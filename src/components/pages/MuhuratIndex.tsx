@@ -207,7 +207,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={muhuratNavLinks(lang)} currentPath="/muhurat" />
+      <Header lang={lang} currentPath="/muhurat" />
 
       <main>
         {/* ---------------- masthead ---------------- */}

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { Mark } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
@@ -90,7 +89,6 @@ function WaterMotif({ form, className = "" }: { form: WaterForm; className?: str
 
 export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
   const t = riverDetailContent[lang];
-  const nav = content[lang].nav;
   const hi = lang === "hi";
   /* `display` sets line-height 0.98; Devanagari matras need more room. */
   const lead = hi ? { lineHeight: 1.2 } : undefined;
@@ -99,13 +97,6 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
   const anchor = (id: string) => `${home}#${id}`;
   const riversHref = localePath(lang, "/rivers");
   const neighbours = ghatNeighbours(ghat.slug);
-
-  const navLinks = [
-    { href: riversHref, label: nav.rivers },
-    { href: anchor("how"), label: nav.how },
-    { href: anchor("muhurat"), label: nav.muhurat },
-    { href: anchor("sankalp"), label: nav.pricing },
-  ];
 
   const facts: { key: string; label: string; value: string }[] = [
     { key: "river", label: t.facts.river, value: ghat.river[lang] },
@@ -122,7 +113,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath={`/rivers/${ghat.slug}`} />
+      <Header lang={lang} currentPath={`/rivers/${ghat.slug}`} />
 
       <main>
         {/* -------------------------------------------------- hero ------ */}

@@ -1,4 +1,5 @@
 import { Marcellus, Karla, Tiro_Devanagari_Hindi, Mukta } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { themeScript } from "@/components/ThemeToggle";
 import type { Lang } from "@/lib/content";
 
@@ -50,7 +51,11 @@ export function RootShell({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        {/* Vercel Web Analytics — no cookies, no cross-site identifiers. */}
+        <Analytics />
+      </body>
     </html>
   );
 }

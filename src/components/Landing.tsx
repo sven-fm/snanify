@@ -3,7 +3,6 @@ import { content } from "@/lib/content";
 import { RIVERS } from "@/content/rivers";
 import { DATED_OCCASIONS } from "@/content/muhurat";
 import { localePath } from "@/lib/i18n";
-import { navItem } from "@/lib/nav";
 import type { Lang } from "@/lib/i18n";
 import { Mark, SealAnimated } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
@@ -13,19 +12,12 @@ import { CTA, Card, StatusBadge, Section, SectionHeader } from "@/components/ui"
 export function Landing({ lang }: { lang: Lang }) {
   const t = content[lang];
 
-  const navLinks = [
-    navItem(lang, "rivers"),
-    navItem(lang, "rituals"),
-    navItem(lang, "muhurat"),
-    navItem(lang, "how"),
-    navItem(lang, "ethics"),
-  ];
 
   return (
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath="/" ctaTo="#sankalp" />
+      <Header lang={lang} currentPath="/" ctaTo="#sankalp" />
 
       <main>
         {/* ---------------- hero ---------------- */}

@@ -1,9 +1,8 @@
-import { content } from "@/lib/content";
-import { localePath, type Lang } from "@/lib/i18n";
+import { type Lang } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Eyebrow } from "@/components/ui";
-import { ETHICS_MAIL, ethicsContent, trustNav } from "@/content/trust";
+import { ETHICS_MAIL, ethicsContent } from "@/content/trust";
 
 /**
  * /ethics — deliberately the quietest page on the site.
@@ -72,14 +71,6 @@ function ChainRule() {
 
 export function Ethics({ lang }: { lang: Lang }) {
   const t = ethicsContent[lang];
-  const nav = trustNav[lang];
-
-  const navLinks = [
-    { href: localePath(lang, "/rivers"), label: content[lang].nav.rivers },
-    { href: localePath(lang, "/how-it-works"), label: nav.how },
-    { href: localePath(lang, "/ethics"), label: nav.ethics },
-    { href: localePath(lang, "/faq"), label: nav.faq },
-  ];
 
   const toc = [t.s1, t.s2, t.s3, t.s4, t.s5, t.s6, t.s7, t.s8, t.s9, t.s10, t.s11].map((s) => ({
     id: s.id,
@@ -91,7 +82,7 @@ export function Ethics({ lang }: { lang: Lang }) {
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath="/ethics" />
+      <Header lang={lang} currentPath="/ethics" />
 
       <main>
         {/* ---------------- masthead ---------------- */}

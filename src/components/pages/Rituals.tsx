@@ -1,4 +1,3 @@
-import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { Mark } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
@@ -86,14 +85,7 @@ function Sku({ label, code, className = "" }: { label: string; code: string; cla
 
 export function Rituals({ lang }: { lang: Lang }) {
   const t: RitualsCopy = ritualsContent[lang];
-  const c = content[lang];
   const home = localePath(lang, "/");
-
-  const navLinks = [
-    { href: `${home}#rivers`, label: c.nav.rivers },
-    { href: `${home}#muhurat`, label: c.nav.muhurat },
-    { href: localePath(lang, "/rituals"), label: t.hero.eyebrow },
-  ];
 
   // The summary table lists every rite at both rates, extended forms included.
   const priceRows = t.catalog.flatMap((r) => [
@@ -127,7 +119,7 @@ export function Rituals({ lang }: { lang: Lang }) {
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath="/rituals" />
+      <Header lang={lang} currentPath="/rituals" />
 
       <main>
         {/* ---------------- masthead ---------------- */}

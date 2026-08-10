@@ -4,7 +4,6 @@ import { Footer } from "@/components/site/Footer";
 import { SankalpPatra } from "@/components/SankalpPatra";
 import { Card, Eyebrow, LinkButton, Section, SectionHeader } from "@/components/ui";
 import { patraContent, specimenPatra } from "@/content/patra";
-import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /* ---------------------------------------------------------------------------
@@ -179,7 +178,6 @@ function Numeral({ n }: { n: number }) {
 
 export function PatraExplainer({ lang }: { lang: Lang }) {
   const t = patraContent[lang];
-  const nav = content[lang].nav;
   const hi = lang === "hi";
   /* The `display` utility sets line-height 0.98, which collides Devanagari
      matras at heading sizes. Inline style, so it wins over the utility. */
@@ -188,19 +186,11 @@ export function PatraExplainer({ lang }: { lang: Lang }) {
 
   /* "Sankalp" is a section of the home page, not a route of its own — the
      same anchor the rivers and rituals pages link to. */
-  const home = localePath(lang, "/");
-
-  const navLinks = [
-    { href: localePath(lang, "/rivers"), label: nav.rivers },
-    { href: localePath(lang, "/how-it-works"), label: nav.how },
-    { href: localePath(lang, "/patra"), label: t.hero.eyebrow },
-    { href: `${home}#sankalp`, label: nav.pricing },
-  ];
 
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} links={navLinks} currentPath="/patra" />
+      <Header lang={lang} currentPath="/patra" />
 
       <main>
         {/* ------------------------------ hero ------------------------------ */}

@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Eyebrow } from "@/components/ui";
-import { ETHICS_MAIL, faqContent, trustNav } from "@/content/trust";
+import { ETHICS_MAIL, faqContent } from "@/content/trust";
 
 /**
  * /faq — <details>/<summary>, so every answer is reachable with JavaScript off
@@ -38,20 +37,12 @@ const DEEP_LINKS: Record<string, string> = {
 
 export function Faq({ lang }: { lang: Lang }) {
   const t = faqContent[lang];
-  const nav = trustNav[lang];
-
-  const navLinks = [
-    { href: localePath(lang, "/rivers"), label: content[lang].nav.rivers },
-    { href: localePath(lang, "/how-it-works"), label: nav.how },
-    { href: localePath(lang, "/ethics"), label: nav.ethics },
-    { href: localePath(lang, "/faq"), label: nav.faq },
-  ];
 
   return (
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath="/faq" />
+      <Header lang={lang} currentPath="/faq" />
 
       <main>
         {/* ---------------- masthead ---------------- */}

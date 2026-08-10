@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Eyebrow, Section } from "@/components/ui";
 import { Mark } from "@/components/Logo";
-import { howItWorksContent, trustNav } from "@/content/trust";
+import { howItWorksContent } from "@/content/trust";
 
 /**
  * /how-it-works — the three landing-page steps at full length.
@@ -18,20 +17,12 @@ import { howItWorksContent, trustNav } from "@/content/trust";
 
 export function HowItWorks({ lang }: { lang: Lang }) {
   const t = howItWorksContent[lang];
-  const nav = trustNav[lang];
-
-  const navLinks = [
-    { href: localePath(lang, "/rivers"), label: content[lang].nav.rivers },
-    { href: localePath(lang, "/how-it-works"), label: nav.how },
-    { href: localePath(lang, "/ethics"), label: nav.ethics },
-    { href: localePath(lang, "/faq"), label: nav.faq },
-  ];
 
   return (
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath="/how-it-works" />
+      <Header lang={lang} currentPath="/how-it-works" />
 
       <main>
         {/* ---------------- masthead ---------------- */}

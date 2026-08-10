@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { Mark, SealAnimated } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
@@ -59,24 +58,15 @@ function Strand({ className = "" }: { className?: string }) {
 
 export function RiversIndex({ lang }: { lang: Lang }) {
   const t = riversIndexContent[lang];
-  const nav = content[lang].nav;
   const hi = lang === "hi";
   /* The `display` utility sets line-height 0.98, which collides Devanagari
      matras at hero sizes. Inline style, so it wins over the utility. */
   const lead = hi ? { lineHeight: 1.2 } : undefined;
 
   const home = localePath(lang, "/");
-  const riversHref = localePath(lang, "/rivers");
 
   /* `home` is "/" or "/hi", so appending the fragment gives /#how and /hi#how. */
   const anchor = (id: string) => `${home}#${id}`;
-
-  const navLinks = [
-    { href: riversHref, label: nav.rivers },
-    { href: anchor("how"), label: nav.how },
-    { href: anchor("muhurat"), label: nav.muhurat },
-    { href: anchor("sankalp"), label: nav.pricing },
-  ];
 
   const first = RIVERS[0];
   const rest = RIVERS.slice(1);
@@ -85,7 +75,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath="/rivers" />
+      <Header lang={lang} currentPath="/rivers" />
 
       <main>
         {/* ------------------------------------------------ hero ------- */}

@@ -5,7 +5,7 @@ import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Section, Eyebrow } from "@/components/ui";
-import { ProvisionalBadge, muhuratNavLinks } from "@/components/pages/MuhuratIndex";
+import { ProvisionalBadge } from "@/components/pages/MuhuratIndex";
 import {
   GHAT_BY_ID,
   MUHURAT,
@@ -67,7 +67,6 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
 
       <Header
         lang={lang}
-        links={muhuratNavLinks(lang)}
         currentPath={`/muhurat/${occasion.slug}`}
       />
 
