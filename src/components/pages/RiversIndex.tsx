@@ -8,10 +8,17 @@ import { RIVERS, riversIndexContent } from "@/content/rivers";
 
 /* Six strands of water, widest at the front. Every coordinate is an integer
    literal so the server and client serialise the same string. */
-function Waterlines({ className = "" }: { className?: string }) {
+function Waterlines({
+  className = "",
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 1200 260"
       preserveAspectRatio="none"
       fill="none"
@@ -81,7 +88,16 @@ export function RiversIndex({ lang }: { lang: Lang }) {
         {/* ------------------------------------------------ hero ------- */}
         <section className="relative overflow-hidden">
           <div className="halo" aria-hidden="true" />
-          <Waterlines className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] w-full" />
+          {/* Masked so the strands fade out before they reach the permission
+              notice — unmasked, they read as strikethrough across the copy
+              that most needs to be legible. */}
+          <Waterlines
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] w-full opacity-70"
+            style={{
+              maskImage: "linear-gradient(to bottom, transparent 0%, black 78%)",
+              WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 78%)",
+            }}
+          />
 
           <div className="relative mx-auto max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24 sm:pb-28">
             <div className="rise-in" style={{ animationDelay: "60ms" }}>
