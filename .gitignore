@@ -43,3 +43,4 @@ next-env.d.ts
 # local visual-check scripts (playwright installed with --no-save)
 /shot.mjs
 /probe.mjs
+/probe2.mjs
