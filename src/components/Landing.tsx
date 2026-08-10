@@ -1,4 +1,9 @@
+import Link from "next/link";
 import { content } from "@/lib/content";
+import { RIVERS } from "@/content/rivers";
+import { DATED_OCCASIONS } from "@/content/muhurat";
+import { localePath } from "@/lib/i18n";
+import { navItem } from "@/lib/nav";
 import type { Lang } from "@/lib/i18n";
 import { Mark, SealAnimated } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
@@ -9,17 +14,18 @@ export function Landing({ lang }: { lang: Lang }) {
   const t = content[lang];
 
   const navLinks = [
-    { href: "#rivers", label: t.nav.rivers },
-    { href: "#how", label: t.nav.how },
-    { href: "#muhurat", label: t.nav.muhurat },
-    { href: "#sankalp", label: t.nav.pricing },
+    navItem(lang, "rivers"),
+    navItem(lang, "rituals"),
+    navItem(lang, "muhurat"),
+    navItem(lang, "how"),
+    navItem(lang, "ethics"),
   ];
 
   return (
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} links={navLinks} currentPath="/" />
+      <Header lang={lang} links={navLinks} currentPath="/" ctaTo="#sankalp" />
 
       <main>
         {/* ---------------- hero ---------------- */}
@@ -77,9 +83,9 @@ export function Landing({ lang }: { lang: Lang }) {
                 <a href="#sankalp">
                   <CTA>{t.hero.ctaPrimary}</CTA>
                 </a>
-                <a href="#how">
+                <Link href={localePath(lang, "/how-it-works")}>
                   <CTA variant="ghost">{t.hero.ctaSecondary}</CTA>
-                </a>
+                </Link>
               </div>
 
               <dl
@@ -121,22 +127,24 @@ export function Landing({ lang }: { lang: Lang }) {
           <SectionHeader eyebrow={t.rivers.eyebrow} title={t.rivers.title} lede={t.rivers.lede} />
 
           <ul className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line/70 bg-line/70 sm:grid-cols-2 lg:grid-cols-3">
-            {t.rivers.items.map((r, i) => (
-              <li
-                key={r.name}
-                className="group relative bg-bg p-7 transition-colors duration-500 hover:bg-bg3"
-              >
-                <span className="inscription absolute top-6 right-6 text-[0.6rem] text-ink2/50">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <Mark className="h-7 w-7 text-ink2 transition-colors duration-500 group-hover:text-gold" />
-                <h3 className="display mt-6 text-2xl text-ink">{r.name}</h3>
-                <p className="mt-1.5 text-sm text-ink2">{r.place}</p>
-                <p className="mt-5 text-xs text-teal italic">{r.note}</p>
-                <span className="absolute inset-x-0 bottom-0 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
+            {RIVERS.map((r) => (
+              <li key={r.slug} className="group relative bg-bg transition-colors duration-500 hover:bg-bg3">
+                <Link href={localePath(lang, `/rivers/${r.slug}`)} className="block p-7">
+                  <span className="inscription absolute top-6 right-6 text-[0.6rem] text-ink2/50">
+                    {r.numeral}
+                  </span>
+                  <Mark className="h-7 w-7 text-ink2 transition-colors duration-500 group-hover:text-gold" />
+                  <h3 className="display mt-6 text-2xl text-ink">{r.river[lang]}</h3>
+                  <p className="mt-1.5 text-sm text-ink2">
+                    {r.ghat[lang]}, {r.city[lang]}
+                  </p>
+                  <p className="mt-5 text-xs text-teal">{r.epithet[lang]}</p>
+                </Link>
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
               </li>
             ))}
           </ul>
+
         </Section>
 
         {/* ---------------- how ---------------- */}
@@ -164,23 +172,38 @@ export function Landing({ lang }: { lang: Lang }) {
             lede={t.muhurat.lede}
           />
 
-          {/* deliberately a list, not more cards — changes the page's rhythm */}
+          {/* deliberately a list, not more cards — changes the page's rhythm.
+              Reads the real calendar, so nothing here can drift from /muhurat. */}
           <ul className="mt-12 border-t border-line/60">
-            {t.muhurat.items.map((m) => (
+            {DATED_OCCASIONS.slice(0, 4).map((o) => (
               <li
-                key={m.t}
-                className="group grid grid-cols-1 items-baseline gap-1 border-b border-line/60 py-6 transition-colors hover:bg-bg3/50 sm:grid-cols-[1fr_auto] sm:gap-8 sm:py-7"
+                key={o.slug}
+                className="group border-b border-line/60 transition-colors hover:bg-bg3/50"
               >
-                <div className="sm:flex sm:items-baseline sm:gap-6">
-                  <h3 className="display text-2xl transition-colors group-hover:text-gold sm:min-w-[15rem]">
-                    {m.t}
-                  </h3>
-                  <p className="mt-1 text-sm text-ink2 sm:mt-0">{m.d}</p>
-                </div>
-                <p className="inscription text-[0.66rem] text-ink2">{m.w}</p>
+                <Link
+                  href={localePath(lang, `/muhurat/${o.slug}`)}
+                  className="grid grid-cols-1 items-baseline gap-1 py-6 sm:grid-cols-[1fr_auto] sm:gap-8 sm:py-7"
+                >
+                  <div className="sm:flex sm:items-baseline sm:gap-6">
+                    <h3 className="display text-2xl transition-colors group-hover:text-gold sm:min-w-[15rem]">
+                      {o.name[lang]}
+                    </h3>
+                    <p className="mt-1 text-sm text-ink2 sm:mt-0">{o.occurrence.note[lang]}</p>
+                  </div>
+                  <p className="inscription text-[0.66rem] text-ink2">
+                    {o.occurrence.label[lang]}
+                  </p>
+                </Link>
               </li>
             ))}
           </ul>
+
+          <p className="mt-6 text-xs text-ink2/80">
+            {lang === "en"
+              ? "Provisional. Every timing is confirmed against the panchang before booking opens."
+              : "अस्थायी। बुकिंग खुलने से पूर्व हर समय पंचांग से पुष्ट किया जाता है।"}
+          </p>
+
         </Section>
 
         {/* ---------------- sankalp / pricing ---------------- */}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { content } from "@/lib/content";
 import { localePath, otherLangPath, type Lang } from "@/lib/i18n";
+import { ctaHref, primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CTA } from "@/components/ui";
@@ -10,17 +11,24 @@ export type NavLink = { href: string; label: string };
 /**
  * `currentPath` is the locale-independent route ("/" or "/rituals"), so the
  * language switch lands on the same page rather than dumping you at home.
+ *
+ * `links` and `ctaTo` default to the shared nav, so pages cannot drift apart.
+ * The landing page overrides `links` with its own on-page anchors.
  */
 export function Header({
   lang,
   links,
   currentPath = "/",
+  ctaTo,
 }: {
   lang: Lang;
-  links: NavLink[];
+  links?: NavLink[];
   currentPath?: string;
+  ctaTo?: string;
 }) {
   const t = content[lang];
+  const navLinks = links ?? primaryNav(lang);
+  const cta = ctaTo ?? ctaHref(lang);
 
   return (
     <header className="sticky top-0 z-50 border-b border-line/60 bg-bg/80 backdrop-blur-xl">
@@ -29,8 +37,8 @@ export function Header({
           <Logo />
         </Link>
 
-        <div className="hidden items-center gap-8 text-sm text-ink2 lg:flex">
-          {links.map((l) => (
+        <div className="hidden items-center gap-7 text-sm text-ink2 lg:flex">
+          {navLinks.map((l) => (
             <a
               key={l.href}
               href={l.href}
@@ -50,7 +58,7 @@ export function Header({
             {t.switchLabel}
           </Link>
           <ThemeToggle label={t.themeLabel} />
-          <a href="#sankalp" className="hidden sm:block">
+          <a href={cta} className="hidden sm:block">
             <CTA className="!px-5 !py-2">{t.nav.cta}</CTA>
           </a>
         </div>

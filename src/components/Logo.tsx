@@ -20,7 +20,7 @@ export function Mark({ className = "" }: { className?: string }) {
       className={className}
       fill="none"
       aria-hidden="true"
-      focusable="false"
+      focusable={false}
     >
       <defs>
         <clipPath id={clip}>
@@ -75,7 +75,7 @@ export function SealAnimated({ className = "" }: { className?: string }) {
       className={className}
       fill="none"
       aria-hidden="true"
-      focusable="false"
+      focusable={false}
     >
       <defs>
         <radialGradient id={sun}>

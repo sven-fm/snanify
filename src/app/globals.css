@@ -109,6 +109,25 @@ html[lang="hi"] {
   line-height: 0.98;
 }
 
+/* Devanagari needs vertical room that Latin display type does not: matras sit
+   above and below the base line, and 0.98 collides them. Body leading is raised
+   for the same reason. */
+html[lang="hi"] .display {
+  line-height: 1.18;
+}
+
+html[lang="hi"] body {
+  line-height: 1.75;
+}
+
+/* Devanagari has no italic form, so the browser would synthesise a slant.
+   Emphasis is carried by colour and weight instead. */
+html[lang="hi"] .italic,
+html[lang="hi"] i,
+html[lang="hi"] em {
+  font-style: normal;
+}
+
 /* Wide inscriptional caps — the "carved in ghat stone" voice.
    Devanagari has no case, so lang=hi opts out of the transform. */
 @utility inscription {
