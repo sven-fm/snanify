@@ -1,26 +1,246 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------
+   Snanify palette — "temple stone at dawn / night ghat"
+   Marigold brass, river teal, sindoor. Never flat saffron.
+   --------------------------------------------------------------- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --bg: #f7efe0;
+  --bg-2: #fdf9f1;
+  --bg-3: #efe3cd;
+  --ink: #16182b;
+  --ink-2: #5c6076;
+  --gold: #a06d0c;
+  --gold-2: #c48f21;
+  /* The seal's disc is decorative, not text — it stays a bright marigold in
+     both themes rather than darkening for contrast like --gold has to. */
+  --sun: #e8a63a;
+  --sun-2: #f8d288;
+  --teal: #135e58;
+  --sindoor: #a5342a;
+  --line: #e0d0b1;
+  --seal-ring: #16182b;
+  --grain: 0.035;
+  --halo: 0.5;
+
+  --f-display: var(--font-marcellus), "Iowan Old Style", Georgia, serif;
+  --f-body: var(--font-karla), ui-sans-serif, system-ui, sans-serif;
+  --tracking-display: -0.015em;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #080c19;
+  --bg-2: #0e1428;
+  --bg-3: #161d39;
+  --ink: #f4ecdb;
+  --ink-2: #98a0bb;
+  --gold: #e3ac46;
+  --gold-2: #f7cd80;
+  --sun: #e3ac46;
+  --sun-2: #f7cd80;
+  --teal: #3fa096;
+  --sindoor: #dd6153;
+  --line: #212950;
+  --seal-ring: #f4ecdb;
+  --grain: 0.055;
+  --halo: 1;
+}
+
+/* Devanagari gets its own typefaces — not a fallback stack. */
+html[lang="hi"] {
+  --f-display: var(--font-tiro), Georgia, serif;
+  --f-body: var(--font-mukta), ui-sans-serif, system-ui, sans-serif;
+  --tracking-display: 0;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg2: var(--bg-2);
+  --color-bg3: var(--bg-3);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink-2);
+  --color-gold: var(--gold);
+  --color-gold2: var(--gold-2);
+  --color-teal: var(--teal);
+  --color-sindoor: var(--sindoor);
+  --color-line: var(--line);
+
+  --font-display: var(--f-display);
+  --font-body: var(--f-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--f-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility display {
+  font-family: var(--f-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+/* Wide inscriptional caps — the "carved in ghat stone" voice.
+   Devanagari has no case, so lang=hi opts out of the transform. */
+@utility inscription {
+  font-family: var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 400;
+}
+
+html[lang="hi"] .inscription {
+  text-transform: none;
+  letter-spacing: 0.08em;
+}
+
+/* The wordmark is a brand asset, not body copy — it stays Latin inscriptional
+   caps in every locale, so it must not inherit the lang=hi override above. */
+@utility wordmark {
+  font-family: var(--font-marcellus), Georgia, serif;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 400;
+}
+
+/* --- Atmosphere ------------------------------------------------- */
+
+/* Aarti glow: warm light bleeding up from the waterline. */
+@utility halo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      68% 42% at 50% 8%,
+      color-mix(in oklab, var(--gold) 26%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 40% at 82% 62%,
+      color-mix(in oklab, var(--teal) 22%, transparent) 0%,
+      transparent 72%
+    );
+  opacity: var(--halo);
+}
+
+/* Film grain, so nothing reads as flat digital paint. */
+@utility grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hairline rule that fades at both ends, like a temple string course. */
+@utility rule-fade {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line) 15%,
+    var(--line) 85%,
+    transparent
+  );
+}
+
+/* --- Motion ----------------------------------------------------- */
+
+@keyframes ripple-out {
+  0% {
+    transform: scale(0.28);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--teal) 60%, transparent);
+  }
+  60% {
+    opacity: 0.75;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@utility rise-in {
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .rise-in {
+    opacity: 1;
+  }
 }

@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local visual-check scripts (playwright installed with --no-save)
+/shot.mjs
+/probe.mjs
