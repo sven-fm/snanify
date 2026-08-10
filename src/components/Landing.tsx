@@ -3,7 +3,7 @@ import type { Lang } from "@/lib/i18n";
 import { Mark, SealAnimated } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Card, LiveBadge, Section, SectionHeader } from "@/components/ui";
+import { CTA, Card, StatusBadge, Section, SectionHeader } from "@/components/ui";
 
 export function Landing({ lang }: { lang: Lang }) {
   const t = content[lang];
@@ -51,7 +51,7 @@ export function Landing({ lang }: { lang: Lang }) {
           <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 pt-16 pb-24 sm:px-8 sm:pt-24 sm:pb-32 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
             <div>
               <div className="rise-in" style={{ animationDelay: "60ms" }}>
-                <LiveBadge>{t.hero.badge}</LiveBadge>
+                <StatusBadge>{t.hero.badge}</StatusBadge>
               </div>
 
               <h1

@@ -123,13 +123,22 @@ export function Card({
   );
 }
 
-/** Pulsing dot + label, for "live now" / "next muhurat" style status. */
-export function LiveBadge({ children }: { children: React.ReactNode }) {
+/**
+ * Status pill. The dot only pulses when `live` is true — a pulsing dot reads as
+ * "a stream is running right now", so it must never decorate a static label.
+ */
+export function StatusBadge({
+  children,
+  live = false,
+}: {
+  children: React.ReactNode;
+  live?: boolean;
+}) {
   return (
     <p className="inscription inline-flex items-center gap-2.5 rounded-full border border-line/70 bg-bg2/60 px-4 py-1.5 text-[0.62rem] text-ink2">
       <span
-        className="h-1.5 w-1.5 rounded-full bg-teal"
-        style={{ animation: "pulse-dot 2.4s ease-in-out infinite" }}
+        className={`h-1.5 w-1.5 rounded-full ${live ? "bg-teal" : "bg-ink2/40"}`}
+        style={live ? { animation: "pulse-dot 2.4s ease-in-out infinite" } : undefined}
       />
       {children}
     </p>
