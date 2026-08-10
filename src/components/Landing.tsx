@@ -49,7 +49,7 @@ export function Landing({ lang }: { lang: Lang }) {
           <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 pt-16 pb-24 sm:px-8 sm:pt-24 sm:pb-32 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
             <div>
               <div className="rise-in" style={{ animationDelay: "60ms" }}>
-                <StatusBadge>{t.hero.badge}</StatusBadge>
+                <StatusBadge live>{t.hero.badge}</StatusBadge>
               </div>
 
               <h1
