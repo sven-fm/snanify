@@ -129,6 +129,12 @@ export const content = {
         },
       ],
     },
+    notFound: {
+      code: "404",
+      title: "This path does not reach the water.",
+      lede: "The page you were looking for is not here. The river, however, is exactly where it has always been.",
+      cta: "Return home",
+    },
     closing: {
       title: "Wherever you stand, the water is already there.",
       lede: "Ten thousand kilometres is not a distance the Ganga recognises.",
@@ -265,6 +271,12 @@ export const content = {
           ],
         },
       ],
+    },
+    notFound: {
+      code: "404",
+      title: "यह मार्ग जल तक नहीं पहुँचता।",
+      lede: "जिस पृष्ठ की आप खोज कर रहे थे, वह यहाँ नहीं है। नदी, किंतु, वहीं है जहाँ सदा से थी।",
+      cta: "मुखपृष्ठ पर लौटें",
     },
     closing: {
       title: "आप जहाँ भी हों, जल वहीं है।",
