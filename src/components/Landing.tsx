@@ -115,10 +115,8 @@ export function Landing({ lang }: { lang: Lang }) {
                 className="rise-in inscription inline-flex items-center gap-2.5 rounded-full border border-line/70 bg-bg2/60 px-4 py-1.5 text-[0.62rem] text-ink2"
                 style={{ animationDelay: "60ms" }}
               >
-                <span
-                  className="h-1.5 w-1.5 rounded-full bg-teal"
-                  style={{ animation: "pulse-dot 2.4s ease-in-out infinite" }}
-                />
+                {/* Not animated: a pulsing dot asserts a live stream. */}
+                <span className="h-1.5 w-1.5 rounded-full bg-ink2/40" />
                 {t.hero.badge}
               </p>
 
