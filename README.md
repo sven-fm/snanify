@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Snanify
 
-## Getting Started
+A fully digital snan service — your name, your gotra, your sankalp, offered at India's
+most sacred waters and streamed to wherever you stand.
 
-First, run the development server:
+**Live:** https://snanify.vercel.app · **Repo:** https://github.com/sven-fm/snanify
+
+---
+
+## Running it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Route            | Locale  | Notes                                  |
+| ---------------- | ------- | -------------------------------------- |
+| `/`              | English | Landing page                           |
+| `/hi`            | Hindi   | Landing page                           |
+| `/sitemap.xml`   | —       | Generated, with reciprocal `hreflang`  |
+| `/robots.txt`    | —       | Static                                 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How the bilingual setup works
 
-## Learn More
+Next.js allows **multiple root layouts** via route groups, and that is what gives each
+locale a real `<html lang>` without any client-side switching:
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/app/
+  (en)/layout.tsx     -> <html lang="en">, English metadata     -> /
+  (en)/page.tsx
+  (hi)/layout.tsx     -> <html lang="hi">, Hindi metadata       -> /hi
+  (hi)/hi/page.tsx
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Both render the same `<Landing lang={...} />`. All copy lives in `src/lib/content.ts`
+as one object keyed by locale, so a missing translation is a **type error**, not a
+silent English fallback.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Build hrefs with `localePath(lang, "/path")` from `src/lib/i18n.ts` — never hand-write
+`/hi/...`, or renaming a route will strand one locale.
 
-## Deploy on Vercel
+### Adding a page
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Add its copy to both `en` and `hi` in `src/lib/content.ts`.
+2. Create `src/app/(en)/<route>/page.tsx` and `src/app/(hi)/hi/<route>/page.tsx`, each a
+   thin wrapper around one shared component that takes `lang`.
+3. Add the route to `src/app/(en)/sitemap.ts`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design system
+
+Tokens live in `src/app/globals.css` as CSS custom properties, flipped by a `.dark`
+class on `<html>` and mapped into Tailwind v4 via `@theme inline`.
+
+**Palette** — night-ghat indigo, marigold brass, river teal, sindoor. Deliberately not
+flat saffron. `--gold` is the *text-safe* gold and darkens in light mode for contrast;
+`--sun` is the decorative disc colour and stays bright marigold in both themes.
+
+**Type** — Latin display is **Marcellus** (inscriptional, carved-stone), body is
+**Karla**. Devanagari has its own real pair: **Tiro Devanagari Hindi** for display and
+**Mukta** for body, swapped in via `html[lang="hi"]`. The `.inscription` utility drops
+its uppercase transform under `lang="hi"` because Devanagari has no case; `.wordmark`
+deliberately does not, so the logo stays Latin caps in every locale.
+
+**Theme** — set before first paint by an inline script in `RootShell`, so there is no
+flash. The toggle is stateless: the icon is chosen by CSS from the `.dark` class, so
+there is nothing to hydrate.
+
+Shared primitives are in `src/components/ui/index.tsx`; site chrome in
+`src/components/site/`.
+
+### Two traps worth remembering
+
+- **Computed SVG coordinates must be rounded.** Raw floats serialise differently on
+  server and client (`56.69872981077808` vs `56.698729810778076`) and React reports it
+  as a hydration mismatch. Anything trigonometric uses `.toFixed(3)`.
+- **The theme script must be a real `<head>` child.** React refuses to hydrate a sync
+  `<script>` placed directly under `<html>`. The `@next/next/no-head-element` lint rule
+  that argues otherwise is Pages-Router-only and is disabled at that line.
+
+## The logo
+
+The **Bindu Ripple** (`src/components/Logo.tsx`) — a bindu (sun / drop / point of
+intention) above three widening ripples, clipped into a struck-coin seal. Read one way
+it is dawn over a ghat; read the other it is the instant a body enters water.
+
+- `<Mark />` — the seal alone
+- `<Logo />` — seal + wordmark lockup
+- `<SealAnimated />` — hero treatment with travelling ripples and a 24-ray chakra
+
+`public/icon.svg` is a standalone copy for the favicon (no CSS variables).
+
+## Deployment
+
+Vercel project `snanify`, connected to the GitHub repo — pushes to `main` deploy
+automatically.
+
+### Custom domain — action required
+
+`snanify.com` is registered at **Porkbun** and still uses Porkbun nameservers, so
+Vercel cannot issue a certificate yet. Pick one:
+
+- **A record** (keeps DNS at Porkbun): point `snanify.com` to `76.76.21.21`, and add a
+  `CNAME` for `www` to `cname.vercel-dns.com`.
+- **Nameservers** (moves DNS to Vercel): set `ns1.vercel-dns.com` and
+  `ns2.vercel-dns.com` at Porkbun.
+
+Vercel re-verifies automatically and emails when it completes.
+
+## Not real yet
+
+The landing page is a marketing surface. Treat the following as **placeholder**:
+
+- The hero statistics (`1,20,000+` sankalps, `48` countries) are invented.
+- Muhurat dates are given at month precision only and are **not** panchang-verified.
+  Do not publish exact timings without a real panchang source.
+- There is no database, no auth, no payments, and no booking flow.
