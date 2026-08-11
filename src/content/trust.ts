@@ -111,7 +111,7 @@ const ethicsEn = {
       },
       {
         k: "What the percentile means",
-        v: "Where today sits against every daily value that same cell has produced in this same week of the year from 1991 to 2025. Four hundred and thirty-five days of that river's own history, and the only honest way to compare a river to anything.",
+        v: "Where today sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Four hundred and thirty-five days of that river's own history, and the only honest way to compare a river to anything.",
       },
       {
         k: "How old it is",
@@ -1228,7 +1228,7 @@ const faqEn = {
           id: "percentile",
           q: "What does the percentile mean?",
           a: [
-            "Where today's flow sits against every daily value that same cell has produced in this same week of the year from 1991 to 2025. Four hundred and thirty-five days of that river's own history.",
+            "Where today's flow sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Four hundred and thirty-five days of that river's own history.",
             "It is the only honest way to compare a river to anything. The Kaveri at Talakaveri runs at about six cubic metres a second and the Sangam at five thousand, and neither number tells you whether either river is behaving unusually. The percentile does.",
           ],
         },
