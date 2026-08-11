@@ -3,6 +3,7 @@ import { content } from "@/lib/content";
 import { RIVERS } from "@/content/rivers";
 import { DATED_OCCASIONS } from "@/content/muhurat";
 import { deepHref, deepLang, pickDeep, type Lang } from "@/lib/locales";
+import { occasionName, waterName } from "@/content/names";
 import { Mark } from "@/components/Logo";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Reveal } from "@/components/Reveal";
@@ -86,31 +87,57 @@ export function Landing({ lang }: { lang: Lang }) {
           <RiverFlow
             variant="panorama"
             anchorSelector="[data-horizon-anchor]"
+            sunAnchorSelector="[data-sun-anchor]"
             className="absolute inset-0 hidden h-full w-full text-ink sm:block"
           />
 
           <div className="relative mx-auto w-full max-w-6xl px-5 pt-8 pb-28 sm:px-8 sm:pt-28 sm:pb-16">
-            <div className="flex max-w-3xl flex-col">
+            <div className="flex flex-col">
               <div className="ink-in order-1 max-w-full">
                 <StatusBadge live>{t.hero.badge}</StatusBadge>
               </div>
 
+              {/* The headline runs the full measure and the sun is set into it
+                  rather than beside it: the float below carries a circular
+                  `shape-outside`, so the first line runs full width and every
+                  line after it wraps around the disc. The sun is not drawn here;
+                  RiverFlow finds this element and paints itself onto it, which
+                  is why the whole composition is sized in `em` off the headline
+                  and holds together at any measure and in any script. */}
               <h1
-                className="ink-in display order-2 mt-6 text-[2.65rem] leading-[1.02] sm:mt-7 sm:text-[4rem] lg:text-[5.4rem]"
+                data-horizon-anchor
+                className="ink-in display order-2 mt-6 text-[2.65rem] leading-[1.02] sm:mt-7 sm:text-[4.6rem] lg:text-[7rem]"
                 style={{ animationDelay: "80ms" }}
               >
+                <span
+                  data-sun-anchor
+                  aria-hidden="true"
+                  className="float-right hidden aspect-square w-[1.75em] sm:block"
+                  style={{
+                    /* One line down, so the first row keeps the full measure. */
+                    marginTop: "calc(1lh + 0.35em)",
+                    /* The lower half hangs out of the headline: an h1 that is a
+                       flex item contains its floats, so without this the disc
+                       adds its full height to the block and opens a hole under
+                       the last line. Pulling half of it back also puts the
+                       headline's bottom edge, and therefore the waterline
+                       anchored to it, straight through the sun's centre, which
+                       is what makes it read as setting into the water rather
+                       than floating above it. */
+                    marginBottom: "-0.875em",
+                    marginRight: "1.2em",
+                    shapeOutside: "circle(50%) border-box",
+                    shapeMargin: "0.28em",
+                  }}
+                />
                 {t.hero.titleA} <span className="text-spot">{t.hero.titleB}</span>
               </h1>
-
-              {/* The printed rule and the waterline are the same line of
-                  thought: everything above it is sky. */}
-              <div data-horizon-anchor className="rule-double order-3 mt-6 max-w-xl sm:mt-8" />
 
               {/* Phone only: the river gets a band of its own, above the fold,
                   with nothing set over it. Full bleed through the container's
                   own gutter. At this size the panorama above is display:none,
                   so only one of the two ever animates. */}
-              <div className="relative order-4 -mx-5 mt-6 h-[30svh] max-h-[320px] min-h-[210px] sm:hidden">
+              <div className="relative order-4 -mx-5 mt-8 h-[30svh] max-h-[320px] min-h-[210px] sm:hidden">
                 <RiverFlow
                   variant="portrait"
                   className="absolute inset-0 h-full w-full text-ink"
@@ -286,12 +313,12 @@ export function Landing({ lang }: { lang: Lang }) {
                     className="group grid grid-cols-[2.75rem_1fr] items-baseline gap-x-4 gap-y-1 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[3.5rem_14rem_1fr_auto] sm:gap-x-8"
                   >
                     <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
-                    <span className="display text-2xl text-ink">{pickDeep(r.river, lang)}</span>
+                    <span className="display text-2xl text-ink">{waterName(r, "river", lang)}</span>
                     <span className="col-start-2 text-sm text-ink2 sm:col-start-auto">
-                      {pickDeep(r.ghat, lang)}, {pickDeep(r.city, lang)}
+                      {waterName(r, "ghat", lang)}, {waterName(r, "city", lang)}
                     </span>
                     <span className="label col-start-2 text-ink2 sm:col-start-auto sm:text-right">
-                      {pickDeep(r.state, lang)}
+                      {waterName(r, "state", lang)}
                     </span>
                   </Link>
                 </li>
@@ -326,7 +353,7 @@ export function Landing({ lang }: { lang: Lang }) {
                     className="grid gap-1.5 border-b border-rule py-4 transition-colors hover:bg-paper3 sm:grid-cols-[15rem_1fr_9rem] sm:items-baseline sm:gap-6"
                   >
                     <span className="display text-xl text-ink underline decoration-rule decoration-1 underline-offset-4">
-                      {pickDeep(o.name, lang)}
+                      {occasionName(o, lang)}
                     </span>
                     <span
                       className="text-sm leading-snug text-ink2"

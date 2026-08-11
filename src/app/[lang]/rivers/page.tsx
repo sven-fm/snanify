@@ -8,7 +8,8 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-import { RIVERS, riversIndexContent } from "@/content/rivers";
+import { RIVERS } from "@/content/rivers";
+import { riversIndexContent } from "@/content/rivers-index";
 /* This route exists in English and Hindi only for now; see the tier note and
    the FULL_ONLY list at the top of src/lib/locales.ts, which is the single
    place that decides. `Lang` here is therefore the full-depth pair. */

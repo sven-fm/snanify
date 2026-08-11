@@ -134,6 +134,11 @@ type Geometry = {
   near: number;
   halfW: number;
   meander: number;
+  /** Sun centre and radius. `vanish` always equals `sunX`: the river runs to
+   *  the sun, so the glitter path and the channel share one point. */
+  sunX: number;
+  sunY: number;
+  sunR: number;
 };
 
 const project = (g: Geometry, d: number) => g.horizon + g.c / d;
@@ -201,6 +206,7 @@ export function RiverFlow({
   className = "",
   variant = "panorama",
   anchorSelector,
+  sunAnchorSelector,
 }: {
   className?: string;
   variant?: RiverVariant;
@@ -210,6 +216,13 @@ export function RiverFlow({
    * not serialisable across that boundary.
    */
   anchorSelector?: string;
+  /**
+   * CSS selector for a circular `shape-outside` float in the headline. When
+   * given, the sun is painted onto exactly that circle and the vanishing point
+   * follows it, so the type and the river are one composition rather than two
+   * that happen to overlap.
+   */
+  sunAnchorSelector?: string;
 }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const rippleRef = useRef<SVGGElement | null>(null);
@@ -270,15 +283,46 @@ export function RiverFlow({
       }
       horizon = Math.min(Math.max(horizon, tune.horizonMin * h), tune.horizonMax * h);
 
+      /* The sun is normally derived from the frame. When a sun anchor is given
+         it is derived from the TYPE instead: the headline floats a circular
+         `shape-outside` and the disc is painted onto exactly that circle, so
+         the words wrap around the real sun rather than around an approximation
+         of where it might be. The vanishing point follows it, which keeps the
+         channel and the reflection converging on the same point. */
+      let sunX = tune.vanishX * w;
+      let sunR = tune.sunR * w;
+      let sunY = horizon - sunR * tune.sunLift;
+
+      if (sunAnchorSelector) {
+        const anchor = document.querySelector(sunAnchorSelector);
+        if (anchor) {
+          const a = anchor.getBoundingClientRect();
+          /* Zero-sized when the float is `display:none`, which is what the
+             portrait breakpoint does; fall through to the tuned values. */
+          if (a.width > 4) {
+            sunR = a.width / 2;
+            sunX = a.left + sunR - box.left;
+            sunY = a.top + a.height / 2 - box.top;
+          }
+        }
+      }
+
+      /* The dome is clipped at the waterline, so it must also fit under the top
+         edge or it comes out squared off. */
+      sunR = Math.min(sunR, Math.max(sunY, 1) * 0.98);
+
       return {
         w,
         h,
         horizon,
         c: h - horizon,
-        vanish: tune.vanishX * w,
+        vanish: sunX,
         near: tune.nearX * w,
         halfW: tune.halfW * w,
         meander: tune.meander * w,
+        sunX,
+        sunY,
+        sunR,
       };
     }
 
@@ -293,15 +337,11 @@ export function RiverFlow({
          TUNING mean what it says. */
       svg!.setAttribute("viewBox", `0 0 ${g.w.toFixed(1)} ${g.h.toFixed(1)}`);
 
-      /* The dome is clipped at the waterline, so it must also fit under the
-         top edge or it comes out squared off. `horizon / (1 + sunLift)` is the
-         radius at which its top exactly touches y=0. */
-      const sunR = Math.min(tune.sunR * g.w, (g.horizon / (1 + tune.sunLift)) * 0.94);
       skyRect?.setAttribute("width", g.w.toFixed(1));
       skyRect?.setAttribute("height", g.horizon.toFixed(1));
-      sun?.setAttribute("cx", g.vanish.toFixed(1));
-      sun?.setAttribute("cy", (g.horizon - sunR * tune.sunLift).toFixed(1));
-      sun?.setAttribute("r", sunR.toFixed(1));
+      sun?.setAttribute("cx", g.sunX.toFixed(1));
+      sun?.setAttribute("cy", g.sunY.toFixed(1));
+      sun?.setAttribute("r", g.sunR.toFixed(1));
 
       /* Line weights are in CSS pixels now that the viewBox is, so they have to
          be scaled by hand or a tall desktop band would engrave the same
@@ -374,8 +414,10 @@ export function RiverFlow({
     window.addEventListener("resize", redraw, { passive: true });
     const ro = new ResizeObserver(redraw);
     ro.observe(svg);
-    const anchorEl = anchorSelector ? document.querySelector(anchorSelector) : null;
-    if (anchorEl) ro.observe(anchorEl);
+    for (const sel of [anchorSelector, sunAnchorSelector]) {
+      const el = sel ? document.querySelector(sel) : null;
+      if (el) ro.observe(el);
+    }
     document.fonts?.ready.then(redraw).catch(() => {});
 
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -434,7 +476,7 @@ export function RiverFlow({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", redraw);
     };
-  }, [variant, anchorSelector]);
+  }, [variant, anchorSelector, sunAnchorSelector]);
 
   return (
     <svg
