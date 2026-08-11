@@ -1,47 +1,32 @@
-import { Marcellus, Karla, Tiro_Devanagari_Hindi, Mukta } from "next/font/google";
+import { Eczar, Martel_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { themeScript } from "@/components/ThemeToggle";
 import type { Lang } from "@/lib/content";
 
-/* Latin: inscriptional display + a grotesque with some grit in it.
-   Devanagari: a real calligraphic pair, never a substituted fallback. */
-
-const marcellus = Marcellus({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-marcellus",
+/**
+ * Two families, both of which speak Devanagari and Latin natively, so the
+ * Hindi and English editions are the same voice rather than two borrowed ones.
+ *
+ * Eczar (Vaibhav Singh, Indian Type Foundry) is a high-contrast display face
+ * designed Devanagari-first. Martel Sans is its text companion.
+ */
+const eczar = Eczar({
+  subsets: ["latin", "devanagari"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-eczar",
   display: "swap",
 });
 
-const karla = Karla({
-  subsets: ["latin"],
-  variable: "--font-karla",
+const martelSans = Martel_Sans({
+  subsets: ["latin", "devanagari"],
+  weight: ["300", "400", "600", "700", "800"],
+  variable: "--font-martel-sans",
   display: "swap",
 });
 
-const tiro = Tiro_Devanagari_Hindi({
-  subsets: ["devanagari", "latin"],
-  weight: "400",
-  variable: "--font-tiro",
-  display: "swap",
-});
+const fontVars = `${eczar.variable} ${martelSans.variable}`;
 
-const mukta = Mukta({
-  subsets: ["devanagari", "latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-mukta",
-  display: "swap",
-});
-
-const fontVars = `${marcellus.variable} ${karla.variable} ${tiro.variable} ${mukta.variable}`;
-
-export function RootShell({
-  lang,
-  children,
-}: {
-  lang: Lang;
-  children: React.ReactNode;
-}) {
+export function RootShell({ lang, children }: { lang: Lang; children: React.ReactNode }) {
   return (
     <html lang={lang} className={fontVars} suppressHydrationWarning>
       {/* Must be a real <head> child: React refuses to hydrate a sync <script>
@@ -53,7 +38,7 @@ export function RootShell({
       </head>
       <body className="antialiased">
         {children}
-        {/* Vercel Web Analytics — no cookies, no cross-site identifiers. */}
+        {/* Vercel Web Analytics, no cookies, no cross-site identifiers. */}
         <Analytics />
       </body>
     </html>

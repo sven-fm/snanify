@@ -1,147 +1,96 @@
-"use client";
-
 import { useId } from "react";
 
 /**
- * The Bindu Ripple.
+ * The Bindu Ripple, cut as a printer's colophon.
  *
- * A bindu (sun / drop / the point of intention) sits above three widening
- * ripples, the whole thing clipped into a struck-coin seal. Read one way it is
- * dawn over a ghat; read the other it is the instant a body enters water.
+ * A solid vermillion bindu over flat ink rules, trimmed by a double-ruled
+ * roundel. Everything is solid colour with butt ends, no gradient, no glow,
+ * no blur. The rules deliberately run past the roundel and get clipped by it,
+ * the way a printed block is trimmed by its seal.
  */
 export function Mark({ className = "" }: { className?: string }) {
-  const id = useId();
-  const clip = `${id}-clip`;
-  const sun = `${id}-sun`;
+  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
+  const clip = `snf-seal-${id}`;
 
   return (
-    <svg
-      viewBox="0 0 48 48"
-      className={className}
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <svg viewBox="0 0 48 48" className={className} fill="none" aria-hidden="true">
       <defs>
         <clipPath id={clip}>
           <circle cx="24" cy="24" r="20" />
         </clipPath>
-        <linearGradient id={sun} x1="24" y1="11" x2="24" y2="26" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--sun-2)" />
-          <stop offset="1" stopColor="var(--sun)" />
-        </linearGradient>
       </defs>
 
-      {/* aura */}
-      <circle cx="24" cy="24" r="22.2" stroke="currentColor" strokeWidth="1.3" opacity="0.32" />
+      {/* double rule, as an almanac sets its borders */}
+      <circle cx="24" cy="24" r="23.2" stroke="currentColor" strokeWidth="1" />
+      <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2" />
 
       <g clipPath={`url(#${clip})`}>
-        {/* bindu */}
-        <circle cx="24" cy="18.4" r="6.5" fill={`url(#${sun})`} />
+        {/* the bindu, the one spot of colour */}
+        <circle cx="24" cy="17.6" r="6.2" fill="var(--spot)" />
 
-        {/* ripples — each wider, fainter, and further down than the last */}
-        <g stroke="currentColor" strokeWidth="2.1" strokeLinecap="round">
-          <path d="M12.8 29.6Q24 35.8 35.2 29.6" opacity="0.92" />
-          <path d="M6.6 33.9Q24 42.4 41.4 33.9" opacity="0.6" />
-          <path d="M0.6 38.4Q24 49.2 47.4 38.4" opacity="0.3" />
+        {/* flat water rules, widening as they come forward */}
+        <g fill="currentColor">
+          <rect x="14" y="27.4" width="20" height="2.2" />
+          <rect x="9" y="32" width="30" height="2.2" />
+          <rect x="3" y="36.6" width="42" height="2.2" />
         </g>
       </g>
     </svg>
   );
 }
 
-/** Full lockup: seal + inscriptional wordmark. */
+/** Masthead lockup: seal + wordmark. */
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <Mark className="h-8 w-8 text-ink" />
-      <span className="wordmark text-[0.95rem] text-ink">Snanify</span>
+      <Mark className="h-7 w-7 text-ink" />
+      <span className="wordmark text-[1.05rem] text-ink">Snanify</span>
     </span>
   );
 }
 
 /**
- * Hero treatment: the same seal, but the ripples actually travel outward —
- * three rings on a staggered loop, as if something just entered the water.
+ * The large colophon, for page heads. Same forme at a bigger measure, with the
+ * ring of tick marks an almanac uses around a dial. Still entirely flat.
  */
-export function SealAnimated({ className = "" }: { className?: string }) {
-  const id = useId();
-  const sun = `${id}-sun`;
-  const fade = `${id}-fade`;
+export function Colophon({ className = "" }: { className?: string }) {
+  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
+  const clip = `snf-colophon-${id}`;
 
   return (
-    <svg
-      viewBox="0 0 200 200"
-      className={className}
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <svg viewBox="0 0 200 200" className={className} fill="none" aria-hidden="true">
       <defs>
-        <radialGradient id={sun}>
-          <stop offset="0%" stopColor="var(--sun-2)" />
-          <stop offset="55%" stopColor="var(--sun)" />
-          <stop offset="100%" stopColor="var(--sun)" stopOpacity="0.9" />
-        </radialGradient>
-        <radialGradient id={fade}>
-          <stop offset="0%" stopColor="var(--sun)" stopOpacity="0.3" />
-          <stop offset="70%" stopColor="var(--sun)" stopOpacity="0" />
-        </radialGradient>
+        <clipPath id={clip}>
+          <circle cx="100" cy="100" r="78" />
+        </clipPath>
       </defs>
 
-      {/* warm bloom behind everything */}
-      <circle cx="100" cy="100" r="98" fill={`url(#${fade})`} />
+      <circle cx="100" cy="100" r="94" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="100" cy="100" r="78" stroke="currentColor" strokeWidth="4" />
 
-      {/* travelling ripples */}
-      <g style={{ transformOrigin: "100px 100px" }}>
-        {[0, 1, 2, 3].map((i) => (
-          <circle
-            key={i}
-            cx="100"
-            cy="100"
-            r="58"
-            stroke="var(--teal)"
-            strokeWidth="1.1"
-            style={{
-              transformOrigin: "100px 100px",
-              animation: `ripple-out 7s cubic-bezier(0.22,0.61,0.36,1) ${i * 1.75}s infinite`,
-            }}
-          />
-        ))}
-      </g>
-
-      {/* mandala rings */}
-      <circle cx="100" cy="100" r="76" stroke="currentColor" strokeWidth="1" opacity="0.18" />
-      <circle
-        cx="100"
-        cy="100"
-        r="62"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.28"
-        strokeDasharray="1.5 7"
-      />
-
-      {/* 24 rays — a subtle chakra, only legible up close.
-          Coordinates are rounded: raw floats serialize differently on server
+      {/* 30 ticks, a printed dial, not a glow.
+          Coordinates are rounded: raw floats serialise differently on server
           and client, which React reports as a hydration mismatch. */}
-      <g stroke="var(--sun-2)" strokeWidth="1.2" opacity="0.45" strokeLinecap="round">
-        {Array.from({ length: 24 }, (_, i) => {
-          const a = (i * Math.PI * 2) / 24;
-          const p = (r: number) => (100 + Math.cos(a) * r).toFixed(3);
-          const q = (r: number) => (100 + Math.sin(a) * r).toFixed(3);
-          return <line key={i} x1={p(44)} y1={q(44)} x2={p(50)} y2={q(50)} />;
+      <g stroke="currentColor" strokeWidth="2">
+        {Array.from({ length: 30 }, (_, i) => {
+          const a = (i * Math.PI * 2) / 30;
+          const x = (r: number) => (100 + Math.cos(a) * r).toFixed(2);
+          const y = (r: number) => (100 + Math.sin(a) * r).toFixed(2);
+          return <line key={i} x1={x(84)} y1={y(84)} x2={x(90)} y2={y(90)} />;
         })}
       </g>
 
-      {/* the bindu itself */}
-      <circle
-        cx="100"
-        cy="100"
-        r="33"
-        fill={`url(#${sun})`}
-        style={{ transformOrigin: "100px 100px", animation: "breathe 6s ease-in-out infinite" }}
-      />
+      <g clipPath={`url(#${clip})`}>
+        <circle cx="100" cy="72" r="25" fill="var(--spot)" />
+        <g fill="currentColor">
+          <rect x="59" y="112" width="82" height="8" />
+          <rect x="38" y="132" width="124" height="8" />
+          <rect x="14" y="152" width="172" height="8" />
+        </g>
+      </g>
     </svg>
   );
 }
+
+/** Retained so pages written against the previous mark keep compiling. */
+export const SealAnimated = Colophon;

@@ -9,9 +9,9 @@ export const content = {
     htmlLang: "en",
     dir: "ltr" as const,
     meta: {
-      title: "Snanify — the river comes to you",
+      title: "Snanify, the river comes to you",
       description:
-        "A complete digital snan. Your name, your gotra, your sankalp — offered at India's most sacred waters and streamed to wherever you stand.",
+        "A complete digital snan. Your name, your gotra, your sankalp, offered at India's most sacred waters and streamed to wherever you stand.",
     },
     switchLabel: "हिंदी",
     switchHref: "/hi",
@@ -28,9 +28,9 @@ export const content = {
       badge: "Live now · Har Ki Pauri, Haridwar",
       titleA: "The river",
       titleB: "comes to you.",
-      lede: "A complete digital snan. Your name, your gotra, your sankalp — carried into a rite performed at India's most sacred waters, and streamed to wherever you stand.",
+      lede: "A complete digital snan. Your name, your gotra, your sankalp, carried into a rite performed at India's most sacred waters, and streamed to wherever you stand.",
       ctaPrimary: "Begin your snan",
-      ctaSecondary: "Watch a snan",
+      ctaSecondary: "How it works",
       card: {
         label: "Next muhurat",
         title: "Brahma Muhurat",
@@ -45,16 +45,8 @@ export const content = {
     },
     rivers: {
       eyebrow: "Sacred waters",
-      title: "Six rivers. One dip.",
-      lede: "Every snan is performed at the ghat itself, at the hour the panchang appoints — never a stock video, never a re-run.",
-      items: [
-        { name: "Ganga", place: "Har Ki Pauri, Haridwar", note: "Moksha · the great purifier" },
-        { name: "Triveni Sangam", place: "Prayagraj", note: "Where three waters meet" },
-        { name: "Yamuna", place: "Vishram Ghat, Mathura", note: "Bhakti · the beloved" },
-        { name: "Godavari", place: "Ram Kund, Nashik", note: "Dakshin Ganga" },
-        { name: "Shipra", place: "Ram Ghat, Ujjain", note: "Ground of the Kumbh" },
-        { name: "Kaveri", place: "Talakaveri, Kodagu", note: "Ganga of the south" },
-      ],
+      title: "Six waters. One sankalp.",
+      lede: "Every rite is performed at the ghat itself, in your name and gotra, and recorded as it happens. Nothing is posted to you.",
     },
     how: {
       eyebrow: "How it works",
@@ -63,17 +55,17 @@ export const content = {
         {
           n: "01",
           t: "Take sankalp",
-          d: "Enter your name, your gotra, and the intention you carry. Add family — and ancestors — if you wish.",
+          d: "Enter your name, your gotra, and the intention you carry. Add family, and ancestors, if you wish.",
         },
         {
           n: "02",
           t: "Choose your muhurat",
-          d: "Pick a river and an auspicious hour. We compute it against the panchang and convert it to your own timezone.",
+          d: "Pick a water and an occasion. Windows are shown provisionally, in IST and in your own timezone, until a panchang source is confirmed.",
         },
         {
           n: "03",
-          t: "Take your dip",
-          d: "Join live as the rite is performed in your name. Your Sankalp Patra arrives the same day.",
+          t: "The rite is performed",
+          d: "Your name and gotra are spoken aloud at the ghat. The recording is timestamped to the moment, and your Sankalp Patra follows.",
         },
       ],
     },
@@ -81,17 +73,11 @@ export const content = {
       eyebrow: "The calendar",
       title: "Days the water listens.",
       lede: "Auspicious occasions open months ahead. Exact timings follow the panchang and are confirmed when booking opens.",
-      items: [
-        { t: "Kartik Purnima", w: "November 2026", d: "Dev Deepawali at the ghats" },
-        { t: "Makar Sankranti", w: "January 2027", d: "The sun turns north" },
-        { t: "Mahashivratri", w: "February 2027", d: "The night of Shiva" },
-        { t: "Ganga Dussehra", w: "May 2027", d: "The descent of the Ganga" },
-      ],
     },
     pricing: {
       eyebrow: "Sankalp",
       title: "Offer what is right.",
-      lede: "One-time offerings. No subscription you cannot leave, no hidden dakshina.",
+      lede: "One-time offerings. No subscription you cannot leave. What reaches the officiant is stated openly.",
       popular: "Most chosen",
       cta: "Choose",
       plans: [
@@ -112,7 +98,7 @@ export const content = {
           features: [
             "Up to six names, one gotra",
             "Priority muhurat slots",
-            "HD recording, kept for good",
+            "HD recording, kept until you delete it",
             "Pitru sankalp for ancestors",
           ],
         },
@@ -128,6 +114,12 @@ export const content = {
           ],
         },
       ],
+    },
+    notFound: {
+      code: "404",
+      title: "This path does not reach the water.",
+      lede: "The page you were looking for is not here. The river, however, is exactly where it has always been.",
+      cta: "Return home",
     },
     closing: {
       title: "Wherever you stand, the water is already there.",
@@ -150,9 +142,9 @@ export const content = {
     htmlLang: "hi",
     dir: "ltr" as const,
     meta: {
-      title: "स्नानिफ़ाई — नदी आप तक आती है",
+      title: "स्नानिफ़ाई, नदी आप तक आती है",
       description:
-        "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प — भारत के पवित्रतम जल में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
+        "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प, भारत के पवित्रतम जल में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
     },
     switchLabel: "English",
     switchHref: "/",
@@ -169,9 +161,9 @@ export const content = {
       badge: "अभी सजीव · हर की पौड़ी, हरिद्वार",
       titleA: "नदी",
       titleB: "आप तक आती है।",
-      lede: "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प — भारत के पवित्रतम जल में संपन्न अनुष्ठान में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
+      lede: "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प, भारत के पवित्रतम जल में संपन्न अनुष्ठान में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
       ctaPrimary: "स्नान आरंभ करें",
-      ctaSecondary: "एक स्नान देखें",
+      ctaSecondary: "कैसे काम करता है",
       card: {
         label: "अगला मुहूर्त",
         title: "ब्रह्म मुहूर्त",
@@ -186,16 +178,8 @@ export const content = {
     },
     rivers: {
       eyebrow: "पवित्र जल",
-      title: "छह नदियाँ। एक डुबकी।",
-      lede: "हर स्नान घाट पर ही, पंचांग द्वारा निर्धारित घड़ी में संपन्न होता है — न कोई पुराना वीडियो, न कोई पुनरावृत्ति।",
-      items: [
-        { name: "गंगा", place: "हर की पौड़ी, हरिद्वार", note: "मोक्ष · महाशोधिनी" },
-        { name: "त्रिवेणी संगम", place: "प्रयागराज", note: "तीन धाराओं का मिलन" },
-        { name: "यमुना", place: "विश्राम घाट, मथुरा", note: "भक्ति · प्रियतमा" },
-        { name: "गोदावरी", place: "रामकुंड, नासिक", note: "दक्षिण गंगा" },
-        { name: "शिप्रा", place: "रामघाट, उज्जैन", note: "कुंभ की भूमि" },
-        { name: "कावेरी", place: "तलकावेरी, कोडगु", note: "दक्षिण की गंगा" },
-      ],
+      title: "छह जल। एक संकल्प।",
+      lede: "हर अनुष्ठान घाट पर ही, आपके नाम और गोत्र से संपन्न होता है, और उसी समय रिकॉर्ड किया जाता है। आपको डाक से कुछ नहीं भेजा जाता।",
     },
     how: {
       eyebrow: "कैसे काम करता है",
@@ -209,12 +193,12 @@ export const content = {
         {
           n: "०२",
           t: "मुहूर्त चुनें",
-          d: "नदी और शुभ घड़ी चुनें। हम पंचांग के अनुसार गणना कर उसे आपके समयक्षेत्र में बदल देते हैं।",
+          d: "जल और पर्व चुनें। समय अभी अस्थायी रूप से, IST और आपके समयक्षेत्र दोनों में, दिखाया जाता है, पंचांग स्रोत पुष्ट होने तक।",
         },
         {
           n: "०३",
-          t: "डुबकी लगाएँ",
-          d: "आपके नाम से होते अनुष्ठान में सजीव सम्मिलित हों। संकल्प पत्र उसी दिन आप तक पहुँचता है।",
+          t: "अनुष्ठान संपन्न होता है",
+          d: "घाट पर आपका नाम और गोत्र स्वर में पढ़ा जाता है। रिकॉर्डिंग उसी क्षण से समयांकित होती है, और संकल्प पत्र उसके बाद आता है।",
         },
       ],
     },
@@ -222,17 +206,11 @@ export const content = {
       eyebrow: "पंचांग",
       title: "जिन दिनों जल सुनता है।",
       lede: "शुभ पर्व महीनों पहले खुलते हैं। सटीक समय पंचांग के अनुसार, बुकिंग खुलते समय पुष्ट किया जाता है।",
-      items: [
-        { t: "कार्तिक पूर्णिमा", w: "नवंबर 2026", d: "घाटों पर देव दीपावली" },
-        { t: "मकर संक्रांति", w: "जनवरी 2027", d: "सूर्य उत्तरायण होते हैं" },
-        { t: "महाशिवरात्रि", w: "फ़रवरी 2027", d: "शिव की रात्रि" },
-        { t: "गंगा दशहरा", w: "मई 2027", d: "गंगा का अवतरण" },
-      ],
     },
     pricing: {
       eyebrow: "संकल्प",
       title: "जो उचित हो, वही अर्पित करें।",
-      lede: "एकमुश्त अर्पण। न छूटने वाली कोई सदस्यता नहीं, न कोई छिपी दक्षिणा।",
+      lede: "एकमुश्त अर्पण। न छूटने वाली कोई सदस्यता। पुरोहित तक कितना पहुँचता है, यह खुलकर बताया जाता है।",
       popular: "सर्वाधिक चुना गया",
       cta: "चुनें",
       plans: [
@@ -249,7 +227,7 @@ export const content = {
           features: [
             "छह नाम तक, एक गोत्र",
             "प्राथमिकता मुहूर्त",
-            "HD रिकॉर्डिंग, सदैव सुरक्षित",
+            "HD रिकॉर्डिंग, जब तक आप न मिटाएँ",
             "पूर्वजों हेतु पितृ संकल्प",
           ],
         },
@@ -266,9 +244,15 @@ export const content = {
         },
       ],
     },
+    notFound: {
+      code: "404",
+      title: "यह मार्ग जल तक नहीं पहुँचता।",
+      lede: "जिस पृष्ठ की आप खोज कर रहे थे, वह यहाँ नहीं है। नदी, किंतु, वहीं है जहाँ सदा से थी।",
+      cta: "मुखपृष्ठ पर लौटें",
+    },
     closing: {
       title: "आप जहाँ भी हों, जल वहीं है।",
-      lede: "दस हज़ार किलोमीटर — गंगा इसे दूरी नहीं मानती।",
+      lede: "दस हज़ार किलोमीटर, गंगा इसे दूरी नहीं मानती।",
       cta: "स्नान आरंभ करें",
     },
     footer: {

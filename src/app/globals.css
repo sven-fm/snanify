@@ -2,211 +2,214 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------------------------------------------------------------
-   Snanify palette — "temple stone at dawn / night ghat"
-   Marigold brass, river teal, sindoor. Never flat saffron.
-   --------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------
+   Snanify, printed panchang.
+
+   The whole system is a two-colour letterpress almanac: ink and one spot
+   vermillion on newsprint. There are NO gradients, NO glows, NO blurs, NO
+   rounded corners and NO soft shadows anywhere in this file. If something needs
+   emphasis it gets a heavier rule, a tint block, or the spot colour. That is
+   the entire vocabulary.
+   --------------------------------------------------------------------------- */
 
 :root {
   color-scheme: light;
 
-  --bg: #f7efe0;
-  --bg-2: #fdf9f1;
-  --bg-3: #efe3cd;
-  --ink: #16182b;
-  --ink-2: #5c6076;
-  --gold: #a06d0c;
-  --gold-2: #c48f21;
-  /* The seal's disc is decorative, not text — it stays a bright marigold in
-     both themes rather than darkening for contrast like --gold has to. */
-  --sun: #e8a63a;
-  --sun-2: #f8d288;
-  --teal: #135e58;
-  --sindoor: #a5342a;
-  --line: #e0d0b1;
-  --seal-ring: #16182b;
-  --grain: 0.035;
-  --halo: 0.5;
+  --paper: #f2ead9;
+  --paper-2: #eae0c9;
+  --paper-3: #ded1b4;
+  --ink: #16130f;
+  --ink-2: #57513f;
+  --spot: #c1272d;
+  --rule: #c3b697;
+  --rule-strong: #16130f;
 
-  --f-display: var(--font-marcellus), "Iowan Old Style", Georgia, serif;
-  --f-body: var(--font-karla), ui-sans-serif, system-ui, sans-serif;
-  --tracking-display: -0.015em;
+  --grain: 0.05;
 }
 
 .dark {
   color-scheme: dark;
 
-  --bg: #080c19;
-  --bg-2: #0e1428;
-  --bg-3: #161d39;
-  --ink: #f4ecdb;
-  --ink-2: #98a0bb;
-  --gold: #e3ac46;
-  --gold-2: #f7cd80;
-  --sun: #e3ac46;
-  --sun-2: #f7cd80;
-  --teal: #3fa096;
-  --sindoor: #dd6153;
-  --line: #212950;
-  --seal-ring: #f4ecdb;
-  --grain: 0.055;
-  --halo: 1;
-}
+  /* The night edition: the same forme, overprinted. */
+  --paper: #12110e;
+  --paper-2: #1a1814;
+  --paper-3: #24211a;
+  --ink: #ece3cf;
+  --ink-2: #99917f;
+  --spot: #e04a40;
+  --rule: #35302a;
+  --rule-strong: #ece3cf;
 
-/* Devanagari gets its own typefaces — not a fallback stack. */
-html[lang="hi"] {
-  --f-display: var(--font-tiro), Georgia, serif;
-  --f-body: var(--font-mukta), ui-sans-serif, system-ui, sans-serif;
-  --tracking-display: 0;
+  --grain: 0.07;
 }
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-bg2: var(--bg-2);
-  --color-bg3: var(--bg-3);
+  --color-paper: var(--paper);
+  --color-paper2: var(--paper-2);
+  --color-paper3: var(--paper-3);
   --color-ink: var(--ink);
   --color-ink2: var(--ink-2);
-  --color-gold: var(--gold);
-  --color-gold2: var(--gold-2);
-  --color-teal: var(--teal);
-  --color-sindoor: var(--sindoor);
-  --color-line: var(--line);
+  --color-spot: var(--spot);
+  --color-rule: var(--rule);
+  --color-rulestrong: var(--rule-strong);
 
-  --font-display: var(--f-display);
-  --font-body: var(--f-body);
+  /* Eczar carries Devanagari and Latin in one voice, no borrowed second face.
+     Martel Sans does the same for text and tabular data. */
+  --font-display: var(--font-eczar), Georgia, serif;
+  --font-body: var(--font-martel-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
-  * {
-    border-color: var(--line);
+  *,
+  *::before,
+  *::after {
+    border-color: var(--rule);
+    /* Nothing in an almanac is rounded. */
+    border-radius: 0 !important;
   }
 
   body {
-    background-color: var(--bg);
+    background-color: var(--paper);
     color: var(--ink);
-    font-family: var(--f-body);
+    font-family: var(--font-martel-sans), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
 
+  /* Numerals line up in columns, because half this site is a table. */
+  table,
+  dl,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
   ::selection {
-    background: var(--gold);
-    color: var(--bg);
+    background: var(--spot);
+    color: var(--paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 3px;
-    border-radius: 2px;
+    outline: 2px solid var(--spot);
+    outline-offset: 2px;
+  }
+
+  a {
+    text-underline-offset: 0.25em;
   }
 }
 
+/* --- Type ---------------------------------------------------------------- */
+
 @utility display {
-  font-family: var(--f-display);
-  letter-spacing: var(--tracking-display);
-  font-weight: 400;
-  line-height: 0.98;
+  font-family: var(--font-eczar), Georgia, serif;
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.005em;
 }
 
-/* Wide inscriptional caps — the "carved in ghat stone" voice.
-   Devanagari has no case, so lang=hi opts out of the transform. */
-@utility inscription {
-  font-family: var(--f-display);
+html[lang="hi"] .display {
+  /* Devanagari matras need the room. */
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+/* Column headings and label rows, the almanac's small voice. */
+@utility label {
+  font-family: var(--font-martel-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-weight: 400;
+  letter-spacing: 0.16em;
+  font-size: 0.66rem;
+  line-height: 1.4;
 }
 
-html[lang="hi"] .inscription {
+html[lang="hi"] .label {
   text-transform: none;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
 }
 
-/* The wordmark is a brand asset, not body copy — it stays Latin inscriptional
-   caps in every locale, so it must not inherit the lang=hi override above. */
+/* The masthead wordmark stays Latin caps in every locale. */
 @utility wordmark {
-  font-family: var(--font-marcellus), Georgia, serif;
+  font-family: var(--font-eczar), Georgia, serif;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-weight: 400;
+  letter-spacing: 0.16em;
 }
 
-/* --- Atmosphere ------------------------------------------------- */
-
-/* Aarti glow: warm light bleeding up from the waterline. */
-@utility halo {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      68% 42% at 50% 8%,
-      color-mix(in oklab, var(--gold) 26%, transparent) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      50% 40% at 82% 62%,
-      color-mix(in oklab, var(--teal) 22%, transparent) 0%,
-      transparent 72%
-    );
-  opacity: var(--halo);
+/* Devanagari has no italic; a synthesised slant is a defect, not emphasis. */
+html[lang="hi"] .italic,
+html[lang="hi"] em,
+html[lang="hi"] i {
+  font-style: normal;
+  font-weight: 600;
 }
 
-/* Film grain, so nothing reads as flat digital paint. */
+/* --- Rules ---------------------------------------------------------------- */
+
+/* The masthead rule: heavy over hairline, as a printed almanac sets it. */
+@utility rule-masthead {
+  border-top: 3px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+  height: 5px;
+}
+
+/* Double rule, the almanac's section divider. */
+@utility rule-double {
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+  height: 4px;
+}
+
+@utility rule-thin {
+  border-top: 1px solid var(--rule);
+}
+
+@utility rule-heavy {
+  border-top: 2px solid var(--rule-strong);
+}
+
+/* --- Blocks -------------------------------------------------------------- */
+
+/* A tint block, the only "fill" in the system. */
+@utility tint {
+  background-color: var(--paper-2);
+}
+
+/* Hard-ruled box. No radius, no shadow, just ink. */
+@utility boxed {
+  border: 1px solid var(--rule-strong);
+}
+
+/* Registration offset: a second impression sitting slightly off, the way a
+   two-colour press misaligns. Used sparingly, never as a drop shadow. */
+@utility misregister {
+  box-shadow: 4px 4px 0 0 var(--spot);
+}
+
+/* Paper grain. The one texture the system keeps, because paper has tooth. */
 @utility grain {
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
   opacity: var(--grain);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Hairline rule that fades at both ends, like a temple string course. */
-@utility rule-fade {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--line) 15%,
-    var(--line) 85%,
-    transparent
-  );
+.dark .grain {
+  mix-blend-mode: screen;
 }
 
-/* --- Motion ----------------------------------------------------- */
+/* --- Motion -------------------------------------------------------------- */
 
-@keyframes ripple-out {
-  0% {
-    transform: scale(0.28);
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
-}
-
-@keyframes breathe {
-  0%,
-  100% {
-    opacity: 0.85;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.03);
-  }
-}
-
-@keyframes rise {
+/* Print does not animate. The only motion is the page arriving. */
+@keyframes ink-in {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -214,21 +217,9 @@ html[lang="hi"] .inscription {
   }
 }
 
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 0 0 color-mix(in oklab, var(--teal) 60%, transparent);
-  }
-  60% {
-    opacity: 0.75;
-    box-shadow: 0 0 0 6px transparent;
-  }
-}
-
-@utility rise-in {
+@utility ink-in {
   opacity: 0;
-  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: ink-in 0.45s steps(6, end) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -240,7 +231,51 @@ html[lang="hi"] .inscription {
     transition-duration: 0.001ms !important;
   }
 
-  .rise-in {
+  .ink-in {
     opacity: 1;
   }
+}
+
+/* --- Compatibility shims -------------------------------------------------
+   The page components were written against the previous palette. These map the
+   old token names onto the new ones so every page keeps rendering while it is
+   restyled, rather than going blank. Remove once no file references them.
+   ------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-bg: var(--paper);
+  --color-bg2: var(--paper-2);
+  --color-bg3: var(--paper-3);
+  --color-gold: var(--spot);
+  --color-gold2: var(--spot);
+  --color-teal: var(--ink-2);
+  --color-sindoor: var(--spot);
+  --color-line: var(--rule);
+}
+
+/* Old atmosphere utilities, now inert, the almanac has no glow. */
+@utility halo {
+  display: none;
+}
+
+@utility inscription {
+  font-family: var(--font-martel-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+html[lang="hi"] .inscription {
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+@utility rule-fade {
+  height: 1px;
+  background: var(--rule);
+}
+
+@utility rise-in {
+  opacity: 0;
+  animation: ink-in 0.45s steps(6, end) forwards;
 }
