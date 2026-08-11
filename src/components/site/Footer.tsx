@@ -10,8 +10,8 @@ const HEADINGS = {
 } as const;
 
 const COLUMNS: { heading: keyof typeof HEADINGS; keys: NavKey[] }[] = [
-  { heading: "service", keys: ["rivers", "rituals", "muhurat", "patra"] },
-  { heading: "company", keys: ["how", "ethics", "faq", "refusals"] },
+  { heading: "service", keys: ["snan", "live", "rivers", "muhurat", "patra"] },
+  { heading: "company", keys: ["how", "ethics", "faq", "panchang"] },
 ];
 
 /* Routes that do not exist yet. Set as plain text rather than links -

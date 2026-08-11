@@ -98,7 +98,7 @@ export const RIVERS: Ghat[] = [
         key: "sankalp-snan",
         name: { en: "Sankalp and pratinidhi snan", hi: "संकल्प एवं प्रतिनिधि स्नान" },
         note: {
-          en: "Your name and gotra are spoken at the water, and the ritvik enters it as your representative.",
+          en: "The dip taken here by pilgrims at dawn. Snanify performs nothing at this water; the tradition is described, not offered.",
           hi: "जल के समीप आपका नाम और गोत्र उच्चारित होते हैं, और ऋत्विक आपके प्रतिनिधि के रूप में जल में उतरते हैं।",
         },
       },
@@ -194,7 +194,7 @@ export const RIVERS: Ghat[] = [
       en: [
         "At Prayagraj the Ganga arrives from the north and the Yamuna from the west, and for a stretch the two run side by side without mixing, a line visible from a boat, the Yamuna darker and slower, the Ganga paler and quicker. Tradition holds that the Sarasvati joins them here unseen, and it is from those three that the place takes the name Triveni, three braids.",
         "Prayag means the place of sacrifice; the tradition is that Brahma performed a yajna here. The city is called Tirtharaj, king of tirthas. The Magh Mela is held on the sands each year through the month of Magha and the Kumbh at its twelve-year turn, and some pilgrims keep kalpavas, a month of residence on the sangam sands, with restraint and a daily bath.",
-        "Shraddha and pind daan at Prayagraj are conducted through the Prayagwal purohits, families who hold the right to officiate for pilgrims by descent and who keep pilgrim registers going back generations. Any rite performed here is performed with them, not around them, and we would not describe it otherwise.",
+        "Shraddha and pind daan at Prayagraj are conducted through the Prayagwal purohits, families who hold the right to officiate for pilgrims by descent and who keep pilgrim registers going back generations. Snanify performs no rite here and arranges none. This is described because it is true of the place, not because it is on offer.",
       ],
       hi: [
         "प्रयागराज में गंगा उत्तर से और यमुना पश्चिम से आती हैं, और कुछ दूर तक दोनों बिना मिले साथ-साथ बहती हैं, नाव से वह रेखा स्पष्ट दिखती है: यमुना गहरी और धीमी, गंगा हल्की और तेज़। परंपरा मानती है कि सरस्वती यहीं अदृश्य रूप में मिलती हैं, और इन्हीं तीन से इस स्थान का नाम त्रिवेणी है।",
@@ -215,7 +215,7 @@ export const RIVERS: Ghat[] = [
         key: "pind-daan",
         name: { en: "Pind daan and tarpan", hi: "पिंडदान एवं तर्पण" },
         note: {
-          en: "Conducted with the Prayagwal purohits. Eligibility rules vary sharply by community and region; ask your family purohit before you ask us.",
+          en: "Conducted at Prayagraj by the Prayagwal purohits, in person. Snanify does not arrange it and cannot; it is named here because it is what this sangam is for.",
           hi: "प्रयागवाल पुरोहितों के साथ संपन्न। अधिकार के नियम समुदाय और क्षेत्र के अनुसार बहुत भिन्न हैं; हमसे पूछने से पहले अपने कुल-पुरोहित से पूछें।",
         },
       },
@@ -387,7 +387,7 @@ export const RIVERS: Ghat[] = [
     ],
     /* PLACEHOLDER, which body must consent has not been established. */
     authority: {
-      en: "Vishram Ghat is looked after by Mathura's tirth-purohit families together with the municipal body, and the evening aarti is run by a local samiti. Which of these must consent to a paid, filmed rite is exactly what we have not yet established, and we will name it here once we have.",
+      en: "Vishram Ghat is looked after by Mathura's tirth-purohit families together with the municipal body, and the evening aarti is run by a local samiti. Snanify has no presence there, films nothing and asks nothing of them; the ghat is named here as a place, not as a venue.",
       hi: "विश्राम घाट की देखरेख मथुरा के तीर्थ-पुरोहित परिवार और नगर निकाय मिलकर करते हैं, तथा संध्या आरती एक स्थानीय समिति संचालित करती है। शुल्क लेकर किए जाने वाले, फ़िल्माए जाने वाले अनुष्ठान के लिए इनमें से किसकी सहमति आवश्यक है, यही हमने अभी तय नहीं किया है।",
     },
     permitStatus: "PLACEHOLDER",
@@ -708,7 +708,7 @@ export const RIVERS: Ghat[] = [
     ],
     /* PLACEHOLDER, the exact Karnataka authority is not yet confirmed by name. */
     authority: {
-      en: "The Talakaveri kshetra is administered by a Karnataka state temple authority together with the local temple committee. We have not yet established which body would have to consent to a paid, filmed rite here, and we will name it on this page once we have.",
+      en: "The Talakaveri kshetra is administered by a Karnataka state temple authority together with the local temple committee. Snanify has no presence there and films nothing; the kshetra is named here as a place, not as a venue.",
       hi: "तलकावेरी क्षेत्र का प्रबंधन कर्नाटक की एक राज्य-स्तरीय मंदिर संस्था तथा स्थानीय मंदिर समिति मिलकर करती हैं। यहाँ शुल्क लेकर किए जाने वाले, फ़िल्माए जाने वाले अनुष्ठान के लिए किसकी सहमति आवश्यक होगी, यह हमने अभी तय नहीं किया है, और जैसे ही तय होगा, उसका नाम इसी पृष्ठ पर लिखा जाएगा।",
     },
     permitStatus: "PLACEHOLDER",
@@ -995,7 +995,7 @@ export const riverDetailContent = {
         {
           key: "snan",
           name: "Pratinidhi snan",
-          body: "The ritvik enters the water and performs the snan as your representative, unedited, never sped up, never stock footage. Where a site cannot carry this, the page above says so.",
+          body: "Nobody enters the water for you. What arrives is the water's own measured state at the hour you sit with it, from a public source, named on the page.",
         },
         {
           key: "arghya",

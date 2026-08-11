@@ -10,8 +10,8 @@ import type { Lang } from "@/lib/content";
  */
 const en = {
   eyebrow: "Verification",
-  title: "Check a Sankalp Patra.",
-  lede: "Every Sankalp Patra carries an identifier. Anyone holding it can confirm that the rite behind it was actually performed, without ever seeing what was asked for.",
+  title: "Check a Jal Chihna.",
+  lede: "Every Jal Chihna carries the reading it was made from. Anyone holding it can recompute the mark from public river data and get the identical image, without ever seeing what was asked for.",
 
   contractTitle: "What a check returns",
   shows: {
@@ -19,9 +19,9 @@ const en = {
     items: [
       "A masked name, R••••• S•••••",
       "The river and the ghat",
-      "The date the rite was performed",
-      "The officiant's name",
-      "The Naam Kshan, the second at which the name was spoken aloud",
+      "The instant the mark was kept",
+      "The river reading it was made from, and the agency that published it",
+      "The seed, so anyone can recompute the image",
     ],
   },
   hides: {
@@ -36,7 +36,7 @@ const en = {
 
   statusTitle: "Not yet live",
   statusBody:
-    "No Sankalp Patra has been issued, so there is nothing to check. This page will accept an identifier once the first rite has been performed and recorded. We would rather show you an empty room than a search box that pretends to look.",
+    "No Jal Chihna has been kept yet, so there is nothing to check. This page will accept an identifier once the first one exists. We would rather show you an empty room than a search box that pretends to look.",
 
   idLabel: "What an identifier looks like",
   idNote:
@@ -48,8 +48,8 @@ const en = {
 
 const hi: typeof en = {
   eyebrow: "सत्यापन",
-  title: "संकल्प पत्र जाँचें।",
-  lede: "हर संकल्प पत्र पर एक पहचान-संख्या होती है। जिसके पास वह है, वह पुष्ट कर सकता है कि अनुष्ठान वास्तव में संपन्न हुआ, यह जाने बिना कि क्या माँगा गया था।",
+  title: "जल चिह्न जाँचें।",
+  lede: "हर जल चिह्न पर वही पाठ अंकित होता है जिससे वह बना। जिसके पास वह है, वह सार्वजनिक नदी-आँकड़ों से चिह्न पुनः गणना कर वही चित्र पा सकता है, यह जाने बिना कि क्या माँगा गया था।",
 
   contractTitle: "जाँच में क्या मिलता है",
   shows: {
@@ -57,9 +57,9 @@ const hi: typeof en = {
     items: [
       "ढका हुआ नाम, र••••• स•••••",
       "नदी और घाट",
-      "जिस दिन अनुष्ठान संपन्न हुआ",
-      "पुरोहित का नाम",
-      "नाम-क्षण, वह क्षण जब नाम स्वर में पढ़ा गया",
+      "जिस क्षण चिह्न रखा गया",
+      "वह नदी-पाठ जिससे चिह्न बना, और उसे प्रकाशित करने वाली संस्था",
+      "बीज, ताकि कोई भी चित्र की पुनः गणना कर सके",
     ],
   },
   hides: {
@@ -74,7 +74,7 @@ const hi: typeof en = {
 
   statusTitle: "अभी उपलब्ध नहीं",
   statusBody:
-    "अभी तक कोई संकल्प पत्र जारी नहीं हुआ है, इसलिए जाँचने को कुछ नहीं है। पहला अनुष्ठान संपन्न और रिकॉर्ड होने पर यह पृष्ठ पहचान-संख्या स्वीकार करने लगेगा। हम आपको खाली कक्ष दिखाना बेहतर मानते हैं, बनिस्बत ऐसे खोज-बक्से के जो खोजने का केवल दिखावा करे।",
+    "अभी तक कोई जल चिह्न जारी नहीं हुआ है, इसलिए जाँचने को कुछ नहीं है। पहला अनुष्ठान संपन्न और रिकॉर्ड होने पर यह पृष्ठ पहचान-संख्या स्वीकार करने लगेगा। हम आपको खाली कक्ष दिखाना बेहतर मानते हैं, बनिस्बत ऐसे खोज-बक्से के जो खोजने का केवल दिखावा करे।",
 
   idLabel: "पहचान-संख्या कैसी दिखती है",
   idNote:

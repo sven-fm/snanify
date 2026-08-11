@@ -1,67 +1,81 @@
 import type { Lang } from "@/lib/content";
 
 /**
- * Copy for the trust layer: /ethics, /how-it-works, /faq.
+ * Copy for the trust layer: /ethics (the manifesto), /how-it-works, /faq.
  *
  * Every string exists in both locales. The `satisfies Record<Lang, typeof …En>`
  * on each export is deliberate, it makes a missing or renamed Hindi key a
  * compile error rather than a page that silently falls back to English.
  *
- * Sourced from docs/design/ethics.md §9 (whose EN and HI copy is normative) and
- * amended to honour the required fixes in that document's adversarial review:
- * bounded conscience refusal, officiant welfare, gotra made optional, the batch
- * privacy leak, the recompression failure of naive verification, the automated
- * safety check, third-party (living relative) data, and the qualification of the
- * "zero third-party scripts" absolute.
+ * THE PRODUCT THIS FILE DESCRIBES: a purely digital snan. No priest, no ghat
+ * performance, no camera, no recording, nothing done on anyone's behalf. The
+ * user sits for four and a half minutes with the live measured state of a
+ * sacred river, says a sankalp in their own words, and keeps a mark and a
+ * register line. Two rules bind every sentence below:
  *
- * The tracking copy names Vercel Web Analytics explicitly. It previously claimed
- * no analytics script ran anywhere, which was false the moment analytics shipped.
- * If analytics is ever removed, tighten this copy back; never loosen the copy to
- * cover a script that is not named on the page.
+ *   1. Never claim a physical rite happened. None does.
+ *   2. Never make a promise that is not true. No guaranteed outcomes.
+ *
+ * Sourced from docs/digital/position.md (the manifesto), docs/digital/
+ * experience.md (the five limbs and their timings) and docs/digital/river.md
+ * (the data spine, which is normative wherever the other two disagree with it).
+ *
+ * PROVENANCE DISCIPLINE, do not loosen any of these:
+ *   · Flow is MODELLED discharge from the Copernicus global flood model read
+ *     through Open-Meteo, not a gauge reading. The word "modelled" appears
+ *     everywhere a number does.
+ *   · The Central Water Commission supplies the named station registry only,
+ *     and four of the six waters have no CWC river level telemetry published.
+ *     Never imply a gauge exists where one does not.
+ *   · No water temperature anywhere. No live feed, no video, no generated
+ *     imagery, no simulated reading.
+ *   · The tracking copy names Vercel Web Analytics explicitly. If analytics is
+ *     ever removed, tighten this copy back; never loosen it to cover a script
+ *     that is not named on the page.
  *
  * PLACEHOLDER inventory, none of these may be presented as settled fact, and
- * each is stated as unsettled in the UI (see ethics §10 "What we have not
- * settled yet"):
+ * each is stated as unsettled on the manifesto page (§11):
  *   · ethics@snanify.com, the address must exist and be monitored before launch
- *   · ₹1,800 flat / 20% of segment gross, proposed officiant pay, not market-tested
- *   · the publication and revision dates of this page
- *   · the short film on /how-it-works
- *   · the sample rite used to test the verifier
- *   · panchang provider, ghat filming permissions, officiant names, review panel
+ *   · the panchang provider
+ *   · the Open-Meteo commercial tier and the Copernicus attribution wording
+ *   · which of the six waters carry a named government gauge
+ *   · the licence and the recordist of every audio stem
+ *   · the published edition the invocation verse in §03 is quoted from
+ *   · the publication and revision dates of the manifesto
  */
 
 export const ETHICS_MAIL = "ethics@snanify.com";
 
 /* ------------------------------------------------------------------ nav --- */
 
-/* The trust pages carry the same four header links. `rivers` is deliberately
+/* The trust pages carry the same three header links. `rivers` is deliberately
    absent here: it already exists as content[lang].nav.rivers, and one label in
    two places is one label that will eventually disagree with itself. */
 const navEn = {
   how: "How it works",
-  ethics: "Our position",
+  ethics: "Manifesto",
   faq: "Questions",
 };
 
 export const trustNav = { en: navEn, hi: {
   how: "कैसे काम करता है",
-  ethics: "हमारा पक्ष",
+  ethics: "घोषणा",
   faq: "प्रश्न",
 } } satisfies Record<Lang, typeof navEn>;
 
-/* --------------------------------------------------------------- ethics --- */
+/* ------------------------------------------------------- the manifesto --- */
 
 const ethicsEn = {
   meta: {
-    title: "Our position, what we can promise, and what we cannot · Snanify",
+    title: "Manifesto: what a digital snan is, and what it is not · Snanify",
     description:
-      "Snanify arranges a rite and proves it happened. It does not sell its fruit. The claims we will never make, how the proof works, how officiants are engaged and paid, and what happens to your name, your gotra and your sankalp.",
+      "No priest, no ghat, no performance, nothing done on your behalf by anyone. A digital snan is the real measured state of a sacred river, the real panchang, and words only you say. What we will never claim, exactly what runs on this site, and what we have not settled.",
   },
-  eyebrow: "Our position",
-  title: "What we can promise, and what we cannot.",
-  lede: "Snanify arranges a rite and proves it happened. It does not sell its fruit. This is the long version, and it is binding on us.",
+  eyebrow: "Manifesto",
+  title: "A digital snan is a real thing to do.",
+  lede: "Snanify is not a recording of somebody else's ritual. Nobody stands in the river for you. You sit, wherever you are, at an hour the panchang names, with a river whose actual condition that day is on the screen in front of you, and you say what you came to say. That is the whole product, and we think it is enough.",
   version:
-    "Version 1. The date of publication is recorded on the day this page goes live, and every later revision is kept and dated beside it. This page is not edited silently.",
+    "Version 2, written at the pivot to a purely digital snan. The date of publication is recorded on the day this page goes live, and every later revision is kept and dated beside it. This page is not edited silently.",
   tocLabel: "On this page",
 
   s1: {
@@ -69,49 +83,156 @@ const ethicsEn = {
     id: "position",
     h: "The plain statement",
     body: [
-      "We are not a temple, and we are not your purohit. We are a service that engages a qualified officiant to perform a snan-sankalp at a named ghat, at a named hour, in your name and your gotra, and then gives you proof that it happened.",
-      "What that rite means is between you, your family, and your tradition.",
+      "There is no priest here. There is no ceremony at a ghat. Nothing is performed on your behalf, anywhere, by anyone, and nothing on this site is a recording of a rite.",
+      "What there is: the real state of a real river, read today from the public flood model that watches it. The real panchang, so the hour you sit in is an hour that means something. The sound of moving water. And a form of words that you, and only you, say.",
+      "We are not a temple and we are not standing in for one. We are a place to sit, at four in the morning, with the river you are from.",
     ],
-    pull: "We describe acts. We do not describe effects.",
+    pull: "We describe what is on the screen. We do not describe what it does to your soul.",
   },
 
   s2: {
     n: "02",
-    id: "precedent",
-    h: "Where the tradition already goes with us",
+    id: "river",
+    h: "Our servers are in the river",
     body: [
-      "The sankalp is, by its own grammar, a naming. It fixes place, time, lineage and person. It has never required that the person be standing there. It has required that the person be named.",
-      "Hindu ritual has always separated the one who sponsors a rite from the one who performs it. The yajaman offers; the purohit performs. That separation is not a workaround we found; it is how the tradition is built.",
-      "The tirth purohits of Haridwar, Prayagraj, Gaya and Trimbakeshwar have kept family registers for generations, and have performed rites for families who could not travel. We do not claim their mantle and we are not their successors. We are saying only that a record of a rite kept for an absent family is a very old idea.",
-      "Temples have accepted remote sponsorship for a long time, an archana booked from another city, a name and gotra handed across a counter, a puja sponsored by post. Live darshan has been streamed from large temples for more than twenty years.",
+      "It sounds like a line. It is a specification.",
+      "The Ganga at Haridwar carried about 1,444 cubic metres a second on the eleventh of August, which is an ordinary flow for that week of the year. The Godavari at Nashik was at the ninety-fifth percentile of everything it has done in that week since 1991. Both numbers went into this site the day they existed, and the Godavari sounded like it.",
+      "So when the Ganga rises, this website rises with it. When the Shipra runs thin in April, it runs thin here. Nothing on this site is a loop, a stock clip, or a mood video with a filter on it. There is no generated water anywhere in this product and there never will be.",
     ],
-    coda: "None of this is new. The camera is new.",
+    specH: "Exactly what the number is",
+    spec: [
+      {
+        k: "What is measured",
+        v: "Modelled river discharge, in cubic metres a second, at the grid cell covering that reach of the river.",
+      },
+      {
+        k: "Where it comes from",
+        v: "The Copernicus Emergency Management Service global flood model, read through Open-Meteo. Public data, licensed CC BY 4.0. It is a model, not a gauge reading, and we write “modelled” every single time.",
+      },
+      {
+        k: "What the percentile means",
+        v: "Where today sits against every daily value that same cell has produced in this same week of the year from 1991 to 2025. Four hundred and thirty-five days of that river's own history, and the only honest way to compare a river to anything.",
+      },
+      {
+        k: "How old it is",
+        v: "Updated daily. Every page prints the hour of the reading it is showing, never the hour you happened to load the page.",
+      },
+      {
+        k: "When we cannot reach it",
+        v: "The page says so, and prints the thirty-five year median for today's date, labelled as exactly that. We never interpolate, and we never invent a plausible number.",
+      },
+      {
+        k: "The named stations",
+        v: "Where a government gauge exists we name it: station, agency, coordinates and datum, from the Central Water Commission's own registry. Four of the six waters have no CWC river level telemetry published at all, and those pages say so rather than borrow a number from elsewhere.",
+      },
+      {
+        k: "What we measure ourselves",
+        v: "Nothing. We have no camera, no microphone and no device at any ghat, and there is no video anywhere on this site.",
+      },
+    ],
+    coda: "The river is not a theme here. It is the input.",
+    credit:
+      "River data by the Copernicus Emergency Management Service via Open-Meteo, CC BY 4.0. Station registry: Central Water Commission, National Water Data Portal.",
   },
 
   s3: {
     n: "03",
-    id: "limits",
-    h: "Where we stop",
+    id: "precedent",
+    h: "The oldest argument for this is not ours",
     body: [
-      "Snan is an act of the body. We are not performing it on your body, and we will never say we are. What is performed is the sankalp, and the rite that follows it, by the officiant, in your name.",
-      "We do not claim this is the same as standing in the river. It is not. The journey is part of the pilgrimage, and we cannot give you the journey. If you can go, go.",
-      "We do not perform the obligatory rites of the life cycle. Not the funeral. Not the immersion of actual ashes. Not a shraddh where your own presence is prescribed. We offer tarpan in remembrance. That is a different and smaller thing, and we will keep saying so.",
-      "Traditions disagree about whether a rite witnessed through a screen is witnessed at all. Some acharyas accept it and some do not. We take no side in that, and we will not quote the ones who agree with us as though the question were settled.",
-      "And we make no claim about outcomes in your life. Not health. Not a visa. Not a marriage. Not a court case.",
+      "Before you tell us that a river cannot travel, look at what your own household already does every morning.",
+    ],
+    verse: ["गङ्गे च यमुने चैव गोदावरि सरस्वति।", "नर्मदे सिन्धु कावेरि जलेऽस्मिन् सन्निधिं कुरु॥"],
+    verseGloss: "Ganga and Yamuna, Godavari, Saraswati, Narmada, Sindhu, Kaveri: be present in this water.",
+    after: [
+      "That is said over a bucket in Lucknow. Over a shower in Leicester. Over a tap in New Jersey, by people who have not seen any of those seven rivers in twenty years. It is not a metaphor that got out of hand. It is a protocol, and an old one, for making a distant river present in the water in front of you, and the tradition has never treated it as a lesser act.",
+      "We did not invent bringing the river to you. Your grandmother does it before breakfast. We built a better instrument for it, one that can tell you what the Ganga is actually doing today.",
     ],
   },
 
   s4: {
     n: "04",
+    id: "is-not",
+    h: "What a digital snan is not",
+    items: [
+      {
+        t: "It is not a bath",
+        d: "Your body does not enter the Ganga, and no arrangement of pixels will put it there.",
+      },
+      {
+        t: "It is not a rite performed for you",
+        d: "Nobody is at the ghat. Nobody is paid to say your name into a camera. We think that is an improvement, and we explain why a few lines down.",
+      },
+      {
+        t: "It is not a claim on your soul",
+        d: "We do not know what happens to anyone's karma. Neither does anybody selling you the alternative, though they charge more for the confidence.",
+      },
+      {
+        t: "It is not a replacement for going",
+        d: "If you can go, go. Book the flight, take the train, walk down the steps. We will still be here in the eleven years between.",
+      },
+    ],
+  },
+
+  s5: {
+    n: "05",
+    id: "wifi",
+    h: "“You cannot wash sins over wifi”",
+    body: [
+      "Correct. You cannot. Neither can we, and we have never said we could.",
+      "Look at what is actually being sold here: an hour, a water, a true reading of that water, a form of words, and a mark to keep. Read every price on this site and you will not find one promised outcome. No sins washed. No punya counted. No dosha discovered and removed for a small additional fee. If that is what you came for, we are genuinely the wrong shop, and there are many, many others.",
+      "The rest of the objection is usually not about plumbing. It is about seriousness, and that is a fair thing to worry about. So here is the test, and it is not ours.",
+      "Nobody has ever complained that a mala is only string. Or that a diya is only a wick in oil. Or that a temple is only granite that people carried up a hill. The instrument was never the point.",
+    ],
+    pull: "Attention is the point, and attention has always needed somewhere to stand.",
+    close:
+      "We built somewhere. It opens at four in the morning, it knows what the river is doing, and it does not require a visa.",
+  },
+
+  s6: {
+    n: "06",
+    id: "for",
+    h: "Who this is for",
+    items: [
+      "The person whose passport says one country and whose calendar says another. The grandson in Frankfurt who knows the tithi by heart and has never seen the ghat. The mother in Toronto with three weeks of leave a year and a father whose shraddh falls in none of them.",
+      "Anyone in India for whom the ghat is not far but unreachable. A night on a train and thirty wet steps have kept more people from the water than distance ever has.",
+      "People who want the practice and not the institution. No intermediary, no queue, no counter to hand your name across, and nobody deciding whether your gotra qualifies you.",
+      "And people who are simply curious, for the price of a coffee, without being told first that something is wrong with their lives.",
+    ],
+  },
+
+  s7: {
+    n: "07",
+    id: "not-for",
+    h: "Who this is not for",
+    items: [
+      {
+        t: "If you can get to the water, go",
+        d: "We mean this, and we have put it at the top of every version of this page we have ever written. This is not a competitor to a pilgrimage and it loses that comparison every single time.",
+      },
+      {
+        t: "If you want a guarantee",
+        d: "We do not sell one, and you will not talk us into it.",
+      },
+      {
+        t: "If a rite counts only when a qualified man performs it for you at the tirth",
+        d: "That is a coherent position, held by serious people, and this product is not built for you. We are not going to argue you out of it, and we are not going to write copy pretending you do not exist. Go with our respect.",
+      },
+    ],
+  },
+
+  s8: {
+    n: "08",
     id: "never",
     h: "Claims we will never make",
-    lede: "This list is binding on us, on anyone we pay, and on anyone who writes about us on our behalf. We will never state, imply, or allow a partner, an officiant, an email or an advertisement to state:",
+    lede: "This list is binding on us, on anyone we pay, and on anyone who writes about us on our behalf. We will never state, imply, or allow a partner, an email or an advertisement to state:",
     items: [
+      "That anything was performed on your behalf. Nothing is. Nobody is at the ghat, and there is no priest in this product.",
       "That your sins are washed away.",
       "That this grants moksha, mukti, or any measure of punya.",
       "That it is equal to bathing in the river yourself.",
-      "That merit can be counted, multiplied, or accumulated in a plan. Our offerings differ in what we do for you, never in what a rite is worth. Twelve snans are twelve rites, not more merit per rite.",
-      "That your ancestors are restless, unfulfilled or waiting, or that anything will befall your family if you do not book.",
+      "That merit can be counted, multiplied, or accumulated in a plan. Eleven snans are eleven sittings, not more merit per sitting.",
+      "That your ancestors are restless, unfulfilled or waiting, or that anything will befall your family if you do not buy.",
       "That any dosha exists in your chart, or that we can find one or remove one.",
       "That this produces any outcome in your life, health, a child, a visa, a marriage, a case, an examination, work, money.",
       "That it replaces a rite your own tradition asks you to perform yourself.",
@@ -119,11 +240,10 @@ const ethicsEn = {
       "That the water at any ghat is clean, safe to drink, or medicinal.",
       "That your body has been purified.",
       "That a muhurat is the last one, or that it will not return in your lifetime. Astronomy belongs in a calendar; it will never appear inside a payment page.",
-      "That a rite happened when it did not.",
-      "That footage made elsewhere, reused, or generated is your rite. We do not use generative video or synthetic voice, not for a rite, not for marketing, not for illustration, not as background.",
+      "That any image on this site is a live view of a river. There is no video anywhere in this product, no generative footage, no synthetic voice, and no simulated river data. A reading we could not fetch is printed as a reading we could not fetch.",
       "That a person who has died received anything, or was affected by anything.",
       "Any use of a person who has died in an advertisement, a case study, or a testimonial.",
-      "Any sentence built on a threat, that time is running out, that something will come to your family, that you will regret not having booked.",
+      "Any sentence built on a threat, that time is running out, that something will come to your family, that you will regret not having done this.",
       "We will never quote your sankalp in our marketing, not named, not anonymised, not paraphrased.",
       "We will never sell, share, license, or build a product out of the names, gotras and intentions people entrust to us.",
     ],
@@ -131,187 +251,18 @@ const ethicsEn = {
       "If you ever see us make one of these claims, write to us. We will take it down, say so publicly, and keep the correction on the record with its date. We publish the corrections, including the ones that were embarrassing.",
   },
 
-  s5: {
-    n: "05",
-    id: "proof",
-    h: "How you know it happened",
-    lede: "Five things, in order. None of them requires you to trust us.",
-    steps: [
-      {
-        t: "Before the rite, the sankalp seal",
-        d: "The moment you book, we publish a fingerprint of your sankalp to a public record: a hash, sixteen characters of which you are shown at once. Your name is not in it, and it cannot be turned back into your words. It proves your intention existed before the rite and was not written afterwards.",
-      },
-      {
-        t: "At the ghat, the slate",
-        d: "The officiant holds a card to the camera showing your rite code, the date, the ghat, and that day's public anchor, a number drawn from a public randomness beacon that could not have existed the day before. No recording made earlier can display it, and anyone can look the number up at its source.",
-      },
-      {
-        t: "The rite, one continuous take",
-        d: "No cuts. Each name and each gotra spoken aloud, separately, with at least forty-five seconds of recitation for every named sankalp, so a segment carrying eleven sankalps runs about nine minutes, not ninety seconds. A machine checks the take for cuts, for splices in the audio, and for a slate that matches the booking. A segment that fails is not published. It is performed again.",
-      },
-      {
-        t: "Afterwards, the ledger",
-        d: "The fingerprint of the recording goes into a public, append-only record together with the ghat, the officiant's identifier, the times, and what actually happened, performed, degraded, or not performed. It never contains a name, a gotra, or a sankalp. That is how the record can be permanent while your data is not.",
-      },
-      {
-        t: "Anyone can check it",
-        d: "Your uncle in Kanpur, or a stranger on the internet, can enter the rite code, drag the video file in, and be told whether it is the file we recorded. The check runs in their own browser. The file never leaves their computer. They never have to trust us, and neither do you.",
-      },
-    ],
-    caveatsH: "Where this proof is weak, in our own words",
-    caveats: [
-      {
-        t: "A forwarded file will not match",
-        d: "If the video reaches you through WhatsApp or Telegram it has been recompressed, and the check will say it does not match. That is the messenger, not a forgery. Download the original from your rite page. We publish a separate fingerprint for every version we hand you, and we keep a sample rite so you can try the check before you ever need it.",
-      },
-      {
-        t: "Our own signatures are the weakest link",
-        d: "Location can be faked and a device signature can be defeated by someone on the inside. That is exactly why the slate, the daily anchor and the live stream carry more weight than anything we sign ourselves. We would rather tell you where our proof is thin than let you find out.",
-      },
-      {
-        t: "The record proves a file, not a feeling",
-        d: "It proves that a recording of a particular rite existed at a particular time and has not been altered since. It proves nothing about sincerity. No technology proves sincerity, and we are not going to pretend otherwise.",
-      },
-    ],
-    densityH: "Who else will hear your name",
-    density: [
-      "A shared segment may carry up to eleven sankalps, and every family in that segment would otherwise hear every other family's names, gotras and ancestors. That is not a marketing problem; it is other people's data.",
-      "So what we hand you is your own excerpt, opening a few seconds before your name is spoken, containing your names and no one else's. The full segment exists, and it is released only if every family in it agrees. Your sankalp is offered silently unless you ask for it aloud, and if you do ask, the checkout says in one sentence who will hear it.",
-      "The public record still says how many sankalps shared your segment. Your rite is not private unless you buy a private rite, and we will not imply otherwise to sell you a cheaper one.",
-    ],
-  },
-
-  s6: {
-    n: "06",
-    id: "officiants",
-    h: "The officiants",
-    body: [
-      "Every officiant is engaged directly by Snanify, on a written contract, in his own language, at a length he can read, with a signed copy in his hand. He is not a gig worker and this is not a marketplace.",
-      "On each officiant's page we publish what we verified, and what we did not. There is no certifying board for ghat purohits, so we will not invent a badge. We will tell you exactly what we checked, and exactly what we could not.",
-    ],
-    payH: "What he is paid",
-    payNote:
-      "The formula is the commitment. The figures below are proposed and have not yet been tested against what purohits at these ghats actually earn; they will be fixed and published for at least twelve months before the first rite, and the officiant share is published every quarter as an actual computed percentage.",
-    pay: [
-      { k: "Each rite segment", v: "the greater of ₹1,800 or a fifth of what that segment earns" },
-      { k: "A private rite", v: "₹4,000" },
-      { k: "Paid", v: "within seven days, by bank transfer, with no deduction for a stream that failed" },
-      { k: "Dakshina", v: "all of it reaches him, none of it reaches us" },
-    ],
-    refusalH: "Refusal, and its bounds",
-    refusal: [
-      "He may decline any sankalp he does not wish to speak, on grounds of the rite itself, and he is paid for the segment anyway. Consent that has been purchased is not consent, and a priest who cannot say no is not an officiant.",
-      "He may not decline you for who you are. Not your caste, your religion, your gender, your marital status, your sexuality, the name you carry, or the fact that your family keeps no gotra. Every refusal is logged with a reason and audited, and you are never told that a priest declined you, we find another officiant at once, at no cost to you, because that is our failure and not yours.",
-    ],
-    welfareH: "His safety",
-    welfare: [
-      "He decides whether to enter the water. Never us, and never you. If he judges it unsafe, the rite proceeds as jal-arpan from the steps, his pay is unchanged, and the record says plainly what happened.",
-      "There is a published cap on how many times he may immerse in a day and in a week, set with the officiants themselves rather than by us alone, and a published list of conditions under which nobody enters, flood, strong current, darkness, a water-quality advisory, illness.",
-      "Accident and health cover is ours to provide, not his to buy.",
-      "In the public record he appears as an opaque identifier, not a name. A permanent, public log of one man's working hours and earnings is a target, and he is the least powerful person in this arrangement. His name appears on your patra and on his own profile, and he may decline a public profile without losing work.",
-    ],
-  },
-
-  s7: {
-    n: "07",
-    id: "failure",
-    h: "If something goes wrong",
-    lede: "This is a table, not a discretion. You do not have to argue with anyone, and you never have to telephone us.",
-    rows: [
-      {
-        w: "The stream dropped, the rite was recorded",
-        t: "You have the recording within six hours, and a quarter of the fee back if you want it. One click, no questions. The recording, not the stream, is the thing we owe you.",
-      },
-      {
-        w: "The rite did not happen",
-        t: "We tell you before you ask. Then you choose: performed again at the next equivalent muhurat at no cost, or the whole fee back.",
-      },
-      {
-        w: "The ghat was closed, or the water unsafe",
-        t: "We tell you before the window, and offer another ghat, another river, another muhurat, or your money back. If the officiant makes the offering from the steps instead, the record says so. We never quietly substitute one river for another.",
-      },
-      {
-        w: "The officiant could not attend",
-        t: "We name the substitute before the rite, not after. You may decline him.",
-      },
-      {
-        w: "Your name or gotra was said wrongly",
-        t: "Tell us and it is recited again, free, once, without an argument. You can record your own voice saying the names when you book, so that he hears them from you first.",
-      },
-      {
-        w: "You change your mind before the rite",
-        t: "The whole fee back up to twenty-four hours before the window; half within it, because the officiant is by then scheduled and paid.",
-      },
-      {
-        w: "You are unhappy afterwards",
-        t: "We refund the fee, within fourteen days, without asking why. We are refunding what you paid us for arranging, performing and recording the rite. We are not undoing the rite: it happened, the officiant is paid in full, and the record stays. A rite is not a returnable good, and we will not pretend it is one.",
-      },
-      {
-        w: "Someone you named has died before the rite",
-        t: "The whole fee back, or, only if you ask us, the same rite performed as a tarpan in remembrance, at no charge. We will not offer you that. For ninety days you hear nothing from us that your booking does not require.",
-      },
-    ],
-    note: "We publish our numbers on the fifth of every month, from the first rite onward: scheduled, performed, degraded and why, not performed and why, refunded, how long the patra took, what share of revenue reached the officiants, complaints received and upheld, and government demands received. Including the bad months. Small honest numbers now are worth more than large vague ones later.",
-  },
-
-  s8: {
-    n: "08",
-    id: "data",
-    h: "Your name, your gotra, your intention",
-    body: [
-      "A gotra is lineage. A sankalp may hold an illness, a death, a fear. This is not ordinary customer data, and we do not treat it as such, not in law, where it is special-category religious data, and not in practice.",
-    ],
-    gotraH: "Gotra is optional here",
-    gotra: [
-      "Many families do not keep a gotra, and a form that insists on one is a form that sorts people by caste. Ours does not insist. Leave it blank and the sankalp uses the customary Kashyapa gotra, or your family's own convention if you tell us what it is.",
-      "In a household booking each name may carry its own gotra, because households are not uniform, a woman who married in, an adopted child, an inter-caste marriage. One gotra for six names would produce a sankalp that is simply wrong for most families.",
-    ],
-    sankalpH: "The sankalp text",
-    sankalp: [
-      "By default the officiant does not read it aloud. He states that the rite is offered for the intention you hold. He reads it aloud only if you ask, and the box that asks is never ticked for you.",
-      "If you do ask for it aloud, it becomes part of a permanent recording, and the ninety-day deletion below cannot reach it. We say that on the checkbox itself, and we offer to delete the recording with it.",
-      "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, it is logged permanently, and you are emailed within a day telling you that it was read, by whom, and why. That costs us something, which is why it is worth believing.",
-      "One automated safety check runs over the text. No person sees it as a result of that check. If the text suggests someone may be in danger, you receive a message with places you can call, written so that nothing in it implies a person read your words, because none did. We will not perform a sankalp intended to harm a named person, and that refusal is one of the very few reasons a human would ever be shown the text.",
-      "We never train anything on it. We never advertise from it. We never quote it, and we never turn it into a testimonial.",
-    ],
-    othersH: "Names that are not yours",
-    others: [
-      "When you name a living relative you are handing us their information, not your own. We ask you to confirm they would not object. We will remove any living person's details at that person's own request, without asking your permission first and without telling you who asked. Naming a child requires you to say that you are their guardian.",
-    ],
-    retentionH: "What is kept, and for how long",
-    retention: [
-      { k: "Your account", v: "as long as you keep it; invoices only where tax law requires" },
-      { k: "Names, gotra, relationships", v: "24 months by default, 3 months or indefinite if you prefer" },
-      { k: "Sankalp text", v: "90 days after the rite by default, or 24 hours, or kept" },
-      { k: "Recordings", v: "kept until you delete them" },
-      { k: "The public record", v: "permanent, and by construction contains no name, gotra or sankalp" },
-    ],
-    eraseH: "Erasure",
-    erase: [
-      "One button deletes everything, across copies and backups, within seven days. It works by destroying the key your rite was encrypted with, which is why it holds even where the storage itself cannot be overwritten. The fingerprint stays in the public record, so the copy you downloaded still verifies afterwards: deleting removes our ability to hold your rite, not your ability to prove it.",
-      "The confirmation lists what was deleted, what was kept, and why, the invoices the law requires, and the anonymous ledger entry.",
-    ],
-    trackingH: "What runs on this site",
-    tracking: [
-      "No advertising script and no session-replay script runs anywhere on this site, ever. Nothing records the screen where you type your sankalp.",
-      "One analytics script counts page views: Vercel Web Analytics. It sets no cookies, follows you to no other site, and never sees the contents of a form. We would rather name it than claim a zero we do not hold.",
-      "The only other third-party script in the product is the payment processor's, on the payment step alone, named on that page.",
-      "From the first rite this page will carry a plain count of the secret demands for data we have received. If that sentence is ever removed rather than updated, read the removal.",
-    ],
-  },
-
   s9: {
     n: "09",
     id: "never-do",
     h: "Things we will not do to you",
     items: [
-      "No countdown on a rite.",
-      "No “two places left” unless two places are actually left.",
+      "No countdown on a muhurat. A real hour is a fact about the sky, not a device for hurrying you.",
+      "No invented scarcity. Nothing here has a queue, a waiting list or a last remaining place, because nothing here could.",
       "No message on the anniversary of a death unless you asked us for one, and one tap in that message stops it forever.",
-      "No streaks, no badges, no levels, no “you have not booked since March”.",
+      "No streaks, no badges, no levels, no “you have not sat since March”. Your register is a record, not a score, which is exactly why it is worth keeping.",
       "No advertising placed against grief, funerals, obituaries or illness.",
       "No price that rises because a day is auspicious, and none that changes because of who you appear to be.",
-      "No box ticked for you, not an add-on, not dakshina, not a renewal, not a mailing list.",
+      "No box ticked for you, not an add-on, not a renewal, not a mailing list.",
       "Cancelling costs no more clicks than starting, with no interstitial and no offer.",
       "One click to unsubscribe, honoured at once, with no “how about fewer emails” step.",
       "No quiz that tells you what is wrong with your chart.",
@@ -323,37 +274,76 @@ const ethicsEn = {
 
   s10: {
     n: "10",
+    id: "data",
+    h: "Your name, your gotra, your sankalp",
+    body: [
+      "A gotra is lineage. A sankalp may hold an illness, a death, a fear. This is not ordinary customer data, and we do not treat it as such, not in law, where it is special-category religious data, and not in practice.",
+    ],
+    gotraH: "Gotra is optional here",
+    gotra: [
+      "Many families do not keep a gotra, and a form that insists on one is a form that sorts people by caste. Ours does not insist. Leave it blank and the sankalp says that the gotra is not stated, or uses the customary Kashyapa gotra, or your family's own convention if you tell us what it is.",
+      "Where you name several people, each name may carry its own gotra, because households are not uniform, a woman who married in, an adopted child, an inter-caste marriage. One gotra for six names would produce a sankalp that is simply wrong for most families.",
+    ],
+    sankalpH: "The sankalp text",
+    sankalp: [
+      "Your sankalp is shown to you and to nobody else. It is never spoken aloud, by anyone, anywhere, because there is nobody in this product to speak it. You read your own words, in your own head or out loud in your own room, and that is the whole of it.",
+      "It is never printed on anything public. It is not in the register line, it is not on the mark you keep, and the verification page will not return it to anyone holding the identifier.",
+      "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, it is logged permanently, and you are emailed within a day telling you that it was read, by whom, and why. That costs us something, which is why it is worth believing.",
+      "One automated safety check runs over the text. No person sees it as a result of that check. If the text suggests someone may be in danger, you receive a message with places you can call, written so that nothing in it implies a person read your words, because none did. We will not hold a sankalp intended to harm a named person, and that refusal is one of the very few reasons a human would ever be shown the text.",
+      "We never train anything on it. We never advertise from it. We never quote it, and we never turn it into a testimonial.",
+    ],
+    othersH: "Names that are not yours",
+    others: [
+      "When you name a living relative you are handing us their information, not your own. We ask you to confirm they would not object. We will remove any living person's details at that person's own request, without asking your permission first and without telling you who asked. Naming a child requires you to say that you are their guardian.",
+    ],
+    retentionH: "What is kept, and for how long",
+    retention: [
+      { k: "Your account", v: "as long as you keep it; invoices only where tax law requires" },
+      { k: "Names, gotra, relationships", v: "24 months by default, 3 months or indefinite if you prefer" },
+      { k: "Your sankalp", v: "kept while you keep sitting with it, because re-reading it is the practice; deleted the moment you ask, and always within seven days" },
+      { k: "Your marks and your register", v: "kept until you delete them" },
+      { k: "The river readings", v: "kept permanently, and they hold no name, gotra or sankalp, because they are readings of a river" },
+    ],
+    eraseH: "Erasure",
+    erase: [
+      "One button deletes everything, across copies and backups, within seven days. It works by destroying the key your record was encrypted with, which is why it holds even where the storage itself cannot be overwritten.",
+      "The mark you downloaded keeps working afterwards, because what it stands on is a public river reading and not a row in our database. Deleting removes our ability to hold your sankalp, not your ability to prove what the river was doing.",
+      "The confirmation lists what was deleted, what was kept, and why, including the invoices the law requires.",
+    ],
+    trackingH: "What runs on this site",
+    tracking: [
+      "No advertising script and no session-replay script runs anywhere on this site, ever. Nothing records the screen where you type your sankalp.",
+      "One analytics script counts page views: Vercel Web Analytics. It sets no cookies, follows you to no other site, and never sees the contents of a form. We would rather name it than claim a zero we do not hold.",
+      "The only other third-party script in the product is the payment processor's, on the payment step alone, named on that page.",
+      "From the first paid sitting this page will carry a plain count of the secret demands for data we have received. If that sentence is ever removed rather than updated, read the removal.",
+    ],
+  },
+
+  s11: {
+    n: "11",
     id: "unsettled",
     h: "What we have not settled yet",
-    lede: "The same block we put on every officiant's page, what was verified, and what was not, applied to ourselves. Weigh what follows accordingly.",
+    lede: "What was verified, and what was not, applied to ourselves. Weigh what follows accordingly.",
     rows: [
       {
-        q: "Permission to film at the ghats",
-        a: "Every one of these sites is governed by someone: a sabha, a temple trust, a mela authority, a municipality. No ghat opens until we hold written permission to film there, and the page for that water will name who granted it.",
-      },
-      {
-        q: "The people at the ghat who are not us",
-        a: "These are public bathing places. The camera stays tight on the officiant and the water and never pans across bathers. Anyone recognisable who has not agreed to be filmed is removed before publication, and there is a takedown address on every page. A public place is not consent.",
-      },
-      {
         q: "The panchang",
-        a: "We have not yet named a source. Until we do, no exact time appears anywhere on this site, only the occasion. When times appear they will carry the method, the ayanamsa and the coordinates of the ghat itself, and where sources disagree we will show the range rather than a false precision.",
+        a: "We have not yet named a source. Until we do, every exact time on this site is labelled provisional where it appears, and where sources disagree we show the range rather than a false precision. When a source is named, the method, the ayanamsa and the coordinates of the ghat itself are published beside the times.",
       },
       {
-        q: "The six waters",
-        a: "We are auditing all six for who governs them, whether daily rites can honestly be performed and filmed there, and what the season does to access. Where the honest answer is no, that water does not open, and we will say why rather than quietly drop it.",
+        q: "The river data licence",
+        a: "Copernicus flood data is CC BY 4.0 and we carry the attribution. What is not settled is the commercial tier and the rate limits of the service we read it through, and the exact attribution wording that service requires. Until it is, this line is the honest state of it.",
       },
       {
-        q: "The officiants",
-        a: "No priest's name, face or history appears on this site until he has signed a contract and agreed in writing to be named. There are no officiants published today, and no placeholder person will ever stand in for one.",
+        q: "Which waters have a named gauge",
+        a: "The Central Water Commission's public portal carries no river level telemetry for the Ganga or the Yamuna basins, so four of the six waters have no named government station we can print. We would rather show a modelled figure and say it is modelled than name a station that is not there.",
       },
       {
-        q: "What we pay",
-        a: "Proposed, not yet tested against what purohits at these ghats actually earn. We also have not yet settled who owns the capture device, who bears the data cost, what happens to pay during a monsoon closure, or how he is classified in law. We will publish the answers rather than describe them vaguely.",
+        q: "The sound",
+        a: "Every stem needs a licence and a named recordist before it plays. A water we have no honest recording of ships silent, and its page says so. Nothing here is generated audio and nothing is a live feed from any ghat.",
       },
       {
-        q: "Who reviews the rite itself",
-        a: "We want three external advisors, publicly named, paid an honorarium, and free to disagree with us in public. We do not have them. Until we do, the judgement that an officiant's vidhi is sound is ours alone, and that is a weaker thing.",
+        q: "The verse in section 03",
+        a: "It is quoted from ordinary daily use rather than from a named published edition. It is the load-bearing paragraph on this page, so it should be the best-sourced line on the site, and it is not yet. The edition will be cited here when it is fixed.",
       },
       {
         q: "Money, tax and jurisdiction",
@@ -362,29 +352,35 @@ const ethicsEn = {
     ],
   },
 
-  s11: {
-    n: "11",
+  s12: {
+    n: "12",
     id: "ask",
     h: "Ask someone whose judgement you trust",
     body: [
-      "Before you book, ask someone whose judgement you trust in these matters, your own purohit, your family's acharya, your elders. If they tell you this is not the right thing for you, they are right, and we are not offended.",
-      "And if you think we have got any of this wrong, the shastra, the price, the proof, write to us. We publish objections made in good faith and what we did about them, including the ones we decided not to act on, and why.",
+      "Before you pay us anything, ask someone whose judgement you trust in these matters, your own purohit, your family's acharya, your elders. If they tell you this is not the right thing for you, they are right, and we are not offended.",
+      "And if you think we have got any of this wrong, the shastra, the price, the data, write to us. We publish objections made in good faith and what we did about them, including the ones we decided not to act on, and why.",
     ],
     mailLabel: "Write to us",
+  },
+
+  closing: {
+    title: "The river is at its own level tonight, whether anyone is watching or not.",
+    body: "You can be one of the people watching.",
+    cta: "Sit with the river",
   },
 };
 
 export const ethicsContent = { en: ethicsEn, hi: {
   meta: {
-    title: "हमारा पक्ष, हम क्या वचन दे सकते हैं, और क्या नहीं · स्नानिफ़ाई",
+    title: "घोषणा: डिजिटल स्नान क्या है, और क्या नहीं · स्नानिफ़ाई",
     description:
-      "स्नानिफ़ाई अनुष्ठान की व्यवस्था करती है और उसका प्रमाण देती है। उसका फल नहीं बेचती। जो दावे हम कभी नहीं करेंगे, प्रमाण कैसे काम करता है, पुरोहितों से हमारा अनुबंध और भुगतान, और आपके नाम, गोत्र तथा संकल्प का क्या होता है।",
+      "न पुरोहित, न घाट पर अनुष्ठान, न कोई प्रदर्शन, न आपकी ओर से किसी के द्वारा कुछ किया जाना। डिजिटल स्नान अर्थात किसी पवित्र नदी की वास्तविक मापी हुई स्थिति, सच्चा पंचांग, और वे शब्द जिन्हें केवल आप कहते हैं। जो दावे हम कभी नहीं करेंगे, इस साइट पर ठीक-ठीक क्या चलता है, और क्या अभी तय नहीं हुआ।",
   },
-  eyebrow: "हमारा पक्ष",
-  title: "हम क्या वचन दे सकते हैं, और क्या नहीं।",
-  lede: "स्नानिफ़ाई अनुष्ठान की व्यवस्था करती है और उसका प्रमाण देती है। उसका फल नहीं बेचती। यह विस्तृत रूप है, और हम इससे बँधे हैं।",
+  eyebrow: "घोषणा",
+  title: "डिजिटल स्नान करने योग्य सच्चा कर्म है।",
+  lede: "स्नानिफ़ाई किसी और के अनुष्ठान की रिकॉर्डिंग नहीं है। कोई आपके बदले नदी में नहीं उतरता। आप जहाँ हैं वहीं बैठते हैं, उस घड़ी में जिसे पंचांग नाम देता है, सामने उस नदी की उसी दिन की वास्तविक स्थिति होती है, और आप स्वयं वही कहते हैं जो कहने आए थे। यही पूरा उत्पाद है, और हमारे मत में यह पर्याप्त है।",
   version:
-    "संस्करण १। प्रकाशन की तिथि उसी दिन दर्ज होती है जिस दिन यह पृष्ठ सार्वजनिक होता है, और हर बाद का संशोधन तिथि सहित साथ रखा जाता है। यह पृष्ठ चुपचाप नहीं बदला जाता।",
+    "संस्करण २, जो पूर्णतः डिजिटल स्नान की ओर मुड़ते समय लिखा गया। प्रकाशन की तिथि उसी दिन दर्ज होती है जिस दिन यह पृष्ठ सार्वजनिक होता है, और हर बाद का संशोधन तिथि सहित साथ रखा जाता है। यह पृष्ठ चुपचाप नहीं बदला जाता।",
   tocLabel: "इस पृष्ठ पर",
 
   s1: {
@@ -392,49 +388,156 @@ export const ethicsContent = { en: ethicsEn, hi: {
     id: "position",
     h: "सीधी बात",
     body: [
-      "हम न मंदिर हैं, न आपके पुरोहित। हम एक सेवा हैं जो योग्य पुरोहित द्वारा, निर्दिष्ट घाट पर, निर्दिष्ट घड़ी में, आपके नाम और आपके गोत्र से स्नान-संकल्प संपन्न कराती है, और फिर आपको इसका प्रमाण देती है।",
-      "उस अनुष्ठान का अर्थ आपके, आपके परिवार और आपकी परंपरा के बीच है।",
+      "यहाँ कोई पुरोहित नहीं है। किसी घाट पर कोई अनुष्ठान नहीं होता। आपकी ओर से, कहीं भी, कोई कुछ नहीं करता, और इस साइट पर कुछ भी किसी विधि की रिकॉर्डिंग नहीं है।",
+      "जो है, वह यह: एक सच्ची नदी की सच्ची स्थिति, आज उसी सार्वजनिक बाढ़-मॉडल से पढ़ी हुई जो उस पर दृष्टि रखता है। सच्चा पंचांग, ताकि जिस घड़ी में आप बैठें उसका अर्थ हो। बहते जल की ध्वनि। और वे शब्द, जिन्हें केवल आप कहते हैं।",
+      "हम न मंदिर हैं, न किसी मंदिर की जगह ले रहे हैं। हम बैठने का एक स्थान हैं, तड़के चार बजे, उसी नदी के साथ जहाँ से आप हैं।",
     ],
-    pull: "हम कर्म का वर्णन करते हैं। फल का नहीं।",
+    pull: "हम बताते हैं कि स्क्रीन पर क्या है। यह नहीं बताते कि उससे आपकी आत्मा का क्या होगा।",
   },
 
   s2: {
     n: "०२",
-    id: "precedent",
-    h: "जहाँ परंपरा हमारे साथ चलती है",
+    id: "river",
+    h: "हमारे सर्वर नदी में हैं",
     body: [
-      "संकल्प अपने स्वरूप में ही एक नामकरण है। वह देश, काल, गोत्र और व्यक्ति को निश्चित करता है। उसने कभी यह नहीं माँगा कि व्यक्ति वहीं खड़ा हो। उसने यह माँगा कि व्यक्ति का नाम लिया जाए।",
-      "कर्मकांड में यजमान और पुरोहित सदा अलग रहे हैं। यजमान अर्पित करता है; पुरोहित संपन्न कराता है। यह विभाजन हमारी खोजी हुई कोई गली नहीं, परंपरा इसी ढाँचे पर बनी है।",
-      "हरिद्वार, प्रयागराज, गया और त्र्यंबकेश्वर के तीर्थ पुरोहित पीढ़ियों से वंशावली बहियाँ रखते आए हैं, और उन परिवारों के लिए अनुष्ठान करते रहे हैं जो आ न सके। हम उनकी विरासत का दावा नहीं करते और न उनके उत्तराधिकारी हैं। हम केवल इतना कहते हैं कि अनुपस्थित परिवार के लिए रखा गया अनुष्ठान का अभिलेख बहुत पुराना विचार है।",
-      "मंदिर बहुत समय से दूर से की गई अर्चना स्वीकार करते हैं, दूसरे नगर से बुक की गई सेवा, काउंटर पर दिया गया नाम और गोत्र, डाक से प्रायोजित पूजा। बड़े मंदिरों से सजीव दर्शन बीस वर्षों से अधिक समय से प्रसारित हो रहा है।",
+      "यह वाक्य नारे जैसा लगता है। असल में यह एक तकनीकी विवरण है।",
+      "ग्यारह अगस्त को हरिद्वार में गंगा लगभग १,४४४ घन मीटर प्रति सेकंड बह रही थीं, जो वर्ष के उस सप्ताह के लिए सामान्य बहाव है। उसी दिन नासिक में गोदावरी उस सप्ताह के अपने ३५ वर्षों के इतिहास के ९५वें प्रतिशतक पर थीं। दोनों अंक उसी दिन इस साइट में आए, और गोदावरी वैसी ही सुनाई भी दीं।",
+      "तो जब गंगा चढ़ती हैं, यह वेबसाइट भी उन्हीं के साथ चढ़ती है। अप्रैल में शिप्रा क्षीण होती हैं, तो यहाँ भी क्षीण होती हैं। इस साइट पर कुछ भी लूप नहीं है, न कोई तैयार दृश्य, न कोई सजाया हुआ वीडियो। इस उत्पाद में कहीं कोई कृत्रिम रूप से बनाया गया जल नहीं है, और कभी होगा भी नहीं।",
     ],
-    coda: "इसमें कुछ नया नहीं। नया केवल कैमरा है।",
+    specH: "वह अंक ठीक-ठीक है क्या",
+    spec: [
+      {
+        k: "क्या मापा जाता है",
+        v: "प्रतिरूपित नदी-प्रवाह, घन मीटर प्रति सेकंड में, उस ग्रिड-खंड पर जो नदी की उस धारा को ढकता है।",
+      },
+      {
+        k: "कहाँ से आता है",
+        v: "कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से, Open-Meteo के माध्यम से पढ़ा हुआ। सार्वजनिक आँकड़ा, CC BY 4.0 अनुज्ञप्ति के अंतर्गत। यह एक मॉडल है, गेज का पाठ नहीं, और हम हर बार “प्रतिरूपित” ही लिखते हैं।",
+      },
+      {
+        k: "प्रतिशतक का अर्थ",
+        v: "आज का मान उसी खंड के उन सब दैनिक मानों के सामने कहाँ बैठता है जो वर्ष के इसी सप्ताह में १९९१ से २०२५ तक आए। उस नदी के अपने इतिहास के चार सौ पैंतीस दिन, और किसी नदी की तुलना करने का एकमात्र सच्चा ढंग।",
+      },
+      {
+        k: "वह कितना पुराना है",
+        v: "प्रतिदिन नवीनीकृत। हर पृष्ठ उसी पाठ का समय छापता है जो वह दिखा रहा है, वह समय नहीं जब आपने पृष्ठ खोला।",
+      },
+      {
+        k: "जब हम नदी तक न पहुँच सकें",
+        v: "पृष्ठ यही कहता है, और आज की तिथि का पैंतीस-वर्षीय मध्यमान छापता है, ठीक इसी नाम से। हम न बीच के मान गढ़ते हैं, न कोई विश्वसनीय दिखने वाला अंक बनाते हैं।",
+      },
+      {
+        k: "नामित मापक केंद्र",
+        v: "जहाँ सरकारी गेज है, वहाँ हम उसे नाम देते हैं: केंद्र, संस्था, निर्देशांक और शून्य-तल, केंद्रीय जल आयोग की अपनी सूची से। छह में से चार जलों के लिए इस पोर्टल पर कोई नदी-जलस्तर दूरमापी है ही नहीं, और वे पृष्ठ यही कहते हैं, कहीं और से अंक उधार नहीं लेते।",
+      },
+      {
+        k: "हम स्वयं क्या मापते हैं",
+        v: "कुछ भी नहीं। किसी भी घाट पर हमारा कोई कैमरा, कोई माइक्रोफ़ोन और कोई यंत्र नहीं है, और इस साइट पर कहीं कोई वीडियो नहीं है।",
+      },
+    ],
+    coda: "नदी यहाँ सजावट नहीं है। वही निवेश है।",
+    credit:
+      "नदी-आँकड़े: कोपरनिकस आपातकालीन प्रबंधन सेवा, Open-Meteo के माध्यम से, CC BY 4.0। स्टेशन सूची: केंद्रीय जल आयोग, राष्ट्रीय जल आँकड़ा पोर्टल।",
   },
 
   s3: {
     n: "०३",
-    id: "limits",
-    h: "जहाँ हम रुक जाते हैं",
+    id: "precedent",
+    h: "इसका सबसे पुराना तर्क हमारा नहीं है",
     body: [
-      "स्नान देह का कर्म है। हम उसे आपकी देह पर नहीं कर रहे, और कभी ऐसा कहेंगे भी नहीं। जो संपन्न होता है वह संकल्प है, और उसके पश्चात का अनुष्ठान, पुरोहित द्वारा, आपके नाम से।",
-      "हम यह नहीं कहते कि यह स्वयं नदी में खड़े होने के समान है। नहीं है। यात्रा भी तीर्थ का अंग है, और यात्रा हम आपको नहीं दे सकते। यदि आप जा सकते हैं, अवश्य जाइए।",
-      "हम जीवन के अनिवार्य संस्कार नहीं करते। न अंत्येष्टि। न अस्थि-विसर्जन। न वह श्राद्ध जहाँ आपकी अपनी उपस्थिति विहित है। हम स्मरण-तर्पण अर्पित करते हैं। वह भिन्न और छोटी वस्तु है, और हम यह कहते रहेंगे।",
-      "पर्दे के माध्यम से देखा गया अनुष्ठान वस्तुतः देखा गया माना जाए या नहीं, इस पर परंपराओं में मतभेद है। कुछ आचार्य स्वीकार करते हैं, कुछ नहीं। हम इसमें कोई पक्ष नहीं लेते, और जो हमसे सहमत हैं केवल उन्हीं को ऐसे उद्धृत नहीं करेंगे मानो प्रश्न सुलझ गया हो।",
-      "और आपके जीवन के परिणामों पर हम कोई दावा नहीं करते। न स्वास्थ्य। न वीज़ा। न विवाह। न मुक़दमा।",
+      "इससे पहले कि आप कहें कि नदी यात्रा नहीं कर सकती, देखिए कि आपके अपने घर में हर सुबह क्या होता है।",
+    ],
+    verse: ["गङ्गे च यमुने चैव गोदावरि सरस्वति।", "नर्मदे सिन्धु कावेरि जलेऽस्मिन् सन्निधिं कुरु॥"],
+    verseGloss: "गंगा और यमुना, गोदावरी, सरस्वती, नर्मदा, सिंधु, कावेरी: इस जल में सन्निधि कीजिए।",
+    after: [
+      "यह लखनऊ में बाल्टी पर कहा जाता है। लेस्टर में शॉवर के नीचे। न्यू जर्सी में नल पर, उन लोगों के द्वारा जिन्होंने इनमें से एक भी नदी बीस वर्षों से नहीं देखी। यह कोई बहकी हुई उपमा नहीं है। यह एक विधि है, और बहुत पुरानी, जिससे दूर की नदी सामने रखे जल में सन्निहित होती है, और परंपरा ने इसे कभी छोटा कर्म नहीं माना।",
+      "नदी को आप तक लाना हमने नहीं गढ़ा। आपकी दादी नाश्ते से पहले यही करती हैं। हमने उसके लिए एक बेहतर यंत्र बनाया है, जो आपको बता सकता है कि गंगा आज वास्तव में क्या कर रही हैं।",
     ],
   },
 
   s4: {
     n: "०४",
+    id: "is-not",
+    h: "डिजिटल स्नान क्या नहीं है",
+    items: [
+      {
+        t: "यह स्नान नहीं है",
+        d: "आपकी देह गंगा में नहीं उतरती, और पिक्सल की कोई सजावट उसे वहाँ नहीं पहुँचाएगी।",
+      },
+      {
+        t: "यह आपके लिए किया गया अनुष्ठान नहीं है",
+        d: "घाट पर कोई नहीं है। किसी को इसका पैसा नहीं मिलता कि वह कैमरे के सामने आपका नाम बोले। हम इसे सुधार मानते हैं, और क्यों, यह कुछ ही पंक्तियों बाद बताते हैं।",
+      },
+      {
+        t: "यह आपकी आत्मा पर कोई दावा नहीं है",
+        d: "किसी के कर्म का क्या होता है, हम नहीं जानते। जो इसका विकल्प बेच रहे हैं, वे भी नहीं जानते, यद्यपि उस आत्मविश्वास का मूल्य वे अधिक लेते हैं।",
+      },
+      {
+        t: "यह जाने का विकल्प नहीं है",
+        d: "यदि आप जा सकते हैं, अवश्य जाइए। टिकट लीजिए, रेल पकड़िए, सीढ़ियाँ उतरिए। बीच के ग्यारह वर्षों में हम यहीं मिलेंगे।",
+      },
+    ],
+  },
+
+  s5: {
+    n: "०५",
+    id: "wifi",
+    h: "“वाई-फ़ाई से पाप नहीं धुलते”",
+    body: [
+      "सही बात है। नहीं धुलते। हमसे भी नहीं धुलते, और हमने कभी कहा भी नहीं कि धुलते हैं।",
+      "देखिए कि यहाँ बेचा क्या जा रहा है: एक घड़ी, एक जल, उस जल का सच्चा पाठ, कुछ शब्द, और रखने योग्य एक चिह्न। इस साइट का हर मूल्य पढ़ जाइए, आपको एक भी वचन नहीं मिलेगा। न पाप धुलने का। न पुण्य गिनने का। न किसी दोष का, जो थोड़े और शुल्क पर खोजकर हटा दिया जाए। यदि आप इसी के लिए आए हैं, तो हम सचमुच ग़लत दुकान हैं, और दुकानें और भी बहुत हैं।",
+      "बाक़ी आपत्ति प्रायः तकनीक की नहीं होती। वह गंभीरता की होती है, और यह चिंता उचित है। तो यह रही कसौटी, और यह हमारी बनाई हुई नहीं है।",
+      "किसी ने कभी शिकायत नहीं की कि माला केवल धागा है। या दीया केवल तेल में बाती है। या मंदिर केवल वह पत्थर है जिसे लोग पहाड़ी पर ढो लाए। साधन कभी मुद्दा नहीं था।",
+    ],
+    pull: "मुद्दा ध्यान है, और ध्यान को सदा खड़े होने के लिए कोई जगह चाहिए रही है।",
+    close:
+      "हमने एक जगह बनाई है। वह तड़के चार बजे खुलती है, उसे पता होता है कि नदी क्या कर रही है, और उसके लिए वीज़ा नहीं चाहिए।",
+  },
+
+  s6: {
+    n: "०६",
+    id: "for",
+    h: "यह किसके लिए है",
+    items: [
+      "उस व्यक्ति के लिए जिसका पासपोर्ट एक देश कहता है और कैलेंडर दूसरा। फ़्रैंकफ़र्ट के उस पोते के लिए जिसे तिथि कंठस्थ है और जिसने घाट कभी नहीं देखा। टोरंटो की उस माँ के लिए जिनके पास वर्ष में तीन सप्ताह की छुट्टी है और जिनके पिता का श्राद्ध उनमें से किसी में नहीं पड़ता।",
+      "भारत में भी उन सबके लिए जिनके लिए घाट दूर नहीं, पहुँच के बाहर है। रात भर की रेल और तीस गीली सीढ़ियों ने लोगों को जल से उतना रोका है जितना दूरी ने कभी नहीं रोका।",
+      "उनके लिए जिन्हें साधना चाहिए, संस्था नहीं। कोई बिचौलिया नहीं, कोई पंक्ति नहीं, नाम थमाने के लिए कोई काउंटर नहीं, और यह तय करने वाला कोई नहीं कि आपका गोत्र आपको पात्र बनाता है या नहीं।",
+      "और उनके लिए भी जो बस जिज्ञासु हैं, एक चाय के मूल्य पर, यह सुने बिना कि उनके जीवन में कुछ गड़बड़ है।",
+    ],
+  },
+
+  s7: {
+    n: "०७",
+    id: "not-for",
+    h: "यह किसके लिए नहीं है",
+    items: [
+      {
+        t: "यदि आप जल तक पहुँच सकते हैं, जाइए",
+        d: "यह हम गंभीरता से कहते हैं और इस पृष्ठ के हर रूप में इसे सबसे ऊपर रखा है। यह तीर्थयात्रा का प्रतिद्वंद्वी नहीं है और उस तुलना में हर बार हारता है।",
+      },
+      {
+        t: "यदि आपको कोई गारंटी चाहिए",
+        d: "हम नहीं बेचते, और आप हमें मना भी नहीं पाएँगे।",
+      },
+      {
+        t: "यदि आपके मत में अनुष्ठान तभी मान्य है जब कोई योग्य व्यक्ति तीर्थ पर आपकी ओर से उसे संपन्न करे",
+        d: "वह एक सुसंगत मत है, गंभीर लोगों का मत है, और यह उत्पाद आपके लिए नहीं बना। हम आपसे बहस नहीं करेंगे, और ऐसा लिखेंगे भी नहीं मानो आप हैं ही नहीं। हमारे आदर सहित जाइए।",
+      },
+    ],
+  },
+
+  s8: {
+    n: "०८",
     id: "never",
     h: "जो दावे हम कभी नहीं करेंगे",
-    lede: "यह सूची हम पर बाध्यकारी है, हम पर, हमारे हर सहयोगी पर, और हमारी ओर से लिखने वाले हर व्यक्ति पर। हम कभी यह न कहेंगे, न संकेत करेंगे, न किसी साझेदार, पुरोहित, ईमेल या विज्ञापन को कहने देंगे:",
+    lede: "यह सूची हम पर बाध्यकारी है, हम पर, हमारे हर सहयोगी पर, और हमारी ओर से लिखने वाले हर व्यक्ति पर। हम कभी यह न कहेंगे, न संकेत करेंगे, न किसी साझेदार, ईमेल या विज्ञापन को कहने देंगे:",
     items: [
+      "कि आपकी ओर से कुछ संपन्न किया गया। कुछ नहीं किया जाता। घाट पर कोई नहीं है, और इस उत्पाद में कोई पुरोहित है ही नहीं।",
       "कि आपके पाप धुल गए।",
       "कि इससे मोक्ष या मुक्ति मिलती है, या पुण्य की कोई माप।",
       "कि यह स्वयं नदी में स्नान करने के बराबर है।",
-      "कि पुण्य गिना, गुणा या किसी योजना में संचित किया जा सकता है। हमारे अर्पण सेवा में भिन्न हैं, अनुष्ठान के मूल्य में कभी नहीं। बारह स्नान बारह अनुष्ठान हैं, प्रति अनुष्ठान अधिक पुण्य नहीं।",
-      "कि आपके पूर्वज अतृप्त हैं, भटक रहे हैं या प्रतीक्षा में हैं, या यह कि न बुक करने से आपके परिवार पर कुछ बीतेगा।",
+      "कि पुण्य गिना, गुणा या किसी योजना में संचित किया जा सकता है। ग्यारह स्नान ग्यारह बैठकें हैं, प्रति बैठक अधिक पुण्य नहीं।",
+      "कि आपके पूर्वज अतृप्त हैं, भटक रहे हैं या प्रतीक्षा में हैं, या यह कि न ख़रीदने से आपके परिवार पर कुछ बीतेगा।",
       "कि आपकी कुंडली में कोई दोष है, या हम उसे खोज या दूर कर सकते हैं।",
       "कि इससे आपके जीवन में कोई परिणाम आता है, स्वास्थ्य, संतान, वीज़ा, विवाह, मुक़दमा, परीक्षा, नौकरी या धन।",
       "कि यह उस विधि का स्थान ले लेता है जिसे आपकी परंपरा स्वयं करने को कहती है।",
@@ -442,8 +545,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
       "कि किसी घाट का जल स्वच्छ, पीने योग्य या औषधीय है।",
       "कि आपकी देह शुद्ध हो गई।",
       "कि कोई मुहूर्त अंतिम है, या आपके जीवन में फिर नहीं आएगा। खगोल का स्थान पंचांग है; भुगतान के पृष्ठ पर वह कभी नहीं आएगा।",
-      "कि कोई अनुष्ठान हुआ, जब वह हुआ ही नहीं।",
-      "कि कहीं और बना, पुनः प्रयुक्त या कृत्रिम रूप से रचा गया दृश्य आपका अनुष्ठान है। हम न AI से बने दृश्य प्रयोग करते हैं, न कृत्रिम स्वर, न अनुष्ठान में, न विज्ञापन में, न उदाहरण के लिए, न पृष्ठभूमि में।",
+      "कि इस साइट का कोई चित्र किसी नदी का सजीव दृश्य है। इस उत्पाद में कहीं कोई वीडियो नहीं है, न कृत्रिम रूप से बनाया गया दृश्य, न कृत्रिम स्वर, न गढ़े हुए नदी-आँकड़े। जो पाठ हम नहीं ला सके, वह “नहीं ला सके” ही छपता है।",
       "कि किसी दिवंगत व्यक्ति को कुछ प्राप्त हुआ, या उन पर कुछ प्रभाव पड़ा।",
       "किसी दिवंगत व्यक्ति का उपयोग विज्ञापन, उदाहरण या प्रशंसापत्र में।",
       "कोई भी वाक्य जो भय पर टिका हो, कि समय बीता जा रहा है, कि आपके घर पर कुछ आ पड़ेगा, कि न करने का पछतावा रहेगा।",
@@ -454,187 +556,18 @@ export const ethicsContent = { en: ethicsEn, hi: {
       "यदि कभी हमें इनमें से कोई दावा करते देखें, हमें लिखिए। हम उसे हटाएँगे, सार्वजनिक रूप से स्वीकार करेंगे, और सुधार को तिथि सहित अभिलेख में रखेंगे। सुधार हम प्रकाशित करते हैं, वे भी जो हमारे लिए असहज थे।",
   },
 
-  s5: {
-    n: "०५",
-    id: "proof",
-    h: "आप कैसे जानेंगे कि यह हुआ",
-    lede: "क्रम से पाँच बातें। इनमें से किसी के लिए हम पर विश्वास करना आवश्यक नहीं।",
-    steps: [
-      {
-        t: "अनुष्ठान से पहले, संकल्प चिह्न",
-        d: "बुकिंग के क्षण ही हम आपके संकल्प की एक छाप सार्वजनिक अभिलेख में प्रकाशित कर देते हैं, जिसके सोलह अक्षर आपको तुरंत दिखते हैं। उसमें आपका नाम नहीं होता, और उसे वापस आपके शब्दों में बदला नहीं जा सकता। वह सिद्ध करती है कि आपका संकल्प अनुष्ठान से पहले था, बाद में गढ़ा नहीं गया।",
-      },
-      {
-        t: "घाट पर, पट्टिका",
-        d: "पुरोहित कैमरे के सामने एक पट्टिका दिखाते हैं जिस पर आपका अनुष्ठान कोड, तिथि, घाट और उस दिन का सार्वजनिक अंक होता है, एक ऐसा अंक जो एक दिन पहले अस्तित्व में नहीं था। पहले बनाई गई कोई रिकॉर्डिंग उसे नहीं दिखा सकती, और उसे कोई भी उसके मूल स्रोत पर जाँच सकता है।",
-      },
-      {
-        t: "अनुष्ठान, एक अखंड दृश्य",
-        d: "बिना कट। हर नाम और हर गोत्र अलग-अलग, स्पष्ट स्वर में, और प्रत्येक नामित संकल्प के लिए कम से कम पैंतालीस सेकंड का पाठ, इसलिए ग्यारह संकल्पों वाला खंड लगभग नौ मिनट का होता है, नब्बे सेकंड का नहीं। यंत्र स्वयं जाँचता है कि कहीं कट तो नहीं, ध्वनि में जोड़ तो नहीं, और पट्टिका बुकिंग से मेल खाती है या नहीं। जो खंड जाँच में विफल हो, वह प्रकाशित नहीं होता। वह दोबारा किया जाता है।",
-      },
-      {
-        t: "उसके बाद, सार्वजनिक अभिलेख",
-        d: "रिकॉर्डिंग की छाप घाट, पुरोहित के पहचान-अंक, समयों और वास्तव में जो हुआ, संपन्न, बाधित, या नहीं हुआ, के साथ एक सार्वजनिक, केवल-जुड़ने वाले अभिलेख में जाती है। उसमें कभी कोई नाम, गोत्र या संकल्प नहीं होता। इसीलिए अभिलेख स्थायी रह सकता है, जबकि आपकी सूचना नहीं।",
-      },
-      {
-        t: "इसे कोई भी जाँच सकता है",
-        d: "कानपुर में बैठे आपके चाचा, या इंटरनेट पर कोई अपरिचित, अनुष्ठान कोड डालकर और वीडियो फ़ाइल खींचकर जान सकते हैं कि यह वही फ़ाइल है या नहीं। जाँच उनके अपने ब्राउज़र में चलती है। फ़ाइल उनके कंप्यूटर से बाहर नहीं जाती। उन्हें हम पर विश्वास करने की आवश्यकता नहीं, और आपको भी नहीं।",
-      },
-    ],
-    caveatsH: "यह प्रमाण कहाँ दुर्बल है, हमारे ही शब्दों में",
-    caveats: [
-      {
-        t: "आगे भेजी गई फ़ाइल मेल नहीं खाएगी",
-        d: "यदि वीडियो आप तक WhatsApp या Telegram से पहुँचा है, तो वह दबाकर छोटा किया जा चुका है और जाँच कहेगी कि मेल नहीं खाता। यह संदेशवाहक का प्रभाव है, कोई जालसाज़ी नहीं। मूल फ़ाइल अपने अनुष्ठान पृष्ठ से उतारिए। हम आपको दी गई हर प्रति की अलग छाप प्रकाशित करते हैं, और एक नमूना अनुष्ठान रखते हैं ताकि आवश्यकता पड़ने से पहले ही आप जाँच आज़मा सकें।",
-      },
-      {
-        t: "सबसे कमज़ोर कड़ी हमारे अपने हस्ताक्षर हैं",
-        d: "स्थान की जानकारी छली जा सकती है, और भीतर का कोई व्यक्ति उपकरण-हस्ताक्षर को भी हरा सकता है। इसीलिए पट्टिका, दैनिक सार्वजनिक अंक और सजीव प्रसारण हमारे अपने हस्ताक्षरों से अधिक भार रखते हैं। हम चाहेंगे कि अपनी दुर्बलता स्वयं बताएँ, न कि आप उसे खोजें।",
-      },
-      {
-        t: "अभिलेख फ़ाइल सिद्ध करता है, भाव नहीं",
-        d: "वह सिद्ध करता है कि एक निश्चित अनुष्ठान की रिकॉर्डिंग एक निश्चित समय पर थी और तब से उसमें फेरबदल नहीं हुआ। श्रद्धा के विषय में वह कुछ सिद्ध नहीं करता। श्रद्धा को कोई तकनीक सिद्ध नहीं करती, और हम इसका दिखावा नहीं करेंगे।",
-      },
-    ],
-    densityH: "आपका नाम और कौन सुनेगा",
-    density: [
-      "एक साझा खंड में ग्यारह संकल्प तक हो सकते हैं, और अन्यथा उस खंड का हर परिवार शेष सब परिवारों के नाम, गोत्र और पूर्वज सुन लेता। यह विपणन की समस्या नहीं, यह दूसरों की निजी सूचना है।",
-      "इसलिए हम आपको आपका अपना अंश देते हैं, जो आपका नाम बोले जाने से कुछ सेकंड पहले आरंभ होता है और जिसमें केवल आपके नाम हैं, किसी और के नहीं। पूरा खंड रहता है, पर वह तभी दिया जाता है जब उसमें सम्मिलित हर परिवार सहमत हो। आपका संकल्प मौन रूप से अर्पित होता है, जब तक आप ऊँचे स्वर में पढ़ने को न कहें, और यदि कहें, तो भुगतान से पहले एक वाक्य में लिखा रहता है कि उसे कौन सुनेगा।",
-      "सार्वजनिक अभिलेख फिर भी बताता है कि आपके खंड में कितने संकल्प थे। आपका अनुष्ठान तब तक निजी नहीं, जब तक आप निजी अनुष्ठान न लें, और सस्ता विकल्प बेचने के लिए हम इसका उलटा संकेत नहीं देंगे।",
-    ],
-  },
-
-  s6: {
-    n: "०६",
-    id: "officiants",
-    h: "पुरोहित",
-    body: [
-      "हर पुरोहित सीधे स्नानिफ़ाई से जुड़ते हैं, लिखित अनुबंध पर, उनकी अपनी भाषा में, और इतना छोटा कि वे उसे पूरा पढ़ सकें; हस्ताक्षरित प्रति उनके हाथ में रहती है। वे दिहाड़ी कर्मी नहीं हैं, और यह कोई मंडी नहीं है।",
-      "हर पुरोहित के पृष्ठ पर हम बताते हैं कि हमने क्या सत्यापित किया, और क्या नहीं। घाट के पुरोहितों के लिए कोई प्रमाणन संस्था नहीं है, इसलिए हम कोई मुहर गढ़ेंगे नहीं। हम ठीक-ठीक बताएँगे कि हमने क्या जाँचा, और क्या नहीं जाँच सके।",
-    ],
-    payH: "उन्हें क्या मिलता है",
-    payNote:
-      "सूत्र हमारा वचन है। नीचे दिए अंक प्रस्तावित हैं और अभी इस कसौटी पर नहीं कसे गए कि इन घाटों के पुरोहित वास्तव में कितना कमाते हैं; पहले अनुष्ठान से पहले इन्हें कम से कम बारह महीनों के लिए निश्चित करके प्रकाशित किया जाएगा, और पुरोहितों तक पहुँचा हिस्सा हर तिमाही वास्तविक प्रतिशत के रूप में प्रकाशित होता है।",
-    pay: [
-      { k: "प्रत्येक अनुष्ठान खंड", v: "₹1,800 या उस खंड की आय का पाँचवाँ भाग, जो अधिक हो" },
-      { k: "निजी अनुष्ठान", v: "₹4,000" },
-      { k: "भुगतान", v: "सात दिन के भीतर, बैंक से; प्रसारण टूटने पर कोई कटौती नहीं" },
-      { k: "दक्षिणा", v: "पूरी उन्हीं तक जाती है, हम तक कुछ नहीं" },
-    ],
-    refusalH: "मना करने का अधिकार, और उसकी सीमा",
-    refusal: [
-      "वे किसी भी संकल्प को बोलने से मना कर सकते हैं, अनुष्ठान के आधार पर, और भुगतान फिर भी होता है। ख़रीदी हुई सहमति सहमति नहीं होती, और जो पुरोहित मना न कर सके वह पुरोहित नहीं।",
-      "पर वे आपको इसलिए मना नहीं कर सकते कि आप कौन हैं। न जाति, न धर्म, न लिंग, न वैवाहिक स्थिति, न आपका यौन रुझान, न आपका नाम, न यह कि आपका परिवार गोत्र नहीं मानता। हर इनकार कारण सहित दर्ज और लेखा-परीक्षित होता है, और आपको कभी यह नहीं बताया जाता कि किसी पुरोहित ने मना किया, हम तुरंत, बिना अतिरिक्त शुल्क, दूसरे पुरोहित की व्यवस्था करते हैं, क्योंकि यह हमारी चूक है, आपकी नहीं।",
-    ],
-    welfareH: "उनकी सुरक्षा",
-    welfare: [
-      "जल में उतरना है या नहीं, यह वे तय करते हैं। न हम, न आप। यदि वे असुरक्षित समझें तो अनुष्ठान सीढ़ियों से जल-अर्पण के रूप में होता है, उनका भुगतान अपरिवर्तित रहता है, और अभिलेख स्पष्ट कहता है कि क्या हुआ।",
-      "दिन और सप्ताह में वे कितनी बार जल में उतर सकते हैं, इसकी प्रकाशित सीमा है, जो पुरोहितों के साथ मिलकर तय होती है, अकेले हमारे द्वारा नहीं, और उन स्थितियों की प्रकाशित सूची है जिनमें कोई जल में नहीं उतरता: बाढ़, तेज़ धारा, अंधेरा, जल-गुणवत्ता की चेतावनी, अस्वस्थता।",
-      "दुर्घटना और स्वास्थ्य बीमा हमारा दायित्व है, उनका ख़र्च नहीं।",
-      "सार्वजनिक अभिलेख में वे नाम से नहीं, एक अपारदर्शी पहचान-अंक से दर्ज होते हैं। एक व्यक्ति के काम के घंटों और आय का स्थायी सार्वजनिक लेखा उसे निशाना बनाता है, और इस व्यवस्था में सबसे कम शक्ति उन्हीं के पास है। उनका नाम आपके संकल्प पत्र पर और उनके अपने पृष्ठ पर रहता है, और वे सार्वजनिक पृष्ठ से मना कर सकते हैं, काम खोए बिना।",
-    ],
-  },
-
-  s7: {
-    n: "०७",
-    id: "failure",
-    h: "यदि कुछ गड़बड़ हो",
-    lede: "यह तालिका है, किसी का विवेक नहीं। आपको किसी से बहस नहीं करनी पड़ती, और फ़ोन तो कभी नहीं करना पड़ता।",
-    rows: [
-      {
-        w: "प्रसारण टूटा, अनुष्ठान रिकॉर्ड हुआ",
-        t: "छह घंटे में रिकॉर्डिंग आपके पास, और चाहें तो एक चौथाई राशि वापस। एक क्लिक, बिना प्रश्न। हम पर आपका अधिकार रिकॉर्डिंग का है, प्रसारण का नहीं।",
-      },
-      {
-        w: "अनुष्ठान हुआ ही नहीं",
-        t: "आपके पूछने से पहले हम बताएँगे। फिर चुनाव आपका: अगले समान मुहूर्त में निःशुल्क पुनः, या पूरी राशि वापस।",
-      },
-      {
-        w: "घाट बंद था, या जल असुरक्षित",
-        t: "मुहूर्त से पहले हम बताएँगे, और दूसरा घाट, दूसरी नदी, दूसरा मुहूर्त, या पूरी वापसी प्रस्तुत करेंगे। यदि पुरोहित सीढ़ियों से अर्पण करें, तो अभिलेख यही कहेगा। एक नदी के बदले चुपचाप दूसरी कभी नहीं।",
-      },
-      {
-        w: "पुरोहित नहीं आ सके",
-        t: "जो उनके स्थान पर आएँगे, उनका नाम अनुष्ठान से पहले बताया जाता है, बाद में नहीं। आप मना कर सकते हैं।",
-      },
-      {
-        w: "आपका नाम या गोत्र ग़लत बोला गया",
-        t: "कहिए, और वह एक बार फिर, निःशुल्क, बिना बहस के पढ़ा जाएगा। बुकिंग के समय आप स्वयं अपने स्वर में नाम रिकॉर्ड कर सकते हैं, ताकि वे पहले आपसे सुन लें।",
-      },
-      {
-        w: "अनुष्ठान से पहले आपका मन बदल जाए",
-        t: "मुहूर्त से चौबीस घंटे पहले तक पूरी राशि वापस; उसके भीतर आधी, क्योंकि तब तक पुरोहित नियत और भुगतान-प्राप्त हो चुके होते हैं।",
-      },
-      {
-        w: "बाद में आप असंतुष्ट हों",
-        t: "चौदह दिन के भीतर, कारण पूछे बिना, राशि वापस। हम वह लौटा रहे हैं जो आपने व्यवस्था, अनुष्ठान और रिकॉर्डिंग के लिए हमें दिया। हम अनुष्ठान को पलट नहीं रहे: वह हुआ, पुरोहित को पूरा भुगतान हुआ, और अभिलेख यथावत रहता है। अनुष्ठान लौटाई जाने वाली वस्तु नहीं है, और हम इसका दिखावा नहीं करेंगे।",
-      },
-      {
-        w: "अनुष्ठान से पहले किसी नामित व्यक्ति का देहांत हो जाए",
-        t: "पूरी राशि वापस, या, केवल आपके कहने पर, वही अनुष्ठान स्मरण-तर्पण के रूप में, निःशुल्क। हम स्वयं यह प्रस्ताव नहीं रखेंगे। नब्बे दिन तक हमसे आपको वही मिलेगा जो आपकी बुकिंग के लिए आवश्यक है।",
-      },
-    ],
-    note: "हर माह की पाँच तारीख़ को, पहले अनुष्ठान से ही, हम अपने आँकड़े प्रकाशित करते हैं: नियत, संपन्न, बाधित और क्यों, न हुए और क्यों, वापस किए गए, संकल्प पत्र में लगा समय, आय का कितना भाग पुरोहितों तक पहुँचा, कितनी आपत्तियाँ आईं और कितनी सही पाई गईं, और सरकार से कितनी माँगें आईं। बुरे महीनों के भी। आज के छोटे सच्चे आँकड़े कल के बड़े धुँधले आँकड़ों से अधिक मूल्यवान हैं।",
-  },
-
-  s8: {
-    n: "०८",
-    id: "data",
-    h: "आपका नाम, आपका गोत्र, आपका संकल्प",
-    body: [
-      "गोत्र वंश है। संकल्प में कोई रोग हो सकता है, कोई मृत्यु, कोई भय। यह सामान्य ग्राहक-सूचना नहीं है, और हम इसे वैसा नहीं मानते, न क़ानून में, जहाँ यह विशेष श्रेणी की धार्मिक सूचना है, न व्यवहार में।",
-    ],
-    gotraH: "यहाँ गोत्र वैकल्पिक है",
-    gotra: [
-      "बहुत से परिवार गोत्र नहीं मानते, और जो फ़ॉर्म गोत्र पर अड़ता है वह लोगों को जाति से छाँटने वाला फ़ॉर्म है। हमारा नहीं अड़ता। रिक्त छोड़िए और संकल्प में प्रचलित कश्यप गोत्र लिया जाएगा, या आपके परिवार की अपनी परिपाटी, यदि आप बता दें।",
-      "पारिवारिक बुकिंग में हर नाम का अपना गोत्र हो सकता है, क्योंकि घर एकरूप नहीं होते, विवाह कर आई स्त्री, गोद लिया बच्चा, अंतर्जातीय विवाह। छह नामों पर एक ही गोत्र अधिकांश परिवारों के लिए ग़लत संकल्प बनाता।",
-    ],
-    sankalpH: "संकल्प-पाठ",
-    sankalp: [
-      "सामान्यतः पुरोहित उसे ऊँचे स्वर में नहीं पढ़ते। वे कहते हैं कि अनुष्ठान आपके मन में धारित संकल्प हेतु है। ऊँचे स्वर में तभी, जब आप कहें, और वह डिब्बी आपके लिए पहले से चुनी हुई कभी नहीं होती।",
-      "यदि आप ऊँचे स्वर में पढ़वाना चुनते हैं, तो वह स्थायी रिकॉर्डिंग का अंग बन जाता है, और नीचे लिखा नब्बे दिन का नियम वहाँ तक नहीं पहुँच सकता। यह हम उसी डिब्बी पर लिख देते हैं, और साथ ही रिकॉर्डिंग भी मिटाने का विकल्प देते हैं।",
-      "स्नानिफ़ाई में कोई संकल्प यूँ ही नहीं पढ़ता। पढ़ने के लिए दो अनुमतियाँ और लिखित कारण चाहिए, वह स्थायी रूप से दर्ज होता है, और एक दिन के भीतर आपको सूचित किया जाता है कि पढ़ा गया, किसने और क्यों। इसकी क़ीमत हमें चुकानी पड़ती है, इसीलिए यह विश्वास योग्य है।",
-      "पाठ पर एक स्वचालित सुरक्षा-जाँच चलती है। उस जाँच के कारण कोई व्यक्ति उसे नहीं देखता। यदि पाठ से लगे कि कोई संकट में हो सकता है, तो आपको एक संदेश मिलता है जिसमें वे स्थान लिखे होते हैं जहाँ आप बात कर सकते हैं, और वह इस तरह लिखा जाता है कि उससे यह संकेत न मिले कि किसी ने आपके शब्द पढ़े, क्योंकि किसी ने नहीं पढ़े। किसी नामित व्यक्ति की हानि के उद्देश्य से किया गया संकल्प हम नहीं करेंगे, और वही उन गिने-चुने कारणों में है जिनमें कोई व्यक्ति पाठ देख सकता है।",
-      "हम इस पर कुछ प्रशिक्षित नहीं करते। इससे विज्ञापन नहीं करते। इसे उद्धृत नहीं करते। प्रशंसापत्र नहीं बनाते।",
-    ],
-    othersH: "वे नाम जो आपके अपने नहीं",
-    others: [
-      "जब आप किसी जीवित संबंधी का नाम देते हैं, तो आप हमें उनकी सूचना सौंप रहे हैं, अपनी नहीं। हम आपसे पुष्टि माँगते हैं कि उन्हें आपत्ति न होगी। किसी भी जीवित व्यक्ति की सूचना उन्हीं के कहने पर हटा दी जाती है, आपकी अनुमति लिए बिना, और यह बताए बिना कि किसने कहा। किसी बच्चे का नाम देने के लिए आपको यह कहना होता है कि आप उनके संरक्षक हैं।",
-    ],
-    retentionH: "क्या रखा जाता है, और कितने समय",
-    retention: [
-      { k: "आपका खाता", v: "जब तक आप रखें; रसीदें केवल जहाँ कर-क़ानून माँगे" },
-      { k: "नाम, गोत्र, संबंध", v: "सामान्यतः 24 माह, आप चाहें तो 3 माह, या अनिश्चित काल" },
-      { k: "संकल्प-पाठ", v: "अनुष्ठान के 90 दिन बाद, या 24 घंटे में, या सदा" },
-      { k: "रिकॉर्डिंग", v: "जब तक आप न हटाएँ" },
-      { k: "सार्वजनिक अभिलेख", v: "स्थायी, और रचना से ही उसमें कोई नाम, गोत्र या संकल्प नहीं" },
-    ],
-    eraseH: "सब कुछ मिटाना",
-    erase: [
-      "एक बटन सब कुछ मिटा देता है, प्रतियों और बैकअप सहित, सात दिन के भीतर। यह उस कुंजी को नष्ट करके होता है जिससे आपका अनुष्ठान एन्क्रिप्ट किया गया था, इसीलिए यह वहाँ भी चलता है जहाँ भंडारण स्वयं मिटाया नहीं जा सकता। छाप सार्वजनिक अभिलेख में रहती है, इसलिए आपकी उतारी हुई प्रति बाद में भी प्रमाणित होती रहती है: मिटाने से हमारी क्षमता जाती है, आपकी नहीं।",
-      "पुष्टि-संदेश में लिखा होता है कि क्या मिटा, क्या रखा गया, और क्यों, वे रसीदें जो क़ानून माँगता है, और अनाम अभिलेख प्रविष्टि।",
-    ],
-    trackingH: "इस साइट पर क्या चलता है",
-    tracking: [
-      "इस साइट पर कोई विज्ञापन या स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं चलती, कभी नहीं। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, उसे कुछ भी रिकॉर्ड नहीं करता।",
-      "एक विश्लेषण स्क्रिप्ट पृष्ठ-दृश्य गिनती है: Vercel Web Analytics। वह कोई कुकी नहीं रखती, आपका पीछा किसी दूसरी साइट तक नहीं करती, और किसी फ़ॉर्म की सामग्री कभी नहीं देखती। जो शून्य हमारे पास नहीं है, उसका दावा करने से अच्छा है उसका नाम बता देना।",
-      "उत्पाद में केवल एक और बाहरी स्क्रिप्ट है: भुगतान सेवा की, केवल भुगतान वाले चरण पर, और उसी पृष्ठ पर उसका नाम लिखा रहता है।",
-      "पहले अनुष्ठान से यह पृष्ठ यह गिनती भी रखेगा कि सूचना के लिए कितनी गुप्त माँगें हमें मिलीं। यदि वह वाक्य कभी बदलने के बजाय हटा दिया जाए, तो हटाए जाने को ही पढ़िए।",
-    ],
-  },
-
   s9: {
     n: "०९",
     id: "never-do",
     h: "जो हम आपके साथ नहीं करेंगे",
     items: [
-      "अनुष्ठान पर कोई उलटी गिनती नहीं।",
-      "“दो स्थान शेष” तभी, जब सचमुच दो शेष हों।",
+      "मुहूर्त पर कोई उलटी गिनती नहीं। सच्ची घड़ी आकाश का तथ्य है, आपको हड़बड़ाने का यंत्र नहीं।",
+      "गढ़ी हुई कमी नहीं। यहाँ न कोई पंक्ति है, न प्रतीक्षा-सूची, न “अंतिम स्थान शेष”, क्योंकि यहाँ हो ही नहीं सकता।",
       "किसी की पुण्यतिथि पर संदेश तभी, जब आपने माँगा हो, और उसी संदेश में एक स्पर्श से वह सदा के लिए बंद।",
-      "न कोई शृंखला, न बैज, न स्तर, न “आपने मार्च से कुछ नहीं किया”।",
+      "न कोई शृंखला, न बैज, न स्तर, न “आपने मार्च से कुछ नहीं किया”। आपकी पंजिका अभिलेख है, अंक-तालिका नहीं, और इसीलिए वह रखने योग्य है।",
       "शोक, अंत्येष्टि, श्रद्धांजलि या रोग से जुड़े पन्नों पर कोई विज्ञापन नहीं।",
       "शुभ दिन देखकर बढ़ता मूल्य नहीं, और यह देखकर बदलता मूल्य भी नहीं कि आप कौन लगते हैं।",
-      "कोई डिब्बी पहले से चुनी हुई नहीं, न अतिरिक्त सेवा, न दक्षिणा, न नवीनीकरण, न सूचना-सूची।",
+      "कोई डिब्बी पहले से चुनी हुई नहीं, न अतिरिक्त सेवा, न नवीनीकरण, न सूचना-सूची।",
       "रोकने में उतने ही क्लिक जितने आरंभ करने में; बीच में न कोई पर्दा, न कोई प्रस्ताव।",
       "सूची से हटने के लिए एक क्लिक, तुरंत मान्य, और “कम ईमेल कैसे रहेंगे” वाला चरण नहीं।",
       "कोई ऐसी प्रश्नावली नहीं जो आपको बताए कि आपकी कुंडली में क्या दोष है।",
@@ -646,37 +579,76 @@ export const ethicsContent = { en: ethicsEn, hi: {
 
   s10: {
     n: "१०",
+    id: "data",
+    h: "आपका नाम, आपका गोत्र, आपका संकल्प",
+    body: [
+      "गोत्र वंश है। संकल्प में कोई रोग हो सकता है, कोई मृत्यु, कोई भय। यह सामान्य ग्राहक-सूचना नहीं है, और हम इसे वैसा नहीं मानते, न क़ानून में, जहाँ यह विशेष श्रेणी की धार्मिक सूचना है, न व्यवहार में।",
+    ],
+    gotraH: "यहाँ गोत्र वैकल्पिक है",
+    gotra: [
+      "बहुत से परिवार गोत्र नहीं मानते, और जो फ़ॉर्म गोत्र पर अड़ता है वह लोगों को जाति से छाँटने वाला फ़ॉर्म है। हमारा नहीं अड़ता। रिक्त छोड़िए और संकल्प में लिखा जाएगा कि गोत्र अनुक्त है, या प्रचलित कश्यप गोत्र लिया जाएगा, या आपके परिवार की अपनी परिपाटी, यदि आप बता दें।",
+      "जहाँ आप कई नाम लिखते हैं, वहाँ हर नाम का अपना गोत्र हो सकता है, क्योंकि घर एकरूप नहीं होते, विवाह कर आई स्त्री, गोद लिया बच्चा, अंतर्जातीय विवाह। छह नामों पर एक ही गोत्र अधिकांश परिवारों के लिए ग़लत संकल्प बनाता।",
+    ],
+    sankalpH: "संकल्प-पाठ",
+    sankalp: [
+      "आपका संकल्प केवल आपको दिखता है, और किसी को नहीं। उसे कहीं भी, कोई भी, ऊँचे स्वर में नहीं पढ़ता, क्योंकि इस उत्पाद में पढ़ने वाला कोई है ही नहीं। आप अपने ही शब्द पढ़ते हैं, मन में या अपने कमरे में स्वर के साथ, और बस इतना ही होता है।",
+      "वह कहीं सार्वजनिक रूप से नहीं छपता। न पंजिका की पंक्ति में, न उस चिह्न पर जो आप रखते हैं, और सत्यापन पृष्ठ उसे किसी को नहीं दिखाता, चाहे उसके पास पहचान-संख्या हो।",
+      "स्नानिफ़ाई में कोई संकल्प यूँ ही नहीं पढ़ता। पढ़ने के लिए दो अनुमतियाँ और लिखित कारण चाहिए, वह स्थायी रूप से दर्ज होता है, और एक दिन के भीतर आपको सूचित किया जाता है कि पढ़ा गया, किसने और क्यों। इसकी क़ीमत हमें चुकानी पड़ती है, इसीलिए यह विश्वास योग्य है।",
+      "पाठ पर एक स्वचालित सुरक्षा-जाँच चलती है। उस जाँच के कारण कोई व्यक्ति उसे नहीं देखता। यदि पाठ से लगे कि कोई संकट में हो सकता है, तो आपको एक संदेश मिलता है जिसमें वे स्थान लिखे होते हैं जहाँ आप बात कर सकते हैं, और वह इस तरह लिखा जाता है कि उससे यह संकेत न मिले कि किसी ने आपके शब्द पढ़े, क्योंकि किसी ने नहीं पढ़े। किसी नामित व्यक्ति की हानि के उद्देश्य से लिखा संकल्प हम नहीं रखेंगे, और वही उन गिने-चुने कारणों में है जिनमें कोई व्यक्ति पाठ देख सकता है।",
+      "हम इस पर कुछ प्रशिक्षित नहीं करते। इससे विज्ञापन नहीं करते। इसे उद्धृत नहीं करते। प्रशंसापत्र नहीं बनाते।",
+    ],
+    othersH: "वे नाम जो आपके अपने नहीं",
+    others: [
+      "जब आप किसी जीवित संबंधी का नाम देते हैं, तो आप हमें उनकी सूचना सौंप रहे हैं, अपनी नहीं। हम आपसे पुष्टि माँगते हैं कि उन्हें आपत्ति न होगी। किसी भी जीवित व्यक्ति की सूचना उन्हीं के कहने पर हटा दी जाती है, आपकी अनुमति लिए बिना, और यह बताए बिना कि किसने कहा। किसी बच्चे का नाम देने के लिए आपको यह कहना होता है कि आप उनके संरक्षक हैं।",
+    ],
+    retentionH: "क्या रखा जाता है, और कितने समय",
+    retention: [
+      { k: "आपका खाता", v: "जब तक आप रखें; रसीदें केवल जहाँ कर-क़ानून माँगे" },
+      { k: "नाम, गोत्र, संबंध", v: "सामान्यतः 24 माह, आप चाहें तो 3 माह, या अनिश्चित काल" },
+      { k: "आपका संकल्प", v: "जब तक आप उसके साथ बैठते रहें, क्योंकि उसे दोबारा पढ़ना ही साधना है; कहते ही मिटा दिया जाता है, और सात दिन के भीतर तो अवश्य" },
+      { k: "आपके चिह्न और पंजिका", v: "जब तक आप स्वयं न हटाएँ" },
+      { k: "नदी के पाठ", v: "स्थायी, और उनमें कोई नाम, गोत्र या संकल्प नहीं होता, क्योंकि वे नदी के पाठ हैं" },
+    ],
+    eraseH: "सब कुछ मिटाना",
+    erase: [
+      "एक बटन सब कुछ मिटा देता है, प्रतियों और बैकअप सहित, सात दिन के भीतर। यह उस कुंजी को नष्ट करके होता है जिससे आपका अभिलेख एन्क्रिप्ट किया गया था, इसीलिए यह वहाँ भी चलता है जहाँ भंडारण स्वयं मिटाया नहीं जा सकता।",
+      "आपका उतारा हुआ चिह्न उसके बाद भी काम करता रहता है, क्योंकि वह जिस पर टिका है वह नदी का सार्वजनिक पाठ है, हमारी तालिका की कोई पंक्ति नहीं। मिटाने से आपका संकल्प रखने की हमारी क्षमता जाती है, नदी की स्थिति सिद्ध करने की आपकी क्षमता नहीं।",
+      "पुष्टि-संदेश में लिखा होता है कि क्या मिटा, क्या रखा गया, और क्यों, उन रसीदों सहित जो क़ानून माँगता है।",
+    ],
+    trackingH: "इस साइट पर क्या चलता है",
+    tracking: [
+      "इस साइट पर कोई विज्ञापन या स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं चलती, कभी नहीं। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, उसे कुछ भी रिकॉर्ड नहीं करता।",
+      "एक विश्लेषण स्क्रिप्ट पृष्ठ-दृश्य गिनती है: Vercel Web Analytics। वह कोई कुकी नहीं रखती, आपका पीछा किसी दूसरी साइट तक नहीं करती, और किसी फ़ॉर्म की सामग्री कभी नहीं देखती। जो शून्य हमारे पास नहीं है, उसका दावा करने से अच्छा है उसका नाम बता देना।",
+      "उत्पाद में केवल एक और बाहरी स्क्रिप्ट है: भुगतान सेवा की, केवल भुगतान वाले चरण पर, और उसी पृष्ठ पर उसका नाम लिखा रहता है।",
+      "पहली सशुल्क बैठक से यह पृष्ठ यह गिनती भी रखेगा कि सूचना के लिए कितनी गुप्त माँगें हमें मिलीं। यदि वह वाक्य कभी बदलने के बजाय हटा दिया जाए, तो हटाए जाने को ही पढ़िए।",
+    ],
+  },
+
+  s11: {
+    n: "११",
     id: "unsettled",
     h: "जो अभी तय नहीं हुआ",
-    lede: "वही खंड जो हम हर पुरोहित के पृष्ठ पर रखते हैं, क्या सत्यापित हुआ और क्या नहीं, इस बार अपने ऊपर लागू। आगे जो है, उसे इसी तराज़ू पर तौलिए।",
+    lede: "क्या सत्यापित हुआ और क्या नहीं, यही कसौटी इस बार अपने ऊपर लागू। आगे जो है, उसे इसी तराज़ू पर तौलिए।",
     rows: [
       {
-        q: "घाटों पर फ़िल्माने की अनुमति",
-        a: "इनमें से हर स्थल किसी के अधीन है: कोई सभा, कोई मंदिर न्यास, कोई मेला प्राधिकरण, कोई नगर निकाय। जब तक वहाँ फ़िल्माने की लिखित अनुमति हमारे पास न हो, वह घाट नहीं खुलेगा, और उस जल के पृष्ठ पर लिखा होगा कि अनुमति किसने दी।",
-      },
-      {
-        q: "घाट पर वे लोग जो हम नहीं हैं",
-        a: "ये सार्वजनिक स्नान-स्थल हैं। कैमरा पुरोहित और जल पर स्थिर रहता है, स्नान करते लोगों पर कभी नहीं फिरता। जिनकी पहचान हो सकती है और जिन्होंने सहमति नहीं दी, वे प्रकाशन से पहले हटा दिए जाते हैं, और हर पृष्ठ पर हटवाने का पता रहता है। सार्वजनिक स्थान सहमति नहीं होता।",
-      },
-      {
         q: "पंचांग",
-        a: "हमने अभी कोई स्रोत तय नहीं किया। जब तक न हो, इस साइट पर कहीं कोई सटीक समय नहीं आएगा, केवल पर्व का नाम। जब समय आएँगे, उनके साथ गणना-पद्धति, अयनांश और घाट के अपने अक्षांश-देशांतर होंगे; और जहाँ स्रोत आपस में भिन्न हों, वहाँ झूठी सटीकता के बजाय हम सीमा दिखाएँगे।",
+        a: "हमने अभी कोई स्रोत तय नहीं किया। जब तक न हो, इस साइट का हर सटीक समय जहाँ आता है वहीं “अस्थायी” अंकित रहता है, और जहाँ स्रोत भिन्न हों वहाँ झूठी सटीकता के बजाय हम पूरी सीमा दिखाते हैं। स्रोत तय होते ही गणना-पद्धति, अयनांश और घाट के अपने निर्देशांक समयों के साथ प्रकाशित होंगे।",
       },
       {
-        q: "छह जल",
-        a: "हम छहों की जाँच कर रहे हैं, कौन उन्हें संचालित करता है, क्या वहाँ प्रतिदिन अनुष्ठान सच में संपन्न और फ़िल्माए जा सकते हैं, और ऋतु का पहुँच पर क्या प्रभाव है। जहाँ सच्चा उत्तर “नहीं” हो, वह जल नहीं खुलेगा, और हम कारण बताएँगे, चुपचाप हटा नहीं देंगे।",
+        q: "नदी-आँकड़ों की अनुज्ञप्ति",
+        a: "कोपरनिकस के बाढ़-आँकड़े CC BY 4.0 हैं और हम उनका श्रेय देते हैं। जो तय नहीं है वह यह कि जिस सेवा के माध्यम से हम उन्हें पढ़ते हैं उसका वाणिज्यिक स्तर, उसकी सीमाएँ, और श्रेय का ठीक-ठीक वाक्य क्या होगा। जब तक तय न हो, यही वाक्य इसकी सच्ची स्थिति है।",
       },
       {
-        q: "पुरोहित",
-        a: "जब तक कोई पुरोहित अनुबंध पर हस्ताक्षर न करें और लिखित में नाम प्रकाशित करने की सहमति न दें, उनका नाम, चित्र या परिचय इस साइट पर नहीं आएगा। आज यहाँ कोई पुरोहित प्रकाशित नहीं है, और किसी काल्पनिक व्यक्ति को उनकी जगह कभी नहीं रखा जाएगा।",
+        q: "किन जलों का नामित गेज है",
+        a: "केंद्रीय जल आयोग के सार्वजनिक पोर्टल पर गंगा और यमुना बेसिन के लिए नदी-जलस्तर दूरमापी है ही नहीं, इसलिए छह में से चार जलों के लिए हम कोई नामित सरकारी केंद्र नहीं छाप सकते। हम प्रतिरूपित अंक दिखाकर उसे प्रतिरूपित कहना अधिक ठीक मानते हैं, बनिस्बत ऐसे केंद्र का नाम लेने के जो है ही नहीं।",
       },
       {
-        q: "हम कितना देते हैं",
-        a: "प्रस्तावित, अभी इस कसौटी पर नहीं कसा गया कि इन घाटों के पुरोहित वास्तव में कितना कमाते हैं। यह भी तय नहीं कि कैमरा किसका होगा, डेटा का ख़र्च कौन उठाएगा, वर्षा-काल में घाट बंद रहने पर भुगतान का क्या होगा, और क़ानून में उनका दर्जा क्या होगा। हम उत्तर प्रकाशित करेंगे, गोल-मोल विवरण नहीं देंगे।",
+        q: "ध्वनि",
+        a: "हर ध्वनि-खंड के लिए बजने से पहले अनुज्ञप्ति और रिकॉर्ड करने वाले का नाम चाहिए। जिस जल की हमारे पास सच्ची रिकॉर्डिंग नहीं, वह मौन ही आता है, और उसका पृष्ठ यही कहता है। यहाँ कुछ भी कृत्रिम रूप से बनाई गई ध्वनि नहीं है और न किसी घाट से कोई सजीव प्रसारण।",
       },
       {
-        q: "विधि की समीक्षा कौन करता है",
-        a: "हम तीन बाहरी परामर्शदाता चाहते हैं, सार्वजनिक रूप से नामित, मानदेय-प्राप्त, और सार्वजनिक रूप से हमसे असहमत होने के लिए स्वतंत्र। वे अभी हमारे पास नहीं हैं। तब तक किसी पुरोहित की विधि उचित है या नहीं, यह निर्णय केवल हमारा है, और वह दुर्बल निर्णय है।",
+        q: "खंड ०३ का श्लोक",
+        a: "वह रोज़ के प्रचलन से उद्धृत है, किसी नामित प्रकाशित संस्करण से नहीं। इस पृष्ठ का सबसे भार उठाने वाला अनुच्छेद वही है, इसलिए उसे साइट की सबसे अच्छी तरह स्रोत-सहित पंक्ति होना चाहिए, और अभी वह नहीं है। संस्करण तय होते ही यहीं उद्धृत होगा।",
       },
       {
         q: "धन, कर और अधिकार-क्षेत्र",
@@ -685,15 +657,21 @@ export const ethicsContent = { en: ethicsEn, hi: {
     ],
   },
 
-  s11: {
-    n: "११",
+  s12: {
+    n: "१२",
     id: "ask",
     h: "जिनका विवेक आप मानते हैं, उनसे पूछिए",
     body: [
-      "बुक करने से पहले किसी ऐसे व्यक्ति से पूछिए जिनके विवेक पर आप इन विषयों में भरोसा करते हैं, अपने पुरोहित, अपने परिवार के आचार्य, अपने बड़े। यदि वे कहें कि यह आपके लिए उचित नहीं, तो वे ठीक कहते हैं, और हमें बुरा नहीं लगेगा।",
-      "और यदि आपको लगे कि हमसे कहीं चूक हुई है, शास्त्र में, मूल्य में, प्रमाण में, हमें लिखिए। सद्भाव से की गई आपत्तियाँ और उन पर हमारा किया, दोनों हम प्रकाशित करते हैं, वे भी जिन पर हमने कुछ नहीं किया, और क्यों नहीं किया।",
+      "हमें कुछ भी देने से पहले किसी ऐसे व्यक्ति से पूछिए जिनके विवेक पर आप इन विषयों में भरोसा करते हैं, अपने पुरोहित, अपने परिवार के आचार्य, अपने बड़े। यदि वे कहें कि यह आपके लिए उचित नहीं, तो वे ठीक कहते हैं, और हमें बुरा नहीं लगेगा।",
+      "और यदि आपको लगे कि हमसे कहीं चूक हुई है, शास्त्र में, मूल्य में, आँकड़ों में, हमें लिखिए। सद्भाव से की गई आपत्तियाँ और उन पर हमारा किया, दोनों हम प्रकाशित करते हैं, वे भी जिन पर हमने कुछ नहीं किया, और क्यों नहीं किया।",
     ],
     mailLabel: "हमें लिखिए",
+  },
+
+  closing: {
+    title: "आज रात नदी अपने ही स्तर पर है, कोई देखे या न देखे।",
+    body: "आप देखने वालों में हो सकते हैं।",
+    cta: "नदी के साथ बैठिए",
   },
 } } satisfies Record<Lang, typeof ethicsEn>;
 
@@ -701,312 +679,384 @@ export const ethicsContent = { en: ethicsEn, hi: {
 
 const howEn = {
   meta: {
-    title: "How it works, from sankalp to Sankalp Patra · Snanify",
+    title: "How it works: four and a half minutes, five limbs · Snanify",
     description:
-      "The full sequence: what you fill in, what the officiant does at the ghat, what is streamed, and what reaches you afterwards. Nothing is shipped to you, everything Snanify gives you is digital.",
+      "Jal Sankalp, the digital snan, at full length: the reading, the breath, the vow held for eleven seconds, ninety seconds of black screen, and the mark. What is on the screen, what you do, where the river figures come from, and what the whole thing costs.",
   },
   eyebrow: "How it works",
-  title: "The three steps, at full length.",
-  lede: "What you fill in, what the officiant does at the ghat, what is streamed while it happens, and what reaches you afterwards. Where we do not yet know how long something takes, this page says so.",
+  title: "Four and a half minutes. The same five limbs, every day.",
+  lede: "The form never changes. Only the river changes, and it changes on its own. Here is every second of it, what is on the screen, what you do, and what is written down at the end.",
 
   shipping: {
     eyebrow: "Read this first",
-    title: "Nothing is shipped to you.",
+    title: "Nothing is shipped to you, and nothing is done for you.",
     body: [
-      "Everything Snanify gives you is digital: a recording, a certificate, and a record that anyone can verify. No water, no prasad, no thread, no ash, no parcel. Nothing arrives at your door and nothing needs a customs form.",
-      "If what you want is Ganga jal in your hand, we are not the service for that, and we would rather say so here than take your money and disappoint you later.",
+      "Everything Snanify gives you is on a screen: four and a half minutes with the river, a mark that the day leaves behind, and one ruled line in a register you keep. No water, no prasad, no thread, no ash, no parcel, nothing that needs a customs form.",
+      "And nothing is performed on your behalf. There is no priest in this product, nobody stands at any ghat for you, there is no camera on any water, and no part of this is a recording of a ceremony. If what you want is Ganga jal in your hand, or a rite done for you by somebody at the river, we are not that service, and we would rather say so here than take your money and disappoint you later.",
     ],
   },
 
-  phases: [
+  first: {
+    n: "00",
+    id: "first",
+    label: "Before the first one",
+    lede: "The first time you open it, before anything else happens, you are shown this. Once, and never again.",
+    screen: [
+      "No priest does anything for you here. No rite is performed at any ghat in your name. There is no camera on the water.",
+      "What is real: the river, its flow today, modelled by the Copernicus global flood model and ranked against thirty-five years of its own history. The panchang. And your own words.",
+      "That is the whole of it, and it is enough.",
+    ],
+    setupH: "Then three questions, asked once",
+    setup: [
+      { k: "Your name", v: "In Latin or in Devanagari, whichever you would rather read at six in the morning." },
+      { k: "Your gotra", v: "Not every family keeps one. Leave it and the sankalp says so, plainly, with no apology in it." },
+      { k: "What you carry", v: "Your sankalp, in your own words. Nothing is suggested to you and no machine writes it. You will read it back every morning, which is the reason you only type it once." },
+      { k: "Which water", v: "Ganga at Har Ki Pauri, Triveni at Prayagraj, Yamuna at Mathura, Godavari at Nashik, Shipra at Ujjain, Kaveri at Talakaveri." },
+      { k: "When you wake", v: "We bring the river to that hour, in your own timezone, against the muhurat computed for that ghat's true sunrise." },
+    ],
+  },
+
+  formH: "The form, end to end",
+  formLede:
+    "Two hundred and seventy seconds, in the same order, at the same lengths, forever. There is no quick mode and there will never be one.",
+  formHeads: { clock: "Clock", limb: "Limb", length: "Length" },
+
+  limbs: [
     {
-      id: "before",
+      id: "reading",
       n: "01",
-      label: "Before, what you do",
-      steps: [
-        {
-          t: "You take sankalp",
-          d: [
-            "Your name, the names of anyone you are including, your relationship to them, and, if your family keeps one, your gotra. Leave the gotra blank and the customary Kashyapa gotra is used, or your family's own convention if you tell us what it is. Each name may carry its own gotra.",
-            "Then the intention. There is no box asking what is wrong with your life. The suggestions are neutral, nothing is ticked for you, and “let it remain unspoken” is a real choice that many people make.",
-          ],
-        },
-        {
-          t: "You record your own name, if you like",
-          d: [
-            "Twenty seconds of your own voice saying the names and the gotra. The officiant listens to it before the rite. For an Indian family this is worth more than any of the cryptography further down this page, and if a name is still said wrongly, one tap has it recited again.",
-          ],
-        },
-        {
-          t: "You choose a water and a window",
-          d: [
-            "Six rivers, and the occasions each observes. While no panchang source is named, you will see the occasion and not a clock time, we would rather show you less than show you a time we invented. When exact timings appear they carry their method and the coordinates of the ghat, and are converted to wherever you are.",
-          ],
-        },
-        {
-          t: "You decide who hears it",
-          d: [
-            "By default the officiant does not read your sankalp aloud; he states that the rite is offered for the intention you hold. If you ask for it aloud, the checkout tells you in one sentence who else will hear it, and that it becomes part of a recording the ninety-day deletion cannot reach.",
-            "A shared segment carries up to eleven sankalps. A private rite carries one. The page says which you are buying before you pay.",
-          ],
-        },
-        {
-          t: "You pay, and two things arrive at once",
-          d: [
-            "A rite code, and the sankalp seal, the first sixteen characters of a fingerprint of everything you just entered, published to a public record within the hour. Your words are not in it and cannot be recovered from it. It is what proves, later, that your intention existed before the rite.",
-            "You do not need an account. The confirmation email carries a link that claims the booking whenever you want it.",
-          ],
-        },
+      clock: "0:04",
+      length: "21 seconds",
+      label: "The reading",
+      deva: "जल-पाठ · Jal Path",
+      body: [
+        "All the chrome leaves the screen and five almanac lines arrive, one every four seconds, set as a printed entry rather than an interface. The last line is the one people talk about afterwards, because it is about you rather than the river.",
+        "Behind the type, a single hairline waterline sits at the river's real position between its own low water and its own high water for this week of the year. On a day the Godavari is in spate the phone is nearly all dark water above a thin band of paper. In February it sits near the bottom. Nobody has to explain this, and within a week you read it without looking.",
       ],
+      specimenH: "A specimen, with the figures the Ganga actually carried on the eleventh of August",
+      specimen: [
+        "GANGA · HAR KI PAURI · HARIDWAR",
+        "FLOW 1,444 cumec, MODELLED",
+        "HIGHER THAN 41 DAYS IN 100 AT THIS TURN OF THE YEAR",
+        "READ 04:00 IST · COPERNICUS EMS VIA OPEN-METEO",
+        "YOU ARE 6,714 km FROM THIS WATER",
+      ],
+      note: "If we could not reach the river, the fourth line says so and prints the thirty-five year median for the date instead, labelled as exactly that. A stale honest number is completely fine. A fabricated fresh one would be the end of this business.",
     },
     {
-      id: "ghat",
+      id: "breath",
       n: "02",
-      label: "At the ghat, what the officiant does",
-      steps: [
-        {
-          t: "He is told what to say, and nothing more",
-          d: [
-            "The names, the gotras, and the fact that you hold an intention. He sees the words of your sankalp only if you asked for it aloud. Everything about you is wiped from his device within forty-eight hours, by the app rather than by his diligence.",
-          ],
-        },
-        {
-          t: "The slate",
-          d: [
-            "Held to the camera and kept still: your rite code, the date, the ghat, the first characters of your sankalp seal, and that day's public anchor, a number published each morning by a public randomness beacon, which no recording made earlier could possibly display. Anyone can look that number up at its source.",
-          ],
-        },
-        {
-          t: "The sankalp, then the water",
-          d: [
-            "The sankalp fixes the place, the time, the lineage and the person, in the ordinary way. Each name and each gotra is spoken separately and audibly, with at least forty-five seconds of recitation for every named sankalp.",
-            "Then the dip, or, if he judges the water unsafe to enter, the offering is made from the steps. That is his decision, never ours and never yours, and the record says which of the two happened.",
-          ],
-        },
-        {
-          t: "One take",
-          d: [
-            "No cuts. A machine checks the file for cuts, for splices in the audio, and for a slate that matches the booking. A segment that fails any of those checks is not published, it is performed again, and you are told.",
-          ],
-        },
+      clock: "0:25",
+      length: "60 seconds",
+      label: "The breath",
+      deva: "श्वास · Shwas",
+      body: [
+        "The waterline rises for four seconds and falls for six, six times over. That is six breaths a minute with the exhale longer than the inhale, which is the rate the body settles at, and it is the only instruction in the whole product.",
+        "The words “in” and “out” appear on the first two cycles and then never again. The instruction removes itself once your body has the pattern, which is the difference between a ritual and an interface.",
+        "How far the line travels is set by today's flow. A river in spate breathes bigger. Same sixty seconds, physically different every morning, and neither of us did anything to make that happen.",
       ],
+      specimenH: "On the screen",
+      specimen: ["Breathe with the water.", "in", "out"],
+      note: "With reduced motion turned on, the line holds still and the two words alternate on the same four and six second timing. The limb is never shortened.",
     },
     {
-      id: "live",
+      id: "sankalp",
       n: "03",
-      label: "While it happens, if you want to be there",
-      steps: [
-        {
-          t: "The stream is a courtesy",
-          d: [
-            "A link at booking, a reminder fifteen minutes before and again at two minutes. Join from anywhere; there is nothing to install.",
-            "The recording, not the stream, is what we owe you. Connectivity at a ghat fails often, and a stream that drops is a small honest failure, not a failed rite. If you sleep through it, many people are eleven hours away, nothing at all is lost.",
-          ],
-        },
+      clock: "1:25",
+      length: "60 seconds",
+      label: "The vow",
+      deva: "संकल्प · Sankalp",
+      body: [
+        "The water goes still and one line appears: say who you are. Beneath it, the sankalp, already filled in from what the site knows. The masa, the paksha and the tithi, your name, your gotra if you keep one, the city your phone is in, and the water you chose. Your own words sit in the last line, exactly as you typed them on the first day.",
+        "Then you press and hold anywhere on the screen. While you hold, the text fills with vermillion from left to right, the way ink soaks into paper, over eleven seconds. Let go early and the ink drains back. There is no error, no red, and no scolding. You simply begin again.",
+        "Eleven seconds of holding a thumb still while reading your own words is a long time, and it is meant to be. It cannot be hurried and it cannot be skipped, which is the whole reason this is not a form.",
       ],
+      specimenH: "What appears when the eleven seconds are up",
+      specimen: ["Spoken."],
+      note: "Not “recorded”, not “offered”, not “accepted”. Spoken, because that is the only thing that happened, and it is true. If the tithi has no sourced panchang behind it, that line is left out of the sankalp entirely rather than guessed at.",
     },
     {
-      id: "after",
+      id: "stillness",
       n: "04",
-      label: "Afterwards, what reaches you",
-      steps: [
-        {
-          t: "Your recording",
-          d: [
-            "Your own excerpt, opening a few seconds before your name is spoken, with the exact second written down. It contains your names and no one else's, because the other families in a shared segment did not consent to be in your video any more than you consented to be in theirs. The full segment exists and is released only if everyone in it agrees.",
-          ],
-        },
-        {
-          t: "Your Sankalp Patra",
-          d: [
-            "The names and gotras, the water, the ghat, the date, the window in IST and in your own timezone, the officiant's name and identifier, the rite code, the sankalp seal, and a code that takes anyone straight to the verification page.",
-            "It carries a line that cannot be removed: “This is a record of a rite performed and recorded. It is not a claim about its fruit.” It carries our name, and it deliberately does not borrow the seal, the styling or the name of any temple or trust. It is not a temple certificate and it does not pretend to be one.",
-            "We aim to have it with you within a day. Until we have published a month of real numbers, please read that as an aim and not a promise, what we actually achieve is published on the fifth of every month.",
-          ],
-        },
-        {
-          t: "Anyone can check it",
-          d: [
-            "The verification page takes a rite code and a video file. It shows the ghat, the officiant, the scheduled and actual times, the day's anchor with a link to its source, how many sankalps shared the segment, and whether the rite was performed, degraded or not performed at all.",
-            "Drag the file in and the check runs in the browser: the file never leaves the computer, and no account is needed. A file forwarded through WhatsApp has been recompressed and will not match, that is the messenger, not a forgery. Download the original from your rite page. There is a sample rite you can practise on before you ever need this.",
-          ],
-        },
-        {
-          t: "If something went wrong",
-          d: [
-            "Every failure has a published remedy, decided in advance rather than argued case by case: a dropped stream, a rite that did not happen, a closed ghat, a name said wrongly, a change of mind. You never have to telephone anyone.",
-          ],
-        },
+      clock: "2:25",
+      length: "90 seconds",
+      label: "The stillness",
+      deva: "मौन · Maun",
+      body: [
+        "The screen tells you to put the phone down, and then the screen goes away. Fully black, brightness dropped, the river still running in your ears, for ninety of the two hundred and seventy seconds.",
+        "If you pick the phone up nothing happens. No counter, no penalty, no note that you moved. A practice does not police you. One bell at ninety seconds brings you back.",
       ],
+      specimenH: "On the screen, and then not on the screen",
+      specimen: ["Put the phone down. Face down, if you like.", "The river runs for ninety seconds."],
+      note: "The best minute of this product is the minute your screen is off. A screen reader is told the same thing in words: ninety seconds of stillness, the screen is dark on purpose.",
+    },
+    {
+      id: "mark",
+      n: "05",
+      clock: "3:55",
+      length: "35 seconds",
+      label: "The mark",
+      deva: "चिह्न · Chihn",
+      body: [
+        "The screen returns at a fifth of its brightness and the day writes itself into your register as one ruled line, the way an almanac sets an entry. Beneath it, the count, stated as an almanac would state it and never as a game.",
+        "Then the mark itself: one engraving drawn from that day's actual reading, so a monsoon morning is a dark, crowded, high-horizoned sheet and a January morning is a pale and open one. You can tell what the river was doing from across the room, and nobody had to tell you.",
+      ],
+      specimenH: "The register line and the count",
+      specimen: [
+        "11 Aug · Shravan Shu. Ekadashi · Ganga 1,444 cumec · 04:38 · stillness 90 s",
+        "Forty-first consecutive morning.",
+        "The Ganga is carrying 300 cumec more than she did on your first.",
+      ],
+      note: "That second sentence is why people stay. Your practice is measured against the river's own year, so you are not collecting a streak, you are watching a river change while you keep showing up. Miss a week and nothing is lost, because a record is not a score.",
     },
   ],
 
-  /* PLACEHOLDER: no film exists yet. This block must keep saying so until a
-     real rite has been recorded, no stock footage, no generated video. */
-  film: {
-    label: "A short film will sit here",
-    body: "Forty seconds of an actual rite, silent, so you can see the ghat, the slate and the take before you decide anything. It is not here yet because no rite has been performed yet. We will not fill this space with stock footage, someone else's ghat, or anything generated.",
+  after: {
+    id: "keep",
+    n: "06",
+    label: "What you keep",
+    steps: [
+      {
+        t: "The mark, one per sitting",
+        d: [
+          "An engraving generated from the exact reading you sat with: the water, the station or the model cell, the flow, the percentile, the minute, your name and gotra. Two colours, no photograph, nothing generative in the modern sense of the word, just an old plate drawn by arithmetic.",
+          "Anyone can recompute it. The page publishes the exact string the image was made from, so a stranger can hash it themselves and redraw the identical sheet. Forging one would mean forging a public river record.",
+        ],
+      },
+      {
+        t: "The register, one line per morning",
+        d: [
+          "A ruled column of your own mornings, set as an almanac page, kept for as long as you want it. At the end of a year it prints as a single sheet: your vow at the head, the river's high and low water for the year marked in the spot colour, and your kept mornings counted at the foot.",
+        ],
+      },
+      {
+        t: "What the mark does not say",
+        d: [
+          "It never says a rite was performed, because none was. The line at the foot of every sheet reads: no rite was performed for you, this sheet records a river, a minute, and the words you chose to say into it.",
+          "It is set at the same weight as everything else on the sheet. It is not a disclaimer, it is the thesis.",
+        ],
+      },
+    ],
+  },
+
+  sound: {
+    label: "About the sound",
+    body: [
+      "Four recordings of moving water are mixed live against the river's actual percentile, so a river in spate is broken and urgent and a slack river is wide and slow. Rain fades in when it is raining at that ghat.",
+      "The sound is real water and it is not live. It is recorded, licensed and credited, and nothing in it is generated. There is no microphone at any ghat, no live feed from anywhere, and no video in this product at all. A water we have no honest recording of ships silent, and its page says so rather than borrowing somebody else's river.",
+    ],
+  },
+
+  price: {
+    eyebrow: "What it costs",
+    title: "The content is free. The snan is paid.",
+    lede: "There is no free snan and there is no trial. Everything that is a page rather than a practice stays free forever: the live state of all six waters, the panchang, the muhurat calendar with its occasions, and the six waters themselves.",
+    heads: { name: "Line", what: "What it is", world: "Vishwa Dar", india: "Bharat Dar" },
+    rows: [
+      { name: "Ek Dhara", alt: "एक धारा", what: "One snan. The whole four and a half minutes, one mark, one register line.", world: "$2", india: "₹101" },
+      { name: "Gyarah", alt: "ग्यारह", what: "Eleven snans, held on your account until you use them. One dollar a snan, and the line most people take.", world: "$11", india: "₹501" },
+      { name: "Varsh Kosh", alt: "वर्ष कोश", what: "Sixty snans. A year of most mornings, at the lowest price we can hold.", world: "$48", india: "₹2,100" },
+    ],
+    note: "Eleven at a time rather than one at a time for an unglamorous reason we would rather print than hide: a single dollar handed across a card network loses about a third of itself to fees, and eleven handed across at once loses about six percent. Buying eleven is what keeps a snan at a dollar. Nothing expires, nothing renews itself, and no box is ticked for you.",
+    cta: "Sit with the river",
   },
 
   closing: {
     title: "The longer answer to “is this legitimate?”",
-    body: "Our position, what we can promise, what we cannot, the claims we will never make, and what we have not yet settled, is written out in full.",
-    ethicsLabel: "Read our position",
+    body: "The manifesto: what a digital snan is, what it is not, what we will never claim, exactly what runs on this site, and what we have not settled yet.",
+    ethicsLabel: "Read the manifesto",
     faqLabel: "Questions people ask",
   },
 };
 
 export const howItWorksContent = { en: howEn, hi: {
   meta: {
-    title: "कैसे काम करता है, संकल्प से संकल्प पत्र तक · स्नानिफ़ाई",
+    title: "कैसे काम करता है: साढ़े चार मिनट, पाँच अंग · स्नानिफ़ाई",
     description:
-      "पूरा क्रम: आप क्या भरते हैं, पुरोहित घाट पर क्या करते हैं, सजीव क्या प्रसारित होता है, और बाद में आप तक क्या पहुँचता है। आपके पास कुछ भेजा नहीं जाता, स्नानिफ़ाई जो देती है वह सब डिजिटल है।",
+      "जल संकल्प, अर्थात डिजिटल स्नान, पूरे विस्तार से: पाठ, श्वास, ग्यारह सेकंड तक थामा गया संकल्प, नब्बे सेकंड की अंधेरी स्क्रीन, और चिह्न। स्क्रीन पर क्या है, आप क्या करते हैं, नदी के अंक कहाँ से आते हैं, और पूरा मूल्य क्या है।",
   },
   eyebrow: "कैसे काम करता है",
-  title: "तीन चरण, पूरे विस्तार से।",
-  lede: "आप क्या भरते हैं, पुरोहित घाट पर क्या करते हैं, उस समय सजीव क्या दिखता है, और बाद में आप तक क्या पहुँचता है। जहाँ हमें अभी नहीं पता कि कितना समय लगेगा, यह पृष्ठ वही कहता है।",
+  title: "साढ़े चार मिनट। वही पाँच अंग, हर दिन।",
+  lede: "रूप कभी नहीं बदलता। केवल नदी बदलती है, और वह अपने आप बदलती है। यह रहा उसका हर सेकंड, स्क्रीन पर क्या है, आप क्या करते हैं, और अंत में क्या दर्ज होता है।",
 
   shipping: {
     eyebrow: "पहले यह पढ़िए",
-    title: "आपके पास कुछ भेजा नहीं जाता।",
+    title: "आपके पास कुछ भेजा नहीं जाता, और आपके लिए कुछ किया नहीं जाता।",
     body: [
-      "स्नानिफ़ाई जो देती है वह सब डिजिटल है: एक रिकॉर्डिंग, एक प्रमाणपत्र, और एक अभिलेख जिसे कोई भी जाँच सकता है। न जल, न प्रसाद, न मौली, न भस्म, न कोई पार्सल। आपके द्वार पर कुछ नहीं आता, और किसी सीमा-शुल्क फ़ॉर्म की आवश्यकता नहीं।",
-      "यदि आपको हाथ में गंगाजल चाहिए, तो हम उसकी सेवा नहीं हैं, और यह हम यहीं कह देना चाहेंगे, बजाय इसके कि आपकी राशि लेकर बाद में निराश करें।",
+      "स्नानिफ़ाई जो देती है वह सब स्क्रीन पर है: नदी के साथ साढ़े चार मिनट, उस दिन का छोड़ा हुआ एक चिह्न, और एक पंजिका में एक पंक्ति जो आपकी रहती है। न जल, न प्रसाद, न मौली, न भस्म, न कोई पार्सल, न कोई ऐसी वस्तु जिसके लिए सीमा-शुल्क फ़ॉर्म चाहिए।",
+      "और आपकी ओर से कुछ भी संपन्न नहीं किया जाता। इस उत्पाद में कोई पुरोहित नहीं है, कोई आपके लिए किसी घाट पर खड़ा नहीं होता, किसी जल पर कोई कैमरा नहीं है, और इसका कोई अंश किसी अनुष्ठान की रिकॉर्डिंग नहीं है। यदि आपको हाथ में गंगाजल चाहिए, या नदी पर किसी के द्वारा आपके लिए किया गया अनुष्ठान चाहिए, तो हम वह सेवा नहीं हैं, और यह हम यहीं कह देना चाहेंगे, बजाय इसके कि आपकी राशि लेकर बाद में निराश करें।",
     ],
   },
 
-  phases: [
+  first: {
+    n: "००",
+    id: "first",
+    label: "पहली बार से पहले",
+    lede: "पहली बार खोलने पर, किसी और चीज़ से पहले, आपको यही दिखाया जाता है। एक बार, और फिर कभी नहीं।",
+    screen: [
+      "यहाँ कोई पुरोहित आपके लिए कुछ नहीं करता। आपके नाम से किसी घाट पर कोई अनुष्ठान नहीं होता। जल पर कोई कैमरा नहीं है।",
+      "जो सत्य है: नदी, आज उसका प्रवाह, कोपरनिकस के वैश्विक बाढ़ मॉडल से प्रतिरूपित और उसी नदी के पैंतीस वर्षों के इतिहास के सामने तौला हुआ। पंचांग। और आपके अपने शब्द।",
+      "बस इतना ही है, और इतना पर्याप्त है।",
+    ],
+    setupH: "फिर तीन प्रश्न, केवल एक बार",
+    setup: [
+      { k: "आपका नाम", v: "देवनागरी में या रोमन में, जो सुबह छह बजे पढ़ना आपको सहज लगे।" },
+      { k: "आपका गोत्र", v: "हर परिवार गोत्र नहीं रखता। छोड़ दीजिए और संकल्प में सीधे लिखा जाएगा कि गोत्र अनुक्त है, बिना किसी सफ़ाई के।" },
+      { k: "आप क्या लेकर चलते हैं", v: "आपका संकल्प, आपके अपने शब्दों में। कोई सुझाव नहीं दिया जाता और कोई यंत्र उसे नहीं लिखता। इन्हें आप हर सुबह दोहराएँगे, और इसीलिए लिखना केवल एक बार पड़ता है।" },
+      { k: "कौन-सा जल", v: "हर की पौड़ी की गंगा, प्रयागराज की त्रिवेणी, मथुरा की यमुना, नासिक की गोदावरी, उज्जैन की शिप्रा, तालकावेरी की कावेरी।" },
+      { k: "आप कब उठते हैं", v: "हम नदी उसी घड़ी तक लाते हैं, आपके अपने समय में, उस घाट के वास्तविक सूर्योदय से गणना किए गए मुहूर्त के सामने।" },
+    ],
+  },
+
+  formH: "पूरा रूप, आरंभ से अंत तक",
+  formLede:
+    "दो सौ सत्तर सेकंड, उसी क्रम में, उन्हीं अवधियों में, सदा। यहाँ कोई “जल्दी वाला” रूप नहीं है और कभी होगा भी नहीं।",
+  formHeads: { clock: "घड़ी", limb: "अंग", length: "अवधि" },
+
+  limbs: [
     {
-      id: "before",
+      id: "reading",
       n: "०१",
-      label: "पहले, आप क्या करते हैं",
-      steps: [
-        {
-          t: "आप संकल्प लेते हैं",
-          d: [
-            "आपका नाम, जिन्हें आप सम्मिलित कर रहे हैं उनके नाम, उनसे आपका संबंध, और, यदि आपका परिवार मानता है, आपका गोत्र। रिक्त छोड़ेंगे तो प्रचलित कश्यप गोत्र लिया जाएगा, या आपके परिवार की अपनी परिपाटी, यदि आप बता दें। हर नाम का अपना गोत्र हो सकता है।",
-            "फिर आपका संकल्प। कोई खाना यह नहीं पूछता कि आपके जीवन में क्या कष्ट है। सुझाव तटस्थ हैं, कुछ भी पहले से चुना हुआ नहीं, और “इसे अनकहा ही रहने दें” एक वास्तविक विकल्प है जिसे बहुत लोग चुनते हैं।",
-          ],
-        },
-        {
-          t: "चाहें तो अपने स्वर में नाम रिकॉर्ड कीजिए",
-          d: [
-            "बीस सेकंड, जिनमें आप स्वयं नाम और गोत्र बोलते हैं। पुरोहित अनुष्ठान से पहले उसे सुनते हैं। किसी भारतीय परिवार के लिए यह इस पृष्ठ पर आगे लिखी सारी तकनीक से अधिक मूल्यवान है, और यदि फिर भी नाम ग़लत बोला जाए, तो एक स्पर्श से वह दोबारा पढ़ा जाता है।",
-          ],
-        },
-        {
-          t: "आप जल और घड़ी चुनते हैं",
-          d: [
-            "छह नदियाँ, और हर एक पर मनाए जाने वाले पर्व। जब तक कोई पंचांग स्रोत तय नहीं होता, आपको पर्व दिखेगा, घड़ी का समय नहीं, गढ़ा हुआ समय दिखाने से कम दिखाना अच्छा है। जब सटीक समय आएँगे, उनके साथ गणना-पद्धति और घाट के अपने निर्देशांक होंगे, और वे आपके स्थान के समय में बदलकर दिखेंगे।",
-          ],
-        },
-        {
-          t: "आप तय करते हैं कि इसे कौन सुनेगा",
-          d: [
-            "सामान्यतः पुरोहित आपका संकल्प ऊँचे स्वर में नहीं पढ़ते; वे कहते हैं कि अनुष्ठान आपके मन में धारित संकल्प हेतु है। यदि आप ऊँचे स्वर में पढ़वाना चाहें, तो भुगतान से पहले एक वाक्य में लिखा रहता है कि उसे और कौन सुनेगा, और यह कि वह उस रिकॉर्डिंग का अंग बन जाएगा जहाँ नब्बे दिन का नियम नहीं पहुँचता।",
-            "साझा खंड में ग्यारह संकल्प तक होते हैं। निजी अनुष्ठान में एक। आप कौन-सा ले रहे हैं, यह भुगतान से पहले पृष्ठ पर लिखा होता है।",
-          ],
-        },
-        {
-          t: "आप भुगतान करते हैं, और दो चीज़ें एक साथ मिलती हैं",
-          d: [
-            "एक अनुष्ठान कोड, और संकल्प चिह्न, अभी आपने जो भरा उसकी छाप के पहले सोलह अक्षर, जो एक घंटे के भीतर सार्वजनिक अभिलेख में प्रकाशित हो जाते हैं। उसमें आपके शब्द नहीं होते और उससे वे वापस निकाले नहीं जा सकते। बाद में यही सिद्ध करता है कि आपका संकल्प अनुष्ठान से पहले था।",
-            "खाता बनाना आवश्यक नहीं। पुष्टि-ईमेल में एक कड़ी रहती है, जिससे आप जब चाहें बुकिंग अपने नाम कर सकते हैं।",
-          ],
-        },
+      clock: "०:०४",
+      length: "२१ सेकंड",
+      label: "पाठ",
+      deva: "जल-पाठ · Jal Path",
+      body: [
+        "स्क्रीन से सब कुछ हट जाता है और पंचांग की पाँच पंक्तियाँ आती हैं, हर चार सेकंड में एक, किसी छपी हुई प्रविष्टि की तरह, किसी इंटरफ़ेस की तरह नहीं। अंतिम पंक्ति ही वह है जिसकी चर्चा लोग बाद में करते हैं, क्योंकि वह नदी के बारे में नहीं, आपके बारे में है।",
+        "अक्षरों के पीछे एक महीन जल-रेखा ठीक उस स्थान पर रहती है जहाँ नदी वर्ष के इस सप्ताह के अपने न्यूनतम और अधिकतम के बीच आज है। जिस दिन गोदावरी उफान पर हों, फ़ोन लगभग पूरा गहरा जल होता है और काग़ज़ की एक पतली पट्टी बचती है। फ़रवरी में वह रेखा नीचे बैठती है। यह किसी को समझाना नहीं पड़ता, और सप्ताह भर में आप उसे बिना देखे पढ़ने लगते हैं।",
       ],
+      specimenH: "एक नमूना, उन्हीं अंकों के साथ जो ग्यारह अगस्त को गंगा में थे",
+      specimen: [
+        "गंगा · हर की पौड़ी · हरिद्वार",
+        "प्रवाह १,४४४ क्यूमेक, प्रतिरूपित",
+        "वर्ष के इस मोड़ पर सौ में से ४१ दिनों से ऊपर",
+        "पाठ ०४:०० भा.मा.स. · कोपरनिकस EMS, Open-Meteo के माध्यम से",
+        "आप इस जल से ६,७१४ किमी दूर हैं",
+      ],
+      note: "यदि हम नदी तक न पहुँच सके, तो चौथी पंक्ति यही कहती है और उसकी जगह उस तिथि का पैंतीस-वर्षीय मध्यमान छापती है, ठीक इसी नाम से। पुराना पर सच्चा अंक पूर्णतः ठीक है। गढ़ा हुआ ताज़ा अंक इस व्यापार का अंत होगा।",
     },
     {
-      id: "ghat",
+      id: "breath",
       n: "०२",
-      label: "घाट पर, पुरोहित क्या करते हैं",
-      steps: [
-        {
-          t: "उन्हें उतना ही बताया जाता है जितना बोलना है",
-          d: [
-            "नाम, गोत्र, और यह कि आपके मन में कोई संकल्प है। आपके संकल्प के शब्द वे तभी देखते हैं जब आपने ऊँचे स्वर में पढ़ने को कहा हो। आपसे जुड़ी हर बात अड़तालीस घंटे में उनके उपकरण से मिट जाती है, ऐप से, उनकी सावधानी के भरोसे नहीं।",
-          ],
-        },
-        {
-          t: "पट्टिका",
-          d: [
-            "कैमरे के सामने स्थिर रखी जाती है: आपका अनुष्ठान कोड, तिथि, घाट, आपके संकल्प चिह्न के पहले अक्षर, और उस दिन का सार्वजनिक अंक, जो प्रत्येक प्रातः एक सार्वजनिक स्रोत से आता है और जिसे पहले बनी कोई रिकॉर्डिंग दिखा ही नहीं सकती। उस अंक को कोई भी उसके स्रोत पर जाँच सकता है।",
-          ],
-        },
-        {
-          t: "संकल्प, फिर जल",
-          d: [
-            "संकल्प देश, काल, गोत्र और व्यक्ति को सामान्य विधि से निश्चित करता है। हर नाम और हर गोत्र अलग-अलग और सुनाई देने योग्य स्वर में बोला जाता है, और प्रत्येक नामित संकल्प के लिए कम से कम पैंतालीस सेकंड का पाठ होता है।",
-            "फिर डुबकी, या यदि वे जल में उतरना असुरक्षित समझें, तो सीढ़ियों से अर्पण। यह निर्णय उनका है, न हमारा, न आपका; और अभिलेख बताता है कि दोनों में से क्या हुआ।",
-          ],
-        },
-        {
-          t: "एक ही दृश्य",
-          d: [
-            "बिना कट। यंत्र फ़ाइल में कट, ध्वनि के जोड़, और पट्टिका का बुकिंग से मेल, तीनों जाँचता है। जो खंड किसी भी जाँच में विफल हो, वह प्रकाशित नहीं होता; वह दोबारा किया जाता है और आपको बताया जाता है।",
-          ],
-        },
+      clock: "०:२५",
+      length: "६० सेकंड",
+      label: "श्वास",
+      deva: "श्वास · Shwas",
+      body: [
+        "जल-रेखा चार सेकंड चढ़ती है और छह सेकंड उतरती है, छह बार। यह एक मिनट में छह साँसें हैं, जिनमें छोड़ना लेने से लंबा है, और यही वह गति है जिस पर देह शांत होती है। पूरे उत्पाद में निर्देश बस यही एक है।",
+        "“भीतर” और “बाहर” पहले दो चक्रों में दिखते हैं और फिर कभी नहीं। जैसे ही देह को लय मिल जाती है, निर्देश स्वयं हट जाता है, और यही अंतर है साधना और इंटरफ़ेस में।",
+        "रेखा कितनी दूर तक जाती है, यह आज के प्रवाह से तय होता है। उफान पर बहती नदी बड़ी साँस लेती है। वही साठ सेकंड, हर सुबह भौतिक रूप से अलग, और इसके लिए हममें से किसी ने कुछ नहीं किया।",
       ],
+      specimenH: "स्क्रीन पर",
+      specimen: ["जल के साथ साँस लीजिए।", "भीतर", "बाहर"],
+      note: "यदि आपके फ़ोन पर गति कम करने का विकल्प चालू है, तो रेखा स्थिर रहती है और वही दो शब्द उसी चार तथा छह सेकंड की लय पर बदलते हैं। अंग कभी छोटा नहीं किया जाता।",
     },
     {
-      id: "live",
+      id: "sankalp",
       n: "०३",
-      label: "उस समय, यदि आप साथ रहना चाहें",
-      steps: [
-        {
-          t: "प्रसारण एक शिष्टाचार है",
-          d: [
-            "बुकिंग के साथ एक कड़ी, पंद्रह मिनट पहले और फिर दो मिनट पहले स्मरण। कहीं से भी जुड़िए; कुछ इंस्टॉल नहीं करना।",
-            "हम पर आपका अधिकार रिकॉर्डिंग का है, प्रसारण का नहीं। घाट पर संपर्क अक्सर टूटता है, और टूटा प्रसारण एक छोटी सच्ची चूक है, विफल अनुष्ठान नहीं। यदि आप उस समय सो रहे हों, बहुत लोग ग्यारह घंटे दूर हैं, तो कुछ भी नहीं खोता।",
-          ],
-        },
+      clock: "१:२५",
+      length: "६० सेकंड",
+      label: "संकल्प",
+      deva: "संकल्प · Sankalp",
+      body: [
+        "जल स्थिर हो जाता है और एक पंक्ति आती है: कहिए, आप कौन हैं। उसके नीचे संकल्प, जो साइट के पास जो है उससे पहले ही भरा हुआ है। मास, पक्ष और तिथि, आपका नाम, गोत्र यदि आप रखते हैं, वह नगर जहाँ आपका फ़ोन है, और आपका चुना हुआ जल। अंतिम पंक्ति में आपके अपने शब्द, ठीक वैसे जैसे आपने पहले दिन लिखे थे।",
+        "फिर आप स्क्रीन पर कहीं भी दबाकर थामे रहते हैं। जब तक आप थामे हैं, अक्षर बाएँ से दाएँ सिंदूरी रंग से भरते जाते हैं, जैसे काग़ज़ में स्याही उतरती है, ग्यारह सेकंड में। पहले छोड़ देंगे तो स्याही लौट जाएगी। न कोई त्रुटि, न लाल रंग, न कोई डाँट। आप बस फिर से आरंभ करते हैं।",
+        "अपने ही शब्द पढ़ते हुए ग्यारह सेकंड तक अंगूठा स्थिर रखना लंबा समय है, और उसे लंबा ही होना है। उसे न जल्दी किया जा सकता है, न छोड़ा जा सकता है, और यही पूरा कारण है कि यह कोई फ़ॉर्म नहीं है।",
       ],
+      specimenH: "ग्यारह सेकंड पूरे होने पर क्या आता है",
+      specimen: ["उच्चारित।"],
+      note: "न “रिकॉर्ड हुआ”, न “अर्पित हुआ”, न “स्वीकृत”। उच्चारित, क्योंकि केवल यही हुआ, और यह सच है। यदि तिथि के पीछे कोई स्रोत-सहित पंचांग नहीं है, तो वह पंक्ति संकल्प से पूरी हटा दी जाती है, अनुमान से भरी नहीं जाती।",
     },
     {
-      id: "after",
+      id: "stillness",
       n: "०४",
-      label: "बाद में, आप तक क्या पहुँचता है",
-      steps: [
-        {
-          t: "आपकी रिकॉर्डिंग",
-          d: [
-            "आपका अपना अंश, जो आपका नाम बोले जाने से कुछ सेकंड पहले आरंभ होता है, और वह सेकंड लिखा हुआ मिलता है। उसमें आपके नाम हैं, किसी और के नहीं, क्योंकि साझा खंड के अन्य परिवारों ने आपके वीडियो में रहने की सहमति उतनी ही नहीं दी, जितनी आपने उनके वीडियो में रहने की। पूरा खंड रहता है, और तभी दिया जाता है जब उसमें सम्मिलित सब सहमत हों।",
-          ],
-        },
-        {
-          t: "आपका संकल्प पत्र",
-          d: [
-            "नाम और गोत्र, जल, घाट, तिथि, मुहूर्त भारतीय समय में और आपके अपने समय में, पुरोहित का नाम और पहचान-अंक, अनुष्ठान कोड, संकल्प चिह्न, और एक कोड जो किसी को भी सीधे जाँच-पृष्ठ तक ले जाता है।",
-            "उस पर एक पंक्ति रहती है जो हटाई नहीं जा सकती: “यह संपन्न एवं अभिलिखित अनुष्ठान का प्रमाण है। इसके फल का दावा नहीं।” उस पर हमारा नाम रहता है, और वह जानबूझकर किसी मंदिर या न्यास की मुहर, शैली या नाम उधार नहीं लेता। यह मंदिर का प्रमाणपत्र नहीं है और होने का दिखावा भी नहीं करता।",
-            "हमारा प्रयास है कि वह एक दिन में आप तक पहुँचे। जब तक हम एक महीने के वास्तविक आँकड़े प्रकाशित न कर दें, कृपया इसे प्रयास मानिए, वचन नहीं, जो वास्तव में होता है वह हर माह की पाँच तारीख़ को प्रकाशित होता है।",
-          ],
-        },
-        {
-          t: "इसे कोई भी जाँच सकता है",
-          d: [
-            "जाँच-पृष्ठ अनुष्ठान कोड और वीडियो फ़ाइल लेता है। वह घाट, पुरोहित, नियत और वास्तविक समय, उस दिन का अंक (स्रोत की कड़ी सहित), खंड में कितने संकल्प थे, और अनुष्ठान संपन्न हुआ, बाधित रहा या नहीं हुआ, सब दिखाता है।",
-            "फ़ाइल खींचकर छोड़िए और जाँच ब्राउज़र में ही चलती है: फ़ाइल कंप्यूटर से बाहर नहीं जाती, और कोई खाता नहीं चाहिए। WhatsApp से आगे भेजी गई फ़ाइल दबाकर छोटी की जा चुकी होती है और मेल नहीं खाएगी, यह संदेशवाहक का प्रभाव है, जालसाज़ी नहीं। मूल फ़ाइल अपने अनुष्ठान पृष्ठ से उतारिए। एक नमूना अनुष्ठान भी है, जिस पर आप आवश्यकता पड़ने से पहले अभ्यास कर सकते हैं।",
-          ],
-        },
-        {
-          t: "यदि कुछ गड़बड़ हुआ",
-          d: [
-            "हर चूक का उपाय पहले से लिखा और प्रकाशित है, हर बार अलग बहस नहीं: टूटा प्रसारण, न हुआ अनुष्ठान, बंद घाट, ग़लत बोला गया नाम, बदला हुआ मन। किसी को फ़ोन करने की आवश्यकता कभी नहीं पड़ती।",
-          ],
-        },
+      clock: "२:२५",
+      length: "९० सेकंड",
+      label: "मौन",
+      deva: "मौन · Maun",
+      body: [
+        "स्क्रीन कहती है कि फ़ोन नीचे रख दीजिए, और फिर स्क्रीन स्वयं चली जाती है। पूरी तरह काली, चमक घटी हुई, कानों में नदी बहती हुई, दो सौ सत्तर में से नब्बे सेकंड तक।",
+        "यदि आप फ़ोन उठा लें तो कुछ नहीं होता। न कोई गिनती, न दंड, न यह टिप्पणी कि आप हिले। साधना पहरा नहीं देती। नब्बे सेकंड पर एक घंटी आपको वापस बुला लेती है।",
       ],
+      specimenH: "स्क्रीन पर, और फिर स्क्रीन पर कुछ नहीं",
+      specimen: ["फ़ोन नीचे रख दीजिए। चाहें तो उल्टा।", "नब्बे सेकंड नदी बहती रहेगी।"],
+      note: "इस उत्पाद का सबसे अच्छा मिनट वही है जब आपकी स्क्रीन बंद रहती है। स्क्रीन रीडर को यही बात शब्दों में बताई जाती है: नब्बे सेकंड का मौन, स्क्रीन जानबूझकर अंधेरी है।",
+    },
+    {
+      id: "mark",
+      n: "०५",
+      clock: "३:५५",
+      length: "३५ सेकंड",
+      label: "चिह्न",
+      deva: "चिह्न · Chihn",
+      body: [
+        "स्क्रीन पाँचवें हिस्से की चमक पर लौटती है और वह दिन आपकी पंजिका में एक पंक्ति बनकर स्वयं लिख जाता है, ठीक वैसे जैसे पंचांग अपनी प्रविष्टि रखता है। उसके नीचे गिनती, वैसे ही कही हुई जैसे पंचांग कहेगा, किसी खेल की तरह कभी नहीं।",
+        "फिर चिह्न स्वयं: उसी दिन के वास्तविक पाठ से खींची गई एक कृति, इसलिए वर्षा की सुबह गहरी, भरी हुई और ऊँचे क्षितिज वाली होती है, और जनवरी की सुबह हल्की और खुली। कमरे के दूसरे छोर से देखकर भी आप जान लेते हैं कि उस दिन नदी क्या कर रही थी, और यह किसी ने आपको बताया नहीं।",
+      ],
+      specimenH: "पंजिका की पंक्ति और गिनती",
+      specimen: [
+        "११ अग. · श्रावण शु. एकादशी · गंगा १,४४४ क्यूमेक · ०४:३८ · मौन ९० से.",
+        "इकतालीसवीं लगातार सुबह।",
+        "आपकी पहली सुबह से गंगा ३०० क्यूमेक अधिक ले जा रही हैं।",
+      ],
+      note: "दूसरा वाक्य ही वह कारण है जिससे लोग टिके रहते हैं। आपकी साधना नदी के अपने वर्ष के सामने तौली जाती है, इसलिए आप कोई शृंखला नहीं जोड़ रहे, आप एक नदी को बदलते हुए देख रहे हैं और साथ-साथ आते रहते हैं। एक सप्ताह छूट जाए तो कुछ नहीं खोता, क्योंकि अभिलेख अंक-तालिका नहीं है।",
     },
   ],
 
-  film: {
-    label: "यहाँ एक लघु फ़िल्म आएगी",
-    body: "चालीस सेकंड, किसी वास्तविक अनुष्ठान के, बिना ध्वनि, ताकि निर्णय से पहले आप घाट, पट्टिका और पूरा दृश्य देख सकें। वह अभी यहाँ नहीं है क्योंकि अभी कोई अनुष्ठान हुआ ही नहीं। इस स्थान को हम न किसी तैयार फ़ुटेज से भरेंगे, न किसी और के घाट से, न किसी कृत्रिम रूप से बने दृश्य से।",
+  after: {
+    id: "keep",
+    n: "०६",
+    label: "आपके पास क्या रहता है",
+    steps: [
+      {
+        t: "चिह्न, हर बैठक पर एक",
+        d: [
+          "ठीक उसी पाठ से बनी एक कृति जिसके साथ आप बैठे: जल, मापक केंद्र अथवा मॉडल का खंड, प्रवाह, प्रतिशतक, वह मिनट, आपका नाम और गोत्र। दो ही रंग, कोई छायाचित्र नहीं, आज के अर्थ में कुछ भी कृत्रिम रूप से रचा हुआ नहीं, केवल गणित से खींची गई एक पुरानी प्लेट।",
+          "इसे कोई भी दोबारा गिन सकता है। पृष्ठ पर वह पूरी पंक्ति छपी रहती है जिससे चित्र बना, इसलिए कोई अपरिचित स्वयं उसका हैश निकालकर वही चित्र फिर से खींच सकता है। इसे नक़ली बनाने का अर्थ होगा नदी का सार्वजनिक अभिलेख नक़ली बनाना।",
+        ],
+      },
+      {
+        t: "पंजिका, हर सुबह की एक पंक्ति",
+        d: [
+          "आपकी अपनी सुबहों का एक पंक्तिबद्ध स्तंभ, पंचांग के पन्ने की तरह, जब तक आप चाहें। वर्ष के अंत में वह एक ही पत्र बनकर छपता है: शीर्ष पर आपका संकल्प, वर्ष भर के नदी के उच्चतम और निम्नतम जल सिंदूरी रंग में अंकित, और पाद पर आपकी निभाई हुई सुबहें गिनी हुई।",
+        ],
+      },
+      {
+        t: "चिह्न क्या नहीं कहता",
+        d: [
+          "वह कभी नहीं कहता कि कोई अनुष्ठान हुआ, क्योंकि हुआ ही नहीं। हर पत्र के पाद पर यही पंक्ति रहती है: आपके लिए कोई अनुष्ठान नहीं किया गया। यह पत्र एक नदी, एक क्षण, और वे शब्द अंकित करता है जो आपने उसमें कहे।",
+          "वह पत्र की बाक़ी हर चीज़ जितने ही भार में छपी है। वह कोई अस्वीकरण नहीं, वही मूल बात है।",
+        ],
+      },
+    ],
+  },
+
+  sound: {
+    label: "ध्वनि के विषय में",
+    body: [
+      "बहते जल की चार रिकॉर्डिंग नदी के वास्तविक प्रतिशतक के सामने सजीव रूप से मिलाई जाती हैं, इसलिए उफान पर बहती नदी टूटी हुई और तेज़ सुनाई देती है और मंद नदी चौड़ी और धीमी। जब उस घाट पर वर्षा हो रही होती है, तब वर्षा भी घुल आती है।",
+      "ध्वनि सच्चे जल की है और वह सजीव नहीं है। वह रिकॉर्ड की हुई, अनुज्ञप्त और श्रेय सहित है, और उसमें कुछ भी कृत्रिम रूप से बनाया हुआ नहीं। किसी घाट पर कोई माइक्रोफ़ोन नहीं है, कहीं से कोई सजीव प्रसारण नहीं है, और इस उत्पाद में वीडियो है ही नहीं। जिस जल की हमारे पास सच्ची रिकॉर्डिंग नहीं, वह मौन ही आता है, और उसका पृष्ठ यही कहता है, किसी और की नदी उधार नहीं लेता।",
+    ],
+  },
+
+  price: {
+    eyebrow: "मूल्य",
+    title: "पढ़ने की सामग्री निःशुल्क है। स्नान सशुल्क है।",
+    lede: "कोई निःशुल्क स्नान नहीं है और कोई आज़माइश नहीं है। जो पृष्ठ है, साधना नहीं, वह सदा निःशुल्क रहेगा: छहों जलों की सजीव स्थिति, पंचांग, मुहूर्त और उसके पर्व, और छहों जलों के अपने पृष्ठ।",
+    heads: { name: "पंक्ति", what: "यह क्या है", world: "विश्व दर", india: "भारत दर" },
+    rows: [
+      { name: "एक धारा", alt: "Ek Dhara", what: "एक स्नान। पूरे साढ़े चार मिनट, एक चिह्न, पंजिका की एक पंक्ति।", world: "$2", india: "₹१०१" },
+      { name: "ग्यारह", alt: "Gyarah", what: "ग्यारह स्नान, जो आपके खाते में तब तक रहते हैं जब तक आप उन्हें लें। एक स्नान एक डॉलर का, और अधिकांश लोग यही लेते हैं।", world: "$11", india: "₹५०१" },
+      { name: "वर्ष कोश", alt: "Varsh Kosh", what: "साठ स्नान। वर्ष की अधिकांश सुबहें, उस न्यूनतम मूल्य पर जो हम निभा सकते हैं।", world: "$48", india: "₹२,१००" },
+    ],
+    note: "एक-एक करके नहीं, ग्यारह एक साथ, और इसका कारण साधारण है जिसे हम छिपाने के बजाय छाप देना ठीक समझते हैं: कार्ड नेटवर्क से गुज़रता एक अकेला डॉलर अपना लगभग एक तिहाई शुल्क में गँवा देता है, और एक साथ गुज़रते ग्यारह लगभग छह प्रतिशत। एक स्नान एक डॉलर पर इसीलिए टिकता है। कुछ भी समाप्त नहीं होता, कुछ भी स्वयं नवीनीकृत नहीं होता, और कोई डिब्बी आपके लिए पहले से चुनी हुई नहीं होती।",
+    cta: "नदी के साथ बैठिए",
   },
 
   closing: {
     title: "“क्या यह सचमुच वैध है?”, विस्तृत उत्तर",
-    body: "हमारा पक्ष, हम क्या वचन दे सकते हैं, क्या नहीं, कौन-से दावे हम कभी नहीं करेंगे, और क्या अभी तय नहीं हुआ, पूरा लिखा हुआ है।",
-    ethicsLabel: "हमारा पक्ष पढ़िए",
+    body: "घोषणा: डिजिटल स्नान क्या है, क्या नहीं, कौन-से दावे हम कभी नहीं करेंगे, इस साइट पर ठीक-ठीक क्या चलता है, और क्या अभी तय नहीं हुआ।",
+    ethicsLabel: "घोषणा पढ़िए",
     faqLabel: "लोग जो पूछते हैं",
   },
 } } satisfies Record<Lang, typeof howEn>;
@@ -1017,13 +1067,14 @@ const faqEn = {
   meta: {
     title: "Questions, including the sceptical ones · Snanify",
     description:
-      "Does this actually work? How do I know you did it? Is this against tradition? What if I have no gotra? Plain answers, including the ones where the honest answer is that we cannot promise.",
+      "What am I paying for? Is this religious? Does it work? Is there a priest? Where does the river data come from? What happens to my name and my sankalp? Plain answers, including the ones where the honest answer is that we cannot promise.",
   },
   eyebrow: "Questions",
   title: "Questions, including the ones we would rather not be asked.",
   lede: "If the honest answer is that we cannot promise something, the answer below says exactly that. Nothing here is written to close a sale.",
   indexLabel: "Sections",
   moreLabel: "Read the long answer",
+  ctaLabel: "Sit with the river",
 
   groups: [
     {
@@ -1034,35 +1085,26 @@ const faqEn = {
           id: "does-it-work",
           q: "Does this actually work?",
           a: [
-            "We cannot answer that, and we will not pretend to.",
-            "What we can tell you is exactly what happens: a qualified officiant performs a snan-sankalp at a named ghat, at a named hour, in your name and your gotra, and we give you an unedited recording and a record that anyone can verify. That much is a fact about the world and you can check it.",
-            "Whether a rite performed by a purohit on your behalf carries what you hope it carries is a question for your tradition, and for people whose judgement you trust in these matters, not for a company that profits when the answer is yes.",
+            "Define works.",
+            "If you mean does the flow on your screen match what the river is doing, yes, and the source is public, linked, and checkable by you without asking us anything.",
+            "If you mean does it change your fate, we have no idea, and neither does anyone charging you more. What we sell is an hour, a river, a true reading of it, and words you say yourself. Everything after that is between you and your tradition.",
           ],
         },
         {
-          id: "scam",
-          q: "How do I know this is not a scam?",
+          id: "priest",
+          q: "Is there a priest? Who performs it?",
           a: [
-            "Partly by what we can prove, and partly by what we refuse to say.",
-            "The proof: a fingerprint of your sankalp published before the rite, a slate on camera carrying a number that did not exist the previous day, one continuous take, and a public record you can check in your own browser without an account.",
-            "The refusal is the stronger signal. We publish a list of claims we will never make, no washed-away sins, no moksha, no dosha in your chart, no restless ancestors, no outcome in your life, and an address to report us if we ever break it. A business selling fake punya would not publish that list, because the list is the whole product they would be selling.",
+            "There is no priest. There never is, and that is the point rather than a shortcut.",
+            "Nobody stands at a ghat for you, nobody says your name into a camera, and nothing is recorded. What happens is that you sit for four and a half minutes with the real state of a real river and say your own sankalp. That is a smaller claim than the alternative, and it is the only one we can make truthfully.",
+            "If you hold that a rite counts only when a qualified person performs it for you at the tirth, that is a coherent position and this product is not built for you. We are not going to argue you out of it.",
           ],
         },
         {
-          id: "proof",
-          q: "How do I know you actually did it, and did it for me?",
+          id: "religious",
+          q: "Is this religious? Am I doing a puja?",
           a: [
-            "Five things, and none of them require trusting us. Before the rite, we publish a fingerprint of your sankalp, so it cannot be back-dated. At the ghat, the officiant holds up a slate with your rite code and that day's public anchor number, footage shot earlier cannot show it. The rite is one continuous take with no cuts, machine-checked. Afterwards, the recording's fingerprint goes into a public record with the times and the ghat. And anyone at all can drag the video file into our verification page and be told whether it is the file we recorded; the check runs in their browser, and the file never leaves their computer.",
-            "Your name is spoken aloud, individually, and we write down the exact second. Your recording opens there.",
-          ],
-        },
-        {
-          id: "tradition",
-          q: "Is this against tradition?",
-          a: [
-            "Some of it has clear precedent. The sankalp is, by its own grammar, a naming, it fixes place, time, lineage and person, and has never required that the person be standing there. Hindu ritual has always separated the sponsor of a rite from its performer. Temples have accepted archana and seva booked from another city for a very long time.",
-            "Some of it does not. Traditions genuinely disagree about whether a rite watched through a screen is witnessed at all. Some acharyas accept mediated darshan; some do not. We take no side, and we will not quote only the ones who agree with us.",
-            "So: ask someone whose judgement you trust in these matters. If they say it is not for you, they are right, and we are not offended.",
+            "You are taking a sankalp, which is a naming: it fixes the place, the time, the lineage and the person. That is a Hindu form and we use it as one, in Devanagari and in Latin.",
+            "Nothing else is asserted. There is no deity invoked on your behalf, no puja performed for you, no ceremony of any kind, because there is nobody here to perform one. People use it as a practice, people use it as four minutes of attention before the day starts, and both are fine by us.",
           ],
         },
         {
@@ -1070,8 +1112,17 @@ const faqEn = {
           q: "Is this the same as bathing in the river myself?",
           a: [
             "No. Not close, and we will never say otherwise.",
-            "Snan is an act of the body, and it is not happening to your body. The journey is part of the pilgrimage, and we cannot give you the journey. What is performed is the sankalp and the rite that follows it, by the officiant, in your name.",
+            "Snan is an act of the body, and it is not happening to your body. The journey is part of the pilgrimage and we cannot give you the journey.",
             "If you can make the journey, make it. We will not say a word against it.",
+          ],
+        },
+        {
+          id: "scam",
+          q: "How do I know this is not a scam?",
+          a: [
+            "Partly by what you can check yourself, and partly by what we refuse to say.",
+            "What you can check: the river figure on any page is modelled discharge from the Copernicus global flood model, public and open, and every page prints the hour it was read. The mark you keep carries the exact string it was generated from, so a stranger can recompute the image and confirm the numbers against the source. There is nothing in that chain you have to take our word for.",
+            "The refusal is the stronger signal. We publish a list of claims we will never make, no washed-away sins, no moksha, no dosha in your chart, no restless ancestors, no outcome in your life, and an address to report us if we ever break it. A business selling fake punya would not publish that list, because the list is the whole product they would be selling.",
           ],
         },
         {
@@ -1079,127 +1130,204 @@ const faqEn = {
           q: "Do I get more punya if I pay more?",
           a: [
             "No, and anyone who tells you otherwise is selling the thing we refuse to sell.",
-            "The offerings differ in what we do for you, how many rites, how many names, whether the segment is shared or private. They do not differ in what a rite is worth. Twelve snans are twelve rites, not more merit per rite.",
+            "The three lines differ in how many snans they hold and what each one costs us to process. They do not differ in what a sitting is. Eleven snans are eleven sittings, not more merit per sitting.",
           ],
         },
         {
-          id: "priest",
-          q: "Who actually performs it? Is he a real priest?",
+          id: "who-for",
+          q: "Who is this actually for?",
           a: [
-            "Every officiant is engaged directly by Snanify on a written contract, in his own language, with a signed copy in his hand. Not a marketplace, not gig work.",
-            "There is no certifying board for ghat purohits, so we will not print a badge that means nothing. Instead each officiant's page states what we verified, identity, years of practice at that ghat, attestation from other purohits there, a recorded assessment, and, in the same block, what we could not verify and why.",
-            "Today there are no officiants published on this site. Nobody has signed and consented to be named, and we will never fill that gap with a stock photograph of a priest.",
+            "People who cannot get to the water on the calendar's schedule: a tithi that falls on a Tuesday in Frankfurt, three weeks of leave a year, a shraddh in the middle of none of them.",
+            "People in India for whom the ghat is not far but unreachable. Old knees have kept more people from the water than distance ever has.",
+            "People who want the practice without the institution, and people who are simply curious for two dollars without being told first that something is wrong with their lives.",
+            "It is not for anyone who can get to the water. Go.",
           ],
         },
       ],
     },
     {
-      id: "receive",
-      title: "What you actually get",
+      id: "sitting",
+      title: "What actually happens",
       items: [
+        {
+          id: "what-happens",
+          q: "What is actually on my screen?",
+          a: [
+            "Five limbs, always the same, four and a half minutes end to end. Twenty-one seconds of the river's reading set as an almanac entry. Sixty seconds of breathing with a waterline that rises for four and falls for six. Sixty seconds with your own sankalp, which you finish by pressing and holding for eleven seconds while the words fill with vermillion. Ninety seconds of a completely black screen with the river still running. Thirty-five seconds in which the day writes itself into your register and your mark is drawn.",
+            "There is no progress bar anywhere in it, and no quick mode. The waterline is the only thing telling you time is passing, and it is busy doing something else.",
+          ],
+        },
+        {
+          id: "black-screen",
+          q: "Ninety seconds of a black screen? Really?",
+          a: [
+            "Yes, and it is the best part. The screen tells you to put the phone down, and then it goes away.",
+            "If you pick it up, nothing happens. No counter, no penalty, no note that you moved. One bell brings you back at ninety seconds.",
+            "A digital product whose best minute is the minute the screen is off is a strange thing to build and an easy thing to defend.",
+          ],
+        },
+        {
+          id: "when",
+          q: "Do I have to be awake at four in the morning?",
+          a: [
+            "No. You tell us when you wake, and the river is brought to that hour in your own timezone. Many people sit in the evening.",
+            "The muhurat windows are computed against that ghat's true sunrise, so they are genuinely different for Haridwar and Nashik. Sit inside one if it matters to you, and outside one if it does not.",
+          ],
+        },
+        {
+          id: "miss",
+          q: "What if I miss a day?",
+          a: [
+            "Nothing happens. Your register is a record, not a streak: it shows the mornings you kept, it does not scold you for the ones you did not.",
+            "There are no badges, no levels, and no message telling you that you have not sat since March. We think that is precisely why people break it less.",
+          ],
+        },
+        {
+          id: "sound",
+          q: "Is the sound real? Is it live?",
+          a: [
+            "It is real water, and it is not live.",
+            "Four recordings of moving water are mixed against the river's actual percentile, so a river in spate sounds broken and urgent and a slack river sounds wide and slow. Rain fades in when it is raining at that ghat. Every recording is licensed and credited.",
+            "There is no microphone at any ghat, no live feed from anywhere, and no generated audio. A water we have no honest recording of ships silent, and its page says so rather than borrowing somebody else's river.",
+          ],
+        },
         {
           id: "shipping",
           q: "Do you send me Ganga jal, or prasad?",
           a: [
             "No. Nothing is shipped to you, ever.",
-            "Everything Snanify gives you is digital: the recording, the Sankalp Patra, and a record anyone can verify. No water, no prasad, no thread, no ash, no parcel, no customs form.",
+            "Everything Snanify gives you is on a screen: the sitting, the mark, and your register. No water, no prasad, no thread, no ash, no parcel, no customs form.",
             "If what you want is Ganga jal in your hand, we are not the service for that.",
           ],
         },
         {
-          id: "patra",
-          q: "What is a Sankalp Patra?",
+          id: "mark",
+          q: "What is the mark I keep?",
           a: [
-            "A signed digital certificate recording what was done: the names and gotras, the water, the ghat, the date, the window in IST and in your own timezone, the officiant's name, the rite code, the sankalp seal, and a code that takes anyone to the verification page.",
-            "It carries a line that cannot be removed: “This is a record of a rite performed and recorded. It is not a claim about its fruit.”",
-            "It is deliberately not designed to look like a temple document. It does not borrow any temple's seal, styling or name, because it is the thing families frame and show to their own purohit, and it must not be mistaken for something it is not.",
-          ],
-        },
-        {
-          id: "recording",
-          q: "What is in the video?",
-          a: [
-            "Your own excerpt: it opens a few seconds before your name is spoken and runs through your recitation and the dip. We write down the exact second your name is said.",
-            "It contains your names and no one else's. The full segment exists, and it is released only if every family in it agrees.",
-          ],
-        },
-        {
-          id: "live",
-          q: "Do I have to watch it live?",
-          a: [
-            "No. Many people are eleven hours away and asleep, and nothing is lost by that.",
-            "The stream is a courtesy. The recording is the thing we owe you, and it is captured locally at the ghat whether or not the connection holds. If the stream drops, you have the recording within six hours and a quarter of the fee back if you want it.",
-          ],
-        },
-        {
-          id: "who-else",
-          q: "Who else will hear my name?",
-          a: [
-            "In a shared segment, up to eleven sankalps are offered, and every family present hears the others' names and gotras. We tell you that plainly before you pay rather than after you notice.",
-            "That is why what we hand you is your own excerpt, with only your names in it, and why your sankalp is offered silently unless you ask for it aloud. If you do ask, the checkout says in one sentence who will hear it.",
-            "The public record says how many sankalps shared your segment. If eleven names shared it, the record says eleven.",
-          ],
-        },
-        {
-          id: "private",
-          q: "Can I have a rite that is only mine?",
-          a: [
-            "Yes, a private rite, one sankalp, one segment, no other family's name in the recording.",
-            "We would rather sell you that than let you assume the shared one is private. Your rite is not private unless you buy a private rite, and that sentence is on our ethics page in exactly those words.",
+            "One engraving per sitting, drawn from the exact reading you sat with: the water, the flow, where that flow sits against thirty-five years of the same week, the minute, and your name and gotra. A monsoon morning is dark and crowded. A January morning is pale and open.",
+            "It carries the string it was generated from, so anyone can recompute it and check the river figure against the public source. Forging one would mean forging a public river record.",
+            "At the foot of every sheet, at full weight and not in fine print: no rite was performed for you, this sheet records a river, a minute, and the words you chose to say into it.",
           ],
         },
       ],
     },
     {
-      id: "booking",
-      title: "Booking, timing and money",
+      id: "river",
+      title: "The river",
       items: [
         {
-          id: "account",
-          q: "Do I need an account?",
+          id: "data",
+          q: "Where does the river data come from?",
           a: [
-            "No. You can book without one. The confirmation email carries a link that claims the booking whenever you want it, and there is no password to forget.",
+            "Modelled river discharge from the Copernicus Emergency Management Service global flood model, read through Open-Meteo at the grid cell covering that reach of the river. It is public data, licensed CC BY 4.0, and we carry the attribution on every page that shows a number.",
+            "It is a model, not a gauge reading, and we write “modelled” every single time rather than letting you assume there is an instrument in the water with our name on it.",
+            "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates. Tithi and the muhurat windows are computed from the panchang against that ghat's true sunrise.",
           ],
         },
         {
-          id: "timing",
-          q: "Why do you not show exact muhurat timings?",
+          id: "percentile",
+          q: "What does the percentile mean?",
           a: [
-            "Because we have not yet named a panchang source, and a precise time with nothing behind it is an invented fact.",
-            "Until a source is named you will see the occasion and not a clock time. When exact timings appear they will carry the method, the ayanamsa and the coordinates of the ghat itself, and where sources disagree by more than a few minutes, we will show the range rather than pick the one that suits us.",
+            "Where today's flow sits against every daily value that same cell has produced in this same week of the year from 1991 to 2025. Four hundred and thirty-five days of that river's own history.",
+            "It is the only honest way to compare a river to anything. The Kaveri at Talakaveri runs at about six cubic metres a second and the Sangam at five thousand, and neither number tells you whether either river is behaving unusually. The percentile does.",
           ],
         },
         {
-          id: "timezone",
-          q: "What time will it be where I am?",
+          id: "offline",
+          q: "What happens when you cannot reach the river?",
           a: [
-            "Every window is shown in IST and converted to wherever you are, at booking and on the certificate. If you want to be awake for it, we send a reminder fifteen minutes before and again at two minutes.",
+            "The page says so and prints the thirty-five year median for today's date, labelled as exactly that: this is what this river usually does on the eleventh of August, taken from thirty-five years of Augusts.",
+            "We never interpolate and we never invent a plausible number. A reading a day old is served with its true timestamp and no apology, because a river moves on the scale of days.",
+            "The one time the model goes quiet and the page says the model has gone quiet is worth more to us than a year of marketing.",
           ],
         },
+        {
+          id: "gauge",
+          q: "Is there a government gauge at each ghat?",
+          a: [
+            "No, and we will not pretend there is. The Central Water Commission's public portal carries no river level telemetry for the Ganga or Yamuna basins at all, so four of the six waters have no named government station we can honestly print.",
+            "Where a station does exist we name it: station, agency, coordinates and datum, from the Commission's own registry. Where it does not, the page shows the modelled figure and says that is what it is.",
+          ],
+        },
+        {
+          id: "camera",
+          q: "Is there a camera on the river?",
+          a: [
+            "No. There is no video anywhere in this product, no live feed, no embedded stream, and no photograph pretending to be one.",
+            "A live picture of a ghat on a page selling a digital snan invites exactly the inference that something is being performed for you. Nothing is. Sound and ink, nothing else.",
+          ],
+        },
+        {
+          id: "temperature",
+          q: "Why do you not show the water temperature?",
+          a: [
+            "Because we could not find a live water temperature for these six waters from any source we can actually reach, and we will not print a number we cannot stand behind.",
+            "Air temperature at the ghat is real and we show that instead. If a genuine water temperature feed appears for at least three of the six, we will add it and say where it came from.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "money",
+      title: "Money",
+      items: [
         {
           id: "paying-for",
           q: "What am I actually paying for?",
           a: [
-            "The arrangement, the officiant's work, the recording, and the record. A service, and its proof.",
-            "Not a blessing, not an outcome, and not a quantity of merit. We publish what the officiant is paid and what share of the money reaches him, and all of any dakshina you add goes to him and none to us.",
+            "A sitting. Four and a half minutes with a river read that day, the panchang behind the hour, the sound, the mark that sitting leaves, and a line in a register you keep.",
+            "Not a blessing, not an outcome, not a quantity of merit, and not somebody's labour at a ghat, because nobody is at a ghat.",
+          ],
+        },
+        {
+          id: "free",
+          q: "Is there a free version?",
+          a: [
+            "Not of the snan. There is no free snan and no trial.",
+            "Everything that is a page rather than a practice is free forever, with no account: the live state of all six waters, the panchang, the muhurat calendar and its occasions, and the six waters themselves. Read all of it, every day, and pay nothing.",
+            "We would rather charge two dollars for the thing itself than dress a free tier up as generosity and sell your attention instead.",
+          ],
+        },
+        {
+          id: "prices",
+          q: "What does it cost?",
+          a: [
+            "Ek Dhara, one snan, $2 or ₹101.",
+            "Gyarah, eleven snans, $11 or ₹501, which is a dollar a snan and the line most people take.",
+            "Varsh Kosh, sixty snans, $48 or ₹2,100.",
+            "Snans sit on your account until you use them. Nothing expires, nothing renews itself, and no box is ticked for you.",
+          ],
+        },
+        {
+          id: "eleven",
+          q: "Why eleven at a time and not one?",
+          a: [
+            "An unglamorous reason we would rather print than hide. A single dollar handed across a card network loses about a third of itself to processing fees. Eleven dollars handed across at once loses about six percent.",
+            "Buying eleven at a time is the only way a single snan stays at a dollar. If we sold them one at a time at that price, a third of what you paid would go to the card network and the price would have to go up.",
+          ],
+        },
+        {
+          id: "india",
+          q: "Why is the India price different?",
+          a: [
+            "Because a price that ignores where someone lives is not one price, it is a wall. The Bharat Dar is printed beside the Vishwa Dar everywhere, never swapped in behind your back based on where your connection appears to be.",
+            "Nothing differs between them except the number. The same sittings, the same waters, the same marks.",
           ],
         },
         {
           id: "refund",
           q: "Can I get a refund?",
           a: [
-            "Yes. Before the rite: the whole fee back up to twenty-four hours before the window, half within it, because by then the officiant is scheduled and paid.",
-            "After the rite: if you are unhappy for any reason, we refund the fee within fourteen days without asking why. One button, no telephone call, no retention offer, and no question at the end asking whether you are sure.",
-            "One honest caveat: we are refunding what you paid us for arranging, performing and recording the rite. We are not undoing the rite. It happened, the officiant is paid in full, and the record of it stays. A rite is not a returnable good.",
+            "Yes. Any snans you have not used are refunded in full, on one click, without being asked why.",
+            "A sitting you have already done is not refundable, and we would rather say that plainly than pretend otherwise. Nothing was consumed except four and a half minutes of your own attention, and we cannot give those back either.",
+            "If the site failed you, the model was stale and we did not say so, or the sound did not play, write to us and we will refund the sitting itself.",
           ],
         },
         {
-          id: "failure",
-          q: "What if the stream drops, or the rite does not happen?",
+          id: "account",
+          q: "Do I need an account?",
           a: [
-            "If the stream drops but the rite was recorded: the recording within six hours, and a quarter of the fee back on one click if you want it.",
-            "If the rite did not happen: we tell you before you ask. Then you choose, performed again at the next equivalent muhurat at no cost, or the whole fee back.",
-            "If the ghat is closed or the water is unsafe: we tell you before the window and offer another ghat, another river, another muhurat, or your money back. We never quietly substitute one river for another.",
+            "Yes, for the snan, because your sankalp, your register and your marks have to belong to somebody and that somebody is you. There is no account needed to read anything on this site.",
           ],
         },
       ],
@@ -1213,7 +1341,7 @@ const faqEn = {
           q: "I do not know my gotra, or my family does not use one.",
           a: [
             "Then leave it blank. A form that insists on a gotra is a form that sorts people by caste, and ours does not insist.",
-            "If the field is empty the sankalp uses the customary Kashyapa gotra, which is the ordinary practice for exactly this situation. If your family has its own convention, tell us and we will use that instead.",
+            "If the field is empty the sankalp says the gotra is not stated, plainly, with no apology in it. If you would rather use the customary Kashyapa gotra, or your family's own convention, tell us and we will use that instead.",
           ],
         },
         {
@@ -1226,68 +1354,43 @@ const faqEn = {
         },
         {
           id: "ancestors",
-          q: "Can I do this for someone who has died?",
+          q: "Can I do this in memory of someone who has died?",
           a: [
-            "You can ask for a tarpan in remembrance, and we will label it exactly that.",
-            "It is not a shraddh. We do not perform the obligatory rites of the life cycle, we do not immerse actual ashes, and we do not perform any rite where your own physical presence is prescribed. Tarpan in remembrance is a different and smaller thing, and we will keep saying so rather than let you assume otherwise.",
-            "We will never say that anyone who has died received anything, was affected by anything, or is waiting for anything.",
+            "You can name them in your own sankalp, in your own words, and sit with them in mind. We will label that as remembrance and nothing more.",
+            "It is not a shraddh and it is not a tarpan. No rite is performed here at all, by anyone, so nothing is being offered on anyone's behalf. We will never say that a person who has died received anything, was affected by anything, or is waiting for anything.",
+            "If a tithi matters to you, tell us and we will bring the river on that tithi, once a year, and never mention it otherwise.",
           ],
         },
         {
           id: "who-can-book",
-          q: "I am not Hindu, or my family is inter-faith, or my name is not a Hindu name. Can I book?",
+          q: "I am not Hindu, or my family is inter-faith, or my name is not a Hindu name. Can I use this?",
           a: [
-            "Yes. People book for a Hindu parent, for a spouse, for a friend, for themselves.",
-            "An officiant may decline a sankalp he does not wish to speak on grounds of the rite itself, and he is paid anyway, consent that has been bought is not consent. But he may not decline you for who you are: not your caste, religion, gender, marital status, sexuality, the name you carry, or the absence of a gotra. Every refusal is logged with a reason and audited, and you are never told that a priest declined you. We simply arrange another officiant, at once, at no cost.",
-          ],
-        },
-        {
-          id: "pronunciation",
-          q: "Will they say my name correctly?",
-          a: [
-            "You can record twenty seconds of your own voice saying the names and the gotra when you book. The officiant listens to it before the rite.",
-            "If a name is still said wrongly, one tap has it recited again, free, without an argument.",
+            "Yes. Nobody vets you, because there is nobody here to vet you. There is no counter, no queue and no gotra check.",
+            "People use it for a Hindu parent, for a spouse, for a friend, for themselves, and for four quiet minutes with a river they have never seen.",
           ],
         },
       ],
     },
     {
-      id: "data",
+      id: "data-privacy",
       title: "Your data",
       items: [
         {
           id: "sankalp-private",
           q: "Who reads my sankalp?",
           a: [
-            "By default, nobody, not even the officiant. He states that the rite is offered for the intention you hold. He reads your words aloud only if you ask, and that box is never ticked for you.",
-            "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, it is logged permanently, and you are emailed within a day telling you that it was read, by whom, and why.",
-            "One automated safety check runs over the text; no person sees it as a result. If the text suggests someone may be in danger, you get a message with places you can call, written so that nothing in it implies a person read your words, because none did.",
+            "Nobody. It is shown to you and to no one else, and it is never spoken aloud by anyone anywhere, because there is nobody in this product to speak it.",
+            "It is not printed on your mark, it is not in your register line, and the verification page will not return it to anyone holding the identifier.",
+            "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, it is logged permanently, and you are emailed within a day telling you that it was read, by whom, and why. One automated safety check runs over the text; no person sees it as a result of that check.",
           ],
         },
         {
           id: "delete",
           q: "Can I delete everything?",
           a: [
-            "Yes. One button, across copies and backups, within seven days. Your sankalp text is deleted ninety days after the rite by default in any case, or within twenty-four hours if you prefer.",
-            "The confirmation lists what was deleted and what was kept, the invoices tax law requires, and the anonymous record entry, and why.",
-            "One thing to know: if you asked for your sankalp to be read aloud, it is in a permanent recording, and deleting the text does not remove it from the audio. We say that on the checkbox, and we offer to delete the recording with it.",
-          ],
-        },
-        {
-          id: "ledger",
-          q: "Is my name in your public record?",
-          a: [
-            "No, and it never can be. The record contains fingerprints, times, the ghat, an opaque officiant identifier and the status of the rite. There is no field in it that could hold a name, a gotra or a sankalp.",
-            "That is what lets the proof be permanent while your data is not: even after everything of yours is deleted, the file you downloaded still verifies against the record.",
-          ],
-        },
-        {
-          id: "verify-fail",
-          q: "I checked my video and it says it does not match.",
-          a: [
-            "Almost always this means the file was forwarded. WhatsApp, Telegram and most phones recompress video when it is shared, which changes every byte and therefore the fingerprint. That is the messenger, not a forgery.",
-            "Download the original from your rite page and check that one. We publish a separate fingerprint for each version we hand you, and there is a sample rite you can practise on before you need it.",
-            "If the original still does not match, write to us and we will investigate publicly rather than quietly.",
+            "Yes. One button, across copies and backups, within seven days. It works by destroying the key your record was encrypted with, which is why it holds even where storage cannot be overwritten.",
+            "The mark you downloaded keeps working afterwards, because what it stands on is a public river reading rather than a row in our database. Deleting removes our ability to hold your sankalp, not your ability to prove what the river was doing.",
+            "The confirmation lists what was deleted and what was kept, including the invoices tax law requires.",
           ],
         },
         {
@@ -1296,6 +1399,14 @@ const faqEn = {
           a: [
             "No advertising script and no session-replay script, anywhere, ever. Nothing records the screen where you type your sankalp.",
             "Two third-party scripts exist in the whole product, and we name both. Vercel Web Analytics counts page views: no cookies, no cross-site following, no sight of any form. The payment processor's script runs on the payment step alone. We would rather qualify an absolute than break one.",
+          ],
+        },
+        {
+          id: "panchang",
+          q: "Why are some timings marked provisional?",
+          a: [
+            "Because we have not yet named a panchang source, and a precise time with nothing behind it is an invented fact.",
+            "Until a source is named, every exact time carries that label where it appears, and where sources disagree by more than a few minutes we show the range rather than pick the one that suits us. When a source is named, the method, the ayanamsa and the coordinates of the ghat are published beside the times.",
           ],
         },
       ],
@@ -1313,13 +1424,14 @@ export const faqContent = { en: faqEn, hi: {
   meta: {
     title: "प्रश्न, संशय के प्रश्न भी · स्नानिफ़ाई",
     description:
-      "क्या यह सचमुच काम करता है? मुझे कैसे पता चले कि आपने किया? क्या यह परंपरा के विरुद्ध है? गोत्र न हो तो? सीधे उत्तर, वे भी जहाँ सच्चा उत्तर यही है कि हम वचन नहीं दे सकते।",
+      "मैं किसका भुगतान कर रहा हूँ? क्या यह धार्मिक है? क्या इससे कुछ होता है? क्या कोई पुरोहित है? नदी के आँकड़े कहाँ से आते हैं? मेरे नाम और मेरे संकल्प का क्या होता है? सीधे उत्तर, वे भी जहाँ सच्चा उत्तर यही है कि हम वचन नहीं दे सकते।",
   },
   eyebrow: "प्रश्न",
   title: "प्रश्न, वे भी जो हमसे न पूछे जाएँ तो अच्छा लगता।",
   lede: "जहाँ सच्चा उत्तर यह है कि हम कोई वचन नहीं दे सकते, वहाँ उत्तर ठीक यही कहता है। यहाँ कुछ भी सौदा पक्का करने के लिए नहीं लिखा गया।",
   indexLabel: "खंड",
   moreLabel: "विस्तृत उत्तर पढ़िए",
+  ctaLabel: "नदी के साथ बैठिए",
 
   groups: [
     {
@@ -1330,35 +1442,26 @@ export const faqContent = { en: faqEn, hi: {
           id: "does-it-work",
           q: "क्या इससे सचमुच कुछ होता है?",
           a: [
-            "इसका उत्तर हम नहीं दे सकते, और देने का दिखावा भी नहीं करेंगे।",
-            "हम इतना बता सकते हैं कि होता क्या है: योग्य पुरोहित निर्दिष्ट घाट पर, निर्दिष्ट घड़ी में, आपके नाम और गोत्र से स्नान-संकल्प संपन्न कराते हैं, और हम आपको बिना काटी हुई रिकॉर्डिंग तथा ऐसा अभिलेख देते हैं जिसे कोई भी जाँच सके। इतना संसार का तथ्य है और आप इसे परख सकते हैं।",
-            "पर आपके निमित्त पुरोहित द्वारा किया गया अनुष्ठान वह फल रखता है या नहीं जिसकी आप आशा करते हैं, यह प्रश्न आपकी परंपरा का है, और उन लोगों का जिनके विवेक पर आप इन विषयों में भरोसा करते हैं; उस कंपनी का नहीं जिसे उत्तर “हाँ” होने पर लाभ मिलता है।",
+            "पहले यह तय कीजिए कि “होना” क्या है।",
+            "यदि आपका अर्थ यह है कि आपकी स्क्रीन पर दिखता प्रवाह वही है जो नदी वास्तव में कर रही है, तो हाँ, और उसका स्रोत सार्वजनिक है, कड़ी सहित है, और आप उसे हमसे कुछ पूछे बिना स्वयं जाँच सकते हैं।",
+            "यदि आपका अर्थ यह है कि इससे आपका भाग्य बदलेगा, तो हमें नहीं मालूम, और जो इसका अधिक मूल्य ले रहे हैं उन्हें भी नहीं मालूम। हम एक घड़ी, एक नदी, उसका सच्चा पाठ, और वे शब्द बेचते हैं जो आप स्वयं कहते हैं। उसके आगे जो है, वह आपके और आपकी परंपरा के बीच है।",
           ],
         },
         {
-          id: "scam",
-          q: "मुझे कैसे पता चले कि यह ठगी नहीं है?",
+          id: "priest",
+          q: "क्या कोई पुरोहित है? इसे संपन्न कौन करता है?",
           a: [
-            "कुछ इससे कि हम क्या सिद्ध कर सकते हैं, और कुछ इससे कि हम क्या कहने से इनकार करते हैं।",
-            "प्रमाण: अनुष्ठान से पहले प्रकाशित आपके संकल्प की छाप, कैमरे पर वह पट्टिका जिस पर एक दिन पहले तक अस्तित्वहीन अंक है, एक अखंड दृश्य, और एक सार्वजनिक अभिलेख जिसे आप बिना खाता बनाए अपने ब्राउज़र में जाँच सकते हैं।",
-            "पर इनकार अधिक बड़ा संकेत है। हम उन दावों की सूची प्रकाशित करते हैं जो हम कभी नहीं करेंगे, न धुले पाप, न मोक्ष, न कुंडली का दोष, न अतृप्त पूर्वज, न आपके जीवन में कोई परिणाम, और साथ में वह पता भी जहाँ हमारी शिकायत की जा सके। नक़ली पुण्य बेचने वाला व्यापार यह सूची कभी नहीं छापेगा, क्योंकि वही सूची उसका पूरा माल है।",
+            "कोई पुरोहित नहीं है। कभी नहीं होता, और यही मूल बात है, कोई छोटा रास्ता नहीं।",
+            "कोई आपके लिए किसी घाट पर खड़ा नहीं होता, कोई कैमरे के सामने आपका नाम नहीं बोलता, और कुछ भी रिकॉर्ड नहीं होता। जो होता है वह यह कि आप साढ़े चार मिनट किसी सच्ची नदी की सच्ची स्थिति के साथ बैठते हैं और अपना संकल्प स्वयं कहते हैं। यह दावा विकल्प से छोटा है, और केवल यही दावा हम सच्चाई से कर सकते हैं।",
+            "यदि आपका मत यह है कि अनुष्ठान तभी मान्य है जब कोई योग्य व्यक्ति तीर्थ पर आपके लिए उसे संपन्न करे, तो वह सुसंगत मत है और यह उत्पाद आपके लिए नहीं बना। हम आपसे बहस नहीं करेंगे।",
           ],
         },
         {
-          id: "proof",
-          q: "मुझे कैसे पता चले कि आपने सचमुच किया, और मेरे लिए किया?",
+          id: "religious",
+          q: "क्या यह धार्मिक है? क्या मैं पूजा कर रहा हूँ?",
           a: [
-            "पाँच बातें, और इनमें से किसी के लिए हम पर विश्वास आवश्यक नहीं। अनुष्ठान से पहले हम आपके संकल्प की छाप प्रकाशित करते हैं, इसलिए उसे पीछे की तिथि में गढ़ा नहीं जा सकता। घाट पर पुरोहित पट्टिका दिखाते हैं जिस पर आपका अनुष्ठान कोड और उस दिन का सार्वजनिक अंक है, पहले बना कोई दृश्य उसे दिखा नहीं सकता। अनुष्ठान एक अखंड दृश्य है, बिना कट, और यंत्र इसकी जाँच करता है। बाद में रिकॉर्डिंग की छाप समयों और घाट के साथ सार्वजनिक अभिलेख में जाती है। और कोई भी व्यक्ति वीडियो फ़ाइल जाँच-पृष्ठ पर खींचकर जान सकता है कि यह वही फ़ाइल है या नहीं, जाँच उनके ब्राउज़र में चलती है और फ़ाइल कहीं नहीं भेजी जाती।",
-            "आपका नाम अलग से, स्पष्ट स्वर में बोला जाता है, और हम वह सेकंड लिख लेते हैं। आपकी रिकॉर्डिंग वहीं से खुलती है।",
-          ],
-        },
-        {
-          id: "tradition",
-          q: "क्या यह परंपरा के विरुद्ध है?",
-          a: [
-            "कुछ बातों का स्पष्ट आधार है। संकल्प अपने स्वरूप में ही एक नामकरण है, वह देश, काल, गोत्र और व्यक्ति निश्चित करता है, और उसने कभी यह नहीं माँगा कि व्यक्ति वहीं खड़ा हो। कर्मकांड में यजमान और पुरोहित सदा अलग रहे हैं। मंदिर बहुत समय से दूसरे नगर से बुक की गई अर्चना और सेवा स्वीकार करते आए हैं।",
-            "कुछ बातों का नहीं। पर्दे पर देखा गया अनुष्ठान वस्तुतः देखा गया माना जाए या नहीं, इस पर परंपराओं में सच्चा मतभेद है। कुछ आचार्य स्वीकार करते हैं, कुछ नहीं। हम कोई पक्ष नहीं लेते, और केवल सहमत लोगों को उद्धृत नहीं करेंगे।",
-            "इसलिए: जिनके विवेक पर आप इन विषयों में भरोसा करते हैं, उनसे पूछिए। यदि वे कहें कि यह आपके लिए नहीं, तो वे ठीक कहते हैं, और हमें बुरा नहीं लगेगा।",
+            "आप संकल्प ले रहे हैं, जो एक नामकरण है: वह देश, काल, गोत्र और व्यक्ति को निश्चित करता है। यह हिंदू विधि का रूप है और हम उसे उसी रूप में रखते हैं, देवनागरी में भी और रोमन में भी।",
+            "इसके आगे कुछ नहीं कहा जाता। आपकी ओर से किसी देवता का आवाहन नहीं होता, आपके लिए कोई पूजा नहीं होती, किसी प्रकार का कोई अनुष्ठान नहीं होता, क्योंकि करने वाला यहाँ कोई है ही नहीं। कुछ लोग इसे साधना की तरह लेते हैं, कुछ दिन आरंभ होने से पहले चार मिनट के ध्यान की तरह, और हमें दोनों स्वीकार हैं।",
           ],
         },
         {
@@ -1366,8 +1469,17 @@ export const faqContent = { en: faqEn, hi: {
           q: "क्या यह स्वयं नदी में स्नान करने के समान है?",
           a: [
             "नहीं। कहीं से नहीं, और हम कभी इसका उलटा नहीं कहेंगे।",
-            "स्नान देह का कर्म है, और वह आपकी देह पर नहीं हो रहा। यात्रा भी तीर्थ का अंग है, और यात्रा हम आपको नहीं दे सकते। जो संपन्न होता है वह संकल्प है और उसके पश्चात का अनुष्ठान, पुरोहित द्वारा, आपके नाम से।",
+            "स्नान देह का कर्म है, और वह आपकी देह पर नहीं हो रहा। यात्रा भी तीर्थ का अंग है, और यात्रा हम आपको नहीं दे सकते।",
             "यदि आप यात्रा कर सकते हैं, अवश्य कीजिए। हम उसके विरुद्ध एक शब्द नहीं कहेंगे।",
+          ],
+        },
+        {
+          id: "scam",
+          q: "मुझे कैसे पता चले कि यह ठगी नहीं है?",
+          a: [
+            "कुछ इससे कि आप स्वयं क्या जाँच सकते हैं, और कुछ इससे कि हम क्या कहने से इनकार करते हैं।",
+            "जो आप जाँच सकते हैं: किसी भी पृष्ठ पर दिखता नदी का अंक कोपरनिकस के वैश्विक बाढ़ मॉडल से लिया गया प्रतिरूपित प्रवाह है, जो सार्वजनिक और खुला है, और हर पृष्ठ उसके पढ़े जाने का समय छापता है। जो चिह्न आप रखते हैं, उस पर वही पंक्ति छपी होती है जिससे वह बना, इसलिए कोई अपरिचित चित्र दोबारा बनाकर अंकों को स्रोत से मिला सकता है। इस पूरी शृंखला में ऐसा कुछ नहीं जिसके लिए आपको हम पर विश्वास करना पड़े।",
+            "पर इनकार अधिक बड़ा संकेत है। हम उन दावों की सूची प्रकाशित करते हैं जो हम कभी नहीं करेंगे, न धुले पाप, न मोक्ष, न कुंडली का दोष, न अतृप्त पूर्वज, न आपके जीवन में कोई परिणाम, और साथ में वह पता भी जहाँ हमारी शिकायत की जा सके। नक़ली पुण्य बेचने वाला व्यापार यह सूची कभी नहीं छापेगा, क्योंकि वही सूची उसका पूरा माल है।",
           ],
         },
         {
@@ -1375,127 +1487,204 @@ export const faqContent = { en: faqEn, hi: {
           q: "अधिक राशि देने पर अधिक पुण्य मिलता है क्या?",
           a: [
             "नहीं। और जो आपसे इसका उलटा कहे, वह ठीक वही बेच रहा है जिसे बेचने से हम इनकार करते हैं।",
-            "हमारे अर्पण इसमें भिन्न हैं कि हम आपके लिए क्या करते हैं, कितने अनुष्ठान, कितने नाम, खंड साझा है या निजी। वे इसमें भिन्न नहीं कि अनुष्ठान का मूल्य क्या है। बारह स्नान बारह अनुष्ठान हैं, प्रति अनुष्ठान अधिक पुण्य नहीं।",
+            "तीनों पंक्तियाँ इसमें भिन्न हैं कि उनमें कितने स्नान हैं और हर एक पर हमें कितना शुल्क लगता है। वे इसमें भिन्न नहीं कि एक बैठक क्या है। ग्यारह स्नान ग्यारह बैठकें हैं, प्रति बैठक अधिक पुण्य नहीं।",
           ],
         },
         {
-          id: "priest",
-          q: "अनुष्ठान वास्तव में कौन करता है? क्या वे सचमुच पुरोहित हैं?",
+          id: "who-for",
+          q: "यह वास्तव में किसके लिए है?",
           a: [
-            "हर पुरोहित सीधे स्नानिफ़ाई से, लिखित अनुबंध पर, उनकी अपनी भाषा में जुड़ते हैं, और हस्ताक्षरित प्रति उनके हाथ में रहती है। न कोई मंडी, न दिहाड़ी काम।",
-            "घाट के पुरोहितों के लिए कोई प्रमाणन संस्था नहीं है, इसलिए हम ऐसी मुहर नहीं छापेंगे जिसका कोई अर्थ न हो। इसके बदले हर पुरोहित के पृष्ठ पर लिखा रहता है कि हमने क्या सत्यापित किया, पहचान, उस घाट पर अभ्यास के वर्ष, वहाँ के अन्य पुरोहितों की गवाही, रिकॉर्ड की गई विधि-परीक्षा, और उसी खंड में यह भी कि क्या हम सत्यापित नहीं कर सके, और क्यों।",
-            "आज इस साइट पर कोई पुरोहित प्रकाशित नहीं है। किसी ने अभी हस्ताक्षर करके नाम छापने की सहमति नहीं दी, और उस रिक्त स्थान को हम किसी तैयार चित्र से कभी नहीं भरेंगे।",
+            "उनके लिए जो कैलेंडर की घड़ी पर जल तक नहीं पहुँच सकते: फ़्रैंकफ़र्ट में मंगलवार को पड़ती तिथि, वर्ष में तीन सप्ताह की छुट्टी, और उनमें से किसी में न पड़ने वाला श्राद्ध।",
+            "भारत में भी उनके लिए जिनके लिए घाट दूर नहीं, पहुँच के बाहर है। बूढ़े घुटनों ने लोगों को जल से उतना रोका है जितना दूरी ने कभी नहीं रोका।",
+            "उनके लिए जिन्हें साधना चाहिए, संस्था नहीं; और उनके लिए भी जो बस जिज्ञासु हैं, दो डॉलर में, यह सुने बिना कि उनके जीवन में कुछ गड़बड़ है।",
+            "जो जल तक पहुँच सकते हैं, यह उनके लिए नहीं है। जाइए।",
           ],
         },
       ],
     },
     {
-      id: "receive",
-      title: "आपको वास्तव में क्या मिलता है",
+      id: "sitting",
+      title: "वास्तव में होता क्या है",
       items: [
+        {
+          id: "what-happens",
+          q: "मेरी स्क्रीन पर वास्तव में क्या होता है?",
+          a: [
+            "पाँच अंग, सदा वही, आरंभ से अंत तक साढ़े चार मिनट। इक्कीस सेकंड नदी का पाठ, पंचांग की प्रविष्टि की तरह रखा हुआ। साठ सेकंड श्वास, जिसमें जल-रेखा चार सेकंड चढ़ती और छह सेकंड उतरती है। साठ सेकंड आपके अपने संकल्प के साथ, जिसे आप ग्यारह सेकंड तक दबाकर थामे रहते हैं और अक्षर सिंदूरी रंग से भर जाते हैं। नब्बे सेकंड पूरी तरह अंधेरी स्क्रीन, नदी बहती हुई। और पैंतीस सेकंड, जिनमें वह दिन आपकी पंजिका में लिख जाता है और आपका चिह्न खिंचता है।",
+            "इसमें कहीं कोई प्रगति-पट्टी नहीं है, और कोई “जल्दी वाला” रूप नहीं। समय बीतने का एकमात्र संकेत जल-रेखा है, और वह अपने में व्यस्त है।",
+          ],
+        },
+        {
+          id: "black-screen",
+          q: "नब्बे सेकंड अंधेरी स्क्रीन? सचमुच?",
+          a: [
+            "हाँ, और वही सबसे अच्छा भाग है। स्क्रीन कहती है कि फ़ोन नीचे रख दीजिए, और फिर वह स्वयं चली जाती है।",
+            "यदि आप उसे उठा लें तो कुछ नहीं होता। न कोई गिनती, न दंड, न यह टिप्पणी कि आप हिले। नब्बे सेकंड पर एक घंटी आपको वापस बुला लेती है।",
+            "जिस डिजिटल वस्तु का सबसे अच्छा मिनट वही हो जब स्क्रीन बंद रहे, उसे बनाना विचित्र है और उसका बचाव सरल।",
+          ],
+        },
+        {
+          id: "when",
+          q: "क्या तड़के चार बजे जागना आवश्यक है?",
+          a: [
+            "नहीं। आप बताते हैं कि आप कब उठते हैं, और नदी उसी घड़ी तक, आपके अपने समय में, लाई जाती है। बहुत लोग संध्या में बैठते हैं।",
+            "मुहूर्त उस घाट के वास्तविक सूर्योदय से गणना किए जाते हैं, इसलिए हरिद्वार और नासिक के मुहूर्त सचमुच भिन्न होते हैं। यदि आपके लिए इसका महत्व है तो मुहूर्त के भीतर बैठिए, और न हो तो बाहर।",
+          ],
+        },
+        {
+          id: "miss",
+          q: "यदि कोई दिन छूट जाए तो?",
+          a: [
+            "कुछ नहीं होता। आपकी पंजिका अभिलेख है, शृंखला नहीं: वह उन सुबहों को दिखाती है जो आपने निभाईं, उन पर डाँटती नहीं जो छूट गईं।",
+            "यहाँ न बैज हैं, न स्तर, और न ऐसा कोई संदेश कि आप मार्च से नहीं बैठे। हमारे मत में यही कारण है कि लोग इसे कम तोड़ते हैं।",
+          ],
+        },
+        {
+          id: "sound",
+          q: "क्या ध्वनि असली है? क्या वह सजीव है?",
+          a: [
+            "जल सच्चा है, और ध्वनि सजीव नहीं है।",
+            "बहते जल की चार रिकॉर्डिंग नदी के वास्तविक प्रतिशतक के सामने मिलाई जाती हैं, इसलिए उफान पर बहती नदी टूटी और तेज़ सुनाई देती है और मंद नदी चौड़ी और धीमी। जब उस घाट पर वर्षा होती है, तब वर्षा भी घुल आती है। हर रिकॉर्डिंग अनुज्ञप्त और श्रेय सहित है।",
+            "किसी घाट पर कोई माइक्रोफ़ोन नहीं है, कहीं से कोई सजीव प्रसारण नहीं है, और कोई कृत्रिम रूप से बनाई गई ध्वनि नहीं है। जिस जल की हमारे पास सच्ची रिकॉर्डिंग नहीं, वह मौन ही आता है, और उसका पृष्ठ यही कहता है, किसी और की नदी उधार नहीं लेता।",
+          ],
+        },
         {
           id: "shipping",
           q: "क्या आप गंगाजल या प्रसाद भेजते हैं?",
           a: [
             "नहीं। आपके पास कुछ भी नहीं भेजा जाता, कभी नहीं।",
-            "स्नानिफ़ाई जो देती है वह सब डिजिटल है: रिकॉर्डिंग, संकल्प पत्र, और एक अभिलेख जिसे कोई भी जाँच सके। न जल, न प्रसाद, न मौली, न भस्म, न पार्सल, न कोई सीमा-शुल्क फ़ॉर्म।",
+            "स्नानिफ़ाई जो देती है वह सब स्क्रीन पर है: बैठक, चिह्न, और आपकी पंजिका। न जल, न प्रसाद, न मौली, न भस्म, न पार्सल, न कोई सीमा-शुल्क फ़ॉर्म।",
             "यदि आपको हाथ में गंगाजल चाहिए, तो हम उसकी सेवा नहीं हैं।",
           ],
         },
         {
-          id: "patra",
-          q: "संकल्प पत्र क्या है?",
+          id: "mark",
+          q: "जो चिह्न मुझे मिलता है, वह क्या है?",
           a: [
-            "एक हस्ताक्षरित डिजिटल प्रमाणपत्र, जिसमें दर्ज रहता है कि क्या हुआ: नाम और गोत्र, जल, घाट, तिथि, मुहूर्त भारतीय समय में और आपके अपने समय में, पुरोहित का नाम, अनुष्ठान कोड, संकल्प चिह्न, और एक कोड जो किसी को भी जाँच-पृष्ठ तक ले जाता है।",
-            "उस पर एक पंक्ति रहती है जो हटाई नहीं जा सकती: “यह संपन्न एवं अभिलिखित अनुष्ठान का प्रमाण है। इसके फल का दावा नहीं।”",
-            "वह जानबूझकर मंदिर के दस्तावेज़ जैसा नहीं दिखता। वह किसी मंदिर की मुहर, शैली या नाम उधार नहीं लेता, क्योंकि यही वह पत्र है जिसे परिवार फ़्रेम कराकर अपने पुरोहित को दिखाते हैं, और उसे किसी और वस्तु के भ्रम में नहीं पड़ना चाहिए।",
-          ],
-        },
-        {
-          id: "recording",
-          q: "वीडियो में क्या रहता है?",
-          a: [
-            "आपका अपना अंश: वह आपका नाम बोले जाने से कुछ सेकंड पहले आरंभ होता है और आपके पाठ तथा डुबकी तक चलता है। आपका नाम जिस सेकंड पर बोला गया, वह हम लिख देते हैं।",
-            "उसमें आपके नाम हैं, किसी और के नहीं। पूरा खंड रहता है, और वह तभी दिया जाता है जब उसमें सम्मिलित हर परिवार सहमत हो।",
-          ],
-        },
-        {
-          id: "live",
-          q: "क्या सजीव देखना आवश्यक है?",
-          a: [
-            "नहीं। बहुत लोग ग्यारह घंटे दूर हैं और उस समय सो रहे होते हैं; इससे कुछ नहीं खोता।",
-            "प्रसारण एक शिष्टाचार है। हम पर आपका अधिकार रिकॉर्डिंग का है, और वह घाट पर उपकरण में ही दर्ज होती है, संपर्क बना रहे या न रहे। प्रसारण टूटे तो छह घंटे में रिकॉर्डिंग आपके पास होती है, और चाहें तो एक चौथाई राशि वापस।",
-          ],
-        },
-        {
-          id: "who-else",
-          q: "मेरा नाम और कौन सुनेगा?",
-          a: [
-            "साझा खंड में ग्यारह संकल्प तक अर्पित होते हैं, और वहाँ उपस्थित हर परिवार शेष के नाम और गोत्र सुनता है। यह हम भुगतान से पहले साफ़ कह देते हैं, आपके ध्यान में आने के बाद नहीं।",
-            "इसीलिए हम आपको आपका अपना अंश देते हैं, जिसमें केवल आपके नाम हैं; और इसीलिए आपका संकल्प मौन रूप से अर्पित होता है, जब तक आप ऊँचे स्वर में न कहलवाएँ। यदि कहलवाएँ, तो भुगतान से पहले एक वाक्य बताता है कि उसे कौन सुनेगा।",
-            "सार्वजनिक अभिलेख बताता है कि आपके खंड में कितने संकल्प थे। यदि ग्यारह थे, तो अभिलेख ग्यारह ही कहेगा।",
-          ],
-        },
-        {
-          id: "private",
-          q: "क्या केवल मेरा अपना अनुष्ठान हो सकता है?",
-          a: [
-            "हाँ, निजी अनुष्ठान: एक संकल्प, एक खंड, रिकॉर्डिंग में किसी अन्य परिवार का नाम नहीं।",
-            "हम चाहेंगे कि आप वही लें, बजाय इसके कि आप साझा वाले को निजी मान बैठें। आपका अनुष्ठान तब तक निजी नहीं जब तक आप निजी अनुष्ठान न लें, और यह वाक्य हमारे पक्ष वाले पृष्ठ पर इन्हीं शब्दों में लिखा है।",
+            "हर बैठक पर एक कृति, ठीक उसी पाठ से खींची हुई जिसके साथ आप बैठे: जल, प्रवाह, वह प्रवाह उसी सप्ताह के पैंतीस वर्षों के सामने कहाँ बैठता है, वह मिनट, और आपका नाम तथा गोत्र। वर्षा की सुबह गहरी और भरी हुई होती है। जनवरी की सुबह हल्की और खुली।",
+            "उस पर वही पंक्ति रहती है जिससे वह बना, इसलिए कोई भी उसे दोबारा बनाकर नदी के अंक सार्वजनिक स्रोत से मिला सकता है। इसे नक़ली बनाने का अर्थ होगा नदी का सार्वजनिक अभिलेख नक़ली बनाना।",
+            "हर पत्र के पाद पर, पूरे भार में और किसी छोटे अक्षर में नहीं: आपके लिए कोई अनुष्ठान नहीं किया गया। यह पत्र एक नदी, एक क्षण, और वे शब्द अंकित करता है जो आपने उसमें कहे।",
           ],
         },
       ],
     },
     {
-      id: "booking",
-      title: "बुकिंग, समय और राशि",
+      id: "river",
+      title: "नदी",
       items: [
         {
-          id: "account",
-          q: "क्या खाता बनाना आवश्यक है?",
+          id: "data",
+          q: "नदी के आँकड़े कहाँ से आते हैं?",
           a: [
-            "नहीं। आप बिना खाते के बुक कर सकते हैं। पुष्टि-ईमेल में एक कड़ी रहती है जिससे आप जब चाहें बुकिंग अपने नाम कर लें, और कोई पासवर्ड भूलने को नहीं रहता।",
+            "कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से लिया गया प्रतिरूपित नदी-प्रवाह, जो Open-Meteo के माध्यम से उस ग्रिड-खंड पर पढ़ा जाता है जो नदी की उस धारा को ढकता है। यह सार्वजनिक आँकड़ा है, CC BY 4.0 के अंतर्गत, और जिस भी पृष्ठ पर अंक दिखता है वहाँ हम उसका श्रेय देते हैं।",
+            "यह एक मॉडल है, गेज का पाठ नहीं, और हम हर बार “प्रतिरूपित” ही लिखते हैं, ताकि आप यह न मान बैठें कि जल में हमारे नाम का कोई यंत्र लगा है।",
+            "सूर्योदय, सूर्यास्त, वायु का तापमान और वर्षा घाट के अपने निर्देशांक पर पढ़े जाते हैं। तिथि और मुहूर्त उसी घाट के वास्तविक सूर्योदय के आधार पर पंचांग से गणना किए जाते हैं।",
           ],
         },
         {
-          id: "timing",
-          q: "आप सटीक मुहूर्त-समय क्यों नहीं दिखाते?",
+          id: "percentile",
+          q: "प्रतिशतक का अर्थ क्या है?",
           a: [
-            "क्योंकि हमने अभी कोई पंचांग स्रोत तय नहीं किया, और जिस सटीक समय के पीछे कुछ न हो वह गढ़ा हुआ तथ्य है।",
-            "जब तक स्रोत तय न हो, आपको पर्व दिखेगा, घड़ी का समय नहीं। जब सटीक समय आएँगे, उनके साथ गणना-पद्धति, अयनांश और घाट के अपने निर्देशांक होंगे, और जहाँ स्रोत कुछ मिनटों से अधिक भिन्न हों, वहाँ हम अपने अनुकूल समय चुनने के बजाय पूरी सीमा दिखाएँगे।",
+            "आज का प्रवाह उन सब दैनिक मानों के सामने कहाँ बैठता है जो उसी खंड पर वर्ष के इसी सप्ताह में १९९१ से २०२५ तक आए। उस नदी के अपने इतिहास के चार सौ पैंतीस दिन।",
+            "किसी नदी की तुलना करने का यही एकमात्र सच्चा ढंग है। तालकावेरी में कावेरी लगभग छह घन मीटर प्रति सेकंड बहती हैं और संगम पर पाँच हज़ार, और इनमें से कोई अंक यह नहीं बताता कि कोई नदी असामान्य व्यवहार कर रही है या नहीं। प्रतिशतक बताता है।",
           ],
         },
         {
-          id: "timezone",
-          q: "मेरे यहाँ उस समय कितने बजे होंगे?",
+          id: "offline",
+          q: "जब आप नदी तक न पहुँच सकें तब क्या होता है?",
           a: [
-            "हर मुहूर्त भारतीय समय में और आपके अपने समय में दिखाया जाता है, बुकिंग के समय भी, प्रमाणपत्र पर भी। जागकर साथ रहना चाहें तो हम पंद्रह मिनट पहले और फिर दो मिनट पहले स्मरण भेजते हैं।",
+            "पृष्ठ यही कहता है और आज की तिथि का पैंतीस-वर्षीय मध्यमान छापता है, ठीक इसी नाम से: यह वह है जो यह नदी सामान्यतः ग्यारह अगस्त को करती है, पैंतीस वर्षों के अगस्त से लिया गया।",
+            "हम न बीच के मान गढ़ते हैं, न कोई विश्वसनीय दिखने वाला अंक बनाते हैं। एक दिन पुराना पाठ अपने सच्चे समय के साथ दिखाया जाता है, बिना किसी सफ़ाई के, क्योंकि नदी दिनों की गति से बदलती है।",
+            "जिस दिन मॉडल चुप हो जाए और पृष्ठ कह दे कि मॉडल चुप है, वह दिन हमारे लिए वर्ष भर के विज्ञापन से अधिक मूल्यवान है।",
           ],
         },
+        {
+          id: "gauge",
+          q: "क्या हर घाट पर कोई सरकारी गेज है?",
+          a: [
+            "नहीं, और हम ऐसा दिखावा नहीं करेंगे। केंद्रीय जल आयोग के सार्वजनिक पोर्टल पर गंगा और यमुना बेसिन के लिए नदी-जलस्तर दूरमापी है ही नहीं, इसलिए छह में से चार जलों के लिए हम कोई नामित सरकारी केंद्र सच्चाई से नहीं छाप सकते।",
+            "जहाँ केंद्र है, वहाँ हम उसे नाम देते हैं: केंद्र, संस्था, निर्देशांक और शून्य-तल, आयोग की अपनी सूची से। जहाँ नहीं है, वहाँ पृष्ठ प्रतिरूपित अंक दिखाता है और यही कहता है कि वह प्रतिरूपित है।",
+          ],
+        },
+        {
+          id: "camera",
+          q: "क्या नदी पर कोई कैमरा है?",
+          a: [
+            "नहीं। इस उत्पाद में कहीं कोई वीडियो नहीं है, न कोई सजीव प्रसारण, न कोई जुड़ा हुआ स्ट्रीम, और न ऐसा कोई चित्र जो सजीव होने का भ्रम दे।",
+            "डिजिटल स्नान बेचते पृष्ठ पर घाट का सजीव चित्र ठीक वही अनुमान जगाता है कि आपके लिए कुछ किया जा रहा है। कुछ नहीं किया जाता। केवल ध्वनि और स्याही, और कुछ नहीं।",
+          ],
+        },
+        {
+          id: "temperature",
+          q: "आप जल का तापमान क्यों नहीं दिखाते?",
+          a: [
+            "क्योंकि इन छह जलों के लिए किसी ऐसे स्रोत से सजीव जल-तापमान हमें नहीं मिला जहाँ तक हम वास्तव में पहुँच सकें, और जिस अंक के पीछे हम खड़े न हो सकें उसे हम नहीं छापेंगे।",
+            "घाट पर वायु का तापमान सच्चा है और हम वही दिखाते हैं। यदि छह में से कम से कम तीन के लिए सच्चा जल-तापमान उपलब्ध होगा, तो हम उसे जोड़ देंगे और बता देंगे कि वह कहाँ से आया।",
+          ],
+        },
+      ],
+    },
+    {
+      id: "money",
+      title: "मूल्य",
+      items: [
         {
           id: "paying-for",
           q: "मैं वास्तव में किसका भुगतान कर रहा हूँ?",
           a: [
-            "व्यवस्था, पुरोहित के श्रम, रिकॉर्डिंग और अभिलेख का। एक सेवा, और उसका प्रमाण।",
-            "किसी आशीर्वाद का नहीं, किसी परिणाम का नहीं, और पुण्य की किसी मात्रा का नहीं। पुरोहित को कितना मिलता है और आय का कितना भाग उन तक पहुँचता है, यह हम प्रकाशित करते हैं; और आप जो दक्षिणा जोड़ते हैं वह पूरी उन्हीं तक जाती है, हम तक कुछ नहीं।",
+            "एक बैठक का। उस दिन पढ़ी गई नदी के साथ साढ़े चार मिनट, उस घड़ी के पीछे का पंचांग, ध्वनि, उस बैठक का छोड़ा हुआ चिह्न, और आपकी पंजिका में एक पंक्ति।",
+            "किसी आशीर्वाद का नहीं, किसी परिणाम का नहीं, पुण्य की किसी मात्रा का नहीं, और घाट पर किसी के श्रम का भी नहीं, क्योंकि घाट पर कोई है ही नहीं।",
+          ],
+        },
+        {
+          id: "free",
+          q: "क्या कोई निःशुल्क रूप है?",
+          a: [
+            "स्नान का नहीं। कोई निःशुल्क स्नान नहीं है और कोई आज़माइश नहीं है।",
+            "जो पृष्ठ है, साधना नहीं, वह बिना खाते के सदा निःशुल्क है: छहों जलों की सजीव स्थिति, पंचांग, मुहूर्त और उसके पर्व, और छहों जलों के अपने पृष्ठ। सब पढ़िए, हर दिन पढ़िए, और कुछ मत दीजिए।",
+            "हम वस्तु के दो डॉलर लेना अधिक ठीक मानते हैं, बनिस्बत इसके कि एक निःशुल्क स्तर को उदारता कहकर सजाएँ और बदले में आपका ध्यान बेच दें।",
+          ],
+        },
+        {
+          id: "prices",
+          q: "इसका मूल्य क्या है?",
+          a: [
+            "एक धारा, एक स्नान, $2 अथवा ₹१०१।",
+            "ग्यारह, ग्यारह स्नान, $11 अथवा ₹५०१, अर्थात एक स्नान एक डॉलर का, और अधिकांश लोग यही लेते हैं।",
+            "वर्ष कोश, साठ स्नान, $48 अथवा ₹२,१००।",
+            "स्नान आपके खाते में तब तक रहते हैं जब तक आप उन्हें लें। कुछ भी समाप्त नहीं होता, कुछ भी स्वयं नवीनीकृत नहीं होता, और कोई डिब्बी आपके लिए पहले से चुनी हुई नहीं होती।",
+          ],
+        },
+        {
+          id: "eleven",
+          q: "एक-एक क्यों नहीं, ग्यारह एक साथ क्यों?",
+          a: [
+            "इसका कारण साधारण है जिसे हम छिपाने के बजाय छाप देना ठीक समझते हैं। कार्ड नेटवर्क से गुज़रता एक अकेला डॉलर अपना लगभग एक तिहाई शुल्क में गँवा देता है। एक साथ गुज़रते ग्यारह डॉलर लगभग छह प्रतिशत।",
+            "एक स्नान एक डॉलर पर केवल इसी तरह टिक सकता है। यदि हम उसी मूल्य पर एक-एक बेचते, तो आपके दिए हुए का एक तिहाई कार्ड नेटवर्क को जाता और मूल्य बढ़ाना पड़ता।",
+          ],
+        },
+        {
+          id: "india",
+          q: "भारत का मूल्य अलग क्यों है?",
+          a: [
+            "क्योंकि जो मूल्य यह नहीं देखता कि व्यक्ति कहाँ रहता है, वह एक मूल्य नहीं, एक दीवार है। भारत दर हर जगह विश्व दर के साथ छपी रहती है, आपकी जानकारी के बिना, आपके संपर्क के आधार पर, चुपचाप बदली नहीं जाती।",
+            "अंक के अतिरिक्त दोनों में कुछ भी भिन्न नहीं। वही बैठकें, वही जल, वही चिह्न।",
           ],
         },
         {
           id: "refund",
           q: "क्या राशि वापस मिल सकती है?",
           a: [
-            "हाँ। अनुष्ठान से पहले: मुहूर्त से चौबीस घंटे पहले तक पूरी राशि, उसके भीतर आधी, क्योंकि तब तक पुरोहित नियत और भुगतान-प्राप्त हो चुके होते हैं।",
-            "अनुष्ठान के बाद: यदि आप किसी भी कारण असंतुष्ट हों, तो चौदह दिन के भीतर, कारण पूछे बिना, राशि वापस। एक बटन, न फ़ोन, न रोकने का कोई प्रस्ताव, न अंत में यह प्रश्न कि आप निश्चित हैं या नहीं।",
-            "एक सच्ची बात: हम वह लौटा रहे हैं जो आपने व्यवस्था, अनुष्ठान और रिकॉर्डिंग के लिए दिया। हम अनुष्ठान को पलट नहीं रहे। वह हुआ, पुरोहित को पूरा भुगतान हुआ, और उसका अभिलेख यथावत रहता है। अनुष्ठान लौटाई जाने वाली वस्तु नहीं है।",
+            "हाँ। जो स्नान आपने नहीं लिए, उनकी पूरी राशि एक क्लिक पर वापस, बिना यह पूछे कि क्यों।",
+            "जो बैठक आप कर चुके हैं, वह वापसी योग्य नहीं है, और यह हम साफ़ कह देना चाहेंगे। उसमें आपके अपने ध्यान के साढ़े चार मिनट के अतिरिक्त कुछ ख़र्च नहीं हुआ, और वे मिनट हम भी लौटा नहीं सकते।",
+            "यदि साइट ने आपका साथ न दिया, मॉडल पुराना था और हमने बताया नहीं, या ध्वनि नहीं बजी, तो हमें लिखिए और हम उस बैठक की राशि लौटा देंगे।",
           ],
         },
         {
-          id: "failure",
-          q: "यदि प्रसारण टूट जाए, या अनुष्ठान हो ही न सके?",
+          id: "account",
+          q: "क्या खाता बनाना आवश्यक है?",
           a: [
-            "प्रसारण टूटा पर अनुष्ठान रिकॉर्ड हुआ: छह घंटे में रिकॉर्डिंग, और चाहें तो एक क्लिक पर एक चौथाई राशि वापस।",
-            "अनुष्ठान हुआ ही नहीं: आपके पूछने से पहले हम बताएँगे। फिर चुनाव आपका, अगले समान मुहूर्त में निःशुल्क पुनः, या पूरी राशि वापस।",
-            "घाट बंद हो या जल असुरक्षित: मुहूर्त से पहले बताएँगे और दूसरा घाट, दूसरी नदी, दूसरा मुहूर्त, या पूरी वापसी प्रस्तुत करेंगे। एक नदी के बदले चुपचाप दूसरी कभी नहीं।",
+            "स्नान के लिए हाँ, क्योंकि आपका संकल्प, आपकी पंजिका और आपके चिह्न किसी के तो होंगे, और वे आपके हैं। इस साइट पर कुछ भी पढ़ने के लिए किसी खाते की आवश्यकता नहीं।",
           ],
         },
       ],
@@ -1509,7 +1698,7 @@ export const faqContent = { en: faqEn, hi: {
           q: "मुझे अपना गोत्र नहीं मालूम, या मेरा परिवार गोत्र नहीं मानता।",
           a: [
             "तो उसे रिक्त छोड़ दीजिए। जो फ़ॉर्म गोत्र पर अड़ता है, वह लोगों को जाति से छाँटने वाला फ़ॉर्म है; हमारा नहीं अड़ता।",
-            "खाना रिक्त हो तो संकल्प में प्रचलित कश्यप गोत्र लिया जाता है, जो ठीक ऐसी ही स्थिति की सामान्य परिपाटी है। यदि आपके परिवार की अपनी परिपाटी हो, बता दीजिए, हम वही लेंगे।",
+            "खाना रिक्त हो तो संकल्प में सीधे लिखा जाता है कि गोत्र अनुक्त है, बिना किसी सफ़ाई के। यदि आप प्रचलित कश्यप गोत्र लेना चाहें, या आपके परिवार की अपनी परिपाटी हो, बता दीजिए, हम वही लेंगे।",
           ],
         },
         {
@@ -1522,76 +1711,59 @@ export const faqContent = { en: faqEn, hi: {
         },
         {
           id: "ancestors",
-          q: "क्या यह किसी दिवंगत के लिए किया जा सकता है?",
+          q: "क्या यह किसी दिवंगत के स्मरण में किया जा सकता है?",
           a: [
-            "आप स्मरण-तर्पण करा सकते हैं, और हम उसे ठीक इसी नाम से अंकित करेंगे।",
-            "यह श्राद्ध नहीं है। हम जीवन के अनिवार्य संस्कार नहीं करते, अस्थि-विसर्जन नहीं करते, और कोई ऐसा अनुष्ठान नहीं करते जहाँ आपकी अपनी उपस्थिति विहित हो। स्मरण-तर्पण भिन्न और छोटी वस्तु है, और हम यह कहते रहेंगे, यह नहीं होने देंगे कि आप कुछ और मान लें।",
-            "हम कभी नहीं कहेंगे कि किसी दिवंगत को कुछ प्राप्त हुआ, उन पर कुछ प्रभाव पड़ा, या वे किसी की प्रतीक्षा में हैं।",
+            "आप उनका नाम अपने संकल्प में, अपने शब्दों में लिख सकते हैं, और उन्हें मन में रखकर बैठ सकते हैं। हम उसे स्मरण कहेंगे, इससे अधिक कुछ नहीं।",
+            "यह न श्राद्ध है, न तर्पण। यहाँ किसी के द्वारा कोई अनुष्ठान होता ही नहीं, इसलिए किसी की ओर से कुछ अर्पित भी नहीं होता। हम कभी नहीं कहेंगे कि किसी दिवंगत को कुछ प्राप्त हुआ, उन पर कुछ प्रभाव पड़ा, या वे किसी की प्रतीक्षा में हैं।",
+            "यदि कोई तिथि आपके लिए महत्व रखती है, तो बता दीजिए, हम उसी तिथि पर, वर्ष में एक बार, नदी ले आएँगे, और उसके अतिरिक्त कभी उसका उल्लेख नहीं करेंगे।",
           ],
         },
         {
           id: "who-can-book",
-          q: "मैं हिंदू नहीं हूँ, या मेरा परिवार अंतर-धार्मिक है, या मेरा नाम हिंदू नाम नहीं है। क्या मैं बुक कर सकता हूँ?",
+          q: "मैं हिंदू नहीं हूँ, या मेरा परिवार अंतर-धार्मिक है, या मेरा नाम हिंदू नाम नहीं है। क्या मैं यह कर सकता हूँ?",
           a: [
-            "हाँ। लोग अपने हिंदू माता-पिता के लिए, जीवनसाथी के लिए, मित्र के लिए, और अपने लिए बुक करते हैं।",
-            "पुरोहित किसी संकल्प को बोलने से, अनुष्ठान के आधार पर, मना कर सकते हैं, और भुगतान फिर भी होता है; ख़रीदी हुई सहमति सहमति नहीं होती। पर वे आपको इसलिए मना नहीं कर सकते कि आप कौन हैं: न जाति, न धर्म, न लिंग, न वैवाहिक स्थिति, न यौन रुझान, न आपका नाम, न गोत्र का न होना। हर इनकार कारण सहित दर्ज और लेखा-परीक्षित होता है, और आपको यह कभी नहीं बताया जाता कि किसी पुरोहित ने मना किया। हम तुरंत, बिना अतिरिक्त शुल्क, दूसरे पुरोहित की व्यवस्था कर देते हैं।",
-          ],
-        },
-        {
-          id: "pronunciation",
-          q: "क्या वे मेरा नाम ठीक बोलेंगे?",
-          a: [
-            "बुकिंग के समय आप बीस सेकंड अपने स्वर में नाम और गोत्र रिकॉर्ड कर सकते हैं। पुरोहित अनुष्ठान से पहले उसे सुनते हैं।",
-            "यदि फिर भी नाम ग़लत बोला जाए, तो एक स्पर्श से वह दोबारा, निःशुल्क, बिना बहस के पढ़ा जाता है।",
+            "हाँ। कोई आपकी जाँच नहीं करता, क्योंकि जाँच करने वाला यहाँ कोई है ही नहीं। न कोई काउंटर, न पंक्ति, न गोत्र की परख।",
+            "लोग इसे अपने हिंदू माता-पिता के लिए करते हैं, जीवनसाथी के लिए, मित्र के लिए, अपने लिए, और उस नदी के साथ चार शांत मिनटों के लिए जिसे उन्होंने कभी देखा नहीं।",
           ],
         },
       ],
     },
     {
-      id: "data",
+      id: "data-privacy",
       title: "आपकी सूचना",
       items: [
         {
           id: "sankalp-private",
           q: "मेरा संकल्प कौन पढ़ता है?",
           a: [
-            "सामान्यतः कोई नहीं, पुरोहित भी नहीं। वे कहते हैं कि अनुष्ठान आपके मन में धारित संकल्प हेतु है। आपके शब्द वे तभी पढ़ते हैं जब आप कहें, और वह डिब्बी आपके लिए पहले से चुनी हुई कभी नहीं होती।",
-            "स्नानिफ़ाई में कोई संकल्प यूँ ही नहीं पढ़ता। पढ़ने के लिए दो अनुमतियाँ और लिखित कारण चाहिए, वह स्थायी रूप से दर्ज होता है, और एक दिन के भीतर आपको सूचित किया जाता है कि पढ़ा गया, किसने और क्यों।",
-            "पाठ पर एक स्वचालित सुरक्षा-जाँच चलती है; उसके कारण कोई व्यक्ति उसे नहीं देखता। यदि पाठ से लगे कि कोई संकट में हो सकता है, तो आपको एक संदेश मिलता है जिसमें वे स्थान लिखे होते हैं जहाँ आप बात कर सकते हैं, और वह ऐसे लिखा जाता है कि उससे यह संकेत न मिले कि किसी ने आपके शब्द पढ़े, क्योंकि किसी ने नहीं पढ़े।",
+            "कोई नहीं। वह केवल आपको दिखता है, और किसी को नहीं, और उसे कहीं भी कोई ऊँचे स्वर में नहीं पढ़ता, क्योंकि इस उत्पाद में पढ़ने वाला कोई है ही नहीं।",
+            "वह न आपके चिह्न पर छपता है, न पंजिका की पंक्ति में आता है, और सत्यापन पृष्ठ उसे किसी को नहीं दिखाता, चाहे उसके पास पहचान-संख्या हो।",
+            "स्नानिफ़ाई में कोई संकल्प यूँ ही नहीं पढ़ता। पढ़ने के लिए दो अनुमतियाँ और लिखित कारण चाहिए, वह स्थायी रूप से दर्ज होता है, और एक दिन के भीतर आपको सूचित किया जाता है कि पढ़ा गया, किसने और क्यों। पाठ पर एक स्वचालित सुरक्षा-जाँच चलती है; उसके कारण कोई व्यक्ति उसे नहीं देखता।",
           ],
         },
         {
           id: "delete",
           q: "क्या मैं सब कुछ मिटा सकता हूँ?",
           a: [
-            "हाँ। एक बटन, प्रतियों और बैकअप सहित, सात दिन के भीतर। वैसे भी आपका संकल्प-पाठ अनुष्ठान के नब्बे दिन बाद स्वतः मिट जाता है, या चाहें तो चौबीस घंटे में।",
-            "पुष्टि-संदेश में लिखा रहता है कि क्या मिटा और क्या रखा गया, वे रसीदें जो कर-क़ानून माँगता है, और अनाम अभिलेख प्रविष्टि, और क्यों।",
-            "एक बात जान लीजिए: यदि आपने संकल्प ऊँचे स्वर में पढ़वाया था, तो वह स्थायी रिकॉर्डिंग में है, और पाठ मिटाने से वह ध्वनि से नहीं हटता। यह हम उसी डिब्बी पर लिख देते हैं, और साथ में रिकॉर्डिंग भी मिटाने का विकल्प देते हैं।",
-          ],
-        },
-        {
-          id: "ledger",
-          q: "क्या आपके सार्वजनिक अभिलेख में मेरा नाम है?",
-          a: [
-            "नहीं, और कभी हो भी नहीं सकता। अभिलेख में छापें, समय, घाट, पुरोहित का अपारदर्शी पहचान-अंक और अनुष्ठान की स्थिति रहती है। उसमें ऐसा कोई खाना ही नहीं जिसमें नाम, गोत्र या संकल्प रखा जा सके।",
-            "इसीलिए प्रमाण स्थायी रह सकता है जबकि आपकी सूचना नहीं: आपकी हर सूचना मिट जाने के बाद भी, आपकी उतारी हुई फ़ाइल उस अभिलेख से प्रमाणित होती रहती है।",
-          ],
-        },
-        {
-          id: "verify-fail",
-          q: "मैंने अपना वीडियो जाँचा और वह कहता है कि मेल नहीं खाता।",
-          a: [
-            "लगभग हमेशा इसका अर्थ है कि फ़ाइल आगे भेजी गई थी। WhatsApp, Telegram और अधिकांश फ़ोन साझा करते समय वीडियो को दबाकर छोटा कर देते हैं, जिससे हर बाइट बदल जाती है और छाप भी। यह संदेशवाहक का प्रभाव है, जालसाज़ी नहीं।",
-            "अपने अनुष्ठान पृष्ठ से मूल फ़ाइल उतारकर उसे जाँचिए। हम आपको दी गई हर प्रति की अलग छाप प्रकाशित करते हैं, और एक नमूना अनुष्ठान भी है जिस पर आप पहले से अभ्यास कर सकते हैं।",
-            "यदि मूल फ़ाइल भी मेल न खाए, तो हमें लिखिए, हम इसकी जाँच चुपचाप नहीं, सार्वजनिक रूप से करेंगे।",
+            "हाँ। एक बटन, प्रतियों और बैकअप सहित, सात दिन के भीतर। यह उस कुंजी को नष्ट करके होता है जिससे आपका अभिलेख एन्क्रिप्ट किया गया था, इसीलिए यह वहाँ भी चलता है जहाँ भंडारण मिटाया नहीं जा सकता।",
+            "आपका उतारा हुआ चिह्न उसके बाद भी काम करता रहता है, क्योंकि वह जिस पर टिका है वह नदी का सार्वजनिक पाठ है, हमारी तालिका की कोई पंक्ति नहीं। मिटाने से आपका संकल्प रखने की हमारी क्षमता जाती है, नदी की स्थिति सिद्ध करने की आपकी क्षमता नहीं।",
+            "पुष्टि-संदेश में लिखा रहता है कि क्या मिटा और क्या रखा गया, उन रसीदों सहित जो कर-क़ानून माँगता है।",
           ],
         },
         {
           id: "tracking",
           q: "इस साइट पर मुझ पर नज़र क्या रख रहा है?",
           a: [
-            "कोई विज्ञापन स्क्रिप्ट नहीं और कोई Vercel Web Analytics के अतिरिक्त विश्लेषण स्क्रिप्ट नहीं, और कोई स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं, कहीं भी, कभी भी। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, वहाँ आपकी स्क्रीन को कोई रिकॉर्ड नहीं करता।",
-            "पूरे उत्पाद में केवल एक बाहरी स्क्रिप्ट है: भुगतान सेवा की, केवल भुगतान वाले चरण पर, और उसी पृष्ठ पर उसका नाम लिखा रहता है। वचन तोड़ने से अच्छा है उसे सीमित कर देना।",
+            "कोई विज्ञापन स्क्रिप्ट नहीं और कोई स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं, कहीं भी, कभी नहीं। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, उसे कुछ भी रिकॉर्ड नहीं करता।",
+            "पूरे उत्पाद में दो ही बाहरी स्क्रिप्ट हैं, और दोनों के नाम हम बताते हैं। Vercel Web Analytics पृष्ठ-दृश्य गिनती है: न कुकी, न दूसरी साइटों तक पीछा, न किसी फ़ॉर्म की सामग्री। भुगतान सेवा की स्क्रिप्ट केवल भुगतान वाले चरण पर चलती है। किसी वचन को तोड़ने से अच्छा है उसे सीमित कर देना।",
+          ],
+        },
+        {
+          id: "panchang",
+          q: "कुछ समयों पर “अस्थायी” क्यों लिखा रहता है?",
+          a: [
+            "क्योंकि हमने अभी कोई पंचांग स्रोत तय नहीं किया, और जिस सटीक समय के पीछे कुछ न हो वह गढ़ा हुआ तथ्य है।",
+            "जब तक स्रोत तय न हो, हर सटीक समय जहाँ आता है वहीं यह अंकन साथ रहता है, और जहाँ स्रोत कुछ मिनटों से अधिक भिन्न हों, वहाँ हम अपने अनुकूल समय चुनने के बजाय पूरी सीमा दिखाते हैं। स्रोत तय होते ही गणना-पद्धति, अयनांश और घाट के निर्देशांक समयों के साथ प्रकाशित होंगे।",
           ],
         },
       ],
