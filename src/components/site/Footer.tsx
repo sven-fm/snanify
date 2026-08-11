@@ -1,25 +1,36 @@
 import { content } from "@/lib/content";
-import type { Lang } from "@/lib/i18n";
-import { navItem, type NavKey } from "@/lib/nav";
+import { servesPath, type Lang } from "@/lib/locales";
+import { navItem, navLabel, type NavKey } from "@/lib/nav";
 import { Mark } from "@/components/Logo";
 
-const HEADINGS = {
-  service: { en: "Service", hi: "सेवा" },
-  company: { en: "Company", hi: "कंपनी" },
-  legal: { en: "Legal", hi: "कानूनी" },
-} as const;
+/**
+ * The column headings and the inert legal labels come from `t.footer.cols`,
+ * which every locale carries, rather than from a second en/hi table that would
+ * have to be kept in step with it. The indices are the three columns as they
+ * are written in src/content/landing/en.ts: service, company, legal.
+ */
+const SERVICE = 0;
+const COMPANY = 1;
+const LEGAL = 2;
 
-const COLUMNS: { heading: keyof typeof HEADINGS; keys: NavKey[] }[] = [
-  { heading: "service", keys: ["snan", "live", "rivers", "muhurat", "patra"] },
-  { heading: "company", keys: ["how", "ethics", "faq", "panchang"] },
+const COLUMNS: { at: number; keys: NavKey[] }[] = [
+  { at: SERVICE, keys: ["snan", "live", "rivers", "muhurat", "patra"] },
+  { at: COMPANY, keys: ["how", "ethics", "faq", "panchang"] },
 ];
 
-/* Routes that do not exist yet. Set as plain text rather than links -
-   a footer full of href="#" is a worse signal than an honestly inert label. */
-const PENDING = {
-  en: ["Privacy", "Terms", "Refunds"],
-  hi: ["गोपनीयता", "शर्तें", "वापसी"],
-} as const;
+/** Where a nav key actually points, so the footer never offers a 404. */
+const ROUTE_OF: Record<NavKey, string> = {
+  rivers: "/rivers",
+  snan: "/snan",
+  muhurat: "/muhurat",
+  patra: "/patra",
+  how: "/how-it-works",
+  ethics: "/ethics",
+  faq: "/faq",
+  live: "/live",
+  panchang: "/panchang",
+  verify: "/verify",
+};
 
 /** The imprint: everything the almanac prints at the back. */
 export function Footer({ lang }: { lang: Lang }) {
@@ -38,33 +49,45 @@ export function Footer({ lang }: { lang: Lang }) {
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink2">{t.footer.tagline}</p>
           </div>
 
-          {COLUMNS.map((col) => (
-            <div key={col.heading}>
-              <h3 className="label text-spot">{HEADINGS[col.heading][lang]}</h3>
-              <div className="rule-thin mt-3" />
-              <ul className="mt-4 space-y-2.5">
-                {col.keys.map((key) => {
-                  const item = navItem(lang, key);
-                  return (
-                    <li key={key}>
-                      <a
-                        href={item.href}
-                        className="text-sm text-ink2 underline decoration-rule decoration-1 transition-colors hover:text-spot hover:decoration-spot"
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+          {COLUMNS.map((col) => {
+            /* A locale is only offered the routes it actually serves. Without
+               this a Tamil footer links to /snan, which exists in English and
+               Hindi only, and every one of those links is a 404 for the reader
+               and a broken internal link for a crawler. */
+            const keys = col.keys.filter((k) => servesPath(lang, ROUTE_OF[k]));
+            if (keys.length === 0) return null;
+
+            return (
+              <div key={col.at}>
+                <h3 className="label text-spot">{t.footer.cols[col.at].h}</h3>
+                <div className="rule-thin mt-3" />
+                <ul className="mt-4 space-y-2.5">
+                  {keys.map((key) => {
+                    const item = navItem(lang, key);
+                    return (
+                      <li key={key}>
+                        <a
+                          href={item.href}
+                          className="text-sm text-ink2 underline decoration-rule decoration-1 transition-colors hover:text-spot hover:decoration-spot"
+                        >
+                          {navLabel(lang, key)}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
 
           <div>
-            <h3 className="label text-spot">{HEADINGS.legal[lang]}</h3>
+            <h3 className="label text-spot">{t.footer.cols[LEGAL].h}</h3>
             <div className="rule-thin mt-3" />
             <ul className="mt-4 space-y-2.5">
-              {PENDING[lang].map((label) => (
+              {/* Routes that do not exist yet. Set as plain text rather than
+                  links: a footer full of href="#" is a worse signal than an
+                  honestly inert label. */}
+              {t.footer.cols[LEGAL].links.map((label) => (
                 <li key={label} className="text-sm text-ink2/60">
                   {label}
                 </li>

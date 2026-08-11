@@ -74,23 +74,44 @@ npm run lint     # must be 0 errors
 npx tsc --noEmit # must be clean
 ```
 
-### Bilingual, always
+### Twelve locales, two tiers
 
-Copy lives in typed objects keyed by locale so a missing translation is a **compile error**,
-never a silent English fallback:
+`src/lib/locales.ts` is the registry and the only file that knows the locale set. Everything
+else (routing, the proxy, hreflang, the sitemap, fonts, the language switch, JSON-LD) derives
+from it. **Adding a language is a row in `LOCALES` plus its translations, and nothing else.**
+
+| Type | Locales | What exists in them |
+| --- | --- | --- |
+| `FullLang` | `en`, `hi` | Every page on the site |
+| `Lang` | those plus `bn mr te ta gu kn ml or pa as` | The landing page, the header, the footer, all metadata |
+
+The tiers are enforced by the type system, not by discipline. Deep content (`rivers.ts`,
+`muhurat.ts`, `panchang.ts`, `trust.ts`, `kumbh.ts`, `patra.ts`, `sky.ts`, `snan.ts`,
+`verify.ts`, `nakshatra.ts`, `live.ts`) is `Record<FullLang, ...>`; those files import
+`FullLang as Lang` under a comment saying so, so their bodies read unchanged and every call
+site from a twelve-locale page fails to compile until it narrows.
+
+Copy that must exist everywhere is `Record<Lang, ...>`, so a missing translation is a
+**compile error**, never a silent English fallback:
 
 ```ts
-export const xContent = { en: {...}, hi: {...} } satisfies Record<Lang, unknown>;
+export const bn = { ... } satisfies LandingCopy;   // src/content/landing/bn.ts
 ```
 
-Hindi must be real, idiomatic, respectful-register (आप) Hindi. Never a literal translation of
-English marketing idiom. Build every href with `localePath(lang, path)` from `@/lib/i18n`;
-hand-writing `/hi/...` is how a route rename strands one locale.
+**`pickDeep` is the only fallback in the codebase.** It is confined to proper nouns (river
+names, ghat names, occasion names) on twelve-locale pages, it is named and typed, and it is
+paired with `deepHref`/`deepLang` so the markup admits which language the string is in. Prose
+never falls back.
+
+Every locale must be real, idiomatic, respectful-register (आप / আপনি / நீங்கள் / మీరు / ਤੁਸੀਂ …)
+copy. Never a literal translation of English marketing idiom.
 
 ### Routing
 
 One tree under `src/app/[lang]/`. `src/proxy.ts` keeps the public URLs: English unprefixed,
-Hindi at `/hi`, `/en/*` 308s to `/*`. Every page:
+every other locale under its ISO 639-1 code (`/ta/rivers`), `/en/*` 308s to `/*`. Build every
+href with `localePath(lang, path)`; hand-writing `/hi/...` is how a route rename strands a
+locale. Every page:
 
 ```tsx
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
@@ -99,9 +120,20 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
 }
 ```
 
-Export `generateMetadata` with the canonical in the **public** URL shape and reciprocal
-`alternates.languages`. Dynamic segments need `generateStaticParams` over every
-`(lang, slug)` combination.
+- **Metadata**: call `pageMetadata({ lang, path, title, description })` from `@/lib/seo`. It
+  produces the canonical, the whole hreflang cluster and the OG locales from the registry.
+  Never hand-roll `alternates.languages` again; that is how `x-default` went missing on nine
+  pages.
+- **Static params**: `allLangParams()` for a twelve-locale route, `fullLangParams()` for a
+  full-depth-only one. A page with neither inherits the layout's twelve and prerenders ten
+  pages whose copy does not exist.
+- **`FULL_ONLY`** in `locales.ts` is the single list deciding which routes are English and
+  Hindi only. Moving a route out of it publishes that route in twelve languages, and the
+  sitemap, hreflang, nav, footer and language switch all follow.
+- **Navigation must ask `servesPath(lang, path)`**, never `isFullOnlyPath` alone. The latter
+  is true for `/snan` even in English, and filtering on it emptied the English nav once.
+
+Google's hreflang rules and the Search Console runbook live in `docs/seo/search-console.md`.
 
 ### Mobile first, not mobile also
 
@@ -126,10 +158,27 @@ mid-range Android.
 - **The theme script must be a real `<head>` child.** React refuses to hydrate a sync
   `<script>` placed directly under `<html>`. The `@next/next/no-head-element` lint rule that
   argues otherwise is Pages-Router-only and is disabled at that line in `RootShell.tsx`.
-- **`font-synthesis: none` on `.display`.** Eczar ships no italic cut, so browsers fake an
-  oblique, which is exactly the generic-AI tell the design exists to avoid.
-- **Devanagari needs its own leading.** `line-height: 0.98` collides matras. `html[lang="hi"]`
-  raises display leading to 1.18 and drops synthetic italics entirely.
+- **`font-synthesis: none` on `.display`.** Eczar ships no italic cut, and neither does any
+  Noto Serif here, so browsers fake an oblique, which is exactly the generic-AI tell the
+  design exists to avoid.
+- **Indic scripts need their own leading.** `line-height: 1.06` collides matras. The type
+  layer keys off `html:not([data-script="latin"])`, not `html[lang="hi"]`, because Hindi and
+  Marathi share Devanagari and Bengali and Assamese share a script. Same selector drops
+  synthetic italics and the uppercase/tracking on `.label`.
+- **next/font options must be literal.** A shared constant, a spread or a helper fails the
+  build with "Unexpected spread": next/font resolves the call with a static parser. All
+  eighteen font calls in `src/lib/fonts.ts` are written out in full for this reason, and each
+  family gets its **own** CSS variable, because two classes setting the same custom property
+  on `<html>` resolve by stylesheet order.
+- **`opengraph-image` must be excluded from the proxy matcher.** It lives at
+  `[lang]/opengraph-image`, so Next writes the English one as `/en/opengraph-image`, which the
+  `/en/*` redirect would 308 into a non-existent path and mangle the cache-busting query.
+  Scrapers do not follow redirects for `og:image`, so the card comes out blank.
+- **The hero waterline is anchored, not a fraction.** `RiverFlow` sets its viewBox from the
+  element's own pixel box and puts the horizon under `[data-horizon-anchor]`. The old fixed
+  `1200x700` viewBox with `preserveAspectRatio="slice"` put the horizon wherever the crop
+  happened to land, which cut the headline in half on desktop and flattened the perspective to
+  nothing in portrait.
 - **`npm i <anything>` prunes `--no-save` dev installs.** Playwright, used for screenshots and
   audits, has to be reinstalled after any dependency change.
 
@@ -148,6 +197,7 @@ commits to it. Panchang timings ship labelled provisional until a source is name
 | Path | What it holds |
 | --- | --- |
 | `docs/digital/` | The digital-snan design set: experience, artefact, river data, model, positioning, growth |
+| `docs/seo/` | Search Console runbook, the hreflang contract, and the pre-launch checklist |
 | `docs/product/` | Six web-researched market analyses, each adversarially reviewed |
 | `docs/design/` | The earlier offering design set from the officiant-model era, superseded but useful |
 | `ARCHITECTURE.md` | Stack, routing, data flow, deployment |

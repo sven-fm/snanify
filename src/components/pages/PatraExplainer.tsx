@@ -10,7 +10,11 @@ import {
   SPECIMEN_CANONICAL,
   SPECIMEN_SEED,
 } from "@/content/patra";
-import { localePath, type Lang } from "@/lib/i18n";
+import { localePath } from "@/lib/i18n";
+/* This page exists in English and Hindi only; see the tier note and the
+   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
+   the full-depth pair and not the twelve locales the site serves. */
+import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    /patra, what the Jal Chihna is, what it records, what it refuses to claim,

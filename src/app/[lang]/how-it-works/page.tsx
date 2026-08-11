@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { HowItWorks } from "@/components/pages/HowItWorks";
-import { LANGS, type Lang } from "@/lib/content";
-import { localePath } from "@/lib/i18n";
+/* This route exists in English and Hindi only, because the deep content behind
+   it does; see the tier note at the top of src/lib/locales.ts. `Lang` here is
+   therefore the full-depth pair and not the twelve locales the site serves, and
+   `FULL_LANGS` is what narrows the prerender set away from the layout default. */
+import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
 import { howItWorksContent } from "@/content/trust";
+import { pageMetadata } from "@/lib/seo";
 
 /**
  * Public URL shape: English unprefixed, Hindi under /hi. Never `/en/...`, and
@@ -10,10 +14,9 @@ import { howItWorksContent } from "@/content/trust";
  * cannot strand one locale.
  */
 const ROUTE = "/how-it-works";
-const PATHS = { en: localePath("en", ROUTE), hi: localePath("hi", ROUTE) } as const;
 
 export function generateStaticParams() {
-  return LANGS.map((lang) => ({ lang }));
+  return FULL_LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({
@@ -24,28 +27,13 @@ export async function generateMetadata({
   const { lang } = await params;
   const t = howItWorksContent[lang];
 
-  return {
+  return pageMetadata({
+    lang,
+    path: ROUTE,
     title: t.meta.title,
     description: t.meta.description,
-    alternates: {
-      canonical: PATHS[lang],
-      languages: { en: PATHS.en, hi: PATHS.hi },
-    },
-    openGraph: {
-      type: "article",
-      url: PATHS[lang],
-      siteName: "Snanify",
-      title: t.meta.title,
-      description: t.meta.description,
-      locale: lang === "en" ? "en_IN" : "hi_IN",
-      alternateLocale: [lang === "en" ? "hi_IN" : "en_IN"],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t.meta.title,
-      description: t.meta.description,
-    },
-  };
+    ogType: "article",
+  });
 }
 
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {

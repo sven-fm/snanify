@@ -8,7 +8,10 @@ import {
   SPECIMEN_WATERMARK_TEXT,
   type ChihnaRecord,
 } from "@/content/patra";
-import type { Lang } from "@/lib/content";
+/* This page exists in English and Hindi only; see the tier note and the
+   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
+   the full-depth pair and not the twelve locales the site serves. */
+import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    जल चिह्न · Jal Chihna, the printable A4 form.

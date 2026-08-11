@@ -11,8 +11,12 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-import { LANGS, type Lang } from "@/lib/content";
-import { localePath, otherLang } from "@/lib/i18n";
+/* This route exists in English and Hindi only, because the deep content behind
+   it does; see the tier note at the top of src/lib/locales.ts. `Lang` here is
+   therefore the full-depth pair and not the twelve locales the site serves, and
+   `FULL_LANGS` is what narrows the prerender set away from the layout default. */
+import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
 import { MuhuratDetail } from "@/components/pages/MuhuratDetail";
 import {
@@ -23,16 +27,14 @@ import {
   type Occasion,
 } from "@/content/muhurat";
 import { RIVERS } from "@/content/rivers";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
 
 /** Every (lang, occasion) pair, the slug is identical in both locales. */
 export function generateStaticParams() {
-  return LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));
+  return FULL_LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));
 }
-
-/** Public URL shape. localePath owns the "/hi" prefix, never hand-write it. */
-const publicPath = (lang: Lang, slug: string) => localePath(lang, `/muhurat/${slug}`);
 
 /* ---------------------------------------------------------------------------
    Search-result copy.
@@ -148,34 +150,13 @@ export async function generateMetadata({
   const title = `${occasion.name[lang]}, ${t.meta.detailSuffix}`;
   const description = occasionDescription(lang, occasion);
 
-  return {
+  return pageMetadata({
+    lang,
+    path: `/muhurat/${slug}`,
     title,
     description,
-    alternates: {
-      canonical: publicPath(lang, slug),
-      // x-default points at the English edition: it is the wider of the two
-      // audiences and the one an unmatched locale should land on.
-      languages: {
-        en: publicPath("en", slug),
-        hi: publicPath("hi", slug),
-        "x-default": publicPath("en", slug),
-      },
-    },
-    openGraph: {
-      type: "article",
-      url: publicPath(lang, slug),
-      siteName: "Snanify",
-      title,
-      description,
-      locale: lang === "en" ? "en_IN" : "hi_IN",
-      alternateLocale: [lang === "en" ? "hi_IN" : "en_IN"],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+    ogType: "article",
+  });
 }
 
 export default async function Page({

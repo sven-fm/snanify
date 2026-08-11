@@ -1,34 +1,25 @@
-import { Eczar, Martel_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { themeScript } from "@/components/ThemeToggle";
-import type { Lang } from "@/lib/content";
+import { fontClass } from "@/lib/fonts";
+import { localeDef, type Lang } from "@/lib/locales";
 
 /**
- * Two families, both of which speak Devanagari and Latin natively, so the
- * Hindi and English editions are the same voice rather than two borrowed ones.
- *
- * Eczar (Vaibhav Singh, Indian Type Foundry) is a high-contrast display face
- * designed Devanagari-first. Martel Sans is its text companion.
+ * `data-script` rather than `lang` is what the type layer in globals.css keys
+ * off, because Hindi and Marathi share Devanagari and Bengali and Assamese
+ * share a script. `lang` still carries the locale, for screen readers,
+ * hyphenation and Google.
  */
-const eczar = Eczar({
-  subsets: ["latin", "devanagari"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-eczar",
-  display: "swap",
-});
-
-const martelSans = Martel_Sans({
-  subsets: ["latin", "devanagari"],
-  weight: ["300", "400", "600", "700", "800"],
-  variable: "--font-martel-sans",
-  display: "swap",
-});
-
-const fontVars = `${eczar.variable} ${martelSans.variable}`;
-
 export function RootShell({ lang, children }: { lang: Lang; children: React.ReactNode }) {
+  const def = localeDef(lang);
+
   return (
-    <html lang={lang} className={fontVars} suppressHydrationWarning>
+    <html
+      lang={def.tag}
+      dir={def.dir}
+      data-script={def.script}
+      className={fontClass(lang)}
+      suppressHydrationWarning
+    >
       {/* Must be a real <head> child: React refuses to hydrate a sync <script>
          placed directly under <html>. The lint rule below points at next/head,
          which is Pages Router only and does not apply here. */}

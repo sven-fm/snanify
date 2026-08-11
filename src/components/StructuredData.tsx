@@ -1,5 +1,5 @@
 import { content, type Lang } from "@/lib/content";
-import { localePath } from "@/lib/i18n";
+import { localeDef, localePath, LOCALES } from "@/lib/i18n";
 import { ETHICS_MAIL } from "@/content/trust";
 
 /* ---------------------------------------------------------------------------
@@ -100,13 +100,18 @@ export function StructuredData({ graph }: { graph: readonly JsonLdNode[] }) {
 
 /* --- shared helpers ------------------------------------------------------ */
 
-/** Absolute URL in the PUBLIC shape: English unprefixed, Hindi under /hi. */
+/** Absolute URL in the PUBLIC shape: English unprefixed, every other locale
+ *  under its own code. Never the internal "/en/..." form. */
 export function publicUrl(lang: Lang, path: string): string {
   return `${SITE_ORIGIN}${localePath(lang, path)}`;
 }
 
-/** Both site languages, as BCP 47 tags. */
-const SITE_LANGUAGES = ["en", "hi"] as const;
+/**
+ * Every language the site publishes in, as BCP 47 tags, read from the registry
+ * rather than listed here. This used to be a hand-written `["en", "hi"]`, which
+ * is exactly the kind of thing that stays at two while the site goes to twelve.
+ */
+const SITE_LANGUAGES = LOCALES.map((l) => l.tag);
 
 /* --- organization -------------------------------------------------------- */
 
@@ -139,12 +144,15 @@ export function organization(lang: Lang): JsonLdNode {
       caption: "Snanify",
     },
     image: { "@id": LOGO_ID },
-    /* Both locales are declared on the organisation itself, not only on the
-       pages, because the entity is bilingual and not merely translated. */
-    knowsLanguage: [
-      { "@type": "Language", name: "English", alternateName: "en" },
-      { "@type": "Language", name: "Hindi", alternateName: "hi" },
-    ],
+    /* Every locale is declared on the organisation itself and not only on the
+       pages, because the entity is multilingual and not merely translated.
+       Read from the registry so it cannot fall behind the locales actually
+       being served. */
+    knowsLanguage: LOCALES.map((l) => ({
+      "@type": "Language",
+      name: l.english,
+      alternateName: l.tag,
+    })),
     /* /ethics is the binding published position, so it is named as both the
        ethics policy and the publishing principles rather than left implicit. */
     ethicsPolicy: `${SITE_ORIGIN}/ethics`,
@@ -203,7 +211,7 @@ export function webPage(o: WebPageOptions): JsonLdNode {
     name: o.name,
     description: o.description,
     isPartOf: { "@id": WEBSITE_ID },
-    inLanguage: o.lang,
+    inLanguage: localeDef(o.lang).tag,
     mainEntity: o.mainEntity,
     about: o.about,
     mentions: o.mentions,
@@ -290,13 +298,13 @@ export function faqQuestions(
       "@id": `${url}#${item.id}`,
       name: item.q,
       url: `${url}#${item.id}`,
-      inLanguage: lang,
+      inLanguage: localeDef(lang).tag,
       answerCount: 1,
       acceptedAnswer: {
         "@type": "Answer",
         text: item.a.join(" "),
         url: `${url}#${item.id}`,
-        inLanguage: lang,
+        inLanguage: localeDef(lang).tag,
       },
     })),
   );
@@ -356,7 +364,7 @@ export function occasionEvent(o: OccasionEventOptions): JsonLdNode {
     name: o.name,
     alternateName: o.alternateName,
     url,
-    inLanguage: o.lang,
+    inLanguage: localeDef(o.lang).tag,
     description: o.description,
     disambiguatingDescription: o.provenance,
     startDate: o.startDate,
