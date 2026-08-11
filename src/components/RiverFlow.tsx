@@ -41,9 +41,15 @@ const STREAMS = 5;
 const STEPS = 44;
 const SKY_LINES = 15;
 
-/** The river runs off to the right, leaving clean paper for the headline. */
-const VANISH_X = W * 0.7;
-const NEAR_X = W * 0.5;
+/**
+ * The river runs off to the right so the headline keeps clean paper. On a
+ * narrow viewport the `slice` fit crops most of the width away, which would
+ * take the sun off frame, so there the channel recentres.
+ */
+const VANISH_X_WIDE = W * 0.7;
+const NEAR_X_WIDE = W * 0.5;
+const VANISH_X_NARROW = W * 0.56;
+const NEAR_X_NARROW = W * 0.44;
 
 const MEANDER = 74;
 /** Depth units per second. Water moves; it does not race. */
@@ -60,17 +66,17 @@ const halfWidth = (d: number) => (HALF_W * D_NEAR) / d;
  * toward the viewer, so the river runs diagonally into the distance instead of
  * sitting square in the frame. Bends travel downstream, so the phase carries `t`.
  */
-function centre(d: number, t: number): number {
+function centre(d: number, t: number, vanish: number, near: number): number {
   const nearness = (D_NEAR / d) ** 0.85;
-  const base = VANISH_X + (NEAR_X - VANISH_X) * nearness;
+  const base = vanish + (near - vanish) * nearness;
   return base + MEANDER * nearness * Math.sin(d * 0.34 + t * 0.5);
 }
 
 /** One transverse ripple, bank to bank, at depth `d`. */
-function ripplePath(d: number, t: number): string {
+function ripplePath(d: number, t: number, vanish: number, near: number): string {
   const y0 = project(d);
   const hw = halfWidth(d);
-  const cx = centre(d, t);
+  const cx = centre(d, t, vanish, near);
   const nearness = D_NEAR / d;
   /* Amplitude and lift both wobble with depth. Without this every ripple is the
      same curve shifted down the frame, which reads as corduroy, not water. */
@@ -93,14 +99,14 @@ function ripplePath(d: number, t: number): string {
 }
 
 /** A streamline from the horizon to the near edge, at lateral position `sx`. */
-function streamPath(sx: number, t: number): string {
+function streamPath(sx: number, t: number, vanish: number, near: number): string {
   let out = "";
   for (let s = 0; s <= STEPS; s++) {
     const u = s / STEPS;
     /* Sample evenly in 1/d so points spread evenly in screen space. */
     const inv = 1 / D_FAR + u * (1 / D_NEAR - 1 / D_FAR);
     const d = 1 / inv;
-    const cx = centre(d, t);
+    const cx = centre(d, t, vanish, near);
     const nearness = D_NEAR / d;
     const x = cx + sx * halfWidth(d);
     const y = project(d) + 11 * nearness ** 1.15 * Math.sin(sx * 3 + d * 0.9 - t * 2.1);
@@ -114,6 +120,8 @@ export function RiverFlow({ className = "" }: { className?: string }) {
   const glitterRef = useRef<SVGGElement | null>(null);
   const streamRef = useRef<SVGGElement | null>(null);
   const bankRef = useRef<SVGGElement | null>(null);
+  const sunRef = useRef<SVGCircleElement | null>(null);
+  const glitterShapeRef = useRef<SVGPolygonElement | null>(null);
 
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const skyClip = `sky-${uid}`;
@@ -124,6 +132,8 @@ export function RiverFlow({ className = "" }: { className?: string }) {
     const glitter = glitterRef.current;
     const streams = streamRef.current;
     const banks = bankRef.current;
+    const sun = sunRef.current;
+    const glitterShape = glitterShapeRef.current;
     if (!ripples || !glitter || !streams || !banks) return;
 
     /* Scrolling pushes the current along rather than moving the camera, so the
@@ -135,8 +145,23 @@ export function RiverFlow({ className = "" }: { className?: string }) {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    let lastT = 0;
+    const onResize = () => draw(lastT);
+    window.addEventListener("resize", onResize, { passive: true });
+
     const draw = (t: number) => {
       const time = t + scrollBoost;
+      const narrow = window.innerWidth < 900;
+      const vanish = narrow ? VANISH_X_NARROW : VANISH_X_WIDE;
+      const near0 = narrow ? NEAR_X_NARROW : NEAR_X_WIDE;
+
+      /* The sun and its reflection are markup, so they are repositioned here
+         rather than re-rendered. */
+      sun?.setAttribute("cx", String(vanish));
+      glitterShape?.setAttribute(
+        "points",
+        `${vanish - 18},${HORIZON} ${vanish + 18},${HORIZON} ${near0 + 132},${H} ${near0 - 132},${H}`,
+      );
 
       for (let i = 0; i < RIPPLES; i++) {
         /* Step the phase in 1/d, not in d. Depth is projected as C/d, so evenly
@@ -145,7 +170,7 @@ export function RiverFlow({ className = "" }: { className?: string }) {
         const phase = (i / RIPPLES + time * FLOW * 0.075) % 1;
         const inv = 1 / D_FAR + phase * (1 / D_NEAR - 1 / D_FAR);
         const d = 1 / inv;
-        const path = ripplePath(d, time);
+        const path = ripplePath(d, time, vanish, near0);
         /* Fade in at the horizon so nothing pops into existence. */
         const near = phase;
         const fade = Math.min(1, phase * 5) ** 1.4;
@@ -167,12 +192,12 @@ export function RiverFlow({ className = "" }: { className?: string }) {
         /* Interior lines only, so they never sit on top of the banks. */
         const sx = -0.66 + (1.32 * i) / (STREAMS - 1);
         const el = streams.children[i] as SVGPathElement | undefined;
-        if (el) el.setAttribute("d", streamPath(sx, time));
+        if (el) el.setAttribute("d", streamPath(sx, time, vanish, near0));
       }
 
       for (let i = 0; i < 2; i++) {
         const el = banks.children[i] as SVGPathElement | undefined;
-        if (el) el.setAttribute("d", streamPath(i === 0 ? -1 : 1, time));
+        if (el) el.setAttribute("d", streamPath(i === 0 ? -1 : 1, time, vanish, near0));
       }
     };
 
@@ -180,13 +205,14 @@ export function RiverFlow({ className = "" }: { className?: string }) {
 
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      window.removeEventListener("scroll", onScroll);
-      return;
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onResize);
+      };
     }
 
     let raf = 0;
     let start = 0;
-    let lastT = 0;
     let running = false;
 
     const loop = (now: number) => {
@@ -228,6 +254,7 @@ export function RiverFlow({ className = "" }: { className?: string }) {
       io?.disconnect();
       document.removeEventListener("visibilitychange", sync);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
@@ -244,7 +271,7 @@ export function RiverFlow({ className = "" }: { className?: string }) {
       viewBox={`0 0 ${W} ${H}`}
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
+      className={`pointer-events-none ${className}`}
       fill="none"
     >
       <defs>
@@ -255,7 +282,8 @@ export function RiverFlow({ className = "" }: { className?: string }) {
         {/* a reflection widens as it comes toward you, following the channel */}
         <clipPath id={glitterClip}>
           <polygon
-            points={`${VANISH_X - 18},${HORIZON} ${VANISH_X + 18},${HORIZON} ${NEAR_X + 132},${H} ${NEAR_X - 132},${H}`}
+            ref={glitterShapeRef}
+            points={`${VANISH_X_WIDE - 18},${HORIZON} ${VANISH_X_WIDE + 18},${HORIZON} ${NEAR_X_WIDE + 132},${H} ${NEAR_X_WIDE - 132},${H}`}
           />
         </clipPath>
       </defs>
@@ -267,7 +295,7 @@ export function RiverFlow({ className = "" }: { className?: string }) {
           ))}
         </g>
         {/* the bindu at full size */}
-        <circle cx={VANISH_X} cy={SUN_CY} r={SUN_R} fill="var(--spot)" opacity="0.92" />
+        <circle ref={sunRef} cx={VANISH_X_WIDE} cy={SUN_CY} r={SUN_R} fill="var(--spot)" opacity="0.92" />
       </g>
 
       {/* the far bank, where water meets sky */}

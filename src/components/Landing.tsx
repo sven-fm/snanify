@@ -31,7 +31,9 @@ export function Landing({ lang }: { lang: Lang }) {
       <main>
         {/* ------------------------------------------------ front page ---- */}
         <section className="relative flex min-h-[88vh] flex-col justify-end overflow-hidden border-b-2 border-rulestrong">
-          <RiverFlow className="text-ink" />
+          {/* On a narrow screen the river is confined to a band beneath the
+              headline; the crop would otherwise put the sun through the type. */}
+          <RiverFlow className="absolute inset-x-0 bottom-0 h-[54%] w-full text-ink lg:inset-0 lg:h-full" />
 
           <div className="relative mx-auto w-full max-w-6xl px-5 pt-24 pb-12 sm:px-8 sm:pt-28 sm:pb-16">
             <div className="max-w-3xl">
