@@ -14,6 +14,11 @@ import type { Lang } from "@/lib/content";
  * safety check, third-party (living relative) data, and the qualification of the
  * "zero third-party scripts" absolute.
  *
+ * The tracking copy names Vercel Web Analytics explicitly. It previously claimed
+ * no analytics script ran anywhere, which was false the moment analytics shipped.
+ * If analytics is ever removed, tighten this copy back; never loosen the copy to
+ * cover a script that is not named on the page.
+ *
  * PLACEHOLDER inventory, none of these may be presented as settled fact, and
  * each is stated as unsettled in the UI (see ethics §10 "What we have not
  * settled yet"):
@@ -288,8 +293,9 @@ const ethicsEn = {
     ],
     trackingH: "What runs on this site",
     tracking: [
-      "No analytics script, no advertising script, and no session-replay script runs anywhere on this site, ever. A page where someone types “for my mother” must be protected structurally, not configured carefully.",
-      "Exactly one third-party script exists anywhere in the product: the payment processor's, on the payment step alone, named on that page. We would rather qualify the promise than break it.",
+      "No advertising script and no session-replay script runs anywhere on this site, ever. Nothing records the screen where you type your sankalp.",
+      "One analytics script counts page views: Vercel Web Analytics. It sets no cookies, follows you to no other site, and never sees the contents of a form. We would rather name it than claim a zero we do not hold.",
+      "The only other third-party script in the product is the payment processor's, on the payment step alone, named on that page.",
       "From the first rite this page will carry a plain count of the secret demands for data we have received. If that sentence is ever removed rather than updated, read the removal.",
     ],
   },
@@ -610,8 +616,9 @@ export const ethicsContent = { en: ethicsEn, hi: {
     ],
     trackingH: "इस साइट पर क्या चलता है",
     tracking: [
-      "इस साइट पर कहीं कोई विश्लेषण, विज्ञापन या स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं चलती, कभी नहीं। जिस पृष्ठ पर कोई “माँ के लिए” टाइप करता है, उसकी रक्षा सेटिंग से नहीं, रचना से होनी चाहिए।",
-      "पूरे उत्पाद में केवल एक बाहरी स्क्रिप्ट है: भुगतान सेवा की, केवल भुगतान वाले चरण पर, और उसी पृष्ठ पर उसका नाम लिखा रहता है। वचन तोड़ने से अच्छा है वचन को सीमित कर देना।",
+      "इस साइट पर कोई विज्ञापन या स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं चलती, कभी नहीं। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, उसे कुछ भी रिकॉर्ड नहीं करता।",
+      "एक विश्लेषण स्क्रिप्ट पृष्ठ-दृश्य गिनती है: Vercel Web Analytics। वह कोई कुकी नहीं रखती, आपका पीछा किसी दूसरी साइट तक नहीं करती, और किसी फ़ॉर्म की सामग्री कभी नहीं देखती। जो शून्य हमारे पास नहीं है, उसका दावा करने से अच्छा है उसका नाम बता देना।",
+      "उत्पाद में केवल एक और बाहरी स्क्रिप्ट है: भुगतान सेवा की, केवल भुगतान वाले चरण पर, और उसी पृष्ठ पर उसका नाम लिखा रहता है।",
       "पहले अनुष्ठान से यह पृष्ठ यह गिनती भी रखेगा कि सूचना के लिए कितनी गुप्त माँगें हमें मिलीं। यदि वह वाक्य कभी बदलने के बजाय हटा दिया जाए, तो हटाए जाने को ही पढ़िए।",
     ],
   },
@@ -1287,8 +1294,8 @@ const faqEn = {
           id: "tracking",
           q: "What is tracking me on this site?",
           a: [
-            "No analytics script, no advertising script, and no session-replay script, anywhere, ever. Nothing records the screen where you type your sankalp.",
-            "Exactly one third-party script exists in the whole product: the payment processor's, on the payment step alone, named on that page. We would rather qualify an absolute than break one.",
+            "No advertising script and no session-replay script, anywhere, ever. Nothing records the screen where you type your sankalp.",
+            "Two third-party scripts exist in the whole product, and we name both. Vercel Web Analytics counts page views: no cookies, no cross-site following, no sight of any form. The payment processor's script runs on the payment step alone. We would rather qualify an absolute than break one.",
           ],
         },
       ],
@@ -1583,7 +1590,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "tracking",
           q: "इस साइट पर मुझ पर नज़र क्या रख रहा है?",
           a: [
-            "कोई विश्लेषण स्क्रिप्ट नहीं, कोई विज्ञापन स्क्रिप्ट नहीं, और कोई स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं, कहीं भी, कभी भी। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, वहाँ आपकी स्क्रीन को कोई रिकॉर्ड नहीं करता।",
+            "कोई विज्ञापन स्क्रिप्ट नहीं और कोई Vercel Web Analytics के अतिरिक्त विश्लेषण स्क्रिप्ट नहीं, और कोई स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं, कहीं भी, कभी भी। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, वहाँ आपकी स्क्रीन को कोई रिकॉर्ड नहीं करता।",
             "पूरे उत्पाद में केवल एक बाहरी स्क्रिप्ट है: भुगतान सेवा की, केवल भुगतान वाले चरण पर, और उसी पृष्ठ पर उसका नाम लिखा रहता है। वचन तोड़ने से अच्छा है उसे सीमित कर देना।",
           ],
         },
