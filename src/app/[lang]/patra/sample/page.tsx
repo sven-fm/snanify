@@ -65,8 +65,6 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
   const { lang } = await params;
   const t = patraContent[lang].sample;
-  const nav = content[lang].nav;
-  const hero = patraContent[lang].hero;
   const hi = lang === "hi";
   /* The `display` utility sets line-height 0.98, which collides Devanagari
      matras at heading sizes. Inline style, so it wins over the utility. */
@@ -75,14 +73,6 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
 
   /* "Sankalp" is a section of the home page, not a route of its own, the
      same anchor the rivers and rituals pages link to. */
-  const home = localePath(lang, "/");
-
-  const navLinks = [
-    { href: localePath(lang, "/rivers"), label: nav.rivers },
-    { href: localePath(lang, "/how-it-works"), label: nav.how },
-    { href: localePath(lang, "/patra"), label: hero.eyebrow },
-    { href: `${home}#sankalp`, label: nav.pricing },
-  ];
 
   return (
     <>
@@ -91,12 +81,11 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       </style>
 
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} links={navLinks} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} />
 
       <main>
         {/* ------------------------------ intro ------------------------------ */}
-        <section className="relative overflow-hidden border-b border-line/60" data-patra-hide>
-          <div className="halo" aria-hidden="true" />
+        <section className="border-b-2 border-rulestrong" data-patra-hide>
           <div className="relative mx-auto grid max-w-6xl gap-12 px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
             <div>
               <Eyebrow>{t.eyebrow}</Eyebrow>
@@ -107,12 +96,12 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
             </div>
 
             {/* The provenance of every value on the sheet, stated before it. */}
-            <aside className="self-end rounded-2xl border border-sindoor/40 bg-bg2/50 p-7">
-              <h2 className="inscription text-[0.62rem] text-sindoor">{t.noticeHeading}</h2>
-              <ul className="mt-5 space-y-3">
+            <aside className="self-end border-2 border-spot p-7">
+              <h2 className="label -mx-7 -mt-7 mb-5 bg-spot px-7 py-2 text-paper">{t.noticeHeading}</h2>
+              <ul className="space-y-3">
                 {t.noticeItems.map((item) => (
                   <li key={item} className="flex gap-3 text-sm leading-relaxed text-ink2">
-                    <span aria-hidden="true" className="mt-3 h-0.5 w-4 shrink-0 rounded-full bg-sindoor/80" />
+                    <span aria-hidden="true" className="mt-2.5 h-[2px] w-4 shrink-0 bg-spot" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -149,7 +138,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         </section>
 
         {/* ------------------------------ notes ------------------------------ */}
-        <section className="border-t border-line/60 bg-bg2/40" data-patra-hide>
+        <section className="border-t-2 border-rulestrong tint" data-patra-hide>
           <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-28">
             <h2 className="display max-w-2xl text-3xl sm:text-4xl" style={lead}>
               {t.notesHeading}
@@ -157,7 +146,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
 
             <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
               {t.notes.map((note) => (
-                <div key={note.h} className="border-t border-line/60 pt-6">
+                <div key={note.h} className="border-t-2 border-rulestrong pt-6">
                   <h3 className="display text-xl" style={leadSm}>
                     {note.h}
                   </h3>

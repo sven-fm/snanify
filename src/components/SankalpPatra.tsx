@@ -1,19 +1,24 @@
 "use client";
 
 import { useId } from "react";
-import { Mark } from "@/components/Logo";
+import { Colophon, Mark } from "@/components/Logo";
 import { patraContent, SPECIMEN_WATERMARK_TEXT, type PatraData } from "@/content/patra";
 import type { Lang } from "@/lib/content";
 
 /* ---------------------------------------------------------------------------
    The Sankalp Patra as a document.
 
+   Cut as a printed certificate: newsprint ground, a double rule around the
+   sheet, inscriptional capitals for every label, hairline rules between the
+   record fields, and the colophon struck at the foot. Two colours only, ink
+   and the vermillion spot. No gradient, no glow, no radius, no shadow.
+
    Prop-driven, so the issuance pipeline can render a real record later with the
    same component that renders the specimen today. Nothing here fetches, and
    nothing here invents: a field that is absent from `data` is either omitted or
    printed as an honest blank, never filled with a plausible value.
 
-   Sizing: the sheet is laid out at a fixed 840 × 1188 (A4 proportion) and every
+   Sizing: the sheet is laid out at a fixed 840 x 1188 (A4 proportion) and every
    measurement below is expressed as a fraction of the container width in `cqw`.
    The document therefore scales, never reflows, never breaks, from a 390px
    phone to a print sheet. If content ever exceeds the design height the box
@@ -23,14 +28,14 @@ import type { Lang } from "@/lib/content";
 const W = 840;
 const H = 1188;
 
-/** Design pixels → container-width units, so the whole sheet scales as one. */
+/** Design pixels to container-width units, so the whole sheet scales as one. */
 const u = (px: number) => `${((px / W) * 100).toFixed(4)}cqw`;
 
 /**
  * Print rules for the document. Injected via React's stylesheet hoisting so the
  * component stays self-contained and globals.css is untouched. In print the
- * sheet forces the light palette, a dark-theme reader printing a night-indigo
- * certificate would get an unreadable page.
+ * sheet forces the day edition: a reader printing the night edition would
+ * otherwise get a solid black page.
  */
 const PRINT_CSS = `
 [data-patra-sheet]{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -40,14 +45,14 @@ const PRINT_CSS = `
   [data-patra-hide]{ display:none !important; }
   [data-patra-page]{ padding:0 !important; margin:0 !important; }
   [data-patra-sheet]{
-    --bg:#fdf9f1; --bg-2:#fdf9f1; --bg-3:#f2e8d6;
-    --ink:#16182b; --ink-2:#5c6076;
-    --gold:#8a5d0a; --gold-2:#a06d0c; --sun:#c98a1e; --sun-2:#e8b25a;
-    --teal:#135e58; --sindoor:#a5342a; --line:#d9c7a5;
-    background-color:#fdf9f1 !important; color:#16182b !important;
+    --paper:#faf6ea; --paper-2:#f2ead9; --paper-3:#e5d9be;
+    --ink:#16130f; --ink-2:#57513f;
+    --spot:#b32620; --rule:#c3b697; --rule-strong:#16130f;
+    background-color:#faf6ea !important; color:#16130f !important;
     box-shadow:none !important;
     break-inside: avoid; page-break-inside: avoid;
   }
+  [data-patra-sheet] *{ box-shadow:none !important; }
 }
 `;
 
@@ -55,8 +60,8 @@ export type SankalpPatraProps = {
   lang: Lang;
   data: PatraData;
   /**
-   * Marks the sheet as a specimen: tiled watermark, sindoor rules, and a stated
-   * banner. Anything not issued against a real record must set this.
+   * Marks the sheet as a specimen: tiled watermark, spot-colour rules, and a
+   * stated banner. Anything not issued against a real record must set this.
    */
   watermark?: boolean;
   className?: string;
@@ -64,9 +69,16 @@ export type SankalpPatraProps = {
 
 /* Small typographic primitives, shared by the fact cells. */
 
-function CellLabel({ children }: { children: React.ReactNode }) {
+/** An inscriptional column head, sized in sheet units like everything else. */
+function CellLabel({
+  children,
+  spot = false,
+}: {
+  children: React.ReactNode;
+  spot?: boolean;
+}) {
   return (
-    <p className="inscription text-gold" style={{ fontSize: u(10) }}>
+    <p className={`label ${spot ? "text-spot" : "text-ink2"}`} style={{ fontSize: u(9.5) }}>
       {children}
     </p>
   );
@@ -76,14 +88,17 @@ function Cell({
   label,
   children,
   sub,
+  opening = false,
 }: {
   label: string;
   children: React.ReactNode;
   sub?: string;
+  /** The first row of the register opens on the full-strength rule. */
+  opening?: boolean;
 }) {
   return (
     <div
-      className="border-t border-line/70"
+      className={opening ? "border-t-2 border-rulestrong" : "border-t border-rule"}
       style={{ paddingTop: u(12), paddingRight: u(14), minHeight: u(86) }}
     >
       <CellLabel>{label}</CellLabel>
@@ -99,11 +114,25 @@ function Cell({
   );
 }
 
+/** A cell that has nothing truthful to print. It keeps the rule running. */
+function BlankCell({ opening = false }: { opening?: boolean }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={opening ? "border-t-2 border-rulestrong" : "border-t border-rule"}
+    />
+  );
+}
+
 export function SankalpPatra({ lang, data, watermark = false, className = "" }: SankalpPatraProps) {
   const t = patraContent[lang].sheet;
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const patternId = `patra-wm-${uid}`;
-  const edge = watermark ? "border-sindoor/40" : "border-line";
+  /* Devanagari is set in Eczar in both editions: the sheet titles itself in
+     Devanagari even on an English page, so the face is pinned rather than
+     inherited from a locale that may not carry the script. */
+  const deva = "var(--font-eczar), Georgia, serif";
+  const ringColour = watermark ? "var(--spot)" : "var(--rule)";
 
   return (
     <div className={`w-full ${className}`} style={{ containerType: "inline-size" }}>
@@ -114,37 +143,23 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
       <article
         data-patra-sheet
         aria-label={watermark ? t.ariaSpecimen : t.aria}
-        className={`relative isolate flex flex-col overflow-hidden border bg-bg2 shadow-[0_40px_120px_-60px_rgba(0,0,0,0.55)] ${edge}`}
-        style={{
-          aspectRatio: `${W} / ${H}`,
-          padding: u(46),
-          borderRadius: u(5),
-        }}
+        className="relative isolate flex flex-col border-2 border-rulestrong bg-paper"
+        style={{ aspectRatio: `${W} / ${H}`, padding: u(44) }}
       >
-        {/* warm bloom from the top edge, as if lamplight fell on the page */}
+        {/* the inner rule: a printed document has two edges */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(70% 34% at 50% 0%, color-mix(in oklab, var(--gold) 14%, transparent), transparent 72%)",
-          }}
-        />
-
-        {/* the inner rule, a printed document has two edges */}
-        <div
-          aria-hidden="true"
-          className={`pointer-events-none absolute border ${watermark ? "border-sindoor/25" : "border-line/70"}`}
-          style={{ inset: u(16), borderRadius: u(3) }}
+          className="pointer-events-none absolute"
+          style={{ inset: u(14), border: `1px solid ${ringColour}` }}
         />
 
         {watermark && (
           <svg
             aria-hidden="true"
             /* The viewBox matches the sheet's own proportions, so the tiled
-               mark is measured in design pixels and scales with the document
-              , the same watermark on a 390px phone and on an A4 print,
-               rather than a huge one on the small preview. */
+               mark is measured in design pixels and scales with the document,
+               the same watermark on a 390px phone and on an A4 print, rather
+               than a huge one on the small preview. */
             viewBox={`0 0 ${W} ${H}`}
             className="pointer-events-none absolute inset-0 h-full w-full"
             style={{ zIndex: 1 }}
@@ -152,22 +167,21 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
             <defs>
               <pattern
                 id={patternId}
-                width="360"
-                height="150"
+                width="330"
+                height="132"
                 patternUnits="userSpaceOnUse"
                 patternTransform="rotate(-24)"
               >
                 <text
                   x="0"
-                  y="34"
-                  fill="var(--gold)"
-                  opacity="0.14"
+                  y="30"
+                  fill="var(--spot)"
+                  opacity="0.13"
                   style={{
-                    /* Tiro carries both scripts, so the bilingual watermark sets
-                       in one face rather than falling back mid-string. */
-                    fontFamily: "var(--font-tiro), Georgia, serif",
-                    fontSize: "26px",
-                    letterSpacing: "0.14em",
+                    fontFamily: deva,
+                    fontWeight: 700,
+                    fontSize: "27px",
+                    letterSpacing: "0.2em",
                   }}
                 >
                   {SPECIMEN_WATERMARK_TEXT}
@@ -180,11 +194,11 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
 
         {/* --------------------------- the document --------------------------- */}
         <div className="relative flex flex-1 flex-col justify-between" style={{ zIndex: 2 }}>
-          {/* header: mark, wordmark, folio */}
+          {/* masthead: mark, wordmark, folio */}
           <div>
-            <div className="flex items-start justify-between" style={{ gap: u(16) }}>
+            <div className="flex items-baseline justify-between" style={{ gap: u(16) }}>
               <span className="inline-flex items-center" style={{ gap: u(10) }}>
-                <span className="inline-block shrink-0" style={{ width: u(30), height: u(30) }}>
+                <span className="inline-block shrink-0" style={{ width: u(26), height: u(26) }}>
                   <Mark className="h-full w-full text-ink" />
                 </span>
                 <span className="wordmark text-ink" style={{ fontSize: u(12) }}>
@@ -195,37 +209,38 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
                   inherit the inscriptional uppercase transform, somebody will
                   type it off a printed sheet. */}
               <span className="text-ink2" style={{ fontSize: u(9.5), textAlign: "right" }}>
-                <span className="inscription">
+                {/* Every label carries its size inline: the `label` utility is
+                    a fixed rem, and this sheet must scale as one block. */}
+                <span className="label text-ink2" style={{ fontSize: u(9.5) }}>
                   {t.folioLabel}
                 </span>
-                <span style={{ paddingLeft: u(6), paddingRight: u(6) }}>·</span>
-                <span style={{ letterSpacing: "0.05em" }}>{data.patraId}</span>
+                <span style={{ paddingLeft: u(7), paddingRight: u(7) }}>·</span>
+                <span className="tabular text-ink" style={{ letterSpacing: "0.05em" }}>
+                  {data.patraId}
+                </span>
               </span>
             </div>
 
-            <div
-              className="rule-fade"
-              style={{ marginTop: u(18), marginLeft: u(-2), marginRight: u(-2) }}
-            />
+            <div className="rule-masthead" style={{ marginTop: u(14) }} />
 
             {/* title */}
-            <div className="text-center" style={{ marginTop: u(24) }}>
-              {/* The document titles itself in Devanagari in both locales, so
-                  the face is pinned to Tiro rather than inherited, an English
-                  page's display face has no Devanagari glyphs. */}
+            <div className="text-center" style={{ marginTop: u(20) }}>
               <p
-                className="text-ink"
-                style={{
-                  fontSize: u(33),
-                  lineHeight: 1.1,
-                  fontFamily: "var(--font-tiro), Georgia, serif",
-                }}
+                className="display text-ink"
+                style={{ fontSize: u(34), lineHeight: 1.35, fontFamily: deva }}
               >
                 संकल्प पत्र
               </p>
               <p
-                className="wordmark text-gold"
-                style={{ marginTop: u(10), fontSize: u(10.5), letterSpacing: "0.34em" }}
+                className="label text-spot"
+                style={{
+                  marginTop: u(10),
+                  fontSize: u(10.5),
+                  letterSpacing: "0.34em",
+                  /* Latin in both editions, so it keeps its inscriptional caps
+                     even where the Hindi rule drops them. */
+                  textTransform: "uppercase",
+                }}
               >
                 {t.titleLatin}
               </p>
@@ -235,10 +250,11 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
 
               {watermark && (
                 <p
-                  className="inscription mx-auto inline-flex items-center border border-sindoor/50 text-sindoor"
+                  className="label text-spot"
                   style={{
-                    marginTop: u(16),
-                    borderRadius: u(999),
+                    marginTop: u(14),
+                    display: "inline-block",
+                    border: "1px solid var(--spot)",
                     paddingLeft: u(14),
                     paddingRight: u(14),
                     paddingTop: u(5),
@@ -258,15 +274,15 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
               {/* A mixed list keeps the neutral heading; the remembrance label
                   then sits on the individual name it belongs to. Nothing else
                   about the row changes, no imagery, no colour. */}
-              <p className="inscription text-gold" style={{ fontSize: u(10) }}>
+              <CellLabel spot>
                 {data.names.length > 0 && data.names.every((n) => n.remembrance)
                   ? t.remembranceLabel
                   : t.namesLabel}
-              </p>
+              </CellLabel>
 
-              <ul style={{ marginTop: u(16) }}>
+              <ul style={{ marginTop: u(14) }}>
                 {data.names.map((n, i) => (
-                  <li key={`${n.latin}-${i}`} style={{ marginTop: i === 0 ? 0 : u(18) }}>
+                  <li key={`${n.latin}-${i}`} style={{ marginTop: i === 0 ? 0 : u(16) }}>
                     <p
                       className="display text-ink"
                       style={{ fontSize: u(i === 0 ? 36 : 24), lineHeight: 1.15 }}
@@ -279,7 +295,7 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
                         style={{
                           marginTop: u(4),
                           fontSize: u(i === 0 ? 21 : 16),
-                          fontFamily: "var(--font-tiro), Georgia, serif",
+                          fontFamily: deva,
                           lineHeight: 1.5,
                         }}
                       >
@@ -287,13 +303,13 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
                       </p>
                     )}
                     {(n.relation || n.remembrance) && (
-                      <p
-                        className="inscription text-ink2"
-                        style={{ marginTop: u(6), fontSize: u(10) }}
-                      >
-                        {[n.remembrance && !data.names.every((x) => x.remembrance)
-                          ? t.remembranceLabel
-                          : null, n.relation]
+                      <p className="label text-ink2" style={{ marginTop: u(7), fontSize: u(9.5) }}>
+                        {[
+                          n.remembrance && !data.names.every((x) => x.remembrance)
+                            ? t.remembranceLabel
+                            : null,
+                          n.relation,
+                        ]
                           .filter(Boolean)
                           .join(" · ")}
                       </p>
@@ -302,8 +318,8 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
                 ))}
               </ul>
 
-              <p className="text-ink2" style={{ marginTop: u(18), fontSize: u(12.5) }}>
-                <span className="inscription text-gold">
+              <p className="text-ink2" style={{ marginTop: u(16), fontSize: u(12.5) }}>
+                <span className="label text-ink2" style={{ fontSize: u(10) }}>
                   {t.gotraLabel}
                 </span>
                 <span style={{ paddingLeft: u(10), paddingRight: u(10) }}>·</span>
@@ -312,12 +328,12 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
             </div>
 
             {data.sankalpText && (
-              <div className="text-center" style={{ marginTop: u(26) }}>
-                <div className="rule-fade" style={{ marginLeft: u(180), marginRight: u(180) }} />
-                <p
-                  className="inscription text-gold"
-                  style={{ marginTop: u(20), fontSize: u(10) }}
-                >
+              <div className="text-center" style={{ marginTop: u(20) }}>
+                <div
+                  className="rule-thin"
+                  style={{ marginLeft: u(300), marginRight: u(300) }}
+                />
+                <p className="label text-spot" style={{ marginTop: u(18), fontSize: u(9.5) }}>
                   {t.sankalpLabel}
                 </p>
                 <p
@@ -335,18 +351,22 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
             )}
           </div>
 
-          {/* the facts */}
+          {/* the facts, set as a ruled register */}
           <div
             className="grid grid-cols-3"
-            style={{ columnGap: u(22), rowGap: u(20), marginTop: u(20) }}
+            style={{ columnGap: u(22), rowGap: u(18), marginTop: u(16) }}
           >
-            <Cell label={t.riverLabel}>
+            <Cell label={t.riverLabel} opening>
               {data.river}
               <br />
               {data.ghat}, {data.place}
             </Cell>
 
-            <Cell label={t.performedLabel} sub={data.performedLocal ? `${t.localLabel}, ${data.performedLocal}` : undefined}>
+            <Cell
+              label={t.performedLabel}
+              opening
+              sub={data.performedLocal ? `${t.localLabel}, ${data.performedLocal}` : undefined}
+            >
               {data.performedOn}
               <br />
               {data.performedIst}
@@ -356,9 +376,11 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
                 named panchang source. Unsourced, the field is omitted, never
                 estimated. */}
             {data.tithi?.confidence === "sourced" ? (
-              <Cell label={t.tithiLabel}>{data.tithi.label}</Cell>
+              <Cell label={t.tithiLabel} opening>
+                {data.tithi.label}
+              </Cell>
             ) : (
-              <div aria-hidden="true" className="border-t border-line/70" />
+              <BlankCell opening />
             )}
 
             <Cell label={t.ritvikLabel} sub={data.ritvik?.id}>
@@ -367,11 +389,13 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
 
             {data.naamKshan ? (
               <Cell label={t.naamKshanLabel} sub={t.naamKshanSub}>
-                {data.naamKshan.timecode}
-                {data.naamKshan.clock ? ` · ${data.naamKshan.clock}` : ""}
+                <span className="tabular">
+                  {data.naamKshan.timecode}
+                  {data.naamKshan.clock ? ` · ${data.naamKshan.clock}` : ""}
+                </span>
               </Cell>
             ) : (
-              <div aria-hidden="true" className="border-t border-line/70" />
+              <BlankCell />
             )}
 
             <Cell label={t.issuedLabel}>{data.issuedOn}</Cell>
@@ -380,7 +404,7 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
           {/* seal, verification, attestation */}
           <div>
             <div
-              className="flex items-end justify-between border-t border-line/70"
+              className="flex items-end justify-between border-t-2 border-rulestrong"
               style={{ gap: u(20), paddingTop: u(18) }}
             >
               <div>
@@ -398,23 +422,18 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
                 </p>
               </div>
 
-              <span
-                className="inline-flex shrink-0 items-center justify-center rounded-full border border-gold/40"
-                style={{ width: u(64), height: u(64) }}
-              >
-                <span className="inline-block" style={{ width: u(40), height: u(40) }}>
-                  <Mark className="h-full w-full text-gold" />
-                </span>
+              <span className="inline-block shrink-0" style={{ width: u(66), height: u(66) }}>
+                <Colophon className="h-full w-full text-ink" />
               </span>
             </div>
 
             {watermark && (
               <p
-                className="border-l text-sindoor"
+                className="border-l-2 text-spot"
                 style={{
-                  marginTop: u(12),
+                  marginTop: u(14),
                   paddingLeft: u(12),
-                  borderColor: "var(--sindoor)",
+                  borderColor: "var(--spot)",
                   fontSize: u(12),
                   lineHeight: 1.5,
                 }}
