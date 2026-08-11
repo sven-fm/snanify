@@ -9,9 +9,9 @@ export const content = {
     htmlLang: "en",
     dir: "ltr" as const,
     meta: {
-      title: "Snanify — the river comes to you",
+      title: "Snanify, the river comes to you",
       description:
-        "A complete digital snan. Your name, your gotra, your sankalp — offered at India's most sacred waters and streamed to wherever you stand.",
+        "A complete digital snan. Your name, your gotra, your sankalp, offered at India's most sacred waters and streamed to wherever you stand.",
     },
     switchLabel: "हिंदी",
     switchHref: "/hi",
@@ -28,7 +28,7 @@ export const content = {
       badge: "Live now · Har Ki Pauri, Haridwar",
       titleA: "The river",
       titleB: "comes to you.",
-      lede: "A complete digital snan. Your name, your gotra, your sankalp — carried into a rite performed at India's most sacred waters, and streamed to wherever you stand.",
+      lede: "A complete digital snan. Your name, your gotra, your sankalp, carried into a rite performed at India's most sacred waters, and streamed to wherever you stand.",
       ctaPrimary: "Begin your snan",
       ctaSecondary: "How it works",
       card: {
@@ -55,7 +55,7 @@ export const content = {
         {
           n: "01",
           t: "Take sankalp",
-          d: "Enter your name, your gotra, and the intention you carry. Add family — and ancestors — if you wish.",
+          d: "Enter your name, your gotra, and the intention you carry. Add family, and ancestors, if you wish.",
         },
         {
           n: "02",
@@ -142,9 +142,9 @@ export const content = {
     htmlLang: "hi",
     dir: "ltr" as const,
     meta: {
-      title: "स्नानिफ़ाई — नदी आप तक आती है",
+      title: "स्नानिफ़ाई, नदी आप तक आती है",
       description:
-        "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प — भारत के पवित्रतम जल में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
+        "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प, भारत के पवित्रतम जल में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
     },
     switchLabel: "English",
     switchHref: "/",
@@ -161,7 +161,7 @@ export const content = {
       badge: "अभी सजीव · हर की पौड़ी, हरिद्वार",
       titleA: "नदी",
       titleB: "आप तक आती है।",
-      lede: "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प — भारत के पवित्रतम जल में संपन्न अनुष्ठान में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
+      lede: "संपूर्ण डिजिटल स्नान। आपका नाम, आपका गोत्र, आपका संकल्प, भारत के पवित्रतम जल में संपन्न अनुष्ठान में अर्पित, और आप जहाँ भी हों वहीं सजीव प्रसारित।",
       ctaPrimary: "स्नान आरंभ करें",
       ctaSecondary: "कैसे काम करता है",
       card: {
@@ -193,7 +193,7 @@ export const content = {
         {
           n: "०२",
           t: "मुहूर्त चुनें",
-          d: "जल और पर्व चुनें। समय अभी अस्थायी रूप से — IST और आपके समयक्षेत्र दोनों में — दिखाया जाता है, पंचांग स्रोत पुष्ट होने तक।",
+          d: "जल और पर्व चुनें। समय अभी अस्थायी रूप से, IST और आपके समयक्षेत्र दोनों में, दिखाया जाता है, पंचांग स्रोत पुष्ट होने तक।",
         },
         {
           n: "०३",
@@ -252,7 +252,7 @@ export const content = {
     },
     closing: {
       title: "आप जहाँ भी हों, जल वहीं है।",
-      lede: "दस हज़ार किलोमीटर — गंगा इसे दूरी नहीं मानती।",
+      lede: "दस हज़ार किलोमीटर, गंगा इसे दूरी नहीं मानती।",
       cta: "स्नान आरंभ करें",
     },
     footer: {

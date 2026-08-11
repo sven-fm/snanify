@@ -1,17 +1,17 @@
-# Snanify — Muhurat Engine & Scheduling Model
+# Snanify, Muhurat Engine & Scheduling Model
 
 > Facet: **Muhurat engine & scheduling model**  
 > Adversarial review verdict: **needs-work**
 
 ## Summary
 
-Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) rather than depending on a third-party astrology API at runtime, because we need *instants* (to schedule streams, capacity and calendar invites 18 months out) rather than display strings, and because the reference almanac users actually trust — Drik Panchang — has no public API. Third-party APIs (ProKerala, DivineAPI, Vedika) are relegated to a nightly three-way verification harness: a muhurat that our engine and two independent sources do not agree on within tolerance is quarantined and never sold. The domain is modelled in four layers — Occasion (a recurring rule), Muhurat (a resolved window at one ghat on one panchang day, with provenance), Slot (a bookable ceremony station with capacity), Ritual (the rite that is actually performed) — so that "when is it auspicious" and "can we staff it" stay separable. Every time is stored as a UTC instant and rendered as a mandatory dual clock: ghat-primary in IST, with the user's local time and an explicit date-shift sentence beneath it, because the single largest UX failure mode here is a diaspora user showing up a day late. Rahu Kaal is a hard veto on slot generation, Kumbh/Shahi Snan dates are admin-entered with a cited source and never asserted by the engine, and the anti-manipulation rules (no grief copy, no fake scarcity, no countdown on payment) are written into the spec as product requirements, not guidelines.
+Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) rather than depending on a third-party astrology API at runtime, because we need *instants* (to schedule streams, capacity and calendar invites 18 months out) rather than display strings, and because the reference almanac users actually trust, Drik Panchang, has no public API. Third-party APIs (ProKerala, DivineAPI, Vedika) are relegated to a nightly three-way verification harness: a muhurat that our engine and two independent sources do not agree on within tolerance is quarantined and never sold. The domain is modelled in four layers, Occasion (a recurring rule), Muhurat (a resolved window at one ghat on one panchang day, with provenance), Slot (a bookable ceremony station with capacity), Ritual (the rite that is actually performed), so that "when is it auspicious" and "can we staff it" stay separable. Every time is stored as a UTC instant and rendered as a mandatory dual clock: ghat-primary in IST, with the user's local time and an explicit date-shift sentence beneath it, because the single largest UX failure mode here is a diaspora user showing up a day late. Rahu Kaal is a hard veto on slot generation, Kumbh/Shahi Snan dates are admin-entered with a cited source and never asserted by the engine, and the anti-manipulation rules (no grief copy, no fake scarcity, no countdown on payment) are written into the spec as product requirements, not guidelines.
 
 ## Decisions
 
 **Compute the panchang in-house with Swiss Ephemeris (npm `sweph`, native binding), not a third-party panchang API.**
 
-*Why:* We need UTC instants for tithi/nakshatra boundaries and window edges 18 months ahead, in bulk, for six locations — to generate slots, price capacity, schedule streams, build ICS files and time reminder emails. Panchang APIs return formatted display strings for one date at a time, are credit-metered (ProKerala: 100 credits for an Advanced Panchang call — 6 ghats × 550 days = 3,300 calls per full recompute), rate-limited, and if they go down we cannot sell. Drik Panchang, the almanac Indian users actually trust, publishes no developer API at all, so 'just use Drik' is not an available option.
+*Why:* We need UTC instants for tithi/nakshatra boundaries and window edges 18 months ahead, in bulk, for six locations, to generate slots, price capacity, schedule streams, build ICS files and time reminder emails. Panchang APIs return formatted display strings for one date at a time, are credit-metered (ProKerala: 100 credits for an Advanced Panchang call, 6 ghats × 550 days = 3,300 calls per full recompute), rate-limited, and if they go down we cannot sell. Drik Panchang, the almanac Indian users actually trust, publishes no developer API at all, so 'just use Drik' is not an available option.
 
 **Buy the Swiss Ephemeris Professional License from Astrodienst (CHF 750 first license; CHF 1550 unlimited) before shipping.**
 
@@ -21,13 +21,13 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 *Why:* It is the Government of India Calendar Reform Committee standard and the default of every almanac our users cross-check us against. Any other choice moves every nakshatra boundary by minutes and every festival date occasionally by a full day. It is stamped into every stored record, because changing it later is a data migration, not a config change.
 
-**Run astronomy-engine (MIT, pure TS, ±1 arcminute) as a second, independent implementation in CI — not in production.**
+**Run astronomy-engine (MIT, pure TS, ±1 arcminute) as a second, independent implementation in CI, not in production.**
 
 *Why:* ±1 arcminute of lunar longitude is ~2 minutes of tithi time, which is well inside our 2-minute agreement tolerance and plenty to catch a real bug (wrong ayanamsa, wrong ΔT, wrong sunrise definition, an off-by-one in the tithi index). It has no native build and no license encumbrance, so it can run in CI on every commit. Two independent codebases agreeing is the cheapest correctness evidence available.
 
 **Third-party APIs (ProKerala Advanced Panchang + one of DivineAPI/Vedika) are used only as a nightly verification oracle, never on the request path.**
 
-*Why:* Their value is as an independent witness, not as a dependency. A Muhurat record cannot reach `verified` status — and therefore cannot be sold — unless at least two external sources agree with our computation within tolerance. This is the concrete mechanism that enforces 'do not invent dates': unverified muhurats simply do not exist in the UI.
+*Why:* Their value is as an independent witness, not as a dependency. A Muhurat record cannot reach `verified` status, and therefore cannot be sold, unless at least two external sources agree with our computation within tolerance. This is the concrete mechanism that enforces 'do not invent dates': unverified muhurats simply do not exist in the UI.
 
 **Compute masa in BOTH Amanta and Purnimanta and store both; display the scheme matching the ghat's region. Explicitly scope out Tamil, Bengali, Malayalam and Oriya solar calendars for v1.**
 
@@ -35,11 +35,11 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 **v1 scheduling logic reads tithi, paksha, masa, vara and sunrise/sunset. Nakshatra gates exactly four occasion rules. Yoga and karana are computed and displayed but never gate a slot.**
 
-*Why:* Tithi defines every parva snan we sell. Vara positions Rahu Kaal. Nakshatra matters for Ganga Dussehra (Hasta), Kartik Purnima (Krittika) and two others. Yoga and karana are almanac furniture for a snan — showing them is authentic, letting them block bookings would be arbitrary complexity with no doctrinal backing our priest council would defend.
+*Why:* Tithi defines every parva snan we sell. Vara positions Rahu Kaal. Nakshatra matters for Ganga Dussehra (Hasta), Kartik Purnima (Krittika) and two others. Yoga and karana are almanac furniture for a snan, showing them is authentic, letting them block bookings would be arbitrary complexity with no doctrinal backing our priest council would defend.
 
 **Rahu Kaal is a hard veto: no slot may overlap it. Configurable per ghat as `veto | warn`, defaulting to `veto`.**
 
-*Why:* 'We never sell an inauspicious hour' is a defensible, statable product stance, and it is the kind of restraint the brand is built on. The flag exists because some traditions hold Rahu Kaal binds new ventures rather than nitya karma such as snan — that is a call for the priest council, not for engineering, so the code exposes the lever and the default is the conservative one.
+*Why:* 'We never sell an inauspicious hour' is a defensible, statable product stance, and it is the kind of restraint the brand is built on. The flag exists because some traditions hold Rahu Kaal binds new ventures rather than nitya karma such as snan, that is a call for the priest council, not for engineering, so the code exposes the lever and the default is the conservative one.
 
 **Occasion→day resolution is explicit per occasion (`udaya | madhyahna | aparahna | pradosha | nishita`), never a single global rule.**
 
@@ -51,7 +51,7 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 **Mandatory dual clock: ghat time in IST is primary, user-local is secondary, and a date-shift sentence is rendered whenever the local calendar date differs from the ghat's.**
 
-*Why:* The rite happens at a real place at a real hour; the ghat clock is the truth and demoting it to a parenthetical is dishonest. But a Toronto user reading '4:24 am IST, Tue 24 Nov' and setting a Tuesday alarm has missed it by eleven hours. Both clocks, always, plus an explicit sentence — never a bare converted time and never a bare IST time.
+*Why:* The rite happens at a real place at a real hour; the ghat clock is the truth and demoting it to a parenthetical is dishonest. But a Toronto user reading '4:24 am IST, Tue 24 Nov' and setting a Tuesday alarm has missed it by eleven hours. Both clocks, always, plus an explicit sentence, never a bare converted time and never a bare IST time.
 
 **Store UTC instants + IANA zone ids only. Never store wall-clock time. Never store `+05:30`. Use `Temporal` (native, `@js-temporal/polyfill` fallback) for arithmetic and `Intl.DateTimeFormat` for rendering.**
 
@@ -59,7 +59,7 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 **The Hindu day runs sunrise→sunrise, so `panchangDate` is a separate stored field from the IST Gregorian date.**
 
-*Why:* A Brahma Muhurat at 04:24 IST falls before sunrise and therefore belongs to the *previous* panchang day. Conflating the two silently mislabels every pre-dawn muhurat — which is our flagship product — with the wrong tithi and the wrong festival name.
+*Why:* A Brahma Muhurat at 04:24 IST falls before sunrise and therefore belongs to the *previous* panchang day. Conflating the two silently mislabels every pre-dawn muhurat, which is our flagship product, with the wrong tithi and the wrong festival name.
 
 **Capacity is derived, never hand-entered: `seats = floor(windowMinutes / (ceremonyMin + bufferMin)) × stations × sankalpsPerCeremony`. Stations: Haridwar 3, Prayagraj 2, the other four 1.**
 
@@ -71,13 +71,13 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 **Booking closes at T−6h IST. Regular days open 90 days ahead, major parvas 180 days ahead, calendar computed 18 months ahead.**
 
-*Why:* Six hours is what it takes to freeze the sankalp roll, transliterate names into Devanagari, have them checked by a human, and brief the purohit. For a 04:24 muhurat that is a 22:24 IST cutoff the previous evening — late enough to be generous, early enough that nobody is transliterating names at 3am.
+*Why:* Six hours is what it takes to freeze the sankalp roll, transliterate names into Devanagari, have them checked by a human, and brief the purohit. For a 04:24 muhurat that is a 22:24 IST cutoff the previous evening, late enough to be generous, early enough that nobody is transliterating names at 3am.
 
 **Slot capacity is enforced by a Postgres CHECK constraint plus row-level lock, with 10-minute TTL holds created at checkout start.**
 
 *Why:* Kartik Purnima at Har Ki Pauri will sell out in minutes. Application-level capacity checks race; a database constraint cannot. Holds prevent the checkout-abandonment leak from either overselling or phantom-blocking inventory.
 
-**Scarcity is shown only when real and only below 25% remaining. No countdown timers on payment pages, no 'N people viewing', no grief, guilt or divine-consequence copy anywhere — enforced as a lint rule over the content file.**
+**Scarcity is shown only when real and only below 25% remaining. No countdown timers on payment pages, no 'N people viewing', no grief, guilt or divine-consequence copy anywhere, enforced as a lint rule over the content file.**
 
 *Why:* This serves real religious practice. The standard conversion-optimisation toolkit is manipulation applied to grief, and using it here would be both wrong and brand suicide. Making it a lint rule rather than a guideline means it survives the first growth hire.
 
@@ -87,7 +87,7 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 ---
 
-# Part 1 — The domain model
+# Part 1, The domain model
 
 ## 1.1 The five angas (limbs) of the panchang
 
@@ -95,7 +95,7 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 | Anga | What it is | How it's computed | Matters for scheduling a snan? |
 |---|---|---|---|
-| **Tithi** | Lunar day. The Moon gaining 12° of ecliptic longitude on the Sun. 30 per lunation, ~19–26 h each. Numbered 1–15 in each paksha. | `floor(((moonLon − sunLon) mod 360) / 12) + 1` | **Primary.** Every parva snan we sell is tithi-defined: Purnima (15), Amavasya (30), Ekadashi (11), Chaturdashi (14). |
+| **Tithi** | Lunar day. The Moon gaining 12° of ecliptic longitude on the Sun. 30 per lunation, ~19-26 h each. Numbered 1-15 in each paksha. | `floor(((moonLon − sunLon) mod 360) / 12) + 1` | **Primary.** Every parva snan we sell is tithi-defined: Purnima (15), Amavasya (30), Ekadashi (11), Chaturdashi (14). |
 | **Nakshatra** | Lunar mansion. 27 divisions of 13°20′ of the sidereal zodiac, indexed by the Moon's sidereal longitude. | `floor(siderealMoonLon / (360/27)) + 1` | **Secondary, gates 4 occasions.** Ganga Dussehra wants Hasta (13). Kartik Purnima wants Krittika (3). Also the input to future per-user personalisation (janma nakshatra). |
 | **Yoga** | 27 divisions of the *sum* of Sun and Moon sidereal longitudes, in 13°20′ steps. | `floor(((sunLon + moonLon) mod 360) / (360/27)) + 1` | **Display only in v1.** Vyatipata (17) and Vaidhriti (27) are classically inauspicious; we surface them as a note, never as a block. |
 | **Karana** | Half-tithi. 11 karana types cycling across 60 half-tithis per lunation. | `floor(((moonLon − sunLon) mod 360) / 6)` → karana table lookup | **Display only.** Vishti/Bhadra karana is avoided for new undertakings; a snan is not a new undertaking. Show it, never block on it. |
@@ -105,18 +105,18 @@ Snanify computes its own panchang in-house on Swiss Ephemeris (Lahiri ayanamsa) 
 
 | Concept | What it is | Matters? |
 |---|---|---|
-| **Paksha** | Fortnight. **Shukla** (waxing, tithi 1–15, ends at Purnima) and **Krishna** (waning, tithi 16–30, ends at Amavasya). | **Required.** Tithi 1–15 is ambiguous without it. Pitru Paksha is by definition a Krishna paksha. |
+| **Paksha** | Fortnight. **Shukla** (waxing, tithi 1-15, ends at Purnima) and **Krishna** (waning, tithi 16-30, ends at Amavasya). | **Required.** Tithi 1-15 is ambiguous without it. Pitru Paksha is by definition a Krishna paksha. |
 | **Masa** | Lunar month. Twelve names: Chaitra, Vaishakha, Jyeshtha, Ashadha, Shravana, Bhadrapada, Ashwin, Kartika, Margashirsha, Pausha, Magha, Phalguna. Plus intercalary **Adhika masa** (~every 32.5 months) and rare **Kshaya masa**. | **Required for naming.** "Purnima" is a monthly event; "Kartik Purnima" is the one people fly home for. The masa is what makes an occasion sellable. |
 | **Vikram Samvat / Shaka year** | Era years. VS ≈ Gregorian + 57; Shaka ≈ Gregorian − 78. | **Display only**, on the Sankalp Patra, where it is expected. |
 
-## 1.3 Amanta vs Purnimanta — the regional split
+## 1.3 Amanta vs Purnimanta, the regional split
 
 Two conventions for where a lunar month *begins*:
 
-- **Amanta** (month ends at Amavasya) — Maharashtra, Gujarat, Karnataka, Andhra, Telangana, Tamil Nadu.
-- **Purnimanta** (month ends at Purnima) — Uttar Pradesh, Uttarakhand, Bihar, Madhya Pradesh, Rajasthan, Punjab.
+- **Amanta** (month ends at Amavasya), Maharashtra, Gujarat, Karnataka, Andhra, Telangana, Tamil Nadu.
+- **Purnimanta** (month ends at Purnima), Uttar Pradesh, Uttarakhand, Bihar, Madhya Pradesh, Rajasthan, Punjab.
 
-**The tithi arithmetic is identical in both.** Only the month *label* differs, and only for Krishna paksha, where Purnimanta runs one month ahead. Worked example: the Krishna Chaturdashi of Mahashivratri is **Magha Krishna Chaturdashi** in Amanta and **Phalguna Krishna Chaturdashi** in Purnimanta — the same instant, two names.
+**The tithi arithmetic is identical in both.** Only the month *label* differs, and only for Krishna paksha, where Purnimanta runs one month ahead. Worked example: the Krishna Chaturdashi of Mahashivratri is **Magha Krishna Chaturdashi** in Amanta and **Phalguna Krishna Chaturdashi** in Purnimanta, the same instant, two names.
 
 **Decision.** Compute and store both. Render the one matching the ghat's region:
 
@@ -133,7 +133,7 @@ Two conventions for where a lunar month *begins*:
 
 **Also out of scope for v1:** the Vaishnava Ekadashi variant. Smarta and Vaishnava traditions observe Ekadashi on different days when the tithi is *viddha* (contaminated by Dashami at sunrise). v1 computes and labels **Smarta Ekadashi**. The label says so.
 
-## 1.4 The Hindu day boundary — the bug that will bite you
+## 1.4 The Hindu day boundary, the bug that will bite you
 
 **The Hindu day runs sunrise → next sunrise, not midnight → midnight.**
 
@@ -143,13 +143,13 @@ Therefore `Muhurat` stores `panchangDate` (the civil date of the *opening sunris
 
 ## 1.5 Tithi is global; the panchang day is local
 
-Tithi, nakshatra, yoga and karana are functions of geocentric Sun/Moon longitude only — **they do not depend on observer location.** What depends on location is *which sunrise* a given tithi is running at, and therefore which panchang day the occasion falls on.
+Tithi, nakshatra, yoga and karana are functions of geocentric Sun/Moon longitude only, **they do not depend on observer location.** What depends on location is *which sunrise* a given tithi is running at, and therefore which panchang day the occasion falls on.
 
-Consequence: within India the six ghats will almost always agree, but not always — Talakaveri (west coast, southern latitude) and Haridwar (northern) can differ by a day on a borderline tithi. The engine must compute per-ghat and never assume "one date for India."
+Consequence: within India the six ghats will almost always agree, but not always, Talakaveri (west coast, southern latitude) and Haridwar (northern) can differ by a day on a borderline tithi. The engine must compute per-ghat and never assume "one date for India."
 
 ---
 
-# Part 2 — Occasions
+# Part 2, Occasions
 
 ## 2.1 The recurring occasions we sell
 
@@ -157,20 +157,20 @@ Consequence: within India the six ghats will almost always agree, but not always
 |---|---|---|---|---|
 | **Purnima** | Tithi 15 (Shukla) | udaya | ~12/yr | Baseline monthly parva |
 | **Amavasya** | Tithi 30 | udaya | ~12/yr | Pitru tarpana |
-| **Somvati Amavasya** | Tithi 30 **and** vara = Monday | udaya | 1–3/yr | **High.** Rare, well known |
-| **Ekadashi** | Tithi 11, both pakshas | udaya + dashami-viddha | ~24–26/yr | Steady; the Varsh tier's spine |
+| **Somvati Amavasya** | Tithi 30 **and** vara = Monday | udaya | 1-3/yr | **High.** Rare, well known |
+| **Ekadashi** | Tithi 11, both pakshas | udaya + dashami-viddha | ~24-26/yr | Steady; the Varsh tier's spine |
 | **Sankranti** | Sun's sidereal ingress into a rashi | instant-based | 12/yr | Moderate |
 | **Makar Sankranti** | Sun ingress → Makara (Capricorn) | instant-based | 1/yr, mid-Jan | **Very high.** Mass snan day |
 | **Pitru Paksha** | Bhadrapada Krishna (Purnimanta) / Ashwin Krishna (Amanta), tithi 16→30 | udaya, day by day | 16 days/yr | **Highest for Parivar tier** |
 | **Sarva Pitru Amavasya** | Final day of Pitru Paksha, tithi 30 | **aparahna** | 1/yr | Peak of the season |
-| **Ganga Dussehra** | Jyeshtha Shukla Dashami (tithi 10); classical Dashahara yoga also wants Hasta nakshatra | udaya | 1/yr, May–Jun | **High at Haridwar/Prayagraj** |
+| **Ganga Dussehra** | Jyeshtha Shukla Dashami (tithi 10); classical Dashahara yoga also wants Hasta nakshatra | udaya | 1/yr, May-Jun | **High at Haridwar/Prayagraj** |
 | **Kartik Purnima** | Kartika Shukla Purnima; Krittika nakshatra strengthens it | udaya | 1/yr, Nov | **Very high.** Dev Deepawali |
-| **Mahashivratri** | Krishna Chaturdashi of Phalguna (Purnimanta) / Magha (Amanta) | **nishita** | 1/yr, Feb–Mar | **Very high at Ujjain** |
+| **Mahashivratri** | Krishna Chaturdashi of Phalguna (Purnimanta) / Magha (Amanta) | **nishita** | 1/yr, Feb-Mar | **Very high at Ujjain** |
 | **Kartik Snan** | Entire Kartika masa | month-long | 30 days/yr | Daily-snan season |
 | **Magh Snan / Kalpvas** | Entire Magha masa, Prayagraj | month-long | 30 days/yr | **Prayagraj-specific season** |
 | **Kumbh / Ardh Kumbh / Magh Mela** | **NOT COMPUTED** | manual | irregular | Largest possible |
 
-## 2.2 Resolution rules — read this before writing the resolver
+## 2.2 Resolution rules, read this before writing the resolver
 
 A tithi that spans two sunrises, or begins and ends between two sunrises (kshaya tithi), must be assigned to exactly one panchang day. There is no single correct rule; each occasion has its own.
 
@@ -186,30 +186,30 @@ If the occasion's tithi is not running at the resolution instant on any day of a
 
 ## 2.3 Kumbh: the engine must refuse to guess
 
-Kumbh site and year are governed by Jupiter/Sun/Moon rashi combinations, but **the Shahi Snan / Amrit Snan dates themselves are fixed by the akhara councils and the district administration** — a human, political process, announced typically 6–12 months ahead. No formula outputs them.
+Kumbh site and year are governed by Jupiter/Sun/Moon rashi combinations, but **the Shahi Snan / Amrit Snan dates themselves are fixed by the akhara councils and the district administration**, a human, political process, announced typically 6-12 months ahead. No formula outputs them.
 
 **Rule.** `OccasionRule.kind: "manual"`. A Kumbh occasion instance requires:
-- `sourceUrl` — a citation to the official announcement
-- `approvedBy` — a named human on staff
-- `approvedAt` — timestamp
+- `sourceUrl`, a citation to the official announcement
+- `approvedBy`, a named human on staff
+- `approvedAt`, timestamp
 
 Without all three, the record cannot leave `draft` and cannot generate slots. Marketing copy may not name a Kumbh date until the record is `manual`-approved.
 
 ---
 
-# Part 3 — Daily windows
+# Part 3, Daily windows
 
-All formulas below use **true local sunrise/sunset at the ghat's coordinates**, defined as the moment the Sun's **upper limb** crosses the horizon with standard refraction — geometric altitude **−0°50′** (34′ refraction + 16′ semidiameter) — plus a horizon-dip correction for elevation:
+All formulas below use **true local sunrise/sunset at the ghat's coordinates**, defined as the moment the Sun's **upper limb** crosses the horizon with standard refraction, geometric altitude **−0°50′** (34′ refraction + 16′ semidiameter), plus a horizon-dip correction for elevation:
 
 ```
 dip(arcminutes) ≈ 1.76 × sqrt(elevation_metres)
 ```
 
-This matters. Talakaveri sits at roughly 1,276 m `PLACEHOLDER — verify elevation` in the Western Ghats; the dip correction moves sunrise by several minutes there and is not optional if we print sunrise on the Sankalp Patra.
+This matters. Talakaveri sits at roughly 1,276 m `PLACEHOLDER, verify elevation` in the Western Ghats; the dip correction moves sunrise by several minutes there and is not optional if we print sunrise on the Sankalp Patra.
 
 We do **not** apply terrain-horizon correction (actual ridgeline occlusion). We state this in the methodology page.
 
-## 3.1 Brahma Muhurat — the flagship
+## 3.1 Brahma Muhurat, the flagship
 
 The 14th muhurta of the night: **two muhurtas (96 min) before sunrise, ending one muhurta (48 min) before sunrise.**
 
@@ -235,7 +235,7 @@ abhijitEnd   = solarNoon + muhurta/2
 
 ## 3.3 Godhuli Muhurat
 
-Cow-dust hour — the sunset window.
+Cow-dust hour, the sunset window.
 
 ```
 godhuliStart = sunset − 24 min
@@ -244,7 +244,7 @@ godhuliEnd   = sunset + 24 min
 
 Commercially valuable: it is the only window that is a civilised evening hour for North America (sunset ~18:00 IST = ~07:30 EST, ~04:30 PST).
 
-## 3.4 Rahu Kaal — hard veto
+## 3.4 Rahu Kaal, hard veto
 
 Divide sunrise→sunset into 8 equal parts. The inauspicious octant is indexed by weekday:
 
@@ -261,7 +261,7 @@ export const RAHU_KAAL_OCTANT: Record<VaraIndex, 1|2|3|4|5|6|7|8> = {
 };
 ```
 
-Sanity check against the classical mnemonic for a 06:00–18:00 day: Mon 07:30–09:00, Sat 09:00–10:30, Fri 10:30–12:00, Wed 12:00–13:30, Thu 13:30–15:00, Tue 15:00–16:30, Sun 16:30–18:00. ✓
+Sanity check against the classical mnemonic for a 06:00-18:00 day: Mon 07:30-09:00, Sat 09:00-10:30, Fri 10:30-12:00, Wed 12:00-13:30, Thu 13:30-15:00, Tue 15:00-16:30, Sun 16:30-18:00. ✓
 
 **Policy: no slot may overlap Rahu Kaal.** `GhatConfig.rahuKaalPolicy: "veto" | "warn"`, default `"veto"`. Also computed and displayed but **never** blocking: **Yamaganda**, **Gulika Kaal**, **Dur Muhurtam**, **Varjyam**.
 
@@ -269,17 +269,17 @@ Public copy: *"No snan is offered during Rahu Kaal."* This is a statable stance 
 
 ---
 
-# Part 4 — Sourcing the data
+# Part 4, Sourcing the data
 
 ## 4.1 Options compared
 
 | Option | What it gives | Licence / cost | Verdict |
 |---|---|---|---|
 | **Swiss Ephemeris** (`sweph` npm, native binding to Astrodienst's C library) | JPL-derived planetary positions, all sidereal ayanamsas incl. Lahiri, rise/set with custom horizon, ΔT handling. Sub-arcsecond. | AGPL-3.0 free, **or** Professional Licence: **CHF 750** first / **CHF 1550** unlimited, one-time, 99 years, permits closed source. | ✅ **CHOSEN.** Buy the professional licence. |
-| **astronomy-engine** (`astronomy-engine` npm) | Sun/Moon/planet positions to **±1 arcminute**, VSOP87 + NOVAS C 3.1 derived. Pure TypeScript, no native build. | **MIT** | ✅ **Second implementation in CI.** ±1′ of lunar longitude ≈ 2 min of tithi — inside tolerance, ample to catch a real bug. |
-| **ProKerala Astrology API** | Formatted daily panchang, auspicious/inauspicious periods, choghadiya. | Credit-metered. **Advanced Panchang (English) = 100 credits/call**; Basic = 10. `PLACEHOLDER — confirm credit→currency rate and rate limits with sales.` | ✅ **Verification oracle only.** ❌ Not a runtime dependency. |
-| **DivineAPI / Vedika API / Panchang.Click** | Similar REST panchang. Vedika lists wallet plans from ~$12/mo. `PLACEHOLDER — verify pricing and terms.` | Commercial | ✅ Second verification oracle. Pick **one**. |
-| **Drik Panchang** | The de-facto reference almanac for Indian users. | **No public developer API.** DrikPanchang® is a trademark of Adarsh Mobile Applications LLP. | ⚠️ Use as the **human** spot-check reference. Do **not** scrape — see Open Questions. |
+| **astronomy-engine** (`astronomy-engine` npm) | Sun/Moon/planet positions to **±1 arcminute**, VSOP87 + NOVAS C 3.1 derived. Pure TypeScript, no native build. | **MIT** | ✅ **Second implementation in CI.** ±1′ of lunar longitude ≈ 2 min of tithi, inside tolerance, ample to catch a real bug. |
+| **ProKerala Astrology API** | Formatted daily panchang, auspicious/inauspicious periods, choghadiya. | Credit-metered. **Advanced Panchang (English) = 100 credits/call**; Basic = 10. `PLACEHOLDER, confirm credit→currency rate and rate limits with sales.` | ✅ **Verification oracle only.** ❌ Not a runtime dependency. |
+| **DivineAPI / Vedika API / Panchang.Click** | Similar REST panchang. Vedika lists wallet plans from ~$12/mo. `PLACEHOLDER, verify pricing and terms.` | Commercial | ✅ Second verification oracle. Pick **one**. |
+| **Drik Panchang** | The de-facto reference almanac for Indian users. | **No public developer API.** DrikPanchang® is a trademark of Adarsh Mobile Applications LLP. | ⚠️ Use as the **human** spot-check reference. Do **not** scrape, see Open Questions. |
 | **`mhah-panchang` npm** | JS tithi/nakshatra/karana/yoga/masa. | Open source | ❌ No published accuracy validation. Fine for a prototype, not for a product where a wrong date is a broken religious commitment. |
 
 ## 4.2 Why not just call a panchang API at request time
@@ -287,9 +287,9 @@ Public copy: *"No snan is offered during Rahu Kaal."* This is a statable stance 
 1. **We need instants, not strings.** Slot generation, stream scheduling, ICS files, reminder emails and capacity all require UTC timestamps. APIs return `"05:23 AM"` in a locale.
 2. **We need bulk.** 6 ghats × 550 days × ~4 windows = ~13,200 window computations per full recompute. At 100 credits per Advanced Panchang call this is an ongoing tax on a nightly job.
 3. **Availability is revenue.** If the vendor is down, we cannot render a calendar or take a booking.
-4. **The trusted source has no API anyway.** Users cross-check against Drik Panchang. Since we cannot call it, we must be independently correct and *demonstrate* it — which is exactly what the verification harness does.
+4. **The trusted source has no API anyway.** Users cross-check against Drik Panchang. Since we cannot call it, we must be independently correct and *demonstrate* it, which is exactly what the verification harness does.
 
-## 4.3 The verification harness — the mechanism that enforces honesty
+## 4.3 The verification harness, the mechanism that enforces honesty
 
 Nightly job at **20:00 UTC (01:30 IST)**, rolling 18-month horizon:
 
@@ -304,7 +304,7 @@ Nightly job at **20:00 UTC (01:30 IST)**, rolling 18-month horizon:
 | Nakshatra start/end instant | ≤ **120 s** |
 | Sunrise / sunset | ≤ **60 s** |
 | Window start/end (Brahma, Abhijit, Godhuli, Rahu Kaal) | ≤ **60 s** |
-| Occasion → panchang-day assignment | **exact — zero tolerance** |
+| Occasion → panchang-day assignment | **exact, zero tolerance** |
 
 Any breach → `status: "quarantined"`. **Quarantined muhurats generate no slots and are invisible in the UI.** They are not shown with a warning; they do not exist. A human resolves them.
 
@@ -314,7 +314,7 @@ Only `verified` and `manual` records are sellable. This is what makes "we do not
 
 ---
 
-# Part 5 — Timezone presentation
+# Part 5, Timezone presentation
 
 ## 5.1 Rules
 
@@ -324,7 +324,7 @@ Only `verified` and `manual` records are sellable. This is what makes "we do not
 4. **Both clocks, always.** Never a bare IST time. Never a bare converted time.
 5. **Name the date shift explicitly** in prose whenever the user's local calendar date ≠ the ghat's.
 6. **Detect the zone, let them change it.** `Intl.DateTimeFormat().resolvedOptions().timeZone`, stored on the account, with a picker in the header. Never guess from IP alone.
-7. **12-hour clock in EN, and in HI use prahar words** (प्रातः / दोपहर / सायं / रात्रि) — Hindi speakers do not read "16:24" naturally.
+7. **12-hour clock in EN, and in HI use prahar words** (प्रातः / दोपहर / सायं / रात्रि), Hindi speakers do not read "16:24" naturally.
 8. **ICS files use UTC `DTSTART`** with a `VTIMEZONE` block. Reminders at T−24h and T−1h are computed from the instant.
 
 ## 5.2 The dual clock component
@@ -344,7 +344,7 @@ Only `verified` and `manual` records are sellable. This is what makes "we do not
 └──────────────────────────────────────────────┘
 ```
 
-**Worked arithmetic (illustration only — this is not asserted as a real Kartik Purnima):**
+**Worked arithmetic (illustration only, this is not asserted as a real Kartik Purnima):**
 
 ```
 Ghat window start  04:24 IST, 24 Nov
@@ -357,7 +357,7 @@ Dubai (UTC+4)           → 02:54, Tue 24 Nov   ← same day
 
 Toronto and London see the previous evening. This is the failure mode the design exists to prevent.
 
-## 5.3 Copy — bilingual
+## 5.3 Copy, bilingual
 
 | Key | EN | HI |
 |---|---|---|
@@ -384,16 +384,16 @@ Toronto and London see the previous evening. This is the failure mode the design
 
 ---
 
-# Part 6 — TypeScript data model
+# Part 6, TypeScript data model
 
 > Path: `src/lib/muhurat/types.ts`. Complete and intended to compile as-is under `strict`.
 
 ```ts
 // ---------------------------------------------------------------------------
-// Snanify — muhurat & scheduling domain model
+// Snanify, muhurat & scheduling domain model
 //
 // INVARIANT 1: every point in time in this file is a UTC ISO-8601 instant
-//              ending in "Z". Wall-clock time is NEVER stored — it is derived
+//              ending in "Z". Wall-clock time is NEVER stored, it is derived
 //              at render time from (instant, IANA zone). No exceptions.
 // INVARIANT 2: no Muhurat may generate a Slot unless status is "verified"
 //              or "manual".
@@ -415,7 +415,7 @@ export type Seconds = number;
 
 // --- Panchang primitives ---------------------------------------------------
 
-/** 1–15 Shukla, 16–30 Krishna. 15 = Purnima, 30 = Amavasya. */
+/** 1-15 Shukla, 16-30 Krishna. 15 = Purnima, 30 = Amavasya. */
 export type TithiIndex =
   | 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15
   | 16|17|18|19|20|21|22|23|24|25|26|27|28|29|30;
@@ -491,12 +491,12 @@ export interface Ghat {
   readonly noteHi: string;
 
   /**
-   * PLACEHOLDER — approximate. Verify on site to 5 decimal places before
+   * PLACEHOLDER, approximate. Verify on site to 5 decimal places before
    * printing sunrise on a Sankalp Patra.
    */
   readonly lat: number;
   readonly lon: number;
-  /** Metres above sea level. PLACEHOLDER — verify. Drives the horizon dip. */
+  /** Metres above sea level. PLACEHOLDER, verify. Drives the horizon dip. */
   readonly elevationM: number;
 
   /** Always "Asia/Kolkata" today; kept explicit for future non-Indian ghats. */
@@ -512,7 +512,7 @@ export interface Ghat {
   readonly windows: readonly MuhuratWindowKind[];
 
   /**
-   * PLACEHOLDER — no priest partnership is asserted. Populate only with
+   * PLACEHOLDER, no priest partnership is asserted. Populate only with
    * signed agreements; the UI must not render an unpopulated roster.
    */
   readonly purohitRoster: readonly PurohitId[];
@@ -541,7 +541,7 @@ export interface SolarDay {
   readonly sunset: Instant;
   /** Local apparent noon (solar transit), not clock noon. */
   readonly solarNoon: Instant;
-  /** Sunrise of the following day — closes the Hindu day. */
+  /** Sunrise of the following day, closes the Hindu day. */
   readonly nextSunrise: Instant;
   /** True midnight between sunset and next sunrise; anchors nishita. */
   readonly trueMidnight: Instant;
@@ -569,7 +569,7 @@ export interface PanchangDay {
   readonly yogas: readonly AngaSpan<YogaIndex>[];
   readonly karanas: readonly AngaSpan<KaranaIndex>[];
 
-  /** Tithi running at sunrise — the udaya-vyapini tithi. */
+  /** Tithi running at sunrise, the udaya-vyapini tithi. */
   readonly tithiAtSunrise: TithiIndex;
   readonly paksha: Paksha;
   /** Both schemes always populated; render per Ghat.masaScheme. */
@@ -593,10 +593,10 @@ export interface PanchangDay {
 // --- Provenance ------------------------------------------------------------
 
 export type MuhuratStatus =
-  | "draft"        // computed, unverified — never sellable
-  | "verified"     // agreed by >=2 independent sources — sellable
-  | "quarantined"  // disagreement beyond tolerance — invisible in UI
-  | "manual"       // human-entered with citation (Kumbh) — sellable
+  | "draft"        // computed, unverified, never sellable
+  | "verified"     // agreed by >=2 independent sources, sellable
+  | "quarantined"  // disagreement beyond tolerance, invisible in UI
+  | "manual"       // human-entered with citation (Kumbh), sellable
   | "superseded";  // replaced by a later recomputation
 
 export interface Provenance {
@@ -683,7 +683,7 @@ export interface Occasion {
   /** One honest line. States what the occasion IS, never what happens if missed. */
   readonly lineEn: string;    // "Dev Deepawali at the ghats"
   readonly lineHi: string;    // "घाटों पर देव दीपावली"
-  /** Longer explainer, 2–4 sentences, with a citation. */
+  /** Longer explainer, 2-4 sentences, with a citation. */
   readonly aboutEn: string;
   readonly aboutHi: string;
   readonly citation: string;
@@ -743,7 +743,7 @@ export interface Muhurat {
   readonly endsAt: Instant;
   readonly durationMin: Minutes;
 
-  /** Angas prevailing at startsAt — what the Sankalp Patra will record. */
+  /** Angas prevailing at startsAt, what the Sankalp Patra will record. */
   readonly tithi: TithiIndex;
   readonly paksha: Paksha;
   readonly nakshatra: NakshatraIndex;
@@ -890,7 +890,7 @@ export interface SankalpName {
   readonly transliterationConfirmed: boolean;
   /** Relationship, for pitru sankalp phrasing. */
   readonly relation?: "self" | "spouse" | "child" | "parent" | "ancestor" | "other";
-  /** True for a departed person — changes the recitation, never the price. */
+  /** True for a departed person, changes the recitation, never the price. */
   readonly isPitru: boolean;
 }
 
@@ -926,7 +926,7 @@ export interface Booking {
 
   readonly sankalp: Sankalp;
 
-  /** Zone at booking time — used for every notification and render. */
+  /** Zone at booking time, used for every notification and render. */
   readonly userZone: IanaZone;
   readonly userLang: "en" | "hi";
 
@@ -998,7 +998,7 @@ Booking          n ──1 Ritual             (via sankalpRoll)
 
 ---
 
-# Part 7 — Capacity, concretely
+# Part 7, Capacity, concretely
 
 ## 7.1 Station allocation
 
@@ -1025,7 +1025,7 @@ Kodagu     1 × 1 × 12 = 12
                                         TOTAL = 108
 ```
 
-**One Brahma Muhurat across all six waters seats 108 sankalps.** This is a derived operational fact, not a marketing invention, and it lands on the number the Varsh tier is priced at. It is worth saying publicly — with the arithmetic shown.
+**One Brahma Muhurat across all six waters seats 108 sankalps.** This is a derived operational fact, not a marketing invention, and it lands on the number the Varsh tier is priced at. It is worth saying publicly, with the arithmetic shown.
 
 Longer windows scale: a `parva-day` window of 6 hours (360 min) yields `floor(360/30) = 12` ceremonies per station → Haridwar 432 seats, all six ghats 1,296.
 
@@ -1054,20 +1054,20 @@ Booking path:
 
 Deliberate: the database, not the application, is the authority on capacity. Kartik Purnima at Haridwar will see concurrent checkouts on 36 seats.
 
-## 7.4 Scarcity display — honest only
+## 7.4 Scarcity display, honest only
 
 - Show remaining seats **only** when `remaining / total < 0.25` **and** the number is the true value.
 - Never show "N people are viewing this".
-- Never show a countdown timer on a payment page. The muhurat countdown on the *calendar* is fine — it is a fact about the sky.
+- Never show a countdown timer on a payment page. The muhurat countdown on the *calendar* is fine, it is a fact about the sky.
 - When full, show the next open muhurat at the same ghat **and** the same occasion at another ghat. Two real alternatives, no pressure copy.
 
 ---
 
-# Part 8 — Pipeline & API
+# Part 8, Pipeline & API
 
 ## 8.1 Nightly job
 
-`cron: 0 20 * * *` (20:00 UTC = 01:30 IST — after the Indian day's bookings, before the morning)
+`cron: 0 20 * * *` (20:00 UTC = 01:30 IST, after the Indian day's bookings, before the morning)
 
 ```
 1. horizon      = today .. today + 18 months
@@ -1154,13 +1154,13 @@ export interface FormattedTime {
 }
 ```
 
-## 8.3 Test suite — non-negotiable
+## 8.3 Test suite, non-negotiable
 
 1. **Cross-implementation.** `sweph` vs `astronomy-engine` over 3,650 days × 6 ghats. All tithi/nakshatra boundaries within 120 s; all sunrise/sunset within 60 s; all occasion→day assignments **exact**. CI-blocking.
 2. **Golden fixtures.** 200 human-verified days checked against Drik Panchang by eye, committed as a fixture file with the verifier's name and date. Any drift fails the build.
 3. **Kshaya/adhika tithi.** Every kshaya and adhika tithi in the 10-year window must resolve to exactly one panchang day.
 4. **Adhika masa.** At least one intercalary month in the window; occasion naming must be correct across it.
-5. **Timezone property test.** For every muhurat × 40 zones (incl. Chatham +12:45, Kathmandu +05:45, Newfoundland −03:30, and both sides of every 2026–2028 DST transition): rendering then re-parsing must return the original instant, and `dateShift` must match an independent computation.
+5. **Timezone property test.** For every muhurat × 40 zones (incl. Chatham +12:45, Kathmandu +05:45, Newfoundland −03:30, and both sides of every 2026-2028 DST transition): rendering then re-parsing must return the original instant, and `dateShift` must match an independent computation.
 6. **Pre-sunrise day boundary.** Every `brahma` muhurat must satisfy `panchangDate === previousDay(ghatCivilDate)`.
 7. **Rahu Kaal veto.** No generated slot overlaps a blocking `InauspiciousPeriod`. Property test over the full horizon.
 8. **Capacity.** Concurrent booking fuzz on a 12-seat slot: 200 parallel holds must yield exactly 12 booked seats, zero oversell.
@@ -1168,12 +1168,12 @@ export interface FormattedTime {
 
 ---
 
-# Part 9 — Ethics constraints, as engineering requirements
+# Part 9, Ethics constraints, as engineering requirements
 
 These are enforced, not aspirational.
 
 1. **No manipulation of grief, guilt or fear.** Copy may state what an occasion *is*. It may never state what happens if you miss it. Pitru Paksha marketing describes the season; it never implies unrest, dosh or consequence. Enforced by the copy lint (§8.3.9).
-2. **No fabricated trust signals.** Priest names, temple partnerships, counts of sankalps offered and countries served are `PLACEHOLDER` until real. *The current landing-page figures — "1,20,000+ sankalps offered" and "48 countries served" — are placeholders and must be replaced with true counts or removed before launch.*
+2. **No fabricated trust signals.** Priest names, temple partnerships, counts of sankalps offered and countries served are `PLACEHOLDER` until real. *The current landing-page figures, "1,20,000+ sankalps offered" and "48 countries served", are placeholders and must be replaced with true counts or removed before launch.*
 3. **No manufactured urgency.** Real remaining-seat counts only, only below 25%. No countdown on payment. No "N viewing".
 4. **No claimed outcomes.** We never say a snan cures, guarantees, removes or grants. We say what is performed, where, when, and by whom.
 5. **A quarantined date is never shown.** Not with a warning, not greyed out. It does not exist in the API response.
@@ -1187,17 +1187,17 @@ These are enforced, not aspirational.
 
 ## Open questions for a human
 
-- Swiss Ephemeris Professional Licence: confirm current price (search indicates CHF 750 first / CHF 1550 unlimited, one-time, 99 years) and confirm the contract terms cover a hosted SaaS with an unlimited number of end users. Sign this before any swisseph code is written — the AGPL fallback would compel publishing the entire booking stack.
+- Swiss Ephemeris Professional Licence: confirm current price (search indicates CHF 750 first / CHF 1550 unlimited, one-time, 99 years) and confirm the contract terms cover a hosted SaaS with an unlimited number of end users. Sign this before any swisseph code is written, the AGPL fallback would compel publishing the entire booking stack.
 - Drik Panchang usage: we must not scrape it, but it is the reference our users check. Ask Adarsh Mobile Applications LLP directly whether a data or verification licence exists, or whether manual weekly spot-checking by a staff member is acceptable under their terms of use.
 - Choose the second verification API. ProKerala is confirmed to have Advanced Panchang (100 credits) and an inauspicious-period endpoint; DivineAPI and Vedika both claim panchang coverage. Get trial keys for all three, run a 90-day agreement test against our engine, and pick the two that agree most closely with Drik Panchang.
 - Rahu Kaal policy needs a doctrinal ruling from the priest council: does Rahu Kaal bind nitya karma such as snan, or only new undertakings? The code defaults to a hard veto; a ruling either way must be documented and citable, because we intend to state the policy publicly.
 - Ekadashi tradition: v1 ships Smarta Ekadashi only. Confirm with the priest council whether the Vaishnava variant must ship for launch, since a meaningful share of diaspora users are Vaishnava and would see a date we call wrong.
-- Ghat coordinates and elevations must be surveyed on site to 5 decimal places, particularly Talakaveri (elevation drives the horizon-dip correction and therefore the printed sunrise). Also confirm the exact stone or step at each ghat where the rite is performed — that is what goes on the Sankalp Patra.
+- Ghat coordinates and elevations must be surveyed on site to 5 decimal places, particularly Talakaveri (elevation drives the horizon-dip correction and therefore the printed sunrise). Also confirm the exact stone or step at each ghat where the rite is performed, that is what goes on the Sankalp Patra.
 - Purohit partnerships: no priest name, lineage, temple affiliation or roster may appear in the product until a signed agreement exists. Determine how many purohits are needed per ghat to staff the station counts in §7.1, including festival surge at Haridwar and Prayagraj.
 - Filming and access permissions: Har Ki Pauri, Vishram Ghat and Triveni Sangam have periodic administrative restrictions on filming and on crowd access, and Kumbh periods impose additional control. Establish written permissions per ghat and encode the known restricted periods as GhatClosure records.
 - Kumbh, Ardh Kumbh and Magh Mela: establish a monitoring process for official akhara and district announcements, and name the staff member who approves each Shahi Snan date with a citation. The engine will not derive these, so a human process is load-bearing.
-- The landing page currently states '1,20,000+ sankalps offered' and '48 countries served'. These must be replaced with true counts or removed before launch. Decide what the honest replacements are — the derived '108 sankalps per Brahma Muhurat across six waters' figure is a candidate that is both true and on-brand.
-- Payments: choose a processor that handles India (UPI, RuPay) and global cards in one account, plus INR/USD/GBP/AUD/CAD/AED presentment. Decide whether pricing is USD-anchored worldwide or locally priced — $11 reads very differently in Haridwar than in Toronto, and 11/31/108 are the auspicious numbers, not the dollar amounts.
+- The landing page currently states '1,20,000+ sankalps offered' and '48 countries served'. These must be replaced with true counts or removed before launch. Decide what the honest replacements are, the derived '108 sankalps per Brahma Muhurat across six waters' figure is a candidate that is both true and on-brand.
+- Payments: choose a processor that handles India (UPI, RuPay) and global cards in one account, plus INR/USD/GBP/AUD/CAD/AED presentment. Decide whether pricing is USD-anchored worldwide or locally priced, $11 reads very differently in Haridwar than in Toronto, and 11/31/108 are the auspicious numbers, not the dollar amounts.
 - Legal and tax: whether Snanify is selling a religious service, a digital media service, or a live-event ticket determines GST treatment in India, VAT/OSS treatment in the EU and UK, and consumer cancellation-right obligations. Get an opinion before pricing is finalised.
 - Refund policy on the Varsh tier: what happens to unredeemed snans at year end? Rolling them over is generous; expiring them is standard; neither is obviously right for a religious commitment. Decide, and state it in plain language on the pricing page.
 - Data retention for sankalp intentions and ancestors' names: this is sensitive personal and religious data, likely special-category under GDPR and under India's DPDP Act. Decide the retention period, the encryption approach, and whether the Sankalp Patra archive can survive account deletion.
@@ -1210,66 +1210,66 @@ These are enforced, not aspirational.
 
 ### Credibility risks
 
-- **Rahu Kaal as a hard veto, marketed as a stance, is manufactured piety and any pandit will say so.** Rahu Kaal governs *shubha karya* — new undertakings, journeys, marriages, business openings. Snan is nitya/naimittika karma. Nobody at Har Ki Pauri climbs out of the water at 07:30 on Monday. Publishing 'No snan is offered during Rahu Kaal' as a differentiator advertises a rule that does not exist in the practice you are serving, which is precisely the tell of an exploitative spiritual-tech startup: inventing a restriction to perform rigour. It also self-harms commercially — Monday's Rahu Kaal is octant 2 (≈07:30–09:00), which deletes prime morning inventory on **Somvati Amavasya**, your own 'high, rare, well known' occasion.
-- **Godhuli's rationale is the most damaging paragraph in the document.** 'Commercially valuable: the only window that is a civilised evening hour for North America (~07:30 EST, ~04:30 PST)' selects a ritual window by conversion rate. Godhuli is classically a *vivaha* muhurta; evening is sandhyavandana time, not a prescribed snan window. If this document ever leaks, that sentence is the headline. The offering may still be defensible (sayam snan exists) — but the stated reason must be doctrinal, with the timezone convenience as a consequence, never the cause.
+- **Rahu Kaal as a hard veto, marketed as a stance, is manufactured piety and any pandit will say so.** Rahu Kaal governs *shubha karya*, new undertakings, journeys, marriages, business openings. Snan is nitya/naimittika karma. Nobody at Har Ki Pauri climbs out of the water at 07:30 on Monday. Publishing 'No snan is offered during Rahu Kaal' as a differentiator advertises a rule that does not exist in the practice you are serving, which is precisely the tell of an exploitative spiritual-tech startup: inventing a restriction to perform rigour. It also self-harms commercially, Monday's Rahu Kaal is octant 2 (≈07:30-09:00), which deletes prime morning inventory on **Somvati Amavasya**, your own 'high, rare, well known' occasion.
+- **Godhuli's rationale is the most damaging paragraph in the document.** 'Commercially valuable: the only window that is a civilised evening hour for North America (~07:30 EST, ~04:30 PST)' selects a ritual window by conversion rate. Godhuli is classically a *vivaha* muhurta; evening is sandhyavandana time, not a prescribed snan window. If this document ever leaks, that sentence is the headline. The offering may still be defensible (sayam snan exists), but the stated reason must be doctrinal, with the timezone convenience as a consequence, never the cause.
 - **Pitru Paksha is modelled as the highest-margin inventory of the year and the anti-manipulation rules do not reach it.** The lint rule covers *copy*; it does not cover *scheduling pressure*. Scarcity badges, reminder emails, and a 16-day countdown funnel aimed at people who feel obligation to dead parents is the grief funnel, executed entirely through mechanisms this spec permits. 'Commercial weight: Highest for Parivar tier' next to Sarva Pitru Amavasya is a sentence written by someone optimising a season, not serving one.
-- **The spec never confronts whether a proxy can discharge shraddha.** The strong traditional position is that shraddha/tarpana is performed by the descendant as karta; a purohit officiates, he does not substitute. Selling 'pitru sankalp' as a schedulable SKU without stating what is and is not being claimed is the theological overreach that will get you written about. This is answerable honestly — tarpana offered *on your behalf, in your name and gotra*, not a substitute for shraddha you are obliged to perform — but the spec must say it.
-- **The 'priest council' is referenced four times as an existing authority and is never marked PLACEHOLDER.** 'No doctrinal backing our priest council would defend', 'that is a call for the priest council' — the project's own constraints forbid fabricating credentials or partnerships. Right now the document quietly asserts a religious governance body exists.
+- **The spec never confronts whether a proxy can discharge shraddha.** The strong traditional position is that shraddha/tarpana is performed by the descendant as karta; a purohit officiates, he does not substitute. Selling 'pitru sankalp' as a schedulable SKU without stating what is and is not being claimed is the theological overreach that will get you written about. This is answerable honestly, tarpana offered *on your behalf, in your name and gotra*, not a substitute for shraddha you are obliged to perform, but the spec must say it.
+- **The 'priest council' is referenced four times as an existing authority and is never marked PLACEHOLDER.** 'No doctrinal backing our priest council would defend', 'that is a call for the priest council', the project's own constraints forbid fabricating credentials or partnerships. Right now the document quietly asserts a religious governance body exists.
 - **Station counts (Haridwar 3, Prayagraj 2, four ghats 1) are asserted as operational fact.** These imply purohits, permissions and a physical presence at six sites, including Talakaveri, a mountain spring in Kodagu. Unmarked, they read as real relationships. Same category of violation as the priest council.
-- **The occasion calendar is generic North-Indian parva boilerplate applied uniformly to six sites that each have their own actual festival.** A practising reader notices instantly: Vishram Ghat's signature occasion is **Yam Dwitiya / Bhai Dooj** (the sibling bathing at Mathura) — absent. Talakaveri's single mass event is **Tula Sankramana / Kaveri Sankramana** and the theerthodbhava — absent, and it is *solar-reckoned*, on the very calendar system you scoped out. Nashik and Ujjain have **Simhastha** — absent. Meanwhile Ekadashi, which nobody travels for, is listed as 'the Varsh tier's spine'. The calendar was designed from a generic panchang, not from the six places.
+- **The occasion calendar is generic North-Indian parva boilerplate applied uniformly to six sites that each have their own actual festival.** A practising reader notices instantly: Vishram Ghat's signature occasion is **Yam Dwitiya / Bhai Dooj** (the sibling bathing at Mathura), absent. Talakaveri's single mass event is **Tula Sankramana / Kaveri Sankramana** and the theerthodbhava, absent, and it is *solar-reckoned*, on the very calendar system you scoped out. Nashik and Ujjain have **Simhastha**, absent. Meanwhile Ekadashi, which nobody travels for, is listed as 'the Varsh tier's spine'. The calendar was designed from a generic panchang, not from the six places.
 - **Nashik/Ram Kund is the pre-eminent site for asthi visarjan, and 'everything is digital' collides with that head-on.** Users *will* ask. There is no line in the spec refusing the category, and an ambiguous non-answer here is far worse than a clear refusal.
-- **Mahashivratri at nishita kaal conflates day-resolution with window placement.** `resolution` decides *which day* the occasion falls on; it must not decide *when the ceremony runs*. Nishita correctly picks the Mahashivratri date — but the Mahashivratri **snan** is a pre-dawn/morning snan, not a midnight one. As modelled, the engine will generate and sell a midnight snan slot at Ujjain. That is a doctrinal error produced by a data-model shortcut, and it is the kind of error a knowledgeable customer screenshots.
+- **Mahashivratri at nishita kaal conflates day-resolution with window placement.** `resolution` decides *which day* the occasion falls on; it must not decide *when the ceremony runs*. Nishita correctly picks the Mahashivratri date, but the Mahashivratri **snan** is a pre-dawn/morning snan, not a midnight one. As modelled, the engine will generate and sell a midnight snan slot at Ujjain. That is a doctrinal error produced by a data-model shortcut, and it is the kind of error a knowledgeable customer screenshots.
 - **Makar Sankranti is reduced to 'instant-based' in one word.** Punya kaal is not the ingress instant; it is a window derived from it, with tradition-specific rules (and a next-morning shift when the ingress falls after sunset). This is a rule as complex as tithi resolution, applied to your self-declared 'very high, mass snan day'. As written, the engine will produce wrong Makar Sankranti windows.
 - **Adhika masa is named and then never handled.** Festivals are generally observed in the *nija* masa, not the adhika one. Without a suppression rule the engine will happily generate and sell 'Kartik Purnima' twice, or place a parva in Purushottama masa. Simultaneously you miss the fact that **Adhik/Purushottama masa snan-daan is itself a major, genuinely sellable observance** at Prayagraj and Haridwar. This is the single most likely path to shipping a wrong festival date to paying customers.
-- **The 2-minute verification tolerance guarantees the safety mechanism becomes theatre.** Your own arithmetic says astronomy-engine's ±1 arcminute is ≈2 minutes of tithi time — so the checker's expected error *equals* the tolerance, and CI will flap. Against third-party APIs it is worse: Drik-lineage sources differ on sunrise convention, ΔT and refraction by minutes routinely. Quarantine-everything becomes disable-the-check, which is how every integrity mechanism dies.
-- **Requiring two commercial APIs to agree before a muhurat is sellable makes your revenue a function of ProKerala's uptime and response format.** You removed them from the request path and reinstalled them on the *availability* path. One vendor lapse silently deletes inventory, with no documented human-override path — so the override will be built in an emergency, undocumented, by whoever is on call.
-- **The dip correction at Talakaveri makes the answer worse, not better, and the spec advertises it as rigour.** Horizon dip (1.76′·√h) assumes a distant sea-level horizon. Talakaveri sits in the Western Ghats surrounded by higher terrain; applying ~63′ of dip there introduces a ~4–5 minute error *away* from reality, while the document explicitly declines the terrain correction that would justify it. Worse, it moves you away from the reference almanac — and your entire trust proposition is 'we agree with the almanac you already check'.
-- **The ayanamsa rationale is overstated for exactly the quantity that matters most.** Tithi is a *difference* of longitudes; ayanamsa cancels entirely. Lahiri matters for nakshatra, yoga and sidereal ingress — not for the tithi arithmetic that defines 'every parva snan we sell'. A knowledgeable reader spots this and starts doubting the rest of the technical claims.
-- **Tithi is numbered two different ways in one document** — '1–15 in each paksha' in §1.1, then 'Amavasya = tithi 30' and 'Krishna paksha tithi 16→30' in §2.1. Trivial to fix, but it is the kind of internal inconsistency that suggests the model was written faster than it was checked.
+- **The 2-minute verification tolerance guarantees the safety mechanism becomes theatre.** Your own arithmetic says astronomy-engine's ±1 arcminute is ≈2 minutes of tithi time, so the checker's expected error *equals* the tolerance, and CI will flap. Against third-party APIs it is worse: Drik-lineage sources differ on sunrise convention, ΔT and refraction by minutes routinely. Quarantine-everything becomes disable-the-check, which is how every integrity mechanism dies.
+- **Requiring two commercial APIs to agree before a muhurat is sellable makes your revenue a function of ProKerala's uptime and response format.** You removed them from the request path and reinstalled them on the *availability* path. One vendor lapse silently deletes inventory, with no documented human-override path, so the override will be built in an emergency, undocumented, by whoever is on call.
+- **The dip correction at Talakaveri makes the answer worse, not better, and the spec advertises it as rigour.** Horizon dip (1.76′·√h) assumes a distant sea-level horizon. Talakaveri sits in the Western Ghats surrounded by higher terrain; applying ~63′ of dip there introduces a ~4-5 minute error *away* from reality, while the document explicitly declines the terrain correction that would justify it. Worse, it moves you away from the reference almanac, and your entire trust proposition is 'we agree with the almanac you already check'.
+- **The ayanamsa rationale is overstated for exactly the quantity that matters most.** Tithi is a *difference* of longitudes; ayanamsa cancels entirely. Lahiri matters for nakshatra, yoga and sidereal ingress, not for the tithi arithmetic that defines 'every parva snan we sell'. A knowledgeable reader spots this and starts doubting the rest of the technical claims.
+- **Tithi is numbered two different ways in one document**, '1-15 in each paksha' in §1.1, then 'Amavasya = tithi 30' and 'Krishna paksha tithi 16→30' in §2.1. Trivial to fix, but it is the kind of internal inconsistency that suggests the model was written faster than it was checked.
 - **Swiss Ephemeris licence terms and prices (CHF 750 / CHF 1550, 'relicenses under LGPL-3.0', 'valid 99 years') are asserted as settled fact.** The project's own rule says mark placeholders. These are legal terms of a third-party contract, restated from memory, in a document that instructs an engineer not to write code until the contract is signed.
-- **Nobody evaluated shipping the MIT library in production.** If the decision that actually matters is *day assignment*, then ±2 minutes of boundary error almost never changes the day, and astronomy-engine may be sufficient — making the AGPL analysis, the CHF spend, and a native addon in a Vercel Next.js deployment all avoidable. The spec assumes Swiss Ephemeris and reasons brilliantly from there without testing the premise.
-- **'One Brahma Muhurat across all six ghats seats 108 sankalps' is a reverse-fitted number dressed as a derived fact.** 9 stations × 12 = 108 requires the ceremony length and sankalps-per-ceremony to be chosen to land on an auspicious number. The formula is not deriving capacity; it is decorating it. And the moment ceremony length changes by one minute the public 'true fact' becomes false while the marketing copy persists — which is how `1,20,000+ Sankalps offered` and `48 Countries served`, both currently live in `src/lib/content.ts`, came to exist.
+- **Nobody evaluated shipping the MIT library in production.** If the decision that actually matters is *day assignment*, then ±2 minutes of boundary error almost never changes the day, and astronomy-engine may be sufficient, making the AGPL analysis, the CHF spend, and a native addon in a Vercel Next.js deployment all avoidable. The spec assumes Swiss Ephemeris and reasons brilliantly from there without testing the premise.
+- **'One Brahma Muhurat across all six ghats seats 108 sankalps' is a reverse-fitted number dressed as a derived fact.** 9 stations × 12 = 108 requires the ceremony length and sankalps-per-ceremony to be chosen to land on an auspicious number. The formula is not deriving capacity; it is decorating it. And the moment ceremony length changes by one minute the public 'true fact' becomes false while the marketing copy persists, which is how `1,20,000+ Sankalps offered` and `48 Countries served`, both currently live in `src/lib/content.ts`, came to exist.
 - **The spec bans countdown timers while the shipped homepage runs one.** `src/lib/content.ts` hero card: `countdown: "opens in 6h 12m"` / `"6 घंटे 12 मिनट में"`, on a hardcoded `04:24 IST` muhurat, under a `Live now · Har Ki Pauri` badge. The lint rule must be pointed at the code that already exists, or the policy is aspirational on day one.
 - **A Postgres `CHECK` constraint cannot express a cross-row aggregate.** As written ('CHECK constraint plus row-level lock'), a naive implementer writes a CHECK over a subquery, which Postgres does not support, and ships the race the decision was meant to prevent.
-- **Sensitive-category data with no retention model.** Name + gotra + ancestors' names is religious-belief data: GDPR Art. 9 special category for EU diaspora users, and sensitive under India's DPDP Act 2023. `content.ts` already promises `HD recording, kept for good` — indefinite retention of religious data, in a recording that also contains *other people's* names spoken aloud, with no erasure path. That promise and the right to erasure cannot both survive.
+- **Sensitive-category data with no retention model.** Name + gotra + ancestors' names is religious-belief data: GDPR Art. 9 special category for EU diaspora users, and sensitive under India's DPDP Act 2023. `content.ts` already promises `HD recording, kept for good`, indefinite retention of religious data, in a recording that also contains *other people's* names spoken aloud, with no erasure path. That promise and the right to erasure cannot both survive.
 - **A live camera at a public ghat films third parties, including people bathing.** Scheduling decides when the camera rolls, so this belongs in this spec. Filming is restricted at several ghats, and dignity/consent of bystanders is both a legal and a brand exposure. Nothing in the document acknowledges it.
 - **No force-majeure or non-performance model.** Floods, monsoon at Talakaveri, district-administration closures, Kumbh crowd control, stream failure. For a service sold as 'a real place at a real hour' with a fixed non-transferable instant, what happens when the rite cannot be performed is the largest trust and legal gap in the entire document, and it is absent.
-- **India's CCPA Dark Patterns Guidelines (2023) are directly on point and uncited.** False urgency, confirm-shaming, drip pricing and basket sneaking are named prohibitions, not brand preferences. The spec's ethics are already broadly compliant — but framing them as taste rather than obligation means the first growth hire argues about taste.
-- **Scarcity below 25% is still pressure on a religious obligation day.** On a 12-seat slot, 'below 25%' means 3 seats — i.e. most of the sell-through window shows a scarcity badge. True scarcity is still coercion when the trigger is a duty to one's dead.
+- **India's CCPA Dark Patterns Guidelines (2023) are directly on point and uncited.** False urgency, confirm-shaming, drip pricing and basket sneaking are named prohibitions, not brand preferences. The spec's ethics are already broadly compliant, but framing them as taste rather than obligation means the first growth hire argues about taste.
+- **Scarcity below 25% is still pressure on a religious obligation day.** On a 12-seat slot, 'below 25%' means 3 seats, i.e. most of the sell-through window shows a scarcity badge. True scarcity is still coercion when the trigger is a duty to one's dead.
 
 ### Required fixes
 
-- Flip the Rahu Kaal default to `warn`, and delete 'No snan is offered during Rahu Kaal' from public copy until a named, real authority endorses it. Replace the display with a neutral, factual note: 'Rahu Kaal at this ghat today: 07:34–09:02 IST.' Show the fact, decline the doctrine. If you keep any veto, scope it to muhurta-sensitive occasions rather than nitya snan — and never let it delete Somvati Amavasya morning inventory.
-- Split `resolution` into two fields: `dayResolution` (udaya | madhyahna | aparahna | pradosha | nishita — decides *which panchang day*) and `windowPolicy` (which daily window the ceremony actually occupies). Mahashivratri becomes `dayResolution: nishita, windowPolicy: brahma`. Sarva Pitru Amavasya stays `aparahna` for both, which is correct and now explicit rather than accidental. Without this split the engine sells a midnight Shivratri snan.
+- Flip the Rahu Kaal default to `warn`, and delete 'No snan is offered during Rahu Kaal' from public copy until a named, real authority endorses it. Replace the display with a neutral, factual note: 'Rahu Kaal at this ghat today: 07:34-09:02 IST.' Show the fact, decline the doctrine. If you keep any veto, scope it to muhurta-sensitive occasions rather than nitya snan, and never let it delete Somvati Amavasya morning inventory.
+- Split `resolution` into two fields: `dayResolution` (udaya | madhyahna | aparahna | pradosha | nishita, decides *which panchang day*) and `windowPolicy` (which daily window the ceremony actually occupies). Mahashivratri becomes `dayResolution: nishita, windowPolicy: brahma`. Sarva Pitru Amavasya stays `aparahna` for both, which is correct and now explicit rather than accidental. Without this split the engine sells a midnight Shivratri snan.
 - Rewrite the Godhuli rationale doctrine-first. State the traditional basis for an evening snan window, then note the timezone consequence as a fact rather than a motive. Apply the same test to every window: if the stated reason for offering it is a conversion rate, do not offer it.
-- Make occasions **per-ghat, not global**. Add: Yam Dwitiya at Vishram Ghat; Tula Sankramana / theerthodbhava at Talakaveri; Simhastha at Ram Ghat and Ram Kund; Harihar Milan / Vaikuntha Chaturdashi at Ujjain; Kalpvas already correctly scoped to Prayagraj. Drop or demote Ekadashi as a headline occasion — it is a fasting vrat, not a destination snan, and 24–26 Ekadashis do not map onto a twelve-snan Varsh tier anyway.
+- Make occasions **per-ghat, not global**. Add: Yam Dwitiya at Vishram Ghat; Tula Sankramana / theerthodbhava at Talakaveri; Simhastha at Ram Ghat and Ram Kund; Harihar Milan / Vaikuntha Chaturdashi at Ujjain; Kalpvas already correctly scoped to Prayagraj. Drop or demote Ekadashi as a headline occasion, it is a fasting vrat, not a destination snan, and 24-26 Ekadashis do not map onto a twelve-snan Varsh tier anyway.
 - Note that Tula Sankramana forces a decision on the solar-calendar scope-out. Either add sidereal solar ingress as a computed occasion type (it is only an ingress instant, cheap given you already need Sankranti) or drop Talakaveri from v1. Shipping a Kaveri ghat without its one mass occasion is worse than shipping five ghats.
-- Add an explicit adhika/kshaya masa rule: occasions are suppressed in an adhika masa and observed in the nija masa, with a hard assertion in CI that no named occasion resolves twice in one samvatsara. Then add **Purushottama masa snan** as a first-class occasion — it is a genuine observance you are currently missing while risking a duplicate-festival bug in the same code path.
-- Replace 'Makar Sankranti — instant-based' with a punya kaal rule: derive the window from the ingress instant, including the post-sunset next-morning shift, and label which tradition's rule you followed. This is your highest-volume day; it cannot be one word.
-- Make the verification tolerance two-tier. **Day assignment must match exactly** — any disagreement on which panchang day an occasion falls on is a hard block. **Boundary instants** get a generous tolerance (5–10 min) and only warn, because sunrise conventions and ΔT legitimately differ between sources. Log the systematic offset per oracle so drift is visible instead of noisy.
-- Reframe the whole methodology from 'physically most accurate' to 'agrees with the reference almanac, deviations documented'. Your trust claim is that users can cross-check you against Drik. Every place you optimise for physics over agreement, you manufacture a discrepancy that reads as a bug. Concretely: drop the dip correction at Talakaveri unless you also model terrain occlusion — half a correction is worse than none — and state the sunrise convention each oracle uses so systematic offsets are expected, not alarming.
+- Add an explicit adhika/kshaya masa rule: occasions are suppressed in an adhika masa and observed in the nija masa, with a hard assertion in CI that no named occasion resolves twice in one samvatsara. Then add **Purushottama masa snan** as a first-class occasion, it is a genuine observance you are currently missing while risking a duplicate-festival bug in the same code path.
+- Replace 'Makar Sankranti, instant-based' with a punya kaal rule: derive the window from the ingress instant, including the post-sunset next-morning shift, and label which tradition's rule you followed. This is your highest-volume day; it cannot be one word.
+- Make the verification tolerance two-tier. **Day assignment must match exactly**, any disagreement on which panchang day an occasion falls on is a hard block. **Boundary instants** get a generous tolerance (5-10 min) and only warn, because sunrise conventions and ΔT legitimately differ between sources. Log the systematic offset per oracle so drift is visible instead of noisy.
+- Reframe the whole methodology from 'physically most accurate' to 'agrees with the reference almanac, deviations documented'. Your trust claim is that users can cross-check you against Drik. Every place you optimise for physics over agreement, you manufacture a discrepancy that reads as a bug. Concretely: drop the dip correction at Talakaveri unless you also model terrain occlusion, half a correction is worse than none, and state the sunrise convention each oracle uses so systematic offsets are expected, not alarming.
 - Document the human-override path for `verified` now, with the same shape as the Kumbh rule: `overrideBy` + `overrideReason` + `sourceUrl` + timestamp, surfaced in an audit log. Otherwise it gets built at 2am by whoever is on call and never reviewed.
 - Never surface the word `verified` in user-facing UI. To a devotee it reads as 'verified by a religious authority', not 'three ephemeris implementations agreed'. Use language about the computation, or say nothing.
 - Correct the ayanamsa rationale: state that ayanamsa cancels in tithi (a longitude *difference*) and matters for nakshatra, yoga, and sidereal ingress. Pin Lahiri for those reasons. Keeping the overstated version costs you credibility with exactly the reader you most need to convince.
-- Normalise tithi numbering to one convention throughout (1–30 continuous, with paksha derived) and fix §1.1's '1–15 in each paksha'.
+- Normalise tithi numbering to one convention throughout (1-30 continuous, with paksha derived) and fix §1.1's '1-15 in each paksha'.
 - Mark as PLACEHOLDER, unambiguously: the priest council (no such body has been constituted), all station counts, Talakaveri elevation, and every Swiss Ephemeris price and licence term. Add a standing rule to the document: any noun implying a person, body, partnership or contract is PLACEHOLDER until a named human signs off.
-- Add a decision record evaluating **astronomy-engine in production**. If day assignment is what matters and ±2 minutes of boundary error changes the day approximately never, the MIT library may be sufficient and the AGPL analysis, the CHF spend, and a native addon in a Vercel deployment all disappear. Test this before signing anything. Separately, note that `sweph` is a native addon and cannot live on the request path in a Next.js serverless deployment — the 18-month precompute job is the right home, so say so explicitly.
-- Delete '108 sankalps' from public copy, or state the parameters that produce it inline. And extend the lint rule to the two fabricated statistics already shipping in `src/lib/content.ts` — `1,20,000+ Sankalps offered` and `48 Countries served` — plus the hardcoded hero countdown (`opens in 6h 12m` / `6 घंटे 12 मिनट में`) and the static `Live now · Har Ki Pauri` badge. A policy that does not fail on the code already in the repo is not a policy.
-- Widen the anti-manipulation lint from copy to **mechanism**, and cite the CCPA Dark Patterns Guidelines 2023 as the compliance floor. Specific rules: no scarcity display of any kind on pitru, Kumbh or manual occasions — sold-out is binary; no reminder or re-engagement email timed to Pitru Paksha; no confirm-shaming decline copy ('No thanks, I'll skip my ancestors this year'); no drip pricing on dakshina.
-- Write the pitru claim explicitly, in both languages, and put it in the booking flow rather than the terms: what is offered is tarpana performed on your behalf, in your name and gotra, by a purohit at the ghat — and it does not discharge shraddha that tradition places on you as karta. Have the (real, once constituted) priest council sign the exact wording. This is the single highest-integrity move available and it is also good marketing.
+- Add a decision record evaluating **astronomy-engine in production**. If day assignment is what matters and ±2 minutes of boundary error changes the day approximately never, the MIT library may be sufficient and the AGPL analysis, the CHF spend, and a native addon in a Vercel deployment all disappear. Test this before signing anything. Separately, note that `sweph` is a native addon and cannot live on the request path in a Next.js serverless deployment, the 18-month precompute job is the right home, so say so explicitly.
+- Delete '108 sankalps' from public copy, or state the parameters that produce it inline. And extend the lint rule to the two fabricated statistics already shipping in `src/lib/content.ts`, `1,20,000+ Sankalps offered` and `48 Countries served`, plus the hardcoded hero countdown (`opens in 6h 12m` / `6 घंटे 12 मिनट में`) and the static `Live now · Har Ki Pauri` badge. A policy that does not fail on the code already in the repo is not a policy.
+- Widen the anti-manipulation lint from copy to **mechanism**, and cite the CCPA Dark Patterns Guidelines 2023 as the compliance floor. Specific rules: no scarcity display of any kind on pitru, Kumbh or manual occasions, sold-out is binary; no reminder or re-engagement email timed to Pitru Paksha; no confirm-shaming decline copy ('No thanks, I'll skip my ancestors this year'); no drip pricing on dakshina.
+- Write the pitru claim explicitly, in both languages, and put it in the booking flow rather than the terms: what is offered is tarpana performed on your behalf, in your name and gotra, by a purohit at the ghat, and it does not discharge shraddha that tradition places on you as karta. Have the (real, once constituted) priest council sign the exact wording. This is the single highest-integrity move available and it is also good marketing.
 - Add an explicit refusal for asthi visarjan and any other rite that requires physical presence or physical objects, named on the Nashik page where users will actually ask.
-- Connect the engine to the sankalp. The sankalp vakya requires desha and kala — samvatsara, ayana, ritu, masa, paksha, tithi, vara, nakshatra — which is precisely what this engine computes. Say so in the summary. It reframes in-house computation from 'the API is credit-metered' to 'the sankalp is only correct if these five angas are correct', which is a vastly stronger and more honest justification, and it makes the Sankalp Patra a real artifact rather than a certificate.
+- Connect the engine to the sankalp. The sankalp vakya requires desha and kala, samvatsara, ayana, ritu, masa, paksha, tithi, vara, nakshatra, which is precisely what this engine computes. Say so in the summary. It reframes in-house computation from 'the API is credit-metered' to 'the sankalp is only correct if these five angas are correct', which is a vastly stronger and more honest justification, and it makes the Sankalp Patra a real artifact rather than a certificate.
 - On the Sankalp Patra, render the masa name in the **user's** tradition, not the ghat's, with the ghat's scheme shown alongside if they differ. A Marathi family reading 'Phalguna' where they say 'Magha' will conclude the certificate is wrong. Operations keep the ghat's scheme; the artifact carries the user's.
 - Specify the capacity constraint concretely: a `seats_taken` counter column on the slot row with `CHECK (seats_taken <= seats_total)`, incremented under `SELECT … FOR UPDATE`, or a Postgres exclusion constraint. 'CHECK constraint' alone will be implemented as a subquery, which Postgres rejects, and the race ships.
-- Restate the T−6h cutoff in the user's clock as well as IST. For a 04:24 IST muhurat, a Toronto user's deadline is roughly midday the previous day — the 'late enough to be generous' framing is IST-parochial and contradicts the dual-clock principle the spec otherwise gets right.
+- Restate the T−6h cutoff in the user's clock as well as IST. For a 04:24 IST muhurat, a Toronto user's deadline is roughly midday the previous day, the 'late enough to be generous' framing is IST-parochial and contradicts the dual-clock principle the spec otherwise gets right.
 - Write the force-majeure and non-performance policy into this spec, since scheduling owns it: what happens on stream failure, ghat closure, flood, monsoon or administrative order; whether the rite is re-performed at the next equivalent muhurat, refunded, or both; who decides; and how the user is told. Publish it before taking a rupee.
-- Add a retention model for sankalp data and recordings. Religious-belief data under GDPR Art. 9 and DPDP 2023 needs a stated purpose, retention period and deletion path — which is incompatible with the shipped promise `HD recording, kept for good`. Change that copy, and handle the fact that recordings contain third parties' names and faces.
+- Add a retention model for sankalp data and recordings. Religious-belief data under GDPR Art. 9 and DPDP 2023 needs a stated purpose, retention period and deletion path, which is incompatible with the shipped promise `HD recording, kept for good`. Change that copy, and handle the fact that recordings contain third parties' names and faces.
 - State the on-site filming policy: what the camera frames, how bystanders are handled, and what permission exists at each ghat. Scheduling determines when the camera rolls, so it belongs here.
-- Answer the two questions the spec leaves open. Is the rite performed when no one books — i.e. is 'the rite happens at a real place at a real hour' contingent on sales? And does Varsh 'Brahma muhurat priority' ever displace a booked person (it must not)? Both are honesty questions about claims already being made in `content.ts`. Also define Varsh redemption: expiry, rollover, and what happens to unredeemed snans — that is prepaid credit, and it is regulated.
+- Answer the two questions the spec leaves open. Is the rite performed when no one books, i.e. is 'the rite happens at a real place at a real hour' contingent on sales? And does Varsh 'Brahma muhurat priority' ever displace a booked person (it must not)? Both are honesty questions about claims already being made in `content.ts`. Also define Varsh redemption: expiry, rollover, and what happens to unredeemed snans, that is prepaid credit, and it is regulated.
 
 ### Must survive
 
-- The sunrise→sunrise Hindu day with `panchangDate` stored separately from `ghatCivilDate`. This is the single best technical insight in the document and almost every competitor gets it wrong. A 04:24 Brahma Muhurat belongs to the previous panchang day — keep this verbatim, including the note that it is the common case for the flagship product, not an edge case.
+- The sunrise→sunrise Hindu day with `panchangDate` stored separately from `ghatCivilDate`. This is the single best technical insight in the document and almost every competitor gets it wrong. A 04:24 Brahma Muhurat belongs to the previous panchang day, keep this verbatim, including the note that it is the common case for the flagship product, not an edge case.
 - §1.5: tithi/nakshatra/yoga/karana are location-independent, but *which sunrise the tithi is running at* is local, therefore compute per-ghat and never assume 'one date for India'. Correct, subtle, and the reason Talakaveri and Haridwar will occasionally differ. Preserve.
 - Per-occasion day resolution (`udaya | madhyahna | aparahna | pradosha | nishita`) instead of one global rule, with the explicit note that hardcoding one rule breaks exactly the commercially important days. This is the correct model and the correct reason.
 - Kumbh / Ardh Kumbh / Shahi Snan as `kind: 'manual'` requiring `sourceUrl` + `approvedBy` + `approvedAt`, with the engine structurally unable to derive them, and marketing barred from naming a date before approval. This is the strongest integrity mechanism in the spec. Keep it word for word and extend the same shape elsewhere.
@@ -1278,10 +1278,10 @@ These are enforced, not aspirational.
 - Labelling v1 Ekadashi as **Smarta** and saying so in the UI. Most Indian apps silently pick one and infuriate the other half. This costs nothing and signals to a knowledgeable user that you know what you don't know.
 - Yoga and karana computed and displayed but never gating a slot, with the reasoning that a snan is not a new undertaking so Vishti/Bhadra does not apply. This is doctrinally correct restraint, correctly argued. It is the one place the spec resists the temptation to add fake piety.
 - UTC instants + IANA zone ids only, never wall-clock, never `+05:30`, Temporal for arithmetic. Non-negotiable and correctly justified.
-- The mandatory dual clock — ghat time in IST primary, user-local secondary, plus an explicit date-shift sentence whenever the calendar date differs. 'The ghat clock is the truth and demoting it to a parenthetical is dishonest' is the best sentence in the document and is a genuine brand differentiator, not just a UX rule.
-- Derived capacity rather than hand-entered, so that a change in ceremony length or purohit count automatically reprices the calendar. Correct engineering. (The '108 sankalps' claim built on top of it is not — see risks.)
+- The mandatory dual clock, ghat time in IST primary, user-local secondary, plus an explicit date-shift sentence whenever the calendar date differs. 'The ghat clock is the truth and demoting it to a parenthetical is dishonest' is the best sentence in the document and is a genuine brand differentiator, not just a UX rule.
+- Derived capacity rather than hand-entered, so that a change in ceremony length or purohit count automatically reprices the calendar. Correct engineering. (The '108 sankalps' claim built on top of it is not, see risks.)
 - 'A seat is a unit of the purohit's voice, not a headcount', and Parivar at 3 seats. Honest, legible, and it explains a pricing decision in terms of the rite rather than in terms of willingness to pay.
 - Anti-manipulation encoded as a lint rule over the content file rather than a guideline, explicitly so it survives the first growth hire. Keep, and widen its scope (see fixes).
-- The Rahu Kaal *mechanism* — a per-ghat `veto | warn` lever with the doctrinal question named as a priest-council call rather than an engineering one. The mechanism is right even though the default is wrong.
+- The Rahu Kaal *mechanism*, a per-ghat `veto | warn` lever with the doctrinal question named as a priest-council call rather than an engineering one. The mechanism is right even though the default is wrong.
 - Running astronomy-engine as a second independent implementation in CI. Two codebases agreeing is genuinely the cheapest correctness evidence available. (Fix the tolerance, keep the idea.)
 - The dip-correction awareness and the commitment to publish a methodology page stating that terrain-horizon correction is not applied. The transparency instinct is right even where the physics is wrong.

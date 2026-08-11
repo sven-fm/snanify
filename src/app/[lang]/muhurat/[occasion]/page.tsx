@@ -8,12 +8,12 @@ import { OCCASIONS, muhuratContent, occasionBySlug } from "@/content/muhurat";
 
 export const dynamicParams = false;
 
-/** Every (lang, occasion) pair — the slug is identical in both locales. */
+/** Every (lang, occasion) pair, the slug is identical in both locales. */
 export function generateStaticParams() {
   return LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));
 }
 
-/** Public URL shape. localePath owns the "/hi" prefix — never hand-write it. */
+/** Public URL shape. localePath owns the "/hi" prefix, never hand-write it. */
 const publicPath = (lang: Lang, slug: string) => localePath(lang, `/muhurat/${slug}`);
 
 export async function generateMetadata({
@@ -26,7 +26,7 @@ export async function generateMetadata({
   if (!occasion) return {};
 
   const t = muhuratContent[lang];
-  const title = `${occasion.name[lang]} — ${t.meta.detailSuffix}`;
+  const title = `${occasion.name[lang]}, ${t.meta.detailSuffix}`;
   // The provisional label rides along into the search snippet too: a date that
   // is not confirmed should never appear anywhere without saying so.
   const description = `${occasion.line[lang]} · ${occasion.occurrence.label[lang]}. ${t.provenance.badge}`;

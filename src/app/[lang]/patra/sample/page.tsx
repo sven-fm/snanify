@@ -73,7 +73,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
   const lead = hi ? { lineHeight: 1.2 } : undefined;
   const leadSm = hi ? { lineHeight: 1.35 } : undefined;
 
-  /* "Sankalp" is a section of the home page, not a route of its own — the
+  /* "Sankalp" is a section of the home page, not a route of its own, the
      same anchor the rivers and rituals pages link to. */
   const home = localePath(lang, "/");
 
@@ -124,7 +124,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         {/* ---------------------------- the sheet ---------------------------- */}
         {/* The sheet keeps A4 proportions and scales as one block, so on a
             phone its type is genuinely small. Said plainly rather than left
-            for the reader to discover — and the gutter is narrowed below `sm`
+            for the reader to discover, and the gutter is narrowed below `sm`
             so the sheet gets every pixel of the screen it can. */}
         <section
           data-patra-page

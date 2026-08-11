@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
- * Snanify — muhurat & scheduling domain
+ * Snanify, muhurat & scheduling domain
  *
  * INVARIANT 1  Every point in time here is a UTC ISO-8601 instant ending in
  *              "Z". Wall-clock time is never stored; it is derived at render
@@ -12,7 +12,7 @@
  * INVARIANT 3  A Slot is only bookable when its provenance says `sourced`.
  *              `SellableSlot` narrows on that field, so a provisional slot
  *              cannot be passed where a sellable one is required. No Slot
- *              records ship in muhurat.json today — nothing is sourced yet.
+ *              records ship in muhurat.json today, nothing is sourced yet.
  * INVARIANT 4  Brahma Muhurat starts before sunrise, so its `panchangDate`
  *              (the Hindu day, sunrise→sunrise) is the day *before* its
  *              `ghatCivilDate`. The two fields are never merged.
@@ -51,7 +51,7 @@ export function asZone(value: string): IanaZone {
 
 /* --- bilingual text ------------------------------------------------------ */
 
-/** Copy that must exist in both locales — a missing side is a type error. */
+/** Copy that must exist in both locales, a missing side is a type error. */
 export type Bilingual = Record<Lang, string>;
 
 export const pick = (t: Bilingual, lang: Lang): string => t[lang];
@@ -59,9 +59,9 @@ export const pick = (t: Bilingual, lang: Lang): string => t[lang];
 /* --- provenance ---------------------------------------------------------- */
 
 /**
- * `provisional` — computed or asserted by us, unchecked. Must be labelled as
+ * `provisional`, computed or asserted by us, unchecked. Must be labelled as
  *   such on every surface that renders it.
- * `sourced`     — agreed with a named almanac and signed off by a named human.
+ * `sourced`    , agreed with a named almanac and signed off by a named human.
  *
  * The user-facing word is never "verified": to a devotee that reads as
  * "verified by a religious authority", which is not what any of this means.
@@ -126,7 +126,7 @@ export type WindowAnchor = "sunrise" | "solar-noon" | "sunset";
 /**
  * A daily window as a *rule*, not as clock times. Offsets are minutes from the
  * anchor, so the record stays true on every day of the year and at every
- * latitude — and stays honest while we have no surveyed coordinates.
+ * latitude, and stays honest while we have no surveyed coordinates.
  */
 export interface MuhuratWindow {
   readonly id: MuhuratWindowId;
@@ -147,7 +147,7 @@ export type OccasionTier = "nitya" | "punya" | "parva" | "mahaparva";
 
 /**
  * Which panchang day the occasion falls on. This is NOT when the ceremony
- * runs — that is the window list. Mahashivratri is decided at nishita and
+ * runs, that is the window list. Mahashivratri is decided at nishita and
  * performed at dawn; merging the two fields is how an engine ends up selling
  * a midnight snan.
  */
@@ -363,7 +363,7 @@ export interface AlmanacMonth {
 
 /**
  * The horizon expanded month by month, each carrying the dated occasions that
- * open in it. Months with nothing dated are kept rather than skipped — an
+ * open in it. Months with nothing dated are kept rather than skipped, an
  * almanac shows the empty weeks too, and the monthly rhythm runs through them.
  */
 export function almanacMonths(): readonly AlmanacMonth[] {
@@ -378,7 +378,7 @@ export function almanacMonths(): readonly AlmanacMonth[] {
     out.push({
       month: key,
       // An occasion is listed under the first month it can fall in, and its own
-      // label carries the full range ("May–June 2027").
+      // label carries the full range ("May-June 2027").
       occasions: OCCASIONS.filter((o) => o.occurrence.months[0] === key),
     });
     m += 1;
@@ -488,7 +488,7 @@ function dayDelta(a: string, b: string): number {
 /**
  * Format one instant twice: at the ghat and where the reader is.
  *
- * The ghat clock is the primary reading — the rite happens at a real place at
+ * The ghat clock is the primary reading, the rite happens at a real place at
  * a real hour, and demoting that to a parenthetical is dishonest. The viewer's
  * clock is rendered beside it, never instead of it, and the date shift is
  * spelled out in a sentence rather than left for the reader to notice. Silent
@@ -527,7 +527,7 @@ export function formatDualClock(args: {
 export const muhuratContent = {
   en: {
     meta: {
-      indexTitle: "Muhurat calendar — Snanify",
+      indexTitle: "Muhurat calendar, Snanify",
       indexDescription:
         "The occasions Snanify keeps, the daily windows they are held in, and an honest account of how precisely we know when each one falls.",
       detailSuffix: "Muhurat calendar · Snanify",
@@ -536,14 +536,14 @@ export const muhuratContent = {
     hero: {
       eyebrow: "The calendar",
       title: "When the water is kept.",
-      lede: "Twelve months of occasions, the daily windows they are held in, and — stated in the same breath — exactly how much we know about when each one falls.",
+      lede: "Twelve months of occasions, the daily windows they are held in, and, stated in the same breath, exactly how much we know about when each one falls.",
       asOf: "Looking forward from 10 August 2026",
     },
     provenance: {
       badge: "Provisional · to be confirmed against the panchang",
       badgeShort: "Provisional",
       heading: "Where these timings come from",
-      line: "No panchang provider is wired yet. Every date and every window on this page is provisional and is labelled so wherever it appears — on this list, on each occasion, and on anything we ever send you. When a provider is named and a person here has checked a sample of days against a reference almanac, the labels change and this sentence changes with them.",
+      line: "No panchang provider is wired yet. Every date and every window on this page is provisional and is labelled so wherever it appears, on this list, on each occasion, and on anything we ever send you. When a provider is named and a person here has checked a sample of days against a reference almanac, the labels change and this sentence changes with them.",
       sourceLabel: "Provider",
       ayanamsaLabel: "Ayanamsa",
       coordinatesLabel: "Ghat coordinates",
@@ -567,7 +567,7 @@ export const muhuratContent = {
         {
           n: "03",
           t: "Sunrise to sunrise",
-          d: "The Hindu day turns at sunrise, not at midnight. A window at 4:24 in the morning belongs to the panchang day that opened the previous dawn — which is the common case for our earliest window, not an edge case.",
+          d: "The Hindu day turns at sunrise, not at midnight. A window at 4:24 in the morning belongs to the panchang day that opened the previous dawn, which is the common case for our earliest window, not an edge case.",
         },
       ],
     },
@@ -586,7 +586,7 @@ export const muhuratContent = {
     windows: {
       eyebrow: "The daily windows",
       title: "Four hours of the day.",
-      lede: "These are rules, not clock times. Each one is defined by its distance from sunrise, from the sun's transit, or from sunset — so it holds on every day of the year and at every latitude, and it stays true while we still have no surveyed coordinates to compute a sunrise from.",
+      lede: "These are rules, not clock times. Each one is defined by its distance from sunrise, from the sun's transit, or from sunset, so it holds on every day of the year and at every latitude, and it stays true while we still have no surveyed coordinates to compute a sunrise from.",
       formulaLabel: "Definition",
       lengthLabel: "Length",
       basisLabel: "Why this hour",
@@ -597,11 +597,11 @@ export const muhuratContent = {
     clock: {
       eyebrow: "Reading the clock",
       title: "One instant, six cities.",
-      lede: "A window at the ghat is a single moment in time. What it is called on your wall calendar depends entirely on where you are standing — and for half the diaspora it is the previous evening.",
+      lede: "A window at the ghat is a single moment in time. What it is called on your wall calendar depends entirely on where you are standing, and for half the diaspora it is the previous evening.",
       atTheGhat: "At the ghat",
       elsewhere: "Elsewhere",
       illustration:
-        "Illustration only. Worked from an assumed sunrise of 06:00 IST — a round number chosen to make the arithmetic legible — on a notional day. This is not a panchang date and no occasion falls on it.",
+        "Illustration only. Worked from an assumed sunrise of 06:00 IST, a round number chosen to make the arithmetic legible, on a notional day. This is not a panchang date and no occasion falls on it.",
       assumed: "Assumed sunrise",
       window: "Window",
     },
@@ -665,7 +665,7 @@ export const muhuratContent = {
 
   hi: {
     meta: {
-      indexTitle: "मुहूर्त पंचांग — स्नानिफ़ाई",
+      indexTitle: "मुहूर्त पंचांग, स्नानिफ़ाई",
       indexDescription:
         "स्नानिफ़ाई जिन पर्वों को मानता है, जिन दैनिक बेलाओं में वे संपन्न होते हैं, और इसका स्पष्ट लेखा कि प्रत्येक की तिथि हम कितनी निश्चितता से जानते हैं।",
       detailSuffix: "मुहूर्त पंचांग · स्नानिफ़ाई",
@@ -674,14 +674,14 @@ export const muhuratContent = {
     hero: {
       eyebrow: "पंचांग",
       title: "जल किन दिनों में रखा जाता है।",
-      lede: "आगामी बारह मास के पर्व, वे दैनिक बेलाएँ जिनमें वे संपन्न होते हैं — और उसी साँस में यह भी कि प्रत्येक की तिथि के बारे में हम वास्तव में कितना जानते हैं।",
+      lede: "आगामी बारह मास के पर्व, वे दैनिक बेलाएँ जिनमें वे संपन्न होते हैं, और उसी साँस में यह भी कि प्रत्येक की तिथि के बारे में हम वास्तव में कितना जानते हैं।",
       asOf: "10 अगस्त 2026 से आगे की गणना",
     },
     provenance: {
       badge: "अनुमानित · पंचांग से पुष्ट किया जाना शेष",
       badgeShort: "अनुमानित",
       heading: "ये समय कहाँ से आते हैं",
-      line: "अभी कोई पंचांग स्रोत जुड़ा नहीं है। इस पृष्ठ की प्रत्येक तिथि और प्रत्येक बेला अनुमानित है, और जहाँ भी दिखती है वहाँ यह अंकित रहता है — इस सूची में, प्रत्येक पर्व पर, और आपको भेजे जाने वाले हर संदेश में। जब स्रोत नियुक्त हो जाएगा और यहाँ का कोई उत्तरदायी व्यक्ति कुछ तिथियों का मिलान किसी प्रामाणिक पंचांग से कर लेगा, तब ये अंकन बदलेंगे और यह वाक्य भी।",
+      line: "अभी कोई पंचांग स्रोत जुड़ा नहीं है। इस पृष्ठ की प्रत्येक तिथि और प्रत्येक बेला अनुमानित है, और जहाँ भी दिखती है वहाँ यह अंकित रहता है, इस सूची में, प्रत्येक पर्व पर, और आपको भेजे जाने वाले हर संदेश में। जब स्रोत नियुक्त हो जाएगा और यहाँ का कोई उत्तरदायी व्यक्ति कुछ तिथियों का मिलान किसी प्रामाणिक पंचांग से कर लेगा, तब ये अंकन बदलेंगे और यह वाक्य भी।",
       sourceLabel: "स्रोत",
       ayanamsaLabel: "अयनांश",
       coordinatesLabel: "घाट के अक्षांश-देशांतर",
@@ -700,19 +700,19 @@ export const muhuratContent = {
         {
           n: "०२",
           t: "दोनों घड़ियाँ, सदैव",
-          d: "समय पहले घाट का दिया जाता है, क्योंकि अनुष्ठान वहीं होता है — और उसके साथ आपके समयक्षेत्र का, दिन के अंतर सहित। हम चुपचाप रूपांतरण नहीं करते, और केवल IST लिखकर गणित आप पर नहीं छोड़ते।",
+          d: "समय पहले घाट का दिया जाता है, क्योंकि अनुष्ठान वहीं होता है, और उसके साथ आपके समयक्षेत्र का, दिन के अंतर सहित। हम चुपचाप रूपांतरण नहीं करते, और केवल IST लिखकर गणित आप पर नहीं छोड़ते।",
         },
         {
           n: "०३",
           t: "सूर्योदय से सूर्योदय",
-          d: "हिंदू दिवस मध्यरात्रि नहीं, सूर्योदय पर बदलता है। प्रातः 4:24 की बेला उस पंचांग दिवस की है जो पिछली भोर आरंभ हुआ था — और हमारी सबसे प्रारंभिक बेला के लिए यह अपवाद नहीं, सामान्य स्थिति है।",
+          d: "हिंदू दिवस मध्यरात्रि नहीं, सूर्योदय पर बदलता है। प्रातः 4:24 की बेला उस पंचांग दिवस की है जो पिछली भोर आरंभ हुआ था, और हमारी सबसे प्रारंभिक बेला के लिए यह अपवाद नहीं, सामान्य स्थिति है।",
         },
       ],
     },
     rhythm: {
       eyebrow: "प्रत्येक मास",
       title: "नीचे बहती लय।",
-      lede: "चार पर्व अपने क्रम से लौटते रहते हैं, वर्ष में और चाहे जो हो। नीचे दिए प्रत्येक मास में ये चलते हैं — नाम लिए बिना भी।",
+      lede: "चार पर्व अपने क्रम से लौटते रहते हैं, वर्ष में और चाहे जो हो। नीचे दिए प्रत्येक मास में ये चलते हैं, नाम लिए बिना भी।",
     },
     spine: {
       eyebrow: "आगामी बारह मास",
@@ -724,7 +724,7 @@ export const muhuratContent = {
     windows: {
       eyebrow: "दैनिक बेलाएँ",
       title: "दिन के चार पहर।",
-      lede: "ये नियम हैं, घड़ी के समय नहीं। प्रत्येक की परिभाषा सूर्योदय, सूर्य के मध्याह्न अथवा सूर्यास्त से उसकी दूरी है — इसलिए यह वर्ष के हर दिन और हर अक्षांश पर सही रहती है, और तब भी सत्य रहती है जब सूर्योदय की गणना के लिए हमारे पास सर्वेक्षित अक्षांश-देशांतर नहीं।",
+      lede: "ये नियम हैं, घड़ी के समय नहीं। प्रत्येक की परिभाषा सूर्योदय, सूर्य के मध्याह्न अथवा सूर्यास्त से उसकी दूरी है, इसलिए यह वर्ष के हर दिन और हर अक्षांश पर सही रहती है, और तब भी सत्य रहती है जब सूर्योदय की गणना के लिए हमारे पास सर्वेक्षित अक्षांश-देशांतर नहीं।",
       formulaLabel: "परिभाषा",
       lengthLabel: "अवधि",
       basisLabel: "यही बेला क्यों",
@@ -735,11 +735,11 @@ export const muhuratContent = {
     clock: {
       eyebrow: "घड़ी पढ़ना",
       title: "एक क्षण, छह नगर।",
-      lede: "घाट की एक बेला समय का एक ही क्षण है। आपकी दीवार के कैलेंडर पर उसे क्या कहा जाएगा, यह पूरी तरह इस पर निर्भर है कि आप कहाँ खड़े हैं — और आधे प्रवासी भारतीयों के लिए वह पिछली संध्या होती है।",
+      lede: "घाट की एक बेला समय का एक ही क्षण है। आपकी दीवार के कैलेंडर पर उसे क्या कहा जाएगा, यह पूरी तरह इस पर निर्भर है कि आप कहाँ खड़े हैं, और आधे प्रवासी भारतीयों के लिए वह पिछली संध्या होती है।",
       atTheGhat: "घाट पर",
       elsewhere: "अन्यत्र",
       illustration:
-        "केवल उदाहरण। एक कल्पित दिन पर, प्रातः 06:00 IST के मान लिए गए सूर्योदय से गणना — यह गोल संख्या केवल गणित को स्पष्ट करने के लिए चुनी गई है। यह कोई पंचांग तिथि नहीं है और उस दिन कोई पर्व नहीं पड़ता।",
+        "केवल उदाहरण। एक कल्पित दिन पर, प्रातः 06:00 IST के मान लिए गए सूर्योदय से गणना, यह गोल संख्या केवल गणित को स्पष्ट करने के लिए चुनी गई है। यह कोई पंचांग तिथि नहीं है और उस दिन कोई पर्व नहीं पड़ता।",
       assumed: "मान लिया गया सूर्योदय",
       window: "बेला",
     },

@@ -7,7 +7,7 @@ import { muhuratContent } from "@/content/muhurat";
 
 /**
  * Public URL shape: English unprefixed, Hindi under /hi. Never "/en/...", and
- * never a hand-written "/hi/..." — localePath owns that shape so a route
+ * never a hand-written "/hi/...", localePath owns that shape so a route
  * rename cannot strand one locale.
  */
 const ROUTE = "/muhurat";

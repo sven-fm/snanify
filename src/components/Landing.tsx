@@ -4,14 +4,23 @@ import { RIVERS } from "@/content/rivers";
 import { DATED_OCCASIONS } from "@/content/muhurat";
 import { localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
-import { Mark, SealAnimated } from "@/components/Logo";
+import { Mark } from "@/components/Logo";
+import { RiverFlow } from "@/components/RiverFlow";
+import { Reveal } from "@/components/Reveal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Card, StatusBadge, Section, SectionHeader } from "@/components/ui";
+import { CTA, Section, SectionHeader, StatusBadge } from "@/components/ui";
+
+/** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
+const DEVA = "०१२३४५६७८९";
+function numeral(n: number, lang: Lang): string {
+  const s = String(n).padStart(2, "0");
+  return lang === "hi" ? [...s].map((d) => DEVA[Number(d)]).join("") : s;
+}
 
 export function Landing({ lang }: { lang: Lang }) {
   const t = content[lang];
-
+  const hi = lang === "hi";
 
   return (
     <>
@@ -20,57 +29,36 @@ export function Landing({ lang }: { lang: Lang }) {
       <Header lang={lang} currentPath="/" ctaTo="#sankalp" />
 
       <main>
-        {/* ---------------- hero ---------------- */}
-        <section className="relative overflow-hidden">
-          <div className="halo" aria-hidden="true" />
+        {/* ------------------------------------------------ front page ---- */}
+        <section className="relative flex min-h-[88vh] flex-col justify-end overflow-hidden border-b-2 border-rulestrong">
+          <RiverFlow className="text-ink" />
 
-          {/* the waterline: concentric ripples receding to the horizon */}
-          <svg
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] w-full opacity-[0.5]"
-            viewBox="0 0 1200 400"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            {Array.from({ length: 9 }, (_, i) => (
-              <ellipse
-                key={i}
-                cx="600"
-                cy={400 - i * 6}
-                rx={140 + i * 135}
-                ry={26 + i * 11}
-                fill="none"
-                stroke="var(--teal)"
-                strokeWidth="1"
-                opacity={0.5 - i * 0.045}
-              />
-            ))}
-          </svg>
-
-          <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 pt-16 pb-24 sm:px-8 sm:pt-24 sm:pb-32 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
-            <div>
-              <div className="rise-in" style={{ animationDelay: "60ms" }}>
+          <div className="relative mx-auto w-full max-w-6xl px-5 pt-24 pb-12 sm:px-8 sm:pt-28 sm:pb-16">
+            <div className="max-w-3xl">
+              <div className="ink-in">
                 <StatusBadge live>{t.hero.badge}</StatusBadge>
               </div>
 
               <h1
-                className="rise-in display mt-7 text-[3.1rem] leading-[0.95] sm:text-7xl lg:text-[5.4rem]"
-                style={{ animationDelay: "160ms" }}
+                className="ink-in display mt-7 text-[3.4rem] leading-[0.97] sm:text-[5rem] lg:text-[6.2rem]"
+                style={{ animationDelay: "80ms" }}
               >
-                {t.hero.titleA}
-                <br />
-                <span className="text-gold italic">{t.hero.titleB}</span>
+                {t.hero.titleA}{" "}
+                <span className="text-spot">{t.hero.titleB}</span>
               </h1>
 
+              <div className="rule-double mt-8 max-w-xl" />
+
               <p
-                className="rise-in mt-7 max-w-lg text-[1.05rem] leading-relaxed text-ink2"
-                style={{ animationDelay: "260ms" }}
+                className="ink-in mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2"
+                style={{ animationDelay: "160ms" }}
               >
                 {t.hero.lede}
               </p>
 
               <div
-                className="rise-in mt-9 flex flex-wrap items-center gap-3"
-                style={{ animationDelay: "360ms" }}
+                className="ink-in mt-9 flex flex-wrap items-center gap-3"
+                style={{ animationDelay: "240ms" }}
               >
                 <a href="#sankalp">
                   <CTA>{t.hero.ctaPrimary}</CTA>
@@ -79,182 +67,229 @@ export function Landing({ lang }: { lang: Lang }) {
                   <CTA variant="ghost">{t.hero.ctaSecondary}</CTA>
                 </Link>
               </div>
+            </div>
 
-              <dl
-                className="rise-in mt-14 flex flex-wrap gap-x-10 gap-y-6 border-t border-line/60 pt-7"
-                style={{ animationDelay: "460ms" }}
-              >
+            {/* the day's entry, printed on paper laid over the water */}
+            <div className="mt-12 grid items-end gap-8 lg:grid-cols-[1fr_auto]">
+              <dl className="ink-in grid max-w-xl grid-cols-3 border-t-2 border-rulestrong bg-paper">
                 {t.hero.stats.map((s) => (
-                  <div key={s.l}>
-                    <dt className="display text-2xl text-ink sm:text-[1.75rem]">{s.n}</dt>
-                    <dd className="mt-1 text-xs tracking-wide text-ink2">{s.l}</dd>
+                  <div
+                    key={s.l}
+                    className="border-r border-rule py-4 pr-4 pl-3 first:pl-0 last:border-r-0"
+                  >
+                    <dt className="display text-[1.6rem] leading-none text-ink sm:text-[2rem]">
+                      {s.n}
+                    </dt>
+                    <dd className="label mt-2 text-ink2">{s.l}</dd>
                   </div>
                 ))}
               </dl>
-            </div>
 
-            <div
-              className="rise-in relative mx-auto w-full max-w-sm lg:max-w-none"
-              style={{ animationDelay: "320ms" }}
-            >
-              <SealAnimated className="mx-auto w-full max-w-[24rem] text-ink" />
-
-              {/* Pulled up into the seal's empty lower third so the card layers
-                  over the bloom without ever covering the bindu. */}
-              <div className="relative z-10 mx-auto -mt-10 w-full max-w-xs rounded-2xl border border-line/80 bg-bg2/85 p-5 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:-mt-14 lg:mr-0 lg:ml-auto">
-                <p className="inscription text-[0.6rem] text-ink2">{t.hero.card.label}</p>
-                <p className="display mt-2 text-2xl text-ink">{t.hero.card.title}</p>
-                <p className="mt-1.5 text-xs text-ink2">{t.hero.card.meta}</p>
-                <div className="mt-4 flex items-center gap-2 border-t border-line/60 pt-3">
-                  <Mark className="h-4 w-4 text-gold" />
-                  <p className="text-xs text-gold">{t.hero.card.countdown}</p>
-                </div>
-              </div>
+              <aside className="ink-in boxed w-full bg-paper p-6 lg:w-[22rem]">
+                <p className="label text-spot">{t.hero.card.label}</p>
+                <p className="display mt-1.5 text-2xl">{t.hero.card.title}</p>
+                <dl className="mt-4 border-t border-rule">
+                  <div className="flex justify-between gap-4 border-b border-rule py-2.5">
+                    <dt className="label text-ink2">{hi ? "घाट" : "Ghat"}</dt>
+                    <dd className="text-right text-sm">{t.hero.card.meta}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4 py-2.5">
+                    <dt className="label text-ink2">{hi ? "समय" : "Window"}</dt>
+                    <dd className="text-right text-sm text-spot">
+                      {t.hero.card.countdown}
+                    </dd>
+                  </div>
+                </dl>
+              </aside>
             </div>
           </div>
         </section>
 
-        {/* ---------------- rivers ---------------- */}
-        <Section id="rivers" tinted>
-          <SectionHeader eyebrow={t.rivers.eyebrow} title={t.rivers.title} lede={t.rivers.lede} />
+        {/* ------------------------------------------------ the six ------- */}
+        <Section id="rivers">
+          <Reveal>
+            <SectionHeader
+              eyebrow={t.rivers.eyebrow}
+              title={t.rivers.title}
+              lede={t.rivers.lede}
+            />
 
-          <ul className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line/70 bg-line/70 sm:grid-cols-2 lg:grid-cols-3">
-            {RIVERS.map((r) => (
-              <li key={r.slug} className="group relative bg-bg transition-colors duration-500 hover:bg-bg3">
-                <Link href={localePath(lang, `/rivers/${r.slug}`)} className="block p-7">
-                  <span className="inscription absolute top-6 right-6 text-[0.6rem] text-ink2/50">
-                    {r.numeral}
-                  </span>
-                  <Mark className="h-7 w-7 text-ink2 transition-colors duration-500 group-hover:text-gold" />
-                  <h3 className="display mt-6 text-2xl text-ink">{r.river[lang]}</h3>
-                  <p className="mt-1.5 text-sm text-ink2">
-                    {r.ghat[lang]}, {r.city[lang]}
-                  </p>
-                  <p className="mt-5 text-xs text-teal">{r.epithet[lang]}</p>
-                </Link>
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
-              </li>
-            ))}
-          </ul>
-
-        </Section>
-
-        {/* ---------------- how ---------------- */}
-        <Section id="how">
-          <SectionHeader eyebrow={t.how.eyebrow} title={t.how.title} />
-
-          <ol className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
-            {t.how.steps.map((s) => (
-              <li key={s.n} className="relative md:pt-10">
-                {/* the hairline that threads the three steps together */}
-                <span className="rule-fade absolute inset-x-0 top-0 hidden md:block" />
-                <span className="display block text-5xl text-gold/35">{s.n}</span>
-                <h3 className="display mt-5 text-2xl">{s.t}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink2">{s.d}</p>
-              </li>
-            ))}
-          </ol>
-        </Section>
-
-        {/* ---------------- muhurat ---------------- */}
-        <Section id="muhurat" tinted>
-          <SectionHeader
-            eyebrow={t.muhurat.eyebrow}
-            title={t.muhurat.title}
-            lede={t.muhurat.lede}
-          />
-
-          {/* deliberately a list, not more cards — changes the page's rhythm.
-              Reads the real calendar, so nothing here can drift from /muhurat. */}
-          <ul className="mt-12 border-t border-line/60">
-            {DATED_OCCASIONS.slice(0, 4).map((o) => (
-              <li
-                key={o.slug}
-                className="group border-b border-line/60 transition-colors hover:bg-bg3/50"
-              >
-                <Link
-                  href={localePath(lang, `/muhurat/${o.slug}`)}
-                  className="grid grid-cols-1 items-baseline gap-1 py-6 sm:grid-cols-[1fr_auto] sm:gap-8 sm:py-7"
-                >
-                  <div className="sm:flex sm:items-baseline sm:gap-6">
-                    <h3 className="display text-2xl transition-colors group-hover:text-gold sm:min-w-[15rem]">
-                      {o.name[lang]}
-                    </h3>
-                    <p className="mt-1 text-sm text-ink2 sm:mt-0">{o.occurrence.note[lang]}</p>
-                  </div>
-                  <p className="inscription text-[0.66rem] text-ink2">
-                    {o.occurrence.label[lang]}
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <p className="mt-6 text-xs text-ink2/80">
-            {lang === "en"
-              ? "Provisional. Every timing is confirmed against the panchang before booking opens."
-              : "अस्थायी। बुकिंग खुलने से पूर्व हर समय पंचांग से पुष्ट किया जाता है।"}
-          </p>
-
-        </Section>
-
-        {/* ---------------- sankalp / pricing ---------------- */}
-        <Section id="sankalp">
-          <SectionHeader
-            eyebrow={t.pricing.eyebrow}
-            title={t.pricing.title}
-            lede={t.pricing.lede}
-          />
-
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
-            {t.pricing.plans.map((p, i) => {
-              const featured = i === 1;
-              return (
-                <Card
-                  key={p.name}
-                  featured={featured}
-                  className={`relative flex flex-col ${featured ? "lg:-translate-y-4" : ""}`}
-                >
-                  {featured && (
-                    <span className="inscription absolute -top-2.5 left-8 rounded-full bg-gold px-3 py-1 text-[0.55rem] text-bg">
-                      {t.pricing.popular}
+            {/* a register, not a card grid */}
+            <ul className="mt-12 border-t-2 border-rulestrong">
+              {RIVERS.map((r, i) => (
+                <li key={r.slug}>
+                  <Link
+                    href={localePath(lang, `/rivers/${r.slug}`)}
+                    className="group grid grid-cols-[2.75rem_1fr] items-baseline gap-x-4 gap-y-1 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[3.5rem_14rem_1fr_auto] sm:gap-x-8"
+                  >
+                    <span className="display text-xl text-spot">
+                      {numeral(i + 1, lang)}
                     </span>
-                  )}
-
-                  <h3 className="display text-2xl">{p.name}</h3>
-                  <p className="mt-1 text-xs text-ink2">{p.sub}</p>
-
-                  <p className="display mt-7 text-5xl text-gold">{p.price}</p>
-
-                  <ul className="mt-8 flex-1 space-y-3.5 border-t border-line/60 pt-7">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex gap-3 text-sm text-ink2">
-                        <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-gold/70" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-8">
-                    <CTA variant={featured ? "solid" : "ghost"} className="w-full">
-                      {t.pricing.cta} {p.name}
-                    </CTA>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
+                    <span className="display text-2xl text-ink">
+                      {r.river[lang]}
+                    </span>
+                    <span className="col-start-2 text-sm text-ink2 sm:col-start-auto">
+                      {r.ghat[lang]}, {r.city[lang]}
+                    </span>
+                    <span className="label col-start-2 text-ink2 sm:col-start-auto sm:text-right">
+                      {r.state[lang]}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </Section>
 
-        {/* ---------------- closing ---------------- */}
-        <section className="relative overflow-hidden border-t border-line/60 bg-bg2/40">
-          <div className="halo" aria-hidden="true" />
-          <div className="relative mx-auto max-w-3xl px-5 py-28 text-center sm:px-8 sm:py-36">
-            <Mark className="mx-auto h-14 w-14 text-ink" />
-            <h2 className="display mt-10 text-4xl leading-[1.08] sm:text-6xl">{t.closing.title}</h2>
-            <p className="mx-auto mt-6 max-w-xl text-ink2">{t.closing.lede}</p>
-            <a href="#sankalp" className="mt-10 inline-block">
-              <CTA className="!px-9 !py-4 !text-base">{t.closing.cta}</CTA>
+        {/* ------------------------------------------------ procedure ----- */}
+        <Section id="how" tinted>
+          <Reveal>
+            <SectionHeader eyebrow={t.how.eyebrow} title={t.how.title} />
+
+            <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
+              {t.how.steps.map((s, i) => (
+                <li key={s.n} className="tint p-7">
+                  <span className="display block text-4xl text-spot">
+                    {numeral(i + 1, lang)}
+                  </span>
+                  <div className="rule-thin mt-4" />
+                  <h3 className="display mt-4 text-2xl">{s.t}</h3>
+                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        </Section>
+
+        {/* ------------------------------------------------ calendar ------ */}
+        <Section id="muhurat">
+          <Reveal>
+            <SectionHeader
+              eyebrow={t.muhurat.eyebrow}
+              title={t.muhurat.title}
+              lede={t.muhurat.lede}
+            />
+
+            <div className="mt-12 overflow-x-auto">
+              <table className="w-full min-w-[34rem] border-collapse text-left">
+                <thead>
+                  <tr className="border-y-2 border-rulestrong">
+                    <th className="label py-3 pr-4 text-ink2">
+                      {hi ? "पर्व" : "Occasion"}
+                    </th>
+                    <th className="label py-3 pr-4 text-ink2">
+                      {hi ? "विवरण" : "Reckoning"}
+                    </th>
+                    <th className="label py-3 text-right text-ink2">
+                      {hi ? "काल" : "Window"}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DATED_OCCASIONS.slice(0, 6).map((o) => (
+                    <tr
+                      key={o.slug}
+                      className="border-b border-rule transition-colors hover:bg-paper3"
+                    >
+                      <td className="py-4 pr-4">
+                        <Link
+                          href={localePath(lang, `/muhurat/${o.slug}`)}
+                          className="display text-xl underline decoration-rule decoration-1 hover:decoration-spot"
+                        >
+                          {o.name[lang]}
+                        </Link>
+                      </td>
+                      <td className="py-4 pr-4 text-sm text-ink2">
+                        {o.occurrence.note[lang]}
+                      </td>
+                      <td className="label py-4 text-right text-ink">
+                        {o.occurrence.label[lang]}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-5 text-xs text-ink2">
+              {hi
+                ? "अस्थायी। बुकिंग खुलने से पूर्व हर समय पंचांग से पुष्ट किया जाता है।"
+                : "Provisional. Every timing is confirmed against the panchang before booking opens."}
+            </p>
+          </Reveal>
+        </Section>
+
+        {/* ------------------------------------------------ tariff -------- */}
+        <Section id="sankalp" tinted>
+          <Reveal>
+            <SectionHeader
+              eyebrow={t.pricing.eyebrow}
+              title={t.pricing.title}
+              lede={t.pricing.lede}
+            />
+
+            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-3">
+              {t.pricing.plans.map((p, i) => {
+                const featured = i === 1;
+                return (
+                  <div
+                    key={p.name}
+                    className={`flex flex-col p-7 ${featured ? "bg-paper3" : "tint"}`}
+                  >
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="display text-2xl">{p.name}</h3>
+                      {featured && (
+                        <span className="label bg-spot px-2 py-1 text-paper">
+                          {t.pricing.popular}
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1 text-xs text-ink2">{p.sub}</p>
+
+                    <p className="display mt-6 text-5xl text-spot">{p.price}</p>
+
+                    <div className="rule-thin mt-6" />
+
+                    <ul className="mt-5 flex-1 space-y-3">
+                      {p.features.map((f) => (
+                        <li
+                          key={f}
+                          className="flex gap-3 text-sm leading-relaxed text-ink2"
+                        >
+                          <span className="mt-[0.5rem] h-[3px] w-3 shrink-0 bg-spot" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-7">
+                      <CTA
+                        variant={featured ? "solid" : "ghost"}
+                        className="w-full"
+                      >
+                        {t.pricing.cta} {p.name}
+                      </CTA>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Reveal>
+        </Section>
+
+        {/* ------------------------------------------------ colophon ------ */}
+        <section className="border-t-2 border-rulestrong">
+          <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
+            <Mark className="mx-auto h-12 w-12 text-ink" />
+            <div className="rule-double mt-8" />
+            <h2 className="display mt-8 text-[2.2rem] leading-tight sm:text-[3.2rem]">
+              {t.closing.title}
+            </h2>
+            <p className="mx-auto mt-5 max-w-lg leading-[1.75] text-ink2">
+              {t.closing.lede}
+            </p>
+            <a href="#sankalp" className="mt-9 inline-block">
+              <CTA className="!px-10 !py-4">{t.closing.cta}</CTA>
             </a>
           </div>
         </section>

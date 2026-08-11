@@ -7,7 +7,7 @@ import { Mark } from "@/components/Logo";
 import { howItWorksContent } from "@/content/trust";
 
 /**
- * /how-it-works — the three landing-page steps at full length.
+ * /how-it-works, the three landing-page steps at full length.
  *
  * Rhythm: masthead, then the "nothing is shipped to you" band (the single most
  * likely misunderstanding of this product, so it comes before the sequence),
@@ -62,7 +62,7 @@ export function HowItWorks({ lang }: { lang: Lang }) {
             <div className="gap-14 lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-20">
               <div>
                 <div className="lg:sticky lg:top-24">
-                  {/* Ghost numeral: decorative sequencing only — the label
+                  {/* Ghost numeral: decorative sequencing only, the label
                       beside it carries the meaning. /45 rather than /35 so it
                       is present in the light theme too, where gold darkens. */}
                   <span className="display block text-5xl text-gold/45 sm:text-6xl">{phase.n}</span>
@@ -96,7 +96,7 @@ export function HowItWorks({ lang }: { lang: Lang }) {
 
         {/* ---------------- the film that does not exist yet ----------------
             PLACEHOLDER: no rite has been recorded. This block states its own
-            absence on purpose — it must never be filled with stock or
+            absence on purpose, it must never be filled with stock or
             generated footage. */}
         <Section>
           <div className="mx-auto max-w-3xl">

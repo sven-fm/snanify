@@ -6,7 +6,7 @@ import { howItWorksContent } from "@/content/trust";
 
 /**
  * Public URL shape: English unprefixed, Hindi under /hi. Never `/en/...`, and
- * never a hand-written "/hi/..." — localePath owns that so a route rename
+ * never a hand-written "/hi/...", localePath owns that so a route rename
  * cannot strand one locale.
  */
 const ROUTE = "/how-it-works";

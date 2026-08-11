@@ -1,6 +1,6 @@
 {
   "_readme": [
-    "Snanify muhurat calendar — checked-in data, no database.",
+    "Snanify muhurat calendar, checked-in data, no database.",
     "INVARIANT 1: every occasion and every window carries a `panchang` block, and",
     "  every panchang block in this file is `confidence: \"provisional\"`. Nothing here",
     "  has been checked against an almanac by a named human. The loader in",
@@ -29,7 +29,7 @@
     "ayanamsa": null,
     "note": {
       "en": "No panchang provider is wired yet and no ayanamsa has been fixed. Until both are settled and a named person has checked a sample of days against a reference almanac, every timing on this site stays provisional and says so.",
-      "hi": "अभी कोई पंचांग स्रोत नियुक्त नहीं है और न ही अयनांश निश्चित हुआ है। जब तक ये दोनों तय न हों और कोई उत्तरदायी व्यक्ति कुछ तिथियों का मिलान किसी प्रामाणिक पंचांग से न कर ले, तब तक इस पृष्ठ का प्रत्येक समय अनुमानित है — और हम यह स्पष्ट लिखते हैं।"
+      "hi": "अभी कोई पंचांग स्रोत नियुक्त नहीं है और न ही अयनांश निश्चित हुआ है। जब तक ये दोनों तय न हों और कोई उत्तरदायी व्यक्ति कुछ तिथियों का मिलान किसी प्रामाणिक पंचांग से न कर ले, तब तक इस पृष्ठ का प्रत्येक समय अनुमानित है, और हम यह स्पष्ट लिखते हैं।"
     }
   },
 
@@ -91,7 +91,7 @@
       "windows": ["brahma", "pratah", "godhuli"],
       "refusal": {
         "en": "Ram Kund is the pre-eminent place in India for asthi visarjan. That rite needs a body present and remains carried in the hand. We do not offer it, we cannot offer it, and we would rather say so here than leave the question hanging.",
-        "hi": "अस्थि विसर्जन के लिए रामकुंड भारत का सर्वप्रमुख स्थान है। उस विधि में अस्थियों का हाथ में होना और आपकी उपस्थिति अनिवार्य है। हम यह सेवा नहीं देते, दे भी नहीं सकते — और इस प्रश्न को अनुत्तरित छोड़ने के बजाय यहीं स्पष्ट कह देना उचित समझते हैं।"
+        "hi": "अस्थि विसर्जन के लिए रामकुंड भारत का सर्वप्रमुख स्थान है। उस विधि में अस्थियों का हाथ में होना और आपकी उपस्थिति अनिवार्य है। हम यह सेवा नहीं देते, दे भी नहीं सकते, और इस प्रश्न को अनुत्तरित छोड़ने के बजाय यहीं स्पष्ट कह देना उचित समझते हैं।"
       }
     },
     {
@@ -137,12 +137,12 @@
         "hi": "सूर्योदय से 96 मिनट पूर्व से, सूर्योदय से 48 मिनट पूर्व तक।"
       },
       "basis": {
-        "en": "The fourteenth of the fifteen muhurtas of the night — two muhurtas before sunrise, ending one muhurta before it. The classical texts assign this hour to snana, japa and study, and it is the one window in the day that is prescribed for the practice rather than merely permitted for it.",
-        "hi": "रात्रि के पंद्रह मुहूर्तों में से चौदहवाँ — सूर्योदय से दो मुहूर्त पूर्व आरंभ होकर एक मुहूर्त पूर्व समाप्त। शास्त्र इस बेला को स्नान, जप और स्वाध्याय के लिए नियत करते हैं; दिन में यही एक अवधि है जो इस अभ्यास के लिए विहित है, केवल अनुमत नहीं।"
+        "en": "The fourteenth of the fifteen muhurtas of the night, two muhurtas before sunrise, ending one muhurta before it. The classical texts assign this hour to snana, japa and study, and it is the one window in the day that is prescribed for the practice rather than merely permitted for it.",
+        "hi": "रात्रि के पंद्रह मुहूर्तों में से चौदहवाँ, सूर्योदय से दो मुहूर्त पूर्व आरंभ होकर एक मुहूर्त पूर्व समाप्त। शास्त्र इस बेला को स्नान, जप और स्वाध्याय के लिए नियत करते हैं; दिन में यही एक अवधि है जो इस अभ्यास के लिए विहित है, केवल अनुमत नहीं।"
       },
       "note": {
-        "en": "Brahma Muhurat falls before sunrise, so it belongs to the panchang day that opened at the previous morning's sunrise — not to the Gregorian date on the clock beside it. We keep the two apart everywhere, because conflating them mislabels the tithi of our most important window.",
-        "hi": "ब्रह्म मुहूर्त सूर्योदय से पूर्व पड़ता है, इसलिए वह उस पंचांग दिवस का अंग है जो पिछली प्रातः के सूर्योदय से आरंभ हुआ — न कि उस अंग्रेज़ी तारीख़ का जो घड़ी पर दिखती है। हम दोनों को सर्वत्र पृथक रखते हैं, क्योंकि इन्हें मिला देने से हमारी सबसे महत्वपूर्ण बेला की तिथि ही ग़लत अंकित हो जाती है।"
+        "en": "Brahma Muhurat falls before sunrise, so it belongs to the panchang day that opened at the previous morning's sunrise, not to the Gregorian date on the clock beside it. We keep the two apart everywhere, because conflating them mislabels the tithi of our most important window.",
+        "hi": "ब्रह्म मुहूर्त सूर्योदय से पूर्व पड़ता है, इसलिए वह उस पंचांग दिवस का अंग है जो पिछली प्रातः के सूर्योदय से आरंभ हुआ, न कि उस अंग्रेज़ी तारीख़ का जो घड़ी पर दिखती है। हम दोनों को सर्वत्र पृथक रखते हैं, क्योंकि इन्हें मिला देने से हमारी सबसे महत्वपूर्ण बेला की तिथि ही ग़लत अंकित हो जाती है।"
       }
     },
     {
@@ -157,8 +157,8 @@
         "hi": "सूर्योदय से, सूर्योदय के 96 मिनट पश्चात तक।"
       },
       "basis": {
-        "en": "The two muhurtas that open the day. This is the ordinary morning snan of daily practice — the hour at which the ghats actually fill, and the window most occasions are kept in when nothing in the rule asks for anything else.",
-        "hi": "दिवस के आरंभ के दो मुहूर्त। यही नित्य अभ्यास का साधारण प्रातः स्नान है — वही बेला जब घाट वास्तव में भरते हैं, और जब नियम कुछ और न माँगे तो अधिकांश पर्व इसी अवधि में रखे जाते हैं।"
+        "en": "The two muhurtas that open the day. This is the ordinary morning snan of daily practice, the hour at which the ghats actually fill, and the window most occasions are kept in when nothing in the rule asks for anything else.",
+        "hi": "दिवस के आरंभ के दो मुहूर्त। यही नित्य अभ्यास का साधारण प्रातः स्नान है, वही बेला जब घाट वास्तव में भरते हैं, और जब नियम कुछ और न माँगे तो अधिकांश पर्व इसी अवधि में रखे जाते हैं।"
       },
       "note": {
         "en": "Unlike Brahma Muhurat, this window sits after sunrise, so its panchang day and its Gregorian date agree.",
@@ -173,16 +173,16 @@
       "offsetEndMin": 24,
       "durationMin": 48,
       "formula": {
-        "en": "The eighth of fifteen equal day-muhurtas — half a muhurta either side of the sun's true transit, not of clock noon.",
-        "hi": "दिवस के पंद्रह समान मुहूर्तों में आठवाँ — सूर्य के वास्तविक मध्याह्न (खमध्य) के दोनों ओर आधा-आधा मुहूर्त; घड़ी के बारह बजे से इसका संबंध नहीं।"
+        "en": "The eighth of fifteen equal day-muhurtas, half a muhurta either side of the sun's true transit, not of clock noon.",
+        "hi": "दिवस के पंद्रह समान मुहूर्तों में आठवाँ, सूर्य के वास्तविक मध्याह्न (खमध्य) के दोनों ओर आधा-आधा मुहूर्त; घड़ी के बारह बजे से इसका संबंध नहीं।"
       },
       "basis": {
         "en": "The victorious muhurta, held to be free of the ordinary blemishes of the day. Its length follows the length of the day, so it is longer in summer and shorter in winter, and it moves with the sun rather than with the clock.",
-        "hi": "विजयप्रद मुहूर्त, जिसे दिवस के सामान्य दोषों से मुक्त माना गया है। इसकी अवधि दिनमान के साथ बदलती है — ग्रीष्म में अधिक, शीत में कम — और यह घड़ी के नहीं, सूर्य के साथ चलता है।"
+        "hi": "विजयप्रद मुहूर्त, जिसे दिवस के सामान्य दोषों से मुक्त माना गया है। इसकी अवधि दिनमान के साथ बदलती है, ग्रीष्म में अधिक, शीत में कम, और यह घड़ी के नहीं, सूर्य के साथ चलता है।"
       },
       "note": {
         "en": "Classically Abhijit is not observed on a Wednesday. Where a rite would fall on a Wednesday Abhijit we do not offer the window rather than sell an hour the tradition itself declines.",
-        "hi": "परंपरा में बुधवार को अभिजित मुहूर्त ग्रहण नहीं किया जाता। यदि कोई अनुष्ठान बुधवार के अभिजित में पड़े तो हम वह अवधि प्रस्तुत ही नहीं करते — जिस घड़ी को परंपरा स्वयं अस्वीकार करती है, उसे बेचना उचित नहीं।"
+        "hi": "परंपरा में बुधवार को अभिजित मुहूर्त ग्रहण नहीं किया जाता। यदि कोई अनुष्ठान बुधवार के अभिजित में पड़े तो हम वह अवधि प्रस्तुत ही नहीं करते, जिस घड़ी को परंपरा स्वयं अस्वीकार करती है, उसे बेचना उचित नहीं।"
       }
     },
     {
@@ -197,12 +197,12 @@
         "hi": "सूर्यास्त से 24 मिनट पूर्व से, सूर्यास्त के 24 मिनट पश्चात तक।"
       },
       "basis": {
-        "en": "The cow-dust hour: the sandhi at which the day closes. The evening sandhya is a fixed part of daily observance, and a sayam snan preceding it is settled practice at river ghats, where the evening arati keeps the same hour. We offer this window on that basis. It happens also to be the only window that lands at a reasonable hour in the Americas — that is a consequence of the earth's rotation, not a reason for offering it, and it is not how we chose it.",
-        "hi": "गोधूलि बेला — दिवस के समापन की संधि। सांध्य संध्यावंदन नित्य कर्म का निश्चित अंग है, और उससे पूर्व सायं स्नान नदी-घाटों पर प्रतिष्ठित अभ्यास है; सांध्य आरती भी इसी बेला में होती है। हम इसी आधार पर यह अवधि प्रस्तुत करते हैं। संयोग से यही एकमात्र अवधि है जो अमेरिका के लिए सुविधाजनक घड़ी में पड़ती है — किंतु वह पृथ्वी की गति का परिणाम है, इसे प्रस्तुत करने का कारण नहीं, और हमने इसे इस आधार पर नहीं चुना।"
+        "en": "The cow-dust hour: the sandhi at which the day closes. The evening sandhya is a fixed part of daily observance, and a sayam snan preceding it is settled practice at river ghats, where the evening arati keeps the same hour. We offer this window on that basis. It happens also to be the only window that lands at a reasonable hour in the Americas, that is a consequence of the earth's rotation, not a reason for offering it, and it is not how we chose it.",
+        "hi": "गोधूलि बेला, दिवस के समापन की संधि। सांध्य संध्यावंदन नित्य कर्म का निश्चित अंग है, और उससे पूर्व सायं स्नान नदी-घाटों पर प्रतिष्ठित अभ्यास है; सांध्य आरती भी इसी बेला में होती है। हम इसी आधार पर यह अवधि प्रस्तुत करते हैं। संयोग से यही एकमात्र अवधि है जो अमेरिका के लिए सुविधाजनक घड़ी में पड़ती है, किंतु वह पृथ्वी की गति का परिणाम है, इसे प्रस्तुत करने का कारण नहीं, और हमने इसे इस आधार पर नहीं चुना।"
       },
       "note": {
         "en": "Godhuli is also, and more commonly, named as a vivaha muhurta. The evening snan we offer here rests on the sandhya, not on that usage; we name the difference rather than let the borrowed prestige stand.",
-        "hi": "गोधूलि का अधिक प्रचलित प्रयोग विवाह मुहूर्त के रूप में होता है। यहाँ प्रस्तुत सायं स्नान का आधार संध्या है, वह प्रयोग नहीं — हम यह अंतर स्पष्ट कर देते हैं, उधार की प्रतिष्ठा का लाभ नहीं लेते।"
+        "hi": "गोधूलि का अधिक प्रचलित प्रयोग विवाह मुहूर्त के रूप में होता है। यहाँ प्रस्तुत सायं स्नान का आधार संध्या है, वह प्रयोग नहीं, हम यह अंतर स्पष्ट कर देते हैं, उधार की प्रतिष्ठा का लाभ नहीं लेते।"
       }
     }
   ],
@@ -212,16 +212,16 @@
       "id": "rahu-kaal",
       "name": { "en": "Rahu Kaal", "hi": "राहु काल" },
       "text": {
-        "en": "One eighth of the daylight, its position set by the weekday. We show it as a fact when we can compute it, and we let you decide. Rahu Kaal governs shubha karya — journeys, marriages, new undertakings. A snan is nitya karma. Nobody climbs out of the Ganga at half past seven on a Monday, and we are not going to invent a rule that says they should.",
-        "hi": "दिनमान का आठवाँ भाग, जिसका स्थान वार से निश्चित होता है। जब हम इसकी गणना कर सकेंगे, इसे तथ्य के रूप में दिखाएँगे — निर्णय आपका। राहु काल शुभ कार्यों पर लागू होता है: यात्रा, विवाह, नए आरंभ। स्नान नित्य कर्म है। सोमवार साढ़े सात बजे कोई गंगा से बाहर नहीं निकलता, और हम ऐसा कोई नियम गढ़ने वाले नहीं जो कहे कि निकलना चाहिए।"
+        "en": "One eighth of the daylight, its position set by the weekday. We show it as a fact when we can compute it, and we let you decide. Rahu Kaal governs shubha karya, journeys, marriages, new undertakings. A snan is nitya karma. Nobody climbs out of the Ganga at half past seven on a Monday, and we are not going to invent a rule that says they should.",
+        "hi": "दिनमान का आठवाँ भाग, जिसका स्थान वार से निश्चित होता है। जब हम इसकी गणना कर सकेंगे, इसे तथ्य के रूप में दिखाएँगे, निर्णय आपका। राहु काल शुभ कार्यों पर लागू होता है: यात्रा, विवाह, नए आरंभ। स्नान नित्य कर्म है। सोमवार साढ़े सात बजे कोई गंगा से बाहर नहीं निकलता, और हम ऐसा कोई नियम गढ़ने वाले नहीं जो कहे कि निकलना चाहिए।"
       }
     },
     {
       "id": "yoga-karana",
       "name": { "en": "Yoga, karana, Bhadra", "hi": "योग, करण, भद्रा" },
       "text": {
-        "en": "Computed and printed because an almanac without them is not an almanac. None of them blocks anything. Vishti karana — Bhadra — is avoided for new undertakings; a snan is not a new undertaking, so we show it and leave it there.",
-        "hi": "इनकी गणना और प्रस्तुति इसलिए कि इनके बिना पंचांग पंचांग नहीं रहता। ये किसी अवधि को रोकते नहीं। विष्टि करण — भद्रा — नए आरंभ में वर्जित है; स्नान नया आरंभ नहीं है, अतः हम इसे दिखा देते हैं और वहीं छोड़ देते हैं।"
+        "en": "Computed and printed because an almanac without them is not an almanac. None of them blocks anything. Vishti karana, Bhadra, is avoided for new undertakings; a snan is not a new undertaking, so we show it and leave it there.",
+        "hi": "इनकी गणना और प्रस्तुति इसलिए कि इनके बिना पंचांग पंचांग नहीं रहता। ये किसी अवधि को रोकते नहीं। विष्टि करण, भद्रा, नए आरंभ में वर्जित है; स्नान नया आरंभ नहीं है, अतः हम इसे दिखा देते हैं और वहीं छोड़ देते हैं।"
       }
     }
   ],
@@ -233,21 +233,21 @@
       "tier": "punya",
       "cadence": "monthly",
       "name": { "en": "Purnima", "hi": "पूर्णिमा" },
-      "line": { "en": "The full moon — the month's high tide of light", "hi": "पूर्णिमा — मास का पूर्ण चंद्र" },
+      "line": { "en": "The full moon, the month's high tide of light", "hi": "पूर्णिमा, मास का पूर्ण चंद्र" },
       "about": {
-        "en": "Purnima is the fifteenth tithi of the waxing fortnight: the moment the moon stands full. It closes the shukla paksha, and in the Purnimanta reckoning followed at our northern ghats it closes the lunar month itself. Snan, daan and vrat on Purnima are among the plainest observances the tradition keeps — one bathes, one gives, one keeps the day uncomplicated. Every lunar month has one. A few of them carry their own name and their own crowd: Kartika, Magha, Vaishakha. The rest pass quietly, which is a large part of what they are for.",
-        "hi": "पूर्णिमा शुक्ल पक्ष की पंद्रहवीं तिथि है — वह क्षण जब चंद्र पूर्ण होता है। यह शुक्ल पक्ष को समाप्त करती है, और हमारे उत्तरी घाटों पर मानी जाने वाली पूर्णिमांत गणना में यही चांद्र मास का भी अंत है। पूर्णिमा का स्नान, दान और व्रत परंपरा के सबसे सरल कर्मों में हैं — स्नान कीजिए, दान कीजिए, दिन को सीधा रहने दीजिए। प्रत्येक चांद्र मास में एक पूर्णिमा आती है। कुछ का अपना नाम और अपनी भीड़ है — कार्तिक, माघ, वैशाख। शेष चुपचाप बीत जाती हैं, और बहुत कुछ उनका प्रयोजन यही है।"
+        "en": "Purnima is the fifteenth tithi of the waxing fortnight: the moment the moon stands full. It closes the shukla paksha, and in the Purnimanta reckoning followed at our northern ghats it closes the lunar month itself. Snan, daan and vrat on Purnima are among the plainest observances the tradition keeps, one bathes, one gives, one keeps the day uncomplicated. Every lunar month has one. A few of them carry their own name and their own crowd: Kartika, Magha, Vaishakha. The rest pass quietly, which is a large part of what they are for.",
+        "hi": "पूर्णिमा शुक्ल पक्ष की पंद्रहवीं तिथि है, वह क्षण जब चंद्र पूर्ण होता है। यह शुक्ल पक्ष को समाप्त करती है, और हमारे उत्तरी घाटों पर मानी जाने वाली पूर्णिमांत गणना में यही चांद्र मास का भी अंत है। पूर्णिमा का स्नान, दान और व्रत परंपरा के सबसे सरल कर्मों में हैं, स्नान कीजिए, दान कीजिए, दिन को सीधा रहने दीजिए। प्रत्येक चांद्र मास में एक पूर्णिमा आती है। कुछ का अपना नाम और अपनी भीड़ है, कार्तिक, माघ, वैशाख। शेष चुपचाप बीत जाती हैं, और बहुत कुछ उनका प्रयोजन यही है।"
       },
       "why": {
         "en": "Because it returns. A practice that waits for one great festival a year is a practice that mostly does not happen. Purnima gives the year twelve unremarkable, dependable occasions, and the tradition has always treated the unremarkable ones as the load-bearing ones.",
-        "hi": "क्योंकि यह लौटकर आती है। जो अभ्यास वर्ष के एक बड़े पर्व की प्रतीक्षा करता है, वह प्रायः होता ही नहीं। पूर्णिमा वर्ष में बारह साधारण किंतु भरोसेमंद अवसर देती है — और परंपरा ने सदा साधारण अवसरों को ही आधार माना है।"
+        "hi": "क्योंकि यह लौटकर आती है। जो अभ्यास वर्ष के एक बड़े पर्व की प्रतीक्षा करता है, वह प्रायः होता ही नहीं। पूर्णिमा वर्ष में बारह साधारण किंतु भरोसेमंद अवसर देती है, और परंपरा ने सदा साधारण अवसरों को ही आधार माना है।"
       },
       "rule": {
         "kind": "tithi",
         "tithi": 15,
         "paksha": "shukla",
         "dayResolution": "udaya",
-        "label": { "en": "Shukla Purnima — tithi 15", "hi": "शुक्ल पूर्णिमा — तिथि 15" },
+        "label": { "en": "Shukla Purnima, tithi 15", "hi": "शुक्ल पूर्णिमा, तिथि 15" },
         "resolutionNote": {
           "en": "Taken on the day the tithi is running at sunrise (udaya-vyapini).",
           "hi": "उस दिन ली जाती है जिस दिन सूर्योदय के समय यह तिथि चल रही हो (उदयव्यापिनी)।"
@@ -293,24 +293,24 @@
       "tier": "punya",
       "cadence": "monthly",
       "name": { "en": "Amavasya", "hi": "अमावस्या" },
-      "line": { "en": "The dark moon — the month's turning point", "hi": "अमावस्या — मास की संधि" },
+      "line": { "en": "The dark moon, the month's turning point", "hi": "अमावस्या, मास की संधि" },
       "about": {
-        "en": "Amavasya is the thirtieth tithi, the moment the moon is invisible and the waning fortnight ends. It is the traditional day for tarpana — an offering of water to the departed of one's line — and for snan and daan at a river. When it falls on a Monday it is called Somvati Amavasya and is kept with particular care; that pairing is a matter of arithmetic between the tithi and the weekday, and happens one to three times a year.",
-        "hi": "अमावस्या तीसवीं तिथि है — वह क्षण जब चंद्र अदृश्य होता है और कृष्ण पक्ष समाप्त होता है। यह तर्पण का पारंपरिक दिन है — अपने वंश के दिवंगतों को जल का अर्पण — तथा नदी में स्नान और दान का। जब यह सोमवार को पड़ती है तो सोमवती अमावस्या कहलाती है और विशेष श्रद्धा से मानी जाती है; यह संयोग तिथि और वार के गणित से बनता है और वर्ष में एक से तीन बार आता है।"
+        "en": "Amavasya is the thirtieth tithi, the moment the moon is invisible and the waning fortnight ends. It is the traditional day for tarpana, an offering of water to the departed of one's line, and for snan and daan at a river. When it falls on a Monday it is called Somvati Amavasya and is kept with particular care; that pairing is a matter of arithmetic between the tithi and the weekday, and happens one to three times a year.",
+        "hi": "अमावस्या तीसवीं तिथि है, वह क्षण जब चंद्र अदृश्य होता है और कृष्ण पक्ष समाप्त होता है। यह तर्पण का पारंपरिक दिन है, अपने वंश के दिवंगतों को जल का अर्पण, तथा नदी में स्नान और दान का। जब यह सोमवार को पड़ती है तो सोमवती अमावस्या कहलाती है और विशेष श्रद्धा से मानी जाती है; यह संयोग तिथि और वार के गणित से बनता है और वर्ष में एक से तीन बार आता है।"
       },
       "why": {
         "en": "Because remembering the dead is a duty the tradition places at a fixed, recurring hour rather than leaving to the moods of grief. That is a kindness in the structure. Amavasya is where the year keeps that appointment, twelve times over, without asking anything dramatic of you.",
-        "hi": "क्योंकि दिवंगतों का स्मरण परंपरा शोक के आवेग पर नहीं छोड़ती — वह उसे एक निश्चित, लौटती हुई बेला में रखती है। यह संरचना की करुणा है। अमावस्या वर्ष में बारह बार उस भेंट को निभाती है, आपसे कुछ नाटकीय माँगे बिना।"
+        "hi": "क्योंकि दिवंगतों का स्मरण परंपरा शोक के आवेग पर नहीं छोड़ती, वह उसे एक निश्चित, लौटती हुई बेला में रखती है। यह संरचना की करुणा है। अमावस्या वर्ष में बारह बार उस भेंट को निभाती है, आपसे कुछ नाटकीय माँगे बिना।"
       },
       "rule": {
         "kind": "tithi",
         "tithi": 30,
         "paksha": "krishna",
         "dayResolution": "udaya",
-        "label": { "en": "Amavasya — tithi 30", "hi": "अमावस्या — तिथि 30" },
+        "label": { "en": "Amavasya, tithi 30", "hi": "अमावस्या, तिथि 30" },
         "resolutionNote": {
-          "en": "Taken at sunrise for ordinary Amavasya. Where the day carries a shraddha rite, the aparahna reckoning governs instead — the fourth of five equal parts of the daylight.",
-          "hi": "सामान्य अमावस्या सूर्योदय के अनुसार ली जाती है। जिस दिन श्राद्ध कर्म हो, वहाँ अपराह्न गणना लागू होती है — दिनमान के पाँच समान भागों में से चौथा।"
+          "en": "Taken at sunrise for ordinary Amavasya. Where the day carries a shraddha rite, the aparahna reckoning governs instead, the fourth of five equal parts of the daylight.",
+          "hi": "सामान्य अमावस्या सूर्योदय के अनुसार ली जाती है। जिस दिन श्राद्ध कर्म हो, वहाँ अपराह्न गणना लागू होती है, दिनमान के पाँच समान भागों में से चौथा।"
         }
       },
       "occurrence": {
@@ -359,22 +359,22 @@
       "name": { "en": "Ekadashi", "hi": "एकादशी" },
       "line": { "en": "The eleventh tithi, twice a month", "hi": "मास में दो बार, ग्यारहवीं तिथि" },
       "about": {
-        "en": "Ekadashi is the eleventh tithi of each fortnight, so it comes round twice a lunar month and roughly twenty-four to twenty-six times a year. It is first of all a fast — a vrat kept at home, with its own rules about what is eaten and when it is broken. A snan is a customary part of the day rather than its centre. We list it because people ask for it, and we describe it honestly: this is not an occasion anyone travels for.",
-        "hi": "एकादशी प्रत्येक पक्ष की ग्यारहवीं तिथि है, अतः यह चांद्र मास में दो बार और वर्ष में लगभग चौबीस से छब्बीस बार आती है। यह सर्वप्रथम एक व्रत है — घर में रखा जाने वाला, अपने आहार और पारण के नियमों सहित। स्नान उस दिन की परंपरा का अंग है, उसका केंद्र नहीं। हम इसे इसलिए सूचीबद्ध करते हैं कि लोग पूछते हैं, और इसे यथार्थ रूप में बताते हैं: यह वह पर्व नहीं जिसके लिए कोई यात्रा करता है।"
+        "en": "Ekadashi is the eleventh tithi of each fortnight, so it comes round twice a lunar month and roughly twenty-four to twenty-six times a year. It is first of all a fast, a vrat kept at home, with its own rules about what is eaten and when it is broken. A snan is a customary part of the day rather than its centre. We list it because people ask for it, and we describe it honestly: this is not an occasion anyone travels for.",
+        "hi": "एकादशी प्रत्येक पक्ष की ग्यारहवीं तिथि है, अतः यह चांद्र मास में दो बार और वर्ष में लगभग चौबीस से छब्बीस बार आती है। यह सर्वप्रथम एक व्रत है, घर में रखा जाने वाला, अपने आहार और पारण के नियमों सहित। स्नान उस दिन की परंपरा का अंग है, उसका केंद्र नहीं। हम इसे इसलिए सूचीबद्ध करते हैं कि लोग पूछते हैं, और इसे यथार्थ रूप में बताते हैं: यह वह पर्व नहीं जिसके लिए कोई यात्रा करता है।"
       },
       "why": {
         "en": "It matters to the household that keeps it and to nobody else, which is precisely the right size for it. If you keep Ekadashi, a snan offered in your name at a river on the same morning belongs to the day. If you do not keep it, there is no reason to start because a website listed it.",
-        "hi": "यह उस घर के लिए महत्वपूर्ण है जो इसे रखता है, और किसी और के लिए नहीं — और यही इसका उचित आकार है। यदि आप एकादशी रखते हैं तो उसी प्रातः नदी पर आपके नाम से हुआ स्नान उस दिन का अंग बनता है। यदि नहीं रखते, तो केवल इसलिए आरंभ करने का कोई कारण नहीं कि किसी वेबसाइट ने इसे सूची में रख दिया।"
+        "hi": "यह उस घर के लिए महत्वपूर्ण है जो इसे रखता है, और किसी और के लिए नहीं, और यही इसका उचित आकार है। यदि आप एकादशी रखते हैं तो उसी प्रातः नदी पर आपके नाम से हुआ स्नान उस दिन का अंग बनता है। यदि नहीं रखते, तो केवल इसलिए आरंभ करने का कोई कारण नहीं कि किसी वेबसाइट ने इसे सूची में रख दिया।"
       },
       "rule": {
         "kind": "tithi",
         "tithi": 11,
         "paksha": "both",
         "dayResolution": "udaya",
-        "label": { "en": "Ekadashi — tithi 11 of either fortnight", "hi": "एकादशी — दोनों पक्षों की तिथि 11" },
+        "label": { "en": "Ekadashi, tithi 11 of either fortnight", "hi": "एकादशी, दोनों पक्षों की तिथि 11" },
         "resolutionNote": {
-          "en": "We compute and label the Smarta Ekadashi. Smarta and Vaishnava traditions part company when the tithi is viddha — contaminated by Dashami at sunrise — and observe on different days. The Vaishnava variant is not supported yet, and we say so rather than let you find out on the morning.",
-          "hi": "हम स्मार्त एकादशी की गणना करते हैं और उसे इसी नाम से अंकित करते हैं। जब तिथि विद्धा हो — सूर्योदय पर दशमी से युक्त — तब स्मार्त और वैष्णव परंपराएँ अलग-अलग दिन मानती हैं। वैष्णव भेद अभी समर्थित नहीं है, और हम यह पहले ही कह देते हैं, ताकि आपको उस प्रातः पता न चले।"
+          "en": "We compute and label the Smarta Ekadashi. Smarta and Vaishnava traditions part company when the tithi is viddha, contaminated by Dashami at sunrise, and observe on different days. The Vaishnava variant is not supported yet, and we say so rather than let you find out on the morning.",
+          "hi": "हम स्मार्त एकादशी की गणना करते हैं और उसे इसी नाम से अंकित करते हैं। जब तिथि विद्धा हो, सूर्योदय पर दशमी से युक्त, तब स्मार्त और वैष्णव परंपराएँ अलग-अलग दिन मानती हैं। वैष्णव भेद अभी समर्थित नहीं है, और हम यह पहले ही कह देते हैं, ताकि आपको उस प्रातः पता न चले।"
         }
       },
       "occurrence": {
@@ -417,22 +417,22 @@
       "tier": "punya",
       "cadence": "monthly",
       "name": { "en": "Sankranti", "hi": "संक्रांति" },
-      "line": { "en": "The sun changes sign — twelve junctions a year", "hi": "सूर्य की राशि-संधि — वर्ष में बारह" },
+      "line": { "en": "The sun changes sign, twelve junctions a year", "hi": "सूर्य की राशि-संधि, वर्ष में बारह" },
       "about": {
-        "en": "A sankranti is the instant the sun crosses from one sidereal rashi into the next. Twelve of them make the solar year, and each is a sandhi — a joint — at which snan and daan are customary. Unlike a tithi, a sankranti is an instant rather than a span, so what tradition marks is a punya kaal derived from it: a window before or after the crossing, whose extent depends on the rule being followed and on whether the ingress falls by day or after sunset.",
-        "hi": "संक्रांति वह क्षण है जब सूर्य एक निरयण राशि से अगली में प्रवेश करता है। बारह संक्रांतियाँ सौर वर्ष बनाती हैं, और प्रत्येक एक संधि है, जिसमें स्नान-दान की परंपरा है। तिथि के विपरीत संक्रांति अवधि नहीं, क्षण है — इसलिए परंपरा उससे व्युत्पन्न पुण्य काल मानती है: प्रवेश से पूर्व या पश्चात की एक अवधि, जिसका विस्तार अपनाए गए नियम पर और इस पर निर्भर करता है कि प्रवेश दिन में हुआ या सूर्यास्त के बाद।"
+        "en": "A sankranti is the instant the sun crosses from one sidereal rashi into the next. Twelve of them make the solar year, and each is a sandhi, a joint, at which snan and daan are customary. Unlike a tithi, a sankranti is an instant rather than a span, so what tradition marks is a punya kaal derived from it: a window before or after the crossing, whose extent depends on the rule being followed and on whether the ingress falls by day or after sunset.",
+        "hi": "संक्रांति वह क्षण है जब सूर्य एक निरयण राशि से अगली में प्रवेश करता है। बारह संक्रांतियाँ सौर वर्ष बनाती हैं, और प्रत्येक एक संधि है, जिसमें स्नान-दान की परंपरा है। तिथि के विपरीत संक्रांति अवधि नहीं, क्षण है, इसलिए परंपरा उससे व्युत्पन्न पुण्य काल मानती है: प्रवेश से पूर्व या पश्चात की एक अवधि, जिसका विस्तार अपनाए गए नियम पर और इस पर निर्भर करता है कि प्रवेश दिन में हुआ या सूर्यास्त के बाद।"
       },
       "why": {
         "en": "The lunar calendar governs most of what is observed, but the sun governs the seasons, the harvest and the agricultural year, and the sankrantis are where the two reckonings are stitched together. They are also the one part of the calendar that barely moves against the Gregorian year, which makes them the easiest occasions to plan around.",
-        "hi": "अधिकांश पर्व चांद्र गणना से चलते हैं, किंतु ऋतु, फ़सल और कृषि वर्ष सूर्य से — और संक्रांतियाँ वही टाँके हैं जहाँ दोनों गणनाएँ जुड़ती हैं। यही पंचांग का वह अंग भी है जो अंग्रेज़ी वर्ष के सापेक्ष लगभग स्थिर रहता है, इसलिए इनकी योजना बनाना सबसे सरल है।"
+        "hi": "अधिकांश पर्व चांद्र गणना से चलते हैं, किंतु ऋतु, फ़सल और कृषि वर्ष सूर्य से, और संक्रांतियाँ वही टाँके हैं जहाँ दोनों गणनाएँ जुड़ती हैं। यही पंचांग का वह अंग भी है जो अंग्रेज़ी वर्ष के सापेक्ष लगभग स्थिर रहता है, इसलिए इनकी योजना बनाना सबसे सरल है।"
       },
       "rule": {
         "kind": "solar-ingress",
         "dayResolution": "instant",
         "label": { "en": "Sidereal ingress of the sun into a rashi", "hi": "सूर्य का निरयण राशि-प्रवेश" },
         "resolutionNote": {
-          "en": "An ingress is an instant. The observed window is a punya kaal derived from it, and the derivation differs between traditions — which is why we will name the rule we followed on each occasion page rather than print a bare time.",
-          "hi": "प्रवेश एक क्षण है। मान्य अवधि उससे व्युत्पन्न पुण्य काल होती है, और यह व्युत्पत्ति परंपराओं में भिन्न है — इसीलिए हम प्रत्येक पर्व पृष्ठ पर अपनाया गया नियम नाम सहित बताएँगे, केवल समय नहीं छापेंगे।"
+          "en": "An ingress is an instant. The observed window is a punya kaal derived from it, and the derivation differs between traditions, which is why we will name the rule we followed on each occasion page rather than print a bare time.",
+          "hi": "प्रवेश एक क्षण है। मान्य अवधि उससे व्युत्पन्न पुण्य काल होती है, और यह व्युत्पत्ति परंपराओं में भिन्न है, इसीलिए हम प्रत्येक पर्व पृष्ठ पर अपनाया गया नियम नाम सहित बताएँगे, केवल समय नहीं छापेंगे।"
         }
       },
       "occurrence": {
@@ -455,7 +455,7 @@
       ],
       "ghatsNote": {
         "en": "Observed at all six waters. Two sankrantis carry their own pages: Makar Sankranti in January, and Tula Sankramana, which is the year's principal occasion at Talakaveri.",
-        "hi": "छहों जल में मान्य। दो संक्रांतियों के अपने पृष्ठ हैं: जनवरी की मकर संक्रांति, और तुला संक्रमण — जो तलकावेरी का वर्ष भर का प्रमुख पर्व है।"
+        "hi": "छहों जल में मान्य। दो संक्रांतियों के अपने पृष्ठ हैं: जनवरी की मकर संक्रांति, और तुला संक्रमण, जो तलकावेरी का वर्ष भर का प्रमुख पर्व है।"
       },
       "textualBasis": {
         "en": "Sankranti snan and daan are prescribed in the nibandha literature on kala. Attribution here is general; a citable edition and passage is still to be supplied by a reviewer.",
@@ -477,30 +477,30 @@
       "name": { "en": "Pitru Paksha", "hi": "पितृ पक्ष" },
       "line": { "en": "The fortnight given to the departed of one's line", "hi": "पूर्वजों को समर्पित पक्ष" },
       "about": {
-        "en": "Pitru Paksha is the dark fortnight that runs from the full moon of Bhadrapada to the following new moon — sixteen days set aside for shraddha and tarpana. Each day of it corresponds to a tithi, and a family customarily keeps the day matching the tithi on which their person died. The fortnight closes with Sarva Pitru Amavasya, kept for all the departed of a line together, and for those whose date is not known — which, for a great many families now, is the honest situation.",
-        "hi": "पितृ पक्ष भाद्रपद की पूर्णिमा से अगली अमावस्या तक चलने वाला कृष्ण पक्ष है — श्राद्ध और तर्पण के लिए नियत सोलह दिन। इसका प्रत्येक दिन एक तिथि से जुड़ा है, और परिवार प्रायः उसी तिथि को श्राद्ध करते हैं जिस तिथि को उनके स्वजन का देहावसान हुआ था। पक्ष का समापन सर्व पितृ अमावस्या से होता है, जो वंश के समस्त दिवंगतों के लिए है — और उनके लिए भी जिनकी तिथि ज्ञात नहीं, जो आज बहुत से परिवारों की वास्तविक स्थिति है।"
+        "en": "Pitru Paksha is the dark fortnight that runs from the full moon of Bhadrapada to the following new moon, sixteen days set aside for shraddha and tarpana. Each day of it corresponds to a tithi, and a family customarily keeps the day matching the tithi on which their person died. The fortnight closes with Sarva Pitru Amavasya, kept for all the departed of a line together, and for those whose date is not known, which, for a great many families now, is the honest situation.",
+        "hi": "पितृ पक्ष भाद्रपद की पूर्णिमा से अगली अमावस्या तक चलने वाला कृष्ण पक्ष है, श्राद्ध और तर्पण के लिए नियत सोलह दिन। इसका प्रत्येक दिन एक तिथि से जुड़ा है, और परिवार प्रायः उसी तिथि को श्राद्ध करते हैं जिस तिथि को उनके स्वजन का देहावसान हुआ था। पक्ष का समापन सर्व पितृ अमावस्या से होता है, जो वंश के समस्त दिवंगतों के लिए है, और उनके लिए भी जिनकी तिथि ज्ञात नहीं, जो आज बहुत से परिवारों की वास्तविक स्थिति है।"
       },
       "why": {
-        "en": "It matters because it is a season the calendar reserves for a thing most people otherwise put off. That is all we will say about it. We do not send reminders during this fortnight, we do not show how many places are left, and we will not tell you what happens if you let it pass — because we do not know, and because anyone who tells you they do is selling something.",
-        "hi": "यह महत्वपूर्ण इसलिए है कि पंचांग एक ऐसे कर्म के लिए पूरा पक्ष सुरक्षित रखता है जिसे अधिकांश लोग अन्यथा टालते रहते हैं। इससे अधिक हम कुछ नहीं कहेंगे। इस पक्ष में हम कोई स्मरण-संदेश नहीं भेजते, शेष स्थानों की संख्या नहीं दिखाते, और यह नहीं बताते कि इसे बीत जाने देने पर क्या होता है — क्योंकि हम नहीं जानते, और जो बताने का दावा करे वह कुछ बेच रहा है।"
+        "en": "It matters because it is a season the calendar reserves for a thing most people otherwise put off. That is all we will say about it. We do not send reminders during this fortnight, we do not show how many places are left, and we will not tell you what happens if you let it pass, because we do not know, and because anyone who tells you they do is selling something.",
+        "hi": "यह महत्वपूर्ण इसलिए है कि पंचांग एक ऐसे कर्म के लिए पूरा पक्ष सुरक्षित रखता है जिसे अधिकांश लोग अन्यथा टालते रहते हैं। इससे अधिक हम कुछ नहीं कहेंगे। इस पक्ष में हम कोई स्मरण-संदेश नहीं भेजते, शेष स्थानों की संख्या नहीं दिखाते, और यह नहीं बताते कि इसे बीत जाने देने पर क्या होता है, क्योंकि हम नहीं जानते, और जो बताने का दावा करे वह कुछ बेच रहा है।"
       },
       "rule": {
         "kind": "tithi-range",
         "paksha": "krishna",
         "dayResolution": "udaya",
         "label": {
-          "en": "Bhadrapada Krishna paksha in the Purnimanta reckoning; Ashwin Krishna paksha in the Amanta reckoning — the same sixteen days under two month-names",
-          "hi": "पूर्णिमांत गणना में भाद्रपद कृष्ण पक्ष; अमांत गणना में आश्विन कृष्ण पक्ष — एक ही सोलह दिन, दो मास-नामों से"
+          "en": "Bhadrapada Krishna paksha in the Purnimanta reckoning; Ashwin Krishna paksha in the Amanta reckoning, the same sixteen days under two month-names",
+          "hi": "पूर्णिमांत गणना में भाद्रपद कृष्ण पक्ष; अमांत गणना में आश्विन कृष्ण पक्ष, एक ही सोलह दिन, दो मास-नामों से"
         },
         "resolutionNote": {
-          "en": "Ordinary days of the fortnight are taken at sunrise. Sarva Pitru Amavasya, which closes it, is decided at aparahna — the fourth of five equal parts of the daylight — as all shraddha rites are.",
-          "hi": "पक्ष के सामान्य दिन सूर्योदय के अनुसार लिए जाते हैं। समापन की सर्व पितृ अमावस्या अपराह्न से निश्चित होती है — दिनमान के पाँच समान भागों में चौथा — जैसा समस्त श्राद्ध कर्मों में होता है।"
+          "en": "Ordinary days of the fortnight are taken at sunrise. Sarva Pitru Amavasya, which closes it, is decided at aparahna, the fourth of five equal parts of the daylight, as all shraddha rites are.",
+          "hi": "पक्ष के सामान्य दिन सूर्योदय के अनुसार लिए जाते हैं। समापन की सर्व पितृ अमावस्या अपराह्न से निश्चित होती है, दिनमान के पाँच समान भागों में चौथा, जैसा समस्त श्राद्ध कर्मों में होता है।"
         }
       },
       "occurrence": {
         "basis": "month",
         "months": ["2026-09", "2026-10"],
-        "label": { "en": "September–October 2026", "hi": "सितंबर–अक्टूबर 2026" },
+        "label": { "en": "September-October 2026", "hi": "सितंबर-अक्टूबर 2026" },
         "note": {
           "en": "Sixteen consecutive days ending on the new moon. The Gregorian dates are not published here until the tithis are confirmed against an almanac.",
           "hi": "अमावस्या पर समाप्त होते सोलह लगातार दिन। जब तक तिथियाँ पंचांग से पुष्ट न हों, अंग्रेज़ी तारीख़ें यहाँ प्रकाशित नहीं की जातीं।"
@@ -538,12 +538,12 @@
         }
       ],
       "ghatsNote": {
-        "en": "Four of the six waters. Vishram Ghat and Talakaveri are not offered for this fortnight — the pitru observances there are not the ones this occasion describes, and we would rather be narrow than approximate.",
-        "hi": "छह में से चार जल। इस पक्ष के लिए विश्राम घाट और तलकावेरी प्रस्तुत नहीं हैं — वहाँ के पितृ कर्म वही नहीं हैं जिनका वर्णन यह पर्व करता है, और अनुमान लगाने से सीमित रहना बेहतर है।"
+        "en": "Four of the six waters. Vishram Ghat and Talakaveri are not offered for this fortnight, the pitru observances there are not the ones this occasion describes, and we would rather be narrow than approximate.",
+        "hi": "छह में से चार जल। इस पक्ष के लिए विश्राम घाट और तलकावेरी प्रस्तुत नहीं हैं, वहाँ के पितृ कर्म वही नहीं हैं जिनका वर्णन यह पर्व करता है, और अनुमान लगाने से सीमित रहना बेहतर है।"
       },
       "notClaimed": {
-        "en": "What is offered is tarpana performed on your behalf, in your name and your gotra, by a purohit at the ghat. It does not discharge the shraddha that tradition places on you as karta — a purohit officiates at a shraddha, he does not stand in for the descendant. We state this before you book rather than in a terms page, because it is the whole of the difference between what we do and what you may be imagining.",
-        "hi": "जो अर्पित किया जाता है वह तर्पण है — घाट पर पुरोहित द्वारा, आपकी ओर से, आपके नाम और गोत्र से। यह उस श्राद्ध का स्थान नहीं लेता जिसे परंपरा कर्ता के रूप में आप पर रखती है; श्राद्ध में पुरोहित आचार्य होता है, वंशज का प्रतिनिधि नहीं। हम यह बात बुकिंग से पहले कह रहे हैं, किसी शर्तों के पृष्ठ में नहीं — क्योंकि हम जो करते हैं और आप जो समझ रहे हों, उनके बीच का पूरा अंतर यही है।"
+        "en": "What is offered is tarpana performed on your behalf, in your name and your gotra, by a purohit at the ghat. It does not discharge the shraddha that tradition places on you as karta, a purohit officiates at a shraddha, he does not stand in for the descendant. We state this before you book rather than in a terms page, because it is the whole of the difference between what we do and what you may be imagining.",
+        "hi": "जो अर्पित किया जाता है वह तर्पण है, घाट पर पुरोहित द्वारा, आपकी ओर से, आपके नाम और गोत्र से। यह उस श्राद्ध का स्थान नहीं लेता जिसे परंपरा कर्ता के रूप में आप पर रखती है; श्राद्ध में पुरोहित आचार्य होता है, वंशज का प्रतिनिधि नहीं। हम यह बात बुकिंग से पहले कह रहे हैं, किसी शर्तों के पृष्ठ में नहीं, क्योंकि हम जो करते हैं और आप जो समझ रहे हों, उनके बीच का पूरा अंतर यही है।"
       },
       "textualBasis": {
         "en": "The shraddha and tarpana rules of Pitru Paksha are set out in the shraddha sections of the dharmashastra nibandhas. Attribution here is general; a citable edition and passage is still to be supplied by a reviewer.",
@@ -565,8 +565,8 @@
       "name": { "en": "Tula Sankramana", "hi": "तुला संक्रमण" },
       "line": { "en": "The Kaveri rises at Talakaveri", "hi": "तलकावेरी में कावेरी का उद्भव" },
       "about": {
-        "en": "Tula Sankramana marks the sun's entry into Tula, the sign of the scales. At Talakaveri in Kodagu, the spring that is the source of the Kaveri is held to well up at the moment of the crossing — the theerthodbhava — and the day is the one great occasion of the year at that place. It is a solar reckoning, not a lunar one, which is why it sits at a slightly awkward angle to the rest of this calendar and why we mention that rather than smooth it over.",
-        "hi": "तुला संक्रमण सूर्य के तुला राशि में प्रवेश का पर्व है। कोडगु के तलकावेरी में मान्यता है कि उसी क्षण कावेरी का उद्गम कुंड स्वयं भर उठता है — तीर्थोद्भव — और वह दिन उस स्थान का वर्ष भर का एकमात्र महापर्व है। यह सौर गणना है, चांद्र नहीं, इसीलिए यह इस पंचांग के शेष भाग से थोड़ा भिन्न कोण पर बैठता है — और हम इसे छिपाने के बजाय कह देना उचित समझते हैं।"
+        "en": "Tula Sankramana marks the sun's entry into Tula, the sign of the scales. At Talakaveri in Kodagu, the spring that is the source of the Kaveri is held to well up at the moment of the crossing, the theerthodbhava, and the day is the one great occasion of the year at that place. It is a solar reckoning, not a lunar one, which is why it sits at a slightly awkward angle to the rest of this calendar and why we mention that rather than smooth it over.",
+        "hi": "तुला संक्रमण सूर्य के तुला राशि में प्रवेश का पर्व है। कोडगु के तलकावेरी में मान्यता है कि उसी क्षण कावेरी का उद्गम कुंड स्वयं भर उठता है, तीर्थोद्भव, और वह दिन उस स्थान का वर्ष भर का एकमात्र महापर्व है। यह सौर गणना है, चांद्र नहीं, इसीलिए यह इस पंचांग के शेष भाग से थोड़ा भिन्न कोण पर बैठता है, और हम इसे छिपाने के बजाय कह देना उचित समझते हैं।"
       },
       "why": {
         "en": "Because a Kaveri page without Tula Sankramana would be a Kaveri page written by someone who had never asked anyone from Kodagu. It is the day the river is addressed by name at its own source, and for families of that region it is the fixed point of the year.",
@@ -629,18 +629,18 @@
       "line": { "en": "A month of daily dawn bathing", "hi": "मासभर का नित्य प्रातः स्नान" },
       "about": {
         "en": "Kartik Snan is not a day but a month: the whole of Kartika, kept as a season of daily bathing before dawn, lamp-lighting in the evening, and a lighter diet. In the Purnimanta reckoning followed at our northern ghats it runs from the full moon of Ashwin to the full moon of Kartika. Those who keep it fully rise every morning for thirty days; those who cannot keep the first day, the last, and the ones in between that they can.",
-        "hi": "कार्तिक स्नान कोई एक दिन नहीं, पूरा मास है: संपूर्ण कार्तिक — प्रातः से पूर्व नित्य स्नान, संध्या को दीपदान और संयमित आहार का काल। हमारे उत्तरी घाटों पर मानी जाने वाली पूर्णिमांत गणना में यह आश्विन पूर्णिमा से कार्तिक पूर्णिमा तक चलता है। जो इसे पूर्ण रखते हैं वे तीस दिन प्रतिदिन उठते हैं; जो नहीं रख सकते वे पहला दिन, अंतिम दिन, और बीच के जितने बन पड़ें उतने रखते हैं।"
+        "hi": "कार्तिक स्नान कोई एक दिन नहीं, पूरा मास है: संपूर्ण कार्तिक, प्रातः से पूर्व नित्य स्नान, संध्या को दीपदान और संयमित आहार का काल। हमारे उत्तरी घाटों पर मानी जाने वाली पूर्णिमांत गणना में यह आश्विन पूर्णिमा से कार्तिक पूर्णिमा तक चलता है। जो इसे पूर्ण रखते हैं वे तीस दिन प्रतिदिन उठते हैं; जो नहीं रख सकते वे पहला दिन, अंतिम दिन, और बीच के जितने बन पड़ें उतने रखते हैं।"
       },
       "why": {
         "en": "Because a month of small repeated acts changes a household in a way a single grand one does not, and Kartika is the month the calendar sets aside for exactly that. It is also the least dramatic thing in this calendar: no crowd, no announcement, just a lamp and cold water for thirty mornings.",
-        "hi": "क्योंकि छोटे-छोटे दोहराए गए कर्मों का एक मास घर को उस तरह बदलता है जैसे कोई एक भव्य आयोजन नहीं बदलता — और पंचांग कार्तिक मास इसी के लिए रखता है। यह इस पंचांग की सबसे कम नाटकीय वस्तु भी है: न भीड़, न घोषणा; बस तीस प्रातः, एक दीपक और शीतल जल।"
+        "hi": "क्योंकि छोटे-छोटे दोहराए गए कर्मों का एक मास घर को उस तरह बदलता है जैसे कोई एक भव्य आयोजन नहीं बदलता, और पंचांग कार्तिक मास इसी के लिए रखता है। यह इस पंचांग की सबसे कम नाटकीय वस्तु भी है: न भीड़, न घोषणा; बस तीस प्रातः, एक दीपक और शीतल जल।"
       },
       "rule": {
         "kind": "lunar-month",
         "dayResolution": "udaya",
         "label": {
-          "en": "The whole of Kartika masa — Ashwin Purnima to Kartika Purnima in the Purnimanta reckoning",
-          "hi": "संपूर्ण कार्तिक मास — पूर्णिमांत गणना में आश्विन पूर्णिमा से कार्तिक पूर्णिमा तक"
+          "en": "The whole of Kartika masa, Ashwin Purnima to Kartika Purnima in the Purnimanta reckoning",
+          "hi": "संपूर्ण कार्तिक मास, पूर्णिमांत गणना में आश्विन पूर्णिमा से कार्तिक पूर्णिमा तक"
         },
         "resolutionNote": {
           "en": "Each day of the season is taken at sunrise. Ghats following the Amanta reckoning name the same month differently in the dark fortnight; the days themselves do not move.",
@@ -711,19 +711,19 @@
       "name": { "en": "Yam Dwitiya", "hi": "यम द्वितीया" },
       "line": { "en": "Brother and sister bathe together in the Yamuna", "hi": "भाई-बहन का यमुना में साथ स्नान" },
       "about": {
-        "en": "Yam Dwitiya falls two days after the new moon of Diwali, on the second tithi of the waxing fortnight of Kartika — the day also kept as Bhai Dooj. The story attached to it is of Yamuna receiving her brother Yama at her house, and the observance that follows from it is specific and geographical: a brother and sister bathing together in the Yamuna at Mathura, and the crowd at Vishram Ghat that morning is the largest of that ghat's year.",
-        "hi": "यम द्वितीया दीपावली की अमावस्या के दो दिन बाद, कार्तिक शुक्ल द्वितीया को पड़ती है — वही दिन जिसे भाई दूज भी कहा जाता है। इससे जुड़ी कथा यमुना द्वारा अपने भाई यम के स्वागत की है, और उससे निकलने वाली परंपरा विशिष्ट और स्थान-बद्ध है: मथुरा में भाई-बहन का यमुना में साथ स्नान। उस प्रातः विश्राम घाट पर वर्ष की सबसे बड़ी भीड़ होती है।"
+        "en": "Yam Dwitiya falls two days after the new moon of Diwali, on the second tithi of the waxing fortnight of Kartika, the day also kept as Bhai Dooj. The story attached to it is of Yamuna receiving her brother Yama at her house, and the observance that follows from it is specific and geographical: a brother and sister bathing together in the Yamuna at Mathura, and the crowd at Vishram Ghat that morning is the largest of that ghat's year.",
+        "hi": "यम द्वितीया दीपावली की अमावस्या के दो दिन बाद, कार्तिक शुक्ल द्वितीया को पड़ती है, वही दिन जिसे भाई दूज भी कहा जाता है। इससे जुड़ी कथा यमुना द्वारा अपने भाई यम के स्वागत की है, और उससे निकलने वाली परंपरा विशिष्ट और स्थान-बद्ध है: मथुरा में भाई-बहन का यमुना में साथ स्नान। उस प्रातः विश्राम घाट पर वर्ष की सबसे बड़ी भीड़ होती है।"
       },
       "why": {
         "en": "Because it is one of the very few observances in the calendar built around a sibling rather than a parent, a spouse or a deity, and because it belongs to one river and one ghat rather than to the whole of north India. A family scattered across three countries can still keep it on the same morning.",
-        "hi": "क्योंकि पंचांग में गिने-चुने पर्व ही ऐसे हैं जिनका केंद्र माता-पिता, पति-पत्नी या देवता नहीं, बल्कि भाई-बहन का संबंध है — और क्योंकि यह पूरे उत्तर भारत का नहीं, एक नदी और एक घाट का पर्व है। तीन देशों में बिखरा परिवार भी इसे एक ही प्रातः मना सकता है।"
+        "hi": "क्योंकि पंचांग में गिने-चुने पर्व ही ऐसे हैं जिनका केंद्र माता-पिता, पति-पत्नी या देवता नहीं, बल्कि भाई-बहन का संबंध है, और क्योंकि यह पूरे उत्तर भारत का नहीं, एक नदी और एक घाट का पर्व है। तीन देशों में बिखरा परिवार भी इसे एक ही प्रातः मना सकता है।"
       },
       "rule": {
         "kind": "tithi",
         "tithi": 2,
         "paksha": "shukla",
         "dayResolution": "udaya",
-        "label": { "en": "Kartika Shukla Dwitiya — tithi 2 of the waxing fortnight", "hi": "कार्तिक शुक्ल द्वितीया — शुक्ल पक्ष की तिथि 2" },
+        "label": { "en": "Kartika Shukla Dwitiya, tithi 2 of the waxing fortnight", "hi": "कार्तिक शुक्ल द्वितीया, शुक्ल पक्ष की तिथि 2" },
         "resolutionNote": {
           "en": "Taken on the day the tithi is running at sunrise. Where the tithi spans two sunrises the bathing is customarily kept on the first.",
           "hi": "उस दिन ली जाती है जिस दिन सूर्योदय पर यह तिथि चल रही हो। यदि तिथि दो सूर्योदयों तक फैले तो स्नान परंपरा से पहले दिन रखा जाता है।"
@@ -753,7 +753,7 @@
         "hi": "केवल एक जल।"
       },
       "textualBasis": {
-        "en": "The Yamuna–Yama narrative and the Mathura bathing custom are attested in the Puranic literature around the Kartika month and in the living usage of Vishram Ghat. Attribution here is general; a citable edition and passage is still to be supplied by a reviewer.",
+        "en": "The Yamuna-Yama narrative and the Mathura bathing custom are attested in the Puranic literature around the Kartika month and in the living usage of Vishram Ghat. Attribution here is general; a citable edition and passage is still to be supplied by a reviewer.",
         "hi": "यमुना-यम कथा और मथुरा की स्नान परंपरा कार्तिक मास संबंधी पौराणिक साहित्य तथा विश्राम घाट की जीवंत परंपरा में प्रमाणित हैं। यहाँ संदर्भ सामान्य है; उद्धरण योग्य संस्करण और अंश समीक्षक द्वारा जोड़ा जाना शेष है।"
       },
       "panchang": {
@@ -772,8 +772,8 @@
       "name": { "en": "Kartik Purnima", "hi": "कार्तिक पूर्णिमा" },
       "line": { "en": "Dev Deepawali at the ghats", "hi": "घाटों पर देव दीपावली" },
       "about": {
-        "en": "Kartik Purnima is the full moon that closes the month of Kartika and the month-long Kartik Snan with it. It is kept as Dev Deepawali — the evening the ghats are set with lamps from the water's edge upward — and as one of the two or three largest bathing days of the north Indian year. Where the full moon coincides with Krittika nakshatra the day is held to be strengthened; that coincidence is a matter of computation, not of assertion, and we will say which of the two we have when we have it.",
-        "hi": "कार्तिक पूर्णिमा वह पूर्णिमा है जो कार्तिक मास और उसके साथ मासभर के कार्तिक स्नान का समापन करती है। यह देव दीपावली के रूप में मनाई जाती है — वह संध्या जब घाट जल की सीमा से ऊपर तक दीपों से सज जाते हैं — और उत्तर भारत के वर्ष के दो-तीन सबसे बड़े स्नान दिवसों में गिनी जाती है। जब पूर्णिमा कृत्तिका नक्षत्र से युक्त हो तो दिन को अधिक बलवान माना जाता है; यह संयोग गणना का विषय है, दावे का नहीं — और जब हमारे पास गणना होगी, हम बता देंगे कि उस वर्ष क्या स्थिति है।"
+        "en": "Kartik Purnima is the full moon that closes the month of Kartika and the month-long Kartik Snan with it. It is kept as Dev Deepawali, the evening the ghats are set with lamps from the water's edge upward, and as one of the two or three largest bathing days of the north Indian year. Where the full moon coincides with Krittika nakshatra the day is held to be strengthened; that coincidence is a matter of computation, not of assertion, and we will say which of the two we have when we have it.",
+        "hi": "कार्तिक पूर्णिमा वह पूर्णिमा है जो कार्तिक मास और उसके साथ मासभर के कार्तिक स्नान का समापन करती है। यह देव दीपावली के रूप में मनाई जाती है, वह संध्या जब घाट जल की सीमा से ऊपर तक दीपों से सज जाते हैं, और उत्तर भारत के वर्ष के दो-तीन सबसे बड़े स्नान दिवसों में गिनी जाती है। जब पूर्णिमा कृत्तिका नक्षत्र से युक्त हो तो दिन को अधिक बलवान माना जाता है; यह संयोग गणना का विषय है, दावे का नहीं, और जब हमारे पास गणना होगी, हम बता देंगे कि उस वर्ष क्या स्थिति है।"
       },
       "why": {
         "en": "It is the day the calendar builds towards for a month, and the one occasion in this list where the ghat itself is the event: the lamps, the crowd on the steps, the arati carrying further than usual. If you were going to fly home for one bathing day, this is the one people fly home for.",
@@ -784,10 +784,10 @@
         "tithi": 15,
         "paksha": "shukla",
         "dayResolution": "udaya",
-        "label": { "en": "Kartika Shukla Purnima — tithi 15 of the waxing fortnight of Kartika", "hi": "कार्तिक शुक्ल पूर्णिमा — कार्तिक शुक्ल पक्ष की तिथि 15" },
+        "label": { "en": "Kartika Shukla Purnima, tithi 15 of the waxing fortnight of Kartika", "hi": "कार्तिक शुक्ल पूर्णिमा, कार्तिक शुक्ल पक्ष की तिथि 15" },
         "resolutionNote": {
           "en": "Taken on the day the tithi is running at sunrise. The evening Dev Deepawali lamps and the morning snan can fall on different Gregorian dates when the tithi turns overnight, which is exactly the kind of thing we will state rather than hide.",
-          "hi": "उस दिन ली जाती है जिस दिन सूर्योदय पर यह तिथि चल रही हो। जब तिथि रात्रि में बदले तो देव दीपावली की संध्या और प्रातः स्नान भिन्न अंग्रेज़ी तारीख़ों पर पड़ सकते हैं — और यही वह बात है जिसे हम छिपाने के बजाय स्पष्ट कहेंगे।"
+          "hi": "उस दिन ली जाती है जिस दिन सूर्योदय पर यह तिथि चल रही हो। जब तिथि रात्रि में बदले तो देव दीपावली की संध्या और प्रातः स्नान भिन्न अंग्रेज़ी तारीख़ों पर पड़ सकते हैं, और यही वह बात है जिसे हम छिपाने के बजाय स्पष्ट कहेंगे।"
         }
       },
       "occurrence": {
@@ -805,7 +805,7 @@
           "id": "ganga-haridwar",
           "note": {
             "en": "Har Ki Pauri on Kartik Purnima is the picture most people carry of this day: the whole flight of steps under lamps, and the water carrying them downstream.",
-            "hi": "कार्तिक पूर्णिमा की हर की पौड़ी वही दृश्य है जो अधिकांश लोगों के मन में बसा है — सीढ़ियों की पूरी श्रेणी दीपों तले, और जल उन्हें बहाकर आगे ले जाता हुआ।"
+            "hi": "कार्तिक पूर्णिमा की हर की पौड़ी वही दृश्य है जो अधिकांश लोगों के मन में बसा है, सीढ़ियों की पूरी श्रेणी दीपों तले, और जल उन्हें बहाकर आगे ले जाता हुआ।"
           }
         },
         {
@@ -826,7 +826,7 @@
           "id": "shipra-ujjain",
           "note": {
             "en": "Ram Ghat comes to it through Vaikuntha Chaturdashi and the Harihar Milan of the previous night, which is Ujjain's own.",
-            "hi": "रामघाट इस दिन तक वैकुंठ चतुर्दशी और पिछली रात्रि के हरिहर मिलन से होकर पहुँचता है — जो उज्जैन का अपना है।"
+            "hi": "रामघाट इस दिन तक वैकुंठ चतुर्दशी और पिछली रात्रि के हरिहर मिलन से होकर पहुँचता है, जो उज्जैन का अपना है।"
           }
         },
         {
@@ -838,8 +838,8 @@
         }
       ],
       "ghatsNote": {
-        "en": "Five of the six waters. Talakaveri is not offered on this day — Kartika is not the Kaveri's month, and Tula Sankramana is.",
-        "hi": "छह में से पाँच जल। इस दिन तलकावेरी प्रस्तुत नहीं है — कार्तिक कावेरी का मास नहीं है; तुला संक्रमण है।"
+        "en": "Five of the six waters. Talakaveri is not offered on this day, Kartika is not the Kaveri's month, and Tula Sankramana is.",
+        "hi": "छह में से पाँच जल। इस दिन तलकावेरी प्रस्तुत नहीं है, कार्तिक कावेरी का मास नहीं है; तुला संक्रमण है।"
       },
       "textualBasis": {
         "en": "Kartika Purnima snan and the Dev Deepawali lamp custom are described in the Kartika Mahatmya literature and in the living usage of the Ganga ghats. Attribution here is general; a citable edition and passage is still to be supplied by a reviewer.",
@@ -861,20 +861,20 @@
       "name": { "en": "Makar Sankranti", "hi": "मकर संक्रांति" },
       "line": { "en": "The sun turns north", "hi": "सूर्य उत्तरायण होते हैं" },
       "about": {
-        "en": "Makar Sankranti is the sun's entry into Makara, and with it the beginning of the northward half of the solar year. It is the largest single bathing day of the Indian calendar and the day on which the Magh Mela at Prayagraj opens. Because it is solar rather than lunar it sits at almost the same place in the Gregorian year every year — in recent decades on the fourteenth or fifteenth of January — which makes it the one occasion here that can be planned around months in advance without much risk.",
-        "hi": "मकर संक्रांति सूर्य का मकर राशि में प्रवेश है, और उसी के साथ सौर वर्ष के उत्तरायण भाग का आरंभ। यह भारतीय पंचांग का सबसे बड़ा एकल स्नान दिवस है और वही दिन जब प्रयागराज का माघ मेला आरंभ होता है। सौर होने के कारण यह हर वर्ष अंग्रेज़ी कैलेंडर में लगभग एक ही स्थान पर रहती है — हाल के दशकों में 14 या 15 जनवरी को — इसलिए यही एक पर्व है जिसकी योजना महीनों पहले बिना विशेष जोखिम के बनाई जा सकती है।"
+        "en": "Makar Sankranti is the sun's entry into Makara, and with it the beginning of the northward half of the solar year. It is the largest single bathing day of the Indian calendar and the day on which the Magh Mela at Prayagraj opens. Because it is solar rather than lunar it sits at almost the same place in the Gregorian year every year, in recent decades on the fourteenth or fifteenth of January, which makes it the one occasion here that can be planned around months in advance without much risk.",
+        "hi": "मकर संक्रांति सूर्य का मकर राशि में प्रवेश है, और उसी के साथ सौर वर्ष के उत्तरायण भाग का आरंभ। यह भारतीय पंचांग का सबसे बड़ा एकल स्नान दिवस है और वही दिन जब प्रयागराज का माघ मेला आरंभ होता है। सौर होने के कारण यह हर वर्ष अंग्रेज़ी कैलेंडर में लगभग एक ही स्थान पर रहती है, हाल के दशकों में 14 या 15 जनवरी को, इसलिए यही एक पर्व है जिसकी योजना महीनों पहले बिना विशेष जोखिम के बनाई जा सकती है।"
       },
       "why": {
-        "en": "Because it is the hinge of the year, and because it is observed under a dozen different names across the country on the same morning — Pongal, Magh Bihu, Uttarayan, Maghi. Whatever a family calls it, the sun does the same thing, and the bathing is the part every version of it shares.",
-        "hi": "क्योंकि यह वर्ष की धुरी है, और क्योंकि उसी प्रातः इसे देशभर में एक दर्जन नामों से मनाया जाता है — पोंगल, माघ बिहू, उत्तरायण, माघी। परिवार इसे जो भी कहे, सूर्य वही करता है — और स्नान वह अंश है जो इसके हर रूप में साझा है।"
+        "en": "Because it is the hinge of the year, and because it is observed under a dozen different names across the country on the same morning, Pongal, Magh Bihu, Uttarayan, Maghi. Whatever a family calls it, the sun does the same thing, and the bathing is the part every version of it shares.",
+        "hi": "क्योंकि यह वर्ष की धुरी है, और क्योंकि उसी प्रातः इसे देशभर में एक दर्जन नामों से मनाया जाता है, पोंगल, माघ बिहू, उत्तरायण, माघी। परिवार इसे जो भी कहे, सूर्य वही करता है, और स्नान वह अंश है जो इसके हर रूप में साझा है।"
       },
       "rule": {
         "kind": "solar-ingress",
         "dayResolution": "instant",
         "label": { "en": "Sidereal ingress of the sun into Makara", "hi": "सूर्य का मकर राशि में निरयण प्रवेश" },
         "resolutionNote": {
-          "en": "The ingress is an instant; what is observed is the punya kaal derived from it. Where the crossing falls after sunset the bathing customarily moves to the following morning. This derivation differs between traditions, so we will name the rule we followed alongside any time we publish — a bare instant would be the wrong answer stated confidently.",
-          "hi": "प्रवेश एक क्षण है; मान्य होता है उससे व्युत्पन्न पुण्य काल। यदि प्रवेश सूर्यास्त के पश्चात हो तो स्नान परंपरा से अगली प्रातः खिसक जाता है। यह व्युत्पत्ति परंपराओं में भिन्न है, इसलिए जो भी समय हम प्रकाशित करेंगे उसके साथ अपनाया गया नियम भी नाम सहित देंगे — केवल क्षण छाप देना आत्मविश्वास के साथ ग़लत उत्तर देना होगा।"
+          "en": "The ingress is an instant; what is observed is the punya kaal derived from it. Where the crossing falls after sunset the bathing customarily moves to the following morning. This derivation differs between traditions, so we will name the rule we followed alongside any time we publish, a bare instant would be the wrong answer stated confidently.",
+          "hi": "प्रवेश एक क्षण है; मान्य होता है उससे व्युत्पन्न पुण्य काल। यदि प्रवेश सूर्यास्त के पश्चात हो तो स्नान परंपरा से अगली प्रातः खिसक जाता है। यह व्युत्पत्ति परंपराओं में भिन्न है, इसलिए जो भी समय हम प्रकाशित करेंगे उसके साथ अपनाया गया नियम भी नाम सहित देंगे, केवल क्षण छाप देना आत्मविश्वास के साथ ग़लत उत्तर देना होगा।"
         }
       },
       "occurrence": {
@@ -883,7 +883,7 @@
         "label": { "en": "January 2027", "hi": "जनवरी 2027" },
         "note": {
           "en": "In recent decades the crossing has fallen on 14 or 15 January. Which of the two, and the punya kaal around it, is not published here until it is computed and checked.",
-          "hi": "हाल के दशकों में यह प्रवेश 14 या 15 जनवरी को पड़ता रहा है। इनमें से कौन-सी तारीख़, और उसके आसपास का पुण्य काल — यह गणना और मिलान से पहले यहाँ प्रकाशित नहीं किया जाएगा।"
+          "hi": "हाल के दशकों में यह प्रवेश 14 या 15 जनवरी को पड़ता रहा है। इनमें से कौन-सी तारीख़, और उसके आसपास का पुण्य काल, यह गणना और मिलान से पहले यहाँ प्रकाशित नहीं किया जाएगा।"
         }
       },
       "windows": ["brahma", "pratah", "abhijit"],
@@ -955,8 +955,8 @@
       "name": { "en": "Magh Snan", "hi": "माघ स्नान" },
       "line": { "en": "A month on the sands at Prayagraj", "hi": "प्रयागराज की रेती पर एक मास" },
       "about": {
-        "en": "Magh Snan is the month of Magha kept at the Sangam: daily bathing before dawn through the coldest weeks of the north Indian year. Those who keep it in its full form — kalpvas — live on the sands for the month under a single vow, eating once a day. Most people keep it in a lighter form, or keep the three or four days of it that carry their own names. It runs from Makar Sankranti or Paush Purnima to Magha Purnima, depending on the reckoning.",
-        "hi": "माघ स्नान संगम पर मनाया जाने वाला माघ मास है: उत्तर भारत के सबसे ठंडे सप्ताहों में प्रातः से पूर्व नित्य स्नान। जो इसे पूर्ण रूप में रखते हैं — कल्पवास — वे मास भर रेती पर, एक व्रत के अधीन, दिन में एक बार भोजन करते हुए रहते हैं। अधिकांश लोग इसे हल्के रूप में रखते हैं, या उसके वे तीन-चार दिन रखते हैं जिनके अपने नाम हैं। यह मकर संक्रांति अथवा पौष पूर्णिमा से माघ पूर्णिमा तक चलता है, गणना के अनुसार।"
+        "en": "Magh Snan is the month of Magha kept at the Sangam: daily bathing before dawn through the coldest weeks of the north Indian year. Those who keep it in its full form, kalpvas, live on the sands for the month under a single vow, eating once a day. Most people keep it in a lighter form, or keep the three or four days of it that carry their own names. It runs from Makar Sankranti or Paush Purnima to Magha Purnima, depending on the reckoning.",
+        "hi": "माघ स्नान संगम पर मनाया जाने वाला माघ मास है: उत्तर भारत के सबसे ठंडे सप्ताहों में प्रातः से पूर्व नित्य स्नान। जो इसे पूर्ण रूप में रखते हैं, कल्पवास, वे मास भर रेती पर, एक व्रत के अधीन, दिन में एक बार भोजन करते हुए रहते हैं। अधिकांश लोग इसे हल्के रूप में रखते हैं, या उसके वे तीन-चार दिन रखते हैं जिनके अपने नाम हैं। यह मकर संक्रांति अथवा पौष पूर्णिमा से माघ पूर्णिमा तक चलता है, गणना के अनुसार।"
       },
       "why": {
         "en": "Because kalpvas is the most demanding thing in this entire calendar and the least suited to being sold. We list the month because a daily morning snan through Magha is a real and common observance; we do not offer kalpvas, and nothing digital could.",
@@ -977,7 +977,7 @@
       "occurrence": {
         "basis": "month",
         "months": ["2027-01", "2027-02"],
-        "label": { "en": "January–February 2027", "hi": "जनवरी–फ़रवरी 2027" },
+        "label": { "en": "January-February 2027", "hi": "जनवरी-फ़रवरी 2027" },
         "note": {
           "en": "Roughly thirty days closing on Magha Purnima. The Gregorian span is not published here until the month's boundaries are confirmed.",
           "hi": "माघ पूर्णिमा पर समाप्त होते लगभग तीस दिन। जब तक मास की सीमाएँ पुष्ट न हों, अंग्रेज़ी अवधि यहाँ प्रकाशित नहीं की जाएगी।"
@@ -999,7 +999,7 @@
       },
       "notClaimed": {
         "en": "We do not offer kalpvas. Kalpvas is a month of residence on the sands under a vow, and there is no version of it that can be performed on someone's behalf. What is offered here is a snan on a morning of Magha, which is a different and smaller thing.",
-        "hi": "हम कल्पवास नहीं कराते। कल्पवास व्रत के अधीन रेती पर मास भर का निवास है, और उसका कोई ऐसा रूप नहीं जो किसी और की ओर से किया जा सके। यहाँ जो प्रस्तुत है वह माघ की किसी प्रातः का स्नान है — जो एक भिन्न और छोटी वस्तु है।"
+        "hi": "हम कल्पवास नहीं कराते। कल्पवास व्रत के अधीन रेती पर मास भर का निवास है, और उसका कोई ऐसा रूप नहीं जो किसी और की ओर से किया जा सके। यहाँ जो प्रस्तुत है वह माघ की किसी प्रातः का स्नान है, जो एक भिन्न और छोटी वस्तु है।"
       },
       "textualBasis": {
         "en": "Magha snan at Prayaga is described in the Prayaga Mahatmya sections of the Puranic literature. Attribution here is general; a citable edition and passage is still to be supplied by a reviewer.",
@@ -1021,12 +1021,12 @@
       "name": { "en": "Mahashivratri", "hi": "महाशिवरात्रि" },
       "line": { "en": "The great night of Shiva", "hi": "शिव की महारात्रि" },
       "about": {
-        "en": "Mahashivratri is the fourteenth tithi of the dark fortnight in the month that Purnimanta reckoning calls Phalguna and Amanta reckoning calls Magha — the same night under two names. It is kept with a fast, with a night of four watches, and with abhisheka of the linga. At Ujjain, where Mahakala's own night this is, the Bhasma Arati and the crowd on the Shipra bank make it the largest day of the year at Ram Ghat.",
-        "hi": "महाशिवरात्रि उस मास के कृष्ण पक्ष की चतुर्दशी है जिसे पूर्णिमांत गणना फाल्गुन कहती है और अमांत गणना माघ — एक ही रात्रि, दो नाम। यह उपवास, चार प्रहरों की रात्रि-पूजा और लिंग के अभिषेक के साथ मनाई जाती है। उज्जैन में, जो महाकाल की अपनी रात्रि है, भस्म आरती और शिप्रा तट की भीड़ इसे रामघाट का वर्ष भर का सबसे बड़ा दिन बना देती है।"
+        "en": "Mahashivratri is the fourteenth tithi of the dark fortnight in the month that Purnimanta reckoning calls Phalguna and Amanta reckoning calls Magha, the same night under two names. It is kept with a fast, with a night of four watches, and with abhisheka of the linga. At Ujjain, where Mahakala's own night this is, the Bhasma Arati and the crowd on the Shipra bank make it the largest day of the year at Ram Ghat.",
+        "hi": "महाशिवरात्रि उस मास के कृष्ण पक्ष की चतुर्दशी है जिसे पूर्णिमांत गणना फाल्गुन कहती है और अमांत गणना माघ, एक ही रात्रि, दो नाम। यह उपवास, चार प्रहरों की रात्रि-पूजा और लिंग के अभिषेक के साथ मनाई जाती है। उज्जैन में, जो महाकाल की अपनी रात्रि है, भस्म आरती और शिप्रा तट की भीड़ इसे रामघाट का वर्ष भर का सबसे बड़ा दिन बना देती है।"
       },
       "why": {
-        "en": "Because it is the one night in the year the tradition asks you to stay awake for, and because the fast, the watches and the abhisheka are all things a household can do at home while the snan is offered at the river. It is the clearest case in this calendar of a rite with two halves — yours and ours — and the smaller half is ours.",
-        "hi": "क्योंकि वर्ष में यही एक रात्रि है जिसके लिए परंपरा आपसे जागने को कहती है, और क्योंकि उपवास, प्रहर-पूजा और अभिषेक — ये सब घर में हो सकते हैं, जबकि स्नान नदी पर अर्पित होता है। इस पंचांग में यही वह पर्व है जहाँ अनुष्ठान के दो भाग सबसे स्पष्ट हैं — आपका और हमारा — और छोटा भाग हमारा है।"
+        "en": "Because it is the one night in the year the tradition asks you to stay awake for, and because the fast, the watches and the abhisheka are all things a household can do at home while the snan is offered at the river. It is the clearest case in this calendar of a rite with two halves, yours and ours, and the smaller half is ours.",
+        "hi": "क्योंकि वर्ष में यही एक रात्रि है जिसके लिए परंपरा आपसे जागने को कहती है, और क्योंकि उपवास, प्रहर-पूजा और अभिषेक, ये सब घर में हो सकते हैं, जबकि स्नान नदी पर अर्पित होता है। इस पंचांग में यही वह पर्व है जहाँ अनुष्ठान के दो भाग सबसे स्पष्ट हैं, आपका और हमारा, और छोटा भाग हमारा है।"
       },
       "rule": {
         "kind": "tithi",
@@ -1034,18 +1034,18 @@
         "paksha": "krishna",
         "dayResolution": "nishita",
         "label": {
-          "en": "Krishna Chaturdashi — Phalguna in the Purnimanta reckoning, Magha in the Amanta reckoning; the same instant, two month-names",
-          "hi": "कृष्ण चतुर्दशी — पूर्णिमांत गणना में फाल्गुन, अमांत में माघ; एक ही क्षण, दो मास-नाम"
+          "en": "Krishna Chaturdashi, Phalguna in the Purnimanta reckoning, Magha in the Amanta reckoning; the same instant, two month-names",
+          "hi": "कृष्ण चतुर्दशी, पूर्णिमांत गणना में फाल्गुन, अमांत में माघ; एक ही क्षण, दो मास-नाम"
         },
         "resolutionNote": {
-          "en": "The day is decided at nishita kaal — the eighth of the fifteen muhurtas of the night, around true midnight — because that is where the tithi must be running for the night to be Mahashivratri. That decides which day. It does not decide when the snan is performed: the snan of this occasion is a pre-dawn and morning rite, and we do not offer a midnight snan. Day-resolution and window are two different fields here for exactly this reason.",
-          "hi": "यह दिन निशीथ काल से निश्चित होता है — रात्रि के पंद्रह मुहूर्तों में आठवाँ, वास्तविक मध्यरात्रि के आसपास — क्योंकि रात्रि के महाशिवरात्रि होने के लिए तिथि का वहीं चलना आवश्यक है। इससे केवल दिन तय होता है। स्नान का समय इससे तय नहीं होता: इस पर्व का स्नान प्रातः-पूर्व और प्रातःकालीन कर्म है, और हम मध्यरात्रि का स्नान नहीं कराते। इसी कारण यहाँ दिन-निर्धारण और अवधि दो अलग क्षेत्र हैं।"
+          "en": "The day is decided at nishita kaal, the eighth of the fifteen muhurtas of the night, around true midnight, because that is where the tithi must be running for the night to be Mahashivratri. That decides which day. It does not decide when the snan is performed: the snan of this occasion is a pre-dawn and morning rite, and we do not offer a midnight snan. Day-resolution and window are two different fields here for exactly this reason.",
+          "hi": "यह दिन निशीथ काल से निश्चित होता है, रात्रि के पंद्रह मुहूर्तों में आठवाँ, वास्तविक मध्यरात्रि के आसपास, क्योंकि रात्रि के महाशिवरात्रि होने के लिए तिथि का वहीं चलना आवश्यक है। इससे केवल दिन तय होता है। स्नान का समय इससे तय नहीं होता: इस पर्व का स्नान प्रातः-पूर्व और प्रातःकालीन कर्म है, और हम मध्यरात्रि का स्नान नहीं कराते। इसी कारण यहाँ दिन-निर्धारण और अवधि दो अलग क्षेत्र हैं।"
         }
       },
       "occurrence": {
         "basis": "month",
         "months": ["2027-02", "2027-03"],
-        "label": { "en": "February–March 2027", "hi": "फ़रवरी–मार्च 2027" },
+        "label": { "en": "February-March 2027", "hi": "फ़रवरी-मार्च 2027" },
         "note": {
           "en": "The exact date is not published here until the chaturdashi's position at nishita is computed and checked.",
           "hi": "जब तक निशीथ पर चतुर्दशी की स्थिति की गणना और मिलान न हो जाए, सटीक तारीख़ यहाँ प्रकाशित नहीं की जाएगी।"
@@ -1107,27 +1107,27 @@
       "line": { "en": "The descent of the Ganga", "hi": "गंगा का अवतरण" },
       "about": {
         "en": "Ganga Dussehra is the tenth tithi of the waxing fortnight of Jyeshtha, kept as the day the Ganga came down to the earth. The classical Dashahara yoga wants the tithi to fall with Hasta nakshatra and several other conditions together; in most years some of them hold and some do not, and the day is kept regardless. It comes at the hottest point of the north Indian year, days before the rains, which is not incidental to a festival about water arriving.",
-        "hi": "गंगा दशहरा ज्येष्ठ शुक्ल पक्ष की दशमी है, जिसे गंगा के पृथ्वी पर अवतरण का दिन माना जाता है। शास्त्रीय दशहरा योग में तिथि का हस्त नक्षत्र तथा कुछ अन्य स्थितियों के साथ आना अपेक्षित है; अधिकांश वर्षों में इनमें से कुछ बनती हैं, कुछ नहीं — और दिन फिर भी मनाया जाता है। यह उत्तर भारत के वर्ष के सबसे तप्त बिंदु पर, वर्षा से कुछ ही दिन पूर्व आता है — और जल के आगमन के पर्व के लिए यह संयोग नहीं है।"
+        "hi": "गंगा दशहरा ज्येष्ठ शुक्ल पक्ष की दशमी है, जिसे गंगा के पृथ्वी पर अवतरण का दिन माना जाता है। शास्त्रीय दशहरा योग में तिथि का हस्त नक्षत्र तथा कुछ अन्य स्थितियों के साथ आना अपेक्षित है; अधिकांश वर्षों में इनमें से कुछ बनती हैं, कुछ नहीं, और दिन फिर भी मनाया जाता है। यह उत्तर भारत के वर्ष के सबसे तप्त बिंदु पर, वर्षा से कुछ ही दिन पूर्व आता है, और जल के आगमन के पर्व के लिए यह संयोग नहीं है।"
       },
       "why": {
         "en": "Because it is the Ganga's own day rather than a general parva that the Ganga happens to be present at, and because the ten in its name is a count of things the bathing is said to loosen. It is the occasion at which Haridwar is most itself.",
-        "hi": "क्योंकि यह गंगा का अपना दिन है, कोई सामान्य पर्व नहीं जिसमें गंगा संयोगवश उपस्थित हो — और क्योंकि इसके नाम का दस उन बातों की गणना है जिन्हें यह स्नान शिथिल करता कहा जाता है। यही वह पर्व है जिसमें हरिद्वार सर्वाधिक अपने स्वरूप में होता है।"
+        "hi": "क्योंकि यह गंगा का अपना दिन है, कोई सामान्य पर्व नहीं जिसमें गंगा संयोगवश उपस्थित हो, और क्योंकि इसके नाम का दस उन बातों की गणना है जिन्हें यह स्नान शिथिल करता कहा जाता है। यही वह पर्व है जिसमें हरिद्वार सर्वाधिक अपने स्वरूप में होता है।"
       },
       "rule": {
         "kind": "tithi",
         "tithi": 10,
         "paksha": "shukla",
         "dayResolution": "udaya",
-        "label": { "en": "Jyeshtha Shukla Dashami — tithi 10 of the waxing fortnight of Jyeshtha", "hi": "ज्येष्ठ शुक्ल दशमी — ज्येष्ठ शुक्ल पक्ष की तिथि 10" },
+        "label": { "en": "Jyeshtha Shukla Dashami, tithi 10 of the waxing fortnight of Jyeshtha", "hi": "ज्येष्ठ शुक्ल दशमी, ज्येष्ठ शुक्ल पक्ष की तिथि 10" },
         "resolutionNote": {
           "en": "Taken at sunrise. Whether Hasta nakshatra and the other classical conditions of the Dashahara yoga hold in a given year is a matter of computation; when we publish the day we will publish which of them did, rather than implying they all did.",
-          "hi": "सूर्योदय के अनुसार ली जाती है। किसी वर्ष में हस्त नक्षत्र तथा दशहरा योग की अन्य शास्त्रीय स्थितियाँ बनती हैं या नहीं, यह गणना का विषय है; जब हम दिन प्रकाशित करेंगे तो यह भी बताएँगे कि उनमें से कौन-सी बनीं — यह संकेत दिए बिना कि सभी बनीं।"
+          "hi": "सूर्योदय के अनुसार ली जाती है। किसी वर्ष में हस्त नक्षत्र तथा दशहरा योग की अन्य शास्त्रीय स्थितियाँ बनती हैं या नहीं, यह गणना का विषय है; जब हम दिन प्रकाशित करेंगे तो यह भी बताएँगे कि उनमें से कौन-सी बनीं, यह संकेत दिए बिना कि सभी बनीं।"
         }
       },
       "occurrence": {
         "basis": "month",
         "months": ["2027-05", "2027-06"],
-        "label": { "en": "May–June 2027", "hi": "मई–जून 2027" },
+        "label": { "en": "May-June 2027", "hi": "मई-जून 2027" },
         "note": {
           "en": "The exact date is not published here until the tithi is confirmed.",
           "hi": "जब तक तिथि पुष्ट न हो, सटीक तारीख़ यहाँ प्रकाशित नहीं की जाएगी।"
@@ -1152,8 +1152,8 @@
         {
           "id": "yamuna-mathura",
           "note": {
-            "en": "Vishram Ghat keeps the tithi. The Yamuna has its own descent day, and this is not it — we list Mathura here because the tithi is observed, not because the story belongs to it.",
-            "hi": "विश्राम घाट पर यह तिथि मानी जाती है। यमुना का अपना अवतरण दिवस अलग है, और यह वह नहीं — मथुरा यहाँ इसलिए है कि तिथि मनाई जाती है, इसलिए नहीं कि कथा उसकी है।"
+            "en": "Vishram Ghat keeps the tithi. The Yamuna has its own descent day, and this is not it, we list Mathura here because the tithi is observed, not because the story belongs to it.",
+            "hi": "विश्राम घाट पर यह तिथि मानी जाती है। यमुना का अपना अवतरण दिवस अलग है, और यह वह नहीं, मथुरा यहाँ इसलिए है कि तिथि मनाई जाती है, इसलिए नहीं कि कथा उसकी है।"
           }
         }
       ],
@@ -1179,8 +1179,8 @@
       "id": "kumbh",
       "name": { "en": "Kumbh, Ardh Kumbh and Shahi Snan dates", "hi": "कुंभ, अर्ध कुंभ और शाही स्नान की तिथियाँ" },
       "text": {
-        "en": "Shahi Snan dates are fixed by the akhara councils and the district administration — a human process, announced months ahead. No formula produces them. We will not print one until an official announcement exists, with a link to it and the name of the person here who checked it.",
-        "hi": "शाही स्नान की तिथियाँ अखाड़ा परिषदों और ज़िला प्रशासन द्वारा निश्चित होती हैं — यह मानवीय प्रक्रिया है, जिसकी घोषणा महीनों पहले होती है। कोई सूत्र इन्हें नहीं निकालता। जब तक आधिकारिक घोषणा, उसका संदर्भ और उसे जाँचने वाले व्यक्ति का नाम न हो, हम कोई तिथि नहीं छापेंगे।"
+        "en": "Shahi Snan dates are fixed by the akhara councils and the district administration, a human process, announced months ahead. No formula produces them. We will not print one until an official announcement exists, with a link to it and the name of the person here who checked it.",
+        "hi": "शाही स्नान की तिथियाँ अखाड़ा परिषदों और ज़िला प्रशासन द्वारा निश्चित होती हैं, यह मानवीय प्रक्रिया है, जिसकी घोषणा महीनों पहले होती है। कोई सूत्र इन्हें नहीं निकालता। जब तक आधिकारिक घोषणा, उसका संदर्भ और उसे जाँचने वाले व्यक्ति का नाम न हो, हम कोई तिथि नहीं छापेंगे।"
       }
     },
     {
@@ -1188,7 +1188,7 @@
       "name": { "en": "Simhastha at Ujjain and Nashik", "hi": "उज्जैन और नासिक का सिंहस्थ" },
       "text": {
         "en": "The same rule. The Simhastha years are governed by planetary positions, but the bathing dates within them are administered, not derived, and they are not ours to guess.",
-        "hi": "वही नियम। सिंहस्थ के वर्ष ग्रह-स्थिति से निर्धारित होते हैं, किंतु उनके भीतर स्नान की तिथियाँ प्रशासित होती हैं, व्युत्पन्न नहीं — और उनका अनुमान लगाना हमारा काम नहीं।"
+        "hi": "वही नियम। सिंहस्थ के वर्ष ग्रह-स्थिति से निर्धारित होते हैं, किंतु उनके भीतर स्नान की तिथियाँ प्रशासित होती हैं, व्युत्पन्न नहीं, और उनका अनुमान लगाना हमारा काम नहीं।"
       }
     },
     {
@@ -1196,7 +1196,7 @@
       "name": { "en": "Tamil, Bengali, Malayalam and Oriya solar calendars", "hi": "तमिल, बंगाली, मलयालम और ओड़िया सौर पंचांग" },
       "text": {
         "en": "Snanify follows the Amanta and Purnimanta lunar reckonings. The regional solar calendars are a different calendrical system with their own new year and their own festivals, and supporting them badly would be worse than not supporting them.",
-        "hi": "स्नानिफ़ाई अमांत और पूर्णिमांत चांद्र गणना का अनुसरण करता है। क्षेत्रीय सौर पंचांग एक भिन्न कालगणना है, अपने नववर्ष और अपने पर्वों सहित — और उन्हें अधूरे ढंग से समर्थन देना, न देने से बुरा होगा।"
+        "hi": "स्नानिफ़ाई अमांत और पूर्णिमांत चांद्र गणना का अनुसरण करता है। क्षेत्रीय सौर पंचांग एक भिन्न कालगणना है, अपने नववर्ष और अपने पर्वों सहित, और उन्हें अधूरे ढंग से समर्थन देना, न देने से बुरा होगा।"
       }
     },
     {

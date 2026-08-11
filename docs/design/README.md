@@ -1,4 +1,4 @@
-# Snanify — offering design
+# Snanify, offering design
 
 Six specs produced in parallel, each then attacked by an adversarial reviewer playing
 a practising Hindu from India and a skeptic of spiritual-tech startups.

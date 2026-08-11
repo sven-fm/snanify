@@ -1,7 +1,7 @@
 import { content } from "@/lib/content";
 import type { Lang } from "@/lib/i18n";
 import { navItem, type NavKey } from "@/lib/nav";
-import { Logo } from "@/components/Logo";
+import { Mark } from "@/components/Logo";
 
 const HEADINGS = {
   service: { en: "Service", hi: "सेवा" },
@@ -14,36 +14,42 @@ const COLUMNS: { heading: keyof typeof HEADINGS; keys: NavKey[] }[] = [
   { heading: "company", keys: ["how", "ethics", "faq", "refusals"] },
 ];
 
-/* Routes that do not exist yet. Rendered as plain text rather than as links —
+/* Routes that do not exist yet. Set as plain text rather than links -
    a footer full of href="#" is a worse signal than an honestly inert label. */
 const PENDING = {
   en: ["Privacy", "Terms", "Refunds"],
   hi: ["गोपनीयता", "शर्तें", "वापसी"],
 } as const;
 
+/** The imprint: everything the almanac prints at the back. */
 export function Footer({ lang }: { lang: Lang }) {
   const t = content[lang];
 
   return (
-    <footer className="border-t border-line/60">
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+    <footer className="border-t-2 border-rulestrong tint">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+        <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
-            <Logo />
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink2">{t.footer.tagline}</p>
+            <div className="flex items-center gap-3">
+              <Mark className="h-9 w-9 text-ink" />
+              <span className="wordmark text-lg text-ink">Snanify</span>
+            </div>
+            <div className="rule-thin mt-5" />
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink2">{t.footer.tagline}</p>
           </div>
 
           {COLUMNS.map((col) => (
             <div key={col.heading}>
-              <h3 className="inscription text-[0.62rem] text-ink">{HEADINGS[col.heading][lang]}</h3>
-              <ul className="mt-5 space-y-3">
+              <h3 className="label text-spot">{HEADINGS[col.heading][lang]}</h3>
+              <div className="rule-thin mt-3" />
+              <ul className="mt-4 space-y-2.5">
                 {col.keys.map((key) => {
                   const item = navItem(lang, key);
                   return (
                     <li key={key}>
                       <a
                         href={item.href}
-                        className="text-sm text-ink2 transition-colors hover:text-gold"
+                        className="text-sm text-ink2 underline decoration-rule decoration-1 transition-colors hover:text-spot hover:decoration-spot"
                       >
                         {item.label}
                       </a>
@@ -55,10 +61,11 @@ export function Footer({ lang }: { lang: Lang }) {
           ))}
 
           <div>
-            <h3 className="inscription text-[0.62rem] text-ink">{HEADINGS.legal[lang]}</h3>
-            <ul className="mt-5 space-y-3">
+            <h3 className="label text-spot">{HEADINGS.legal[lang]}</h3>
+            <div className="rule-thin mt-3" />
+            <ul className="mt-4 space-y-2.5">
               {PENDING[lang].map((label) => (
-                <li key={label} className="text-sm text-ink2/50">
+                <li key={label} className="text-sm text-ink2/60">
                   {label}
                 </li>
               ))}
@@ -66,7 +73,9 @@ export function Footer({ lang }: { lang: Lang }) {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-line/60 pt-7 text-xs text-ink2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="rule-double mt-12" />
+
+        <div className="flex flex-col gap-2 pt-5 text-xs text-ink2 sm:flex-row sm:items-center sm:justify-between">
           <p>{t.footer.made}</p>
           <p>{t.footer.rights}</p>
         </div>

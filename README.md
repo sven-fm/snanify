@@ -1,6 +1,6 @@
 # Snanify
 
-A fully digital snan service — your name, your gotra, your sankalp, offered at India's
+A fully digital snan service, your name, your gotra, your sankalp, offered at India's
 most sacred waters and streamed to wherever you stand.
 
 **Live:** https://snanify.vercel.app · **Repo:** https://github.com/sven-fm/snanify
@@ -22,8 +22,8 @@ npm run lint
 | ---------------- | ------- | -------------------------------------- |
 | `/`              | English | Landing page                           |
 | `/hi`            | Hindi   | Landing page                           |
-| `/sitemap.xml`   | —       | Generated, with reciprocal `hreflang`  |
-| `/robots.txt`    | —       | Static                                 |
+| `/sitemap.xml`   |,       | Generated, with reciprocal `hreflang`  |
+| `/robots.txt`    |,       | Static                                 |
 
 ## How the bilingual setup works
 
@@ -42,7 +42,7 @@ Both render the same `<Landing lang={...} />`. All copy lives in `src/lib/conten
 as one object keyed by locale, so a missing translation is a **type error**, not a
 silent English fallback.
 
-Build hrefs with `localePath(lang, "/path")` from `src/lib/i18n.ts` — never hand-write
+Build hrefs with `localePath(lang, "/path")` from `src/lib/i18n.ts`, never hand-write
 `/hi/...`, or renaming a route will strand one locale.
 
 ### Adding a page
@@ -57,17 +57,17 @@ Build hrefs with `localePath(lang, "/path")` from `src/lib/i18n.ts` — never ha
 Tokens live in `src/app/globals.css` as CSS custom properties, flipped by a `.dark`
 class on `<html>` and mapped into Tailwind v4 via `@theme inline`.
 
-**Palette** — night-ghat indigo, marigold brass, river teal, sindoor. Deliberately not
+**Palette**, night-ghat indigo, marigold brass, river teal, sindoor. Deliberately not
 flat saffron. `--gold` is the *text-safe* gold and darkens in light mode for contrast;
 `--sun` is the decorative disc colour and stays bright marigold in both themes.
 
-**Type** — Latin display is **Marcellus** (inscriptional, carved-stone), body is
+**Type**, Latin display is **Marcellus** (inscriptional, carved-stone), body is
 **Karla**. Devanagari has its own real pair: **Tiro Devanagari Hindi** for display and
 **Mukta** for body, swapped in via `html[lang="hi"]`. The `.inscription` utility drops
 its uppercase transform under `lang="hi"` because Devanagari has no case; `.wordmark`
 deliberately does not, so the logo stays Latin caps in every locale.
 
-**Theme** — set before first paint by an inline script in `RootShell`, so there is no
+**Theme**, set before first paint by an inline script in `RootShell`, so there is no
 flash. The toggle is stateless: the icon is chosen by CSS from the `.dark` class, so
 there is nothing to hydrate.
 
@@ -85,22 +85,22 @@ Shared primitives are in `src/components/ui/index.tsx`; site chrome in
 
 ## The logo
 
-The **Bindu Ripple** (`src/components/Logo.tsx`) — a bindu (sun / drop / point of
+The **Bindu Ripple** (`src/components/Logo.tsx`), a bindu (sun / drop / point of
 intention) above three widening ripples, clipped into a struck-coin seal. Read one way
 it is dawn over a ghat; read the other it is the instant a body enters water.
 
-- `<Mark />` — the seal alone
-- `<Logo />` — seal + wordmark lockup
-- `<SealAnimated />` — hero treatment with travelling ripples and a 24-ray chakra
+- `<Mark />`, the seal alone
+- `<Logo />`, seal + wordmark lockup
+- `<SealAnimated />`, hero treatment with travelling ripples and a 24-ray chakra
 
 `public/icon.svg` is a standalone copy for the favicon (no CSS variables).
 
 ## Deployment
 
-Vercel project `snanify`, connected to the GitHub repo — pushes to `main` deploy
+Vercel project `snanify`, connected to the GitHub repo, pushes to `main` deploy
 automatically.
 
-### Custom domain — action required
+### Custom domain, action required
 
 `snanify.com` is registered at **Porkbun** and still uses Porkbun nameservers, so
 Vercel cannot issue a certificate yet. Pick one:

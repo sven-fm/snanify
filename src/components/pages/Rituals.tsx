@@ -6,12 +6,12 @@ import { Card, Section, SectionHeader, Eyebrow, LinkButton, StatusBadge } from "
 import { ritualsContent, type Honesty, type Note, type RitualsCopy } from "@/content/rituals";
 
 /**
- * /rituals — the full offering catalog.
+ * /rituals, the full offering catalog.
  *
  * The page is organised around the one structural claim the catalog rests on:
  * the price axis is how the rite is held (samuhik / ekantik), not how many
- * names are read. Everything else — the modules, the two ladders, the refusal
- * list — hangs off that.
+ * names are read. Everything else, the modules, the two ladders, the refusal
+ * list, hangs off that.
  *
  * Every rite renders `honesty.is` and `honesty.isNot`. Both are required
  * fields on the Rite type, so a rite without them cannot be added to the
@@ -98,8 +98,7 @@ export function Rituals({ lang }: { lang: Lang }) {
       usd: r.usd,
       inr: r.inr,
       sub: false,
-    },
-    ...(r.variant
+    }, ...(r.variant
       ? [
           {
             key: r.variant.sku,
@@ -294,7 +293,7 @@ export function Rituals({ lang }: { lang: Lang }) {
         <Section id="rites" className="!scroll-mt-32">
           <SectionHeader eyebrow={t.rites.eyebrow} title={t.rites.title} lede={t.rites.lede} />
 
-          {/* PLACEHOLDER pricing — stated as provisional where the figures are,
+          {/* PLACEHOLDER pricing, stated as provisional where the figures are,
               not only in a source comment. */}
           <p className="mt-9 max-w-2xl border-l-2 border-gold/50 pl-6 text-sm leading-relaxed text-ink2">
             {t.priceNote}

@@ -7,15 +7,13 @@ const SITE = "https://www.snanify.com";
 /** Locale-independent routes, in the public English shape. */
 const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "monthly" }[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
-  { path: "/rivers", priority: 0.9, changeFrequency: "monthly" },
-  ...RIVER_SLUGS.map((slug) => ({
+  { path: "/rivers", priority: 0.9, changeFrequency: "monthly" }, ...RIVER_SLUGS.map((slug) => ({
     path: `/rivers/${slug}`,
     priority: 0.8,
     changeFrequency: "monthly" as const,
   })),
   { path: "/rituals", priority: 0.9, changeFrequency: "monthly" },
-  { path: "/muhurat", priority: 0.9, changeFrequency: "weekly" },
-  ...OCCASION_SLUGS.map((slug) => ({
+  { path: "/muhurat", priority: 0.9, changeFrequency: "weekly" }, ...OCCASION_SLUGS.map((slug) => ({
     path: `/muhurat/${slug}`,
     priority: 0.7,
     changeFrequency: "weekly" as const,
@@ -33,7 +31,7 @@ const hi = (path: string) => (path === "/" ? "/hi" : `/hi${path}`);
 
 /**
  * Both locales are listed as separate entries, each carrying the reciprocal
- * hreflang pair — a page missing from its own alternates is invisible to the
+ * hreflang pair, a page missing from its own alternates is invisible to the
  * locale it serves.
  */
 export default function sitemap(): MetadataRoute.Sitemap {

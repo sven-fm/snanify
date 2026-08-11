@@ -89,7 +89,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
         <section className="relative overflow-hidden">
           <div className="halo" aria-hidden="true" />
           {/* Masked so the strands fade out before they reach the permission
-              notice — unmasked, they read as strikethrough across the copy
+              notice, unmasked, they read as strikethrough across the copy
               that most needs to be legible. */}
           <Waterlines
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] w-full opacity-70"

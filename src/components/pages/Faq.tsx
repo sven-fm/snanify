@@ -6,7 +6,7 @@ import { Eyebrow } from "@/components/ui";
 import { ETHICS_MAIL, faqContent } from "@/content/trust";
 
 /**
- * /faq — <details>/<summary>, so every answer is reachable with JavaScript off
+ * /faq, <details>/<summary>, so every answer is reachable with JavaScript off
  * and every question is anchor-linkable (/faq#refund). No `name` attribute:
  * making the group exclusive would close an answer the reader is comparing
  * against another one.

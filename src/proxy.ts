@@ -18,7 +18,7 @@ export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const first = pathname.split("/")[1];
 
-  // /en/... is never canonical — collapse it to the unprefixed form.
+  // /en/... is never canonical, collapse it to the unprefixed form.
   if (first === DEFAULT) {
     const rest = pathname.slice(DEFAULT.length + 1) || "/";
     return NextResponse.redirect(new URL(rest + search, req.url), 308);

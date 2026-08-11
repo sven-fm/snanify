@@ -52,7 +52,7 @@ export function ProvisionalBadge({ lang, short = false }: { lang: Lang; short?: 
    A day drawn as an arc, with the four windows marked where they fall. The
    geometry is the same arithmetic the window records carry, laid out from an
    assumed 06:00 sunrise and 18:00 sunset; it is a picture of the rule, not of
-   any date. Hidden below `sm` — the full definition list below carries every
+   any date. Hidden below `sm`, the full definition list below carries every
    fact it shows.                                                           */
 
 const T0 = 4; // the diagram spans 04:00 to 20:00
@@ -293,7 +293,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
         {/* ---------------- the almanac spine ----------------
             Deliberately not a card grid: an almanac reads down a column, month
             by month, and shows the empty months too. Nothing is featured at the
-            top — the nearest occasion here is Pitru Paksha, and putting a
+            top, the nearest occasion here is Pitru Paksha, and putting a
             bereavement season in a hero slot is the exact pressure this
             product refuses to apply. */}
         <Section id="spine">
@@ -390,7 +390,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
           <SectionHeader eyebrow={t.clock.eyebrow} title={t.clock.title} lede={t.clock.lede} />
 
           <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-14">
-            {/* the ghat clock — primary, never a parenthetical */}
+            {/* the ghat clock, primary, never a parenthetical */}
             <div className="rounded-2xl border border-gold/45 bg-bg2 p-7 shadow-[0_30px_80px_-50px_var(--gold)]">
               <h3 className="inscription text-[0.58rem] text-gold">{t.clock.atTheGhat}</h3>
               <p className="display mt-5 text-3xl text-ink">

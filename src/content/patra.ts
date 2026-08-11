@@ -1,17 +1,17 @@
 import type { Lang } from "@/lib/content";
 
 /* ---------------------------------------------------------------------------
-   The Sankalp Patra — copy, document labels, and the specimen record.
+   The Sankalp Patra, copy, document labels, and the specimen record.
 
    Two things live here:
 
-   1. `patraContent` — every user-facing string on /patra and /patra/sample,
+   1. `patraContent`, every user-facing string on /patra and /patra/sample,
       keyed by locale. `hi` is checked against the shape of `en`, so a missing
       translation is a compile error rather than an English word in a Hindi
       page.
-   2. `specimenPatra()` — the invented record rendered on /patra/sample.
+   2. `specimenPatra()`, the invented record rendered on /patra/sample.
       EVERY value in it is PLACEHOLDER. The names are the placeholder names of
-      the Sanskrit grammarians (Devadatta, Yajnadatta — the equivalents of
+      the Sanskrit grammarians (Devadatta, Yajnadatta, the equivalents of
       "John Doe"); the ritvik ID is all zeros; the tithi was not computed from
       any panchang; the identifier is not issued against anything. The sample
       page states all of this in the UI, and the document itself is watermarked.
@@ -34,7 +34,7 @@ export type PatraData = {
   /** 22-character base58. Unguessable, so a patra is link-shareable. */
   patraId: string;
   names: PatraNameEntry[];
-  /** Omitted when the family does not use one — the sheet then prints "Not stated". */
+  /** Omitted when the family does not use one, the sheet then prints "Not stated". */
   gotra?: string;
   /** The yajaman's own words. Printed on their copy; never returned by /verify. */
   sankalpText?: string;
@@ -57,7 +57,7 @@ export type PatraData = {
   /** The second at which the name is spoken aloud in the recording. */
   naamKshan?: { timecode: string; clock?: string };
   issuedOn: string;
-  /** Displayed without a scheme — it is read off paper as often as clicked. */
+  /** Displayed without a scheme, it is read off paper as often as clicked. */
   verifyUrl: string;
 };
 
@@ -65,20 +65,20 @@ export type PatraData = {
 
 const en = {
   meta: {
-    title: "The Sankalp Patra — what you receive",
+    title: "The Sankalp Patra, what you receive",
     description:
       "The Sankalp Patra records who a rite was offered for, which water it was performed in, the hour it was performed, and the second the name was spoken. See a watermarked specimen and how anyone can verify one.",
   },
   sampleMeta: {
     title: "A specimen Sankalp Patra",
     description:
-      "A full, watermarked specimen of the Sankalp Patra. Every value on it is invented — the names are placeholder names and the identifier is not issued against anything.",
+      "A full, watermarked specimen of the Sankalp Patra. Every value on it is invented, the names are placeholder names and the identifier is not issued against anything.",
   },
 
   hero: {
     eyebrow: "The Sankalp Patra",
     title: "The record of what was done.",
-    lede: "Every snan ends in one document. It names the person the rite was offered for, the water it was performed in, the hour it was performed, and the second the name was spoken aloud. It is the record of an act — not a promise about what follows from it.",
+    lede: "Every snan ends in one document. It names the person the rite was offered for, the water it was performed in, the hour it was performed, and the second the name was spoken aloud. It is the record of an act, not a promise about what follows from it.",
     primary: "See a specimen",
     secondary: "Verify a patra",
     previewCaption: "Specimen. Every value on it is invented.",
@@ -108,7 +108,7 @@ const en = {
       {
         n: 4,
         name: "The sankalp",
-        body: "Your own words, verbatim and unedited. It is printed on your copy of the patra and nowhere else — a stranger verifying the patra never sees it.",
+        body: "Your own words, verbatim and unedited. It is printed on your copy of the patra and nowhere else, a stranger verifying the patra never sees it.",
       },
       {
         n: 5,
@@ -128,7 +128,7 @@ const en = {
       {
         n: 8,
         name: "The ritvik",
-        body: "The person who actually performed the rite — never the rostered name if somebody else stood in. Until a ritvik has agreed in writing to be named, the line stays empty.",
+        body: "The person who actually performed the rite, never the rostered name if somebody else stood in. Until a ritvik has agreed in writing to be named, the line stays empty.",
       },
       {
         n: 9,
@@ -138,7 +138,7 @@ const en = {
       {
         n: 10,
         name: "The seal, and the line beneath it",
-        body: "The Bindu Ripple, and one sentence stating exactly what the document attests to — and what it does not.",
+        body: "The Bindu Ripple, and one sentence stating exactly what the document attests to, and what it does not.",
       },
     ],
   },
@@ -152,7 +152,7 @@ const en = {
       "It carries no registry number, no seal of any temple, and no crest we have not been given the right to use.",
       "It never names a person who has not agreed in writing to be named on it.",
       "It never carries a tithi, nakshatra or muhurat that has not been confirmed against a named panchang source.",
-      "It makes no claim about what follows from the rite — not for health, money, examinations, marriage or a court date.",
+      "It makes no claim about what follows from the rite, not for health, money, examinations, marriage or a court date.",
       "It is not evidence in anybody's family dispute. It records an act, not a standing.",
     ],
     attestationLabel: "Printed on every patra",
@@ -171,23 +171,23 @@ const en = {
       },
       {
         h: "They open the verification page",
-        b: "snanify.com/verify — no account, no sign-in, no cookie set, nothing to install.",
+        b: "snanify.com/verify, no account, no sign-in, no cookie set, nothing to install.",
       },
       {
         h: "They are told whether it stands",
-        b: "Issued, withdrawn, or unknown — and beyond that, only the four facts listed below.",
+        b: "Issued, withdrawn, or unknown, and beyond that, only the four facts listed below.",
       },
     ],
     showsHeading: "What verification returns",
     shows: [
-      "The name, masked — R••••• S•••••",
+      "The name, masked, R••••• S•••••",
       "The river and the ghat",
       "The date the rite was performed",
       "The date the patra was issued, and whether it still stands",
     ],
     hidesHeading: "What it never returns",
     hides: [
-      "The sankalp — your words are never shown to a verifier",
+      "The sankalp, your words are never shown to a verifier",
       "The full name",
       "Any other name on the same booking",
       "Your email, your phone, or what was paid",
@@ -201,7 +201,7 @@ const en = {
     demoIssuedLabel: "Patra issued",
     demoIssued: "14 May 2026",
     demoCaption:
-      "Illustration. This response is composed for this page — no patra with this identifier exists.",
+      "Illustration. This response is composed for this page, no patra with this identifier exists.",
     cta: "Go to verification",
   },
 
@@ -215,7 +215,7 @@ const en = {
       },
       {
         h: "The link preview says less than the page",
-        b: "Paste a patra link into a chat and the preview shows the seal, the ghat and the date. Names offered in remembrance are never placed in a preview image — a death is not a thumbnail.",
+        b: "Paste a patra link into a chat and the preview shows the seal, the ghat and the date. Names offered in remembrance are never placed in a preview image, a death is not a thumbnail.",
       },
       {
         h: "You can withdraw it",
@@ -238,7 +238,7 @@ const en = {
       },
       {
         h: "A file to keep",
-        b: "A PDF in both A4 and US Letter, with Devanagari set in Tiro rather than substituted — so a name is never rendered in the wrong face.",
+        b: "A PDF in both A4 and US Letter, with Devanagari set in Tiro rather than substituted, so a name is never rendered in the wrong face.",
       },
       {
         h: "An image to send",
@@ -246,12 +246,12 @@ const en = {
       },
     ],
     nothingShipped:
-      "Nothing is posted to you. The Sankalp Patra is digital, like everything else here — there is no parcel, no prasad, no courier.",
+      "Nothing is posted to you. The Sankalp Patra is digital, like everything else here, there is no parcel, no prasad, no courier.",
   },
 
   closing: {
     title: "Look at one before you decide anything.",
-    lede: "The specimen is the whole document at full size — watermarked, and plain about every invented value printed on it.",
+    lede: "The specimen is the whole document at full size, watermarked, and plain about every invented value printed on it.",
     primary: "See the specimen",
     secondary: "How the rite is performed",
   },
@@ -259,7 +259,7 @@ const en = {
   sample: {
     eyebrow: "Specimen",
     title: "A Sankalp Patra, in full.",
-    lede: "The layout, the type and the seal are exactly what is issued. Everything written on it is invented. The names are the placeholder names of the Sanskrit grammarians — Devadatta and Yajnadatta, the equivalents of 'John Doe' — and the identifier resolves to nothing.",
+    lede: "The layout, the type and the seal are exactly what is issued. Everything written on it is invented. The names are the placeholder names of the Sanskrit grammarians, Devadatta and Yajnadatta, the equivalents of 'John Doe', and the identifier resolves to nothing.",
     noticeHeading: "Every value on this specimen is invented",
     noticeItems: [
       "The two names, the relation between them, and the gotra.",
@@ -294,7 +294,7 @@ const en = {
      that explains it can never drift apart. */
   sheet: {
     aria: "Sankalp Patra",
-    ariaSpecimen: "Sankalp Patra — specimen, not a record of any rite",
+    ariaSpecimen: "Sankalp Patra, specimen, not a record of any rite",
     titleLatin: "Sankalp Patra",
     subtitle: "A record of a rite performed at the ghat",
     folioLabel: "Patra",
@@ -318,26 +318,26 @@ const en = {
     footerLine:
       "This patra records that the rites named above were performed on your behalf, at the place and hour named, by the person named. It is a record of what was done. It is not a promise of what will follow.",
     specimenChip: "Specimen",
-    specimenBanner: "Specimen — nothing on this sheet records a real rite, and the identifier is not issued.",
+    specimenBanner: "Specimen, nothing on this sheet records a real rite, and the identifier is not issued.",
   },
 };
 
 const hi: typeof en = {
   meta: {
-    title: "संकल्प पत्र — आपको क्या मिलता है",
+    title: "संकल्प पत्र, आपको क्या मिलता है",
     description:
       "संकल्प पत्र में अंकित होता है कि अनुष्ठान किसके निमित्त हुआ, किस जल में हुआ, किस समय हुआ, और रिकॉर्डिंग में किस क्षण नाम पुकारा गया। नमूना देखिए और जानिए कि कोई भी इसका सत्यापन कैसे कर सकता है।",
   },
   sampleMeta: {
     title: "संकल्प पत्र का नमूना",
     description:
-      "संकल्प पत्र का पूरा नमूना, नमूने की छाप सहित। इस पर लिखा हर विवरण कल्पित है — नाम उदाहरण-नाम हैं और उस पहचान से कोई पत्र जारी नहीं हुआ।",
+      "संकल्प पत्र का पूरा नमूना, नमूने की छाप सहित। इस पर लिखा हर विवरण कल्पित है, नाम उदाहरण-नाम हैं और उस पहचान से कोई पत्र जारी नहीं हुआ।",
   },
 
   hero: {
     eyebrow: "संकल्प पत्र",
     title: "जो किया गया, उसका अभिलेख।",
-    lede: "हर स्नान एक दस्तावेज़ पर पूर्ण होता है। उसमें वह नाम है जिसके निमित्त अनुष्ठान हुआ, वह जल जिसमें हुआ, वह समय जिस पर हुआ, और वह क्षण जब नाम स्वर में पुकारा गया। यह किए गए कार्य का अभिलेख है — आगे क्या होगा, इसका वचन नहीं।",
+    lede: "हर स्नान एक दस्तावेज़ पर पूर्ण होता है। उसमें वह नाम है जिसके निमित्त अनुष्ठान हुआ, वह जल जिसमें हुआ, वह समय जिस पर हुआ, और वह क्षण जब नाम स्वर में पुकारा गया। यह किए गए कार्य का अभिलेख है, आगे क्या होगा, इसका वचन नहीं।",
     primary: "नमूना देखें",
     secondary: "किसी पत्र का सत्यापन करें",
     previewCaption: "नमूना। इसका हर विवरण कल्पित है।",
@@ -357,7 +357,7 @@ const hi: typeof en = {
       {
         n: 2,
         name: "नाम",
-        body: "जैसे आपने दिए, उसी लिपि में — रोमन और देवनागरी, दोनों में अंकित। घाट पर नाम इसी रूप में पुकारे जाते हैं।",
+        body: "जैसे आपने दिए, उसी लिपि में, रोमन और देवनागरी, दोनों में अंकित। घाट पर नाम इसी रूप में पुकारे जाते हैं।",
       },
       {
         n: 3,
@@ -367,7 +367,7 @@ const hi: typeof en = {
       {
         n: 4,
         name: "संकल्प",
-        body: "आपके अपने शब्द, ज्यों के त्यों, बिना किसी संपादन के। यह केवल आपकी प्रति पर अंकित होता है — सत्यापन करने वाले किसी अन्य व्यक्ति को यह कभी नहीं दिखता।",
+        body: "आपके अपने शब्द, ज्यों के त्यों, बिना किसी संपादन के। यह केवल आपकी प्रति पर अंकित होता है, सत्यापन करने वाले किसी अन्य व्यक्ति को यह कभी नहीं दिखता।",
       },
       {
         n: 5,
@@ -382,22 +382,22 @@ const hi: typeof en = {
       {
         n: 7,
         name: "तिथि",
-        body: "केवल तभी अंकित, जब तिथि किसी नामित पंचांग से पुष्ट हो। जहाँ पुष्टि न हो, वहाँ यह पंक्ति अनुमान से नहीं भरी जाती — वह रहती ही नहीं।",
+        body: "केवल तभी अंकित, जब तिथि किसी नामित पंचांग से पुष्ट हो। जहाँ पुष्टि न हो, वहाँ यह पंक्ति अनुमान से नहीं भरी जाती, वह रहती ही नहीं।",
       },
       {
         n: 8,
         name: "ऋत्विक",
-        body: "वह व्यक्ति जिसने वास्तव में अनुष्ठान किया — यदि किसी और ने स्थान लिया हो तो सूची में लिखा नाम कभी नहीं। जब तक कोई ऋत्विक लिखित सहमति न दे, यह पंक्ति रिक्त रहती है।",
+        body: "वह व्यक्ति जिसने वास्तव में अनुष्ठान किया, यदि किसी और ने स्थान लिया हो तो सूची में लिखा नाम कभी नहीं। जब तक कोई ऋत्विक लिखित सहमति न दे, यह पंक्ति रिक्त रहती है।",
       },
       {
         n: 9,
         name: "नाम क्षण",
-        body: "रिकॉर्डिंग में वह क्षण जब नाम स्वर में पुकारा जाता है, समय-बिंदु के रूप में — ताकि पूरा सत्र देखे बिना वह क्षण मिल जाए।",
+        body: "रिकॉर्डिंग में वह क्षण जब नाम स्वर में पुकारा जाता है, समय-बिंदु के रूप में, ताकि पूरा सत्र देखे बिना वह क्षण मिल जाए।",
       },
       {
         n: 10,
         name: "मुद्रा, और उसके नीचे की पंक्ति",
-        body: "बिंदु-तरंग मुद्रा, और एक वाक्य जो स्पष्ट कहता है कि यह पत्र किस बात की पुष्टि करता है — और किस बात की नहीं।",
+        body: "बिंदु-तरंग मुद्रा, और एक वाक्य जो स्पष्ट कहता है कि यह पत्र किस बात की पुष्टि करता है, और किस बात की नहीं।",
       },
     ],
   },
@@ -407,11 +407,11 @@ const hi: typeof en = {
     title: "दस्तावेज़ उतना ही खरा होता है, जितने दावों से वह इनकार करता है।",
     lede: "प्रमाणपत्र अपना बल उन बातों से लेता है जो उस पर छपी होती हैं। ये वे बातें हैं जो हम कभी नहीं छापेंगे।",
     points: [
-      "इस पर ‘प्रमाणित’ नहीं लिखा। किसी ने इसे प्रमाणित नहीं किया — हमने अनुष्ठान किया और जो किया, वही लिख दिया।",
+      "इस पर ‘प्रमाणित’ नहीं लिखा। किसी ने इसे प्रमाणित नहीं किया, हमने अनुष्ठान किया और जो किया, वही लिख दिया।",
       "न कोई रजिस्ट्री संख्या, न किसी मंदिर की मुहर, न कोई ऐसा चिह्न जिसके प्रयोग का अधिकार हमें नहीं मिला।",
       "जिस व्यक्ति ने लिखित सहमति न दी हो, उसका नाम इस पर कभी नहीं आता।",
       "जो तिथि, नक्षत्र या मुहूर्त किसी नामित पंचांग से पुष्ट न हो, वह इस पर कभी अंकित नहीं होता।",
-      "अनुष्ठान के बाद क्या होगा, इसका कोई दावा इस पर नहीं — न आरोग्य का, न धन का, न परीक्षा, विवाह या मुकदमे का।",
+      "अनुष्ठान के बाद क्या होगा, इसका कोई दावा इस पर नहीं, न आरोग्य का, न धन का, न परीक्षा, विवाह या मुकदमे का।",
       "यह किसी पारिवारिक विवाद का प्रमाण नहीं है। यह एक कार्य का अभिलेख है, किसी हैसियत का नहीं।",
     ],
     attestationLabel: "हर पत्र पर अंकित",
@@ -430,23 +430,23 @@ const hi: typeof en = {
       },
       {
         h: "वे सत्यापन पृष्ठ खोलते हैं",
-        b: "snanify.com/verify — न खाता, न लॉगिन, न कोई कुकी, न कुछ इंस्टॉल करने की आवश्यकता।",
+        b: "snanify.com/verify, न खाता, न लॉगिन, न कोई कुकी, न कुछ इंस्टॉल करने की आवश्यकता।",
       },
       {
         h: "उन्हें बता दिया जाता है कि पत्र वैध है या नहीं",
-        b: "जारी, वापस लिया गया, या अज्ञात — और इसके आगे केवल नीचे दिए गए चार तथ्य।",
+        b: "जारी, वापस लिया गया, या अज्ञात, और इसके आगे केवल नीचे दिए गए चार तथ्य।",
       },
     ],
     showsHeading: "सत्यापन में क्या मिलता है",
     shows: [
-      "नाम, आंशिक रूप से ढका हुआ — R••••• S•••••",
+      "नाम, आंशिक रूप से ढका हुआ, R••••• S•••••",
       "नदी और घाट",
       "जिस दिन अनुष्ठान संपन्न हुआ, वह दिनांक",
       "पत्र जारी होने का दिनांक, और वह अब भी वैध है या नहीं",
     ],
     hidesHeading: "क्या कभी नहीं मिलता",
     hides: [
-      "संकल्प — आपके शब्द सत्यापनकर्ता को कभी नहीं दिखाए जाते",
+      "संकल्प, आपके शब्द सत्यापनकर्ता को कभी नहीं दिखाए जाते",
       "पूरा नाम",
       "उसी बुकिंग में सम्मिलित कोई अन्य नाम",
       "आपका ईमेल, आपका फ़ोन, या दी गई राशि",
@@ -460,7 +460,7 @@ const hi: typeof en = {
     demoIssuedLabel: "पत्र जारी",
     demoIssued: "14 मई 2026",
     demoCaption:
-      "यह चित्रण है। यह उत्तर केवल इसी पृष्ठ के लिए रचा गया है — इस पहचान का कोई पत्र मौजूद नहीं।",
+      "यह चित्रण है। यह उत्तर केवल इसी पृष्ठ के लिए रचा गया है, इस पहचान का कोई पत्र मौजूद नहीं।",
     cta: "सत्यापन पृष्ठ पर जाएँ",
   },
 
@@ -474,7 +474,7 @@ const hi: typeof en = {
       },
       {
         h: "लिंक की झलक पृष्ठ से कम कहती है",
-        b: "पत्र का लिंक किसी चैट में भेजने पर झलक में मुद्रा, घाट और दिनांक ही दिखते हैं। स्मरण में अर्पित नाम कभी झलक-चित्र में नहीं रखे जाते — मृत्यु किसी की झलक-तस्वीर नहीं होती।",
+        b: "पत्र का लिंक किसी चैट में भेजने पर झलक में मुद्रा, घाट और दिनांक ही दिखते हैं। स्मरण में अर्पित नाम कभी झलक-चित्र में नहीं रखे जाते, मृत्यु किसी की झलक-तस्वीर नहीं होती।",
       },
       {
         h: "आप इसे वापस ले सकते हैं",
@@ -493,11 +493,11 @@ const hi: typeof en = {
     items: [
       {
         h: "एक स्थायी पृष्ठ",
-        b: "स्थायी लिंक, फ़ोन पर सुपाठ्य, और ब्राउज़र से सीधे A4 या US Letter पर छपने योग्य — हाशिये पहले से निर्धारित।",
+        b: "स्थायी लिंक, फ़ोन पर सुपाठ्य, और ब्राउज़र से सीधे A4 या US Letter पर छपने योग्य, हाशिये पहले से निर्धारित।",
       },
       {
         h: "सहेजने योग्य फ़ाइल",
-        b: "A4 और US Letter, दोनों नापों में PDF, जिसमें देवनागरी तिरो में ही सेट होती है, किसी विकल्प फ़ॉन्ट में नहीं — ताकि कोई नाम कभी ग़लत लिपि-रूप में न छपे।",
+        b: "A4 और US Letter, दोनों नापों में PDF, जिसमें देवनागरी तिरो में ही सेट होती है, किसी विकल्प फ़ॉन्ट में नहीं, ताकि कोई नाम कभी ग़लत लिपि-रूप में न छपे।",
       },
       {
         h: "भेजने योग्य चित्र",
@@ -505,12 +505,12 @@ const hi: typeof en = {
       },
     ],
     nothingShipped:
-      "आपको डाक से कुछ नहीं भेजा जाता। संकल्प पत्र भी यहाँ की हर वस्तु की भाँति डिजिटल है — न पार्सल, न प्रसाद, न कुरियर।",
+      "आपको डाक से कुछ नहीं भेजा जाता। संकल्प पत्र भी यहाँ की हर वस्तु की भाँति डिजिटल है, न पार्सल, न प्रसाद, न कुरियर।",
   },
 
   closing: {
     title: "कुछ भी तय करने से पहले, एक बार देख लीजिए।",
-    lede: "नमूना पूरा दस्तावेज़ है, पूरे आकार में — नमूने की छाप सहित, और उस पर छपे हर कल्पित विवरण के बारे में स्पष्ट।",
+    lede: "नमूना पूरा दस्तावेज़ है, पूरे आकार में, नमूने की छाप सहित, और उस पर छपे हर कल्पित विवरण के बारे में स्पष्ट।",
     primary: "नमूना देखें",
     secondary: "अनुष्ठान कैसे संपन्न होता है",
   },
@@ -518,7 +518,7 @@ const hi: typeof en = {
   sample: {
     eyebrow: "नमूना",
     title: "संपूर्ण संकल्प पत्र।",
-    lede: "विन्यास, अक्षर और मुद्रा ठीक वही हैं जो जारी किए गए पत्र पर होते हैं। उस पर लिखा हर विवरण कल्पित है। नाम संस्कृत व्याकरण के परंपरागत उदाहरण-नाम हैं — देवदत्त और यज्ञदत्त — और उस पर दी गई पहचान से कुछ नहीं खुलता।",
+    lede: "विन्यास, अक्षर और मुद्रा ठीक वही हैं जो जारी किए गए पत्र पर होते हैं। उस पर लिखा हर विवरण कल्पित है। नाम संस्कृत व्याकरण के परंपरागत उदाहरण-नाम हैं, देवदत्त और यज्ञदत्त, और उस पर दी गई पहचान से कुछ नहीं खुलता।",
     noticeHeading: "इस नमूने का प्रत्येक विवरण कल्पित है",
     noticeItems: [
       "दोनों नाम, उनका पारस्परिक संबंध, और गोत्र।",
@@ -551,7 +551,7 @@ const hi: typeof en = {
 
   sheet: {
     aria: "संकल्प पत्र",
-    ariaSpecimen: "संकल्प पत्र — नमूना, किसी अनुष्ठान का अभिलेख नहीं",
+    ariaSpecimen: "संकल्प पत्र, नमूना, किसी अनुष्ठान का अभिलेख नहीं",
     titleLatin: "Sankalp Patra",
     subtitle: "घाट पर संपन्न अनुष्ठान का अभिलेख",
     folioLabel: "पत्र",
@@ -575,7 +575,7 @@ const hi: typeof en = {
     footerLine:
       "यह पत्र इस बात का अभिलेख है कि ऊपर वर्णित अनुष्ठान, वर्णित स्थान और समय पर, वर्णित व्यक्ति द्वारा, आपके निमित्त संपन्न हुए। यह किए गए कार्य का अभिलेख है। आगे क्या होगा, इसका वचन नहीं।",
     specimenChip: "नमूना",
-    specimenBanner: "नमूना — इस पत्र पर किसी वास्तविक अनुष्ठान का अभिलेख नहीं, और यह पहचान जारी नहीं हुई है।",
+    specimenBanner: "नमूना, इस पत्र पर किसी वास्तविक अनुष्ठान का अभिलेख नहीं, और यह पहचान जारी नहीं हुई है।",
   },
 };
 
@@ -591,7 +591,7 @@ export const SPECIMEN_WATERMARK_TEXT = "SPECIMEN · नमूना";
  *
  * Devadatta and Yajnadatta are the traditional placeholder names of Sanskrit
  * grammar. The ritvik ID is all zeros. The tithi below was NOT computed from a
- * panchang and must never be presented as one — on an issued patra the tithi
+ * panchang and must never be presented as one, on an issued patra the tithi
  * line is omitted unless `confidence === "sourced"`; it is marked "sourced"
  * here only so the specimen can demonstrate the layout, and /patra/sample says
  * so on the page. The patra identifier is the example ID from the design spec
@@ -617,7 +617,7 @@ export function specimenPatra(lang: Lang): PatraData {
     ghat: hi ? "हर की पौड़ी" : "Har Ki Pauri",
     place: hi ? "हरिद्वार" : "Haridwar",
     performedOn: hi ? "14 मई 2026" : "14 May 2026",
-    performedIst: "04:24 – 05:12 IST",
+    performedIst: "04:24, 05:12 IST",
     performedLocal: hi ? "14 मई 2026 · 00:54 CEST" : "14 May 2026 · 00:54 CEST",
     tithi: {
       label: hi ? "वैशाख शुक्ल पक्ष" : "Vaishakha, Shukla Paksha",

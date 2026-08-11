@@ -1,12 +1,13 @@
 import Link from "next/link";
 
-/* Shared primitives. Everything visual that more than one page needs lives
-   here so the ghat pages, booking flow and marketing pages stay one system. */
+/* Shared primitives, cut for the printed panchang. Everything here is flat:
+   solid fills, hard rules, one spot colour. No radius, no soft shadow. */
 
+/** A section label, set as a ruled column heading. */
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="inscription flex items-center gap-3 text-[0.68rem] text-gold">
-      <span className="h-px w-8 bg-gold/50" />
+    <p className="label flex items-center gap-3 text-spot">
+      <span className="h-[2px] w-6 bg-spot" />
       {children}
     </p>
   );
@@ -24,10 +25,10 @@ export function SectionHeader({
   className?: string;
 }) {
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`max-w-3xl ${className}`}>
       {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h2 className="display mt-5 text-4xl sm:text-5xl">{title}</h2>
-      {lede && <p className="mt-5 text-ink2">{lede}</p>}
+      <h2 className="display mt-4 text-[2.1rem] sm:text-[2.9rem]">{title}</h2>
+      {lede && <p className="mt-5 max-w-2xl leading-relaxed text-ink2">{lede}</p>}
     </div>
   );
 }
@@ -46,21 +47,22 @@ export function Section({
   return (
     <section
       id={id}
-      className={`scroll-mt-20 border-t border-line/60 ${tinted ? "bg-bg2/40" : ""} ${className}`}
+      className={`scroll-mt-16 border-t-2 border-rulestrong ${tinted ? "tint" : ""} ${className}`}
     >
-      <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-28">{children}</div>
+      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">{children}</div>
     </section>
   );
 }
 
 const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm transition-all duration-300 whitespace-nowrap";
+  "label inline-flex items-center justify-center gap-2 px-6 py-3.5 transition-colors duration-150";
 
 const buttonVariants = {
-  solid:
-    "bg-gold text-bg font-medium hover:brightness-110 shadow-[0_8px_30px_-12px_var(--gold)] hover:shadow-[0_12px_36px_-10px_var(--gold)] hover:-translate-y-0.5",
-  ghost: "border border-line text-ink hover:border-gold hover:text-gold",
-  quiet: "text-ink2 hover:text-gold",
+  /* The press impression: solid spot colour, inverted type. */
+  solid: "bg-spot text-paper hover:bg-ink hover:text-paper",
+  /* A ruled box that fills with ink on hover. */
+  ghost: "border border-rulestrong text-ink hover:bg-ink hover:text-paper",
+  quiet: "text-ink underline decoration-spot decoration-2 hover:text-spot px-0 py-1",
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;
@@ -82,7 +84,6 @@ export function CTA({
   return <span className={buttonClass(variant, className)}>{children}</span>;
 }
 
-/** A real link styled as a button. */
 export function LinkButton({
   href,
   children,
@@ -101,6 +102,10 @@ export function LinkButton({
   );
 }
 
+/**
+ * A ruled block. `featured` gets the misregistered second impression rather
+ * than a glow, the two-colour press slipping by a few points.
+ */
 export function Card({
   children,
   className = "",
@@ -112,11 +117,7 @@ export function Card({
 }) {
   return (
     <div
-      className={`rounded-2xl border p-8 transition-all duration-500 ${
-        featured
-          ? "border-gold/60 bg-bg2 shadow-[0_30px_80px_-40px_var(--gold)]"
-          : "border-line/70 bg-bg2/40 hover:border-ink2/40"
-      } ${className}`}
+      className={`boxed p-7 ${featured ? "misregister border-2" : ""} ${className}`}
     >
       {children}
     </div>
@@ -124,8 +125,8 @@ export function Card({
 }
 
 /**
- * Status pill. The dot only pulses when `live` is true — a pulsing dot reads as
- * "a stream is running right now", so it must never decorate a static label.
+ * A boxed label. The square only fills with the spot colour when something is
+ * genuinely live, it must never decorate a static line.
  */
 export function StatusBadge({
   children,
@@ -135,12 +136,32 @@ export function StatusBadge({
   live?: boolean;
 }) {
   return (
-    <p className="inscription inline-flex items-center gap-2.5 rounded-full border border-line/70 bg-bg2/60 px-4 py-1.5 text-[0.62rem] text-ink2">
-      <span
-        className={`h-1.5 w-1.5 rounded-full ${live ? "bg-teal" : "bg-ink2/40"}`}
-        style={live ? { animation: "pulse-dot 2.4s ease-in-out infinite" } : undefined}
-      />
+    <p className="label inline-flex items-center gap-2.5 border border-rulestrong px-3 py-2 text-ink">
+      <span className={`h-2 w-2 ${live ? "bg-spot" : "border border-ink2"}`} />
       {children}
     </p>
+  );
+}
+
+/**
+ * A two-column ruled data row, the almanac's basic unit.
+ * Used wherever the old design would have reached for a card.
+ */
+export function DataRow({
+  term,
+  children,
+  className = "",
+}: {
+  term: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`grid grid-cols-1 gap-1 border-b border-rule py-3 sm:grid-cols-[11rem_1fr] sm:gap-6 ${className}`}
+    >
+      <dt className="label pt-1 text-ink2">{term}</dt>
+      <dd className="text-ink">{children}</dd>
+    </div>
   );
 }

@@ -4,16 +4,18 @@ import { localePath, otherLangPath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { CTA } from "@/components/ui";
 
 export type NavLink = { href: string; label: string };
 
+/* The almanac's edition line. Vikram Samvat runs ~57 years ahead of CE. */
+const EDITION = { en: "Samvat 2083 · 2026", hi: "सं. २०८३ · २०२६" } as const;
+
 /**
- * `currentPath` is the locale-independent route ("/" or "/rituals"), so the
- * language switch lands on the same page rather than dumping you at home.
+ * A printed masthead rather than an app bar: wordmark and edition line over a
+ * heavy rule, with the sections set as a ruled row beneath.
  *
- * `links` and `ctaTo` default to the shared nav, so pages cannot drift apart.
- * The landing page overrides `links` with its own on-page anchors.
+ * `currentPath` is the locale-independent route, so the language switch lands
+ * on the same page instead of dumping you at home.
  */
 export function Header({
   lang,
@@ -31,37 +33,54 @@ export function Header({
   const cta = ctaTo ?? ctaHref(lang);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line/60 bg-bg/80 backdrop-blur-xl">
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-        <Link href={localePath(lang, "/")} aria-label="Snanify">
-          <Logo />
-        </Link>
-
-        <div className="hidden items-center gap-7 text-sm text-ink2 lg:flex">
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="relative transition-colors hover:text-ink after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
-            >
-              {l.label}
-            </a>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link
-            href={otherLangPath(lang, currentPath)}
-            hrefLang={lang === "en" ? "hi" : "en"}
-            className="rounded-full border border-line/70 px-3 py-1.5 text-xs text-ink2 transition-colors hover:border-gold hover:text-gold"
-          >
-            {t.switchLabel}
+    <header className="sticky top-0 z-50 bg-paper">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        {/* masthead row */}
+        <div className="flex h-14 items-center justify-between gap-4">
+          <Link href={localePath(lang, "/")} aria-label="Snanify">
+            <Logo />
           </Link>
-          <ThemeToggle label={t.themeLabel} />
-          <a href={cta} className="hidden sm:block">
-            <CTA className="!px-5 !py-2">{t.nav.cta}</CTA>
-          </a>
+
+          <div className="flex items-center gap-4">
+            <span className="label hidden text-ink2 lg:inline">{EDITION[lang]}</span>
+
+            <Link
+              href={otherLangPath(lang, currentPath)}
+              hrefLang={lang === "en" ? "hi" : "en"}
+              className="label border border-rulestrong px-2.5 py-1.5 text-ink transition-colors hover:bg-ink hover:text-paper"
+            >
+              {t.switchLabel}
+            </Link>
+
+            <ThemeToggle label={t.themeLabel} />
+
+            <a
+              href={cta}
+              className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+            >
+              {t.nav.cta}
+            </a>
+          </div>
         </div>
+      </div>
+
+      {/* heavy-over-hairline, as an almanac sets its masthead */}
+      <div className="rule-masthead" />
+
+      {/* section row */}
+      <nav className="hidden border-b border-rulestrong bg-paper lg:block">
+        <ul className="mx-auto flex max-w-6xl divide-x divide-rule px-5 sm:px-8">
+          {navLinks.map((l) => (
+            <li key={l.href} className="first:pl-0">
+              <a
+                href={l.href}
+                className="label block px-5 py-2.5 text-ink2 transition-colors hover:bg-ink hover:text-paper"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </nav>
     </header>
   );

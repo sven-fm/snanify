@@ -15,7 +15,7 @@ import type { Lang } from "@/lib/content";
 
    Sizing: the sheet is laid out at a fixed 840 × 1188 (A4 proportion) and every
    measurement below is expressed as a fraction of the container width in `cqw`.
-   The document therefore scales — never reflows, never breaks — from a 390px
+   The document therefore scales, never reflows, never breaks, from a 390px
    phone to a print sheet. If content ever exceeds the design height the box
    grows rather than clipping.
    --------------------------------------------------------------------------- */
@@ -29,7 +29,7 @@ const u = (px: number) => `${((px / W) * 100).toFixed(4)}cqw`;
 /**
  * Print rules for the document. Injected via React's stylesheet hoisting so the
  * component stays self-contained and globals.css is untouched. In print the
- * sheet forces the light palette — a dark-theme reader printing a night-indigo
+ * sheet forces the light palette, a dark-theme reader printing a night-indigo
  * certificate would get an unreadable page.
  */
 const PRINT_CSS = `
@@ -131,7 +131,7 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
           }}
         />
 
-        {/* the inner rule — a printed document has two edges */}
+        {/* the inner rule, a printed document has two edges */}
         <div
           aria-hidden="true"
           className={`pointer-events-none absolute border ${watermark ? "border-sindoor/25" : "border-line/70"}`}
@@ -143,7 +143,7 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
             aria-hidden="true"
             /* The viewBox matches the sheet's own proportions, so the tiled
                mark is measured in design pixels and scales with the document
-               — the same watermark on a 390px phone and on an A4 print,
+              , the same watermark on a 390px phone and on an A4 print,
                rather than a huge one on the small preview. */
             viewBox={`0 0 ${W} ${H}`}
             className="pointer-events-none absolute inset-0 h-full w-full"
@@ -192,7 +192,7 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
                 </span>
               </span>
               {/* The identifier is base58 and case-sensitive, so it must never
-                  inherit the inscriptional uppercase transform — somebody will
+                  inherit the inscriptional uppercase transform, somebody will
                   type it off a printed sheet. */}
               <span className="text-ink2" style={{ fontSize: u(9.5), textAlign: "right" }}>
                 <span className="inscription">
@@ -211,7 +211,7 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
             {/* title */}
             <div className="text-center" style={{ marginTop: u(24) }}>
               {/* The document titles itself in Devanagari in both locales, so
-                  the face is pinned to Tiro rather than inherited — an English
+                  the face is pinned to Tiro rather than inherited, an English
                   page's display face has no Devanagari glyphs. */}
               <p
                 className="text-ink"
@@ -257,7 +257,7 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
             <div className="text-center">
               {/* A mixed list keeps the neutral heading; the remembrance label
                   then sits on the individual name it belongs to. Nothing else
-                  about the row changes — no imagery, no colour. */}
+                  about the row changes, no imagery, no colour. */}
               <p className="inscription text-gold" style={{ fontSize: u(10) }}>
                 {data.names.length > 0 && data.names.every((n) => n.remembrance)
                   ? t.remembranceLabel
@@ -346,14 +346,14 @@ export function SankalpPatra({ lang, data, watermark = false, className = "" }: 
               {data.ghat}, {data.place}
             </Cell>
 
-            <Cell label={t.performedLabel} sub={data.performedLocal ? `${t.localLabel} — ${data.performedLocal}` : undefined}>
+            <Cell label={t.performedLabel} sub={data.performedLocal ? `${t.localLabel}, ${data.performedLocal}` : undefined}>
               {data.performedOn}
               <br />
               {data.performedIst}
             </Cell>
 
             {/* A tithi is printed only when it has been confirmed against a
-                named panchang source. Unsourced, the field is omitted — never
+                named panchang source. Unsourced, the field is omitted, never
                 estimated. */}
             {data.tithi?.confidence === "sourced" ? (
               <Cell label={t.tithiLabel}>{data.tithi.label}</Cell>

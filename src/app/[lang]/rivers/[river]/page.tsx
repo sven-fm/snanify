@@ -7,7 +7,7 @@ import { localePath } from "@/lib/i18n";
 
 export const dynamicParams = false;
 
-/** Every (lang, river) combination — six waters × two locales. */
+/** Every (lang, river) combination, six waters × two locales. */
 export function generateStaticParams() {
   return LANGS.flatMap((lang) => RIVERS.map((r) => ({ lang, river: r.slug })));
 }
@@ -21,7 +21,7 @@ export async function generateMetadata({
   const ghat = getGhat(river);
   if (!ghat) return {};
 
-  /* Public URL shape, built through localePath — never a hand-written /hi. */
+  /* Public URL shape, built through localePath, never a hand-written /hi. */
   const route = `/rivers/${ghat.slug}`;
   const paths = { en: localePath("en", route), hi: localePath("hi", route) } as const;
   const publicPath = paths[lang];
@@ -33,7 +33,7 @@ export async function generateMetadata({
       ? `${ghat.river.hi} · ${ghat.ghat.hi}, ${ghat.city.hi} | स्नानिफ़ाई`
       : `${ghat.river.en} at ${ghat.ghat.en}, ${ghat.city.en} | Snanify`;
 
-  const description = `${ghat.epithet[lang]} — ${ghat.standfirst[lang]}`;
+  const description = `${ghat.epithet[lang]}, ${ghat.standfirst[lang]}`;
 
   return {
     title,

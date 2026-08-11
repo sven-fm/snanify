@@ -7,7 +7,7 @@ import { patraContent, specimenPatra } from "@/content/patra";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /* ---------------------------------------------------------------------------
-   /patra — what the Sankalp Patra is, what it records, what it refuses to
+   /patra, what the Sankalp Patra is, what it records, what it refuses to
    claim, and how a third party verifies one without reading it.
    --------------------------------------------------------------------------- */
 
@@ -184,7 +184,7 @@ export function PatraExplainer({ lang }: { lang: Lang }) {
   const lead = hi ? { lineHeight: 1.2 } : undefined;
   const leadSm = hi ? { lineHeight: 1.35 } : undefined;
 
-  /* "Sankalp" is a section of the home page, not a route of its own — the
+  /* "Sankalp" is a section of the home page, not a route of its own, the
      same anchor the rivers and rituals pages link to. */
 
   return (

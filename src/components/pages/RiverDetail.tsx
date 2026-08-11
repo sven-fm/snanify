@@ -8,7 +8,7 @@ import { ghatNeighbours, riverDetailContent, type Ghat, type WaterForm } from "@
 
 /* ---------------------------------------------------------------------------
    No photographs exist in this repo, so each water gets a drawn motif instead
-   of a picture — and the drawing is keyed to what the place physically is:
+   of a picture, and the drawing is keyed to what the place physically is:
    steps into a flowing river, two streams meeting, or a walled tank fed by a
    spring. It is atmosphere, never a depiction, and it is aria-hidden.
    --------------------------------------------------------------------------- */
@@ -102,8 +102,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
     { key: "river", label: t.facts.river, value: ghat.river[lang] },
     { key: "ghat", label: t.facts.ghat, value: ghat.ghat[lang] },
     { key: "place", label: t.facts.place, value: `${ghat.city[lang]}, ${ghat.state[lang]}` },
-    { key: "form", label: t.facts.form, value: t.formLabels[ghat.form] },
-    ...(ghat.riverAlso
+    { key: "form", label: t.facts.form, value: t.formLabels[ghat.form] }, ...(ghat.riverAlso
       ? [{ key: "also", label: t.facts.alsoKnown, value: ghat.riverAlso[lang] }]
       : []),
     { key: "tz", label: t.facts.timezone, value: ghat.tz },

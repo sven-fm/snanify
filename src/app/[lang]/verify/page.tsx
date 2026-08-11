@@ -11,7 +11,7 @@ export async function generateMetadata({
   const { lang } = await params;
   const t = verifyContent[lang];
   return {
-    title: `${t.title} — Snanify`,
+    title: `${t.title}, Snanify`,
     description: t.lede,
     alternates: {
       canonical: lang === "en" ? "/verify" : "/hi/verify",

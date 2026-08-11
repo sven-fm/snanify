@@ -6,7 +6,7 @@ import { localePath } from "@/lib/i18n";
 
 /**
  * Public URL shape: English unprefixed, Hindi under /hi. Never `/en/...`, and
- * never a hand-written "/hi/..." — localePath owns that so a route rename
+ * never a hand-written "/hi/...", localePath owns that so a route rename
  * cannot strand one locale.
  */
 const ROUTE = "/rivers";

@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Snanify — the river comes to you";
+export const alt = "Snanify, the river comes to you";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -73,7 +73,7 @@ export function renderOgCard() {
               maxWidth: 820,
             }}
           >
-            A complete digital snan at India&apos;s most sacred waters — streamed to wherever you
+            A complete digital snan at India&apos;s most sacred waters, streamed to wherever you
             stand.
           </div>
         </div>
