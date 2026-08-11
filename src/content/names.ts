@@ -1,6 +1,6 @@
 import { OCCASIONS, type GhatId, type Occasion } from "@/content/muhurat";
 import type { Ghat } from "@/content/rivers";
-import { isFullLang, type FullLang, type Lang } from "@/lib/locales";
+import { DEFAULT_LANG, isFullLang, type FullLang, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Proper nouns, in every locale the site serves.
@@ -245,6 +245,33 @@ const OCCASION_NAMES: Record<string, Names> = {
   },
 };
 
+/**
+ * The four daily muhurat windows. They appear on /live beside every water, so
+ * they are named rather than left in English on nine of the twelve editions.
+ */
+const WINDOW_NAMES: Record<string, Names> = {
+  brahma: {
+    bn: "ব্রহ্ম মুহূর্ত", mr: "ब्रह्म मुहूर्त", te: "బ్రహ్మ ముహూర్తం", ta: "பிரம்ம முகூர்த்தம்",
+    gu: "બ્રહ્મ મુહૂર્ત", kn: "ಬ್ರಹ್ಮ ಮುಹೂರ್ತ", ml: "ബ്രഹ്മ മുഹൂർത്തം", or: "ବ୍ରହ୍ମ ମୁହୂର୍ତ୍ତ",
+    pa: "ਬ੍ਰਹਮ ਮੁਹੂਰਤ", as: "ব্ৰহ্ম মুহূৰ্ত",
+  },
+  pratah: {
+    bn: "প্রাতঃ স্নান", mr: "प्रातः स्नान", te: "ప్రాతః స్నానం", ta: "பிராதః நீராடல்",
+    gu: "પ્રાતઃ સ્નાન", kn: "ಪ್ರಾತಃ ಸ್ನಾನ", ml: "പ്രാതഃ സ്നാനം", or: "ପ୍ରାତଃ ସ୍ନାନ",
+    pa: "ਪ੍ਰਾਤਃ ਇਸ਼ਨਾਨ", as: "প্ৰাতঃ স্নান",
+  },
+  abhijit: {
+    bn: "অভিজিৎ মুহূর্ত", mr: "अभिजित मुहूर्त", te: "అభిజిత్ ముహూర్తం", ta: "அபிஜித் முகூர்த்தம்",
+    gu: "અભિજિત મુહૂર્ત", kn: "ಅಭಿಜಿತ್ ಮುಹೂರ್ತ", ml: "അഭിജിത് മുഹൂർത്തം", or: "ଅଭିଜିତ ମୁହୂର୍ତ୍ତ",
+    pa: "ਅਭਿਜਿਤ ਮੁਹੂਰਤ", as: "অভিজিৎ মুহূৰ্ত",
+  },
+  godhuli: {
+    bn: "গোধূলি মুহূর্ত", mr: "गोधूली मुहूर्त", te: "గోధూళి ముహూర్తం", ta: "கோதூளி முகூர்த்தம்",
+    gu: "ગોધૂલિ મુહૂર્ત", kn: "ಗೋಧೂಳಿ ಮುಹೂರ್ತ", ml: "ഗോധൂളി മുഹൂർത്തം", or: "ଗୋଧୂଳି ମୁହୂର୍ତ୍ତ",
+    pa: "ਗੋਧੂਲੀ ਮੁਹੂਰਤ", as: "গোধূলি মুহূৰ্ত",
+  },
+};
+
 /* --- readers -------------------------------------------------------------- */
 
 /**
@@ -260,6 +287,16 @@ export function waterName(ghat: Ghat, field: WaterField, lang: Lang): string {
 export function occasionName(occasion: Occasion, lang: Lang): string {
   if (isFullLang(lang)) return occasion.name[lang];
   return OCCASION_NAMES[occasion.slug][lang];
+}
+
+/**
+ * A daily muhurat window's name in any locale. Takes the bilingual name so the
+ * caller keeps its existing lookup and the English and Hindi editions still
+ * read from muhurat.ts.
+ */
+export function windowName(id: string, name: Record<FullLang, string>, lang: Lang): string {
+  if (isFullLang(lang)) return name[lang];
+  return WINDOW_NAMES[id]?.[lang] ?? name[DEFAULT_LANG];
 }
 
 /* --- the guard ------------------------------------------------------------ */

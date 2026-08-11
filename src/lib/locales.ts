@@ -189,7 +189,6 @@ const FULL_ONLY: readonly string[] = [
      hreflang sets and the sitemap keep telling the truth about what is
      actually served. Moving a route out of this list is the only change
      needed to publish it in twelve languages. */
-  "/live",
   "/muhurat",
 ];
 

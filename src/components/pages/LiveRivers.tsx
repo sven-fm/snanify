@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { content } from "@/lib/content";
 import { localePath } from "@/lib/i18n";
-/* This page exists in English and Hindi only; see the tier note and the
-   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
-   the full-depth pair and not the twelve locales the site serves. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
+import { waterName, windowName } from "@/content/names";
 import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -327,7 +325,8 @@ function SkyPanel({ sky, lang }: { sky: Sky; lang: Lang }) {
 
 function windowLine(slot: WindowSlot, lang: Lang): string {
   const t = liveContent[lang];
-  const name = WINDOW_BY_ID[slot.id]?.name[lang] ?? slot.id;
+  const w = WINDOW_BY_ID[slot.id];
+  const name = w ? windowName(slot.id, w.name, lang) : slot.id;
   const when = `${clock(slot.startsAt)} IST`;
   if (slot.open) return `${name}, ${fill(t.windows.until, { time: clock(slot.endsAt) })}`;
   return `${name}, ${when}${slot.onNextDay ? ` ${t.windows.tomorrow}` : ""}`;
@@ -360,10 +359,11 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
           </span>
           <div className="min-w-0">
             <h2 className="display text-[1.7rem] leading-tight sm:text-[2.6rem]">
-              {ghat.river[lang]}
+              {waterName(ghat, "river", lang)}
             </h2>
             <p className="label mt-1.5 text-ink2">
-              {ghat.ghat[lang]} · {ghat.city[lang]}, {ghat.state[lang]}
+              {waterName(ghat, "ghat", lang)} · {waterName(ghat, "city", lang)},{" "}
+              {waterName(ghat, "state", lang)}
             </p>
           </div>
         </div>
@@ -565,9 +565,9 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-[1rem] leading-tight text-ink">
-                          {ghat.river[lang]}
+                          {waterName(ghat, "river", lang)}
                         </span>
-                        <span className="label block text-ink2">{ghat.city[lang]}</span>
+                        <span className="label block text-ink2">{waterName(ghat, "city", lang)}</span>
                       </span>
                       <span className="flex shrink-0 items-center gap-2 text-right">
                         <span className="label text-ink">
