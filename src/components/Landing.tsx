@@ -9,7 +9,20 @@ import { RiverFlow } from "@/components/RiverFlow";
 import { Reveal } from "@/components/Reveal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Section, SectionHeader, StatusBadge } from "@/components/ui";
+import {
+  StructuredData,
+  organization,
+  webPage,
+  website,
+} from "@/components/StructuredData";
+import {
+  CTA,
+  Eyebrow,
+  LinkButton,
+  Section,
+  SectionHeader,
+  StatusBadge,
+} from "@/components/ui";
 
 /** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
 const DEVA = "०१२३४५६७८९";
@@ -24,6 +37,21 @@ export function Landing({ lang }: { lang: Lang }) {
 
   return (
     <>
+      {/* The home page is where the Organization and WebSite nodes are anchored;
+          every other page references them by @id. */}
+      <StructuredData
+        graph={[
+          organization(lang),
+          website(),
+          webPage({
+            lang,
+            path: "/",
+            name: t.meta.title,
+            description: t.meta.description,
+          }),
+        ]}
+      />
+
       <div className="grain" aria-hidden="true" />
 
       <Header lang={lang} currentPath="/" ctaTo="#sankalp" />
@@ -69,6 +97,15 @@ export function Landing({ lang }: { lang: Lang }) {
                   <CTA variant="ghost">{t.hero.ctaSecondary}</CTA>
                 </Link>
               </div>
+
+              {/* The offer, stated in the hero rather than buried in the
+                  tariff. A price is a fact about the thing, not a reveal. */}
+              <p
+                className="ink-in mt-7 max-w-xl border-l-2 border-spot pl-4 text-sm leading-[1.75] text-ink2"
+                style={{ animationDelay: "320ms" }}
+              >
+                {t.hero.offer}
+              </p>
             </div>
 
             {/* the day's entry, printed on paper laid over the water */}
@@ -221,7 +258,17 @@ export function Landing({ lang }: { lang: Lang }) {
           </Reveal>
         </Section>
 
-        {/* ------------------------------------------------ tariff -------- */}
+        {/* ------------------------------------------------ tariff --------
+            The section is about the samuhik/ekantik distinction first and the
+            numbers second, because that distinction is the honest reason an
+            $11 rite and a $251 rite can sit on the same page. The vessels come
+            before the tariff for that reason; do not reorder them.
+
+            Every session figure here agrees with the others: 11 per segment,
+            up to 51 per session in five segments, at least 45 seconds each,
+            which is ~53 minutes against a 48-minute Brahma Muhurat, hence the
+            stated overrun into Pratah Sandhya. Changing one of those numbers
+            means changing all of them, in both locales.                    */}
         <Section id="sankalp" tinted>
           <Reveal>
             <SectionHeader
@@ -230,51 +277,169 @@ export function Landing({ lang }: { lang: Lang }) {
               lede={t.pricing.lede}
             />
 
-            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-3">
-              {t.pricing.plans.map((p, i) => {
-                const featured = i === 1;
-                return (
-                  <div
-                    key={p.name}
-                    className={`flex flex-col p-7 ${featured ? "bg-paper3" : "tint"}`}
-                  >
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h3 className="display text-2xl">{p.name}</h3>
-                      {featured && (
-                        <span className="label bg-spot px-2 py-1 text-paper">
-                          {t.pricing.popular}
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-1 text-xs text-ink2">{p.sub}</p>
+            {/* the two vessels, set as facing registers */}
+            <div className="mt-12">
+              <Eyebrow>{t.pricing.modes.eyebrow}</Eyebrow>
+            </div>
 
-                    <p className="display mt-6 text-5xl text-spot">{p.price}</p>
-
-                    <div className="rule-thin mt-6" />
-
-                    <ul className="mt-5 flex-1 space-y-3">
-                      {p.features.map((f) => (
-                        <li
-                          key={f}
-                          className="flex gap-3 text-sm leading-relaxed text-ink2"
-                        >
-                          <span className="mt-[0.5rem] h-[3px] w-3 shrink-0 bg-spot" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="mt-7">
-                      <CTA
-                        variant={featured ? "solid" : "ghost"}
-                        className="w-full"
-                      >
-                        {t.pricing.cta} {p.name}
-                      </CTA>
-                    </div>
+            <div className="mt-6 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-2">
+              {t.pricing.modes.items.map((m) => (
+                <div key={m.name} className="tint flex flex-col p-7">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <h3 className="display text-2xl">{m.name}</h3>
+                    <span className="label text-ink2">{m.alt}</span>
                   </div>
-                );
-              })}
+                  <p className="label mt-2 text-spot">{m.sub}</p>
+
+                  <div className="rule-thin mt-5" />
+
+                  <p className="mt-5 text-sm leading-[1.75] text-ink2">
+                    {m.body}
+                  </p>
+
+                  <dl className="mt-6 border-t border-rule">
+                    {m.rows.map((r) => (
+                      <div
+                        key={r.k}
+                        className="flex justify-between gap-6 border-b border-rule py-2.5 last:border-b-0"
+                      >
+                        <dt className="label shrink-0 pt-0.5 text-ink2">
+                          {r.k}
+                        </dt>
+                        <dd className="text-right text-sm leading-snug text-ink">
+                          {r.v}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              ))}
+            </div>
+
+            {/* the arithmetic of a full session, stated rather than implied */}
+            <div className="boxed mt-8 bg-paper p-6 sm:p-7">
+              <p className="label text-spot">{t.pricing.session.label}</p>
+              {t.pricing.session.body.map((p) => (
+                <p
+                  key={p}
+                  className="mt-4 max-w-3xl text-sm leading-[1.75] text-ink2"
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            {/* the tariff, both ladders in one table, never a geo switch */}
+            <div className="mt-16">
+              <Eyebrow>{t.pricing.tariff.label}</Eyebrow>
+              <h3 className="display mt-4 text-[1.9rem] sm:text-[2.3rem]">
+                {t.pricing.tariff.caption}
+              </h3>
+
+              <div className="mt-8 overflow-x-auto">
+                <table className="w-full min-w-[48rem] border-collapse text-left">
+                  <thead>
+                    <tr className="border-t-2 border-rulestrong">
+                      <th className="label py-3 pr-6 text-ink2">
+                        {t.pricing.tariff.heads.rite}
+                      </th>
+                      <th className="label py-3 pr-6 text-ink2">
+                        {t.pricing.tariff.heads.vessel}
+                      </th>
+                      <th className="label py-3 pr-6 text-right text-spot">
+                        {t.pricing.tariff.heads.world}
+                      </th>
+                      <th className="label py-3 text-right text-ink">
+                        {t.pricing.tariff.heads.india}
+                      </th>
+                    </tr>
+                    <tr className="border-b-2 border-rulestrong">
+                      <td className="pb-3" colSpan={2} />
+                      <td className="max-w-[10rem] pr-6 pb-3 text-right text-[0.7rem] leading-snug text-ink2">
+                        {t.pricing.tariff.subheads.world}
+                      </td>
+                      <td className="max-w-[10rem] pb-3 text-right text-[0.7rem] leading-snug text-ink2">
+                        {t.pricing.tariff.subheads.india}
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {t.pricing.tariff.rows.map((r) => (
+                      <tr key={r.name} className="border-b border-rule align-top">
+                        <td className="py-5 pr-6">
+                          <span className="display block text-xl text-ink">
+                            {r.name}
+                          </span>
+                          <span className="label mt-1.5 block text-ink2">
+                            {r.alt}
+                          </span>
+                          <p className="mt-2.5 max-w-sm text-sm leading-[1.7] text-ink2">
+                            {r.what}
+                          </p>
+                        </td>
+                        <td className="label py-5 pr-6 text-ink2">{r.vessel}</td>
+                        <td className="py-5 pr-6 text-right">
+                          <span className="display text-2xl text-spot">
+                            {r.world}
+                          </span>
+                        </td>
+                        <td className="py-5 text-right">
+                          <span className="display text-2xl text-ink">
+                            {r.india}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* the two things the table cannot say on its own */}
+            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-2">
+              <div className="tint p-7">
+                <p className="label text-spot">{t.pricing.ladders.label}</p>
+                {t.pricing.ladders.body.map((p) => (
+                  <p key={p} className="mt-4 text-sm leading-[1.75] text-ink2">
+                    {p}
+                  </p>
+                ))}
+              </div>
+
+              <div className="bg-paper3 p-7">
+                <p className="label text-spot">{t.pricing.kosh.label}</p>
+                <h3 className="display mt-3 text-2xl">{t.pricing.kosh.title}</h3>
+                <p className="mt-4 text-sm leading-[1.75] text-ink2">
+                  {t.pricing.kosh.body}
+                </p>
+
+                <dl className="mt-6 border-t border-rule">
+                  {t.pricing.kosh.rows.map((r) => (
+                    <div
+                      key={r.k}
+                      className="flex justify-between gap-6 border-b border-rule py-2.5 last:border-b-0"
+                    >
+                      <dt className="label shrink-0 pt-0.5 text-ink2">{r.k}</dt>
+                      <dd className="text-right text-sm leading-snug text-ink">
+                        {r.v}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+
+            <p className="mt-7 max-w-3xl text-xs leading-[1.75] text-ink2">
+              {t.pricing.note}
+            </p>
+
+            <div className="mt-8">
+              <LinkButton
+                href={localePath(lang, "/rituals")}
+                variant="ghost"
+              >
+                {t.pricing.cta}
+              </LinkButton>
             </div>
           </Reveal>
         </Section>

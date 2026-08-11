@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import { Faq } from "@/components/pages/Faq";
+import {
+  StructuredData,
+  breadcrumbList,
+  faqQuestions,
+  organization,
+  webPage,
+  website,
+} from "@/components/StructuredData";
 import { LANGS, type Lang } from "@/lib/content";
 import { localePath } from "@/lib/i18n";
+import { navLabel } from "@/lib/nav";
 import { faqContent } from "@/content/trust";
 
 /**
@@ -29,7 +38,9 @@ export async function generateMetadata({
     description: t.meta.description,
     alternates: {
       canonical: PATHS[lang],
-      languages: { en: PATHS.en, hi: PATHS.hi },
+      // x-default points at the English edition: it is the wider of the two
+      // audiences and the one an unmatched locale should land on.
+      languages: { en: PATHS.en, hi: PATHS.hi, "x-default": PATHS.en },
     },
     openGraph: {
       type: "article",
@@ -50,5 +61,32 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
   const { lang } = await params;
-  return <Faq lang={lang} />;
+  const t = faqContent[lang];
+
+  /* FAQPage carrying every question on the page, answer text included in full.
+     The page is the entity, so the FAQPage node IS the WebPage node rather than
+     a second one sitting beside it. */
+  const graph = [
+    organization(lang),
+    website(),
+    webPage({
+      lang,
+      path: ROUTE,
+      type: "FAQPage",
+      name: t.title,
+      description: t.meta.description,
+      mainEntity: faqQuestions(lang, ROUTE, t.groups),
+      breadcrumb: breadcrumbList(lang, [
+        { name: "Snanify", path: "/" },
+        { name: navLabel(lang, "faq"), path: ROUTE },
+      ]),
+    }),
+  ];
+
+  return (
+    <>
+      <StructuredData graph={graph} />
+      <Faq lang={lang} />
+    </>
+  );
 }

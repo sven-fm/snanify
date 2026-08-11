@@ -11,21 +11,24 @@ import {
   SectionHeader,
   StatusBadge,
 } from "@/components/ui";
-import { ritualsContent, type Honesty, type Note, type RitualsCopy } from "@/content/rituals";
+import { ritualsContent, type Fare, type Honesty, type Note, type RitualsCopy } from "@/content/rituals";
 
 /**
  * /rituals, the full offering catalog, set as a printed tariff.
  *
  * The page is organised around the one structural claim the catalog rests on:
  * the price axis is how the rite is held (samuhik / ekantik), not how many
- * names are read. Everything else, the modules, the two ladders, the refusal
- * list, hangs off that.
+ * names are read. So a rite offered in both vessels prints two fares, each
+ * with the reason for its number beside it, rather than hiding the difference
+ * inside a single figure. Everything else, the modules, the Snan Kosh, the two
+ * ladders, the refusal list, hangs off that.
  *
  * Every rite renders `honesty.is` and `honesty.isNot`. Both are required
  * fields on the Rite type, so a rite without them cannot be added to the
  * catalog; do not make this block collapsible, and do not move it behind a
  * "read more". It is set as a tinted, hard-ruled block so it reads as a
- * printed rider on the entry rather than as decoration.
+ * printed rider on the entry rather than as decoration. The Snan Kosh section
+ * carries the same block for the same reason.
  */
 
 /** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
@@ -100,36 +103,67 @@ function Sku({ label, code, className = "" }: { label: string; code: string; cla
   );
 }
 
+/**
+ * The fares for one rite, set as a ruled register rather than a price tag.
+ * Each fare states the vessel it buys, both published rates, and the reason
+ * the number is what it is. The reason is not optional: a rite that is dearer
+ * in one vessel has to say why on the same line.
+ */
+function Fares({
+  fares,
+  skuLabel,
+  className = "",
+}: {
+  fares: Fare[];
+  skuLabel: string;
+  className?: string;
+}) {
+  return (
+    <ul className={`border-t-2 border-rulestrong ${className}`}>
+      {fares.map((f) => (
+        <li key={f.sku} className="border-b border-rule py-5">
+          <p className="label text-ink2">{f.vessel}</p>
+          <p className="display mt-2 text-3xl text-spot">{f.usd}</p>
+          <p className="mt-0.5 text-base text-ink2">{f.inr}</p>
+          <p className="mt-3 text-xs leading-[1.7] text-ink2">{f.note}</p>
+          <Sku label={skuLabel} code={f.sku} className="mt-3" />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /* --- page --------------------------------------------------------- */
 
 export function Rituals({ lang }: { lang: Lang }) {
   const t: RitualsCopy = ritualsContent[lang];
   const home = localePath(lang, "/");
 
-  // The summary table lists every rite at both rates, extended forms included.
+  // The summary table lists one row per purchasable fare, so a rite offered in
+  // both vessels appears twice, at both rates, rather than once at whichever
+  // number reads best.
   const priceRows = t.catalog.flatMap((r) => [
-    {
-      key: r.sku,
+    ...r.fares.map((f) => ({
+      key: f.sku,
       name: r.name,
       deva: r.deva,
-      vessel: r.vessel,
+      vessel: f.vessel,
       duration: r.duration,
-      usd: r.usd,
-      inr: r.inr,
+      usd: f.usd,
+      inr: f.inr,
       sub: false,
-    }, ...(r.variant
-      ? [
-          {
-            key: r.variant.sku,
-            name: r.variant.name,
-            deva: r.variant.deva,
-            vessel: r.vessel,
-            duration: r.variant.duration,
-            usd: r.variant.usd,
-            inr: r.variant.inr,
-            sub: true,
-          },
-        ]
+    })),
+    ...(r.variant
+      ? r.variant.fares.map((f) => ({
+          key: f.sku,
+          name: r.variant!.name,
+          deva: r.variant!.deva,
+          vessel: f.vessel,
+          duration: r.variant!.duration,
+          usd: f.usd,
+          inr: f.inr,
+          sub: true,
+        }))
       : []),
   ]);
 
@@ -340,7 +374,7 @@ export function Rituals({ lang }: { lang: Lang }) {
           <div className="mt-16 border-t-2 border-rulestrong">
             {t.catalog.map((r) => (
               <article
-                key={r.sku}
+                key={r.id}
                 id={r.id}
                 className="scroll-mt-32 border-b border-rule py-14 lg:grid lg:grid-cols-[15rem_1fr] lg:gap-14"
               >
@@ -350,16 +384,12 @@ export function Rituals({ lang }: { lang: Lang }) {
                   <h3 className="display mt-3 text-3xl text-ink">{r.name}</h3>
                   <p className="mt-1 text-base text-ink2">{r.deva}</p>
 
-                  <div className="rule-heavy mt-6 pt-5">
-                    <p className="display text-4xl text-spot">{r.usd}</p>
-                    <p className="mt-1 text-lg text-ink2">{r.inr}</p>
-                  </div>
-
                   <dl className="mt-7 space-y-4 border-t border-rule pt-5">
                     <Fact label={t.rites.labels.duration} value={r.duration} />
-                    <Fact label={t.rites.labels.vessel} value={r.vessel} />
                   </dl>
-                  <Sku label={t.rites.labels.sku} code={r.sku} className="mt-5" />
+
+                  <p className="label mt-7 text-spot">{t.rites.labels.fares}</p>
+                  <Fares fares={r.fares} skuLabel={t.rites.labels.sku} className="mt-4" />
                 </div>
 
                 {/* body */}
@@ -392,19 +422,17 @@ export function Rituals({ lang }: { lang: Lang }) {
                     <div className="mt-7 border border-rule p-5 sm:p-6">
                       <p className="label text-ink2">{t.rites.labels.alsoAvailable}</p>
                       <div className="rule-thin mt-4 pt-4">
-                        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                          <div className="flex flex-wrap items-baseline gap-x-3">
-                            <h4 className="display text-xl text-ink">{r.variant.name}</h4>
-                            <span className="text-sm text-ink2">{r.variant.deva}</span>
-                          </div>
-                          <p className="text-sm text-ink">
-                            <span className="text-spot">{r.variant.usd}</span>
-                            <span className="text-ink2"> · {r.variant.inr}</span>
-                          </p>
+                        <div className="flex flex-wrap items-baseline gap-x-3">
+                          <h4 className="display text-xl text-ink">{r.variant.name}</h4>
+                          <span className="text-sm text-ink2">{r.variant.deva}</span>
                         </div>
                         <p className="mt-2 text-xs text-ink2">{r.variant.duration}</p>
                         <p className="mt-3 text-sm leading-[1.75] text-ink2">{r.variant.note}</p>
-                        <Sku label={t.rites.labels.sku} code={r.variant.sku} className="mt-4" />
+                        <Fares
+                          fares={r.variant.fares}
+                          skuLabel={t.rites.labels.sku}
+                          className="mt-6"
+                        />
                       </div>
                     </div>
                   )}
@@ -416,14 +444,96 @@ export function Rituals({ lang }: { lang: Lang }) {
           </div>
         </Section>
 
+        {/* ---------------- snan kosh, the credit that replaced varsh -------
+            The refund promise is the product, so it is set as the body of the
+            section and never as small print under it. Do not move
+            `kosh.terms` into a footnote, an accordion or a terms page. */}
+        <Section id="kosh" tinted className="!scroll-mt-32">
+          <Reveal>
+            <SectionHeader eyebrow={t.kosh.eyebrow} title={t.kosh.title} lede={t.kosh.lede} />
+
+            <div className="mt-12 grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+              <div>
+                <p className="border-l-2 border-rulestrong pl-6 text-[1.05rem] leading-[1.75] text-ink">
+                  {t.kosh.statement}
+                </p>
+                <Sku label={t.rites.labels.sku} code={t.kosh.sku} className="mt-6 pl-6" />
+                <HonestyBlock labels={t.honestyLabels} honesty={t.kosh.honesty} />
+              </div>
+
+              <div>
+                <h3 className="display text-2xl text-ink">{t.kosh.tableTitle}</h3>
+                <div className="mt-6 overflow-x-auto">
+                  <table className="w-full min-w-[22rem] border-collapse text-left">
+                    <caption className="sr-only">{t.kosh.tableCaption}</caption>
+                    <thead>
+                      <tr className="border-y-2 border-rulestrong">
+                        <th scope="col" className="label py-4 pr-6 text-ink2">
+                          {t.kosh.heads.ladder}
+                        </th>
+                        <th scope="col" className="label py-4 pr-6 text-right text-ink2">
+                          {t.kosh.heads.place}
+                        </th>
+                        <th scope="col" className="label py-4 text-right text-spot">
+                          {t.kosh.heads.spend}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {t.kosh.rows.map((row) => (
+                        <tr key={`${row.ladder}-${row.place}`} className="border-b border-rule">
+                          <th scope="row" className="py-4 pr-6 text-sm font-normal text-ink2">
+                            {row.ladder}
+                          </th>
+                          <td className="py-4 pr-6 text-right text-sm text-ink">{row.place}</td>
+                          <td className="display py-4 text-right text-lg text-spot">{row.spend}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="boxed tint mt-10 p-6">
+                  <p className="label text-spot">{t.kosh.withdrawn.label}</p>
+                  <div className="rule-thin mt-4" />
+                  <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.kosh.withdrawn.body}</p>
+                </div>
+              </div>
+            </div>
+
+            <dl className="mt-16 border-t-2 border-rulestrong">
+              {t.kosh.terms.map((term) => (
+                <div
+                  key={term.label}
+                  className="grid gap-2 border-b border-rule py-6 sm:grid-cols-[18rem_1fr] sm:gap-10 sm:py-7"
+                >
+                  <dt className="text-sm leading-[1.75] text-ink">{term.label}</dt>
+                  <dd className="text-sm leading-[1.75] text-ink2">{term.body}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+        </Section>
+
         {/* ---------------- the two ladders ---------------- */}
-        <Section id="sankalp" tinted className="!scroll-mt-32">
+        <Section id="sankalp" className="!scroll-mt-32">
           <Reveal>
             <SectionHeader eyebrow={t.ladder.eyebrow} title={t.ladder.title} lede={t.ladder.lede} />
 
             <p className="mt-10 max-w-3xl border-l-2 border-rulestrong pl-6 text-[1.05rem] leading-[1.75] text-ink">
               {t.ladder.statement}
             </p>
+
+            {/* The reason for the gap, set at full weight in the open. A dual
+                ladder that does not print its own justification is the version
+                that becomes a scandal when somebody discovers it. */}
+            <div className="misregister boxed tint mt-12 border-2 p-7 sm:p-9">
+              <p className="label text-spot">{t.ladder.reason.label}</p>
+              <div className="rule-double mt-5" />
+              <p className="mt-6 max-w-3xl text-[1.02rem] leading-[1.8] text-ink">
+                {t.ladder.reason.body}
+              </p>
+            </div>
 
             <div className="mt-14 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
               {t.ladder.ladders.map((l) => (
@@ -438,7 +548,62 @@ export function Rituals({ lang }: { lang: Lang }) {
               ))}
             </div>
 
-            <dl className="mt-10 border-t-2 border-rulestrong">
+            {/* What each ladder buys, line by line, so the difference sits in
+                the service and is visible rather than implied. */}
+            <h3 className="display mt-20 text-2xl text-ink sm:text-3xl">
+              {t.ladder.differencesTitle}
+            </h3>
+            <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-ink2">
+              {t.ladder.differencesLede}
+            </p>
+            <div className="mt-10 overflow-x-auto">
+              <table className="w-full min-w-[44rem] border-collapse text-left">
+                <caption className="sr-only">{t.ladder.differencesCaption}</caption>
+                <thead>
+                  <tr className="border-y-2 border-rulestrong">
+                    <th scope="col" className="w-[22%] py-5 pr-4 align-bottom">
+                      <span className="sr-only">{t.ladder.differencesHeads.key}</span>
+                    </th>
+                    <th
+                      scope="col"
+                      className="w-[39%] border-l border-rule py-5 pr-6 pl-6 align-bottom"
+                    >
+                      <span className="display block text-2xl text-ink">
+                        {t.ladder.differencesHeads.vishwa}
+                      </span>
+                      <span className="mt-1.5 block text-sm text-ink2">
+                        {t.ladder.differencesHeads.vishwaDeva}
+                      </span>
+                    </th>
+                    <th scope="col" className="w-[39%] border-l border-rule py-5 pl-6 align-bottom">
+                      <span className="display block text-2xl text-ink">
+                        {t.ladder.differencesHeads.bharat}
+                      </span>
+                      <span className="mt-1.5 block text-sm text-ink2">
+                        {t.ladder.differencesHeads.bharatDeva}
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {t.ladder.differences.map((row) => (
+                    <tr key={row.key} className="border-b border-rule align-top">
+                      <th scope="row" className="label py-5 pr-4 text-ink2">
+                        {row.key}
+                      </th>
+                      <td className="border-l border-rule py-5 pr-6 pl-6 text-sm leading-[1.7] text-ink">
+                        {row.vishwa}
+                      </td>
+                      <td className="border-l border-rule py-5 pl-6 text-sm leading-[1.7] text-ink">
+                        {row.bharat}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <dl className="mt-16 border-t-2 border-rulestrong">
               {[t.ladder.eligibility, t.ladder.fee, t.ladder.split, t.ladder.cooling].map((n) => (
                 <DataRow key={n.label} term={n.label}>
                   <span className="block text-sm leading-[1.75] text-ink2">{n.body}</span>

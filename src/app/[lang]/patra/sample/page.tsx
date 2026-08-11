@@ -4,7 +4,7 @@ import { Footer } from "@/components/site/Footer";
 import { SankalpPatra } from "@/components/SankalpPatra";
 import { Eyebrow, LinkButton } from "@/components/ui";
 import { patraContent, specimenPatra } from "@/content/patra";
-import { content, LANGS, type Lang } from "@/lib/content";
+import { LANGS, type Lang } from "@/lib/content";
 import { localePath } from "@/lib/i18n";
 
 /* Public URL shape: English unprefixed, Hindi under /hi. Built through

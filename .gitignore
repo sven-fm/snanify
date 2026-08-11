@@ -46,3 +46,4 @@ next-env.d.ts
 /probe2.mjs
 /verify.mjs
 /shotm.mjs
+/jsonld.mjs
