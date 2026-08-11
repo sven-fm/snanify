@@ -47,3 +47,8 @@ next-env.d.ts
 /verify.mjs
 /shotm.mjs
 /jsonld.mjs
+/final.mjs
+/hyd.mjs
+/hyd2.mjs
+/shot2.mjs
+/liveshot.mjs
