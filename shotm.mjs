@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport:{width:390,height:844}, deviceScaleFactor:2 });
+const p = await ctx.newPage();
+await p.addInitScript(() => localStorage.setItem('snanify-theme','light'));
+await p.goto('http://localhost:3000/', {waitUntil:'domcontentloaded'});
+await p.waitForTimeout(2200);
+await p.screenshot({ path: process.argv[2]+'/mobile-hero.png' });
+const ow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+console.log('overflow:', ow);
+await b.close();

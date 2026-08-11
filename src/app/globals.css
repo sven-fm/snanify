@@ -106,6 +106,9 @@
   font-weight: 600;
   line-height: 1.06;
   letter-spacing: -0.005em;
+  /* Eczar ships no italic or bolder-than-800 cut. Without this the browser
+     fakes them, which is exactly the sort of tell the redesign exists to kill. */
+  font-synthesis: none;
 }
 
 html[lang="hi"] .display {
