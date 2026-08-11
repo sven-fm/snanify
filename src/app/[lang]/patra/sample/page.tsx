@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { SankalpPatra } from "@/components/SankalpPatra";
+import { ChihnaSheetViewer } from "@/components/SankalpPatra";
 import { Eyebrow, LinkButton } from "@/components/ui";
-import { patraContent, specimenPatra } from "@/content/patra";
+import { chihnaContent, specimenChihna } from "@/content/patra";
 import { LANGS, type Lang } from "@/lib/content";
 import { localePath } from "@/lib/i18n";
 
 /* Public URL shape: English unprefixed, Hindi under /hi. Built through
-   localePath so a route rename cannot strand one locale. */
+   localePath so a route rename cannot strand one locale. The path stays
+   /patra/sample because it is indexed; the sheet on it is the Jal Chihna. */
 const ROUTE = "/patra/sample";
 const PATHS = { en: localePath("en", ROUTE), hi: localePath("hi", ROUTE) } as const;
 
@@ -36,14 +37,14 @@ export async function generateMetadata({
   params: Promise<{ lang: Lang }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const t = patraContent[lang].sampleMeta;
+  const t = chihnaContent[lang].sampleMeta;
 
   return {
     title: t.title,
     description: t.description,
     alternates: {
       canonical: PATHS[lang],
-      languages: { en: PATHS.en, hi: PATHS.hi },
+      languages: { en: PATHS.en, hi: PATHS.hi, "x-default": PATHS.en },
     },
     openGraph: {
       type: "article",
@@ -64,19 +65,16 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
   const { lang } = await params;
-  const t = patraContent[lang].sample;
+  const t = chihnaContent[lang].sample;
   const hi = lang === "hi";
-  /* The `display` utility sets line-height 0.98, which collides Devanagari
+  /* The `display` utility sets line-height 1.06, which collides Devanagari
      matras at heading sizes. Inline style, so it wins over the utility. */
   const lead = hi ? { lineHeight: 1.2 } : undefined;
   const leadSm = hi ? { lineHeight: 1.35 } : undefined;
 
-  /* "Sankalp" is a section of the home page, not a route of its own, the
-     same anchor the rivers and rituals pages link to. */
-
   return (
     <>
-      <style href="snanify-patra-sample-print" precedence="medium">
+      <style href="snanify-chihna-sample-print" precedence="medium">
         {SAMPLE_PRINT_CSS}
       </style>
 
@@ -86,21 +84,23 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       <main>
         {/* ------------------------------ intro ------------------------------ */}
         <section className="border-b-2 border-rulestrong" data-patra-hide>
-          <div className="relative mx-auto grid max-w-6xl gap-12 px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+          <div className="relative mx-auto grid max-w-6xl gap-10 px-5 pt-12 pb-14 sm:px-8 sm:pt-20 sm:pb-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
             <div>
               <Eyebrow>{t.eyebrow}</Eyebrow>
-              <h1 className="display mt-6 text-[2.9rem] leading-[1.02] sm:text-6xl" style={lead}>
+              <h1 className="display mt-5 text-[2.5rem] leading-[1.02] sm:text-6xl" style={lead}>
                 {t.title}
               </h1>
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink2">{t.lede}</p>
+              <p className="mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2">{t.lede}</p>
             </div>
 
             {/* The provenance of every value on the sheet, stated before it. */}
-            <aside className="self-end border-2 border-spot p-7">
-              <h2 className="label -mx-7 -mt-7 mb-5 bg-spot px-7 py-2 text-paper">{t.noticeHeading}</h2>
+            <aside className="self-end border-2 border-spot p-5 sm:p-7">
+              <h2 className="label -mx-5 -mt-5 mb-5 bg-spot px-5 py-2.5 text-paper sm:-mx-7 sm:-mt-7 sm:px-7">
+                {t.noticeHeading}
+              </h2>
               <ul className="space-y-3">
                 {t.noticeItems.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-relaxed text-ink2">
+                  <li key={item} className="flex gap-3 leading-relaxed text-ink2">
                     <span aria-hidden="true" className="mt-2.5 h-[2px] w-4 shrink-0 bg-spot" />
                     <span>{item}</span>
                   </li>
@@ -112,50 +112,61 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
 
         {/* ---------------------------- the sheet ---------------------------- */}
         {/* The sheet keeps A4 proportions and scales as one block, so on a
-            phone its type is genuinely small. Said plainly rather than left
-            for the reader to discover, and the gutter is narrowed below `sm`
-            so the sheet gets every pixel of the screen it can. */}
-        <section
-          data-patra-page
-          className="mx-auto w-full max-w-6xl px-3 py-16 sm:px-8 sm:py-24"
-        >
+            phone its type is genuinely small. The viewer under it is the
+            answer: whole sheet, or reading size with the reader panning it,
+            controls on the bottom edge where a thumb already is. The gutter is
+            narrowed below `sm` so the sheet gets every pixel it can. */}
+        <section data-patra-page className="mx-auto w-full max-w-6xl px-3 py-12 sm:px-8 sm:py-20">
           <p
-            className="mx-auto mb-6 max-w-[46rem] px-2 text-center text-xs leading-relaxed text-ink2 sm:hidden"
+            className="mx-auto mb-6 max-w-[46rem] px-2 text-center leading-relaxed text-ink2 sm:hidden"
             data-patra-hide
           >
             {t.smallScreenHint}
           </p>
 
           <div className="mx-auto w-full max-w-[46rem]">
-            <SankalpPatra lang={lang} data={specimenPatra(lang)} watermark />
+            <ChihnaSheetViewer lang={lang} data={specimenChihna(lang)} watermark />
           </div>
+
           <p
-            className="mx-auto mt-8 max-w-[46rem] px-2 text-center text-xs text-ink2"
+            className="mx-auto mt-8 max-w-[46rem] px-2 text-center text-sm text-ink2"
             data-patra-hide
           >
             {t.printHint}
           </p>
         </section>
 
+        {/* --------------------------- the engraving -------------------------- */}
+        <section className="border-t-2 border-rulestrong" data-patra-hide>
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+            <div className="max-w-3xl border-l-2 border-spot pl-5 sm:pl-6">
+              <h2 className="display text-2xl sm:text-3xl" style={leadSm}>
+                {t.plateHeading}
+              </h2>
+              <p className="mt-4 leading-[1.75] text-ink2">{t.plateBody}</p>
+            </div>
+          </div>
+        </section>
+
         {/* ------------------------------ notes ------------------------------ */}
-        <section className="border-t-2 border-rulestrong tint" data-patra-hide>
-          <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-28">
-            <h2 className="display max-w-2xl text-3xl sm:text-4xl" style={lead}>
+        <section className="tint border-t-2 border-rulestrong" data-patra-hide>
+          <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+            <h2 className="display max-w-2xl text-[1.9rem] sm:text-4xl" style={lead}>
               {t.notesHeading}
             </h2>
 
-            <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
+            <div className="mt-10 grid gap-8 sm:grid-cols-3">
               {t.notes.map((note) => (
                 <div key={note.h} className="border-t-2 border-rulestrong pt-6">
                   <h3 className="display text-xl" style={leadSm}>
                     {note.h}
                   </h3>
-                  <p className="mt-3 leading-relaxed text-ink2">{note.b}</p>
+                  <p className="mt-3 leading-[1.75] text-ink2">{note.b}</p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-14 flex flex-wrap items-center gap-3">
+            <div className="mt-12 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <LinkButton href={localePath(lang, "/patra")} variant="ghost">
                 {t.back}
               </LinkButton>

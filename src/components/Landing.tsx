@@ -15,14 +15,7 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-import {
-  CTA,
-  Eyebrow,
-  LinkButton,
-  Section,
-  SectionHeader,
-  StatusBadge,
-} from "@/components/ui";
+import { CTA, Eyebrow, LinkButton, Section, SectionHeader, StatusBadge } from "@/components/ui";
 
 /** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
 const DEVA = "०१२३४५६७८९";
@@ -31,9 +24,31 @@ function numeral(n: number, lang: Lang): string {
   return lang === "hi" ? [...s].map((d) => DEVA[Number(d)]).join("") : s;
 }
 
+/**
+ * The front page of the digital product.
+ *
+ * BUILT FOR 390px FIRST. Over nine in ten readers arrive on a phone, so every
+ * block here is designed at 390 x 844 and widened afterwards, not the other way
+ * round. The rules that produced this layout, so they survive the next edit:
+ *
+ *  · Nothing may scroll horizontally. There is not a single `min-w-` table on
+ *    this page; the tariff, the calendar and the five limbs are all ruled rows
+ *    that stack on a phone and become columns from `sm` upward.
+ *  · The hero is bottom-aligned inside `86svh` so the headline sits high and the
+ *    two buttons land under the thumb rather than under the masthead. `svh`, not
+ *    `vh`, because mobile browser chrome makes `vh` overshoot.
+ *  · A ruled bar is fixed to the bottom edge on small screens carrying the hero
+ *    SKU and its price. It is the thumb-reachable primary action for the whole
+ *    page; the spacer at the very bottom keeps it off the imprint.
+ *  · Every tappable thing clears 44px. Buttons carry `!py-4` on the phone.
+ *  · Body copy never drops below 0.875rem. `label` is used for labels only.
+ *
+ * The river SVG is confined to a band beneath the headline on a phone: full
+ * bleed at that size would put the sun through the type and paints far more
+ * pixels than a mid-range Android wants at 60fps.
+ */
 export function Landing({ lang }: { lang: Lang }) {
   const t = content[lang];
-  const hi = lang === "hi";
 
   return (
     <>
@@ -57,45 +72,49 @@ export function Landing({ lang }: { lang: Lang }) {
       <Header lang={lang} currentPath="/" ctaTo="#sankalp" />
 
       <main>
-        {/* ------------------------------------------------ front page ---- */}
-        <section className="relative flex min-h-[88vh] flex-col justify-end overflow-hidden border-b-2 border-rulestrong">
-          {/* On a narrow screen the river is confined to a band beneath the
-              headline; the crop would otherwise put the sun through the type. */}
-          <RiverFlow className="absolute inset-x-0 bottom-0 h-[54%] w-full text-ink lg:inset-0 lg:h-full" />
+        {/* ------------------------------------------------ front page ----
+            Badge, headline, lede, buttons, price. Nothing else: the register
+            and the figures move to their own band below so that the two
+            buttons stay within reach of a thumb at 844px tall.            */}
+        <section className="relative flex min-h-[86svh] flex-col justify-end overflow-hidden border-b-2 border-rulestrong">
+          <RiverFlow className="absolute inset-x-0 bottom-0 h-[42%] w-full text-ink sm:h-[54%] lg:inset-0 lg:h-full" />
 
-          <div className="relative mx-auto w-full max-w-6xl px-5 pt-24 pb-12 sm:px-8 sm:pt-28 sm:pb-16">
+          <div className="relative mx-auto w-full max-w-6xl px-5 pt-24 pb-28 sm:px-8 sm:pt-28 sm:pb-16">
             <div className="max-w-3xl">
-              <div className="ink-in">
+              <div className="ink-in max-w-full">
                 <StatusBadge live>{t.hero.badge}</StatusBadge>
               </div>
 
               <h1
-                className="ink-in display mt-7 text-[3.4rem] leading-[0.97] sm:text-[5rem] lg:text-[6.2rem]"
+                className="ink-in display mt-6 text-[2.65rem] leading-[1.02] sm:mt-7 sm:text-[4rem] lg:text-[5.4rem]"
                 style={{ animationDelay: "80ms" }}
               >
-                {t.hero.titleA}{" "}
-                <span className="text-spot">{t.hero.titleB}</span>
+                {t.hero.titleA} <span className="text-spot">{t.hero.titleB}</span>
               </h1>
 
-              <div className="rule-double mt-8 max-w-xl" />
+              <div className="rule-double mt-6 max-w-xl sm:mt-8" />
 
               <p
-                className="ink-in mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2"
+                className="ink-in mt-5 max-w-xl text-[1.02rem] leading-[1.7] text-ink2 sm:text-[1.05rem] sm:leading-[1.75]"
                 style={{ animationDelay: "160ms" }}
               >
                 {t.hero.lede}
               </p>
 
+              {/* Stacked and full width on a phone, so both are a comfortable
+                  target and neither is a 90px pill in a corner. */}
               <div
-                className="ink-in mt-9 flex flex-wrap items-center gap-3"
+                className="ink-in mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "240ms" }}
               >
-                <a href="#sankalp">
-                  <CTA>{t.hero.ctaPrimary}</CTA>
+                <a href="#sankalp" className="block">
+                  <CTA className="w-full !py-4 sm:w-auto">{t.hero.ctaPrimary}</CTA>
                 </a>
-                <Link href={localePath(lang, "/how-it-works")}>
-                  <CTA variant="ghost">{t.hero.ctaSecondary}</CTA>
-                </Link>
+                <a href="#form" className="block">
+                  <CTA variant="ghost" className="w-full !py-4 sm:w-auto">
+                    {t.hero.ctaSecondary}
+                  </CTA>
+                </a>
               </div>
 
               {/* The offer, stated in the hero rather than buried in the
@@ -107,42 +126,119 @@ export function Landing({ lang }: { lang: Lang }) {
                 {t.hero.offer}
               </p>
             </div>
+          </div>
+        </section>
 
-            {/* the day's entry, printed on paper laid over the water */}
-            <div className="mt-12 grid items-end gap-8 lg:grid-cols-[1fr_auto]">
-              <dl className="ink-in grid max-w-xl grid-cols-3 border-t-2 border-rulestrong bg-paper">
-                {t.hero.stats.map((s) => (
+        {/* ------------------------------------------------ the reading ---
+            The live river is the product, so it is the first thing under the
+            headline: the day's entry, printed on paper laid over the water. */}
+        <section className="tint border-b-2 border-rulestrong">
+          <div className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 sm:py-12 lg:grid-cols-[1fr_20rem] lg:gap-12">
+            <div className="boxed bg-paper p-5 sm:p-7">
+              <p className="label text-spot">{t.hero.card.label}</p>
+              <p className="display mt-2 text-[1.7rem] leading-tight sm:text-3xl">
+                {t.hero.card.title}
+              </p>
+
+              <dl className="mt-4 border-t border-rule">
+                {t.hero.card.rows.map((r) => (
                   <div
-                    key={s.l}
-                    className="border-r border-rule py-4 pr-4 pl-3 first:pl-0 last:border-r-0"
+                    key={r.k}
+                    className="grid grid-cols-[7rem_1fr] items-baseline gap-4 border-b border-rule py-3 last:border-b-0 sm:grid-cols-[9rem_1fr]"
                   >
-                    <dt className="display text-[1.6rem] leading-none text-ink sm:text-[2rem]">
-                      {s.n}
-                    </dt>
-                    <dd className="label mt-2 text-ink2">{s.l}</dd>
+                    <dt className="label text-ink2">{r.k}</dt>
+                    <dd className="text-sm leading-snug text-ink sm:text-right">{r.v}</dd>
                   </div>
                 ))}
               </dl>
 
-              <aside className="ink-in boxed w-full bg-paper p-6 lg:w-[22rem]">
-                <p className="label text-spot">{t.hero.card.label}</p>
-                <p className="display mt-1.5 text-2xl">{t.hero.card.title}</p>
-                <dl className="mt-4 border-t border-rule">
-                  <div className="flex justify-between gap-4 border-b border-rule py-2.5">
-                    <dt className="label text-ink2">{hi ? "घाट" : "Ghat"}</dt>
-                    <dd className="text-right text-sm">{t.hero.card.meta}</dd>
-                  </div>
-                  <div className="flex justify-between gap-4 py-2.5">
-                    <dt className="label text-ink2">{hi ? "समय" : "Window"}</dt>
-                    <dd className="text-right text-sm text-spot">
-                      {t.hero.card.countdown}
-                    </dd>
-                  </div>
-                </dl>
-              </aside>
+              <Link
+                href={localePath(lang, "/rivers")}
+                className="label mt-3 inline-flex min-h-[44px] items-center text-spot underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
+              >
+                {t.hero.card.link}
+              </Link>
             </div>
+
+            {/* Ruled rows at every width. Three columns of figures at 390px
+                would break "1,20,000+" across two lines. */}
+            <dl className="border-t-2 border-rulestrong">
+              {t.hero.stats.map((s) => (
+                <div
+                  key={s.l}
+                  className="flex items-baseline justify-between gap-5 border-b border-rule py-3.5"
+                >
+                  <dt className="display text-[1.7rem] leading-none text-ink">{s.n}</dt>
+                  <dd className="label max-w-[11rem] text-right text-ink2">{s.l}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
+
+        {/* ------------------------------------------------ procedure ----- */}
+        <Section id="how">
+          <Reveal>
+            <SectionHeader eyebrow={t.how.eyebrow} title={t.how.title} />
+
+            <ol className="mt-10 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
+              {t.how.steps.map((s, i) => (
+                <li key={s.n} className="tint p-6 sm:p-7">
+                  <span className="display block text-4xl text-spot">{numeral(i + 1, lang)}</span>
+                  <div className="rule-thin mt-4" />
+                  <h3 className="display mt-4 text-2xl">{s.t}</h3>
+                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        </Section>
+
+        {/* ------------------------------------------------ the form ------
+            The four and a half minutes, set out limb by limb. Nobody guesses
+            that a fifth of a devotional product is a black screen, so the
+            ninety seconds are printed as a reverse block rather than as a
+            bullet: it is the strongest thing in the product.
+
+            The clock and the lengths agree with docs/digital/experience.md:
+            4s transition, 21s reading, 60s breath, 60s sankalp, 90s stillness,
+            35s mark, which is 270 seconds. Change one and change them all. */}
+        <Section id="form" tinted>
+          <Reveal>
+            <SectionHeader eyebrow={t.form.eyebrow} title={t.form.title} lede={t.form.lede} />
+
+            <ol className="mt-10 border-t-2 border-rulestrong">
+              {t.form.limbs.map((l) => (
+                <li
+                  key={l.name}
+                  className="grid grid-cols-[3.25rem_1fr] gap-x-4 gap-y-2 border-b border-rule py-5 sm:grid-cols-[4.5rem_13rem_1fr] sm:gap-x-8"
+                >
+                  <span className="label tabular pt-2 text-spot">{l.clock}</span>
+                  <div>
+                    <h3 className="display text-xl sm:text-2xl">{l.name}</h3>
+                    <p className="label mt-1.5 text-ink2">
+                      {l.alt} · {l.len}
+                    </p>
+                  </div>
+                  <p className="col-start-2 text-sm leading-[1.75] text-ink2 sm:col-start-3">
+                    {l.d}
+                  </p>
+                </li>
+              ))}
+            </ol>
+
+            {/* the black screen, printed as a black screen */}
+            <div className="mt-10 border-2 border-rulestrong bg-ink p-6 text-paper sm:p-8">
+              <p className="label text-spot">{t.form.pull.label}</p>
+              <p className="display mt-3 max-w-2xl text-[1.55rem] leading-tight sm:text-[2.1rem]">
+                {t.form.pull.title}
+              </p>
+              <p className="mt-4 max-w-2xl text-sm leading-[1.8]">{t.form.pull.body}</p>
+            </div>
+
+            <p className="mt-6 max-w-2xl text-sm leading-[1.75] text-ink2">{t.form.note}</p>
+          </Reveal>
+        </Section>
 
         {/* ------------------------------------------------ the six ------- */}
         <Section id="rivers">
@@ -154,19 +250,15 @@ export function Landing({ lang }: { lang: Lang }) {
             />
 
             {/* a register, not a card grid */}
-            <ul className="mt-12 border-t-2 border-rulestrong">
+            <ul className="mt-10 border-t-2 border-rulestrong">
               {RIVERS.map((r, i) => (
                 <li key={r.slug}>
                   <Link
                     href={localePath(lang, `/rivers/${r.slug}`)}
                     className="group grid grid-cols-[2.75rem_1fr] items-baseline gap-x-4 gap-y-1 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[3.5rem_14rem_1fr_auto] sm:gap-x-8"
                   >
-                    <span className="display text-xl text-spot">
-                      {numeral(i + 1, lang)}
-                    </span>
-                    <span className="display text-2xl text-ink">
-                      {r.river[lang]}
-                    </span>
+                    <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
+                    <span className="display text-2xl text-ink">{r.river[lang]}</span>
                     <span className="col-start-2 text-sm text-ink2 sm:col-start-auto">
                       {r.ghat[lang]}, {r.city[lang]}
                     </span>
@@ -180,28 +272,11 @@ export function Landing({ lang }: { lang: Lang }) {
           </Reveal>
         </Section>
 
-        {/* ------------------------------------------------ procedure ----- */}
-        <Section id="how" tinted>
-          <Reveal>
-            <SectionHeader eyebrow={t.how.eyebrow} title={t.how.title} />
-
-            <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
-              {t.how.steps.map((s, i) => (
-                <li key={s.n} className="tint p-7">
-                  <span className="display block text-4xl text-spot">
-                    {numeral(i + 1, lang)}
-                  </span>
-                  <div className="rule-thin mt-4" />
-                  <h3 className="display mt-4 text-2xl">{s.t}</h3>
-                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-        </Section>
-
-        {/* ------------------------------------------------ calendar ------ */}
-        <Section id="muhurat">
+        {/* ------------------------------------------------ calendar ------
+            A ruled register rather than a <table>: at 390px a three-column
+            table is a horizontal scroller, and these are six links, not a
+            dataset. The column heads only appear once the columns do.     */}
+        <Section id="muhurat" tinted>
           <Reveal>
             <SectionHeader
               eyebrow={t.muhurat.eyebrow}
@@ -209,67 +284,49 @@ export function Landing({ lang }: { lang: Lang }) {
               lede={t.muhurat.lede}
             />
 
-            <div className="mt-12 overflow-x-auto">
-              <table className="w-full min-w-[34rem] border-collapse text-left">
-                <thead>
-                  <tr className="border-y-2 border-rulestrong">
-                    <th className="label py-3 pr-4 text-ink2">
-                      {hi ? "पर्व" : "Occasion"}
-                    </th>
-                    <th className="label py-3 pr-4 text-ink2">
-                      {hi ? "विवरण" : "Reckoning"}
-                    </th>
-                    <th className="label py-3 text-right text-ink2">
-                      {hi ? "काल" : "Window"}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {DATED_OCCASIONS.slice(0, 6).map((o) => (
-                    <tr
-                      key={o.slug}
-                      className="border-b border-rule transition-colors hover:bg-paper3"
-                    >
-                      <td className="py-4 pr-4">
-                        <Link
-                          href={localePath(lang, `/muhurat/${o.slug}`)}
-                          className="display text-xl underline decoration-rule decoration-1 hover:decoration-spot"
-                        >
-                          {o.name[lang]}
-                        </Link>
-                      </td>
-                      <td className="py-4 pr-4 text-sm text-ink2">
-                        {o.occurrence.note[lang]}
-                      </td>
-                      <td className="label py-4 text-right text-ink">
-                        {o.occurrence.label[lang]}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="mt-10 hidden border-b-2 border-rulestrong pb-2.5 sm:grid sm:grid-cols-[15rem_1fr_9rem] sm:gap-6">
+              <span className="label text-ink2">{t.muhurat.heads.occasion}</span>
+              <span className="label text-ink2">{t.muhurat.heads.reckoning}</span>
+              <span className="label text-right text-ink2">{t.muhurat.heads.window}</span>
             </div>
 
-            <p className="mt-5 text-xs text-ink2">
-              {hi
-                ? "अस्थायी। बुकिंग खुलने से पूर्व हर समय पंचांग से पुष्ट किया जाता है।"
-                : "Provisional. Every timing is confirmed against the panchang before booking opens."}
-            </p>
+            <ul className="mt-10 border-t-2 border-rulestrong sm:mt-0 sm:border-t-0">
+              {DATED_OCCASIONS.slice(0, 6).map((o) => (
+                <li key={o.slug}>
+                  <Link
+                    href={localePath(lang, `/muhurat/${o.slug}`)}
+                    className="grid gap-1.5 border-b border-rule py-4 transition-colors hover:bg-paper3 sm:grid-cols-[15rem_1fr_9rem] sm:items-baseline sm:gap-6"
+                  >
+                    <span className="display text-xl text-ink underline decoration-rule decoration-1 underline-offset-4">
+                      {o.name[lang]}
+                    </span>
+                    <span className="text-sm leading-snug text-ink2">
+                      {o.occurrence.note[lang]}
+                    </span>
+                    <span className="label text-ink2 sm:text-right">
+                      {o.occurrence.label[lang]}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-5 text-sm leading-relaxed text-ink2">{t.muhurat.note}</p>
           </Reveal>
         </Section>
 
         {/* ------------------------------------------------ tariff --------
-            The section is about the samuhik/ekantik distinction first and the
-            numbers second, because that distinction is the honest reason an
-            $11 rite and a $251 rite can sit on the same page. The vessels come
-            before the tariff for that reason; do not reorder them.
+            Paid only, three lines, both ladders printed side by side on every
+            one of them. The free register comes first because it is the larger
+            half of the offer and because it is what makes the paid half easy
+            to state: content is free, the snan is paid.
 
-            Every session figure here agrees with the others: 11 per segment,
-            up to 51 per session in five segments, at least 45 seconds each,
-            which is ~53 minutes against a 48-minute Brahma Muhurat, hence the
-            stated overrun into Pratah Sandhya. Changing one of those numbers
-            means changing all of them, in both locales.                    */}
-        <Section id="sankalp" tinted>
+            Every per-snan figure is arithmetic on the price above it and is
+            documented in src/lib/content.ts. The middle line is the one to
+            take, so it is the one that carries the flag and the paper3 ground.
+            Keep it in the middle: on a phone these are three stacked rows and
+            the middle row is where the eye lands.                          */}
+        <Section id="sankalp">
           <Reveal>
             <SectionHeader
               eyebrow={t.pricing.eyebrow}
@@ -277,38 +334,69 @@ export function Landing({ lang }: { lang: Lang }) {
               lede={t.pricing.lede}
             />
 
-            {/* the two vessels, set as facing registers */}
             <div className="mt-12">
-              <Eyebrow>{t.pricing.modes.eyebrow}</Eyebrow>
+              <Eyebrow>{t.pricing.free.label}</Eyebrow>
             </div>
 
-            <div className="mt-6 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-2">
-              {t.pricing.modes.items.map((m) => (
-                <div key={m.name} className="tint flex flex-col p-7">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="display text-2xl">{m.name}</h3>
-                    <span className="label text-ink2">{m.alt}</span>
-                  </div>
-                  <p className="label mt-2 text-spot">{m.sub}</p>
+            <ul className="mt-5 border-t-2 border-rulestrong">
+              {t.pricing.free.items.map((f) => (
+                <li key={f.name}>
+                  <Link
+                    href={localePath(lang, f.href)}
+                    className="grid gap-1 border-b border-rule py-4 transition-colors hover:bg-paper3 sm:grid-cols-[15rem_1fr] sm:items-baseline sm:gap-6"
+                  >
+                    <span className="display text-xl text-ink underline decoration-rule decoration-1 underline-offset-4">
+                      {f.name}
+                    </span>
+                    <span className="text-sm leading-[1.7] text-ink2">{f.d}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-                  <div className="rule-thin mt-5" />
+            <p className="mt-4 text-sm text-ink2">{t.pricing.free.note}</p>
 
-                  <p className="mt-5 text-sm leading-[1.75] text-ink2">
-                    {m.body}
+            {/* the three lines: stacked ruled rows on a phone, three columns
+                from lg, hairlines drawn by the gap over an inked ground */}
+            <div className="mt-14 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-3">
+              {t.pricing.tiers.map((tier) => (
+                <div
+                  key={tier.name}
+                  className={`flex flex-col p-6 sm:p-7 ${tier.flag ? "bg-paper3" : "tint"}`}
+                >
+                  <p className={`label ${tier.flag ? "text-spot" : "text-ink2"}`}>
+                    {tier.flag || tier.sub}
                   </p>
 
+                  <div className="mt-2 flex items-baseline justify-between gap-4">
+                    <h3 className="display text-[1.7rem] leading-tight sm:text-2xl">
+                      {tier.name}
+                    </h3>
+                    <span className="label text-ink2">{tier.alt}</span>
+                  </div>
+
+                  {/* both currencies, always, never a geo switch */}
+                  <div className="mt-5 grid grid-cols-2 border-y border-rule">
+                    <div className="border-r border-rule py-4 pr-4">
+                      <p className="display text-[2rem] leading-none text-spot">{tier.world}</p>
+                      <p className="label mt-2 text-ink2">{t.pricing.heads.world}</p>
+                    </div>
+                    <div className="py-4 pl-4">
+                      <p className="display text-[2rem] leading-none text-ink">{tier.india}</p>
+                      <p className="label mt-2 text-ink2">{t.pricing.heads.india}</p>
+                    </div>
+                  </div>
+
+                  <p className="mt-5 text-sm leading-[1.75] text-ink2">{tier.body}</p>
+
                   <dl className="mt-6 border-t border-rule">
-                    {m.rows.map((r) => (
+                    {tier.rows.map((r) => (
                       <div
                         key={r.k}
                         className="flex justify-between gap-6 border-b border-rule py-2.5 last:border-b-0"
                       >
-                        <dt className="label shrink-0 pt-0.5 text-ink2">
-                          {r.k}
-                        </dt>
-                        <dd className="text-right text-sm leading-snug text-ink">
-                          {r.v}
-                        </dd>
+                        <dt className="label shrink-0 pt-0.5 text-ink2">{r.k}</dt>
+                        <dd className="text-right text-sm leading-snug text-ink">{r.v}</dd>
                       </div>
                     ))}
                   </dl>
@@ -316,88 +404,8 @@ export function Landing({ lang }: { lang: Lang }) {
               ))}
             </div>
 
-            {/* the arithmetic of a full session, stated rather than implied */}
-            <div className="boxed mt-8 bg-paper p-6 sm:p-7">
-              <p className="label text-spot">{t.pricing.session.label}</p>
-              {t.pricing.session.body.map((p) => (
-                <p
-                  key={p}
-                  className="mt-4 max-w-3xl text-sm leading-[1.75] text-ink2"
-                >
-                  {p}
-                </p>
-              ))}
-            </div>
-
-            {/* the tariff, both ladders in one table, never a geo switch */}
-            <div className="mt-16">
-              <Eyebrow>{t.pricing.tariff.label}</Eyebrow>
-              <h3 className="display mt-4 text-[1.9rem] sm:text-[2.3rem]">
-                {t.pricing.tariff.caption}
-              </h3>
-
-              <div className="mt-8 overflow-x-auto">
-                <table className="w-full min-w-[48rem] border-collapse text-left">
-                  <thead>
-                    <tr className="border-t-2 border-rulestrong">
-                      <th className="label py-3 pr-6 text-ink2">
-                        {t.pricing.tariff.heads.rite}
-                      </th>
-                      <th className="label py-3 pr-6 text-ink2">
-                        {t.pricing.tariff.heads.vessel}
-                      </th>
-                      <th className="label py-3 pr-6 text-right text-spot">
-                        {t.pricing.tariff.heads.world}
-                      </th>
-                      <th className="label py-3 text-right text-ink">
-                        {t.pricing.tariff.heads.india}
-                      </th>
-                    </tr>
-                    <tr className="border-b-2 border-rulestrong">
-                      <td className="pb-3" colSpan={2} />
-                      <td className="max-w-[10rem] pr-6 pb-3 text-right text-[0.7rem] leading-snug text-ink2">
-                        {t.pricing.tariff.subheads.world}
-                      </td>
-                      <td className="max-w-[10rem] pb-3 text-right text-[0.7rem] leading-snug text-ink2">
-                        {t.pricing.tariff.subheads.india}
-                      </td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {t.pricing.tariff.rows.map((r) => (
-                      <tr key={r.name} className="border-b border-rule align-top">
-                        <td className="py-5 pr-6">
-                          <span className="display block text-xl text-ink">
-                            {r.name}
-                          </span>
-                          <span className="label mt-1.5 block text-ink2">
-                            {r.alt}
-                          </span>
-                          <p className="mt-2.5 max-w-sm text-sm leading-[1.7] text-ink2">
-                            {r.what}
-                          </p>
-                        </td>
-                        <td className="label py-5 pr-6 text-ink2">{r.vessel}</td>
-                        <td className="py-5 pr-6 text-right">
-                          <span className="display text-2xl text-spot">
-                            {r.world}
-                          </span>
-                        </td>
-                        <td className="py-5 text-right">
-                          <span className="display text-2xl text-ink">
-                            {r.india}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* the two things the table cannot say on its own */}
-            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-2">
-              <div className="tint p-7">
+            <div className="mt-10 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-2">
+              <div className="tint p-6 sm:p-7">
                 <p className="label text-spot">{t.pricing.ladders.label}</p>
                 {t.pricing.ladders.body.map((p) => (
                   <p key={p} className="mt-4 text-sm leading-[1.75] text-ink2">
@@ -406,37 +414,21 @@ export function Landing({ lang }: { lang: Lang }) {
                 ))}
               </div>
 
-              <div className="bg-paper3 p-7">
-                <p className="label text-spot">{t.pricing.kosh.label}</p>
-                <h3 className="display mt-3 text-2xl">{t.pricing.kosh.title}</h3>
-                <p className="mt-4 text-sm leading-[1.75] text-ink2">
-                  {t.pricing.kosh.body}
+              <div className="bg-paper3 p-6 sm:p-7">
+                <p className="label text-spot">{t.pricing.truth.label}</p>
+                <p className="mt-4 text-[1.02rem] leading-[1.8] text-ink">
+                  {t.pricing.truth.body}
                 </p>
-
-                <dl className="mt-6 border-t border-rule">
-                  {t.pricing.kosh.rows.map((r) => (
-                    <div
-                      key={r.k}
-                      className="flex justify-between gap-6 border-b border-rule py-2.5 last:border-b-0"
-                    >
-                      <dt className="label shrink-0 pt-0.5 text-ink2">{r.k}</dt>
-                      <dd className="text-right text-sm leading-snug text-ink">
-                        {r.v}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
               </div>
             </div>
 
-            <p className="mt-7 max-w-3xl text-xs leading-[1.75] text-ink2">
-              {t.pricing.note}
-            </p>
+            <p className="mt-7 max-w-3xl text-sm leading-[1.75] text-ink2">{t.pricing.note}</p>
 
             <div className="mt-8">
               <LinkButton
-                href={localePath(lang, "/rituals")}
+                href={localePath(lang, "/snan")}
                 variant="ghost"
+                className="w-full !py-4 sm:w-auto"
               >
                 {t.pricing.cta}
               </LinkButton>
@@ -446,23 +438,47 @@ export function Landing({ lang }: { lang: Lang }) {
 
         {/* ------------------------------------------------ colophon ------ */}
         <section className="border-t-2 border-rulestrong">
-          <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
+          <div className="mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-24">
             <Mark className="mx-auto h-12 w-12 text-ink" />
             <div className="rule-double mt-8" />
-            <h2 className="display mt-8 text-[2.2rem] leading-tight sm:text-[3.2rem]">
+            <h2 className="display mt-8 text-[2rem] leading-tight sm:text-[3.2rem]">
               {t.closing.title}
             </h2>
-            <p className="mx-auto mt-5 max-w-lg leading-[1.75] text-ink2">
+            <p className="mx-auto mt-5 max-w-lg text-[1.02rem] leading-[1.75] text-ink2">
               {t.closing.lede}
             </p>
-            <a href="#sankalp" className="mt-9 inline-block">
-              <CTA className="!px-10 !py-4">{t.closing.cta}</CTA>
+            <a href="#sankalp" className="mt-9 block sm:inline-block">
+              <CTA className="w-full !py-4 sm:w-auto sm:!px-10">{t.closing.cta}</CTA>
             </a>
           </div>
         </section>
       </main>
 
       <Footer lang={lang} />
+
+      {/* ------------------------------------------------ thumb rail ----
+          The phone's primary action, kept at the bottom edge where the thumb
+          is, carrying the hero SKU and its price in both currencies. Set as a
+          ruled bar on paper, not a floating pill. Hidden from `sm` up, where
+          the buttons in the flow are already reachable.                   */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden">
+        <div className="flex items-center justify-between gap-4 px-5 py-2.5">
+          <div className="min-w-0">
+            <p className="label text-ink2">{t.bar.label}</p>
+            <p className="display mt-0.5 truncate text-lg leading-tight text-ink">
+              {t.bar.price}
+            </p>
+          </div>
+          <a
+            href="#sankalp"
+            className="label flex min-h-[48px] shrink-0 items-center bg-spot px-7 text-paper transition-colors hover:bg-ink"
+          >
+            {t.bar.cta}
+          </a>
+        </div>
+      </div>
+      {/* keeps the imprint clear of the rail */}
+      <div className="h-[4.75rem] sm:hidden" aria-hidden="true" />
     </>
   );
 }

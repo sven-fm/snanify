@@ -71,7 +71,7 @@ function WaterMotif({ form, className = "" }: { form: WaterForm; className?: str
       <path d="M216 138 H304" strokeWidth="2" />
       <path d="M180 158 H304" strokeWidth="1" />
       <path d="M150 176 H304" strokeWidth="1" />
-      {/* where the ritvik stands, at the waterline */}
+      {/* the waterline, where the lowest step meets the river */}
       <rect x="204" y="126" width="12" height="12" fill="var(--spot)" stroke="none" />
     </svg>
   );
@@ -79,11 +79,14 @@ function WaterMotif({ form, className = "" }: { form: WaterForm; className?: str
 
 export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
   const t = riverDetailContent[lang];
-  const granted = ghat.permitStatus === "granted";
 
   const home = localePath(lang, "/");
   const anchor = (id: string) => `${home}#${id}`;
   const riversHref = localePath(lang, "/rivers");
+  const muhuratHref = localePath(lang, "/muhurat");
+  /* /live lists all six and anchors each row on its slug, so this lands the
+     reader on this water's own block rather than at the top of the page. */
+  const liveHref = `${localePath(lang, "/live")}#${ghat.slug}`;
   const neighbours = ghatNeighbours(ghat.slug);
 
   const facts: { key: string; label: string; value: string }[] = [
@@ -229,65 +232,146 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
           </Reveal>
         </Section>
 
-        {/* -------------------------------------------------- rite ------ */}
-        <Section id="rite">
+        {/* ----------------------------------------------- reading ------ */}
+        <Section id="reading">
           <Reveal>
-            <SectionHeader eyebrow={t.rite.eyebrow} title={t.rite.title} lede={t.rite.lede} />
+            <SectionHeader
+              eyebrow={t.reading.eyebrow}
+              title={t.reading.title}
+              lede={t.reading.lede}
+            />
+
+            <p className="mt-10 max-w-3xl text-[1.05rem] leading-[1.85] text-ink">
+              {ghat.reading[lang]}
+            </p>
+
+            <div className="mt-9">
+              <Link href={liveHref} className="inline-block">
+                <CTA>{t.reading.cta}</CTA>
+              </Link>
+            </div>
+
+            {/* The masthead of a data publication, not a disclaimer. It is set
+                small and under a hairline, and it carries the licence. */}
+            <div className="mt-14 max-w-3xl border-t-2 border-rulestrong pt-6">
+              <h3 className="label text-ink2">{t.reading.provenanceLabel}</h3>
+              <div className="mt-5 space-y-4">
+                {t.reading.provenance.map((para, i) => (
+                  <p key={i} className="text-sm leading-[1.8] text-ink2">
+                    {para}
+                  </p>
+                ))}
+              </div>
+
+              <div className="rule-thin mt-7" />
+              <h3 className="label mt-6 text-ink2">{t.reading.attributionLabel}</h3>
+              <ul className="mt-3 space-y-1.5">
+                {t.reading.attribution.map((line) => (
+                  <li key={line} className="text-sm leading-[1.7] text-ink2">
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </Section>
+
+        {/* ------------------------------------------------- offer ------ */}
+        <Section id="offer" tinted>
+          <Reveal>
+            <SectionHeader
+              eyebrow={t.offer.eyebrow}
+              title={t.offer.title}
+              lede={t.offer.lede}
+            />
 
             <ol className="mt-12 border-t-2 border-rulestrong">
-              {t.rite.steps.map((s, i) => (
+              {t.offer.items.map((item, i) => (
                 <li
-                  key={s.key}
-                  className="grid grid-cols-[2.75rem_1fr] items-baseline gap-x-5 gap-y-2 border-b border-rule py-6 md:grid-cols-[3.5rem_13rem_1fr] md:gap-x-8 md:py-7"
+                  key={item.key}
+                  className="grid grid-cols-[2.75rem_1fr] items-baseline gap-x-5 gap-y-3 border-b border-rule py-6 md:grid-cols-[3.5rem_14rem_1fr] md:gap-x-8 md:py-7"
                 >
                   <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
-                  <span className="display text-xl text-ink">{s.name}</span>
+                  <span className="display text-xl text-ink">{item.name}</span>
                   <span className="col-start-2 max-w-2xl text-sm leading-[1.75] text-ink2 md:col-start-auto">
-                    {s.body}
+                    {item.body}
                   </span>
                 </li>
               ))}
             </ol>
 
-            <div className="mt-12 grid gap-7 md:grid-cols-3">
-              <p className="border-t-2 border-rulestrong pt-5 text-sm leading-[1.75] text-ink2">
-                {t.rite.audioNote}
-              </p>
-              <p className="border-t-2 border-rulestrong pt-5 text-sm leading-[1.75] text-ink2">
-                {t.rite.proxyNote}
-              </p>
-              <p className="border-t-2 border-spot pt-5 text-sm leading-[1.75] text-ink2">
-                {t.rite.digital}
-              </p>
+            <p className="mt-8 max-w-2xl border-t-2 border-spot pt-5 text-sm leading-[1.75] text-ink2">
+              {t.offer.note}
+            </p>
+
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <a href={anchor("sankalp")}>
+                <CTA>{t.offer.cta}</CTA>
+              </a>
+              <Link href={muhuratHref}>
+                <CTA variant="ghost">{t.offer.muhurat}</CTA>
+              </Link>
             </div>
           </Reveal>
         </Section>
 
-        {/* ------------------------------------------------- rites ------ */}
-        <Section id="rites" tinted>
+        {/* --------------------------------------------- tradition ------ */}
+        <Section id="tradition">
           <Reveal>
-            <SectionHeader eyebrow={t.rites.eyebrow} title={t.rites.title} lede={t.rites.lede} />
+            <SectionHeader
+              eyebrow={t.tradition.eyebrow}
+              title={t.tradition.title}
+              lede={t.tradition.lede}
+            />
 
-            <ul className="mt-12 grid gap-px border-2 border-rulestrong bg-rule sm:grid-cols-2">
-              {ghat.rites.map((r) => (
-                <li key={r.key} className="tint p-7 sm:p-8">
-                  <h3 className="display text-xl text-ink">{r.name[lang]}</h3>
-                  <div className="rule-thin mt-4" />
-                  <p className="mt-4 text-sm leading-[1.75] text-ink2">{r.note[lang]}</p>
+            {/* The standing sentence sits above the register, so nothing in it
+                can be read as a menu even by somebody skimming. */}
+            <p className="mt-8 max-w-3xl border-l-2 border-spot pl-5 text-sm leading-[1.8] text-ink">
+              {t.tradition.standing}
+            </p>
+
+            <ul className="mt-10 border-t-2 border-rulestrong">
+              {ghat.tradition.map((item) => (
+                <li
+                  key={item.key}
+                  className="grid gap-x-8 gap-y-4 border-b border-rule py-7 md:grid-cols-[1fr_16rem] md:py-8"
+                >
+                  <div>
+                    <h3 className="display text-2xl text-ink">{item.name[lang]}</h3>
+                    <p className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2">
+                      {item.note[lang]}
+                    </p>
+                  </div>
+                  <div className="md:text-right">
+                    <span
+                      className={`label inline-flex items-center gap-2.5 border px-3 py-2 ${
+                        item.kind === "personal"
+                          ? "border-spot text-spot"
+                          : "border-rulestrong text-ink"
+                      }`}
+                    >
+                      <span
+                        className={`h-2 w-2 ${
+                          item.kind === "personal" ? "bg-spot" : "border border-ink2"
+                        }`}
+                        aria-hidden="true"
+                      />
+                      {t.tradition.kindLabels[item.kind]}
+                    </span>
+                    <p className="mt-3 text-sm leading-[1.7] text-ink2">
+                      {item.kind === "personal"
+                        ? t.tradition.personalNote
+                        : t.tradition.placeNote}
+                    </p>
+                  </div>
                 </li>
               ))}
-              {/* Three of the six waters carry an odd number of rites. Without a
-                  filler the last grid cell falls through to the container's rule
-                  colour and renders as a solid block. */}
-              {ghat.rites.length % 2 === 1 && (
-                <li aria-hidden="true" className="tint hidden sm:block" />
-              )}
             </ul>
           </Reveal>
         </Section>
 
         {/* --------------------------------------------- occasions ------ */}
-        <Section id="occasions">
+        <Section id="occasions" tinted>
           <Reveal>
             <SectionHeader
               eyebrow={t.occasions.eyebrow}
@@ -321,40 +405,20 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
           </Reveal>
         </Section>
 
-        {/* -------------------------------------------- permission ------ */}
-        <Section id="permission" tinted>
+        {/* ------------------------------------------------ keeper ------ */}
+        <Section id="keeper">
           <Reveal>
-            <SectionHeader eyebrow={t.permission.eyebrow} title={t.permission.title} />
+            <SectionHeader eyebrow={t.keeper.eyebrow} title={t.keeper.title} />
 
             <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
               <dl className="border-t-2 border-rulestrong">
                 <div className="border-b border-rule py-6">
-                  <dt className="label text-ink2">{t.permission.authorityLabel}</dt>
-                  <dd className="mt-3 leading-[1.75] text-ink">{ghat.authority[lang]}</dd>
-                </div>
-                <div className="border-b border-rule py-6">
-                  <dt className="label text-ink2">{t.permission.statusLabel}</dt>
-                  <dd className="mt-3">
-                    <span
-                      className={`label inline-flex items-center gap-2.5 border px-3 py-2 ${
-                        granted ? "border-rulestrong text-ink" : "border-spot text-spot"
-                      }`}
-                    >
-                      <span
-                        className={`h-2 w-2 ${granted ? "bg-ink" : "bg-spot"}`}
-                        aria-hidden="true"
-                      />
-                      {t.permission.status[ghat.permitStatus]}
-                    </span>
-                  </dd>
+                  <dt className="label text-ink2">{t.keeper.label}</dt>
+                  <dd className="mt-3 leading-[1.75] text-ink">{ghat.keeper[lang]}</dd>
                 </div>
               </dl>
 
-              <div className="max-w-2xl space-y-6">
-                <p className="leading-[1.75] text-ink2">{t.permission.body}</p>
-                <div className="rule-thin" />
-                <p className="leading-[1.75] text-ink2">{t.permission.framing}</p>
-              </div>
+              <p className="max-w-2xl leading-[1.75] text-ink2">{t.keeper.body}</p>
             </div>
           </Reveal>
         </Section>

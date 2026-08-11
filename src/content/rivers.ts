@@ -5,31 +5,56 @@ import type { Lang } from "@/lib/content";
 
    Rules this file is written under:
 
-   1. Everything here is either a matter of public record or a tradition
-      described as a tradition. No dates, no timings, no priest names, no
-      partnerships and no statistics are asserted. Where a fact is unverified
-      it is marked PLACEHOLDER in the data and stated in the UI.
-   2. `permitStatus` is "PLACEHOLDER" for all six. It means: we hold nothing.
-      No page may imply otherwise, RiverDetail renders the status explicitly.
-   3. Talakaveri is not a ghat. It is the spring the Kaveri rises from, inside
-      a temple tank. The page says so before it says anything else, and points
-      to Paschima Vahini for the rites that cannot be performed at a source.
-   4. No river is described by reference to another river. "Dakshin Ganga" and
+   1. NOTHING IS PERFORMED. Snanify has no priest, no ritvik, no operator and
+      no device at any of these six places. Nothing is done there for anyone,
+      nothing is filmed, streamed or recorded, and no sentence in this file may
+      imply otherwise. These pages describe places. That is the whole of it.
+   2. NOTHING IS PROMISED. No rite is tied to an outcome, health, wealth,
+      examination or any other, and tradition is described as tradition rather
+      than as a product benefit.
+   3. WHAT IS ON OFFER IS NAMED EXACTLY. At each water Snanify offers four
+      things: its measured state, its sunrise, its muhurat windows, and four
+      and a half minutes you sit yourself. The measured state is modelled
+      discharge, not a gauge reading, and the file says modelled every time.
+   4. THE ARCHIVE STARTS IN 1997, matching `src/lib/riverdata.ts`. The
+      Copernicus reanalysis returns nulls before that, so no string here says
+      1991.
+   5. `tradition` is not a menu. It lists what a water is traditionally kept
+      for, in the third person. Where a thing can only be done by a body
+      standing at the water, the record says so and says that Snanify does not
+      arrange it and cannot.
+   6. Talakaveri is not a ghat. It is the spring the Kaveri rises from, inside
+      a temple tank. The page says so before it says anything else, and names
+      the waters downstream that a Kaveri snan actually belongs at.
+   7. No river is described by reference to another river. "Dakshin Ganga" and
       "Ganga of the south" are out; Gautami and Ponni are in.
-   5. No rite is ever tied to an outcome, health, wealth, examination, or any
-      other. Tradition is described as tradition, never as a product benefit.
+   8. Slugs are stable. `src/content/muhurat.ts` keys its ghat records off
+      them and `src/app/sitemap.ts` publishes them.
    --------------------------------------------------------------------------- */
 
-/** What we actually hold at a ghat. All six are PLACEHOLDER, i.e. nothing. */
-export type PermitStatus = "PLACEHOLDER" | "applied" | "granted";
-
-/** The physical form of the water, because it decides what can be performed. */
+/** The physical form of the water, because it decides what the place can be. */
 export type WaterForm = "flowing-ghat" | "confluence" | "temple-tank";
 
 /** Both locales required, a missing translation is a type error. */
 export type Bilingual = Record<Lang, string>;
 
-export type GhatRite = { key: string; name: Bilingual; note: Bilingual };
+/**
+ * How a tradition is kept.
+ *
+ * `personal`      an act performed by a person standing at the water. It
+ *                 cannot be delegated, and the page says so plainly.
+ * `of-the-place`  something the place itself keeps, daily or on its calendar,
+ *                 whether or not anybody asks for it.
+ */
+export type TraditionKind = "personal" | "of-the-place";
+
+export type GhatTradition = {
+  key: string;
+  name: Bilingual;
+  /** Described as tradition, in the third person. Never as something offered. */
+  note: Bilingual;
+  kind: TraditionKind;
+};
 
 export type GhatOccasion = {
   key: string;
@@ -53,13 +78,15 @@ export type Ghat = {
   epithet: Bilingual;
   standfirst: Bilingual;
   sacred: Record<Lang, string[]>;
-  rites: GhatRite[];
+  /** What the measured figure means at this particular water. Modelled, always. */
+  reading: Bilingual;
+  /** What this water is traditionally kept for. Not a menu. */
+  tradition: GhatTradition[];
   occasions: GhatOccasion[];
-  /** An honest caveat that must be read before booking. Rendered prominently. */
+  /** An honest caveat that must be read before choosing. Rendered prominently. */
   caution?: Bilingual;
-  /** The body that actually controls the ghat. PLACEHOLDER where unconfirmed. */
-  authority: Bilingual;
-  permitStatus: PermitStatus;
+  /** Who looks after the place. A statement of custody, not of permission. */
+  keeper: Bilingual;
 };
 
 export const RIVERS: Ghat[] = [
@@ -83,47 +110,66 @@ export const RIVERS: Ghat[] = [
     },
     sacred: {
       en: [
-        "Haridwar is the point at which the Ganga finishes her descent through the hills and enters the plain. The name is read two ways, Hari-dwar, the gate of Vishnu, and Har-dwar, the gate of Shiva, and both readings are kept, because the town is the doorway to two sets of shrines, Badrinath in one direction and Kedarnath in the other.",
+        "Haridwar is the point at which the Ganga finishes her descent through the hills and enters the plain. The name is read two ways, Hari-dwar, the gate of Vishnu, and Har-dwar, the gate of Shiva, and both readings are kept, because the town is the doorway to two sets of shrines, Badrinath in one direction and Kedarnath in the other. By the time she arrives she has run a long way from Gaumukh, and everything below the town is flat country.",
         "Har Ki Pauri means the steps of Hari. Set into the ghat is Brahmakund, held in tradition to be the place where a drop of the amrit fell as it was carried away after the churning of the ocean; it is that tradition which gives Haridwar one of the four Kumbh Melas. A stone on the ghat is venerated as bearing Vishnu's footprint, and the ghat takes its name from that footprint.",
-        "In daily practice this is one of the busiest working ghats in the country. The Ganga aarti is performed here at dusk; tarpan, shraddha and asthi visarjan are conducted through the day; and the ghat is looked after by Shri Ganga Sabha, the body responsible for the aarti and for the upkeep of the steps.",
+        "The water running past the steps is not the whole river. A short way upstream, at Bhimgoda, a channel is drawn off the main stem and it is on that channel that the ghat is built; the main stream runs east of it, and the same works feed the Upper Ganges Canal, cut in the eighteen fifties and still carrying water into the Doab. It is worth knowing when you read a flow figure for Haridwar, because the figure belongs to the river and not to the channel between the steps.",
+        "In daily practice this is one of the busiest working ghats in the country. The aarti is performed at dusk; tarpan, shraddha and asthi visarjan are conducted through the day; and a little downstream at Kankhal the Daksha Mahadev temple keeps the account of Daksha's yajna, which is the older story of the place and the reason the town was a tirtha before it was a ghat.",
       ],
       hi: [
-        "हरिद्वार वह स्थान है जहाँ गंगा पर्वतों से उतरना पूरा कर मैदान में प्रवेश करती हैं। नाम दो प्रकार से पढ़ा जाता है, हरिद्वार, विष्णु का द्वार, और हरद्वार, शिव का द्वार, और दोनों पाठ चलते हैं, क्योंकि यह नगर दो तीर्थ-मार्गों का प्रवेश है: एक ओर बद्रीनाथ, दूसरी ओर केदारनाथ।",
+        "हरिद्वार वह स्थान है जहाँ गंगा पर्वतों से उतरना पूरा कर मैदान में प्रवेश करती हैं। नाम दो प्रकार से पढ़ा जाता है, हरिद्वार, विष्णु का द्वार, और हरद्वार, शिव का द्वार, और दोनों पाठ चलते हैं, क्योंकि यह नगर दो तीर्थ-मार्गों का प्रवेश है: एक ओर बद्रीनाथ, दूसरी ओर केदारनाथ। यहाँ पहुँचने तक वे गोमुख से बहुत दूर आ चुकी होती हैं, और नगर के नीचे सब कुछ मैदान है।",
         "हर की पौड़ी का अर्थ है हरि की सीढ़ियाँ। घाट में ही ब्रह्मकुंड है, जिसके विषय में परंपरा कहती है कि समुद्र-मंथन के बाद अमृत ले जाते समय एक बूँद यहीं गिरी थी; इसी परंपरा से हरिद्वार को चार कुंभ स्थलों में गिना जाता है। घाट पर एक शिला विष्णु के चरण-चिह्न के रूप में पूजित है, और घाट का नाम उसी चरण से है।",
-        "व्यवहार में यह देश के सबसे व्यस्त घाटों में से एक है। संध्या के समय यहाँ गंगा आरती होती है; दिन भर तर्पण, श्राद्ध और अस्थि विसर्जन चलते रहते हैं; और घाट की देखरेख श्री गंगा सभा करती है, जिस पर आरती तथा सीढ़ियों के रखरखाव का दायित्व है।",
+        "सीढ़ियों के सामने बहता जल पूरी नदी नहीं है। कुछ ऊपर भीमगोड़ा पर मुख्य धारा से एक नहर-धारा निकाली जाती है, और घाट उसी धारा पर बना है; मुख्य धारा उसके पूर्व की ओर बहती है, और उन्हीं जल-संरचनाओं से ऊपरी गंगा नहर को जल मिलता है, जो उन्नीसवीं शताब्दी के मध्य में काटी गई थी और आज भी दोआब तक जल ले जाती है। हरिद्वार का प्रवाह-अंक पढ़ते समय यह जानना उचित है, क्योंकि वह अंक नदी का है, सीढ़ियों के बीच बहती धारा का नहीं।",
+        "व्यवहार में यह देश के सबसे व्यस्त घाटों में से एक है। संध्या के समय आरती होती है; दिन भर तर्पण, श्राद्ध और अस्थि विसर्जन चलते रहते हैं; और कुछ नीचे कनखल में दक्ष महादेव मंदिर दक्ष-यज्ञ की कथा संजोए है, जो इस स्थान की उससे भी पुरानी कथा है और वह कारण भी, जिससे यह नगर घाट बनने से पहले ही तीर्थ था।",
       ],
     },
-    rites: [
+    reading: {
+      en: "The cell this site reads for Haridwar sits on the Ganga main stem below the town, where she has finished her descent from the hills. The number is modelled discharge in cubic metres a second, published once a day, and it is ranked against every daily value that same cell has produced in this same week of the year from 1997 to 2025. She carries far more water here in a monsoon week than in a dry March, and the percentile is what makes the difference legible without your having to know the numbers.",
+      hi: "इस स्थल पर हरिद्वार के लिए जो खंड पढ़ा जाता है वह नगर के नीचे गंगा की मुख्य धारा पर है, जहाँ वे पर्वतों से उतरना पूरा कर चुकी होती हैं। अंक प्रतिरूपित नदी-प्रवाह है, घन मीटर प्रति सेकंड में, प्रतिदिन एक बार प्रकाशित, और उसकी तुलना उसी खंड के उन सभी दैनिक मानों से की जाती है जो 1997 से 2025 तक वर्ष के इसी सप्ताह में आए। वर्षा-काल के एक सप्ताह में वे यहाँ सूखे मार्च की तुलना में कहीं अधिक जल लाती हैं, और प्रतिशतक ही वह चीज़ है जो यह अंतर बिना अंक जाने समझा देती है।",
+    },
+    tradition: [
       {
-        key: "sankalp-snan",
-        name: { en: "Sankalp and pratinidhi snan", hi: "संकल्प एवं प्रतिनिधि स्नान" },
+        key: "snan",
+        kind: "personal",
+        name: { en: "The dawn dip at Brahmakund", hi: "ब्रह्मकुंड पर प्रातःकालीन स्नान" },
         note: {
-          en: "Your name and gotra are spoken at the water, and the ritvik enters it as your representative.",
-          hi: "जल के समीप आपका नाम और गोत्र उच्चारित होते हैं, और ऋत्विक आपके प्रतिनिधि के रूप में जल में उतरते हैं।",
+          en: "The dip itself, taken at first light from the steps at Brahmakund. It is what the ghat is for, and it is taken by the person who takes it.",
+          hi: "स्नान स्वयं, प्रातः की पहली किरण के साथ ब्रह्मकुंड की सीढ़ियों से। घाट इसी के लिए है, और यह वही करता है जो स्वयं वहाँ उतरता है।",
         },
       },
       {
         key: "tarpan",
+        kind: "personal",
         name: { en: "Tarpan", hi: "तर्पण" },
         note: {
-          en: "Water offered to the ancestors by name. Practice varies by community, if your family keeps a purohit, ask them first.",
-          hi: "पूर्वजों को नामपूर्वक जल-अर्पण। विधि समुदाय के अनुसार भिन्न होती है, यदि आपके परिवार के अपने पुरोहित हैं, पहले उनसे पूछ लें।",
+          en: "Water offered to the ancestors by name, from the hand, standing in the river. Practice varies by community; families that keep a purohit follow his order and not a general one.",
+          hi: "पूर्वजों को नामपूर्वक जल-अर्पण, हाथ से, नदी में खड़े होकर। विधि समुदाय के अनुसार भिन्न है; जिन परिवारों के अपने पुरोहित हैं वे उन्हीं का क्रम मानते हैं, कोई सामान्य क्रम नहीं।",
         },
       },
       {
-        key: "nadi-puja",
-        name: { en: "Ganga puja", hi: "गंगा पूजा" },
+        key: "asthi-visarjan",
+        kind: "personal",
+        name: { en: "Asthi visarjan", hi: "अस्थि विसर्जन" },
         note: {
-          en: "The upachara sequence offered to the river herself at the water's edge.",
-          hi: "जल के किनारे नदी को ही अर्पित उपचार-क्रम।",
+          en: "Ashes given to the water at the ghat, which is one of the long-standing reasons families travel to Haridwar at all. It is done by the family, present, at the water.",
+          hi: "घाट पर अस्थियाँ जल को सौंपी जाती हैं, और यही उन पुराने कारणों में से एक है जिनसे परिवार हरिद्वार तक आते हैं। यह परिवार स्वयं, वहाँ उपस्थित रहकर, जल के सामने करता है।",
+        },
+      },
+      {
+        key: "aarti",
+        kind: "of-the-place",
+        name: { en: "The evening aarti", hi: "संध्या आरती" },
+        note: {
+          en: "Performed at these steps at dusk by Shri Ganga Sabha, every evening, for whoever is standing there. Nobody commissions it and nobody owns it.",
+          hi: "इन्हीं सीढ़ियों पर संध्या के समय श्री गंगा सभा द्वारा प्रतिदिन, जो भी वहाँ खड़ा हो उसके लिए। न कोई इसे बुलवाता है, न किसी की यह निजी वस्तु है।",
         },
       },
       {
         key: "deep-daan",
+        kind: "personal",
         name: { en: "Deep daan", hi: "दीप दान" },
         note: {
-          en: "A lamp, lit, named, and set on the water. That is the whole of it, and it has always been enough.",
-          hi: "एक दीप, जलाया गया, नाम लिया गया, जल पर रखा गया। बस इतना ही, और सदा इतना ही पर्याप्त रहा है।",
+          en: "A lamp on a leaf, lit and set on the water from the step. That is the whole of it, and it has always been enough.",
+          hi: "पत्ते पर एक दीप, जलाकर सीढ़ी से जल पर रखा हुआ। बस इतना ही, और सदा इतना ही पर्याप्त रहा है।",
         },
       },
     ],
@@ -165,11 +211,10 @@ export const RIVERS: Ghat[] = [
         },
       },
     ],
-    authority: {
-      en: "Har Ki Pauri is administered by Shri Ganga Sabha, which runs the evening aarti and maintains the ghat. The Haridwar municipal and district administrations control access at Kumbh and on major parva days.",
-      hi: "हर की पौड़ी का प्रबंधन श्री गंगा सभा करती है, जो संध्या आरती संचालित करती है और घाट का रखरखाव देखती है। कुंभ तथा बड़े पर्वों पर प्रवेश हरिद्वार नगर एवं ज़िला प्रशासन के नियंत्रण में रहता है।",
+    keeper: {
+      en: "Har Ki Pauri is looked after by Shri Ganga Sabha, which runs the evening aarti and maintains the steps. The Haridwar municipal and district administrations take charge of access at Kumbh and on the large parva days.",
+      hi: "हर की पौड़ी की देखरेख श्री गंगा सभा करती है, जो संध्या आरती संचालित करती है और सीढ़ियों का रखरखाव देखती है। कुंभ तथा बड़े पर्वों पर प्रवेश हरिद्वार नगर एवं ज़िला प्रशासन के अधीन रहता है।",
     },
-    permitStatus: "PLACEHOLDER",
   },
 
   /* ---------------------------------------------------------------- 02 */
@@ -194,45 +239,64 @@ export const RIVERS: Ghat[] = [
       en: [
         "At Prayagraj the Ganga arrives from the north and the Yamuna from the west, and for a stretch the two run side by side without mixing, a line visible from a boat, the Yamuna darker and slower, the Ganga paler and quicker. Tradition holds that the Sarasvati joins them here unseen, and it is from those three that the place takes the name Triveni, three braids.",
         "Prayag means the place of sacrifice; the tradition is that Brahma performed a yajna here. The city is called Tirtharaj, king of tirthas. The Magh Mela is held on the sands each year through the month of Magha and the Kumbh at its twelve-year turn, and some pilgrims keep kalpavas, a month of residence on the sangam sands, with restraint and a daily bath.",
-        "Shraddha and pind daan at Prayagraj are conducted through the Prayagwal purohits, families who hold the right to officiate for pilgrims by descent and who keep pilgrim registers going back generations. Any rite performed here is performed with them, not around them, and we would not describe it otherwise.",
+        "The mela is possible because of what the rivers do in winter. When the flood falls back it leaves a plain of sand between the two channels, and a city is put up on it for a month and taken down again. Nothing about that is decorative: the calendar of the mela is the calendar of the river, and a late or heavy season moves the ground it stands on. Above the sands the fort holds the Akshayavat, the undying banyan, and an Ashokan pillar that has stood on that spot far longer than the fort has.",
+        "Shraddha and pind daan at Prayagraj are conducted through the Prayagwal purohits, families who hold the right to officiate for pilgrims by descent and who keep pilgrim registers going back generations. That is how it is done here: in person, by people who are there, with the family present. Snanify has nothing to do with it, arranges none of it, and names it because it is true of the place.",
       ],
       hi: [
         "प्रयागराज में गंगा उत्तर से और यमुना पश्चिम से आती हैं, और कुछ दूर तक दोनों बिना मिले साथ-साथ बहती हैं, नाव से वह रेखा स्पष्ट दिखती है: यमुना गहरी और धीमी, गंगा हल्की और तेज़। परंपरा मानती है कि सरस्वती यहीं अदृश्य रूप में मिलती हैं, और इन्हीं तीन से इस स्थान का नाम त्रिवेणी है।",
         "प्रयाग का अर्थ है यज्ञ का स्थान; परंपरा है कि ब्रह्मा ने यहाँ यज्ञ किया था। नगर को तीर्थराज कहा जाता है। माघ मास में प्रतिवर्ष रेती पर माघ मेला लगता है और बारह वर्ष के फेर पर कुंभ; कुछ तीर्थयात्री कल्पवास करते हैं, संगम की रेती पर एक मास का निवास, संयम और प्रतिदिन स्नान।",
-        "प्रयागराज में श्राद्ध और पिंडदान प्रयागवाल पुरोहितों के माध्यम से संपन्न होते हैं, वे परिवार जिन्हें तीर्थयात्रियों के लिए कर्म कराने का अधिकार वंश-परंपरा से प्राप्त है और जो पीढ़ियों पुरानी यात्री-बहियाँ रखते हैं। यहाँ कोई भी अनुष्ठान उनके साथ होता है, उन्हें छोड़कर नहीं, और हम इसे किसी और रूप में नहीं कहेंगे।",
+        "मेला इसलिए संभव है कि शीत ऋतु में नदियाँ क्या करती हैं। बाढ़ उतरने पर दोनों धाराओं के बीच रेत का विस्तार छूट जाता है, और उसी पर एक मास के लिए नगर बसाया जाता है और फिर उठा लिया जाता है। इसमें सजावट कुछ नहीं है: मेले का पंचांग नदी का पंचांग है, और कोई देर से या भारी ऋतु उस ज़मीन को ही बदल देती है जिस पर वह खड़ा होता है। रेती के ऊपर किला अक्षयवट को संजोए है, और वह अशोक-स्तंभ भी, जो उस स्थान पर किले से कहीं पहले से खड़ा है।",
+        "प्रयागराज में श्राद्ध और पिंडदान प्रयागवाल पुरोहितों के माध्यम से संपन्न होते हैं, वे परिवार जिन्हें तीर्थयात्रियों के लिए कर्म कराने का अधिकार वंश-परंपरा से प्राप्त है और जो पीढ़ियों पुरानी यात्री-बहियाँ रखते हैं। यहाँ यही रीति है: प्रत्यक्ष, वहाँ उपस्थित लोगों द्वारा, परिवार के सामने। स्नानिफ़ाई का इससे कोई संबंध नहीं, वह इसकी कोई व्यवस्था नहीं करता, और इसका उल्लेख इसलिए है कि यह इस स्थान का सत्य है।",
       ],
     },
-    rites: [
+    reading: {
+      en: "The cell this site reads for the Sangam sits on the Ganga main stem below the confluence, so the figure carries the Ganga and the Yamuna together. It is modelled discharge, not a gauge reading, ranked against that same cell's own record for this week of the year from 1997 to 2025. When the winter figure falls it is the sands coming back, which is the ground the Magh Mela is built on.",
+      hi: "इस स्थल पर संगम के लिए जो खंड पढ़ा जाता है वह संगम के नीचे गंगा की मुख्य धारा पर है, इसलिए यह अंक गंगा और यमुना दोनों को एक साथ लिए हुए है। यह प्रतिरूपित प्रवाह है, गेज का पाठ नहीं, और उसी खंड के 1997 से 2025 तक के, वर्ष के इसी सप्ताह के अपने अभिलेख के सापेक्ष क्रमित है। शीत ऋतु में जब अंक गिरता है तो वह रेती का लौटना है, और वही भूमि है जिस पर माघ मेला खड़ा होता है।",
+    },
+    tradition: [
       {
-        key: "sankalp-snan",
-        name: { en: "Sankalp and pratinidhi snan", hi: "संकल्प एवं प्रतिनिधि स्नान" },
+        key: "sangam-snan",
+        kind: "personal",
+        name: { en: "The dip at the meeting point", hi: "संगम-बिंदु पर स्नान" },
         note: {
-          en: "Performed from the water at the meeting point, which is reached by boat rather than by a step.",
-          hi: "संगम-बिंदु पर जल से ही संपन्न, जहाँ सीढ़ी से नहीं, नाव से पहुँचा जाता है।",
+          en: "Taken out in the stream rather than from a step, because the point where the two waters meet is reached by boat. It is a dip a person takes.",
+          hi: "सीढ़ी से नहीं, धारा के बीच में, क्योंकि जहाँ दोनों जल मिलते हैं वहाँ नाव से पहुँचा जाता है। यह वह डुबकी है जो व्यक्ति स्वयं लगाता है।",
         },
       },
       {
         key: "pind-daan",
+        kind: "personal",
         name: { en: "Pind daan and tarpan", hi: "पिंडदान एवं तर्पण" },
         note: {
-          en: "Conducted with the Prayagwal purohits. Eligibility rules vary sharply by community and region; ask your family purohit before you ask us.",
-          hi: "प्रयागवाल पुरोहितों के साथ संपन्न। अधिकार के नियम समुदाय और क्षेत्र के अनुसार बहुत भिन्न हैं; हमसे पूछने से पहले अपने कुल-पुरोहित से पूछें।",
+          en: "Conducted at Prayagraj by the Prayagwal purohits, with the family there. The right to officiate for a pilgrim is held by descent, and eligibility for the rite itself varies by community and by region.",
+          hi: "प्रयागराज में यह प्रयागवाल पुरोहितों द्वारा, परिवार की उपस्थिति में संपन्न होता है। तीर्थयात्री के लिए कर्म कराने का अधिकार वंश-परंपरा से मिलता है, और कर्म का अधिकार स्वयं समुदाय तथा क्षेत्र के अनुसार भिन्न रहता है।",
         },
       },
       {
-        key: "nadi-puja",
-        name: { en: "Triveni puja", hi: "त्रिवेणी पूजा" },
+        key: "kalpavas",
+        kind: "personal",
+        name: { en: "Kalpavas", hi: "कल्पवास" },
         note: {
-          en: "The three waters invoked together, by their own names.",
-          hi: "तीनों धाराओं का उनके अपने नामों से एक साथ आवाहन।",
+          en: "A month of residence on the sands through Magha, with one meal, restraint, and a bath at first light every day of it. It is a month of a person's life, spent in a tent on a riverbed.",
+          hi: "माघ भर रेती पर निवास, एक समय का भोजन, संयम, और प्रत्येक दिन प्रातः स्नान। यह किसी के जीवन का एक मास है, जो नदी की रेत पर एक तंबू में बीतता है।",
+        },
+      },
+      {
+        key: "magh-mela",
+        kind: "of-the-place",
+        name: { en: "The Magh Mela", hi: "माघ मेला" },
+        note: {
+          en: "A city of canvas laid out on the sands each Magha by the district administration and the akharas, and dismantled when the river returns.",
+          hi: "प्रत्येक माघ में ज़िला प्रशासन और अखाड़ों द्वारा रेती पर बसाया गया तंबुओं का नगर, जो नदी के लौटने पर उठा लिया जाता है।",
         },
       },
       {
         key: "deep-daan",
+        kind: "personal",
         name: { en: "Deep daan", hi: "दीप दान" },
         note: {
-          en: "A lamp set on the water at the confluence. It is a lamp on a river, and nothing more is claimed for it.",
-          hi: "संगम के जल पर रखा एक दीप। वह नदी पर एक दीप है, इससे अधिक कुछ नहीं कहा जाता।",
+          en: "A lamp set on the water at the confluence, usually from the boat that brought you. It is a lamp on a river, and nothing more is claimed for it.",
+          hi: "संगम के जल पर रखा एक दीप, प्रायः उसी नाव से जो आपको वहाँ लाई। वह नदी पर एक दीप है, इससे अधिक कुछ नहीं कहा जाता।",
         },
       },
     ],
@@ -277,11 +341,10 @@ export const RIVERS: Ghat[] = [
         },
       },
     ],
-    authority: {
-      en: "The sangam and the mela grounds are controlled by the Prayagraj district administration and the Mela Authority, with the ritual right to officiate for pilgrims held by the Prayagwal purohits. Access at Kumbh is restricted well in advance.",
-      hi: "संगम और मेला क्षेत्र प्रयागराज ज़िला प्रशासन तथा मेला प्राधिकरण के नियंत्रण में हैं, जबकि तीर्थयात्रियों के लिए कर्म कराने का अधिकार प्रयागवाल पुरोहितों के पास है। कुंभ के समय प्रवेश बहुत पहले से नियंत्रित कर दिया जाता है।",
+    keeper: {
+      en: "The sangam and the mela grounds are held by the Prayagraj district administration together with the Mela Authority, while the ritual right to officiate for pilgrims sits with the Prayagwal purohits. Access at Kumbh is settled months in advance.",
+      hi: "संगम और मेला क्षेत्र प्रयागराज ज़िला प्रशासन तथा मेला प्राधिकरण के अधीन हैं, जबकि तीर्थयात्रियों के लिए कर्म कराने का अधिकार प्रयागवाल पुरोहितों के पास है। कुंभ के समय प्रवेश महीनों पहले तय कर लिया जाता है।",
     },
-    permitStatus: "PLACEHOLDER",
   },
 
   /* ---------------------------------------------------------------- 03 */
@@ -305,38 +368,65 @@ export const RIVERS: Ghat[] = [
     sacred: {
       en: [
         "Vishram Ghat takes its name from vishram, rest: the tradition of Braj is that Krishna rested here after the killing of Kansa. It is the central ghat of Mathura, and the parikrama of the town's ghats begins here and returns here. The aarti at dusk is smaller and more domestic than at Haridwar, and it belongs to the town rather than to visitors.",
-        "In the Braj tradition the Yamuna is not addressed chiefly as a purifier. She is Krishna's own river, the water he played in, the water the gopis carried, and she is approached with the affection due to someone loved rather than the awe due to a judge. Rites performed at this ghat carry that register, and the register is not decoration; it changes what is said.",
+        "In the Braj tradition the Yamuna is not addressed chiefly as a purifier. She is Krishna's own river, the water he played in, the water the gopis carried, and she is approached with the affection due to someone loved rather than the awe due to a judge. The rites kept at this ghat carry that register, and the register is not decoration; it changes what is said.",
         "The Yamuna is also the daughter of Surya and the sister of Yama. That relation is why Yama Dwitiya, the second day after Diwali which much of India keeps as Bhai Dooj, is the great day here: brothers and sisters bathe together at this ghat, following the tradition that Yama came to his sister's house on that day and was received by her.",
+        "Mathura's riverfront runs to some twenty-five ghats and the parikrama takes them in order, with Vishram first and last. The river reaching them has come a long way from Yamunotri and through a great deal of engineering: upstream of Mathura she is regulated at Hathnikund, at Wazirabad and at Okhla, where much of her is drawn off for canals and for Delhi. In a dry month what arrives at the ghat is largely what those gates release, and that fact sits underneath everything else on this page.",
       ],
       hi: [
         "विश्राम घाट का नाम विश्राम से है: ब्रज की परंपरा है कि कंस-वध के बाद कृष्ण ने यहीं विश्राम किया था। यह मथुरा का मुख्य घाट है, और नगर के घाटों की परिक्रमा यहीं से आरंभ होकर यहीं लौटती है। संध्या आरती हरिद्वार की तुलना में छोटी और अधिक घरेलू है, वह बाहर से आए लोगों की नहीं, नगर की अपनी है।",
-        "ब्रज की परंपरा में यमुना को मुख्यतः शोधिका नहीं कहा जाता। वे कृष्ण की अपनी नदी हैं, वही जल जिसमें वे खेले, वही जल जिसे गोपियाँ भरकर लाईं, और उन्हें भय या न्याय के भाव से नहीं, स्नेह के भाव से पुकारा जाता है। इस घाट पर होने वाले अनुष्ठानों में वही भाव रहता है, और वह भाव केवल सजावट नहीं, उससे कहे जाने वाले शब्द बदल जाते हैं।",
+        "ब्रज की परंपरा में यमुना को मुख्यतः शोधिका नहीं कहा जाता। वे कृष्ण की अपनी नदी हैं, वही जल जिसमें वे खेले, वही जल जिसे गोपियाँ भरकर लाईं, और उन्हें भय या न्याय के भाव से नहीं, स्नेह के भाव से पुकारा जाता है। इस घाट पर होने वाले कर्मों में वही भाव रहता है, और वह भाव केवल सजावट नहीं, उससे कहे जाने वाले शब्द बदल जाते हैं।",
         "यमुना सूर्य की पुत्री और यम की बहन भी हैं। इसी संबंध के कारण यम द्वितीया, दीपावली के दूसरे दिन, जिसे बहुत बड़े भाग में भाई दूज कहा जाता है, इस घाट का सबसे बड़ा दिन है: भाई-बहन यहाँ साथ स्नान करते हैं, इस परंपरा के अनुसार कि उस दिन यम अपनी बहन के घर आए थे और उन्होंने उनका स्वागत किया था।",
+        "मथुरा के तट पर लगभग पच्चीस घाट हैं और परिक्रमा उन्हें क्रम से लेती है, जिसमें विश्राम पहला भी है और अंतिम भी। उन तक पहुँचने वाली नदी यमुनोत्री से बहुत दूर आ चुकी होती है और बहुत सारी अभियांत्रिकी से होकर: मथुरा से ऊपर वे हथिनीकुंड पर, वज़ीराबाद पर और ओखला पर नियंत्रित होती हैं, जहाँ उनका बड़ा भाग नहरों के लिए और दिल्ली के लिए निकाल लिया जाता है। सूखे महीनों में घाट तक जो पहुँचता है वह प्रायः वही है जो इन द्वारों से छोड़ा जाता है, और यह तथ्य इस पृष्ठ की हर बात के नीचे बैठा हुआ है।",
       ],
     },
     caution: {
-      en: "The Yamuna at Mathura carries a heavy pollution load for much of the year. Where the water cannot be entered safely, the rite is performed at the water's edge with jal taken up by hand, and the recording and the Sankalp Patra say so, in those words. We would rather tell you than frame the shot around it.",
-      hi: "मथुरा में यमुना का जल वर्ष के अधिकांश समय अत्यंत प्रदूषित रहता है। जहाँ जल में उतरना सुरक्षित न हो, वहाँ अनुष्ठान किनारे पर, हाथ में जल लेकर संपन्न किया जाता है, और रिकॉर्डिंग तथा संकल्प पत्र में यही शब्दों में लिखा जाता है। इसे कैमरे से छिपाने के बजाय हम आपको बता देना उचित समझते हैं।",
+      en: "The Yamuna at Mathura carries a heavy pollution load for much of the year, and through the dry months a large share of what passes the ghat is regulated release and drain water rather than mountain flow. Anyone going there to bathe should know that before they go, and should ask locally on the day. Snanify sends nobody, and nothing on this page is advice that the water is safe to enter.",
+      hi: "मथुरा में यमुना का जल वर्ष के अधिकांश समय अत्यंत प्रदूषित रहता है, और सूखे महीनों में घाट के सामने से जो बहता है उसका बड़ा भाग पर्वतीय प्रवाह नहीं, नियंत्रित छोड़ा गया जल और नालों का जल होता है। जो वहाँ स्नान के लिए जा रहे हों, वे यह पहले जान लें और उस दिन स्थानीय लोगों से पूछ लें। स्नानिफ़ाई किसी को वहाँ नहीं भेजता, और इस पृष्ठ पर कहीं यह परामर्श नहीं है कि जल में उतरना सुरक्षित है।",
     },
-    rites: [
+    reading: {
+      en: "The cell this site reads for Mathura sits on the Yamuna main stem below Vishram Ghat. Her modelled figure behaves less like a mountain river and more like a set of gates, because upstream of here she is one. Ranking her against her own record for this week of the year, 1997 to 2025, is still the honest reading, and it is the only one this site prints.",
+      hi: "इस स्थल पर मथुरा के लिए जो खंड पढ़ा जाता है वह विश्राम घाट के नीचे यमुना की मुख्य धारा पर है। उनका प्रतिरूपित अंक किसी पर्वतीय नदी जैसा नहीं, द्वारों की एक शृंखला जैसा बर्ताव करता है, क्योंकि यहाँ से ऊपर वे वही हैं। फिर भी 1997 से 2025 तक, वर्ष के इसी सप्ताह के उनके अपने अभिलेख के सापेक्ष क्रम ही ईमानदार पाठ है, और यह स्थल केवल वही छापता है।",
+    },
+    tradition: [
       {
-        key: "sankalp-snan",
-        name: { en: "Sankalp and pratinidhi snan", hi: "संकल्प एवं प्रतिनिधि स्नान" },
+        key: "snan",
+        kind: "personal",
+        name: { en: "The dip at Vishram Ghat", hi: "विश्राम घाट पर स्नान" },
         note: {
-          en: "Where the water is not safe to enter, performed at the edge with jal taken up by hand, and stated as such.",
-          hi: "जहाँ जल में उतरना सुरक्षित न हो, किनारे पर हाथ में जल लेकर संपन्न, और यह स्पष्ट लिखा जाता है।",
+          en: "Taken from the steps, most heavily on Yama Dwitiya and through Kartik. Read the note above about the water before you plan one.",
+          hi: "सीढ़ियों से, सबसे अधिक यम द्वितीया पर और कार्तिक भर। योजना बनाने से पहले जल के विषय में ऊपर दी गई सूचना पढ़ लें।",
         },
       },
       {
-        key: "nadi-puja",
-        name: { en: "Yamuna puja", hi: "यमुना पूजा" },
+        key: "parikrama",
+        kind: "personal",
+        name: { en: "The parikrama of the ghats", hi: "घाटों की परिक्रमा" },
         note: {
-          en: "The upachara sequence offered to the river in the Braj register, as to someone loved.",
-          hi: "ब्रज की रीति में नदी को अर्पित उपचार-क्रम, जैसे किसी प्रियजन को।",
+          en: "The round of Mathura's riverfront, taken on foot in order, beginning and ending at Vishram. It is walked, which is the only way it exists.",
+          hi: "मथुरा के तट की परिक्रमा, पैदल, क्रम से, विश्राम से आरंभ और वहीं समाप्त। यह चलकर ही होती है, इसके अस्तित्व का दूसरा रूप नहीं।",
+        },
+      },
+      {
+        key: "yamuna-puja",
+        kind: "personal",
+        name: { en: "Yamuna puja in the Braj register", hi: "ब्रज रीति में यमुना पूजा" },
+        note: {
+          en: "The upachara sequence offered to the river as to someone loved rather than to a power that must be appeased. Braj keeps its own words for it.",
+          hi: "नदी को अर्पित उपचार-क्रम, किसी प्रियजन की भाँति, न कि किसी ऐसी शक्ति की भाँति जिसे मनाना पड़े। ब्रज के अपने शब्द इसके लिए हैं।",
+        },
+      },
+      {
+        key: "aarti",
+        kind: "of-the-place",
+        name: { en: "The evening aarti", hi: "संध्या आरती" },
+        note: {
+          en: "Run at the ghat by a local samiti at dusk. Smaller than Haridwar's and mostly attended by the town itself.",
+          hi: "संध्या के समय घाट पर एक स्थानीय समिति द्वारा। हरिद्वार से छोटी, और प्रायः नगर के अपने लोग ही उसमें रहते हैं।",
         },
       },
       {
         key: "deep-daan",
+        kind: "personal",
         name: { en: "Deep daan", hi: "दीप दान" },
         note: {
           en: "Leaf and cotton, no plastic. Lit, named, and set on the water at the ghat's edge.",
@@ -385,12 +475,10 @@ export const RIVERS: Ghat[] = [
         },
       },
     ],
-    /* PLACEHOLDER, which body must consent has not been established. */
-    authority: {
-      en: "Vishram Ghat is looked after by Mathura's tirth-purohit families together with the municipal body, and the evening aarti is run by a local samiti. Which of these must consent to a paid, filmed rite is exactly what we have not yet established, and we will name it here once we have.",
-      hi: "विश्राम घाट की देखरेख मथुरा के तीर्थ-पुरोहित परिवार और नगर निकाय मिलकर करते हैं, तथा संध्या आरती एक स्थानीय समिति संचालित करती है। शुल्क लेकर किए जाने वाले, फ़िल्माए जाने वाले अनुष्ठान के लिए इनमें से किसकी सहमति आवश्यक है, यही हमने अभी तय नहीं किया है।",
+    keeper: {
+      en: "Vishram Ghat is looked after by Mathura's tirth-purohit families together with the municipal body, and the evening aarti is run by a local samiti.",
+      hi: "विश्राम घाट की देखरेख मथुरा के तीर्थ-पुरोहित परिवार और नगर निकाय मिलकर करते हैं, तथा संध्या आरती एक स्थानीय समिति संचालित करती है।",
     },
-    permitStatus: "PLACEHOLDER",
   },
 
   /* ---------------------------------------------------------------- 04 */
@@ -416,43 +504,68 @@ export const RIVERS: Ghat[] = [
       en: [
         "The Godavari rises at Brahmagiri, above Trimbakeshwar, a short way upstream of Nashik. Her older name is Gautami, from the sage Gautama: the account is that he brought the river down through Shiva's intercession, in expiation of a cow's death, and Gautami is the name still used when she is invoked.",
         "Ram Kund lies in Panchavati, the quarter of Nashik associated with Rama's years in exile. Tradition holds that Rama and Sita bathed at this kund, and that Rama performed his father Dasharatha's shraddha here. It is on that account that Ram Kund is Nashik's asthi visarjan tirth: ashes are given to the water at this kund, and the kund is held to receive them.",
-        "In daily practice this is a place of pitru karya before it is anything else. Shraddha and tarpan go on here through the year and heavily through Pitru Paksha. Nashik also holds the Simhastha, the Kumbh of this river, at the twelve-year turn when Jupiter enters Simha, shared with Trimbakeshwar upstream. The ghat is under the Nashik Municipal Corporation.",
+        "In daily practice this is a place of pitru karya before it is anything else. Shraddha and tarpan go on here through the year and heavily through Pitru Paksha. Nashik also holds the Simhastha, the Kumbh of this river, at the twelve-year turn when Jupiter enters Simha, shared with Trimbakeshwar upstream.",
+        "From Brahmagiri the Godavari runs east across the whole peninsula to the Bay of Bengal, and she is the longest river of southern India. What passes Ram Kund, though, is a young river only a few tens of kilometres old, and a managed one: the Gangapur dam stands upstream of the city, so through the dry months the flow at the kund is largely what is let down from it, while a heavy monsoon week can put the steps themselves under water.",
       ],
       hi: [
         "गोदावरी का उद्गम त्र्यंबकेश्वर के ऊपर ब्रह्मगिरि पर है, नासिक से कुछ ही ऊपर। उनका प्राचीन नाम गौतमी है, ऋषि गौतम से: कथा है कि गो-हत्या के प्रायश्चित्त में उन्होंने शिव की कृपा से नदी को नीचे उतारा, और आवाहन में आज भी गौतमी नाम ही लिया जाता है।",
         "रामकुंड पंचवटी में है, नासिक का वह भाग जो राम के वनवास-काल से जुड़ा है। परंपरा है कि राम और सीता ने इसी कुंड पर स्नान किया था, और राम ने यहीं अपने पिता दशरथ का श्राद्ध किया था। इसी कारण रामकुंड नासिक का अस्थि-विसर्जन तीर्थ है: अस्थियाँ इसी कुंड के जल को सौंपी जाती हैं, और माना जाता है कि कुंड उन्हें ग्रहण कर लेता है।",
-        "व्यवहार में यह सबसे पहले पितृ-कर्म का स्थान है। वर्ष भर, और पितृ पक्ष में विशेष रूप से, यहाँ श्राद्ध और तर्पण चलते रहते हैं। नासिक में सिंहस्थ भी होता है, इस नदी का कुंभ, बारह वर्ष के उस फेर पर जब बृहस्पति सिंह राशि में आते हैं, और वह ऊपर त्र्यंबकेश्वर के साथ मिलकर होता है। घाट नासिक महानगरपालिका के अधीन है।",
+        "व्यवहार में यह सबसे पहले पितृ-कर्म का स्थान है। वर्ष भर, और पितृ पक्ष में विशेष रूप से, यहाँ श्राद्ध और तर्पण चलते रहते हैं। नासिक में सिंहस्थ भी होता है, इस नदी का कुंभ, बारह वर्ष के उस फेर पर जब बृहस्पति सिंह राशि में आते हैं, और वह ऊपर त्र्यंबकेश्वर के साथ मिलकर होता है।",
+        "ब्रह्मगिरि से गोदावरी पूरे प्रायद्वीप को पार करती हुई पूर्व में बंगाल की खाड़ी तक जाती हैं, और दक्षिण भारत की सबसे लंबी नदी हैं। किंतु रामकुंड के सामने से जो बहती है वह अभी कुछ ही दसियों किलोमीटर पुरानी, और नियंत्रित नदी है: नगर से ऊपर गंगापुर बाँध है, इसलिए सूखे महीनों में कुंड का प्रवाह प्रायः वही होता है जो वहाँ से छोड़ा जाता है, जबकि भारी वर्षा का एक सप्ताह सीढ़ियों को ही जल में डुबो सकता है।",
       ],
     },
     caution: {
-      en: "Ram Kund is where Nashik's families come to give their dead to the water. Our framing rule at this ghat is strict and is not negotiable: the camera stays on the ritvik, the offering and the water. No crowd pans, no filming of anyone else's rites, and the operator kills the feed rather than point it at a family.",
-      hi: "रामकुंड वह स्थान है जहाँ नासिक के परिवार अपने दिवंगतों को जल सौंपने आते हैं। इस घाट पर हमारा कैमरा-नियम कठोर है और उस पर कोई समझौता नहीं: कैमरा ऋत्विक, अर्पण और जल पर ही रहेगा। भीड़ पर कोई पैन नहीं, किसी और के कर्म का कोई चित्रांकन नहीं, और यदि ऐसी स्थिति बने तो संचालक कैमरा किसी परिवार की ओर मोड़ने के बजाय प्रसारण बंद कर देगा।",
+      en: "Ram Kund is where Nashik's families come to give their dead to the water. Asthi visarjan goes on there through the day, every day of the year. It is a place with grief standing in it, and it is not a viewpoint. Snanify has nobody there and films nothing anywhere; this page describes the kund rather than showing it, and that is deliberate.",
+      hi: "रामकुंड वह स्थान है जहाँ नासिक के परिवार अपने दिवंगतों को जल सौंपने आते हैं। वर्ष के हर दिन, दिन भर, वहाँ अस्थि विसर्जन चलता रहता है। यह वह स्थान है जहाँ शोक खड़ा रहता है, कोई दर्शनीय स्थल नहीं। स्नानिफ़ाई का वहाँ कोई नहीं है और वह कहीं कुछ फ़िल्माता भी नहीं; यह पृष्ठ कुंड को दिखाता नहीं, उसका वर्णन करता है, और यह जानबूझकर है।",
     },
-    rites: [
+    reading: {
+      en: "The cell this site reads for Nashik sits on the Godavari main stem below Ram Kund. She is a small river here and a quick one: a wet week can carry her far above what that week usually brings, and an April reading sits near the bottom of her own record. The figure is modelled discharge, ranked against 1997 to 2025 for this same week, which is why a number in the low hundreds can mean spate here and nothing much on the Ganga.",
+      hi: "इस स्थल पर नासिक के लिए जो खंड पढ़ा जाता है वह रामकुंड के नीचे गोदावरी की मुख्य धारा पर है। यहाँ वे छोटी नदी हैं और तेज़ भी: वर्षा का एक सप्ताह उन्हें उस सप्ताह के सामान्य से कहीं ऊपर ले जा सकता है, और अप्रैल का पाठ उनके अपने अभिलेख के निचले सिरे पर बैठता है। अंक प्रतिरूपित प्रवाह है, 1997 से 2025 तक इसी सप्ताह के सापेक्ष क्रमित, और इसीलिए कुछ सौ का अंक यहाँ उफान हो सकता है और गंगा पर कुछ भी नहीं।",
+    },
+    tradition: [
       {
-        key: "tarpan",
-        name: { en: "Tarpan and pitru sankalp", hi: "तर्पण एवं पितृ संकल्प" },
+        key: "asthi-visarjan",
+        kind: "personal",
+        name: { en: "Asthi visarjan", hi: "अस्थि विसर्जन" },
         note: {
-          /* No refund terms are stated here: the refund policy is a single
-             site-wide document, and a rite page must not invent its own. */
-          en: "The rite this kund is best known for. Eligibility varies by community and by region; ask your family purohit first. A ritvik here may decline a rite he judges is not his to perform, and we would rather he declined than obliged.",
-          hi: "यह कुंड सबसे अधिक इसी कर्म के लिए जाना जाता है। अधिकार समुदाय और क्षेत्र के अनुसार भिन्न है; पहले अपने कुल-पुरोहित से पूछें। यहाँ ऋत्विक ऐसे किसी कर्म को करने से मना कर सकते हैं जिसे वे अपना अधिकार नहीं मानते, और हम चाहेंगे कि वे मना ही करें, निभा न दें।",
+          en: "What Ram Kund is above all else. The ashes are given to the kund by the family, standing at the water, and no part of it is done at a distance by anyone.",
+          hi: "रामकुंड सबसे पहले यही है। अस्थियाँ परिवार स्वयं, जल के सामने खड़े होकर कुंड को सौंपता है, और इसका कोई अंश कोई भी दूर से नहीं करता।",
         },
       },
       {
-        key: "sankalp-snan",
-        name: { en: "Sankalp and pratinidhi snan", hi: "संकल्प एवं प्रतिनिधि स्नान" },
+        key: "shraddha",
+        kind: "personal",
+        name: { en: "Shraddha and tarpan", hi: "श्राद्ध एवं तर्पण" },
         note: {
-          en: "Performed at the kund steps, which are cut into stone and hold water even when the river runs low.",
-          hi: "कुंड की सीढ़ियों पर संपन्न, जो पत्थर में कटी हैं और नदी के घटने पर भी जल रोके रखती हैं।",
+          en: "The rite this kund is best known for, kept through the year and heavily through Pitru Paksha. Eligibility varies by community and by region, and a family that keeps a purohit follows his ruling on it.",
+          hi: "यह कुंड सबसे अधिक इसी कर्म के लिए जाना जाता है, जो वर्ष भर और पितृ पक्ष में विशेष रूप से चलता है। अधिकार समुदाय और क्षेत्र के अनुसार भिन्न है, और जिस परिवार के अपने पुरोहित हैं वह उन्हीं का निर्णय मानता है।",
         },
       },
       {
-        key: "nadi-puja",
+        key: "snan",
+        kind: "personal",
+        name: { en: "The dip at the kund", hi: "कुंड पर स्नान" },
+        note: {
+          en: "Taken at the kund steps, which are cut into stone and hold water even when the river runs low.",
+          hi: "कुंड की सीढ़ियों पर, जो पत्थर में कटी हैं और नदी के घटने पर भी जल रोके रखती हैं।",
+        },
+      },
+      {
+        key: "gautami-puja",
+        kind: "personal",
         name: { en: "Godavari puja", hi: "गोदावरी पूजा" },
         note: {
-          en: "Offered to the river under her invoked name, Gautami.",
-          hi: "नदी को उनके आवाहन-नाम गौतमी से अर्पित।",
+          en: "Offered to the river under her invoked name, Gautami, which is the name the older texts of this place use.",
+          hi: "नदी को उनके आवाहन-नाम गौतमी से अर्पित, वही नाम जो इस स्थान के प्राचीन ग्रंथ प्रयोग करते हैं।",
+        },
+      },
+      {
+        key: "simhastha",
+        kind: "of-the-place",
+        name: { en: "The Simhastha", hi: "सिंहस्थ" },
+        note: {
+          en: "The Kumbh of this river, kept at Nashik and Trimbakeshwar together at the twelve-year turn, and run by the akhadas with the mela and district administrations.",
+          hi: "इस नदी का कुंभ, बारह वर्ष के फेर पर नासिक और त्र्यंबकेश्वर में एक साथ, जिसे अखाड़े मेला तथा ज़िला प्रशासन के साथ मिलकर संचालित करते हैं।",
         },
       },
     ],
@@ -498,16 +611,15 @@ export const RIVERS: Ghat[] = [
           hi: "बारह वर्ष के फेर पर, जब बृहस्पति सिंह राशि में आते हैं",
         },
         note: {
-          en: "Shared with Trimbakeshwar upstream. Access is controlled months ahead and we list no date for it.",
-          hi: "ऊपर त्र्यंबकेश्वर के साथ सम्मिलित। प्रवेश महीनों पहले से नियंत्रित होता है, और हम इसकी कोई तिथि नहीं देते।",
+          en: "Shared with Trimbakeshwar upstream. Access is settled months ahead and no date is listed here.",
+          hi: "ऊपर त्र्यंबकेश्वर के साथ सम्मिलित। प्रवेश महीनों पहले तय होता है, और यहाँ कोई तिथि नहीं दी जाती।",
         },
       },
     ],
-    authority: {
-      en: "Ram Kund and the Godavari ghats at Nashik are under the Nashik Municipal Corporation, with the district administration taking control at Simhastha. Local tirth-purohit families hold the customary right to officiate for pilgrims here.",
-      hi: "रामकुंड और नासिक के गोदावरी घाट नासिक महानगरपालिका के अधीन हैं, और सिंहस्थ के समय नियंत्रण ज़िला प्रशासन ले लेता है। यहाँ तीर्थयात्रियों के लिए कर्म कराने का परंपरागत अधिकार स्थानीय तीर्थ-पुरोहित परिवारों के पास है।",
+    keeper: {
+      en: "Ram Kund and the Godavari ghats at Nashik are under the Nashik Municipal Corporation, with the district administration taking charge at Simhastha. Local tirth-purohit families hold the customary right to officiate for pilgrims here.",
+      hi: "रामकुंड और नासिक के गोदावरी घाट नासिक महानगरपालिका के अधीन हैं, और सिंहस्थ के समय ज़िला प्रशासन व्यवस्था अपने हाथ में लेता है। यहाँ तीर्थयात्रियों के लिए कर्म कराने का परंपरागत अधिकार स्थानीय तीर्थ-पुरोहित परिवारों के पास है।",
     },
-    permitStatus: "PLACEHOLDER",
   },
 
   /* ---------------------------------------------------------------- 05 */
@@ -530,27 +642,35 @@ export const RIVERS: Ghat[] = [
     },
     sacred: {
       en: [
-        "Ram Ghat is the oldest of Ujjain's bathing ghats on the Shipra and the one the Simhastha is centred on. Tradition places Ujjain among the four sites where a drop of the amrit fell, which is why the Kumbh returns here at the twelve-year turn when Jupiter enters Simha, Simhastha is the name the city uses for it. The Shipra aarti is performed at these steps in the evening.",
-        "Ujjain is Avantika, counted among the seven cities called moksha-puri. Its presiding form is Mahakal, Shiva as time itself, and the Mahakaleshwar jyotirlinga stands a short way from the ghat. We perform nothing inside that temple and claim no access to it; what we can honestly describe is the river and the steps.",
+        "Ram Ghat is the oldest of Ujjain's bathing ghats on the Shipra and the one the Simhastha is centred on. Tradition places Ujjain among the four sites where a drop of the amrit fell, which is why the Kumbh returns here at the twelve-year turn when Jupiter enters Simha; Simhastha is the name the city uses for it. The Shipra aarti is performed at these steps in the evening.",
+        "Ujjain is Avantika, counted among the seven cities called moksha-puri. Its presiding form is Mahakal, Shiva as time itself, and the Mahakaleshwar jyotirlinga stands a short way from the ghat. Snanify has no access to that garbhagriha, no relationship with the temple and nothing to do with what happens inside it; what this page can honestly describe is the river and the steps.",
         "The city holds a second and stranger claim on time. The first meridian of classical Indian astronomy was reckoned through Ujjain, and the observatory built here in the eighteenth century still stands and is still used to read the sun. That a city of astronomers should also be the city of Mahakal is not a coincidence anyone in Ujjain treats as one.",
+        "The Shipra herself is a small river, a couple of hundred kilometres from her rise in the hills to her meeting with the Chambal, and she is fed by the monsoon rather than by snow. Through the hot months she runs thin, which is why the state cut a link from the Narmada to feed her in the years before the 2016 Simhastha, and why the Shipra at Ram Ghat in May and the Shipra at Ram Ghat in August are barely the same river to look at.",
       ],
       hi: [
         "रामघाट उज्जैन के शिप्रा-तट के घाटों में सबसे प्राचीन है और सिंहस्थ का केंद्र भी यही है। परंपरा उज्जैन को उन चार स्थानों में गिनती है जहाँ अमृत की बूँद गिरी थी; इसीलिए बारह वर्ष के उस फेर पर, जब बृहस्पति सिंह राशि में आते हैं, कुंभ यहाँ लौटता है, नगर उसे सिंहस्थ कहता है। संध्या के समय इन्हीं सीढ़ियों पर शिप्रा आरती होती है।",
-        "उज्जैन ही अवंतिका है, जो सात मोक्षपुरियों में गिनी जाती है। यहाँ के अधिष्ठाता महाकाल हैं, शिव, काल के रूप में, और महाकालेश्वर ज्योतिर्लिंग घाट से थोड़ी ही दूर है। उस मंदिर के भीतर हम कुछ नहीं करते और वहाँ किसी प्रकार की पहुँच का दावा भी नहीं करते; हम ईमानदारी से केवल नदी और इन सीढ़ियों का वर्णन कर सकते हैं।",
+        "उज्जैन ही अवंतिका है, जो सात मोक्षपुरियों में गिनी जाती है। यहाँ के अधिष्ठाता महाकाल हैं, शिव, काल के रूप में, और महाकालेश्वर ज्योतिर्लिंग घाट से थोड़ी ही दूर है। उस गर्भगृह तक स्नानिफ़ाई की कोई पहुँच नहीं, मंदिर से कोई संबंध नहीं, और उसके भीतर जो होता है उससे कोई लेना-देना नहीं; यह पृष्ठ ईमानदारी से केवल नदी और इन सीढ़ियों का वर्णन कर सकता है।",
         "काल पर इस नगर का एक दूसरा, और कुछ विचित्र, अधिकार भी है। भारतीय ज्योतिष की प्रथम मध्य-रेखा उज्जैन से होकर मानी जाती रही, और अठारहवीं शताब्दी में यहाँ बनी वेधशाला आज भी खड़ी है और आज भी उससे सूर्य देखा जाता है। ज्योतिषियों का नगर ही महाकाल का नगर भी हो, उज्जैन में इसे कोई संयोग नहीं मानता।",
+        "शिप्रा स्वयं छोटी नदी हैं, पहाड़ियों में अपने उद्गम से चंबल में मिलने तक कुछ सौ किलोमीटर, और उन्हें हिम नहीं, वर्षा पालती है। गर्मी के महीनों में वे पतली धार में रह जाती हैं, इसीलिए 2016 के सिंहस्थ से पहले के वर्षों में राज्य ने उन्हें भरने के लिए नर्मदा से एक लिंक काटा, और इसीलिए मई की शिप्रा और अगस्त की शिप्रा रामघाट पर देखने में एक नदी लगती ही नहीं।",
       ],
     },
-    rites: [
+    reading: {
+      en: "The cell this site reads for Ujjain sits on the Shipra near Ram Ghat. Her figures are small numbers, tens of cubic metres a second rather than thousands, and that is simply what a monsoon-fed river of her size does. She is ranked only against herself, 1997 to 2025, in this same week of the year, because setting the Shipra beside the Ganga would tell you nothing about either.",
+      hi: "इस स्थल पर उज्जैन के लिए जो खंड पढ़ा जाता है वह रामघाट के पास शिप्रा पर है। उनके अंक छोटे हैं, हज़ारों नहीं, दसियों घन मीटर प्रति सेकंड, और उनके आकार की वर्षा-पोषित नदी यही करती है। उनकी तुलना केवल उन्हीं से की जाती है, 1997 से 2025 तक, वर्ष के इसी सप्ताह में, क्योंकि शिप्रा को गंगा के बगल में रखने से दोनों में से किसी के विषय में कुछ पता नहीं चलता।",
+    },
+    tradition: [
       {
-        key: "sankalp-snan",
-        name: { en: "Sankalp and pratinidhi snan", hi: "संकल्प एवं प्रतिनिधि स्नान" },
+        key: "snan",
+        kind: "personal",
+        name: { en: "The dip at Ram Ghat", hi: "रामघाट पर स्नान" },
         note: {
-          en: "Performed at the Ram Ghat steps, which run long and shallow and are usable through most of the year.",
-          hi: "रामघाट की सीढ़ियों पर संपन्न, जो लंबी और उथली हैं और वर्ष के अधिकांश समय प्रयोग में रहती हैं।",
+          en: "Taken from the long shallow steps, which are usable through most of the year and are the centre of the city's bathing on every parva day.",
+          hi: "लंबी और उथली सीढ़ियों से, जो वर्ष के अधिकांश समय प्रयोग में रहती हैं और हर पर्व पर नगर के स्नान का केंद्र होती हैं।",
         },
       },
       {
-        key: "nadi-puja",
+        key: "shipra-puja",
+        kind: "personal",
         name: { en: "Shipra puja", hi: "शिप्रा पूजा" },
         note: {
           en: "Offered to the river at the water's edge, at the same steps where the evening aarti is performed.",
@@ -558,19 +678,30 @@ export const RIVERS: Ghat[] = [
         },
       },
       {
-        key: "abhishek",
-        name: { en: "Abhishek at a ghat-side shrine", hi: "घाट-स्थित मंदिर में अभिषेक" },
+        key: "aarti",
+        kind: "of-the-place",
+        name: { en: "The Shipra aarti", hi: "शिप्रा आरती" },
         note: {
-          en: "At a shrine on the ghat itself. Not at Mahakaleshwar, we have no access to that garbhagriha and will never imply that we do.",
-          hi: "घाट पर ही स्थित किसी मंदिर में। महाकालेश्वर में नहीं, उस गर्भगृह तक हमारी कोई पहुँच नहीं है और हम कभी ऐसा संकेत भी नहीं करेंगे।",
+          en: "Performed at Ram Ghat in the evening. It belongs to the ghat and to the city, and it happens whether anyone has come for it or not.",
+          hi: "संध्या के समय रामघाट पर। वह घाट की और नगर की है, और होती रहती है, कोई उसके लिए आया हो या नहीं।",
         },
       },
       {
         key: "deep-daan",
+        kind: "personal",
         name: { en: "Deep daan", hi: "दीप दान" },
         note: {
-          en: "Set on the Shipra from the ghat steps at dusk.",
-          hi: "संध्या के समय घाट की सीढ़ियों से शिप्रा के जल पर रखा हुआ।",
+          en: "Set on the Shipra from the ghat steps at dusk, most of all on Kartik Purnima.",
+          hi: "संध्या के समय घाट की सीढ़ियों से शिप्रा पर रखा हुआ, और सबसे अधिक कार्तिक पूर्णिमा पर।",
+        },
+      },
+      {
+        key: "simhastha",
+        kind: "of-the-place",
+        name: { en: "The Simhastha", hi: "सिंहस्थ" },
+        note: {
+          en: "Ram Ghat is its centre. The bathing order is settled between the akhadas and the administration, and access is controlled for the duration.",
+          hi: "रामघाट इसका केंद्र है। स्नान का क्रम अखाड़ों और प्रशासन के बीच तय होता है, और उन दिनों प्रवेश नियंत्रित रहता है।",
         },
       },
     ],
@@ -613,16 +744,15 @@ export const RIVERS: Ghat[] = [
           hi: "बारह वर्ष के फेर पर, जब बृहस्पति सिंह राशि में आते हैं",
         },
         note: {
-          en: "Ram Ghat is its centre. Access is hard-restricted and separately permitted; we list no date.",
-          hi: "रामघाट इसका केंद्र है। प्रवेश कड़ाई से नियंत्रित होता है और अनुमति अलग से लेनी होती है; हम कोई तिथि नहीं देते।",
+          en: "Ram Ghat is its centre. Access is hard-restricted for the duration and no date is listed here.",
+          hi: "रामघाट इसका केंद्र है। उन दिनों प्रवेश कड़ाई से नियंत्रित रहता है और यहाँ कोई तिथि नहीं दी जाती।",
         },
       },
     ],
-    authority: {
-      en: "Ram Ghat and the Shipra ghats are under the Ujjain municipal and district administration, which takes direct control of access at Simhastha and on Mahashivratri. The Mahakaleshwar temple is a separate authority altogether and is not part of anything we offer.",
-      hi: "रामघाट और शिप्रा के घाट उज्जैन नगर एवं ज़िला प्रशासन के अधीन हैं, जो सिंहस्थ तथा महाशिवरात्रि पर प्रवेश का नियंत्रण सीधे अपने हाथ में ले लेता है। महाकालेश्वर मंदिर पूर्णतः पृथक अधिकार-क्षेत्र है और हमारी किसी सेवा का अंग नहीं।",
+    keeper: {
+      en: "Ram Ghat and the Shipra ghats are under the Ujjain municipal and district administration, which takes direct charge of access at Simhastha and on Mahashivratri. The Mahakaleshwar temple is a separate authority altogether and has nothing to do with this site.",
+      hi: "रामघाट और शिप्रा के घाट उज्जैन नगर एवं ज़िला प्रशासन के अधीन हैं, जो सिंहस्थ तथा महाशिवरात्रि पर प्रवेश की व्यवस्था सीधे अपने हाथ में लेता है। महाकालेश्वर मंदिर पूर्णतः पृथक अधिकार-क्षेत्र है और इस स्थल से उसका कोई संबंध नहीं।",
     },
-    permitStatus: "PLACEHOLDER",
   },
 
   /* ---------------------------------------------------------------- 06 */
@@ -647,42 +777,60 @@ export const RIVERS: Ghat[] = [
     sacred: {
       en: [
         "Talakaveri is the udgama sthala, the source: a small spring-fed kundike on the Brahmagiri hill in Kodagu, from which the Kaveri rises before going underground and re-emerging below. It sits inside a temple complex, not on a riverbank. There are no steps down into a flowing river here, and the flow is seasonal.",
-        "In her own literature the Kaveri is Lopamudra, wife of the sage Agastya, released from his kamandalu to become the river. In Tamil country she is Ponni, and the delta she makes is most of what that name means to the people who farm it. She is not a southern version of a northern river, and we will not describe her as one.",
+        "In her own literature the Kaveri is Lopamudra, wife of the sage Agastya, released from his kamandalu to become the river. In Tamil country she is Ponni, and the delta she makes is most of what that name means to the people who farm it. She is not a southern version of a northern river, and this page will not describe her as one.",
         "The day at this site is Tula Sankramana, when the sun enters Tula: at a moment fixed by the panchang the spring is held to well up in the tank, and those present take the theertha. For pitru karya on the Kaveri the recognised places are elsewhere, the sangama at Bhagamandala below the hill, Paschima Vahini at Srirangapatna where the river turns west, Talakadu, and the Srirangam stretch.",
+        "From the tank the water goes underground almost at once and rises again at Bhagamandala a short way below, where it meets the Kannike and the Sujyoti and is kept as a triveni sangama in its own right. From there the Kaveri runs east across the Deccan to the Bay of Bengal, past Srirangapatna, Shivanasamudra, Talakadu and Srirangam, and the delta at the end of that journey is the reason two states have argued over her for a century.",
       ],
       hi: [
         "तलकावेरी उद्गम स्थल है: कोडगु की ब्रह्मगिरि पहाड़ी पर एक छोटा-सा स्रोत-कुंड, जहाँ से कावेरी निकलकर कुछ दूर भूमिगत हो जाती हैं और नीचे फिर प्रकट होती हैं। यह किसी नदी-तट पर नहीं, एक मंदिर-परिसर के भीतर है। यहाँ बहती नदी में उतरने वाली कोई सीढ़ियाँ नहीं हैं, और जल-प्रवाह ऋतु पर निर्भर है।",
-        "अपने साहित्य में कावेरी लोपामुद्रा हैं, ऋषि अगस्त्य की पत्नी, जो उनके कमंडलु से मुक्त होकर नदी बनीं। तमिल भूमि में वे पोन्नी हैं, और जो डेल्टा वे बनाती हैं, वहाँ खेती करने वालों के लिए उस नाम का अर्थ प्रायः वही है। वे किसी उत्तरी नदी का दक्षिणी रूप नहीं हैं, और हम उन्हें ऐसा कहेंगे भी नहीं।",
+        "अपने साहित्य में कावेरी लोपामुद्रा हैं, ऋषि अगस्त्य की पत्नी, जो उनके कमंडलु से मुक्त होकर नदी बनीं। तमिल भूमि में वे पोन्नी हैं, और जो डेल्टा वे बनाती हैं, वहाँ खेती करने वालों के लिए उस नाम का अर्थ प्रायः वही है। वे किसी उत्तरी नदी का दक्षिणी रूप नहीं हैं, और यह पृष्ठ उन्हें ऐसा कहेगा भी नहीं।",
         "इस स्थान का दिन तुला संक्रमण है, जब सूर्य तुला राशि में प्रवेश करते हैं: पंचांग से निश्चित एक क्षण पर माना जाता है कि कुंड में स्रोत ऊपर उठ आता है, और उपस्थित जन तीर्थ ग्रहण करते हैं। कावेरी पर पितृ-कर्म के लिए मान्य स्थान अन्यत्र हैं, पहाड़ी के नीचे भागमंडल का संगम, श्रीरंगपट्टण का पश्चिम वाहिनी जहाँ नदी पश्चिम की ओर मुड़ती हैं, तलकाडु, और श्रीरंगम का प्रवाह-क्षेत्र।",
+        "कुंड से जल लगभग तुरंत भूमिगत हो जाता है और कुछ ही नीचे भागमंडल पर फिर उठता है, जहाँ वह कन्निके और सुज्योति से मिलता है और अपने आप में एक त्रिवेणी संगम माना जाता है। वहाँ से कावेरी दक्कन को पार करती हुई पूर्व में बंगाल की खाड़ी तक जाती हैं, श्रीरंगपट्टण, शिवनसमुद्र, तलकाडु और श्रीरंगम होते हुए, और उस यात्रा के अंत का डेल्टा ही वह कारण है जिस पर दो राज्य एक शताब्दी से विवाद करते आए हैं।",
       ],
     },
     caution: {
-      en: "Talakaveri is a temple tank at a river's source, not a bathing ghat. A pratinidhi snan of the kind performed at Har Ki Pauri or Ram Ghat cannot honestly be performed here. What can be offered at this site is a sankalp and a theertha archana at the kundike, and nothing beyond that. If what you want is a snan in the Kaveri, ask us for Paschima Vahini at Srirangapatna instead, we would rather send you to the right water than sell you the famous name.",
-      hi: "तलकावेरी नदी के उद्गम पर बना मंदिर-कुंड है, स्नान घाट नहीं। हर की पौड़ी या रामघाट पर जिस प्रकार का प्रतिनिधि स्नान होता है, वह यहाँ ईमानदारी से नहीं किया जा सकता। इस स्थान पर जो अर्पित किया जा सकता है, वह है कुंड पर संकल्प और तीर्थ अर्चना, उससे आगे कुछ नहीं। यदि आपको कावेरी में स्नान ही चाहिए, तो हमसे श्रीरंगपट्टण के पश्चिम वाहिनी के लिए कहें, प्रसिद्ध नाम बेचने से बेहतर है कि हम आपको सही जल तक पहुँचाएँ।",
+      en: "Talakaveri is a temple tank at a river's source, not a bathing ghat. There are no steps into a flowing river here and the flow is seasonal. A Kaveri snan, in the sense anyone means it, belongs downstream: at the sangama at Bhagamandala, at Paschima Vahini at Srirangapatna where the river turns west, at Talakadu, or on the Srirangam stretch. Snanify arranges a snan nowhere, here or there, and would rather name the right water than trade on the famous one.",
+      hi: "तलकावेरी नदी के उद्गम पर बना मंदिर-कुंड है, स्नान घाट नहीं। यहाँ बहती नदी में उतरने वाली सीढ़ियाँ नहीं हैं और प्रवाह ऋतु पर निर्भर है। कावेरी-स्नान, जिस अर्थ में लोग उसे कहते हैं, नीचे का है: भागमंडल के संगम पर, श्रीरंगपट्टण के पश्चिम वाहिनी पर जहाँ नदी पश्चिम की ओर मुड़ती हैं, तलकाडु पर, अथवा श्रीरंगम के प्रवाह-क्षेत्र में। स्नानिफ़ाई कहीं भी किसी स्नान की व्यवस्था नहीं करता, न यहाँ न वहाँ, और प्रसिद्ध नाम भुनाने के बजाय सही जल का नाम बता देना उचित समझता है।",
     },
-    rites: [
+    reading: {
+      en: "The Kaveri at Talakaveri is a few cubic metres a second. She is not a river here yet; she is a spring in a tank, and her figure sits three orders of magnitude under the others on this site because that is the truth of the place and not a fault in the reading. She is ranked against herself, 1997 to 2025, as every water here is, and against herself she is exactly as legible as the Ganga.",
+      hi: "तलकावेरी में कावेरी कुछ ही घन मीटर प्रति सेकंड हैं। यहाँ वे अभी नदी नहीं हैं; वे एक कुंड में उद्गम हैं, और उनका अंक इस स्थल के बाक़ी जलों से तीन घात नीचे बैठता है, क्योंकि यही इस स्थान का सत्य है, पाठ की कोई त्रुटि नहीं। उनकी तुलना उन्हीं से की जाती है, 1997 से 2025 तक, जैसे यहाँ हर जल की, और अपने ही सापेक्ष वे उतनी ही स्पष्ट हैं जितनी गंगा।",
+    },
+    tradition: [
       {
-        key: "sankalp-kundike",
-        name: { en: "Sankalp at the kundike", hi: "कुंड पर संकल्प" },
+        key: "theertha",
+        kind: "personal",
+        name: { en: "Taking the theertha at the kundike", hi: "कुंड पर तीर्थ ग्रहण" },
         note: {
-          en: "Your name and gotra spoken at the source itself. No immersion, because there is nothing here to be immersed in.",
-          hi: "उद्गम पर ही आपका नाम और गोत्र उच्चारित। कोई अवगाहन नहीं, क्योंकि यहाँ अवगाहन के योग्य कुछ है ही नहीं।",
+          en: "The theertha is taken from the spring by those standing at the tank. This is what the site is actually for, and it is the whole of what happens at it.",
+          hi: "कुंड के सामने खड़े लोग स्रोत से तीर्थ ग्रहण करते हैं। यह स्थान वस्तुतः इसी के लिए है, और वहाँ जो होता है वह इतना ही है।",
         },
       },
       {
-        key: "theertha-archana",
-        name: { en: "Theertha archana", hi: "तीर्थ अर्चना" },
+        key: "tula-sankramana",
+        kind: "of-the-place",
+        name: { en: "Tula Sankramana at the tank", hi: "कुंड पर तुला संक्रमण" },
         note: {
-          en: "Archana at the tank with the theertha taken from the spring. This is what the site is actually for.",
-          hi: "कुंड पर अर्चना, स्रोत से लिए गए तीर्थ के साथ। यह स्थान वस्तुतः इसी के लिए है।",
+          en: "At a moment fixed by the panchang the spring is held to well up in the kundike. The temple keeps the hour and the crowd gathers for it; nobody arranges it.",
+          hi: "पंचांग से निश्चित एक क्षण पर माना जाता है कि कुंड में स्रोत ऊपर उठ आता है। मंदिर वह घड़ी रखता है और उसी के लिए भीड़ जुटती है; इसकी व्यवस्था कोई नहीं करता।",
         },
       },
       {
-        key: "nadi-puja",
+        key: "kaveri-puja",
+        kind: "personal",
         name: { en: "Kaveri puja", hi: "कावेरी पूजा" },
         note: {
-          en: "Offered at the source under her own names, Lopamudra, and Ponni.",
-          hi: "उद्गम पर उनके अपने नामों से अर्पित, लोपामुद्रा, और पोन्नी।",
+          en: "Offered at the source under her own names, Lopamudra and Ponni, by those who have climbed to it.",
+          hi: "उद्गम पर उनके अपने नामों से, लोपामुद्रा और पोन्नी, उन लोगों द्वारा जो वहाँ तक चढ़कर आते हैं।",
+        },
+      },
+      {
+        key: "pitru-karya",
+        kind: "personal",
+        name: { en: "Pitru karya, which is not kept here", hi: "पितृ-कर्म, जो यहाँ नहीं होता" },
+        note: {
+          en: "A source is not where the Kaveri's pitru karya belongs. The recognised places are the sangama at Bhagamandala, Paschima Vahini at Srirangapatna, Talakadu and the Srirangam stretch, and it is kept at them in person.",
+          hi: "कावेरी का पितृ-कर्म उद्गम का विषय नहीं है। मान्य स्थान हैं भागमंडल का संगम, श्रीरंगपट्टण का पश्चिम वाहिनी, तलकाडु और श्रीरंगम का प्रवाह-क्षेत्र, और वहाँ वह प्रत्यक्ष उपस्थित रहकर ही होता है।",
         },
       },
     ],
@@ -706,12 +854,10 @@ export const RIVERS: Ghat[] = [
         },
       },
     ],
-    /* PLACEHOLDER, the exact Karnataka authority is not yet confirmed by name. */
-    authority: {
-      en: "The Talakaveri kshetra is administered by a Karnataka state temple authority together with the local temple committee. We have not yet established which body would have to consent to a paid, filmed rite here, and we will name it on this page once we have.",
-      hi: "तलकावेरी क्षेत्र का प्रबंधन कर्नाटक की एक राज्य-स्तरीय मंदिर संस्था तथा स्थानीय मंदिर समिति मिलकर करती हैं। यहाँ शुल्क लेकर किए जाने वाले, फ़िल्माए जाने वाले अनुष्ठान के लिए किसकी सहमति आवश्यक होगी, यह हमने अभी तय नहीं किया है, और जैसे ही तय होगा, उसका नाम इसी पृष्ठ पर लिखा जाएगा।",
+    keeper: {
+      en: "The Talakaveri kshetra is in the care of a Karnataka state temple authority together with the local temple committee. Snanify has no relationship with either and has never asked them for anything.",
+      hi: "तलकावेरी क्षेत्र कर्नाटक की एक राज्य-स्तरीय मंदिर संस्था तथा स्थानीय मंदिर समिति की देखरेख में है। स्नानिफ़ाई का इनमें से किसी से कोई संबंध नहीं है और उसने इनसे कभी कुछ माँगा भी नहीं।",
     },
-    permitStatus: "PLACEHOLDER",
   },
 ];
 
@@ -735,6 +881,7 @@ export function ghatNeighbours(slug: string): { prev: Ghat; next: Ghat } | undef
    --------------------------------------------------------------------------- */
 
 type ChoosingRow = { key: string; label: string; body: string };
+type OfferItem = { key: string; name: string; body: string };
 
 type RiversIndexCopy = {
   meta: { title: string; description: string };
@@ -742,9 +889,16 @@ type RiversIndexCopy = {
   eyebrow: string;
   title: string;
   lede: string;
-  permission: { label: string; body: string };
+  presence: { label: string; body: string };
   lead: { label: string; read: string };
   index: { label: string; title: string; lede: string; read: string };
+  offer: {
+    eyebrow: string;
+    title: string;
+    lede: string;
+    items: OfferItem[];
+    note: string;
+  };
   choosing: { eyebrow: string; title: string; lede: string; rows: ChoosingRow[] };
   honesty: {
     eyebrow: string;
@@ -762,65 +916,93 @@ type RiversIndexCopy = {
 export const riversIndexContent = {
   en: {
     meta: {
-      title: "Sacred waters, six rivers, six ghats | Snanify",
+      title: "Six sacred waters, measured daily | Snanify",
       description:
-        "The six waters at which a snan may be offered: Ganga at Har Ki Pauri, the Sangam at Prayagraj, Yamuna at Vishram Ghat, Godavari at Ram Kund, Shipra at Ram Ghat, and the Kaveri at her source. Described plainly, including what cannot be done at each.",
+        "The Ganga at Har Ki Pauri, the Sangam at Prayagraj, the Yamuna at Vishram Ghat, the Godavari at Ram Kund, the Shipra at Ram Ghat and the Kaveri at her source. What each place is, what it is traditionally kept for, and its modelled flow ranked against 1997 to 2025. Nothing is performed at any of them.",
     },
     badge: "Six waters · six ghats",
     eyebrow: "Sacred waters",
     title: "Six waters, and the ghats that keep them.",
-    lede: "A snan is performed where the water actually runs, at a named ghat, at a stated hour, by a ritvik standing in it. These are the six, described as plainly as we can manage, including the places where the plain description is inconvenient for us.",
-    permission: {
-      label: "Before you read further",
-      body: "We do not yet hold written permission to perform or film a paid rite at any of these six places. Most of them are held by trusts, samitis and hereditary purohit families whose consent is a separate matter from a municipal one. Every page below states its own position, and will keep stating it until it changes.",
+    lede: "Six rivers, each measured every day, each with its own sunrise and its own calendar. These pages describe the places: the river, the steps, the history, and what the water has been kept for over a very long time. Snanify performs nothing at any of them, and says so on every page.",
+    presence: {
+      label: "What Snanify does at these six places",
+      body: "Nothing. There is no priest of ours at any ghat, no camera on any water, no device on any step, and no recording of anything happening anywhere. What Snanify has is the measured state of these six rivers, read daily from a public flood model, their sunrises, their muhurat windows, and four and a half minutes in which you make your own sankalp. The river comes to you means exactly that: the river's own numbers arrive on your screen, and you sit with them.",
     },
     lead: { label: "The first water", read: "Read this water" },
     index: {
       label: "The other five",
-      title: "Five more, each with its own difficulty.",
+      title: "Five more, each with its own character.",
       lede: "They are not interchangeable. One is a confluence reached by boat, one is a town's ghat of rest, one is where a city gives its dead to the water, one stands under the city of Mahakal, and one is not a ghat at all.",
       read: "Read",
+    },
+    offer: {
+      eyebrow: "What is here",
+      title: "Four things at every water.",
+      lede: "The same four at all six, and nothing else. Three of them are free to read, with no account, and they always will be.",
+      items: [
+        {
+          key: "state",
+          name: "Her measured state",
+          body: "Modelled river discharge in cubic metres a second at the grid cell covering that reach, from the Copernicus Emergency Management Service global flood model through Open-Meteo, published once a day. It is a model, not a gauge reading. Every value is ranked against every daily value that same cell has produced in this same week of the year from 1997 to 2025, which is what the percentile means.",
+        },
+        {
+          key: "sunrise",
+          name: "Her sunrise",
+          body: "Sunrise and sunset read at the ghat's own coordinates rather than at the grid cell, because weather belongs at the ghat and discharge belongs on the main stem. Haridwar's sunrise and Nashik's are half an hour apart and the site treats them as the different facts they are.",
+        },
+        {
+          key: "muhurat",
+          name: "Her muhurat windows",
+          body: "Brahma, pratah, abhijit and godhuli, resolved as the panchang's own rules against that ghat's true sunrise. That is why the windows for one water do not agree with the windows for another, and why no single national timing is printed anywhere on this site.",
+        },
+        {
+          key: "sitting",
+          name: "A sitting you take yourself",
+          body: "Four and a half minutes on your own screen, against the state that river is actually in at the hour you sit. Your sankalp, in your words, made by you. Nobody stands in for you, because there is nobody to stand in.",
+        },
+      ],
+      note: "No priest. No ghat performance. No camera, no stream, no recording. Nothing posted to you: no prasad, no bottled jal, no thread in an envelope.",
     },
     choosing: {
       eyebrow: "Choosing",
       title: "Which water, and why.",
-      lede: "There is no better and worse water here. There are waters a particular rite belongs to, and we would rather tell you which than sell you whichever name you already know.",
+      lede: "There is no better and worse water here. There are waters a particular thing belongs to, and this page would rather tell you which than send you to whichever name you already know.",
       rows: [
         {
           key: "first",
-          label: "For a first snan",
-          body: "Ganga at Har Ki Pauri, or Shipra at Ram Ghat. Both are working bathing ghats with a daily evening aarti, both have long steps that hold water through most of the year, and both are used to people who have come from a long way off.",
+          label: "If you have not sat before",
+          body: "Ganga at Har Ki Pauri, or Shipra at Ram Ghat. Both are working bathing ghats with a daily evening aarti, both have long steps that hold water through most of the year, and both are waters whose figures move legibly with the season, so the reading you sit with means something within a fortnight of watching it.",
         },
         {
           key: "pitru",
-          label: "For remembrance and pitru karya",
-          body: "Godavari at Ram Kund, or the Sangam at Prayagraj. Ram Kund is Nashik's asthi visarjan tirth and is a place of shraddha before it is anything else. At Prayagraj, pind daan is conducted through the Prayagwal purohits, who hold that right by descent. Eligibility for these rites varies by community, ask your family purohit before you ask us.",
+          label: "For remembrance",
+          body: "Godavari at Ram Kund, or the Sangam at Prayagraj. Ram Kund is Nashik's asthi visarjan tirth and is a place of shraddha before it is anything else; at Prayagraj pind daan is conducted by the Prayagwal purohits, who hold that right by descent. Both are kept in person, by families who are there. Snanify does not arrange either and cannot, and neither is what is sold here.",
         },
         {
           key: "bhakti",
-          label: "For Braj, and for bhakti",
-          body: "Yamuna at Vishram Ghat. In the Braj tradition the Yamuna is approached as someone loved rather than as a purifier, and that changes the words that are said. Read the page for the water's condition before you choose it.",
+          label: "For Braj",
+          body: "Yamuna at Vishram Ghat. In the Braj tradition the Yamuna is approached as someone loved rather than as a purifier, and that changes the words that are said. Read the page for the state of that water before you choose it; it is not flattering and it is not hidden.",
         },
         {
           key: "source",
           label: "For the source itself",
-          body: "Talakaveri. It is not a ghat, it is the spring the Kaveri rises from, inside a temple tank on Brahmagiri. Only a sankalp and a theertha archana can honestly be performed there. If you want a snan in the Kaveri, the page names the places that are right for it instead.",
+          body: "Talakaveri. It is not a ghat, it is the spring the Kaveri rises from, inside a temple tank on Brahmagiri, and her figure is a few cubic metres a second rather than a few thousand. That is the truth of the place and it is the most striking number on the site. If what you want is a Kaveri snan, the page names the waters downstream that it belongs at.",
         },
       ],
     },
     honesty: {
       eyebrow: "Plainly",
-      title: "What is performed at these waters.",
+      title: "What this is, and what it is not.",
       isLabel: "This is",
       isBody:
-        "A sankalp and an archana recited at the water in your name and your gotra by a ritvik, followed, where the site allows it, by a pratinidhi snan, the ritvik entering the water as your representative. This is an ordinary thing. It is done every day at every ghat for a yajaman who cannot stand there in person. It is streamed as it happens and it is recorded.",
+        "Four and a half minutes on your own screen, against the state a river is actually in at the hour you sit with her. Her modelled flow, ranked against thirty years of her own history in this same week of the year. Her sunrise. The panchang's windows resolved against it. Your own sankalp, in your own words. One mark drawn from the reading, and one line in a register you keep.",
       isNotLabel: "This is not",
       isNotBody:
-        "A substitute for bathing in the river yourself. No one can take your dip for you and we will not say otherwise. It is not a claim about your health, your fortune, your examinations or any other outcome, and no page here will ever make one. And nothing is posted to you, no prasad, no bottled jal, no thread in an envelope.",
+        "It is not a rite performed at a ghat. Nobody stands in the water for you, because there is nobody. Nothing is filmed, streamed or recorded at any of these six places, and nothing is posted to you. It is not a substitute for standing in the river yourself, and it makes no claim about your health, your fortune, your examinations or any other outcome.",
     },
     closing: {
       title: "Read a water before you choose one.",
-      lede: "Each page says what is performed there, what is not, who controls the ghat, and what we do not yet have permission to do.",
+      lede: "Each page says what the place is, what it is traditionally kept for, what cannot be done from a distance, who looks after it, and how its figure is read.",
       cta: "Begin your snan",
     },
     formLabels: {
@@ -833,65 +1015,93 @@ export const riversIndexContent = {
 
   hi: {
     meta: {
-      title: "पवित्र जल, छह नदियाँ, छह घाट | स्नानिफ़ाई",
+      title: "छह पवित्र जल, प्रतिदिन मापे गए | स्नानिफ़ाई",
       description:
-        "वे छह जल जहाँ स्नान अर्पित किया जा सकता है: हर की पौड़ी पर गंगा, प्रयागराज का संगम, विश्राम घाट पर यमुना, रामकुंड पर गोदावरी, रामघाट पर शिप्रा, और अपने उद्गम पर कावेरी। स्पष्ट वर्णन, यह भी कि कहाँ क्या नहीं हो सकता।",
+        "हर की पौड़ी पर गंगा, प्रयागराज का संगम, विश्राम घाट पर यमुना, रामकुंड पर गोदावरी, रामघाट पर शिप्रा, और अपने उद्गम पर कावेरी। प्रत्येक स्थान क्या है, परंपरा में किसके लिए जाना जाता है, और उसका प्रतिरूपित प्रवाह 1997 से 2025 के सापेक्ष। इनमें से किसी स्थान पर कुछ भी नहीं किया जाता।",
     },
     badge: "छह जल · छह घाट",
     eyebrow: "पवित्र जल",
     title: "छह जल, और उन्हें संभालने वाले घाट।",
-    lede: "स्नान वहीं संपन्न होता है जहाँ जल वास्तव में बहता है, किसी नामित घाट पर, निश्चित घड़ी में, उसमें खड़े ऋत्विक के द्वारा। ये वही छह हैं, यथासंभव स्पष्ट रूप में, उन बातों सहित जहाँ स्पष्ट कहना हमारे लिए असुविधाजनक है।",
-    permission: {
-      label: "आगे पढ़ने से पहले",
-      body: "इन छह में से किसी भी स्थान पर शुल्क लेकर अनुष्ठान करने या उसका फ़िल्मांकन करने की लिखित अनुमति अभी हमारे पास नहीं है। इनमें से अधिकांश न्यासों, समितियों और परंपरागत पुरोहित परिवारों के अधिकार में हैं, जिनकी सहमति नगरपालिका की सहमति से अलग बात है। नीचे प्रत्येक पृष्ठ अपनी स्थिति स्वयं बताता है, और जब तक वह नहीं बदलती, बताता रहेगा।",
+    lede: "छह नदियाँ, प्रत्येक प्रतिदिन मापी जाती हुई, प्रत्येक का अपना सूर्योदय और अपना पंचांग। ये पृष्ठ स्थानों का वर्णन करते हैं: नदी, सीढ़ियाँ, इतिहास, और वह सब जिसके लिए यह जल बहुत लंबे समय से माना जाता रहा है। स्नानिफ़ाई इनमें से किसी स्थान पर कुछ नहीं करता, और हर पृष्ठ पर यही लिखता है।",
+    presence: {
+      label: "इन छह स्थानों पर स्नानिफ़ाई क्या करता है",
+      body: "कुछ नहीं। किसी घाट पर हमारा कोई पुरोहित नहीं, किसी जल पर कोई कैमरा नहीं, किसी सीढ़ी पर कोई यंत्र नहीं, और कहीं कुछ होते हुए की कोई रिकॉर्डिंग नहीं। स्नानिफ़ाई के पास है इन छह नदियों की मापी हुई अवस्था, जो प्रतिदिन एक सार्वजनिक बाढ़-मॉडल से पढ़ी जाती है, उनके सूर्योदय, उनके मुहूर्त, और वे साढ़े चार मिनट जिनमें आप अपना संकल्प स्वयं करते हैं। नदी आपके पास आती है का अर्थ ठीक यही है: नदी के अपने अंक आपकी स्क्रीन पर आते हैं, और आप उनके साथ बैठते हैं।",
     },
     lead: { label: "प्रथम जल", read: "यह जल पढ़ें" },
     index: {
       label: "शेष पाँच",
-      title: "पाँच और, हर एक की अपनी कठिनाई।",
+      title: "पाँच और, हर एक का अपना स्वभाव।",
       lede: "ये आपस में बदले नहीं जा सकते। एक संगम है जहाँ नाव से पहुँचा जाता है, एक नगर का विश्राम-घाट है, एक वह स्थान है जहाँ नगर अपने दिवंगतों को जल सौंपता है, एक महाकाल की नगरी के नीचे बहता है, और एक घाट है ही नहीं।",
       read: "पढ़ें",
+    },
+    offer: {
+      eyebrow: "यहाँ क्या है",
+      title: "हर जल पर चार बातें।",
+      lede: "छहों पर यही चार, और इसके अतिरिक्त कुछ नहीं। इनमें से तीन बिना किसी खाते के, निःशुल्क पढ़ी जा सकती हैं, और सदा पढ़ी जा सकेंगी।",
+      items: [
+        {
+          key: "state",
+          name: "उनकी मापी हुई अवस्था",
+          body: "उस धारा को ढकने वाले ग्रिड-खंड पर प्रतिरूपित नदी-प्रवाह, घन मीटर प्रति सेकंड में, कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से Open-Meteo के माध्यम से, प्रतिदिन एक बार प्रकाशित। यह एक मॉडल है, गेज का पाठ नहीं। प्रत्येक मान की तुलना उसी खंड के उन सभी दैनिक मानों से की जाती है जो 1997 से 2025 तक वर्ष के इसी सप्ताह में आए, प्रतिशतक का यही अर्थ है।",
+        },
+        {
+          key: "sunrise",
+          name: "उनका सूर्योदय",
+          body: "सूर्योदय और सूर्यास्त ग्रिड-खंड पर नहीं, घाट के अपने निर्देशांक पर पढ़े जाते हैं, क्योंकि मौसम घाट का विषय है और प्रवाह मुख्य धारा का। हरिद्वार और नासिक के सूर्योदय में आधे घंटे का अंतर है, और यह स्थल उन्हें दो अलग तथ्यों की तरह ही रखता है।",
+        },
+        {
+          key: "muhurat",
+          name: "उनके मुहूर्त",
+          body: "ब्रह्म, प्रातः, अभिजित और गोधूलि, पंचांग के अपने नियमों के अनुसार उसी घाट के वास्तविक सूर्योदय पर हल किए गए। इसीलिए एक जल के मुहूर्त दूसरे से नहीं मिलते, और इसीलिए इस स्थल पर कहीं कोई एक अखिल भारतीय समय नहीं छपता।",
+        },
+        {
+          key: "sitting",
+          name: "वह बैठक जो आप स्वयं करते हैं",
+          body: "आपकी अपनी स्क्रीन पर साढ़े चार मिनट, उस अवस्था के सामने जिसमें वह नदी उस घड़ी वास्तव में है। आपका संकल्प, आपके शब्दों में, आपके द्वारा। कोई आपके स्थान पर खड़ा नहीं होता, क्योंकि खड़ा होने वाला कोई है ही नहीं।",
+        },
+      ],
+      note: "कोई पुरोहित नहीं। घाट पर कोई आयोजन नहीं। न कैमरा, न प्रसारण, न रिकॉर्डिंग। डाक से आपको कुछ नहीं भेजा जाता: न प्रसाद, न बोतल में जल, न लिफ़ाफ़े में मौली।",
     },
     choosing: {
       eyebrow: "चयन",
       title: "कौन-सा जल, और क्यों।",
-      lede: "यहाँ कोई जल श्रेष्ठ या हीन नहीं है। कुछ अनुष्ठान कुछ विशेष जलों के हैं, और जो नाम आप पहले से जानते हैं वही बेच देने के बजाय हम आपको यह बताना उचित समझते हैं कि कौन-सा किसका है।",
+      lede: "यहाँ कोई जल श्रेष्ठ या हीन नहीं है। कुछ बातें कुछ विशेष जलों की हैं, और जो नाम आप पहले से जानते हैं वहीं भेज देने के बजाय यह पृष्ठ आपको यह बताना उचित समझता है कि कौन-सी बात किसकी है।",
       rows: [
         {
           key: "first",
-          label: "पहले स्नान के लिए",
-          body: "हर की पौड़ी पर गंगा, अथवा रामघाट पर शिप्रा। दोनों प्रयोग में रहने वाले स्नान घाट हैं जहाँ प्रतिदिन संध्या आरती होती है, दोनों की सीढ़ियाँ लंबी हैं और वर्ष के अधिकांश समय जल में रहती हैं, और दोनों दूर से आए लोगों के अभ्यस्त हैं।",
+          label: "यदि आप पहले नहीं बैठे हैं",
+          body: "हर की पौड़ी पर गंगा, अथवा रामघाट पर शिप्रा। दोनों प्रयोग में रहने वाले स्नान घाट हैं जहाँ प्रतिदिन संध्या आरती होती है, दोनों की सीढ़ियाँ लंबी हैं और वर्ष के अधिकांश समय जल में रहती हैं, और दोनों के अंक ऋतु के साथ स्पष्ट रूप से चलते हैं, इसलिए जिस पाठ के साथ आप बैठते हैं उसका अर्थ पंद्रह दिन देखते-देखते समझ में आने लगता है।",
         },
         {
           key: "pitru",
-          label: "स्मरण और पितृ-कर्म के लिए",
-          body: "रामकुंड पर गोदावरी, अथवा प्रयागराज का संगम। रामकुंड नासिक का अस्थि-विसर्जन तीर्थ है और सबसे पहले श्राद्ध का स्थान है। प्रयागराज में पिंडदान प्रयागवाल पुरोहितों के माध्यम से होता है, जिन्हें यह अधिकार वंश-परंपरा से प्राप्त है। इन कर्मों का अधिकार समुदाय के अनुसार भिन्न होता है, हमसे पूछने से पहले अपने कुल-पुरोहित से पूछें।",
+          label: "स्मरण के लिए",
+          body: "रामकुंड पर गोदावरी, अथवा प्रयागराज का संगम। रामकुंड नासिक का अस्थि-विसर्जन तीर्थ है और सबसे पहले श्राद्ध का स्थान है; प्रयागराज में पिंडदान प्रयागवाल पुरोहित कराते हैं, जिन्हें यह अधिकार वंश-परंपरा से प्राप्त है। दोनों प्रत्यक्ष उपस्थित रहकर, उन परिवारों द्वारा होते हैं जो वहाँ होते हैं। स्नानिफ़ाई इनमें से किसी की व्यवस्था न करता है न कर सकता है, और यहाँ जो बेचा जाता है वह यह है भी नहीं।",
         },
         {
           key: "bhakti",
-          label: "ब्रज और भक्ति के लिए",
-          body: "विश्राम घाट पर यमुना। ब्रज की परंपरा में यमुना को शोधिका नहीं, प्रियजन मानकर पुकारा जाता है, और इससे कहे जाने वाले शब्द बदल जाते हैं। चुनने से पहले जल की दशा के विषय में उस पृष्ठ को अवश्य पढ़ें।",
+          label: "ब्रज के लिए",
+          body: "विश्राम घाट पर यमुना। ब्रज की परंपरा में यमुना को शोधिका नहीं, प्रियजन मानकर पुकारा जाता है, और इससे कहे जाने वाले शब्द बदल जाते हैं। चुनने से पहले उस जल की दशा के विषय में वह पृष्ठ पढ़ लें; वह सुखद नहीं है और छिपाई भी नहीं गई है।",
         },
         {
           key: "source",
           label: "उद्गम के लिए",
-          body: "तलकावेरी। यह घाट नहीं है, यह वह स्रोत है जहाँ से कावेरी उठती हैं, ब्रह्मगिरि पर एक मंदिर-कुंड के भीतर। वहाँ ईमानदारी से केवल संकल्प और तीर्थ अर्चना ही की जा सकती है। यदि आप कावेरी में स्नान चाहते हैं, तो उस पृष्ठ पर उसके लिए उपयुक्त स्थानों के नाम दिए गए हैं।",
+          body: "तलकावेरी। यह घाट नहीं है, यह वह स्रोत है जहाँ से कावेरी उठती हैं, ब्रह्मगिरि पर एक मंदिर-कुंड के भीतर, और उनका अंक कुछ हज़ार नहीं, कुछ ही घन मीटर प्रति सेकंड है। यही इस स्थान का सत्य है और इस स्थल का सबसे उल्लेखनीय अंक भी। यदि आप कावेरी-स्नान चाहते हैं, तो वह पृष्ठ नीचे के उन जलों के नाम देता है जिनका वह है।",
         },
       ],
     },
     honesty: {
       eyebrow: "स्पष्ट रूप से",
-      title: "इन जलों पर क्या संपन्न होता है।",
+      title: "यह क्या है, और क्या नहीं।",
       isLabel: "यह है",
       isBody:
-        "जल के समीप ऋत्विक द्वारा आपके नाम और गोत्र से किया गया संकल्प और अर्चना, और, जहाँ स्थान इसकी अनुमति देता है, उसके बाद प्रतिनिधि स्नान, जिसमें ऋत्विक आपके प्रतिनिधि के रूप में जल में उतरते हैं। यह कोई असाधारण बात नहीं है। हर घाट पर प्रतिदिन ऐसे यजमान के लिए यही किया जाता है जो स्वयं वहाँ खड़ा नहीं हो सकता। यह जैसे-जैसे होता है वैसे-वैसे प्रसारित होता है, और रिकॉर्ड किया जाता है।",
+        "आपकी अपनी स्क्रीन पर साढ़े चार मिनट, उस अवस्था के सामने जिसमें कोई नदी उस घड़ी वास्तव में है। उनका प्रतिरूपित प्रवाह, वर्ष के इसी सप्ताह में उनके अपने तीस वर्षों के इतिहास के सापेक्ष क्रमित। उनका सूर्योदय। उसी पर हल किए गए पंचांग के मुहूर्त। आपका अपना संकल्प, आपके अपने शब्दों में। उसी पाठ से बना एक चिह्न, और आपके पास रहने वाली बही में एक पंक्ति।",
       isNotLabel: "यह नहीं है",
       isNotBody:
-        "यह आपके स्वयं नदी में स्नान करने का स्थान नहीं लेता। आपकी डुबकी कोई दूसरा नहीं लगा सकता, और हम इसके विपरीत कुछ नहीं कहेंगे। यह आपके आरोग्य, धन, परीक्षा या किसी भी फल के विषय में कोई दावा नहीं है, और यहाँ का कोई पृष्ठ कभी ऐसा दावा करेगा भी नहीं। और आपको डाक से कुछ नहीं भेजा जाता, न प्रसाद, न बोतल में जल, न लिफ़ाफ़े में मौली।",
+        "यह किसी घाट पर संपन्न कोई अनुष्ठान नहीं है। आपके स्थान पर कोई जल में नहीं उतरता, क्योंकि कोई है ही नहीं। इन छह स्थानों पर कुछ भी फ़िल्माया, प्रसारित या रिकॉर्ड नहीं किया जाता, और आपको डाक से कुछ नहीं भेजा जाता। यह आपके स्वयं नदी में उतरने का स्थान नहीं लेता, और यह आपके आरोग्य, धन, परीक्षा या किसी भी फल के विषय में कोई दावा नहीं करता।",
     },
     closing: {
       title: "चुनने से पहले जल को पढ़ लें।",
-      lede: "प्रत्येक पृष्ठ बताता है कि वहाँ क्या संपन्न होता है, क्या नहीं, घाट किसके अधिकार में है, और किन कार्यों की अनुमति अभी हमारे पास नहीं है।",
+      lede: "प्रत्येक पृष्ठ बताता है कि वह स्थान क्या है, परंपरा में किसके लिए है, दूर से क्या नहीं हो सकता, उसकी देखरेख कौन करता है, और उसका अंक कैसे पढ़ा जाता है।",
       cta: "स्नान आरंभ करें",
     },
     formLabels: {
@@ -902,8 +1112,6 @@ export const riversIndexContent = {
     notAGhat: "घाट नहीं",
   },
 } satisfies Record<Lang, RiversIndexCopy>;
-
-type RiteStep = { key: string; name: string; body: string };
 
 type RiverDetailCopy = {
   eyebrow: string;
@@ -919,16 +1127,34 @@ type RiverDetailCopy = {
   formLabels: Record<WaterForm, string>;
   caution: { label: string };
   sacred: { eyebrow: string; title: string };
-  rite: {
+  reading: {
     eyebrow: string;
     title: string;
     lede: string;
-    steps: RiteStep[];
-    audioNote: string;
-    proxyNote: string;
-    digital: string;
+    provenanceLabel: string;
+    provenance: string[];
+    attributionLabel: string;
+    attribution: string[];
+    cta: string;
   };
-  rites: { eyebrow: string; title: string; lede: string };
+  offer: {
+    eyebrow: string;
+    title: string;
+    lede: string;
+    items: OfferItem[];
+    note: string;
+    cta: string;
+    muhurat: string;
+  };
+  tradition: {
+    eyebrow: string;
+    title: string;
+    lede: string;
+    standing: string;
+    kindLabels: Record<TraditionKind, string>;
+    personalNote: string;
+    placeNote: string;
+  };
   occasions: {
     eyebrow: string;
     title: string;
@@ -936,14 +1162,11 @@ type RiverDetailCopy = {
     provisional: string;
     reckoningLabel: string;
   };
-  permission: {
+  keeper: {
     eyebrow: string;
     title: string;
-    authorityLabel: string;
-    statusLabel: string;
-    status: Record<PermitStatus, string>;
+    label: string;
     body: string;
-    framing: string;
   };
   onward: { eyebrow: string; title: string; cta: string; all: string; prev: string; next: string };
 };
@@ -967,86 +1190,79 @@ export const riverDetailContent = {
     },
     caution: { label: "Read this before you choose this water" },
     sacred: { eyebrow: "The water", title: "Why this water." },
-    rite: {
-      eyebrow: "The rite",
-      title: "What a snan here involves.",
-      lede: "The order below is fixed and the same at every water we work at. What changes between them is what the site can honestly carry, which the section above says.",
-      steps: [
+    reading: {
+      eyebrow: "The reading",
+      title: "How this water is measured.",
+      lede: "One number, taken the same way at all six waters, and stated the same way every time it appears.",
+      provenanceLabel: "How this page knows",
+      provenance: [
+        "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, read at the grid cell covering this reach and published once a day. It is a model, not a gauge reading, and this site writes modelled every time it prints a number.",
+        "Each value is ranked against every daily value that same cell has produced in this same week of the year from 1997 to 2025. That is what the percentile means, and it is a comparison of one water with itself, which is the only honest one.",
+        "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates rather than at the grid cell. The muhurat windows are the panchang's rules resolved against that true sunrise.",
+        "We measure nothing ourselves. There is no camera, no microphone and no device of ours at this ghat or at any other, and nothing is performed here by anyone on anyone's behalf.",
+      ],
+      attributionLabel: "Attribution",
+      attribution: [
+        "River discharge: Copernicus Emergency Management Service, GloFAS, served by Open-Meteo, CC BY 4.0.",
+        "Sun and weather: Open-Meteo, CC BY 4.0.",
+      ],
+      cta: "See this water as she is running now",
+    },
+    offer: {
+      eyebrow: "What is offered here",
+      title: "Four things, and nothing else.",
+      lede: "The same four at every water on this site. Three of them cost nothing to read and always will.",
+      items: [
         {
-          key: "pravesh",
-          name: "Pravesh",
-          body: "The stream opens on the ghat itself. Ambient sound only, no music bed, no voiceover, no title card.",
+          key: "state",
+          name: "Her measured state",
+          body: "Modelled discharge for this reach, in cubic metres a second, ranked against 1997 to 2025 for this same week of the year, with the hour of the reading printed beside it.",
         },
         {
-          key: "achamana",
-          name: "Aasan and achamana",
-          body: "The ritvik seats himself and performs the self-purification that precedes any rite.",
+          key: "sunrise",
+          name: "Her sunrise",
+          body: "Sunrise and sunset at this ghat's own coordinates, which is why they do not agree with any other ghat's and are not meant to.",
         },
         {
-          key: "sankalp",
-          name: "Sankalp, the naming",
-          body: "Place and time are stated, then your gotra and your name. This is the part the rite exists for.",
+          key: "muhurat",
+          name: "Her muhurat windows",
+          body: "Brahma, pratah, abhijit and godhuli, resolved as rules against that true sunrise rather than copied from a national table.",
         },
         {
-          key: "vandana",
-          name: "Nadi vandana",
-          body: "The river is invoked by her own name, in the form used at this site.",
-        },
-        {
-          key: "snan",
-          name: "Pratinidhi snan",
-          body: "The ritvik enters the water and performs the snan as your representative, unedited, never sped up, never stock footage. Where a site cannot carry this, the page above says so.",
-        },
-        {
-          key: "arghya",
-          name: "Arghya",
-          body: "Water is offered to the sun, or before sunrise to the direction of sunrise.",
-        },
-        {
-          key: "kshama",
-          name: "Kshama prarthana",
-          body: "A closing petition for forgiveness of any error in performance.",
-        },
-        {
-          key: "samapti",
-          name: "Samapti",
-          body: "The session identifier is spoken aloud on camera, so a recording can never be passed off as another day's.",
+          key: "sitting",
+          name: "A sitting you take yourself",
+          body: "Four and a half minutes against this water's live state, with your own sankalp in your own words. Nobody stands in for you.",
         },
       ],
-      audioNote:
-        "In a shared session only your name and your gotra are spoken aloud. Your own words stay in the sankalp, they are not read out, not captioned, and not carried in any preview image.",
-      proxyNote:
-        "This is a sankalp and, where the site allows it, a pratinidhi snan offered in your name. It is not a substitute for bathing in the river yourself, and we do not claim that it is.",
-      digital:
-        "Nothing is posted to you, no prasad, no bottled jal, no thread in an envelope. What you receive is a stream, a recording and a Sankalp Patra.",
+      note: "No priest, no ghat performance, no camera, no stream, no recording, and nothing posted to you.",
+      cta: "Begin your snan",
+      muhurat: "The muhurat calendar",
     },
-    rites: {
-      eyebrow: "Rites",
-      title: "What this water carries.",
-      lede: "Not every rite belongs at every site. These are the ones that belong here.",
+    tradition: {
+      eyebrow: "Tradition",
+      title: "What this water is kept for.",
+      lede: "Described as tradition, in the third person, because that is what it is. Some of it is centuries older than any of the words on this site.",
+      standing:
+        "None of this is on offer. Snanify has nobody at this water, arranges nothing at it, and asks nothing of the people who keep it. What is listed here is what people do when they stand there.",
+      kindLabels: {
+        personal: "Kept in person",
+        "of-the-place": "Kept by the place",
+      },
+      personalNote: "It is done by a person standing at the water. Snanify does not arrange it and cannot.",
+      placeNote: "It happens whether or not anybody asks for it.",
     },
     occasions: {
       eyebrow: "The calendar",
       title: "Days this ghat is known for.",
-      lede: "Reckoned by tithi or by the sun, as noted. We publish no dates and no timings on this page, because we have not yet sourced a panchang we are willing to name.",
+      lede: "Reckoned by tithi or by the sun, as noted beside each. No dates are printed: the daily windows are computed from this ghat's own sunrise, but the tithi that fixes a parva day comes from a panchang, and we have not yet named one we are willing to stand behind.",
       provisional: "Timing to be confirmed against the panchang",
       reckoningLabel: "Reckoned as",
     },
-    permission: {
-      eyebrow: "Permission",
-      title: "Who controls this ghat.",
-      authorityLabel: "Governing authority",
-      statusLabel: "Our permit status",
-      /* PLACEHOLDER must not read as "we have it but haven't checked". It
-         means we hold nothing, and the label has to say that. */
-      status: {
-        PLACEHOLDER: "None held",
-        applied: "Applied for",
-        granted: "Granted",
-      },
-      body: "We do not hold written permission to perform or film a paid rite at this ghat. Nothing has been agreed, nothing applied for, nothing granted, and this line stays on the page until that changes. Permission is not a formality at these places: the bodies that hold it are trusts, samitis and hereditary purohit families whose consent is a different thing from a municipal one.",
-      framing:
-        "Our framing rule, wherever we film: the camera stays on the ritvik, the offering and the water. No crowd pans, no filming of anyone else's rites, and the feed is cut rather than pointed at a family.",
+    keeper: {
+      eyebrow: "Custody",
+      title: "Who looks after this water.",
+      label: "In whose care",
+      body: "Snanify holds no permission at this ghat and needs none, because Snanify does nothing there. Nobody stands in for you, nothing is filmed, no device of ours sits on the steps, and nothing has been asked of the people named here. They are named because who keeps a place is worth knowing, and because a page that describes a ghat and never says whose it is has left out the most practical fact about it.",
     },
     onward: {
       eyebrow: "Onward",
@@ -1076,84 +1292,79 @@ export const riverDetailContent = {
     },
     caution: { label: "यह जल चुनने से पहले इसे पढ़ लें" },
     sacred: { eyebrow: "जल", title: "यह जल क्यों।" },
-    rite: {
-      eyebrow: "अनुष्ठान",
-      title: "यहाँ स्नान में क्या-क्या होता है।",
-      lede: "नीचे दिया क्रम निश्चित है और हमारे सभी जलों पर एक-सा रहता है। बदलता केवल यह है कि कौन-सा स्थान ईमानदारी से क्या वहन कर सकता है, और वह ऊपर लिखा है।",
-      steps: [
+    reading: {
+      eyebrow: "पाठ",
+      title: "यह जल कैसे मापा जाता है।",
+      lede: "एक अंक, छहों जलों पर एक ही रीति से लिया गया, और हर बार एक ही रीति से कहा गया।",
+      provenanceLabel: "यह पृष्ठ कैसे जानता है",
+      provenance: [
+        "प्रवाह कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से लिया गया प्रतिरूपित नदी-प्रवाह है, जो इस धारा को ढकने वाले ग्रिड-खंड पर पढ़ा जाता है और प्रतिदिन एक बार प्रकाशित होता है। यह एक मॉडल है, गेज का पाठ नहीं, और यह स्थल जब भी कोई अंक छापता है, प्रतिरूपित ही लिखता है।",
+        "प्रत्येक मान की तुलना उसी खंड के उन सभी दैनिक मानों से की जाती है जो 1997 से 2025 तक वर्ष के इसी सप्ताह में आए। प्रतिशतक का यही अर्थ है, और यह एक जल की तुलना उसी जल से है, जो एकमात्र ईमानदार तुलना है।",
+        "सूर्योदय, सूर्यास्त, वायु का तापमान और वर्षा ग्रिड-खंड पर नहीं, घाट के अपने निर्देशांक पर पढ़े जाते हैं। मुहूर्त पंचांग के नियमों को उसी वास्तविक सूर्योदय पर हल करके निकाले जाते हैं।",
+        "हम स्वयं कुछ नहीं मापते। इस घाट पर या किसी और घाट पर हमारा कोई कैमरा, कोई माइक्रोफ़ोन और कोई यंत्र नहीं है, और यहाँ किसी के लिए किसी के द्वारा कुछ भी नहीं किया जाता।",
+      ],
+      attributionLabel: "श्रेय",
+      attribution: [
+        "नदी-प्रवाह: Copernicus Emergency Management Service, GloFAS, Open-Meteo के माध्यम से, CC BY 4.0.",
+        "सूर्य एवं मौसम: Open-Meteo, CC BY 4.0.",
+      ],
+      cta: "इस जल को इस समय जैसा है वैसा देखें",
+    },
+    offer: {
+      eyebrow: "यहाँ क्या मिलता है",
+      title: "चार बातें, और कुछ नहीं।",
+      lede: "इस स्थल के हर जल पर यही चार। इनमें से तीन पढ़ने के लिए निःशुल्क हैं और सदा रहेंगी।",
+      items: [
         {
-          key: "pravesh",
-          name: "प्रवेश",
-          body: "प्रसारण घाट पर ही खुलता है। केवल परिवेश की ध्वनि, न कोई संगीत, न भाष्य, न कोई शीर्षक-पट्टी।",
+          key: "state",
+          name: "उनकी मापी हुई अवस्था",
+          body: "इस धारा का प्रतिरूपित प्रवाह, घन मीटर प्रति सेकंड में, 1997 से 2025 तक वर्ष के इसी सप्ताह के सापेक्ष क्रमित, और साथ में उस पाठ की घड़ी छपी हुई।",
         },
         {
-          key: "achamana",
-          name: "आसन एवं आचमन",
-          body: "ऋत्विक आसन ग्रहण कर वह आत्मशुद्धि करते हैं जो किसी भी अनुष्ठान से पहले होती है।",
+          key: "sunrise",
+          name: "उनका सूर्योदय",
+          body: "इस घाट के अपने निर्देशांक पर सूर्योदय और सूर्यास्त, इसीलिए वे किसी दूसरे घाट से नहीं मिलते, और मिलने भी नहीं चाहिए।",
         },
         {
-          key: "sankalp",
-          name: "संकल्प, नाम-उच्चारण",
-          body: "पहले देश और काल कहे जाते हैं, फिर आपका गोत्र और नाम। अनुष्ठान इसी अंश के लिए है।",
+          key: "muhurat",
+          name: "उनके मुहूर्त",
+          body: "ब्रह्म, प्रातः, अभिजित और गोधूलि, किसी अखिल भारतीय सारणी से उतारे हुए नहीं, उसी वास्तविक सूर्योदय पर नियमों से हल किए हुए।",
         },
         {
-          key: "vandana",
-          name: "नदी वंदना",
-          body: "नदी का आवाहन उनके अपने नाम से किया जाता है, उसी रूप में जो उस स्थान पर प्रचलित है।",
-        },
-        {
-          key: "snan",
-          name: "प्रतिनिधि स्नान",
-          body: "ऋत्विक जल में उतरकर आपके प्रतिनिधि के रूप में स्नान करते हैं, बिना काट-छाँट, बिना गति बढ़ाए, कोई पुराना दृश्य नहीं। जहाँ कोई स्थान इसे वहन नहीं कर सकता, वह ऊपर स्पष्ट लिखा है।",
-        },
-        {
-          key: "arghya",
-          name: "अर्घ्य",
-          body: "सूर्य को जल अर्पित किया जाता है, अथवा सूर्योदय से पूर्व उदय की दिशा में।",
-        },
-        {
-          key: "kshama",
-          name: "क्षमा प्रार्थना",
-          body: "विधि में रह गई किसी त्रुटि के लिए अंत में क्षमा-याचना।",
-        },
-        {
-          key: "samapti",
-          name: "समाप्ति",
-          body: "सत्र की पहचान-संख्या कैमरे के सामने स्वर में बोली जाती है, ताकि कोई रिकॉर्डिंग किसी और दिन की बताकर न दी जा सके।",
+          key: "sitting",
+          name: "वह बैठक जो आप स्वयं करते हैं",
+          body: "इस जल की जीवंत अवस्था के सामने साढ़े चार मिनट, आपके अपने शब्दों में आपका अपना संकल्प। कोई आपके स्थान पर खड़ा नहीं होता।",
         },
       ],
-      audioNote:
-        "सामूहिक सत्र में केवल आपका नाम और गोत्र स्वर में बोले जाते हैं। आपके अपने शब्द संकल्प में ही रहते हैं, वे न पढ़े जाते हैं, न उपशीर्षक में आते हैं, न किसी पूर्वावलोकन चित्र में।",
-      proxyNote:
-        "यह आपके नाम से अर्पित संकल्प है और, जहाँ स्थान अनुमति दे, प्रतिनिधि स्नान। यह आपके स्वयं नदी में स्नान करने का स्थान नहीं लेता, और हम ऐसा दावा भी नहीं करते।",
-      digital:
-        "आपको डाक से कुछ नहीं भेजा जाता, न प्रसाद, न बोतल में जल, न लिफ़ाफ़े में मौली। आपको मिलता है प्रसारण, रिकॉर्डिंग और संकल्प पत्र।",
+      note: "न पुरोहित, न घाट पर कोई आयोजन, न कैमरा, न प्रसारण, न रिकॉर्डिंग, और डाक से आपको कुछ नहीं।",
+      cta: "स्नान आरंभ करें",
+      muhurat: "मुहूर्त पंचांग",
     },
-    rites: {
-      eyebrow: "अनुष्ठान",
-      title: "यह जल क्या-क्या वहन करता है।",
-      lede: "हर अनुष्ठान हर स्थान का नहीं होता। ये वे हैं जो यहाँ के हैं।",
+    tradition: {
+      eyebrow: "परंपरा",
+      title: "यह जल किसके लिए माना जाता है।",
+      lede: "परंपरा के रूप में, अन्य पुरुष में, क्योंकि वह है यही। इसमें से बहुत कुछ इस स्थल के हर शब्द से सदियों पुराना है।",
+      standing:
+        "इनमें से कुछ भी सेवा के रूप में उपलब्ध नहीं है। इस जल पर स्नानिफ़ाई का कोई नहीं है, वह वहाँ किसी बात की व्यवस्था नहीं करता, और जो लोग इसे संभालते हैं उनसे कुछ माँगता भी नहीं। यहाँ जो सूचीबद्ध है वह वही है जो लोग वहाँ खड़े होकर करते हैं।",
+      kindLabels: {
+        personal: "स्वयं उपस्थित होकर",
+        "of-the-place": "स्थान का अपना",
+      },
+      personalNote: "यह जल के सामने खड़ा व्यक्ति स्वयं करता है। स्नानिफ़ाई इसकी व्यवस्था न करता है, न कर सकता है।",
+      placeNote: "यह किसी के कहने पर नहीं, अपने आप होता रहता है।",
     },
     occasions: {
       eyebrow: "पंचांग",
       title: "जिन दिनों के लिए यह घाट जाना जाता है।",
-      lede: "गणना तिथि से या सूर्य से, जैसा नीचे अंकित है। इस पृष्ठ पर हम कोई तिथि या समय प्रकाशित नहीं करते, क्योंकि अभी हमने कोई ऐसा पंचांग नहीं लिया है जिसका नाम हम बता सकें।",
+      lede: "गणना तिथि से या सूर्य से, जैसा प्रत्येक के आगे अंकित है। कोई तिथि नहीं छापी जाती: दैनिक मुहूर्त इसी घाट के अपने सूर्योदय से निकाले जाते हैं, किंतु पर्व का दिन जिस तिथि से तय होता है वह पंचांग से आती है, और ऐसा कोई पंचांग हमने अभी नहीं चुना है जिसके पीछे हम खड़े हो सकें।",
       provisional: "समय पंचांग से पुष्ट किया जाना शेष",
       reckoningLabel: "गणना",
     },
-    permission: {
-      eyebrow: "अनुमति",
-      title: "यह घाट किसके अधिकार में है।",
-      authorityLabel: "अधिकारी संस्था",
-      statusLabel: "हमारी अनुमति की स्थिति",
-      status: {
-        PLACEHOLDER: "कोई अनुमति नहीं",
-        applied: "आवेदन किया गया",
-        granted: "स्वीकृत",
-      },
-      body: "इस घाट पर शुल्क लेकर अनुष्ठान करने या उसका फ़िल्मांकन करने की लिखित अनुमति हमारे पास नहीं है। न कोई सहमति हुई है, न आवेदन, न स्वीकृति, और जब तक यह स्थिति नहीं बदलती, यह पंक्ति इसी पृष्ठ पर बनी रहेगी। इन स्थानों पर अनुमति औपचारिकता नहीं है: यह अधिकार न्यासों, समितियों और परंपरागत पुरोहित परिवारों के पास है, जिनकी सहमति नगरपालिका की सहमति से भिन्न वस्तु है।",
-      framing:
-        "जहाँ भी हम फ़िल्मांकन करते हैं, हमारा नियम यह है: कैमरा ऋत्विक, अर्पण और जल पर ही रहेगा। भीड़ पर कोई पैन नहीं, किसी और के कर्म का कोई चित्रांकन नहीं, और आवश्यकता पड़ने पर कैमरा किसी परिवार की ओर मोड़ने के बजाय प्रसारण बंद कर दिया जाएगा।",
+    keeper: {
+      eyebrow: "देखरेख",
+      title: "इस जल को कौन संभालता है।",
+      label: "किसकी देखरेख में",
+      body: "इस घाट पर स्नानिफ़ाई के पास कोई अनुमति नहीं है और उसे किसी अनुमति की आवश्यकता भी नहीं, क्योंकि वह वहाँ कुछ करता ही नहीं। आपके स्थान पर कोई खड़ा नहीं होता, कुछ फ़िल्माया नहीं जाता, सीढ़ियों पर हमारा कोई यंत्र नहीं रखा, और यहाँ जिनका नाम है उनसे कुछ माँगा नहीं गया। उनका नाम इसलिए है कि किसी स्थान को कौन संभालता है, यह जानने योग्य बात है, और जो पृष्ठ किसी घाट का वर्णन करके यह न बताए कि वह किसका है, वह उसका सबसे व्यावहारिक तथ्य छोड़ देता है।",
     },
     onward: {
       eyebrow: "आगे",

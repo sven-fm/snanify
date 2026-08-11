@@ -39,7 +39,6 @@ const RIPPLES = 42;
 /** Interior streamlines only; the two banks are drawn separately and heavier. */
 const STREAMS = 5;
 const STEPS = 44;
-const SKY_LINES = 15;
 
 /**
  * The river runs off to the right so the headline keeps clean paper. On a
@@ -53,7 +52,7 @@ const NEAR_X_NARROW = W * 0.44;
 
 const MEANDER = 74;
 /** Depth units per second. Water moves; it does not race. */
-const FLOW = 0.85;
+const FLOW = 0.34;
 
 const SUN_R = 74;
 const SUN_CY = HORIZON - 30;
@@ -69,7 +68,7 @@ const halfWidth = (d: number) => (HALF_W * D_NEAR) / d;
 function centre(d: number, t: number, vanish: number, near: number): number {
   const nearness = (D_NEAR / d) ** 0.85;
   const base = vanish + (near - vanish) * nearness;
-  return base + MEANDER * nearness * Math.sin(d * 0.34 + t * 0.5);
+  return base + MEANDER * nearness * Math.sin(d * 0.34 + t * 0.2);
 }
 
 /** One transverse ripple, bank to bank, at depth `d`. */
@@ -90,9 +89,9 @@ function ripplePath(d: number, t: number, vanish: number, near: number): string 
     const y =
       y0 +
       lift +
-      amp * Math.sin(u * 7.5 + d * 0.9 - t * 2.1) +
-      amp * 0.4 * Math.sin(u * 15 - d * 1.4 + t * 1.3) +
-      amp * 0.25 * Math.sin(u * 26 + d * 3.1 - t * 0.9);
+      amp * Math.sin(u * 7.5 + d * 0.9 - t * 0.85) +
+      amp * 0.4 * Math.sin(u * 15 - d * 1.4 + t * 0.55) +
+      amp * 0.25 * Math.sin(u * 26 + d * 3.1 - t * 0.38);
     out += `${s === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)} `;
   }
   return out;
@@ -109,7 +108,7 @@ function streamPath(sx: number, t: number, vanish: number, near: number): string
     const cx = centre(d, t, vanish, near);
     const nearness = D_NEAR / d;
     const x = cx + sx * halfWidth(d);
-    const y = project(d) + 11 * nearness ** 1.15 * Math.sin(sx * 3 + d * 0.9 - t * 2.1);
+    const y = project(d) + 11 * nearness ** 1.15 * Math.sin(sx * 3 + d * 0.9 - t * 0.85);
     out += `${s === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)} `;
   }
   return out;
@@ -167,7 +166,7 @@ export function RiverFlow({ className = "" }: { className?: string }) {
         /* Step the phase in 1/d, not in d. Depth is projected as C/d, so evenly
            spaced depths would cake into a black band at the horizon; evenly
            spaced reciprocals give ripples that are evenly spaced on screen. */
-        const phase = (i / RIPPLES + time * FLOW * 0.075) % 1;
+        const phase = (i / RIPPLES + time * FLOW * 0.045) % 1;
         const inv = 1 / D_FAR + phase * (1 / D_NEAR - 1 / D_FAR);
         const d = 1 / inv;
         const path = ripplePath(d, time, vanish, near0);
@@ -258,13 +257,6 @@ export function RiverFlow({ className = "" }: { className?: string }) {
     };
   }, []);
 
-  /* Engraver's convention for a bright sky: horizontal hatching that tightens
-     as it nears the horizon. Static, so it is plain markup. */
-  const sky = Array.from({ length: SKY_LINES }, (_, j) => {
-    const u = (j + 1) / SKY_LINES;
-    const y = HORIZON - HORIZON * (1 - u) ** 1.6;
-    return { y, opacity: 0.06 + 0.2 * u };
-  });
 
   return (
     <svg
@@ -289,11 +281,6 @@ export function RiverFlow({ className = "" }: { className?: string }) {
       </defs>
 
       <g clipPath={`url(#${skyClip})`}>
-        <g stroke="currentColor" strokeWidth="1">
-          {sky.map((l, i) => (
-            <line key={i} x1="0" y1={l.y.toFixed(1)} x2={W} y2={l.y.toFixed(1)} opacity={l.opacity} />
-          ))}
-        </g>
         {/* the bindu at full size */}
         <circle ref={sunRef} cx={VANISH_X_WIDE} cy={SUN_CY} r={SUN_R} fill="var(--spot)" opacity="0.92" />
       </g>

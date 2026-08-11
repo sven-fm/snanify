@@ -5,14 +5,15 @@ import { OCCASION_SLUGS } from "@/content/muhurat";
 const SITE = "https://www.snanify.com";
 
 /** Locale-independent routes, in the public English shape. */
-const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "monthly" }[] = [
+const ROUTES: { path: string; priority: number; changeFrequency: "daily" | "weekly" | "monthly" }[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
   { path: "/rivers", priority: 0.9, changeFrequency: "monthly" }, ...RIVER_SLUGS.map((slug) => ({
     path: `/rivers/${slug}`,
     priority: 0.8,
     changeFrequency: "monthly" as const,
   })),
-  { path: "/rituals", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/snan", priority: 0.95, changeFrequency: "monthly" },
+  { path: "/live", priority: 0.9, changeFrequency: "daily" },
   { path: "/muhurat", priority: 0.9, changeFrequency: "weekly" }, ...OCCASION_SLUGS.map((slug) => ({
     path: `/muhurat/${slug}`,
     priority: 0.7,

@@ -475,10 +475,10 @@ export const kumbhContent = {
       eyebrow: "The honest part",
       title: "What we can and cannot do here.",
       lede: "A mela is not a quiet dawn at a working ghat. Nothing about it is convenient for a camera, and most of what a company would want to promise about it cannot be promised.",
-      permitLabel: "Our permit status at Ram Kund",
-      permitStatus: "None held",
+      permitLabel: "Our presence at Ram Kund",
+      permitStatus: "None. We are not there.",
       permitBody:
-        "Snanify holds no written permission to perform or to film a paid rite at Ram Kund, or at any of the six waters on this site. Nothing has been applied for and nothing has been granted. That sentence stands on every ghat page and it is not softened here because the occasion is larger. Permission during a Simhastha is a further matter again: for the duration the ghats fall under the mela authority alongside the municipal corporation and the police, and what happens on the bathing mornings is settled between them and the akhada council. There is nobody in that chain we could sign a contract with today.",
+        "Snanify holds no permission at Ram Kund and needs none, because it does nothing there. Nobody stands at that ghat for us, nothing is performed, nothing is filmed. During a Simhastha the ghats fall under the mela authority alongside the municipal corporation and the police, and the bathing mornings are settled between them and the akhada council. That is worth knowing if you are going in person. It has no bearing on what this site does, which is to read the Godavari's measured state from a public source and show it to you.",
       authorityLabel: "Who controls the ghats during the mela",
       authority:
         "The Nashik-Trimbakeshwar Kumbh Mela Authority, constituted by the Government of Maharashtra and sitting under the Divisional Commissioner, Nashik, with the Nashik Municipal Corporation, the Trimbakeshwar temple trust, the police, and the akhada council. Permission at these places is not a municipal formality; the bodies that hold it are trusts, samitis and hereditary purohit families whose consent is a different thing from a licence.",
@@ -486,7 +486,7 @@ export const kumbhContent = {
       cannot: [
         "A camera on the kund steps on an Amrit Snan morning. Those hours belong to the akhadas in procession. It is not a permission a private company should expect, and we will not sell against the possibility that we might get it.",
         "Anything that asks the crowd to be moved, held, parted or arranged around a rite of ours. At the densities involved that is not an inconvenience, it is a danger.",
-        "Any footage that puts a stranger's face, or a stranger's family at their own rite, into your recording. Our framing rule does not relax for a mela: the camera stays on the ritvik, the offering and the water, and the operator cuts the feed rather than turn it on a family.",
+        "Any footage at all. Snanify films nothing, at a mela or anywhere else, and has nobody at Ram Kund to point a camera with. What arrives from the Godavari during the Simhastha is the same thing that arrives from it on an ordinary Tuesday: its measured state, from a public source.",
         "Any claim that a rite performed during a Simhastha carries more than the same rite performed on an ordinary Tuesday. Our offerings differ in what we do for you, never in what a rite is worth, and that does not change because a mela is on.",
         "Any claim of association with an akhada, a math, the mela authority or the purohit bodies at the ghat. If one of them ever signs a dated letter, we will publish it, and they will be free to withdraw it.",
       ],
@@ -743,8 +743,8 @@ export const kumbhContent = {
       eyebrow: "स्पष्ट बात",
       title: "यहाँ हम क्या कर सकते हैं और क्या नहीं।",
       lede: "मेला किसी कार्यरत घाट की शांत भोर नहीं होता। उसमें कैमरे के अनुकूल कुछ भी नहीं है, और उसके विषय में कोई उपक्रम जो-जो वचन देना चाहेगा, उनमें से अधिकांश दिए ही नहीं जा सकते।",
-      permitLabel: "रामकुंड पर हमारी अनुमति की स्थिति",
-      permitStatus: "कोई नहीं",
+      permitLabel: "रामकुंड पर हमारी उपस्थिति",
+      permitStatus: "कोई नहीं। हम वहाँ हैं ही नहीं।",
       permitBody:
         "रामकुंड पर, अथवा इस साइट के छह में से किसी भी जल पर, सशुल्क कर्म करने या उसका चित्रांकन करने की कोई लिखित अनुमति स्नानिफ़ाई के पास नहीं है। न कुछ माँगा गया है, न कुछ मिला है। यह वाक्य हर घाट के पृष्ठ पर खड़ा है और अवसर बड़ा होने के कारण यहाँ उसे हल्का नहीं किया गया। सिंहस्थ के दिनों में अनुमति और भी अलग विषय है: उस अवधि में घाट महानगरपालिका और पुलिस के साथ-साथ मेला प्राधिकरण के अधीन आ जाते हैं, और स्नान की सुबहों में क्या होगा यह उनके तथा अखाड़ा परिषद के बीच तय होता है। उस श्रृंखला में आज कोई ऐसा नहीं है जिससे हम अनुबंध कर सकें।",
       authorityLabel: "मेले के दिनों में घाट किसके नियंत्रण में",

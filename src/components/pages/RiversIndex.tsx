@@ -109,17 +109,17 @@ export function RiversIndex({ lang }: { lang: Lang }) {
               <Waterlines className="h-20 w-full text-ink sm:h-24" />
             </div>
 
-            {/* The permission disclosure sits above the fold on purpose, and it
-                is set as a printed notice in the spot colour, not a whisper. */}
+            {/* Said once, above the fold, as a printed notice in the spot
+                colour rather than a whisper at the bottom of the page. */}
             <div
               className="ink-in mt-12 max-w-3xl border-2 border-spot"
               style={{ animationDelay: "240ms" }}
             >
               <h2 className="label bg-spot px-4 py-2.5 text-paper sm:px-6">
-                {t.permission.label}
+                {t.presence.label}
               </h2>
               <p className="px-4 py-5 text-sm leading-[1.75] text-ink sm:px-6 sm:py-6">
-                {t.permission.body}
+                {t.presence.body}
               </p>
             </div>
           </div>
@@ -232,8 +232,42 @@ export function RiversIndex({ lang }: { lang: Lang }) {
           </Reveal>
         </Section>
 
+        {/* ------------------------------------------------- offer ------
+            What is actually on offer at every one of the six. A numbered
+            register: at 390px the number and the name share the first line
+            and the body runs full width underneath, so nothing is ever set
+            in a column narrower than the text needs.                     */}
+        <Section id="offer" tinted>
+          <Reveal>
+            <SectionHeader
+              eyebrow={t.offer.eyebrow}
+              title={t.offer.title}
+              lede={t.offer.lede}
+            />
+
+            <ol className="mt-12 border-t-2 border-rulestrong">
+              {t.offer.items.map((item, i) => (
+                <li
+                  key={item.key}
+                  className="grid grid-cols-[2.75rem_1fr] items-baseline gap-x-5 gap-y-3 border-b border-rule py-7 md:grid-cols-[3.5rem_15rem_1fr] md:gap-x-8 md:py-8"
+                >
+                  <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
+                  <span className="display text-xl text-ink sm:text-2xl">{item.name}</span>
+                  <span className="col-start-2 max-w-2xl text-sm leading-[1.75] text-ink2 md:col-start-auto">
+                    {item.body}
+                  </span>
+                </li>
+              ))}
+            </ol>
+
+            <p className="mt-8 max-w-2xl border-t-2 border-spot pt-5 text-sm leading-[1.75] text-ink2">
+              {t.offer.note}
+            </p>
+          </Reveal>
+        </Section>
+
         {/* ----------------------------------------------- choosing ----- */}
-        <Section tinted>
+        <Section>
           <Reveal>
             <SectionHeader
               eyebrow={t.choosing.eyebrow}
@@ -256,7 +290,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ------------------------------------------------ honesty ----- */}
-        <Section>
+        <Section tinted>
           <Reveal>
             <SectionHeader eyebrow={t.honesty.eyebrow} title={t.honesty.title} />
 
