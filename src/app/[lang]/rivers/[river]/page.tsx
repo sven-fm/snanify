@@ -12,15 +12,20 @@ import {
   website,
 } from "@/components/StructuredData";
 import { getGhat, RIVERS } from "@/content/rivers";
-import { LANGS, type Lang } from "@/lib/content";
-import { localePath, otherLang } from "@/lib/i18n";
+/* This route exists in English and Hindi only, because the deep content behind
+   it does; see the tier note at the top of src/lib/locales.ts. `Lang` here is
+   therefore the full-depth pair and not the twelve locales the site serves, and
+   `FULL_LANGS` is what narrows the prerender set away from the layout default. */
+import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
 
 /** Every (lang, river) combination, six waters × two locales. */
 export function generateStaticParams() {
-  return LANGS.flatMap((lang) => RIVERS.map((r) => ({ lang, river: r.slug })));
+  return FULL_LANGS.flatMap((lang) => RIVERS.map((r) => ({ lang, river: r.slug })));
 }
 
 export async function generateMetadata({
@@ -32,10 +37,9 @@ export async function generateMetadata({
   const ghat = getGhat(river);
   if (!ghat) return {};
 
-  /* Public URL shape, built through localePath, never a hand-written /hi. */
+  /* The canonical, the hreflang set and the OG locales are all derived from
+     this route by pageMetadata; nothing here writes a "/hi" by hand. */
   const route = `/rivers/${ghat.slug}`;
-  const paths = { en: localePath("en", route), hi: localePath("hi", route) } as const;
-  const publicPath = paths[lang];
 
   /* Titles are noun lists rather than sentences, so neither locale ends up
      with a grammatically wrong interpolation. */
@@ -46,30 +50,7 @@ export async function generateMetadata({
 
   const description = `${ghat.epithet[lang]}, ${ghat.standfirst[lang]}`;
 
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: publicPath,
-      // x-default points at the English edition: it is the wider of the two
-      // audiences and the one an unmatched locale should land on.
-      languages: { en: paths.en, hi: paths.hi, "x-default": paths.en },
-    },
-    openGraph: {
-      type: "article",
-      url: publicPath,
-      siteName: "Snanify",
-      title,
-      description,
-      locale: lang === "en" ? "en_IN" : "hi_IN",
-      alternateLocale: [lang === "en" ? "hi_IN" : "en_IN"],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+  return pageMetadata({ lang, path: route, title, description, ogType: "article" });
 }
 
 export default async function Page({

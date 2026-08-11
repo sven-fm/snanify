@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { content } from "@/lib/content";
-import { localePath, otherLangPath, type Lang } from "@/lib/i18n";
+import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LangSwitch } from "@/components/site/LangSwitch";
 
 export type NavLink = { href: string; label: string };
-
-/* The almanac's edition line. Vikram Samvat runs ~57 years ahead of CE. */
-const EDITION = { en: "Samvat 2083 · 2026", hi: "सं. २०८३ · २०२६" } as const;
 
 /**
  * A printed masthead rather than an app bar: wordmark and edition line over a
@@ -42,15 +40,11 @@ export function Header({
           </Link>
 
           <div className="flex items-center gap-4">
-            <span className="label hidden text-ink2 lg:inline">{EDITION[lang]}</span>
+            {/* The almanac's edition line. Vikram Samvat runs ~57 years ahead
+                of CE; each locale sets it in its own numerals. */}
+            <span className="label hidden text-ink2 lg:inline">{t.edition}</span>
 
-            <Link
-              href={otherLangPath(lang, currentPath)}
-              hrefLang={lang === "en" ? "hi" : "en"}
-              className="label border border-rulestrong px-2.5 py-1.5 text-ink transition-colors hover:bg-ink hover:text-paper"
-            >
-              {t.switchLabel}
-            </Link>
+            <LangSwitch lang={lang} currentPath={currentPath} label={t.langLabel} />
 
             <ThemeToggle label={t.themeLabel} />
 
@@ -67,21 +61,25 @@ export function Header({
       {/* heavy-over-hairline, as an almanac sets its masthead */}
       <div className="rule-masthead" />
 
-      {/* section row */}
-      <nav className="hidden border-b border-rulestrong bg-paper lg:block">
-        <ul className="mx-auto flex max-w-6xl divide-x divide-rule px-5 sm:px-8">
-          {navLinks.map((l) => (
-            <li key={l.href} className="first:pl-0">
-              <a
-                href={l.href}
-                className="label block px-5 py-2.5 text-ink2 transition-colors hover:bg-ink hover:text-paper"
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {/* Section row. A locale that serves none of these sections gets no rule
+          and no empty <nav> at all, rather than an eight-pixel grey line under
+          the masthead. */}
+      {navLinks.length > 0 && (
+        <nav className="hidden border-b border-rulestrong bg-paper lg:block">
+          <ul className="mx-auto flex max-w-6xl divide-x divide-rule px-5 sm:px-8">
+            {navLinks.map((l) => (
+              <li key={l.href} className="first:pl-0">
+                <a
+                  href={l.href}
+                  className="label block px-5 py-2.5 text-ink2 transition-colors hover:bg-ink hover:text-paper"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }

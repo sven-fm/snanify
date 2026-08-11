@@ -2,8 +2,7 @@ import Link from "next/link";
 import { content } from "@/lib/content";
 import { RIVERS } from "@/content/rivers";
 import { DATED_OCCASIONS } from "@/content/muhurat";
-import { localePath } from "@/lib/i18n";
-import type { Lang } from "@/lib/i18n";
+import { deepHref, deepLang, pickDeep, type Lang } from "@/lib/locales";
 import { Mark } from "@/components/Logo";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Reveal } from "@/components/Reveal";
@@ -76,35 +75,54 @@ export function Landing({ lang }: { lang: Lang }) {
             Badge, headline, lede, buttons, price. Nothing else: the register
             and the figures move to their own band below so that the two
             buttons stay within reach of a thumb at 844px tall.            */}
-        <section className="relative flex min-h-[86svh] flex-col justify-end overflow-hidden border-b-2 border-rulestrong">
-          <RiverFlow className="absolute inset-x-0 bottom-0 h-[42%] w-full text-ink sm:h-[54%] lg:inset-0 lg:h-full" />
+        {/* The waterline is anchored under the headline rule (see
+            `data-horizon-anchor` below and the note in RiverFlow), so the
+            masthead and the headline are always on sky and never cut by the
+            horizon, whatever the viewport does and however the headline wraps
+            in twelve languages. */}
+        <section className="relative flex min-h-[92svh] flex-col overflow-hidden border-b-2 border-rulestrong sm:min-h-[86svh] sm:justify-end">
+          {/* Wide: a full-bleed panorama behind the type, its channel kept
+              narrow and far right so the left column stays clean paper. */}
+          <RiverFlow
+            variant="panorama"
+            anchorSelector="[data-horizon-anchor]"
+            className="absolute inset-0 hidden h-full w-full text-ink sm:block"
+          />
 
-          <div className="relative mx-auto w-full max-w-6xl px-5 pt-24 pb-28 sm:px-8 sm:pt-28 sm:pb-16">
-            <div className="max-w-3xl">
-              <div className="ink-in max-w-full">
+          <div className="relative mx-auto w-full max-w-6xl px-5 pt-8 pb-28 sm:px-8 sm:pt-28 sm:pb-16">
+            <div className="flex max-w-3xl flex-col">
+              <div className="ink-in order-1 max-w-full">
                 <StatusBadge live>{t.hero.badge}</StatusBadge>
               </div>
 
               <h1
-                className="ink-in display mt-6 text-[2.65rem] leading-[1.02] sm:mt-7 sm:text-[4rem] lg:text-[5.4rem]"
+                className="ink-in display order-2 mt-6 text-[2.65rem] leading-[1.02] sm:mt-7 sm:text-[4rem] lg:text-[5.4rem]"
                 style={{ animationDelay: "80ms" }}
               >
                 {t.hero.titleA} <span className="text-spot">{t.hero.titleB}</span>
               </h1>
 
-              <div className="rule-double mt-6 max-w-xl sm:mt-8" />
+              {/* The printed rule and the waterline are the same line of
+                  thought: everything above it is sky. */}
+              <div data-horizon-anchor className="rule-double order-3 mt-6 max-w-xl sm:mt-8" />
 
-              <p
-                className="ink-in mt-5 max-w-xl text-[1.02rem] leading-[1.7] text-ink2 sm:text-[1.05rem] sm:leading-[1.75]"
-                style={{ animationDelay: "160ms" }}
-              >
-                {t.hero.lede}
-              </p>
+              {/* Phone only: the river gets a band of its own, above the fold,
+                  with nothing set over it. Full bleed through the container's
+                  own gutter. At this size the panorama above is display:none,
+                  so only one of the two ever animates. */}
+              <div className="relative order-4 -mx-5 mt-6 h-[30svh] max-h-[320px] min-h-[210px] sm:hidden">
+                <RiverFlow
+                  variant="portrait"
+                  className="absolute inset-0 h-full w-full text-ink"
+                />
+              </div>
 
               {/* Stacked and full width on a phone, so both are a comfortable
-                  target and neither is a 90px pill in a corner. */}
+                  target and neither is a 90px pill in a corner. On a phone they
+                  sit directly under the river, which puts the primary action
+                  inside the first screen instead of a scroll below it. */}
               <div
-                className="ink-in mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
+                className="ink-in order-5 mt-7 flex flex-col gap-3 sm:order-6 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "240ms" }}
               >
                 <a href="#sankalp" className="block">
@@ -117,10 +135,17 @@ export function Landing({ lang }: { lang: Lang }) {
                 </a>
               </div>
 
+              <p
+                className="ink-in order-6 mt-7 max-w-xl text-[1.02rem] leading-[1.7] text-ink2 sm:order-5 sm:mt-5 sm:text-[1.05rem] sm:leading-[1.75]"
+                style={{ animationDelay: "160ms" }}
+              >
+                {t.hero.lede}
+              </p>
+
               {/* The offer, stated in the hero rather than buried in the
                   tariff. A price is a fact about the thing, not a reveal. */}
               <p
-                className="ink-in mt-7 max-w-xl border-l-2 border-spot pl-4 text-sm leading-[1.75] text-ink2"
+                className="ink-in order-7 mt-7 max-w-xl border-l-2 border-spot pl-4 text-sm leading-[1.75] text-ink2"
                 style={{ animationDelay: "320ms" }}
               >
                 {t.hero.offer}
@@ -153,7 +178,7 @@ export function Landing({ lang }: { lang: Lang }) {
               </dl>
 
               <Link
-                href={localePath(lang, "/rivers")}
+                {...deepHref(lang, "/rivers")}
                 className="label mt-3 inline-flex min-h-[44px] items-center text-spot underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
               >
                 {t.hero.card.link}
@@ -253,17 +278,20 @@ export function Landing({ lang }: { lang: Lang }) {
             <ul className="mt-10 border-t-2 border-rulestrong">
               {RIVERS.map((r, i) => (
                 <li key={r.slug}>
+                  {/* The six water pages are English and Hindi only, so from a
+                      Tamil landing page this link goes to the English one and
+                      says so; see `deepHref` in src/lib/locales.ts. */}
                   <Link
-                    href={localePath(lang, `/rivers/${r.slug}`)}
+                    {...deepHref(lang, `/rivers/${r.slug}`)}
                     className="group grid grid-cols-[2.75rem_1fr] items-baseline gap-x-4 gap-y-1 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[3.5rem_14rem_1fr_auto] sm:gap-x-8"
                   >
                     <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
-                    <span className="display text-2xl text-ink">{r.river[lang]}</span>
+                    <span className="display text-2xl text-ink">{pickDeep(r.river, lang)}</span>
                     <span className="col-start-2 text-sm text-ink2 sm:col-start-auto">
-                      {r.ghat[lang]}, {r.city[lang]}
+                      {pickDeep(r.ghat, lang)}, {pickDeep(r.city, lang)}
                     </span>
                     <span className="label col-start-2 text-ink2 sm:col-start-auto sm:text-right">
-                      {r.state[lang]}
+                      {pickDeep(r.state, lang)}
                     </span>
                   </Link>
                 </li>
@@ -294,17 +322,20 @@ export function Landing({ lang }: { lang: Lang }) {
               {DATED_OCCASIONS.slice(0, 6).map((o) => (
                 <li key={o.slug}>
                   <Link
-                    href={localePath(lang, `/muhurat/${o.slug}`)}
+                    {...deepHref(lang, `/muhurat/${o.slug}`)}
                     className="grid gap-1.5 border-b border-rule py-4 transition-colors hover:bg-paper3 sm:grid-cols-[15rem_1fr_9rem] sm:items-baseline sm:gap-6"
                   >
                     <span className="display text-xl text-ink underline decoration-rule decoration-1 underline-offset-4">
-                      {o.name[lang]}
+                      {pickDeep(o.name, lang)}
                     </span>
-                    <span className="text-sm leading-snug text-ink2">
-                      {o.occurrence.note[lang]}
+                    <span
+                      className="text-sm leading-snug text-ink2"
+                      lang={deepLang(lang)}
+                    >
+                      {pickDeep(o.occurrence.note, lang)}
                     </span>
-                    <span className="label text-ink2 sm:text-right">
-                      {o.occurrence.label[lang]}
+                    <span className="label text-ink2 sm:text-right" lang={deepLang(lang)}>
+                      {pickDeep(o.occurrence.label, lang)}
                     </span>
                   </Link>
                 </li>
@@ -342,7 +373,7 @@ export function Landing({ lang }: { lang: Lang }) {
               {t.pricing.free.items.map((f) => (
                 <li key={f.name}>
                   <Link
-                    href={localePath(lang, f.href)}
+                    {...deepHref(lang, f.href)}
                     className="grid gap-1 border-b border-rule py-4 transition-colors hover:bg-paper3 sm:grid-cols-[15rem_1fr] sm:items-baseline sm:gap-6"
                   >
                     <span className="display text-xl text-ink underline decoration-rule decoration-1 underline-offset-4">
@@ -426,7 +457,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
             <div className="mt-8">
               <LinkButton
-                href={localePath(lang, "/snan")}
+                {...deepHref(lang, "/snan")}
                 variant="ghost"
                 className="w-full !py-4 sm:w-auto"
               >

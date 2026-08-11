@@ -1,5 +1,8 @@
 import Link from "next/link";
-import type { Lang } from "@/lib/content";
+/* This page exists in English and Hindi only; see the tier note and the
+   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
+   the full-depth pair and not the twelve locales the site serves. */
+import type { FullLang as Lang } from "@/lib/locales";
 import { localePath } from "@/lib/i18n";
 import { EXAMPLE_ID_SHAPE, verifyContent } from "@/content/verify";
 import { Reveal } from "@/components/Reveal";

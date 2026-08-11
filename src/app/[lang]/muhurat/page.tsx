@@ -8,11 +8,14 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-import { LANGS, type Lang } from "@/lib/content";
-import { localePath } from "@/lib/i18n";
+/* This route exists in English and Hindi only for now; see the tier note and
+   the FULL_ONLY list at the top of src/lib/locales.ts, which is the single
+   place that decides. `Lang` here is therefore the full-depth pair. */
+import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
 import { navLabel } from "@/lib/nav";
 import { MuhuratIndex } from "@/components/pages/MuhuratIndex";
 import { OCCASIONS, muhuratContent } from "@/content/muhurat";
+import { pageMetadata } from "@/lib/seo";
 
 /**
  * Public URL shape: English unprefixed, Hindi under /hi. Never "/en/...", and
@@ -20,10 +23,9 @@ import { OCCASIONS, muhuratContent } from "@/content/muhurat";
  * rename cannot strand one locale.
  */
 const ROUTE = "/muhurat";
-const PUBLIC_PATH = { en: localePath("en", ROUTE), hi: localePath("hi", ROUTE) } as const;
 
 export function generateStaticParams() {
-  return LANGS.map((lang) => ({ lang }));
+  return FULL_LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({
@@ -34,27 +36,12 @@ export async function generateMetadata({
   const { lang } = await params;
   const t = muhuratContent[lang].meta;
 
-  return {
+  return pageMetadata({
+    lang,
+    path: ROUTE,
     title: t.indexTitle,
     description: t.indexDescription,
-    alternates: {
-      canonical: PUBLIC_PATH[lang],
-      // x-default points at the English edition: it is the wider of the two
-      // audiences and the one an unmatched locale should land on.
-      languages: {
-        en: PUBLIC_PATH.en,
-        hi: PUBLIC_PATH.hi,
-        "x-default": PUBLIC_PATH.en,
-      },
-    },
-    openGraph: {
-      type: "website",
-      url: PUBLIC_PATH[lang],
-      title: t.indexTitle,
-      description: t.indexDescription,
-      locale: lang === "en" ? "en_IN" : "hi_IN",
-    },
-  };
+  });
 }
 
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {

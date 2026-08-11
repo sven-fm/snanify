@@ -86,17 +86,20 @@ export function CTA({
 
 export function LinkButton({
   href,
+  hrefLang,
   children,
   variant = "solid",
   className = "",
 }: {
   href: string;
+  /** Set when the target is in another language, which `deepHref` decides. */
+  hrefLang?: string;
   children: React.ReactNode;
   variant?: ButtonVariant;
   className?: string;
 }) {
   return (
-    <Link href={href} className={buttonClass(variant, className)}>
+    <Link href={href} hrefLang={hrefLang} className={buttonClass(variant, className)}>
       {children}
     </Link>
   );

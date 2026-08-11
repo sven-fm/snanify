@@ -1,5 +1,8 @@
 import * as Astro from "astronomy-engine";
-import type { Lang } from "@/lib/content";
+/* This module carries deep content, which exists in English and Hindi only.
+   `Lang` here is therefore the full-depth pair and not the twelve locales the
+   site serves; see the tier note at the top of src/lib/locales.ts. */
+import type { FullLang as Lang } from "@/lib/locales";
 import {
   asInstant,
   type Bilingual,

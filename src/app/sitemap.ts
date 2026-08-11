@@ -1,24 +1,44 @@
 import type { MetadataRoute } from "next";
 import { RIVER_SLUGS } from "@/content/rivers";
 import { OCCASION_SLUGS } from "@/content/muhurat";
+import { hreflangMap, localeUrl, localesForPath, DEFAULT_LANG } from "@/lib/locales";
 
-const SITE = "https://www.snanify.com";
+/* ---------------------------------------------------------------------------
+   The sitemap, generated per locale from the same route manifest that drives
+   hreflang.
+
+   The important property is that this file cannot disagree with the `<link
+   rel="alternate">` tags on the pages themselves: both come out of
+   `localesForPath`, so a route only ever appears in the locales that serve it,
+   and every entry carries the same alternates set as the page it points at.
+   Google treats a mismatch between the two as a reason to ignore both.
+
+   `/rivers` is listed in twelve locales; `/rivers/ganga-haridwar` in two. That
+   asymmetry is the whole point of the route manifest, and it is why the detail
+   routes are built with `isFullOnlyPath` rather than assumed.
+   --------------------------------------------------------------------------- */
+
+type Route = {
+  path: string;
+  priority: number;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+};
 
 /** Locale-independent routes, in the public English shape. */
-const ROUTES: { path: string; priority: number; changeFrequency: "daily" | "weekly" | "monthly" }[] = [
+const ROUTES: Route[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
-  { path: "/rivers", priority: 0.9, changeFrequency: "monthly" }, ...RIVER_SLUGS.map((slug) => ({
-    path: `/rivers/${slug}`,
-    priority: 0.8,
-    changeFrequency: "monthly" as const,
-  })),
+  { path: "/rivers", priority: 0.9, changeFrequency: "monthly" },
+  ...RIVER_SLUGS.map(
+    (slug): Route => ({ path: `/rivers/${slug}`, priority: 0.8, changeFrequency: "monthly" }),
+  ),
   { path: "/snan", priority: 0.95, changeFrequency: "monthly" },
   { path: "/live", priority: 0.9, changeFrequency: "daily" },
-  { path: "/muhurat", priority: 0.9, changeFrequency: "weekly" }, ...OCCASION_SLUGS.map((slug) => ({
-    path: `/muhurat/${slug}`,
-    priority: 0.7,
-    changeFrequency: "weekly" as const,
-  })),
+  { path: "/panchang", priority: 0.85, changeFrequency: "daily" },
+  { path: "/muhurat", priority: 0.9, changeFrequency: "weekly" },
+  ...OCCASION_SLUGS.map(
+    (slug): Route => ({ path: `/muhurat/${slug}`, priority: 0.7, changeFrequency: "weekly" }),
+  ),
+  { path: "/kumbh", priority: 0.8, changeFrequency: "monthly" },
   { path: "/ethics", priority: 0.8, changeFrequency: "monthly" },
   { path: "/how-it-works", priority: 0.8, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.7, changeFrequency: "monthly" },
@@ -27,25 +47,17 @@ const ROUTES: { path: string; priority: number; changeFrequency: "daily" | "week
   { path: "/verify", priority: 0.5, changeFrequency: "monthly" },
 ];
 
-/** Hindi lives under /hi; English is unprefixed. */
-const hi = (path: string) => (path === "/" ? "/hi" : `/hi${path}`);
-
-/**
- * Both locales are listed as separate entries, each carrying the reciprocal
- * hreflang pair, a page missing from its own alternates is invisible to the
- * locale it serves.
- */
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.flatMap(({ path, priority, changeFrequency }) => {
-    const languages = { en: `${SITE}${path}`, hi: `${SITE}${hi(path)}` };
-    return [
-      { url: `${SITE}${path}`, priority, changeFrequency, alternates: { languages } },
-      {
-        url: `${SITE}${hi(path)}`,
-        priority: priority * 0.9,
-        changeFrequency,
-        alternates: { languages },
-      },
-    ];
+    const languages = hreflangMap(path);
+    return localesForPath(path).map((lang) => ({
+      url: localeUrl(lang, path),
+      changeFrequency,
+      /* The English edition is the one to crawl first for a given route; the
+         others are the same page in another language, not a lesser page. A
+         single step down is enough to say so without burying them. */
+      priority: lang === DEFAULT_LANG ? priority : Number((priority * 0.9).toFixed(2)),
+      alternates: { languages },
+    }));
   });
 }
