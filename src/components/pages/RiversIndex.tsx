@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { localePath } from "@/lib/i18n";
-/* This page exists in English and Hindi only; see the tier note and the
-   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
-   the full-depth pair and not the twelve locales the site serves. */
-import type { FullLang as Lang } from "@/lib/locales";
+import { deepLang, pickDeep, type Lang } from "@/lib/locales";
+import { waterName } from "@/content/names";
 import { Colophon, Mark } from "@/components/Logo";
 import { Reveal } from "@/components/Reveal";
 import { Header } from "@/components/site/Header";
@@ -144,10 +142,11 @@ export function RiversIndex({ lang }: { lang: Lang }) {
                     </span>
                     <div>
                       <h2 className="display text-4xl sm:text-5xl lg:text-6xl">
-                        {first.river[lang]}
+                        {waterName(first, "river", lang)}
                       </h2>
                       <p className="label mt-4 text-ink2">
-                        {first.ghat[lang]} · {first.city[lang]}, {first.state[lang]}
+                        {waterName(first, "ghat", lang)} · {waterName(first, "city", lang)},{" "}
+                        {waterName(first, "state", lang)}
                       </p>
                     </div>
                   </div>
@@ -156,19 +155,30 @@ export function RiversIndex({ lang }: { lang: Lang }) {
                       synthesised italic: Eczar has no italic cut. */}
                   <div className="mt-8 max-w-xl">
                     <span className="block h-[3px] w-10 bg-spot" aria-hidden="true" />
-                    <p className="display mt-5 text-xl leading-[1.45] text-ink sm:text-2xl">
-                      {first.epithet[lang]}
+                    {/* The six river descriptions are English and Hindi only:
+                        see the tier note in src/lib/locales.ts. The name above
+                        is localised, this prose is not, and the `lang` says so
+                        rather than letting a screen reader read English with a
+                        Tamil voice. */}
+                    <p
+                      className="display mt-5 text-xl leading-[1.45] text-ink sm:text-2xl"
+                      lang={deepLang(lang)}
+                    >
+                      {pickDeep(first.epithet, lang)}
                     </p>
                   </div>
 
                   <div className="rule-thin mt-8 max-w-xl" />
 
-                  <p className="mt-6 max-w-xl leading-[1.75] text-ink2">
-                    {first.standfirst[lang]}
+                  <p className="mt-6 max-w-xl leading-[1.75] text-ink2" lang={deepLang(lang)}>
+                    {pickDeep(first.standfirst, lang)}
                   </p>
 
-                  <p className="mt-5 max-w-xl text-sm leading-[1.75] text-ink2">
-                    {first.sacred[lang][0]}
+                  <p
+                    className="mt-5 max-w-xl text-sm leading-[1.75] text-ink2"
+                    lang={deepLang(lang)}
+                  >
+                    {pickDeep(first.sacred, lang)[0]}
                   </p>
 
                   <div className="mt-9 flex flex-wrap items-center gap-5">
@@ -204,15 +214,21 @@ export function RiversIndex({ lang }: { lang: Lang }) {
                     </span>
 
                     <div>
-                      <h3 className="display text-3xl text-ink sm:text-4xl">{r.river[lang]}</h3>
+                      <h3 className="display text-3xl text-ink sm:text-4xl">{waterName(r, "river", lang)}</h3>
                       <p className="label mt-3 text-ink2">
-                        {r.ghat[lang]} · {r.city[lang]}, {r.state[lang]}
+                        {waterName(r, "ghat", lang)} · {waterName(r, "city", lang)}, {waterName(r, "state", lang)}
                       </p>
-                      <p className="display mt-5 max-w-xl text-lg leading-[1.45] text-ink">
-                        {r.epithet[lang]}
+                      <p
+                        className="display mt-5 max-w-xl text-lg leading-[1.45] text-ink"
+                        lang={deepLang(lang)}
+                      >
+                        {pickDeep(r.epithet, lang)}
                       </p>
-                      <p className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2">
-                        {r.standfirst[lang]}
+                      <p
+                        className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2"
+                        lang={deepLang(lang)}
+                      >
+                        {pickDeep(r.standfirst, lang)}
                       </p>
                       <Strand className="mt-6 h-3 w-32 text-rule transition-colors group-hover:text-spot" />
                     </div>
