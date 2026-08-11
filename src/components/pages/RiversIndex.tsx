@@ -9,7 +9,8 @@ import { Reveal } from "@/components/Reveal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Eyebrow, Section, SectionHeader, StatusBadge } from "@/components/ui";
-import { RIVERS, riversIndexContent } from "@/content/rivers";
+import { RIVERS } from "@/content/rivers";
+import { riversIndexContent } from "@/content/rivers-index";
 
 /** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
 const DEVA = "०१२३४५६७८९";

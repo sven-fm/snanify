@@ -39,12 +39,23 @@ export function Mark({ className = "" }: { className?: string }) {
   );
 }
 
-/** Masthead lockup: seal + wordmark. */
+/**
+ * Masthead lockup: seal, a hairline, then the wordmark.
+ *
+ * The seal was always the good half. The word beside it used to be set at
+ * 1.05rem in letter-spaced caps, which is `label` styling applied to a
+ * logotype, and it read as a stock tech mark rather than as the top of a
+ * printed page. It is now set as a masthead is set: larger than the copy around
+ * it, heavy, nearly solid, and separated from the seal by the same hairline the
+ * almanac rules everything else with, so the two read as one printed block
+ * rather than as an icon with a label next to it.
+ */
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <Mark className="h-7 w-7 text-ink" />
-      <span className="wordmark text-[1.05rem] text-ink">Snanify</span>
+    <span className={`inline-flex items-baseline gap-2.5 sm:gap-3 ${className}`}>
+      <Mark className="h-7 w-7 shrink-0 translate-y-[0.2em] text-ink" />
+      <span aria-hidden="true" className="h-[1.15em] w-px shrink-0 translate-y-[0.16em] bg-rulestrong" />
+      <span className="wordmark text-[1.22rem] text-ink sm:text-[1.35rem]">Snanify</span>
     </span>
   );
 }

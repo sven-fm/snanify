@@ -178,12 +178,20 @@ html:not([data-script="latin"]) .label {
 }
 
 /* The masthead wordmark stays Latin caps in Eczar in every locale, so the brand
-   is one mark and not twelve. This is the one place that names a family. */
+   is one mark and not twelve. This is the one place that names a family.
+
+   It is set as a LOGOTYPE, not as a label: heavy, large and nearly solid. The
+   0.16em tracking it used to carry is `label` spacing, and letter-spaced caps at
+   a small size read as a stock tech logo rather than as a printed masthead. An
+   almanac sets its own name big and tight, so this does too, with kerning left
+   on and synthesis off because Eczar has no heavier cut to fake. */
 @utility wordmark {
   font-family: var(--font-eczar), Georgia, serif;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.015em;
+  font-feature-settings: "kern" 1;
+  font-synthesis: none;
 }
 
 /* None of these scripts has an italic; a synthesised slant is a defect, not
