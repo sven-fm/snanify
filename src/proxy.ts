@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { DEFAULT_LANG, LANGS } from "@/lib/locales";
+import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
 
 /**
  * Keeps the public URL scheme (English unprefixed, every other locale under its
@@ -18,6 +19,22 @@ import { DEFAULT_LANG, LANGS } from "@/lib/locales";
 
 const PREFIXES = new Set<string>(LANGS.filter((l) => l !== DEFAULT_LANG));
 
+/**
+ * The visitor's country, from Vercel, turned into the currency their price is
+ * shown in. Written on every response so a reader who moves country sees the
+ * new price on their next load. Not httpOnly: the sync <head> script in
+ * src/lib/currency.ts has to read it before first paint.
+ */
+function stampCurrency(res: NextResponse, req: NextRequest): NextResponse {
+  const country = req.headers.get("x-vercel-ip-country");
+  res.cookies.set(CURRENCY_COOKIE, currencyForCountry(country), {
+    path: "/",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 30,
+  });
+  return res;
+}
+
 export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const first = pathname.split("/")[1];
@@ -29,10 +46,13 @@ export function proxy(req: NextRequest) {
   }
 
   // /hi/..., /ta/... and the rest already match [lang].
-  if (PREFIXES.has(first)) return NextResponse.next();
+  if (PREFIXES.has(first)) return stampCurrency(NextResponse.next(), req);
 
   // Everything else is English: rewrite without changing the visible URL.
-  return NextResponse.rewrite(new URL(`/${DEFAULT_LANG}${pathname}${search}`, req.url));
+  return stampCurrency(
+    NextResponse.rewrite(new URL(`/${DEFAULT_LANG}${pathname}${search}`, req.url)),
+    req,
+  );
 }
 
 export const config = {

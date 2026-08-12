@@ -15,7 +15,8 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-import { CTA, Eyebrow, LinkButton, Section, SectionHeader, StatusBadge } from "@/components/ui";
+import { CTA, Eyebrow, LinkButton, Price, Section, SectionHeader, StatusBadge } from "@/components/ui";
+import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 
 /** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
 const DEVA = "०१२३४५६७८९";
@@ -175,7 +176,10 @@ export function Landing({ lang }: { lang: Lang }) {
                 className="ink-in order-7 mt-7 max-w-xl border-l-2 border-spot pl-4 text-sm leading-[1.75] text-ink2"
                 style={{ animationDelay: "320ms" }}
               >
-                {t.hero.offer}
+                {/* {price} is the eleven-morning line, in the reader's currency. */}
+                {t.hero.offer.split("{price}")[0]}
+                <Price prices={PRICE.eleven} className="text-ink" />
+                {t.hero.offer.split("{price}")[1]}
               </p>
             </div>
           </div>
@@ -433,22 +437,25 @@ export function Landing({ lang }: { lang: Lang }) {
                     <span className="label text-ink2">{tier.alt}</span>
                   </div>
 
-                  {/* both currencies, always, never a geo switch */}
-                  <div className="mt-5 grid grid-cols-2 border-y border-rule">
-                    <div className="border-r border-rule py-4 pr-4">
-                      <p className="display text-[2rem] leading-none text-spot">{tier.world}</p>
-                      <p className="label mt-2 text-ink2">{t.pricing.heads.world}</p>
-                    </div>
-                    <div className="py-4 pl-4">
-                      <p className="display text-[2rem] leading-none text-ink">{tier.india}</p>
-                      <p className="label mt-2 text-ink2">{t.pricing.heads.india}</p>
-                    </div>
+                  {/* One price, in the reader's own currency. Every currency
+                      ships in the markup and CSS shows one; see lib/currency.ts. */}
+                  <div className="mt-5 border-y border-rule py-4">
+                    <p className="display text-[2.4rem] leading-none text-spot">
+                      <Price prices={PRICE[tier.key as TierKey]} />
+                    </p>
                   </div>
 
                   <p className="mt-5 text-sm leading-[1.75] text-ink2">{tier.body}</p>
 
                   <dl className="mt-6 border-t border-rule">
-                    {tier.rows.map((r) => (
+                    {[
+                      { k: t.pricing.labels.snans, v: tier.snans },
+                      {
+                        k: t.pricing.labels.each,
+                        v: <Price prices={PER_SNAN[tier.key as TierKey]} />,
+                      },
+                      { k: t.pricing.labels.expiry, v: tier.expiry },
+                    ].map((r) => (
                       <div
                         key={r.k}
                         className="flex justify-between gap-6 border-b border-rule py-2.5 last:border-b-0"
@@ -462,22 +469,13 @@ export function Landing({ lang }: { lang: Lang }) {
               ))}
             </div>
 
-            <div className="mt-10 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-2">
-              <div className="tint p-6 sm:p-7">
-                <p className="label text-spot">{t.pricing.ladders.label}</p>
-                {t.pricing.ladders.body.map((p) => (
-                  <p key={p} className="mt-4 text-sm leading-[1.75] text-ink2">
-                    {p}
-                  </p>
-                ))}
-              </div>
-
-              <div className="bg-paper3 p-6 sm:p-7">
-                <p className="label text-spot">{t.pricing.truth.label}</p>
-                <p className="mt-4 text-[1.02rem] leading-[1.8] text-ink">
-                  {t.pricing.truth.body}
-                </p>
-              </div>
+            {/* The two-ladder panel that used to sit beside this is gone with
+                the two ladders. One price, in the reader’s own currency. */}
+            <div className="mt-10 border-2 border-rulestrong bg-paper3 p-6 sm:p-7">
+              <p className="label text-spot">{t.pricing.truth.label}</p>
+              <p className="mt-4 max-w-3xl text-[1.02rem] leading-[1.8] text-ink">
+                {t.pricing.truth.body}
+              </p>
             </div>
 
             <p className="mt-7 max-w-3xl text-sm leading-[1.75] text-ink2">{t.pricing.note}</p>
@@ -524,7 +522,7 @@ export function Landing({ lang }: { lang: Lang }) {
           <div className="min-w-0">
             <p className="label text-ink2">{t.bar.label}</p>
             <p className="display mt-0.5 truncate text-lg leading-tight text-ink">
-              {t.bar.price}
+              <Price prices={PRICE.eleven} />
             </p>
           </div>
           <a

@@ -336,3 +336,21 @@ html:not([data-script="latin"]) .inscription {
   opacity: 0;
   animation: ink-in 0.45s steps(6, end) forwards;
 }
+
+/* --- One price, in the reader's own money --------------------------------- */
+
+/* Every currency is in the markup and CSS shows exactly one, which is what lets
+   the page stay fully prerendered with no flash of the wrong number.
+   `data-cur` is stamped in <head> before first paint; see src/lib/currency.ts.
+   The USD rule doubles as the fallback, so a reader whose script did not run
+   sees a price rather than a gap. */
+.cur {
+  display: none;
+}
+html:not([data-cur]) .cur-USD,
+html[data-cur="USD"] .cur-USD,
+html[data-cur="EUR"] .cur-EUR,
+html[data-cur="CAD"] .cur-CAD,
+html[data-cur="INR"] .cur-INR {
+  display: inline;
+}

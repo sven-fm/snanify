@@ -11,6 +11,8 @@ import { RiverFlow } from "@/components/RiverFlow";
 import { Mark } from "@/components/Logo";
 import { buttonClass, Eyebrow, Section, SectionHeader } from "@/components/ui";
 import { snanContent } from "@/content/snan";
+import { PER_SNAN, PRICE } from "@/content/prices";
+import { Price } from "@/components/ui";
 
 /**
  * /snan, the page where somebody decides to pay.
@@ -140,19 +142,6 @@ export function SnanIntro({ lang }: { lang: Lang }) {
               ))}
             </div>
 
-            <div className="boxed mt-10 max-w-3xl bg-paper p-5 sm:p-7">
-              <p className="label text-spot">{t.truth.never.label}</p>
-              <ul className="mt-4 border-t border-rule">
-                {t.truth.never.items.map((item) => (
-                  <li
-                    key={item}
-                    className="border-b border-rule py-4 text-[1rem] leading-[1.8] text-ink2 last:border-b-0"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </Reveal>
         </Section>
 
@@ -490,26 +479,19 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                         </p>
                       </div>
 
-                      <dl className="mt-5 grid grid-cols-2 gap-6 border-t border-rule pt-4 sm:mt-0 sm:shrink-0 sm:border-t-0 sm:pt-0 sm:text-right">
-                        <div>
-                          <dt className="label text-ink2">{t.tariff.heads.world}</dt>
-                          <dd className="display mt-1.5 text-[2rem] leading-none text-spot tabular-nums">
-                            {row.world}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt className="label text-ink2">{t.tariff.heads.india}</dt>
-                          <dd className="display mt-1.5 text-[2rem] leading-none text-ink tabular-nums">
-                            {row.india}
-                          </dd>
-                        </div>
+                      {/* One price, in the reader's own currency. */}
+                      <dl className="mt-5 border-t border-rule pt-4 sm:mt-0 sm:shrink-0 sm:border-t-0 sm:pt-0 sm:text-right">
+                        <dt className="label text-ink2">{t.tariff.heads.price}</dt>
+                        <dd className="display mt-1.5 text-[2.4rem] leading-none text-spot tabular-nums">
+                          <Price prices={PRICE[row.key]} />
+                        </dd>
                       </dl>
                     </div>
 
                     <div className="mt-6 flex items-baseline gap-3 border-t border-rule pt-4">
                       <p className="label shrink-0 text-ink2">{t.tariff.heads.per}</p>
                       <p className="text-[1.05rem] leading-none text-spot tabular-nums">
-                        {row.per}
+                        <Price prices={PER_SNAN[row.key]} />
                       </p>
                     </div>
                     <p className="mt-4 max-w-[40rem] text-[1.02rem] leading-[1.85] text-ink2">
