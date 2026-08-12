@@ -260,7 +260,7 @@ const en: Copy = {
           "That last line is the one people repeat back. Six thousand seven hundred kilometres from Leicester, two hundred and four from Delhi.",
         ],
         specimen: {
-          note: "Set as it prints. A specimen, not this hour. The live readings sit on the six water pages, free.",
+          note: "Set as it prints. These figures are a specimen. The live readings sit on the six water pages, free.",
           lines: [
             "GANGA · HAR KI PAURI · HARIDWAR",
             "LEVEL 293.11 m · RISEN 4 cm SINCE MIDNIGHT",
@@ -530,7 +530,7 @@ const hi: Copy = {
           "यही अंतिम पंक्ति लोग दोहराकर बताते हैं। लेस्टर से छह हज़ार सात सौ किलोमीटर, दिल्ली से दो सौ चार।",
         ],
         specimen: {
-          note: "जैसा छपता है, वैसा ही। ये अंक नमूना हैं, आज का पाठ नहीं। सजीव पाठ छहों जल-पृष्ठों पर हैं, निःशुल्क।",
+          note: "जैसा छपता है, वैसा ही। ये अंक नमूना हैं। सजीव पाठ छहों जल-पृष्ठों पर हैं, निःशुल्क।",
           lines: [
             "गंगा · हर की पौड़ी · हरिद्वार",
             "जलस्तर २९३·११ मी · आधी रात से ४ सेमी ऊपर",
