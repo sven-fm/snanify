@@ -2,6 +2,8 @@ import { OCCASIONS, type GhatId, type Occasion } from "@/content/muhurat";
 import type { Ghat } from "@/content/rivers";
 import { DEFAULT_LANG, isFullLang, type FullLang, type Lang } from "@/lib/locales";
 
+export { monthName } from "@/content/months";
+
 /* ---------------------------------------------------------------------------
    Proper nouns, in every locale the site serves.
 
@@ -271,6 +273,7 @@ const WINDOW_NAMES: Record<string, Names> = {
     pa: "ਗੋਧੂਲੀ ਮੁਹੂਰਤ", as: "গোধূলি মুহূৰ্ত",
   },
 };
+
 
 /* --- readers -------------------------------------------------------------- */
 

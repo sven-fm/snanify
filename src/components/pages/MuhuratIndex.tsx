@@ -1,10 +1,7 @@
 import Link from "next/link";
 
 import { content } from "@/lib/content";
-/* This page exists in English and Hindi only; see the tier note and the
-   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
-   the full-depth pair and not the twelve locales the site serves. */
-import type { FullLang as Lang } from "@/lib/locales";
+import { deepLang, pickDeep, type Lang } from "@/lib/locales";
 import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -22,10 +19,11 @@ import {
   formatDualClock,
   ghatLabel,
   monthLabel,
-  muhuratContent,
   type MuhuratWindow,
   type Occasion,
 } from "@/content/muhurat";
+import { muhuratIndexContent } from "@/content/muhurat-index";
+import { occasionName, windowName } from "@/content/names";
 
 /* Nav is shared with the occasion pages so the two never drift. */
 export function muhuratNavLinks(lang: Lang) {
@@ -62,7 +60,7 @@ function numeral(n: number, lang: Lang): string {
  * is genuinely settled, and nothing on this calendar is settled yet.
  */
 export function ProvisionalBadge({ lang, short = false }: { lang: Lang; short?: boolean }) {
-  const c = muhuratContent[lang].provenance;
+  const c = muhuratIndexContent[lang].provenance;
   return (
     <span className="label inline-flex items-center gap-2 border border-spot px-2.5 py-1.5 text-spot">
       <span className="h-1.5 w-1.5 shrink-0 border border-spot" aria-hidden="true" />
@@ -93,7 +91,7 @@ const BANDS = [
 ] as const;
 
 function DayDiagram({ lang }: { lang: Lang }) {
-  const c = muhuratContent[lang].windows;
+  const c = muhuratIndexContent[lang].windows;
   const byId = Object.fromEntries(WINDOWS.map((w) => [w.id, w])) as Record<string, MuhuratWindow>;
 
   return (
@@ -137,7 +135,7 @@ function DayDiagram({ lang }: { lang: Lang }) {
               fill="currentColor"
               fontSize="13"
             >
-              {byId[b.id]?.name[lang]}
+              {byId[b.id] ? windowName(b.id, byId[b.id]!.name, lang) : b.id}
             </text>
           </g>
         ))}
@@ -180,7 +178,7 @@ const SPINE_COLS =
   "sm:grid sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1.15fr)_13rem] sm:gap-x-8";
 
 function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
-  const t = muhuratContent[lang];
+  const t = muhuratIndexContent[lang];
   const waters = occasion.ghats.length;
 
   return (
@@ -193,9 +191,9 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
         <div>
           {/* h4: the month above it is the h3 of this group. */}
           <h4 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot sm:text-[1.6rem]">
-            {occasion.name[lang]}
+            {occasionName(occasion, lang)}
           </h4>
-          <p className="mt-1.5 text-sm leading-[1.7] text-ink2">{occasion.line[lang]}</p>
+          <p className="mt-1.5 text-sm leading-[1.7] text-ink2">{pickDeep(occasion.line, lang)}</p>
           <p className="label mt-3 text-ink2">
             {t.spine.observedAt} {t.spine.waters(waters)} · {t.tiers[occasion.tier]}
           </p>
@@ -203,12 +201,12 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
 
         {/* the reckoning */}
         <p className="mt-3 text-sm leading-[1.7] text-ink2 sm:mt-0">
-          {occasion.rule.label[lang]}
+          {pickDeep(occasion.rule.label, lang)}
         </p>
 
         {/* the window, and its provenance, inseparably */}
         <div className="mt-3 sm:mt-0 sm:text-right">
-          <p className="label text-spot">{occasion.occurrence.label[lang]}</p>
+          <p className="label text-spot">{pickDeep(occasion.occurrence.label, lang)}</p>
           <span className="mt-3 inline-block">
             <ProvisionalBadge lang={lang} short />
           </span>
@@ -221,7 +219,7 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
 /* --- page ----------------------------------------------------------------- */
 
 export function MuhuratIndex({ lang }: { lang: Lang }) {
-  const t = muhuratContent[lang];
+  const t = muhuratIndexContent[lang];
   const hi = lang === "hi";
   const months = almanacMonths();
   const example = MUHURAT.workedExample;
@@ -234,7 +232,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
     viewerZone: asZone("Asia/Kolkata"),
     viewerLabel: "IST",
     ghatLabel: "IST",
-    lang,
+    lang: deepLang(lang),
   });
 
   return (
@@ -279,7 +277,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                 <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:pr-5">
                   <dt className="label text-ink2">{t.provenance.sourceLabel}</dt>
                   <dd className="mt-2 text-sm text-ink">
-                    {MUHURAT.provider.displayName[lang]}
+                    {pickDeep(MUHURAT.provider.displayName, lang)}
                   </dd>
                 </div>
                 <div className="border-b border-rule py-3 sm:border-b-0 sm:border-r sm:px-5">
@@ -335,13 +333,13 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                   >
                     <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
                     <h3 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
-                      {o.name[lang]}
+                      {occasionName(o, lang)}
                     </h3>
                     <span className="col-start-2 text-sm leading-[1.7] text-ink2 sm:col-start-auto">
-                      {o.line[lang]}
+                      {pickDeep(o.line, lang)}
                     </span>
                     <span className="label col-start-2 text-spot sm:col-start-auto sm:text-right">
-                      {o.occurrence.label[lang]}
+                      {pickDeep(o.occurrence.label, lang)}
                     </span>
                   </Link>
                 </li>
@@ -427,7 +425,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                   </span>
 
                   <div>
-                    <h3 className="display text-2xl">{w.name[lang]}</h3>
+                    <h3 className="display text-2xl">{windowName(w.id, w.name, lang)}</h3>
                     <p className="label mt-3 text-ink">{t.windows.minutes(w.durationMin)}</p>
                     <p className="label mt-1.5 text-ink2">{t.anchors[w.anchor]}</p>
                   </div>
@@ -436,17 +434,17 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                     <dl>
                       <div className="border-t border-rule pt-3">
                         <dt className="label text-ink2">{t.windows.formulaLabel}</dt>
-                        <dd className="mt-1.5 text-sm text-ink">{w.formula[lang]}</dd>
+                        <dd className="mt-1.5 text-sm text-ink">{pickDeep(w.formula, lang)}</dd>
                       </div>
                       <div className="mt-5 border-t border-rule pt-3">
                         <dt className="label text-ink2">{t.windows.basisLabel}</dt>
                         <dd className="mt-1.5 text-sm leading-[1.75] text-ink2">
-                          {w.basis[lang]}
+                          {pickDeep(w.basis, lang)}
                         </dd>
                       </div>
                     </dl>
                     <p className="mt-5 border-t border-rule pt-3 text-sm leading-[1.75] text-ink2">
-                      {w.note[lang]}
+                      {pickDeep(w.note, lang)}
                     </p>
                   </div>
                 </li>
@@ -460,10 +458,10 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
             <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
               {MUHURAT.displayedNotActedOn.map((n) => (
                 <div key={n.id}>
-                  <h3 className="label text-ink">{n.name[lang]}</h3>
+                  <h3 className="label text-ink">{pickDeep(n.name, lang)}</h3>
                   <div className="rule-thin mt-3" />
                   <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-ink2">
-                    {n.text[lang]}
+                    {pickDeep(n.text, lang)}
                   </p>
                 </div>
               ))}
@@ -490,7 +488,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                 <dl className="mt-7 border-t-2 border-rulestrong text-sm">
                   <div className="flex justify-between gap-4 border-b border-rule py-3">
                     <dt className="label text-ink2">{t.clock.window}</dt>
-                    <dd className="text-right text-ink">{exampleWindow?.name[lang]}</dd>
+                    <dd className="text-right text-ink">{exampleWindow ? windowName(exampleWindow.id, exampleWindow.name, lang) : null}</dd>
                   </div>
                   <div className="flex justify-between gap-4 py-3">
                     <dt className="label text-ink2">{t.clock.assumed}</dt>
@@ -511,16 +509,16 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                     const clock = formatDualClock({
                       instant: exampleInstant,
                       viewerZone: z.zone,
-                      viewerLabel: z.label[lang],
+                      viewerLabel: pickDeep(z.label, lang),
                       ghatLabel: "IST",
-                      lang,
+                      lang: deepLang(lang),
                     });
                     return (
                       <li
                         key={z.zone}
                         className="grid gap-1 border-b border-rule py-4 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-6"
                       >
-                        <p className="label text-ink2">{z.label[lang]}</p>
+                        <p className="label text-ink2">{pickDeep(z.label, lang)}</p>
                         <div>
                           <p className="text-sm text-ink2">
                             <span className="text-ink">{clock.viewer.time}</span> ·{" "}
@@ -565,8 +563,8 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                   <span className="display text-2xl leading-none text-spot">
                     {numeral(i + 1, lang)}
                   </span>
-                  <h3 className="display text-xl text-ink">{n.name[lang]}</h3>
-                  <p className="max-w-2xl text-sm leading-[1.75] text-ink2">{n.text[lang]}</p>
+                  <h3 className="display text-xl text-ink">{pickDeep(n.name, lang)}</h3>
+                  <p className="max-w-2xl text-sm leading-[1.75] text-ink2">{pickDeep(n.text, lang)}</p>
                 </li>
               ))}
             </ul>
@@ -581,9 +579,9 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                       key={g.id}
                       className="grid gap-x-8 gap-y-2 border-b border-rule py-6 sm:grid-cols-[18rem_1fr]"
                     >
-                      <p className="label text-ink">{ghatLabel(g, lang)}</p>
+                      <p className="label text-ink">{ghatLabel(g, deepLang(lang))}</p>
                       <p className="max-w-2xl border-l-2 border-spot pl-5 text-sm leading-[1.75] text-ink2">
-                        {g.refusal?.[lang]}
+                        {g.refusal ? pickDeep(g.refusal, lang) : null}
                       </p>
                     </li>
                   ))}
@@ -613,7 +611,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
 
             {/* The provenance sentence closes the page as well as opening it. */}
             <p className="mx-auto mt-14 max-w-2xl border-t border-rule pt-8 text-xs leading-[1.75] text-ink2">
-              {MUHURAT.provider.note[lang]}
+              {pickDeep(MUHURAT.provider.note, lang)}
             </p>
           </div>
         </section>

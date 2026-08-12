@@ -20,6 +20,7 @@ import {
   type MasaScheme,
   type Occasion,
 } from "@/content/muhurat";
+import { muhuratIndexContent } from "@/content/muhurat-index";
 
 const SCHEME_LABEL: Record<MasaScheme, Bilingual> = {
   amanta: { en: "Amanta reckoning", hi: "अमांत गणना" },
@@ -67,7 +68,11 @@ function neighbours(occasion: Occasion) {
 }
 
 export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasion }) {
-  const t = muhuratContent[lang];
+  /* The shared keys (meta, nav, cta, provenance, tiers, windows, anchors) live
+     in content/muhurat-index/ because the index page needs them in twelve
+     locales; the detail-only keys stayed in muhurat.ts. A Record<Lang, ...>
+     indexes fine with a FullLang, so nothing is written twice. */
+  const t = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
   const d = t.detail;
   const { prev, next } = neighbours(occasion);
   const windows = occasion.windows.map((id) => WINDOW_BY_ID[id]).filter(Boolean);

@@ -184,12 +184,6 @@ const FULL_ONLY: readonly string[] = [
   "/kumbh",
   "/rivers/",
   "/muhurat/",
-  /* The free daily surface. These three index pages are the next to widen to
-     all twelve; until their copy exists in every locale they stay here, so the
-     hreflang sets and the sitemap keep telling the truth about what is
-     actually served. Moving a route out of this list is the only change
-     needed to publish it in twelve languages. */
-  "/muhurat",
 ];
 
 /** True when a route exists in English and Hindi only. */
