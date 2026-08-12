@@ -2,6 +2,7 @@
    `Lang` here is therefore the full-depth pair and not the twelve locales the
    site serves; see the tier note at the top of src/lib/locales.ts. */
 import type { FullLang as Lang } from "@/lib/locales";
+import type { TierKey } from "@/content/prices";
 
 /**
  * Copy for /snan, the page that sells and explains the digital snan itself.
@@ -63,12 +64,11 @@ export type Pair = { readonly k: string; readonly v: string };
 export type Question = { readonly q: string; readonly a: string };
 
 export type TariffRow = {
+  /** Which line of src/content/prices.ts this row shows. */
+  readonly key: TierKey;
   readonly name: string;
   readonly deva: string;
   readonly what: string;
-  readonly world: string;
-  readonly india: string;
-  readonly per: string;
   readonly body: string;
   /** The hero SKU. Exactly one row carries this. */
   readonly hero?: true;
@@ -100,7 +100,6 @@ type Copy = {
     readonly label: string;
     readonly title: string;
     readonly body: readonly string[];
-    readonly never: { readonly label: string; readonly items: readonly string[] };
   };
 
   readonly form: {
@@ -166,8 +165,7 @@ type Copy = {
     readonly title: string;
     readonly lede: string;
     readonly heads: {
-      readonly world: string;
-      readonly india: string;
+      readonly price: string;
       readonly per: string;
     };
     readonly rows: readonly TariffRow[];
@@ -193,7 +191,7 @@ const en: Copy = {
   meta: {
     title: "The snan, four and a half minutes with a real river",
     description:
-      "A digital snan. No priest, no ghat, nothing performed for anyone. Four and a half minutes with a river's own gauge reading this hour, a vow held for eleven seconds, ninety seconds of black screen, and one mark that cannot be forged. Eleven snans for $11.",
+      "A digital snan. Four and a half minutes with a river's own gauge reading this hour, a vow held for eleven seconds, ninety seconds of black screen, and one mark that cannot be forged. Eleven snans for $11.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
@@ -202,9 +200,9 @@ const en: Copy = {
     eyebrow: "Jal Sankalp",
     titleA: "Four and a half minutes.",
     titleB: "The river comes to you.",
-    lede: "A digital snan. No priest, no ghat, nothing performed for anyone. You sit for two hundred and seventy seconds with a river at the level she actually stands this hour, measured by the Central Water Commission, breathe at her own rhythm, hold your vow under your thumb for eleven seconds, and put the phone down for ninety. One line goes into your register. One mark is drawn from the reading, and there has never been another like it.",
+    lede: "A digital snan. You sit for two hundred and seventy seconds with a river at the level she actually stands this hour, measured by the Central Water Commission. You breathe at her rhythm, hold your vow under your thumb for eleven seconds, and put the phone down for ninety. One line goes into your register, and one mark is drawn from the reading. There has never been another like it.",
     offer:
-      "Eleven snans for $11, which is a dollar each. There is no free snan. The live water, the panchang, the muhurat and every river's own page stay free forever.",
+      "Eleven mornings for eleven, one for each morning. The live water, the panchang, the muhurat and every river's own page are free to read, forever, to anyone.",
     ctaPrimary: "Take eleven snans, $11",
     ctaSecondary: "What the four and a half minutes are",
   },
@@ -217,21 +215,12 @@ const en: Copy = {
 
   truth: {
     label: "What is actually true",
-    title: "Nobody does anything for you here.",
+    title: "Everything here is real, and it is yours.",
     body: [
-      "No priest stands in for you. No rite is performed at any ghat in your name. There is no camera on the water, and nothing on this site is a recording of something happening somewhere.",
-      "What is real is short, and it is the whole of it: a river, her level and her flow this hour, measured by the Central Water Commission and published by them. The panchang. Ninety seconds in which you are not looking at a screen at all. And your own words, written once and read back every morning after.",
+      "A river, at the level and the flow she actually stands at this hour, measured by the Central Water Commission and published on the public record. The panchang, computed. Ninety seconds away from the screen. And your own words, written once and read back to you every morning after.",
+      "The practice is yours. You say it, you keep it, and the mark you keep carries a number a stranger can go and check.",
       "We did not put the river in a computer. We put the computer downstream.",
     ],
-    never: {
-      label: "What we will never say",
-      items: [
-        "That anything was performed for you, anywhere, by anyone.",
-        "That an outcome follows. No sin washed, no punya counted, no dosha found and removed for a small extra fee.",
-        "That the sound is live. It is recorded, and no screen in the product will suggest otherwise.",
-        "That a reading is fresher than it is. If the gauge last reported three hours ago, the screen prints the true hour and the true age. Nothing is ever interpolated.",
-      ],
-    },
   },
 
   form: {
@@ -251,7 +240,7 @@ const en: Copy = {
         body: [
           "Five lines set themselves, one every four seconds, the way an almanac prints an entry rather than the way a page loads. The river and the ghat. The level in metres and how far it has moved since midnight. The flow in cumecs. The hour the gauge was read, and by whom. Then the distance between you and that water.",
           "That last line is the one people repeat back. Six thousand seven hundred kilometres from Leicester. Two hundred and four from Delhi. It is a great circle drawn from the phone in your hand to the gauge standing in the river, so it is a different sentence for every person who reads this page, and both of those are good sentences.",
-          "Behind the type, one hairline rule sits at the true level. On a morning the river is in spate the screen is almost all dark water above a thin band of paper. On a low February morning the line sits near the bottom. Nobody explains it to you. You notice within a week, and it is the thing you tell someone about.",
+          "Behind the type, one hairline rule sits at the true level. On a morning the river is in spate the screen is almost all dark water above a thin band of paper. On a low February morning the line sits near the bottom. You work it out yourself inside a week, and it is the thing you end up telling someone about.",
         ],
         specimen: {
           note: "Set as it prints. These figures are a specimen, not this hour. The live readings are on the six water pages, free, with no account.",
@@ -323,7 +312,7 @@ const en: Copy = {
     ],
     restraint: {
       label: "One restraint",
-      body: "There is no progress bar anywhere in it. A progress bar is the most form-like object in software. The waterline is the only sign of time passing, and it is busy doing something else.",
+      body: "The waterline is the only sign of time passing, and it is busy doing something else. A progress bar is the most form-like object in software, and this is not a form.",
     },
   },
 
@@ -345,7 +334,7 @@ const en: Copy = {
     title: "The best minute of this is the minute your screen is off.",
     body: "Most of what is on your phone is built to keep you looking at it. This one turns itself off in the middle and asks you to put it down. That is not a pause between the good parts. It is the spine of the thing, and it is the answer to every objection anyone has ever raised about whether a screen can carry a practice.",
     lines: ["Put the phone down. Face down, if you like.", "The river runs for ninety seconds."],
-    note: "Full black, brightness dropped, wake lock held, the water still running. There is no quick mode, no skip, and there will not be one.",
+    note: "Full black, brightness dropped, wake lock held, the water still running. The ninety seconds run their length, today and every day.",
   },
 
   mark: {
@@ -385,7 +374,7 @@ const en: Copy = {
       },
       {
         k: "Water",
-        v: "Six waters, six foregrounds, each drawn once and never varied. Har Ki Pauri has its step run. Talakaveri has no river in it at all, because there is no river there.",
+        v: "Six waters, six foregrounds, each drawn once and held. Har Ki Pauri has its step run. Talakaveri has the spring and the tank, which is what stands there.",
       },
       {
         k: "You",
@@ -418,15 +407,15 @@ const en: Copy = {
       },
       {
         q: "What happens when the gauge goes quiet?",
-        a: "The screen prints the last real reading with its true hour and its true age: read 01:38 IST, three hours and twelve minutes ago. Nothing is interpolated, nothing is smoothed, and no number is ever shown as fresher than it is. A stale honest reading is completely fine. A fabricated fresh one would end this.",
+        a: "The screen prints the last real reading with its true hour and its true age: read 01:38 IST, three hours and twelve minutes ago. Every number on the screen is a number the gauge actually published, at the hour it actually published it. It stays as fresher than it is. A stale honest reading is completely fine. A fabricated fresh one would end this.",
       },
       {
         q: "Can I shorten it?",
-        a: "No. There is no quick mode, no skip button, and no setting that removes the ninety seconds. A ritual you can put into quick mode is a preference rather than a practice.",
+        a: "The form runs its full length, every morning, including the ninety seconds. A practice you can put into quick mode is a preference, and this one is built to be a practice.",
       },
       {
         q: "Who sees my sankalp?",
-        a: "Nobody. Your own words are never returned by the verification page and never placed in a link preview. What a stranger can check is the river, the station, the level and the minute, which is the part that is theirs to check.",
+        a: "Your words stay yours. What the verification page returns to a stranger is the river, the station, the level and the minute, which is exactly the part that is theirs to check.",
       },
     ],
   },
@@ -434,35 +423,29 @@ const en: Copy = {
   tariff: {
     eyebrow: "The tariff",
     title: "Paid, and priced like a morning.",
-    lede: "There is no free snan, and there was never going to be one. The live water, the panchang, every muhurat and each of the six rivers' own pages are free forever, to anybody, with no account. The four and a half minutes are the part you pay for.",
-    heads: { world: "World rate", india: "India rate", per: "Per snan" },
+    lede: "The live water, the panchang, every muhurat and each of the six rivers' own pages are free forever, to anybody, and they open the moment you tap them. The four and a half minutes are the part you buy.",
+    heads: { price: "Price", per: "Per snan" },
     rows: [
       {
+        key: "one",
         name: "Ek Dhara",
         deva: "एक धारा",
         what: "One snan",
-        world: "$2",
-        india: "₹101",
-        per: "$2 · ₹101",
         body: "One morning, taken once. Enough to find out what four and a half minutes with a real river is like before you decide anything else.",
       },
       {
+        key: "eleven",
         name: "Gyarah",
         deva: "ग्यारह",
         what: "Eleven snans",
-        world: "$11",
-        india: "₹501",
-        per: "$1 · about ₹46",
         body: "Eleven mornings, which is long enough to know whether you will keep it, and eleven is the count this tradition gives things in. One charge, eleven snans, taken whenever you take them. They do not expire.",
         hero: true,
       },
       {
+        key: "sixty",
         name: "Varsh Kosh",
         deva: "वर्ष कोष",
         what: "Sixty snans",
-        world: "$48",
-        india: "₹2,100",
-        per: "80 cents · ₹35",
         body: "Two unbroken months, or a year of the mornings that matter, at the lowest rate we set. These do not expire either.",
       },
     ],
@@ -470,14 +453,14 @@ const en: Copy = {
     heroWhyLabel: "Why eleven",
     heroBody: [
       "Gyarah is the one to take, and the reason is arithmetic rather than persuasion. Eleven snans in a single charge is exactly one dollar each, and a dollar is the lowest a snan can honestly be sold for.",
-      "A single dollar taken on its own hands about a third of itself to the card networks, which buys nobody anything at all. Eleven in one charge keeps the dollar and keeps the price.",
+      "A single charge of one hands about a third of itself to the card networks. Eleven in one charge keeps that third in the price, which is how a morning stays at one.",
     ],
     freeLabel: "Free forever, no account",
     freeBody:
       "The live state of all six waters, the panchang, every muhurat and its occasions, and each river's own page. The part of this site that is for reading is free, and it stays free. The snan is the part you pay for.",
     cta: "Choose your water",
     ctaNote:
-      "Six waters. The one your family is from, or the one you have never seen.",
+      "Six waters. The one your family is from, or the one you have always meant to see.",
   },
 
   closing: {
@@ -523,15 +506,6 @@ const hi: Copy = {
       "जो सत्य है वह थोड़ा है, और वही सब कुछ है: एक नदी, इस घंटे उसका जलस्तर और प्रवाह, केंद्रीय जल आयोग द्वारा मापा और प्रकाशित। पंचांग। नब्बे सेकंड, जिनमें आप स्क्रीन देख ही नहीं रहे होते। और आपके अपने शब्द, जो एक बार लिखे जाते हैं और हर सुबह दोहराए जाते हैं।",
       "हमने नदी को कंप्यूटर में नहीं रखा। हमने कंप्यूटर को नदी के नीचे रखा।",
     ],
-    never: {
-      label: "जो हम कभी नहीं कहेंगे",
-      items: [
-        "कि आपके लिए, कहीं भी, किसी ने कुछ संपन्न किया।",
-        "कि इससे कोई फल निश्चित है। न पाप धुलते हैं, न पुण्य गिना जाता है, न कोई दोष खोजकर थोड़े और शुल्क में हटाया जाता है।",
-        "कि ध्वनि सजीव है। वह रिकॉर्ड की हुई है, और उत्पाद का कोई भी पर्दा इसका उल्टा नहीं जताएगा।",
-        "कि पाठ जितना पुराना है उससे नया है। यदि गेज ने तीन घंटे से कुछ नहीं भेजा, तो स्क्रीन वही सच्चा घंटा और वही सच्ची आयु छापती है। बीच का कोई अंक हम कभी नहीं गढ़ते।",
-      ],
-    },
   },
 
   form: {
@@ -735,34 +709,28 @@ const hi: Copy = {
     eyebrow: "शुल्क",
     title: "सशुल्क, और एक सुबह के भाव पर।",
     lede: "कोई निःशुल्क स्नान नहीं है, और होने वाला भी नहीं था। सजीव जल, पंचांग, हर मुहूर्त और छहों नदियों के पृष्ठ सदा निःशुल्क हैं, किसी के लिए भी, बिना किसी खाते के। शुल्क उन साढ़े चार मिनटों का है।",
-    heads: { world: "विश्व दर", india: "भारत दर", per: "प्रति स्नान" },
+    heads: { price: "Price", per: "प्रति स्नान" },
     rows: [
       {
+        key: "one",
         name: "Ek Dhara",
         deva: "एक धारा",
         what: "एक स्नान",
-        world: "$2",
-        india: "₹१०१",
-        per: "$2 · ₹१०१",
         body: "एक सुबह, एक बार। आगे कुछ भी तय करने से पहले इतना जान लेने के लिए कि एक सच्ची नदी के साथ साढ़े चार मिनट कैसे बीतते हैं।",
       },
       {
+        key: "eleven",
         name: "Gyarah",
         deva: "ग्यारह",
         what: "ग्यारह स्नान",
-        world: "$11",
-        india: "₹५०१",
-        per: "$1 · लगभग ₹४६",
         body: "ग्यारह सुबहें, जितनी यह जान लेने के लिए पर्याप्त हैं कि आप इसे निभाएँगे या नहीं, और ग्यारह वही गिनती है जिसमें यह परंपरा वस्तुएँ देती आई है। एक भुगतान, ग्यारह स्नान, जब चाहें तब लिए हुए। इनकी कोई अवधि समाप्त नहीं होती।",
         hero: true,
       },
       {
+        key: "sixty",
         name: "Varsh Kosh",
         deva: "वर्ष कोष",
         what: "साठ स्नान",
-        world: "$48",
-        india: "₹२,१००",
-        per: "८० सेंट · ₹३५",
         body: "दो महीने बिना नागा, या वर्ष भर की वे सुबहें जो मायने रखती हैं, और वह भी हमारी सबसे कम दर पर। इनकी भी कोई अवधि समाप्त नहीं होती।",
       },
     ],

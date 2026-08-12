@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import { themeScript } from "@/components/ThemeToggle";
+import { currencyScript } from "@/lib/currency";
 import { fontClass } from "@/lib/fonts";
 import { localeDef, type Lang } from "@/lib/locales";
 
@@ -26,6 +27,9 @@ export function RootShell({ lang, children }: { lang: Lang; children: React.Reac
       {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* Stamps data-cur before first paint, so only the reader's own price
+            is ever painted. See src/lib/currency.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: currencyScript }} />
       </head>
       <body className="antialiased">
         {children}

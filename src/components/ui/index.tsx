@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { CURRENCIES } from "@/lib/currency";
+import type { Prices } from "@/content/prices";
 
 /* Shared primitives, cut for the printed panchang. Everything here is flat:
    solid fills, hard rules, one spot colour. No radius, no soft shadow. */
@@ -166,5 +168,25 @@ export function DataRow({
       <dt className="label pt-1 text-ink2">{term}</dt>
       <dd className="text-ink">{children}</dd>
     </div>
+  );
+}
+
+/**
+ * One price, in the reader's own currency.
+ *
+ * Every currency is written into the markup and CSS shows exactly one, keyed
+ * off `data-cur` on <html>. That is what lets a page carrying prices stay fully
+ * prerendered: no request-time render, no client fetch, and no flash of the
+ * wrong number. See src/lib/currency.ts.
+ */
+export function Price({ prices, className = "" }: { prices: Prices; className?: string }) {
+  return (
+    <>
+      {CURRENCIES.map((c) => (
+        <span key={c} className={`cur cur-${c} ${className}`}>
+          {prices[c]}
+        </span>
+      ))}
+    </>
   );
 }
