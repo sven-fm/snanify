@@ -17,9 +17,24 @@ They are not editorial caution and they are not up for softening.
 2. **Never make a promise that is not true.** No guaranteed spiritual outcomes. Nothing about
    what this does to anyone's karma, sins or soul.
 
-Beyond those two, be confident. This is a legitimate digital product, nobody is forced to buy
-it, and the copy should not be apologetic, hedging or padded with disclaimers nobody asked
-for. Do not add caveats to be safe. Do not argue against the product in its own voice.
+Beyond those two, **sell the thing**. This is a legitimate digital product, nobody is forced
+to buy it, and the copy is not apologetic, hedging or padded with disclaimers nobody asked
+for. Never argue against the product in its own voice.
+
+That has a mechanic, and it is a hard rule on the landing page and on `/snan`:
+
+> **No negative constructions.** If a sentence is built on "no", "nobody", "nothing" or
+> "there is no", rewrite it until it is built on a noun and a verb.
+
+"Nobody stands in the water for you" becomes "the practice is yours". "There is no quick
+mode" becomes "the form is the form". The page was once built almost entirely out of denials
+and read as an argument with a critic who was not in the room; that was a violation of this
+rule, and re-adding one is too. Keep sentences short: this is read at six in the morning, on
+a phone, by many readers whose English is a third language.
+
+**Not claiming is not the same as denying.** The two rules above forbid the claim, not the
+silence. The commitment stated at length and in the negative belongs on `/ethics`, which
+every page links, and nowhere else.
 
 The rules are also the moat. "We never pretended a priest did anything" is what makes the
 category defensible when somebody attacks it, and it costs nothing, because the product does
@@ -56,10 +71,26 @@ The artefact is the **Jal Chihna**, the Watermark: a generative engraving seeded
 river's published gauge reading at that instant, so no two are alike and none can be forged
 without forging the agency's record.
 
-**Pricing is paid-only.** Content is free, the snan is paid.
-`$2 / Rs 101` single · `$11 / Rs 501` for eleven (the hero SKU, exactly $1 a snan) ·
-`$48 / Rs 2,100` for sixty. Eleven-in-one-charge exists because $1 per transaction loses 34%
-to card fees while eleven loses 6%.
+**Pricing is paid-only, and there is exactly one price**, shown in the reader's own currency:
+rupees in India, Canadian dollars in Canada, euro in the eurozone, US dollars everywhere
+else. The site used to print a world ladder and an India ladder side by side with an essay
+explaining why; that is gone.
+
+| | one | eleven, the hero SKU | sixty |
+| --- | --- | --- | --- |
+| USD | $2 | **$11** | $48 |
+| EUR | €2 | **€11** | €45 |
+| CAD | C$3 | **C$11** | C$48 |
+| INR | ₹101 | **₹501** | ₹2,100 |
+
+**Eleven mornings cost eleven, one for each morning, in every currency.** That is the hook,
+and it is the reason eleven exists at all: one charge of a single unit loses about 34% to
+card fees, eleven loses 6%.
+
+Prices live in `src/content/prices.ts`, never in a locale file, because a price is not a
+translation: a Tamil reader in Toronto pays Canadian dollars and a Tamil reader in Chennai
+pays rupees. `src/lib/currency.ts` picks the currency. Change a price and change `PER_SNAN`
+in the same commit; nothing recomputes it.
 
 Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. That is the SEO and daily-return
 surface, not a product tier.
@@ -180,6 +211,10 @@ mid-range Android.
   `1200x700` viewBox with `preserveAspectRatio="slice"` put the horizon wherever the crop
   happened to land, which cut the headline in half on desktop and flattened the perspective to
   nothing in portrait.
+- **Price and theme are both stamped by a sync `<head>` script.** Every currency ships in the
+  markup and CSS shows one, keyed off `data-cur` on `<html>`. That is what keeps a page
+  carrying prices fully prerendered with no flash of the wrong number. Render a price with
+  `<Price prices={PRICE.eleven} />`, never by reading the currency in a component.
 - **`npm i <anything>` prunes `--no-save` dev installs.** Playwright, used for screenshots and
   audits, has to be reinstalled after any dependency change.
 

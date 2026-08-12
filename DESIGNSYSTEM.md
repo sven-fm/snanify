@@ -119,9 +119,9 @@ statement should be legible the instant it loads.
 
 Print does not animate. There are exactly two motions.
 
-- `.ink-in` — a stepped entrance, `steps(6, end)`, so content arrives like an impression
+- `.ink-in`, a stepped entrance, `steps(6, end)`, so content arrives like an impression
   being pulled rather than a web page fading in.
-- `<Reveal>` — the same, triggered by `IntersectionObserver` on scroll.
+- `<Reveal>`, the same, triggered by `IntersectionObserver` on scroll.
 
 Both collapse under `prefers-reduced-motion`.
 
@@ -139,14 +139,28 @@ Two things are worth preserving:
   the horizon; stepping in the reciprocal spaces them evenly on screen.
 - **The river runs diagonally**, vanishing right of centre, so the headline keeps clean paper.
 
-The sun sets into the waterline and its glitter path is the same ripple geometry redrawn in
-the spot colour, clipped to a widening trapezoid, which is the shape a real reflection makes.
-The sky above the horizon is empty paper; it previously carried engraved hatching and read as
-busy.
+**The sun is set into the headline, not placed beside it.** The `h1` floats a circular
+`shape-outside`: the first line keeps the full measure and every line after it wraps around
+the disc. RiverFlow finds that float, paints the sun onto exactly that circle, and takes its
+vanishing point from it, so the type and the water converge on one point. The whole
+composition is sized in `em` off the headline, which is why it holds in all twelve scripts.
+The float hangs its lower half out of the block with a negative bottom margin, which puts the
+waterline through the sun's centre and makes it set rather than float.
 
-Below 900px the channel recentres and the river is confined to a band beneath the type,
-because the `slice` fit crops most of the viewBox width on a phone and would otherwise put
-the sun through the headline.
+The glitter path is the same ripple geometry redrawn in the spot colour, clipped to a widening
+trapezoid, which is the shape a real reflection makes. The sky above the horizon is empty
+paper; it previously carried engraved hatching and read as busy.
+
+**The viewBox is the element, in CSS pixels**, set from the measured box each frame. A fixed
+viewBox with `preserveAspectRatio="slice"` put the horizon wherever the crop landed: through
+the headline on a desktop, and flattened to a symmetric wedge with no perspective on a phone.
+
+At `sm` and below the river gets a band of its own beneath the headline, above the fold, with
+nothing set over it, and the vanishing point swings hard right against a hard-left near edge.
+That swing is the only thing that reads as depth in a box that shape.
+
+**Anything set over the river needs an opaque ground.** The ripples read straight through
+type. The ghost button carries `bg-paper` for this reason, and so does the hero's offer slip.
 
 Performance: geometry is written straight to each path's `d` attribute through a group ref,
 so roughly eighty paths animate with zero React re-renders. It pauses off screen and in
@@ -158,8 +172,13 @@ The **Bindu Ripple**, cut as a printer's colophon. A solid vermillion bindu over
 rules, trimmed by a double-ruled roundel. The rules deliberately run past the roundel and get
 clipped by it, the way a printed block is trimmed by its seal.
 
+The wordmark is set as a **logotype, not a label**: Eczar 800, tracking down at 0.015em,
+larger than the copy around it, kerning on, synthesis off, and separated from the seal by a
+hairline. It was once 1.05rem caps tracked out to 0.16em, which is `label` styling applied to
+a logotype and read as a stock tech mark rather than the top of a printed page.
+
 - `<Mark />` the seal alone
-- `<Logo />` seal plus wordmark
+- `<Logo />` seal, hairline, wordmark
 - `<Colophon />` the large version, with a 30-tick dial
 
 `public/icon.svg` is a standalone flat copy for the favicon, with no CSS variables.
@@ -194,16 +213,26 @@ adaptation.
 **No em dashes.** Not in copy, not in comments. Use a comma, a colon, a full stop or
 parentheses. Roughly 1,950 were removed from this repo in one pass; do not reintroduce them.
 
-Copy is plain, unhurried, never defensive and never salesy. Where the honest answer is "we
-cannot promise that", it says exactly that. Sanskrit and Hindi terms (snan, sankalp, gotra,
-muhurat, ghat, tithi, nakshatra) stay untranslated in the English edition and are glossed in
-place for a reader who does not know them.
+**No negative constructions in selling copy.** On the landing page and `/snan`, a sentence
+built on "no", "nobody", "nothing" or "there is no" gets rewritten until it is built on a noun
+and a verb. "Nobody stands in the water for you" becomes "the practice is yours". Say what the
+product **is**; the page is not a defence.
+
+Copy is plain, unhurried and confident. Sentences are short, because this is read at six in
+the morning on a phone by many readers whose English is a third language. Sanskrit and Hindi
+terms (snan, sankalp, gotra, muhurat, ghat, tithi, nakshatra) stay untranslated in the English
+edition and are glossed in place for a reader who does not know them.
+
+Honest disclosure has one home, `/ethics`, where it is stated at length. Everywhere else the
+rule is simply never to claim what did not happen.
 
 ## Checklist before shipping a page
 
 - [ ] `npx tsc --noEmit` clean, `npm run lint` zero errors
-- [ ] Renders correctly in **both** editions, light and dark
-- [ ] Complete copy in **both** locales
+- [ ] Renders correctly in every edition it serves, light and dark
+- [ ] Complete copy in every locale of its tier, and no English left in the others
+- [ ] No sentence in selling copy built on "no", "nobody" or "there is no"
+- [ ] Anything set over the river has an opaque ground
 - [ ] No horizontal scroll at 390px, tap targets 44px
 - [ ] No gradient, glow, blur, radius or soft shadow
 - [ ] No em dashes
