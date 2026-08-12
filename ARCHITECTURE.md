@@ -26,8 +26,8 @@ and a scheduled fetch.
 ```
 src/
   app/
-    [lang]/              one route tree, both locales
-      page.tsx           /            and /hi
+    [lang]/              one route tree, twelve locales
+      page.tsx           /            and /hi, /ta, /bn, ...
       live/              /live        the six waters right now, free
       snan/              /snan        the product page
       rivers/[river]/    six waters
@@ -38,7 +38,7 @@ src/
       ethics/ faq/ how-it-works/ verify/ rituals/
       layout.tsx         root layout, per-locale metadata
       not-found.tsx
-    sitemap.ts           every route x both locales, reciprocal hreflang
+    sitemap.ts           every route x the locales that serve it, reciprocal hreflang
     globals.css          the entire design system
   proxy.ts               URL scheme (Next 16 renamed middleware.ts to proxy.ts)
   components/
@@ -50,9 +50,13 @@ src/
     site/                Header, Footer
     ui/                  shared primitives
     pages/               one component per route
-  content/               typed bilingual content, one module per domain
+  content/               typed per-locale content, one directory or module per domain
+                         prices.ts, names.ts and months.ts are locale-independent
   lib/
-    i18n.ts              localePath, otherLangPath
+    locales.ts           the locale registry, the tier split, hreflang and route manifest
+    i18n.ts              short re-exports of the URL helpers
+    seo.ts               pageMetadata: canonical, hreflang cluster, OG locales
+    currency.ts          one price, picked from Vercel geo, stamped before first paint
     nav.ts               single source of truth for navigation
     content.ts           shared copy and the Lang type
     sky.ts               moon, tithi, nakshatra
@@ -60,17 +64,20 @@ src/
 docs/                    design and research, see CLAUDE.md
 ```
 
-## The bilingual URL scheme
+## The twelve-locale URL scheme
 
-English is unprefixed, Hindi lives under `/hi`, and the route tree is authored **once**.
+English is unprefixed, every other locale lives under its ISO 639-1 code, and the route tree
+is authored **once**.
 
 ```
 /rivers      -> rewrite  /en/rivers    the URL bar still reads /rivers
-/hi/rivers   -> pass through, matches [lang]=hi
+/ta/rivers   -> pass through, matches [lang]=ta
 /en/rivers   -> 308 redirect to /rivers
 ```
 
-`src/proxy.ts` does this. Slugs are identical in both locales and Latin-script, because
+`src/proxy.ts` does this, deriving the prefix set from `src/lib/locales.ts`, and stamps the
+currency cookie on the way through. Slugs are identical in every locale and Latin-script,
+because
 Devanagari URLs percent-encode into unreadable strings when pasted into WhatsApp, which is
 the primary diaspora sharing channel.
 
@@ -81,22 +88,34 @@ roughly five times as much.
 
 ### Adding a page
 
-1. Add its copy to `src/content/<domain>.ts`, both locales, `satisfies Record<Lang, ...>`.
-2. Create `src/app/[lang]/<route>/page.tsx` as a thin wrapper around one component that takes
-   `lang`, exporting `generateMetadata` with a public-shape canonical.
-3. Add the route to `src/app/sitemap.ts`.
-4. If it belongs in the nav, add it to `src/lib/nav.ts`. Never hand-write nav links in a page.
+1. Decide its tier. A page in all twelve locales is `satisfies Record<Lang, ...>`; a
+   full-depth page is `Record<FullLang, ...>` and its route goes in `FULL_ONLY`.
+2. Add its copy, one file per locale under `src/content/<domain>/`, English defining the shape.
+3. Create `src/app/[lang]/<route>/page.tsx` as a thin wrapper around one component that takes
+   `lang`, calling `pageMetadata()` from `@/lib/seo` and `allLangParams()` or
+   `fullLangParams()`. Never hand-roll `alternates.languages`.
+4. Add the route to `src/app/sitemap.ts`.
+5. If it belongs in the nav, add it to `src/lib/nav.ts` and filter with `servesPath`. Never
+   hand-write nav links in a page.
 
 ## Content model
 
 All user-facing copy is data, not JSX. Each domain owns a module in `src/content/`:
 
 ```ts
-export const riversIndexContent = { en, hi } satisfies Record<Lang, typeof en>;
+export const riversIndexContent = { en, hi, bn, ... } satisfies Record<Lang, RiversIndexCopy>;
 ```
 
-Typing the Hindi object against `typeof en` means adding an English key without its Hindi
-counterpart is a **compile error**. This is the single most useful invariant in the codebase.
+Typing every locale against `typeof en` means adding an English key without its eleven
+counterparts is a **compile error**. This is the single most useful invariant in the codebase.
+`pickDeep` is the only fallback anywhere, it is confined to proper nouns, and prose can never
+reach it.
+
+**Prices are not content.** They live in `src/content/prices.ts` in four currencies, because a
+price is not a translation. Proper nouns that must exist in all twelve (rivers, ghats, cities,
+occasions, muhurat windows) live in `src/content/names.ts`, and month names in
+`src/content/months.ts`, which is a separate module only to avoid a require cycle with
+`muhurat.ts`.
 
 Entity data (`rivers.ts`, `muhurat.ts`, `nakshatra.ts`) is separate from page copy, because
 the same six waters appear on the landing page, the index, six detail pages, the calendar and
@@ -134,7 +153,7 @@ rotate and expire while the artefact has to outlive them.
 
 ## Rendering
 
-Every route is statically generated for both locales via `generateStaticParams` returning the
+Every route is statically generated for the locales it serves via `generateStaticParams` returning the
 `(lang, slug)` product. `dynamicParams = false`, so an unknown locale 404s rather than
 rendering an empty shell.
 
@@ -148,7 +167,9 @@ Two components are client components, for good reasons:
 - `Reveal.tsx` and `ThemeToggle.tsx` need browser APIs. `ThemeToggle` holds no state at all;
   the glyph is chosen by CSS from the `.dark` class, so there is nothing to hydrate.
 
-Theme is set before first paint by an inline script in `RootShell`, so there is no flash.
+Theme **and currency** are both set before first paint by inline scripts in `RootShell`, so
+there is no flash of either. Every currency is in the markup and CSS shows one, keyed off
+`data-cur`; that is what lets pages carrying prices stay static. See `src/lib/currency.ts`.
 
 ## SEO
 
@@ -158,7 +179,9 @@ not asserted on the page.** No prices, no officiants, no ratings, no coordinates
 exist is a lie that gets caught. Provisional dates ship as reduced-precision ISO (`2026-09`)
 rather than invented precision.
 
-`sitemap.ts` emits both locales of every route with reciprocal `hreflang`.
+`sitemap.ts` emits every locale that serves a route, with a reciprocal `hreflang` set built
+from the same `localesForPath` the pages use, so the two can never disagree. Google's rules
+and the Search Console runbook are in `docs/seo/search-console.md`.
 
 ## Deployment
 

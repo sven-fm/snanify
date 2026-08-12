@@ -62,8 +62,10 @@ const buttonBase =
 const buttonVariants = {
   /* The press impression: solid spot colour, inverted type. */
   solid: "bg-spot text-paper hover:bg-ink hover:text-paper",
-  /* A ruled box that fills with ink on hover. */
-  ghost: "border border-rulestrong text-ink hover:bg-ink hover:text-paper",
+  /* A ruled box that fills with ink on hover. Opaque, not transparent: the
+     hero sits this button on top of the river, and ripples reading through the
+     type made the label almost unreadable. */
+  ghost: "border border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper",
   quiet: "text-ink underline decoration-spot decoration-2 hover:text-spot px-0 py-1",
 } as const;
 

@@ -173,7 +173,7 @@ export function Landing({ lang }: { lang: Lang }) {
               {/* The offer, stated in the hero rather than buried in the
                   tariff. A price is a fact about the thing, not a reveal. */}
               <p
-                className="ink-in order-7 mt-7 max-w-xl border-l-2 border-spot pl-4 text-sm leading-[1.75] text-ink2"
+                className="ink-in order-7 mt-7 max-w-xl border-l-2 border-spot bg-paper py-3 pr-4 pl-4 text-sm leading-[1.75] text-ink2"
                 style={{ animationDelay: "320ms" }}
               >
                 {/* {price} is the eleven-morning line, in the reader's currency. */}
