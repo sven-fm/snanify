@@ -1,5 +1,5 @@
 import type { Lang } from "@/lib/locales";
-import { en, type RiversIndexCopy } from "./en";
+import { en, type LiveCopy } from "./en";
 import { hi } from "./hi";
 import { bn } from "./bn";
 import { mr } from "./mr";
@@ -12,13 +12,15 @@ import { or } from "./or";
 import { pa } from "./pa";
 import { as } from "./as";
 
-export type { RiversIndexCopy };
+export type { LiveCopy };
+export { fill } from "./en";
 
 /**
- * The waters index in every locale the site serves. See the header of ./en.ts
- * for the rules the copy is written under.
+ * The live river page in every locale the site serves. See the header of
+ * ./en.ts for the rules the copy is written under, in particular that the
+ * {braces} and the units are identical in all twelve.
  */
-export const riversIndexContent = {
+export const liveContent = {
   en,
   hi,
   bn,
@@ -31,4 +33,4 @@ export const riversIndexContent = {
   or,
   pa,
   as,
-} satisfies Record<Lang, RiversIndexCopy>;
+} satisfies Record<Lang, LiveCopy>;

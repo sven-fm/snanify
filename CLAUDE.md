@@ -128,7 +128,8 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
   full-depth-only one. A page with neither inherits the layout's twelve and prerenders ten
   pages whose copy does not exist.
 - **`FULL_ONLY`** in `locales.ts` is the single list deciding which routes are English and
-  Hindi only. Moving a route out of it publishes that route in twelve languages, and the
+  Hindi only. The landing page, `/rivers`, `/live` and `/muhurat` are out of it and served in
+  all twelve. Moving a route out of it publishes that route in twelve languages, and the
   sitemap, hreflang, nav, footer and language switch all follow.
 - **Navigation must ask `servesPath(lang, path)`**, never `isFullOnlyPath` alone. The latter
   is true for `/snan` even in English, and filtering on it emptied the English nav once.

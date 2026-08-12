@@ -10,10 +10,8 @@ import {
 } from "@/components/StructuredData";
 import { RIVERS } from "@/content/rivers";
 import { riversIndexContent } from "@/content/rivers-index";
-/* This route exists in English and Hindi only for now; see the tier note and
-   the FULL_ONLY list at the top of src/lib/locales.ts, which is the single
-   place that decides. `Lang` here is therefore the full-depth pair. */
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { allLangParams, pickDeep, type Lang } from "@/lib/locales";
+import { waterName } from "@/content/names";
 import { navLabel } from "@/lib/nav";
 import { pageMetadata } from "@/lib/seo";
 
@@ -25,7 +23,7 @@ import { pageMetadata } from "@/lib/seo";
 const ROUTE = "/rivers";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return allLangParams();
 }
 
 export async function generateMetadata({
@@ -65,9 +63,9 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         lang,
         ROUTE,
         RIVERS.map((ghat) => ({
-          name: `${ghat.river[lang]}, ${ghat.ghat[lang]}, ${ghat.city[lang]}`,
+          name: `${waterName(ghat, "river", lang)}, ${waterName(ghat, "ghat", lang)}, ${waterName(ghat, "city", lang)}`,
           path: `/rivers/${ghat.slug}`,
-          description: ghat.epithet[lang],
+          description: pickDeep(ghat.epithet, lang),
         })),
       ),
       breadcrumb: breadcrumbList(lang, [

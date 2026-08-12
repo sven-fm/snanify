@@ -19,7 +19,6 @@ import {
   WINDOW_BY_ID,
   formatDualClock,
   ghatLabel,
-  muhuratContent,
   type IanaZone,
   type Instant,
   type Occasion,
@@ -36,6 +35,8 @@ import {
   tithiLine,
   type WindowSpan,
 } from "@/content/panchang";
+import { muhuratIndexContent } from "@/content/muhurat-index";
+import { muhuratContent } from "@/content/muhurat";
 
 /* --- numerals -------------------------------------------------------------
    Same rule as the rest of the almanac: a printed panchang sets its figures in
@@ -112,7 +113,9 @@ function WindowCell({
 /* --- an occasion, as one line of the register ----------------------------- */
 
 function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
-  const m = muhuratContent[lang];
+  /* Shared keys from content/muhurat-index (twelve locales), detail-only keys
+     from muhurat.ts (English and Hindi). See the note in MuhuratDetail. */
+  const m = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
 
   return (
     <tr className="border-b border-rule align-top transition-colors hover:bg-paper3">
@@ -174,7 +177,9 @@ function OccasionTable({
 
 export function Panchang({ lang }: { lang: Lang }) {
   const t = panchangContent[lang];
-  const m = muhuratContent[lang];
+  /* Shared keys from content/muhurat-index (twelve locales), detail-only keys
+     from muhurat.ts (English and Hindi). See the note in MuhuratDetail. */
+  const m = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
   const hi = lang === "hi";
 
   /* The offsets are read on the reference instant, because four of the seven

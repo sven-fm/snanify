@@ -49,8 +49,8 @@ alternates set for its route, which is the same set the page itself emits in
 neither, so they are generated from one function, `localesForPath`, and cannot
 drift.
 
-Expect roughly 74 URLs today: 12 landing pages, 12 routes that exist in English
-and Hindi only, 6 waters and 13 occasions in two locales each.
+Expect roughly 104 URLs today: four routes in twelve locales each, nine routes
+in English and Hindi only, and 6 waters plus 13 occasions in two locales each.
 
 ## 3. Do NOT set international targeting
 
@@ -110,11 +110,11 @@ change needed to publish it in all twelve languages, and the sitemap, the
 hreflang sets, the header nav, the footer and the language switch all follow
 automatically.
 
-Currently full-depth-only: `/snan`, `/panchang`, `/ethics`, `/how-it-works`,
-`/faq`, `/patra`, `/verify`, `/kumbh`, `/live`, `/rivers`, `/muhurat`, and the
-`/rivers/*` and `/muhurat/*` detail pages.
+Twelve locales: the landing page, `/rivers`, `/live` and `/muhurat`.
 
-Twelve locales: the landing page.
+Full-depth-only (English and Hindi): `/snan`, `/panchang`, `/ethics`,
+`/how-it-works`, `/faq`, `/patra`, `/verify`, `/kumbh`, and the `/rivers/*`
+and `/muhurat/*` detail pages.
 
 ---
 

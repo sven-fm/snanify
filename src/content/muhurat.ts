@@ -21,7 +21,8 @@
 /* This module carries deep content, which exists in English and Hindi only.
    `Lang` here is therefore the full-depth pair and not the twelve locales the
    site serves; see the tier note at the top of src/lib/locales.ts. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { FullLang as Lang, Lang as WideLang } from "@/lib/locales";
+import { monthName } from "@/content/months";
 import raw from "./data/muhurat.json";
 
 /* --- primitives ---------------------------------------------------------- */
@@ -353,10 +354,14 @@ const MONTH_NAMES: Record<Lang, readonly string[]> = {
   ],
 };
 
-export function monthLabel(month: string, lang: Lang): { name: string; year: string } {
+/**
+ * Month names are localised in all twelve; see content/names.ts. English and
+ * Hindi still come from MONTH_NAMES above, which stays their source of truth.
+ */
+export function monthLabel(month: string, lang: WideLang): { name: string; year: string } {
   const [y, m] = month.split("-");
   const index = Number(m) - 1;
-  return { name: MONTH_NAMES[lang][index] ?? month, year: y };
+  return { name: monthName(index, lang, MONTH_NAMES) ?? month, year: y };
 }
 
 export interface AlmanacMonth {
@@ -527,102 +532,15 @@ export function formatDualClock(args: {
 
 /* --- page copy ----------------------------------------------------------- */
 
+/**
+ * Detail-page copy for /muhurat/<occasion>, in English and Hindi.
+ *
+ * The index copy, and everything the two pages share, moved to
+ * src/content/muhurat-index/ when /muhurat went to twelve locales. What is left
+ * here is only what the detail route uses and the index does not.
+ */
 export const muhuratContent = {
   en: {
-    meta: {
-      indexTitle: "Muhurat calendar, Snanify",
-      indexDescription:
-        "The occasions Snanify keeps, the daily windows they are held in, and an honest account of how precisely we know when each one falls.",
-      detailSuffix: "Muhurat calendar · Snanify",
-    },
-    nav: { back: "All occasions" },
-    hero: {
-      eyebrow: "The calendar",
-      title: "When the water is kept.",
-      lede: "Twelve months of occasions, the daily windows they are held in, and, stated in the same breath, exactly how much we know about when each one falls.",
-      asOf: "Looking forward from 10 August 2026",
-    },
-    provenance: {
-      badge: "Provisional · to be confirmed against the panchang",
-      badgeShort: "Provisional",
-      heading: "Where these timings come from",
-      line: "No panchang provider is wired yet. Every date and every window on this page is provisional and is labelled so wherever it appears, on this list, on each occasion, and on anything we ever send you. When a provider is named and a person here has checked a sample of days against a reference almanac, the labels change and this sentence changes with them.",
-      sourceLabel: "Provider",
-      ayanamsaLabel: "Ayanamsa",
-      coordinatesLabel: "Ghat coordinates",
-      coordinatesPending: "Pending on-site survey",
-      notSet: "Not yet fixed",
-    },
-    reading: {
-      eyebrow: "How to read this",
-      title: "Three things we do differently.",
-      items: [
-        {
-          n: "01",
-          t: "Months, not dates",
-          d: "Where we cannot defend an exact date we print the month and the tithi rule instead. The rule is a definition and therefore a fact; the date is a computation we have not yet done. A confident wrong date is worse than an honest imprecise one.",
-        },
-        {
-          n: "02",
-          t: "Both clocks, always",
-          d: "Times are given at the ghat first, because that is where the rite happens, and beside them in your own zone with the date shift written out. We never convert silently, and we never print a bare IST time and leave the arithmetic to you.",
-        },
-        {
-          n: "03",
-          t: "Sunrise to sunrise",
-          d: "The Hindu day turns at sunrise, not at midnight. A window at 4:24 in the morning belongs to the panchang day that opened the previous dawn, which is the common case for our earliest window, not an edge case.",
-        },
-      ],
-    },
-    rhythm: {
-      eyebrow: "Every month",
-      title: "The rhythm underneath.",
-      lede: "Four occasions recur on their own schedule regardless of what else the year is doing. They run through every month below, named or not.",
-    },
-    spine: {
-      eyebrow: "The twelve months ahead",
-      title: "Occasion by month.",
-      empty: "No dated occasion. The monthly rhythm runs as it always does.",
-      observedAt: "Kept at",
-      waters: (n: number) => (n === 1 ? "1 water" : `${n} waters`),
-    },
-    windows: {
-      eyebrow: "The daily windows",
-      title: "Four hours of the day.",
-      lede: "These are rules, not clock times. Each one is defined by its distance from sunrise, from the sun's transit, or from sunset, so it holds on every day of the year and at every latitude, and it stays true while we still have no surveyed coordinates to compute a sunrise from.",
-      formulaLabel: "Definition",
-      lengthLabel: "Length",
-      basisLabel: "Why this hour",
-      minutes: (n: number) => `${n} minutes`,
-      diagramLabel: "A day, with the four windows marked in their order",
-      diagram: { sunrise: "Sunrise", noon: "Solar transit", sunset: "Sunset" },
-    },
-    clock: {
-      eyebrow: "Reading the clock",
-      title: "One instant, six cities.",
-      lede: "A window at the ghat is a single moment in time. What it is called on your wall calendar depends entirely on where you are standing, and for half the diaspora it is the previous evening.",
-      atTheGhat: "At the ghat",
-      elsewhere: "Elsewhere",
-      illustration:
-        "Illustration only. Worked from an assumed sunrise of 06:00 IST, a round number chosen to make the arithmetic legible, on a notional day. This is not a panchang date and no occasion falls on it.",
-      assumed: "Assumed sunrise",
-      window: "Window",
-    },
-    notPublished: {
-      eyebrow: "What is not here",
-      title: "Four things we will not print.",
-      lede: "A calendar is as much what it declines to say as what it says.",
-    },
-    refusals: {
-      eyebrow: "What we do not do",
-      title: "Asked for, and refused.",
-    },
-    cta: {
-      title: "Choose the water first.",
-      lede: "The occasion matters less than the river you have a relationship with. Start there.",
-      primary: "The six waters",
-      secondary: "The occasion list",
-    },
     detail: {
       aboutTitle: "What it is",
       whyTitle: "Why this occasion",
@@ -640,21 +558,10 @@ export const muhuratContent = {
       next: "Next",
       backToCalendar: "The whole calendar",
     },
-    tiers: {
-      nitya: "A daily observance",
-      punya: "A recurring parva",
-      parva: "A major occasion",
-      mahaparva: "One of the year's great days",
-    },
     cadences: {
       monthly: "Every lunar month",
       annual: "Once a year",
       season: "A season of days",
-    },
-    anchors: {
-      sunrise: "Anchored to sunrise",
-      "solar-noon": "Anchored to the sun's transit",
-      sunset: "Anchored to sunset",
     },
     resolutions: {
       udaya: "Sunrise (udaya-vyapini)",
@@ -667,100 +574,6 @@ export const muhuratContent = {
   },
 
   hi: {
-    meta: {
-      indexTitle: "मुहूर्त पंचांग, स्नानिफ़ाई",
-      indexDescription:
-        "स्नानिफ़ाई जिन पर्वों को मानता है, जिन दैनिक बेलाओं में वे संपन्न होते हैं, और इसका स्पष्ट लेखा कि प्रत्येक की तिथि हम कितनी निश्चितता से जानते हैं।",
-      detailSuffix: "मुहूर्त पंचांग · स्नानिफ़ाई",
-    },
-    nav: { back: "सभी पर्व" },
-    hero: {
-      eyebrow: "पंचांग",
-      title: "जल किन दिनों में रखा जाता है।",
-      lede: "आगामी बारह मास के पर्व, वे दैनिक बेलाएँ जिनमें वे संपन्न होते हैं, और उसी साँस में यह भी कि प्रत्येक की तिथि के बारे में हम वास्तव में कितना जानते हैं।",
-      asOf: "10 अगस्त 2026 से आगे की गणना",
-    },
-    provenance: {
-      badge: "अनुमानित · पंचांग से पुष्ट किया जाना शेष",
-      badgeShort: "अनुमानित",
-      heading: "ये समय कहाँ से आते हैं",
-      line: "अभी कोई पंचांग स्रोत जुड़ा नहीं है। इस पृष्ठ की प्रत्येक तिथि और प्रत्येक बेला अनुमानित है, और जहाँ भी दिखती है वहाँ यह अंकित रहता है, इस सूची में, प्रत्येक पर्व पर, और आपको भेजे जाने वाले हर संदेश में। जब स्रोत नियुक्त हो जाएगा और यहाँ का कोई उत्तरदायी व्यक्ति कुछ तिथियों का मिलान किसी प्रामाणिक पंचांग से कर लेगा, तब ये अंकन बदलेंगे और यह वाक्य भी।",
-      sourceLabel: "स्रोत",
-      ayanamsaLabel: "अयनांश",
-      coordinatesLabel: "घाट के अक्षांश-देशांतर",
-      coordinatesPending: "स्थल सर्वेक्षण शेष",
-      notSet: "अभी निश्चित नहीं",
-    },
-    reading: {
-      eyebrow: "इसे कैसे पढ़ें",
-      title: "तीन बातें, जो हम भिन्न ढंग से करते हैं।",
-      items: [
-        {
-          n: "०१",
-          t: "तारीख़ नहीं, मास",
-          d: "जहाँ हम सटीक तिथि का औचित्य नहीं दे सकते, वहाँ हम मास और तिथि-नियम छापते हैं। नियम एक परिभाषा है, अतः तथ्य; तिथि वह गणना है जो हमने अभी की ही नहीं। आत्मविश्वास से दी गई ग़लत तारीख़, ईमानदार अनिश्चितता से बुरी है।",
-        },
-        {
-          n: "०२",
-          t: "दोनों घड़ियाँ, सदैव",
-          d: "समय पहले घाट का दिया जाता है, क्योंकि अनुष्ठान वहीं होता है, और उसके साथ आपके समयक्षेत्र का, दिन के अंतर सहित। हम चुपचाप रूपांतरण नहीं करते, और केवल IST लिखकर गणित आप पर नहीं छोड़ते।",
-        },
-        {
-          n: "०३",
-          t: "सूर्योदय से सूर्योदय",
-          d: "हिंदू दिवस मध्यरात्रि नहीं, सूर्योदय पर बदलता है। प्रातः 4:24 की बेला उस पंचांग दिवस की है जो पिछली भोर आरंभ हुआ था, और हमारी सबसे प्रारंभिक बेला के लिए यह अपवाद नहीं, सामान्य स्थिति है।",
-        },
-      ],
-    },
-    rhythm: {
-      eyebrow: "प्रत्येक मास",
-      title: "नीचे बहती लय।",
-      lede: "चार पर्व अपने क्रम से लौटते रहते हैं, वर्ष में और चाहे जो हो। नीचे दिए प्रत्येक मास में ये चलते हैं, नाम लिए बिना भी।",
-    },
-    spine: {
-      eyebrow: "आगामी बारह मास",
-      title: "मास दर मास।",
-      empty: "कोई तिथि-बद्ध पर्व नहीं। मासिक लय यथावत चलती है।",
-      observedAt: "कहाँ",
-      waters: (n: number) => (n === 1 ? "1 जल" : `${n} जल`),
-    },
-    windows: {
-      eyebrow: "दैनिक बेलाएँ",
-      title: "दिन के चार पहर।",
-      lede: "ये नियम हैं, घड़ी के समय नहीं। प्रत्येक की परिभाषा सूर्योदय, सूर्य के मध्याह्न अथवा सूर्यास्त से उसकी दूरी है, इसलिए यह वर्ष के हर दिन और हर अक्षांश पर सही रहती है, और तब भी सत्य रहती है जब सूर्योदय की गणना के लिए हमारे पास सर्वेक्षित अक्षांश-देशांतर नहीं।",
-      formulaLabel: "परिभाषा",
-      lengthLabel: "अवधि",
-      basisLabel: "यही बेला क्यों",
-      minutes: (n: number) => `${n} मिनट`,
-      diagramLabel: "एक दिन, जिसमें चारों बेलाएँ क्रम से अंकित हैं",
-      diagram: { sunrise: "सूर्योदय", noon: "मध्याह्न", sunset: "सूर्यास्त" },
-    },
-    clock: {
-      eyebrow: "घड़ी पढ़ना",
-      title: "एक क्षण, छह नगर।",
-      lede: "घाट की एक बेला समय का एक ही क्षण है। आपकी दीवार के कैलेंडर पर उसे क्या कहा जाएगा, यह पूरी तरह इस पर निर्भर है कि आप कहाँ खड़े हैं, और आधे प्रवासी भारतीयों के लिए वह पिछली संध्या होती है।",
-      atTheGhat: "घाट पर",
-      elsewhere: "अन्यत्र",
-      illustration:
-        "केवल उदाहरण। एक कल्पित दिन पर, प्रातः 06:00 IST के मान लिए गए सूर्योदय से गणना, यह गोल संख्या केवल गणित को स्पष्ट करने के लिए चुनी गई है। यह कोई पंचांग तिथि नहीं है और उस दिन कोई पर्व नहीं पड़ता।",
-      assumed: "मान लिया गया सूर्योदय",
-      window: "बेला",
-    },
-    notPublished: {
-      eyebrow: "जो यहाँ नहीं है",
-      title: "चार बातें, जो हम नहीं छापेंगे।",
-      lede: "पंचांग उतना ही उससे बनता है जो वह कहने से इनकार करता है, जितना उससे जो वह कहता है।",
-    },
-    refusals: {
-      eyebrow: "जो हम नहीं करते",
-      title: "पूछा गया, और अस्वीकार किया गया।",
-    },
-    cta: {
-      title: "पहले जल चुनिए।",
-      lede: "पर्व से अधिक महत्व उस नदी का है जिससे आपका संबंध है। आरंभ वहीं से कीजिए।",
-      primary: "छह पवित्र जल",
-      secondary: "पर्वों की सूची",
-    },
     detail: {
       aboutTitle: "यह क्या है",
       whyTitle: "यह पर्व क्यों",
@@ -778,21 +591,10 @@ export const muhuratContent = {
       next: "अगला",
       backToCalendar: "संपूर्ण पंचांग",
     },
-    tiers: {
-      nitya: "नित्य कर्म",
-      punya: "आवर्ती पर्व",
-      parva: "प्रमुख पर्व",
-      mahaparva: "वर्ष के महापर्वों में एक",
-    },
     cadences: {
       monthly: "प्रत्येक चांद्र मास",
       annual: "वर्ष में एक बार",
       season: "कई दिनों की ऋतु",
-    },
-    anchors: {
-      sunrise: "सूर्योदय से बद्ध",
-      "solar-noon": "सूर्य के मध्याह्न से बद्ध",
-      sunset: "सूर्यास्त से बद्ध",
     },
     resolutions: {
       udaya: "सूर्योदय (उदयव्यापिनी)",

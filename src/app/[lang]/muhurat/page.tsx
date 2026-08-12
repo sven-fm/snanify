@@ -8,13 +8,12 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-/* This route exists in English and Hindi only for now; see the tier note and
-   the FULL_ONLY list at the top of src/lib/locales.ts, which is the single
-   place that decides. `Lang` here is therefore the full-depth pair. */
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { allLangParams, pickDeep, type Lang } from "@/lib/locales";
+import { occasionName } from "@/content/names";
 import { navLabel } from "@/lib/nav";
 import { MuhuratIndex } from "@/components/pages/MuhuratIndex";
-import { OCCASIONS, muhuratContent } from "@/content/muhurat";
+import { OCCASIONS } from "@/content/muhurat";
+import { muhuratIndexContent } from "@/content/muhurat-index";
 import { pageMetadata } from "@/lib/seo";
 
 /**
@@ -25,7 +24,7 @@ import { pageMetadata } from "@/lib/seo";
 const ROUTE = "/muhurat";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return allLangParams();
 }
 
 export async function generateMetadata({
@@ -34,7 +33,7 @@ export async function generateMetadata({
   params: Promise<{ lang: Lang }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const t = muhuratContent[lang].meta;
+  const t = muhuratIndexContent[lang].meta;
 
   return pageMetadata({
     lang,
@@ -46,7 +45,7 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
   const { lang } = await params;
-  const t = muhuratContent[lang];
+  const t = muhuratIndexContent[lang];
 
   /* The calendar as a list of occasions, in the order the almanac sets them.
      Each entry carries only a name, a line and a link. The Event node with its
@@ -65,9 +64,9 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         lang,
         ROUTE,
         OCCASIONS.map((occasion) => ({
-          name: occasion.name[lang],
+          name: occasionName(occasion, lang),
           path: `/muhurat/${occasion.slug}`,
-          description: occasion.line[lang],
+          description: pickDeep(occasion.line, lang),
         })),
       ),
       breadcrumb: breadcrumbList(lang, [

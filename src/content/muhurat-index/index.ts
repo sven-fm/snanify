@@ -1,5 +1,5 @@
 import type { Lang } from "@/lib/locales";
-import { en, type RiversIndexCopy } from "./en";
+import { en, type MuhuratIndexCopy } from "./en";
 import { hi } from "./hi";
 import { bn } from "./bn";
 import { mr } from "./mr";
@@ -12,13 +12,13 @@ import { or } from "./or";
 import { pa } from "./pa";
 import { as } from "./as";
 
-export type { RiversIndexCopy };
+export type { MuhuratIndexCopy };
 
 /**
- * The waters index in every locale the site serves. See the header of ./en.ts
- * for the rules the copy is written under.
+ * The muhurat calendar in every locale the site serves, plus the keys the
+ * detail route shares with it. See the header of ./en.ts.
  */
-export const riversIndexContent = {
+export const muhuratIndexContent = {
   en,
   hi,
   bn,
@@ -31,4 +31,4 @@ export const riversIndexContent = {
   or,
   pa,
   as,
-} satisfies Record<Lang, RiversIndexCopy>;
+} satisfies Record<Lang, MuhuratIndexCopy>;

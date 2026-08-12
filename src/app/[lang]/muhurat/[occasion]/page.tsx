@@ -28,6 +28,8 @@ import {
 } from "@/content/muhurat";
 import { RIVERS } from "@/content/rivers";
 import { pageMetadata } from "@/lib/seo";
+import { muhuratIndexContent } from "@/content/muhurat-index";
+import { occasionName } from "@/content/names";
 
 export const dynamicParams = false;
 
@@ -146,7 +148,11 @@ export async function generateMetadata({
   const occasion = occasionBySlug(slug);
   if (!occasion) return {};
 
-  const t = muhuratContent[lang];
+  /* The shared keys (meta, nav, cta, provenance, tiers, windows, anchors) live
+     in content/muhurat-index/ because the index page needs them in twelve
+     locales; the detail-only keys stayed in muhurat.ts. A Record<Lang, ...>
+     indexes fine with a FullLang, so nothing is written twice. */
+  const t = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
   const title = `${occasion.name[lang]}, ${t.meta.detailSuffix}`;
   const description = occasionDescription(lang, occasion);
 
@@ -189,7 +195,7 @@ export default async function Page({
     webPage({
       lang,
       path: route,
-      name: occasion.name[lang],
+      name: occasionName(occasion, lang),
       description,
       mainEntity: { "@id": `${publicUrl(lang, route)}#occasion` },
       mentions: ghats,
@@ -207,7 +213,7 @@ export default async function Page({
       description,
       /* The provenance label verbatim, so the date's status travels with the
          date wherever the node is read. */
-      provenance: muhuratContent[lang].provenance.badge,
+      provenance: muhuratIndexContent[lang].provenance.badge,
       ...eventDates(occasion),
       scheduleTimezone: GHAT_ZONE,
       repeatFrequency: repeatFrequency(occasion),

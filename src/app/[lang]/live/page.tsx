@@ -12,10 +12,8 @@ import {
 } from "@/components/StructuredData";
 import { liveContent } from "@/content/live";
 import { getGhat } from "@/content/rivers";
-/* This route exists in English and Hindi only for now; see the tier note and
-   the FULL_ONLY list at the top of src/lib/locales.ts, which is the single
-   place that decides. `Lang` here is therefore the full-depth pair. */
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { allLangParams, type Lang } from "@/lib/locales";
+import { waterName } from "@/content/names";
 import { ARCHIVE, REVALIDATE_SECONDS, SOURCES, getLiveSnapshot } from "@/lib/riverdata";
 import { pageMetadata } from "@/lib/seo";
 
@@ -45,7 +43,7 @@ if (revalidate !== REVALIDATE_SECONDS) {
 }
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return allLangParams();
 }
 
 export async function generateMetadata({
@@ -114,7 +112,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       const ghat = getGhat(water.slug);
       return {
         "@type": "Place",
-        name: ghat ? `${ghat.river[lang]}, ${ghat.city[lang]}` : water.slug,
+        name: ghat ? `${waterName(ghat, "river", lang)}, ${waterName(ghat, "city", lang)}` : water.slug,
         description: t.reaches[water.slug],
         geo: {
           "@type": "GeoCoordinates",
