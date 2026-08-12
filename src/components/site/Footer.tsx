@@ -1,7 +1,7 @@
 import { content } from "@/lib/content";
 import { servesPath, type Lang } from "@/lib/locales";
 import { navItem, navLabel, type NavKey } from "@/lib/nav";
-import { Mark } from "@/components/Logo";
+import { Mark, Wordmark } from "@/components/Logo";
 
 /**
  * The column headings and the inert legal labels come from `t.footer.cols`,
@@ -41,9 +41,9 @@ export function Footer({ lang }: { lang: Lang }) {
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
-            <div className="flex items-center gap-3">
-              <Mark className="h-9 w-9 text-ink" />
-              <span className="wordmark text-lg text-ink">Snanify</span>
+            <div className="flex items-baseline gap-3">
+              <Mark className="h-9 w-9 shrink-0 translate-y-[0.14em] text-ink" />
+              <Wordmark className="text-[20px] text-ink" />
             </div>
             <div className="rule-thin mt-5" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink2">{t.footer.tagline}</p>

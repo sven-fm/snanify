@@ -92,7 +92,6 @@ type Copy = {
 
   readonly sticky: {
     readonly name: string;
-    readonly price: string;
     readonly cta: string;
   };
 
@@ -191,7 +190,7 @@ const en: Copy = {
   meta: {
     title: "The snan, four and a half minutes with a real river",
     description:
-      "A digital snan. Four and a half minutes with a river's own gauge reading this hour, a vow held for eleven seconds, ninety seconds of black screen, and one mark that cannot be forged. Eleven snans for $11.",
+      "A digital snan. Four and a half minutes with a river's own gauge reading this hour, a vow held for eleven seconds, ninety seconds of black screen, and one mark that cannot be forged. Eleven mornings, one for each morning.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
@@ -202,14 +201,13 @@ const en: Copy = {
     titleB: "The river comes to you.",
     lede: "A digital snan. You sit for two hundred and seventy seconds with a river at the level she actually stands this hour, measured by the Central Water Commission. You breathe at her rhythm, hold your vow under your thumb for eleven seconds, and put the phone down for ninety. One line goes into your register, and one mark is drawn from the reading. There has never been another like it.",
     offer:
-      "Eleven mornings for eleven, one for each morning. The live water, the panchang, the muhurat and every river's own page are free to read, forever, to anyone.",
-    ctaPrimary: "Take eleven snans, $11",
+      "Eleven mornings for {price}, one for each morning. The live water, the panchang, the muhurat and every river's own page are free to read, forever, to anyone.",
+    ctaPrimary: "Take eleven mornings, {price}",
     ctaSecondary: "What the four and a half minutes are",
   },
 
   sticky: {
-    name: "Gyarah, eleven snans",
-    price: "$11 · ₹501",
+    name: "Gyarah, eleven mornings",
     cta: "Choose your water",
   },
 
@@ -476,7 +474,7 @@ const hi: Copy = {
   meta: {
     title: "स्नान, साढ़े चार मिनट एक सच्ची नदी के साथ",
     description:
-      "एक डिजिटल स्नान। न पुरोहित, न घाट, न किसी के लिए कुछ संपन्न किया जाना। साढ़े चार मिनट, इस घंटे के अपने गेज पाठ के साथ; ग्यारह सेकंड थमा हुआ संकल्प; नब्बे सेकंड की काली स्क्रीन; और एक चिह्न जिसे गढ़ा नहीं जा सकता। ग्यारह स्नान $11 में।",
+      "एक डिजिटल स्नान। साढ़े चार मिनट, इस घंटे के अपने गेज पाठ के साथ; ग्यारह सेकंड थमा हुआ संकल्प; नब्बे सेकंड की काली स्क्रीन; और एक चिह्न जिसे गढ़ा नहीं जा सकता। ग्यारह सुबहें, हर सुबह के लिए एक।",
   },
 
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
@@ -485,25 +483,24 @@ const hi: Copy = {
     eyebrow: "जल संकल्प",
     titleA: "साढ़े चार मिनट।",
     titleB: "नदी आप तक आती है।",
-    lede: "एक डिजिटल स्नान। न पुरोहित, न घाट, न किसी के लिए कुछ संपन्न किया जाना। आप दो सौ सत्तर सेकंड उस नदी के साथ बैठते हैं जो इस घंटे वास्तव में जिस स्तर पर है, केंद्रीय जल आयोग द्वारा मापी हुई। उसी की लय पर साँस लेते हैं, अपना संकल्प ग्यारह सेकंड अंगूठे के नीचे थामे रखते हैं, और नब्बे सेकंड के लिए फ़ोन नीचे रख देते हैं। आपकी पंजिका में एक पंक्ति दर्ज होती है, और उसी पाठ से एक चिह्न बनता है, जिस जैसा दूसरा कभी हुआ नहीं।",
+    lede: "एक डिजिटल स्नान। आप दो सौ सत्तर सेकंड उस नदी के साथ बैठते हैं जो इस घंटे वास्तव में जिस स्तर पर है, केंद्रीय जल आयोग द्वारा मापी हुई। उसी की लय पर साँस लेते हैं, अपना संकल्प ग्यारह सेकंड अंगूठे के नीचे थामे रखते हैं, और नब्बे सेकंड के लिए फ़ोन नीचे रख देते हैं। आपकी पंजिका में एक पंक्ति दर्ज होती है, और उसी पाठ से एक चिह्न बनता है, जिस जैसा दूसरा कभी हुआ नहीं।",
     offer:
-      "ग्यारह स्नान $11 में, यानी एक स्नान एक डॉलर का। कोई निःशुल्क स्नान नहीं है। सजीव जल, पंचांग, मुहूर्त और हर नदी का अपना पृष्ठ सदा निःशुल्क रहते हैं।",
-    ctaPrimary: "ग्यारह स्नान लें, $11",
+      "ग्यारह सुबहें {price} में, हर सुबह के लिए एक। सजीव जल, पंचांग, मुहूर्त और हर नदी का अपना पृष्ठ सदा, सबके लिए, निःशुल्क पढ़े जा सकते हैं।",
+    ctaPrimary: "ग्यारह सुबहें लीजिए, {price}",
     ctaSecondary: "इन साढ़े चार मिनटों में क्या होता है",
   },
 
   sticky: {
-    name: "ग्यारह, ११ स्नान",
-    price: "$11 · ₹५०१",
+    name: "ग्यारह, ११ सुबहें",
     cta: "जल चुनिए",
   },
 
   truth: {
     label: "जो वास्तव में सत्य है",
-    title: "यहाँ आपके लिए कोई कुछ नहीं करता।",
+    title: "यहाँ सब कुछ वास्तविक है, और वह आपका है।",
     body: [
-      "कोई पुरोहित आपकी जगह नहीं खड़ा होता। आपके नाम से किसी घाट पर कोई अनुष्ठान नहीं होता। जल पर कोई कैमरा नहीं है, और इस स्थल पर कहीं कुछ घटित होते हुए की कोई रिकॉर्डिंग नहीं है।",
-      "जो सत्य है वह थोड़ा है, और वही सब कुछ है: एक नदी, इस घंटे उसका जलस्तर और प्रवाह, केंद्रीय जल आयोग द्वारा मापा और प्रकाशित। पंचांग। नब्बे सेकंड, जिनमें आप स्क्रीन देख ही नहीं रहे होते। और आपके अपने शब्द, जो एक बार लिखे जाते हैं और हर सुबह दोहराए जाते हैं।",
+      "एक नदी, इस घंटे वह जिस जलस्तर और प्रवाह पर वास्तव में है, केंद्रीय जल आयोग द्वारा मापी और सार्वजनिक अभिलेख में प्रकाशित। पंचांग, गणना किया हुआ। नब्बे सेकंड जो स्क्रीन से दूर बीतते हैं। और आपके अपने शब्द, जो एक बार लिखे जाते हैं और हर सुबह आपको लौटाकर पढ़ाए जाते हैं।",
+      "साधना आपकी है। आप उसे कहते हैं, आप उसे निभाते हैं, और जो चिह्न आपके पास रहता है वह एक ऐसा अंक लिए होता है जिसे कोई अजनबी जाकर जाँच सकता है।",
       "हमने नदी को कंप्यूटर में नहीं रखा। हमने कंप्यूटर को नदी के नीचे रखा।",
     ],
   },

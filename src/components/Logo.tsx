@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { type CSSProperties, useId } from "react";
 
 /**
  * The Bindu Ripple, cut as a printer's colophon.
@@ -40,22 +40,75 @@ export function Mark({ className = "" }: { className?: string }) {
 }
 
 /**
- * Masthead lockup: seal, a hairline, then the wordmark.
+ * The logotype.
  *
- * The seal was always the good half. The word beside it used to be set at
- * 1.05rem in letter-spaced caps, which is `label` styling applied to a
- * logotype, and it read as a stock tech mark rather than as the top of a
- * printed page. It is now set as a masthead is set: larger than the copy around
- * it, heavy, nearly solid, and separated from the seal by the same hairline the
- * almanac rules everything else with, so the two read as one printed block
- * rather than as an icon with a label next to it.
+ * Two things are happening. The word is set in mixed case in two weights, the
+ * Sanskrit root heavy and the English suffix light, so the eye reads SNAN first
+ * and the word has ascenders and a descender to be recognised by rather than
+ * the even grey of letter-spaced caps. And the dot of the i is the bindu, in
+ * the spot colour, so the seal's one idea recurs inside the word instead of
+ * standing next to it.
+ *
+ * The dot is drawn, not typed. Two reasons it has to be:
+ *
+ * 1. The base layer sets border-radius: 0 !important on everything, so a
+ *    rounded span would print as a square. The seal draws its bindu as an SVG
+ *    circle and so does this.
+ * 2. The letter under it is U+0131, the dotless i, because Eczar's own tittle
+ *    would otherwise sit above the bindu.
+ *
+ * The visible string is therefore not "Snanify", which is why the lettering is
+ * aria-hidden and the real name is carried in a sr-only span beside it. Without
+ * that, a screen reader says "Snan" plus a stray letter, find-in-page misses the
+ * brand, and copying the masthead yields a Turkish i.
+ *
+ * The geometry of the dot lives in globals.css, in em, measured off the live
+ * face: 0.152em across, 0.826em up from the box bottom, centred at 46.1% of the
+ * i's advance. That last figure only holds while the wordmark stays at
+ * line-height: 1, which is why the utility sets it explicitly.
+ */
+export function Wordmark({
+  className = "",
+  style,
+}: {
+  className?: string;
+  style?: CSSProperties;
+}) {
+  return (
+    <span className={`wordmark ${className}`} style={style}>
+      {/* select-none so a reader copying the masthead gets the sr-only
+          "Snanify" and not that string glued to a Turkish-i version of it. */}
+      <span aria-hidden="true" className="select-none">
+        <span className="wordmark-root">Snan</span>
+        <span className="wordmark-suffix">
+          <span className="wordmark-i">
+            {"ı"}
+            <svg viewBox="0 0 10 10" className="wordmark-bindu" aria-hidden="true">
+              <circle cx="5" cy="5" r="5" fill="var(--spot)" />
+            </svg>
+          </span>
+          fy
+        </span>
+      </span>
+      <span className="sr-only">Snanify</span>
+    </span>
+  );
+}
+
+/**
+ * Masthead lockup: seal, then the word, baseline aligned.
+ *
+ * The hairline that used to sit between them is gone. It was there to hold an
+ * icon and a label apart, and this is not an icon with a label: the word now
+ * carries the seal's own bindu, so the two read as one printed block without a
+ * rule to bind them. The seal is nudged down 0.14em, not the old 0.2em, because
+ * a mixed-case word puts its optical centre lower than caps do.
  */
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-baseline gap-2.5 sm:gap-3 ${className}`}>
-      <Mark className="h-7 w-7 shrink-0 translate-y-[0.2em] text-ink" />
-      <span aria-hidden="true" className="h-[1.15em] w-px shrink-0 translate-y-[0.16em] bg-rulestrong" />
-      <span className="wordmark text-[1.22rem] text-ink sm:text-[1.35rem]">Snanify</span>
+    <span className={`inline-flex items-baseline gap-[11px] sm:gap-3 ${className}`}>
+      <Mark className="h-7 w-7 shrink-0 translate-y-[0.14em] text-ink" />
+      <Wordmark className="text-[22px] text-ink sm:text-[24px]" />
     </span>
   );
 }
