@@ -93,7 +93,34 @@ export function pageMetadata({
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   applicationName: "Snanify",
-  icons: { icon: "/icon.svg", apple: "/icon.svg" },
+  /**
+   * Three files, because three different consumers ask three different ways.
+   *
+   *  · icon.svg     modern browsers, and the one that has to survive a 16px tab.
+   *                 It is therefore the small-size cut of the Bindu Ripple: one
+   *                 strong ring instead of the double rule, two water rules
+   *                 instead of three, a slightly larger bindu. At 16px the
+   *                 double hairline aliased to a grey smudge and the three
+   *                 2.2-unit rules merged into one, which is why this exists.
+   *  · favicon.ico  16, 32 and 48, from the same small cut. Browsers request
+   *                 /favicon.ico whatever the markup says, and Google's favicon
+   *                 crawler strongly prefers it. Its absence is why a stale icon
+   *                 could persist in a tab and in search results no matter what
+   *                 `rel="icon"` pointed at.
+   *  · apple-touch  180px, OPAQUE, and the full three-rule mark. iOS composites
+   *                 any transparency to black and masks the corners itself, so
+   *                 this one keeps the full-bleed paper ground; it is also shown
+   *                 large enough for the double rule to read.
+   *
+   * Regenerate with the note in DESIGNSYSTEM.md if the seal ever changes.
+   */
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   /**
    * Search Console's HTML-tag verification, supplied by the environment so the
    * token is not committed. Set GOOGLE_SITE_VERIFICATION in the Vercel project

@@ -201,8 +201,36 @@ optical centre lower than caps do.
 - `<Logo />` seal and word, baseline aligned, no separator
 - `<Colophon />` the large version, with a 30-tick dial
 
-`public/icon.svg` is a standalone flat copy for the favicon, with the day-edition tokens
-resolved and no CSS variables.
+### The favicon is three files, and one of them is a different cut of the seal
+
+All three are standalone and flat, with the day-edition tokens resolved to hex and no CSS
+variables, because a favicon renders with no stylesheet.
+
+| File | Used by | Art |
+| --- | --- | --- |
+| `public/icon.svg` | modern browsers, including the 16px tab | the **small cut**: one 3.2-unit ring, two water rules, bindu at `r 6.6` |
+| `public/favicon.ico` | any browser asking for `/favicon.ico`, and Google | the small cut at 16, 32 and 48 |
+| `public/apple-touch-icon.png` | iOS home screen | the **full mark**, 180px, opaque |
+
+The small cut exists because the full seal does not survive 16px. The double rule is a 1
+and a 2 unit stroke on a 48 unit box, which at 16px is a third of a pixel and two thirds of
+one: they alias into a single grey smudge. The three 2.2-unit water rules, 2.4 apart, merge
+into one grey band. So the tab icon drops the outer hairline, thickens the ring, and prints
+two rules instead of three, with the lower one still running past the roundel and getting
+trimmed by it, which is the idea the seal is built on.
+
+`apple-touch-icon.png` keeps the full three-rule mark and the full-bleed paper ground, for
+two reasons: iOS shows it large enough for the double rule to read, and iOS composites any
+transparency to **black**, so a transparent-cornered icon lands on the home screen in a
+black square.
+
+**`/favicon.ico` must exist as a file.** Browsers request that exact path whatever
+`rel="icon"` says, and Google's favicon crawler prefers it. While it 404'd, a stale icon
+could sit in a tab and in search results no matter what the markup pointed at, which is
+exactly what happened.
+
+Regenerate from `src/components/Logo.tsx` with `sharp` for the PNG and SVG cuts and PIL for
+the multi-size ICO; `src/lib/seo.ts` declares all three.
 
 ## Components
 

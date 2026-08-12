@@ -1,17 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  
   <defs>
     <clipPath id="seal"><circle cx="24" cy="24" r="20"></circle></clipPath>
   </defs>
-  <rect width="48" height="48" fill="#f2ead9"></rect>
-  <circle cx="24" cy="24" r="23.2" stroke="#16130f" stroke-width="1"></circle>
-  <circle cx="24" cy="24" r="20" stroke="#16130f" stroke-width="2"></circle>
+  <circle cx="24" cy="24" r="23" fill="#f2ead9"></circle>
+  <circle cx="24" cy="24" r="21.4" stroke="#16130f" stroke-width="3.2" fill="none"></circle>
   <g clip-path="url(#seal)">
-    <circle cx="24" cy="17.6" r="6.2" fill="#c1272d"></circle>
+    <circle cx="24" cy="16.2" r="6.6" fill="#c1272d"></circle>
     <g fill="#16130f">
-      <rect x="14" y="27.4" width="20" height="2.2"></rect>
-      <rect x="9" y="32" width="30" height="2.2"></rect>
-      <rect x="3" y="36.6" width="42" height="2.2"></rect>
+      <rect x="11" y="27.8" width="26" height="3.2"></rect>
+      <rect x="4" y="34.6" width="40" height="3.4"></rect>
     </g>
   </g>
 </svg>
