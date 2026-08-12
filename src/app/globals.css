@@ -177,21 +177,59 @@ html:not([data-script="latin"]) .label {
   font-size: 0.78rem;
 }
 
-/* The masthead wordmark stays Latin caps in Eczar in every locale, so the brand
-   is one mark and not twelve. This is the one place that names a family.
+/* The masthead wordmark stays Latin in Eczar in every locale, so the brand is
+   one mark and not twelve. This is the one place that names a family.
 
-   It is set as a LOGOTYPE, not as a label: heavy, large and nearly solid. The
-   0.16em tracking it used to carry is `label` spacing, and letter-spaced caps at
-   a small size read as a stock tech logo rather than as a printed masthead. An
-   almanac sets its own name big and tight, so this does too, with kerning left
-   on and synthesis off because Eczar has no heavier cut to fake. */
+   It is set as a LOGOTYPE, not as a label. The 800 caps it used to carry closed
+   the counters of a high-contrast face and the near-zero tracking flattened the
+   word into an even grey. It is now mixed case in two weights: the Sanskrit root
+   heavy, the English suffix light, with the dot of the i inked in the spot
+   colour so the seal's bindu recurs inside the word.
+
+   line-height: 1 IS LOAD-BEARING. The bindu is positioned in em from the box
+   bottom, and that offset (0.826em) is the sum of the dot's foot above the
+   baseline (0.587em, measured off Eczar) and the baseline's height above the box
+   bottom, which is only 0.2388em while the line box is exactly one em. Change
+   the leading and the dot drifts off the stem. */
 @utility wordmark {
   font-family: var(--font-eczar), Georgia, serif;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.015em;
+  font-weight: 400;
+  line-height: 1;
   font-feature-settings: "kern" 1;
+  /* Eczar ships no italic and nothing above 800, so a synthesised cut is a
+     defect rather than emphasis. */
   font-synthesis: none;
+}
+
+/* Snan, the root. */
+@utility wordmark-root {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ify, the suffix, opened a touch to carry the lighter weight. */
+@utility wordmark-suffix {
+  font-weight: 400;
+  letter-spacing: 0.015em;
+}
+
+/* The dotless i (U+0131) that the bindu sits over. */
+@utility wordmark-i {
+  position: relative;
+  display: inline-block;
+}
+
+/* The bindu, measured into Eczar's own tittle box at weight 400:
+   0.152em across, foot 0.587em above the baseline, centred at 46.1% of the
+   glyph's advance. An SVG circle rather than a rounded span, because the base
+   layer sets border-radius: 0 !important and would print a square. */
+@utility wordmark-bindu {
+  position: absolute;
+  left: 46.1%;
+  bottom: 0.826em;
+  width: 0.152em;
+  height: 0.152em;
+  transform: translateX(-50%);
 }
 
 /* None of these scripts has an italic; a synthesised slant is a defect, not

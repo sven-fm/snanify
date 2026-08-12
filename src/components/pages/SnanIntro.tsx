@@ -99,7 +99,9 @@ export function SnanIntro({ lang }: { lang: Lang }) {
               className="ink-in mt-6 max-w-2xl border-l-2 border-spot pl-4 text-[1rem] leading-[1.8] text-ink"
               style={{ animationDelay: "200ms" }}
             >
-              {t.hero.offer}
+              {t.hero.offer.split("{price}")[0]}
+              <Price prices={PRICE.eleven} />
+              {t.hero.offer.split("{price}")[1]}
             </p>
 
             <div
@@ -110,7 +112,10 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                 href="#tariff"
                 className={buttonClass("solid", "min-h-[52px] w-full sm:w-auto")}
               >
-                {t.hero.ctaPrimary}
+                {/* {price} is the eleven-morning line, in the reader's currency. */}
+                {t.hero.ctaPrimary.split("{price}")[0]}
+                <Price prices={PRICE.eleven} />
+                {t.hero.ctaPrimary.split("{price}")[1]}
               </a>
               <a
                 href="#form"
@@ -571,7 +576,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
           <div className="min-w-0">
             <p className="label truncate text-ink">{t.sticky.name}</p>
             <p className="mt-1 text-[0.95rem] leading-none text-ink2 tabular-nums">
-              {t.sticky.price}
+              <Price prices={PRICE.eleven} />
             </p>
           </div>
           <Link

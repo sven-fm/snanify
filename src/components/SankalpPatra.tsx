@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
-import { Colophon, Mark } from "@/components/Logo";
+import { Colophon, Mark, Wordmark } from "@/components/Logo";
 import {
   chihnaContent,
   SPECIMEN_WATERMARK_TEXT,
@@ -240,9 +240,7 @@ export function ChihnaSheet({
                 <span className="inline-block shrink-0" style={{ width: u(26), height: u(26) }}>
                   <Mark className="h-full w-full text-ink" />
                 </span>
-                <span className="wordmark text-ink" style={{ fontSize: u(12) }}>
-                  Snanify
-                </span>
+                <Wordmark className="text-ink" style={{ fontSize: u(13) }} />
               </span>
               <span className="text-ink2" style={{ fontSize: u(9.5), textAlign: "right" }}>
                 {/* Every label carries its size inline: the `label` utility is

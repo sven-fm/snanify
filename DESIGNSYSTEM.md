@@ -56,7 +56,7 @@ editions speak in one voice rather than two borrowed ones.
 ```css
 .display  /* Eczar 600, tight leading, headings only */
 .label    /* Martel Sans 700 caps, 0.16em tracking, column heads and eyebrows */
-.wordmark /* the brand lockup only */
+.wordmark /* the brand lockup only, plus -root -suffix -i -bindu */
 ```
 
 ### Script-specific rules, all of which matter
@@ -74,8 +74,9 @@ synthesised style is exactly the generic tell this design exists to remove.
 Numerals are Devanagari in the Hindi edition (`०१ ०२ ०३`). Tabular figures everywhere numbers
 line up in a column.
 
-`.wordmark` deliberately does **not** inherit the `lang="hi"` case override, because the logo
-stays Latin caps in every locale.
+`.wordmark` names its own family (Eczar) rather than reading `--font-display`, and takes none
+of the `html:not([data-script="latin"])` overrides, because the brand stays Latin in all
+twelve locales: one mark, not twelve.
 
 ## Rules
 
@@ -172,16 +173,36 @@ The **Bindu Ripple**, cut as a printer's colophon. A solid vermillion bindu over
 rules, trimmed by a double-ruled roundel. The rules deliberately run past the roundel and get
 clipped by it, the way a printed block is trimmed by its seal.
 
-The wordmark is set as a **logotype, not a label**: Eczar 800, tracking down at 0.015em,
-larger than the copy around it, kerning on, synthesis off, and separated from the seal by a
-hairline. It was once 1.05rem caps tracked out to 0.16em, which is `label` styling applied to
-a logotype and read as a stock tech mark rather than the top of a printed page.
+The wordmark is set as a **logotype, not a label**, and it does two things at once:
+
+- **Mixed case, two weights.** `Snan` in Eczar 700 at `-0.01em`, `ıfy` in Eczar 400 at
+  `0.015em`. The eye reads the Sanskrit root first, and the word has ascenders and a
+  descender to be recognised by. It was once 800 caps, which closed the counters of a
+  high-contrast face and flattened the name into an even grey.
+- **The dot of the i is the bindu**, in the spot colour, so the seal's one idea recurs inside
+  the word instead of standing next to it. The hairline that used to separate seal from word
+  is gone with it: this is no longer an icon with a label, so nothing has to bind the two.
+
+Three things about that dot are load-bearing, and each one bites if changed:
+
+| | |
+| --- | --- |
+| `line-height: 1` on `.wordmark` | The bindu is placed 0.826em up from the box bottom, which is the dot's foot above the baseline (0.587em, measured off the live face) plus the baseline's own height above the box bottom. That second term only holds while the line box is exactly one em. Change the leading and the dot drifts off the stem. |
+| An SVG `<circle>`, not a styled span | The base layer sets `border-radius: 0 !important`, so a rounded span prints as a square. The seal draws its bindu the same way. |
+| The letter is U+0131, the dotless `ı` | Eczar's own tittle would otherwise sit above the bindu. The visible string is therefore not "Snanify", so the lettering is `aria-hidden` and `select-none`, with the real name in an `sr-only` span. Without both, a screen reader says "Snan" plus a stray letter and copying the masthead yields the name twice. |
+
+Every dot measurement is in em, so the lockup works at any size with no per-size tuning:
+22px in the header (24px at `sm`), 20px in the footer, `u(13)` on the Jal Chihna masthead. The
+seal is nudged `translateY(0.14em)`, down from `0.2em`, because a mixed-case word puts its
+optical centre lower than caps do.
 
 - `<Mark />` the seal alone
-- `<Logo />` seal, hairline, wordmark
+- `<Wordmark />` the word alone, at whatever size it inherits
+- `<Logo />` seal and word, baseline aligned, no separator
 - `<Colophon />` the large version, with a 30-tick dial
 
-`public/icon.svg` is a standalone flat copy for the favicon, with no CSS variables.
+`public/icon.svg` is a standalone flat copy for the favicon, with the day-edition tokens
+resolved and no CSS variables.
 
 ## Components
 
