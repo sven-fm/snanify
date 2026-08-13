@@ -1,4 +1,4 @@
-import type { Currency } from "@/lib/currency";
+import { DEFAULT_CURRENCY, type Currency } from "@/lib/currency";
 
 /* ---------------------------------------------------------------------------
    The tariff, in four currencies.
@@ -35,3 +35,29 @@ export const PER_SNAN: Record<TierKey, Prices> = {
   eleven: { USD: "$1", EUR: "€1", CAD: "C$1", INR: "₹46" },
   sixty: { USD: "$0.80", EUR: "€0.75", CAD: "C$0.80", INR: "₹35" },
 };
+
+/* ---------------------------------------------------------------------------
+   Prices inside a sentence.
+
+   Copy writes `{price:eleven}` rather than a figure, and <PriceText> fills it
+   with every currency at render, the same way the tariff does. Structured data
+   cannot do that: JSON-LD is one static string per page, with no reader and no
+   `data-cur` to key off, so it has to commit to a currency. It commits to the
+   edition's own: rupees on the Hindi pages, US dollars elsewhere.
+
+   That is the one place a crawler and a reader can see different figures, and
+   it is a figure rather than a claim. Nothing else about the answer changes.
+   --------------------------------------------------------------------------- */
+
+/** The currency to write into static JSON-LD for a given edition. */
+export function currencyForLang(lang: string): Currency {
+  return lang === "hi" ? "INR" : DEFAULT_CURRENCY;
+}
+
+/** Replace every `{price:tier}` token in a string with one currency's figure. */
+export function fillPrices(text: string, currency: Currency): string {
+  return text.replace(
+    /\{price:(one|eleven|sixty)\}/g,
+    (_, tier: string) => PRICE[tier as TierKey][currency],
+  );
+}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CURRENCIES } from "@/lib/currency";
-import type { Prices } from "@/content/prices";
+import type { Prices, TierKey } from "@/content/prices";
+import { PRICE } from "@/content/prices";
 
 /* Shared primitives, cut for the printed panchang. Everything here is flat:
    solid fills, hard rules, one spot colour. No radius, no soft shadow. */
@@ -189,6 +190,32 @@ export function Price({ prices, className = "" }: { prices: Prices; className?: 
           {prices[c]}
         </span>
       ))}
+    </>
+  );
+}
+
+/**
+ * A sentence with a price in it, filled from prices.ts at render.
+ *
+ * Copy writes `{price:eleven}` and gets the reader's own currency, the same
+ * way `{price}` works on the landing hero. A locale file that spells a figure
+ * out ships one currency to twelve audiences, which is the bug this exists to
+ * prevent: a rupee price read in Toronto is simply the wrong number.
+ */
+export function PriceText({ children }: { children: string }) {
+  const parts = children.split(/(\{price:(?:one|eleven|sixty)\})/);
+  return (
+    <>
+      {parts.map((part, i) => {
+        const tier = /^\{price:(one|eleven|sixty)\}$/.exec(part);
+        return tier ? (
+          <span key={i} className="tabular-nums">
+            <Price prices={PRICE[tier[1] as TierKey]} />
+          </span>
+        ) : (
+          part
+        );
+      })}
     </>
   );
 }

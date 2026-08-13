@@ -1,5 +1,6 @@
 import { content, type Lang } from "@/lib/content";
 import { localeDef, localePath, LOCALES } from "@/lib/i18n";
+import { currencyForLang, fillPrices } from "@/content/prices";
 import { ETHICS_MAIL } from "@/content/trust";
 
 /* ---------------------------------------------------------------------------
@@ -285,6 +286,9 @@ export interface FaqGroup {
  * whole answer, every paragraph of it, because publishing a shortened answer to
  * a crawler and a longer one to a reader is exactly the divergence rule 1
  * forbids. Answers live inside <details> on the page, which is on-page content.
+ *
+ * `{price:…}` tokens are filled here rather than shipped raw. See the note in
+ * src/content/prices.ts for why this one string has to pick a currency.
  */
 export function faqQuestions(
   lang: Lang,
@@ -292,17 +296,18 @@ export function faqQuestions(
   groups: readonly FaqGroup[],
 ): readonly JsonLdNode[] {
   const url = publicUrl(lang, path);
+  const cur = currencyForLang(lang);
   return groups.flatMap((group) =>
     group.items.map((item) => ({
       "@type": "Question",
       "@id": `${url}#${item.id}`,
-      name: item.q,
+      name: fillPrices(item.q, cur),
       url: `${url}#${item.id}`,
       inLanguage: localeDef(lang).tag,
       answerCount: 1,
       acceptedAnswer: {
         "@type": "Answer",
-        text: item.a.join(" "),
+        text: fillPrices(item.a.join(" "), cur),
         url: `${url}#${item.id}`,
         inLanguage: localeDef(lang).tag,
       },

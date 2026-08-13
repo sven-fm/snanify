@@ -7,7 +7,8 @@ import type { FullLang as Lang } from "@/lib/locales";
 import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow, Section } from "@/components/ui";
+import { Eyebrow, Price, Section } from "@/components/ui";
+import { PER_SNAN, PRICE } from "@/content/prices";
 import { Reveal } from "@/components/Reveal";
 import { howItWorksContent } from "@/content/trust";
 
@@ -298,20 +299,21 @@ export function HowItWorks({ lang }: { lang: Lang }) {
             </h2>
             <p className="mt-5 max-w-2xl text-[1.02rem] leading-[1.8] text-ink2">{t.price.lede}</p>
 
-            {/* Both ladders on one page, never a geo switch. On a phone each
-                line is a stacked entry with the two prices side by side. */}
+            {/* One price per line, in the reader's own currency. Every currency
+                ships in the markup and CSS shows one, so this page stays fully
+                prerendered; see the note at the top of src/lib/currency.ts. */}
             <dl className="mt-9 border-t-2 border-rulestrong">
-              <div className="hidden gap-6 border-b border-rule pb-2 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)_6rem_6rem]">
+              <div className="hidden gap-6 border-b border-rule pb-2 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)_7rem_6rem]">
                 <span className="label text-ink2">{t.price.heads.name}</span>
                 <span className="label text-ink2">{t.price.heads.what}</span>
-                <span className="label text-right text-spot">{t.price.heads.world}</span>
-                <span className="label text-right text-ink">{t.price.heads.india}</span>
+                <span className="label text-right text-spot">{t.price.heads.price}</span>
+                <span className="label text-right text-ink2">{t.price.heads.per}</span>
               </div>
 
               {t.price.rows.map((row) => (
                 <div
-                  key={row.name}
-                  className="grid gap-3 border-b border-rule py-6 lg:grid-cols-[12rem_minmax(0,1fr)_6rem_6rem] lg:items-baseline lg:gap-6"
+                  key={row.key}
+                  className="grid gap-3 border-b border-rule py-6 lg:grid-cols-[12rem_minmax(0,1fr)_7rem_6rem] lg:items-baseline lg:gap-6"
                 >
                   <dt>
                     <span className="display block text-[1.3rem] text-ink">{row.name}</span>
@@ -321,12 +323,16 @@ export function HowItWorks({ lang }: { lang: Lang }) {
                     {row.what}
                   </dd>
                   <dd className="flex items-baseline gap-6 lg:block lg:text-right">
-                    <span className="display text-[1.5rem] text-spot">{row.world}</span>
-                    <span className="label text-ink2 lg:hidden">{t.price.heads.world}</span>
+                    <span className="display text-[1.5rem] text-spot tabular-nums">
+                      <Price prices={PRICE[row.key]} />
+                    </span>
+                    <span className="label text-ink2 lg:hidden">{t.price.heads.price}</span>
                   </dd>
                   <dd className="flex items-baseline gap-6 lg:block lg:text-right">
-                    <span className="display text-[1.5rem] text-ink">{row.india}</span>
-                    <span className="label text-ink2 lg:hidden">{t.price.heads.india}</span>
+                    <span className="text-[1.05rem] text-ink2 tabular-nums">
+                      <Price prices={PER_SNAN[row.key]} />
+                    </span>
+                    <span className="label text-ink2 lg:hidden">{t.price.heads.per}</span>
                   </dd>
                 </div>
               ))}
@@ -373,8 +379,9 @@ export function HowItWorks({ lang }: { lang: Lang }) {
         >
           <span>{t.price.cta}</span>
           <span aria-hidden="true">·</span>
+          {/* The hero SKU, not the cheapest line: eleven mornings for eleven. */}
           <span className="tabular-nums">
-            {t.price.rows[0].world} / {t.price.rows[0].india}
+            <Price prices={PRICE.eleven} />
           </span>
         </a>
       </div>

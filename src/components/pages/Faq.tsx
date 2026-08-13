@@ -7,7 +7,7 @@ import type { FullLang as Lang } from "@/lib/locales";
 import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow } from "@/components/ui";
+import { Eyebrow, PriceText } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { ETHICS_MAIL, faqContent } from "@/content/trust";
 
@@ -185,7 +185,7 @@ export function Faq({ lang }: { lang: Lang }) {
                                   key={p}
                                   className="mt-4 max-w-[38rem] text-[0.98rem] leading-[1.8] text-ink2 first:mt-0"
                                 >
-                                  {p}
+                                  <PriceText>{p}</PriceText>
                                 </p>
                               ))}
                               {to && (

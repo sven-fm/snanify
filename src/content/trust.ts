@@ -2,6 +2,11 @@
    `Lang` here is therefore the full-depth pair and not the twelve locales the
    site serves; see the tier note at the top of src/lib/locales.ts. */
 import type { FullLang as Lang } from "@/lib/locales";
+import type { TierKey } from "@/content/prices";
+
+/** A line of the tariff on /how-it-works. The price itself lives in
+    prices.ts and is rendered by <Price>, in the reader's own currency. */
+type PriceRow = { readonly key: TierKey; name: string; alt: string; what: string };
 
 /**
  * Copy for the trust layer: /ethics (the manifesto), /how-it-works, /faq.
@@ -853,14 +858,14 @@ const howEn = {
   price: {
     eyebrow: "What it costs",
     title: "The content is free. The snan is paid.",
-    lede: "There is no free snan and there is no trial. Everything that is a page rather than a practice stays free forever: the live state of all six waters, the panchang, the muhurat calendar with its occasions, and the six waters themselves.",
-    heads: { name: "Line", what: "What it is", world: "Vishwa Dar", india: "Bharat Dar" },
+    lede: "Everything that is a page rather than a practice stays free forever: the live state of all six waters, the panchang, and the muhurat calendar with its occasions.",
+    heads: { name: "Line", what: "What it is", price: "Price", per: "A morning" },
     rows: [
-      { name: "Ek Dhara", alt: "एक धारा", what: "One snan. The whole four and a half minutes, one mark, one register line.", world: "$2", india: "₹101" },
-      { name: "Gyarah", alt: "ग्यारह", what: "Eleven snans, held on your account until you use them. One dollar a snan, and the line most people take.", world: "$11", india: "₹501" },
-      { name: "Varsh Kosh", alt: "वर्ष कोश", what: "Sixty snans. A year of most mornings, at the lowest price we can hold.", world: "$48", india: "₹2,100" },
-    ],
-    note: "Eleven at a time rather than one at a time, for an unglamorous reason we would rather print than hide: a single charge loses about a third of itself to card fees, and eleven at once loses about six percent. Buying eleven is what holds the price. Nothing expires and nothing renews itself.",
+      { key: "one", name: "Ek Dhara", alt: "एक धारा", what: "One snan. The whole four and a half minutes, one mark, one register line." },
+      { key: "eleven", name: "Gyarah", alt: "ग्यारह", what: "Eleven snans, held until you use them. One for each morning, and the line most people take." },
+      { key: "sixty", name: "Varsh Kosh", alt: "वर्ष कोश", what: "Sixty snans. A year of most mornings, at the lowest price we can hold." },
+    ] as readonly PriceRow[],
+    note: "Eleven at a time, for an unglamorous reason we would rather print than hide: a single charge loses about a third of itself to card fees, and eleven at once loses about six percent. Nothing expires and nothing renews itself.",
     cta: "Sit with the river",
   },
 
@@ -1045,14 +1050,14 @@ export const howItWorksContent = { en: howEn, hi: {
   price: {
     eyebrow: "मूल्य",
     title: "पढ़ने की सामग्री निःशुल्क है। स्नान सशुल्क है।",
-    lede: "कोई निःशुल्क स्नान नहीं है और कोई आज़माइश नहीं है। जो पृष्ठ है, साधना नहीं, वह सदा निःशुल्क रहेगा: छहों जलों की सजीव स्थिति, पंचांग, मुहूर्त और उसके पर्व, और छहों जलों के अपने पृष्ठ।",
-    heads: { name: "पंक्ति", what: "यह क्या है", world: "विश्व दर", india: "भारत दर" },
+    lede: "जो पृष्ठ है, साधना नहीं, वह सदा निःशुल्क रहेगा: छहों जलों की सजीव स्थिति, पंचांग, और मुहूर्त तथा उसके पर्व।",
+    heads: { name: "पंक्ति", what: "यह क्या है", price: "मूल्य", per: "प्रति सुबह" },
     rows: [
-      { name: "एक धारा", alt: "Ek Dhara", what: "एक स्नान। पूरे साढ़े चार मिनट, एक चिह्न, पंजिका की एक पंक्ति।", world: "$2", india: "₹१०१" },
-      { name: "ग्यारह", alt: "Gyarah", what: "ग्यारह स्नान, जो आपके खाते में तब तक रहते हैं जब तक आप उन्हें लें। एक स्नान एक डॉलर का, और अधिकांश लोग यही लेते हैं।", world: "$11", india: "₹५०१" },
-      { name: "वर्ष कोश", alt: "Varsh Kosh", what: "साठ स्नान। वर्ष की अधिकांश सुबहें, उस न्यूनतम मूल्य पर जो हम निभा सकते हैं।", world: "$48", india: "₹२,१००" },
-    ],
-    note: "एक-एक करके नहीं, ग्यारह एक साथ, और इसका कारण साधारण है जिसे हम छिपाने के बजाय छाप देना ठीक समझते हैं: कार्ड नेटवर्क से गुज़रता एक अकेला डॉलर अपना लगभग एक तिहाई शुल्क में गँवा देता है, और एक साथ गुज़रते ग्यारह लगभग छह प्रतिशत। एक स्नान एक डॉलर पर इसीलिए टिकता है। कुछ भी समाप्त नहीं होता, कुछ भी स्वयं नवीनीकृत नहीं होता, और कोई डिब्बी आपके लिए पहले से चुनी हुई नहीं होती।",
+      { key: "one", name: "एक धारा", alt: "Ek Dhara", what: "एक स्नान। पूरे साढ़े चार मिनट, एक चिह्न, पंजिका की एक पंक्ति।" },
+      { key: "eleven", name: "ग्यारह", alt: "Gyarah", what: "ग्यारह स्नान, जो आपके लेने तक आपके खाते में रहते हैं। हर सुबह के लिए एक, और अधिकांश लोग यही लेते हैं।" },
+      { key: "sixty", name: "वर्ष कोश", alt: "Varsh Kosh", what: "साठ स्नान। वर्ष की अधिकांश सुबहें, उस न्यूनतम मूल्य पर जो हम निभा सकते हैं।" },
+    ] as readonly PriceRow[],
+    note: "एक-एक करके नहीं, ग्यारह एक साथ, और कारण साधारण है जिसे हम छिपाने के बजाय छाप देना ठीक समझते हैं: कार्ड नेटवर्क से गुज़रता एक अकेला भुगतान अपना लगभग एक तिहाई शुल्क में गँवा देता है, और एक साथ गुज़रते ग्यारह लगभग छह प्रतिशत। कुछ भी समाप्त नहीं होता, कुछ भी स्वयं नवीनीकृत नहीं होता।",
     cta: "नदी के साथ बैठिए",
   },
 
@@ -1142,7 +1147,7 @@ const faqEn = {
           a: [
             "People who cannot get to the water on the calendar's schedule: a tithi that falls on a Tuesday in Frankfurt, three weeks of leave a year, a shraddh in the middle of none of them.",
             "People in India for whom the ghat is not far but unreachable. Old knees have kept more people from the water than distance ever has.",
-            "People who want the practice without the institution, and people who are simply curious for two dollars without being told first that something is wrong with their lives.",
+            "People who want the practice without the institution, and people who are simply curious for {price:one} without being told first that something is wrong with their lives.",
             "It is not for anyone who can get to the water. Go.",
           ],
         },
@@ -1287,17 +1292,17 @@ const faqEn = {
           q: "Is there a free version?",
           a: [
             "Not of the snan. There is no free snan and no trial.",
-            "Everything that is a page rather than a practice is free forever, with no account: the live state of all six waters, the panchang, the muhurat calendar and its occasions, and the six waters themselves. Read all of it, every day, and pay nothing.",
-            "We would rather charge two dollars for the thing itself than dress a free tier up as generosity and sell your attention instead.",
+            "Everything that is a page rather than a practice is free forever, with no account: the live state of all six waters, the panchang, the muhurat calendar and its occasions. Read all of it, every day, and pay nothing.",
+            "We would rather charge for the thing itself than dress a free tier up as generosity and sell your attention instead.",
           ],
         },
         {
           id: "prices",
           q: "What does it cost?",
           a: [
-            "Ek Dhara, one snan, $2 or ₹101.",
-            "Gyarah, eleven snans, $11 or ₹501, which is a dollar a snan and the line most people take.",
-            "Varsh Kosh, sixty snans, $48 or ₹2,100.",
+            "Ek Dhara, one snan, {price:one}.",
+            "Gyarah, eleven snans, {price:eleven}, one for each morning, and the line most people take.",
+            "Varsh Kosh, sixty snans, {price:sixty}.",
             "Snans sit on your account until you use them. Nothing expires, nothing renews itself, and no box is ticked for you.",
           ],
         },
@@ -1305,15 +1310,15 @@ const faqEn = {
           id: "eleven",
           q: "Why eleven at a time and not one?",
           a: [
-            "An unglamorous reason we would rather print than hide. A single dollar handed across a card network loses about a third of itself to processing fees. Eleven dollars handed across at once loses about six percent.",
-            "Buying eleven at a time is the only way a single snan stays at a dollar. If we sold them one at a time at that price, a third of what you paid would go to the card network and the price would have to go up.",
+            "An unglamorous reason we would rather print than hide. A single charge loses about a third of itself to card fees. Eleven at once loses about six percent.",
+            "Eleven is what holds the price. Sold one at a time, a third of what you paid would go to the card network and the price would have to go up.",
           ],
         },
         {
           id: "india",
           q: "Why is the India price different?",
           a: [
-            "Because a price that ignores where someone lives is not one price, it is a wall. The Bharat Dar is printed beside the Vishwa Dar everywhere, never swapped in behind your back based on where your connection appears to be.",
+            "Because a price that ignores where someone lives is not one price, it is a wall. India pays rupees, Canada Canadian dollars, the eurozone euro, and everywhere else US dollars.",
             "Nothing differs between them except the number. The same sittings, the same waters, the same marks.",
           ],
         },
@@ -1499,7 +1504,7 @@ export const faqContent = { en: faqEn, hi: {
           a: [
             "उनके लिए जो कैलेंडर की घड़ी पर जल तक नहीं पहुँच सकते: फ़्रैंकफ़र्ट में मंगलवार को पड़ती तिथि, वर्ष में तीन सप्ताह की छुट्टी, और उनमें से किसी में न पड़ने वाला श्राद्ध।",
             "भारत में भी उनके लिए जिनके लिए घाट दूर नहीं, पहुँच के बाहर है। बूढ़े घुटनों ने लोगों को जल से उतना रोका है जितना दूरी ने कभी नहीं रोका।",
-            "उनके लिए जिन्हें साधना चाहिए, संस्था नहीं; और उनके लिए भी जो बस जिज्ञासु हैं, दो डॉलर में, यह सुने बिना कि उनके जीवन में कुछ गड़बड़ है।",
+            "उनके लिए जिन्हें साधना चाहिए, संस्था नहीं; और उनके लिए भी जो बस जिज्ञासु हैं, {price:one} में, यह सुने बिना कि उनके जीवन में कुछ गड़बड़ है।",
             "जो जल तक पहुँच सकते हैं, यह उनके लिए नहीं है। जाइए।",
           ],
         },
@@ -1644,33 +1649,33 @@ export const faqContent = { en: faqEn, hi: {
           q: "क्या कोई निःशुल्क रूप है?",
           a: [
             "स्नान का नहीं। कोई निःशुल्क स्नान नहीं है और कोई आज़माइश नहीं है।",
-            "जो पृष्ठ है, साधना नहीं, वह बिना खाते के सदा निःशुल्क है: छहों जलों की सजीव स्थिति, पंचांग, मुहूर्त और उसके पर्व, और छहों जलों के अपने पृष्ठ। सब पढ़िए, हर दिन पढ़िए, और कुछ मत दीजिए।",
-            "हम वस्तु के दो डॉलर लेना अधिक ठीक मानते हैं, बनिस्बत इसके कि एक निःशुल्क स्तर को उदारता कहकर सजाएँ और बदले में आपका ध्यान बेच दें।",
+            "जो पृष्ठ है, साधना नहीं, वह बिना खाते के सदा निःशुल्क है: छहों जलों की सजीव स्थिति, पंचांग, और मुहूर्त तथा उसके पर्व। सब पढ़िए, हर दिन पढ़िए, और कुछ मत दीजिए।",
+            "हम वस्तु का मूल्य लेना अधिक ठीक मानते हैं, बनिस्बत इसके कि एक निःशुल्क स्तर को उदारता कहकर सजाएँ और बदले में आपका ध्यान बेच दें।",
           ],
         },
         {
           id: "prices",
           q: "इसका मूल्य क्या है?",
           a: [
-            "एक धारा, एक स्नान, $2 अथवा ₹१०१।",
-            "ग्यारह, ग्यारह स्नान, $11 अथवा ₹५०१, अर्थात एक स्नान एक डॉलर का, और अधिकांश लोग यही लेते हैं।",
-            "वर्ष कोश, साठ स्नान, $48 अथवा ₹२,१००।",
-            "स्नान आपके खाते में तब तक रहते हैं जब तक आप उन्हें लें। कुछ भी समाप्त नहीं होता, कुछ भी स्वयं नवीनीकृत नहीं होता, और कोई डिब्बी आपके लिए पहले से चुनी हुई नहीं होती।",
+            "एक धारा, एक स्नान, {price:one}।",
+            "ग्यारह, ग्यारह स्नान, {price:eleven}, हर सुबह के लिए एक, और अधिकांश लोग यही लेते हैं।",
+            "वर्ष कोश, साठ स्नान, {price:sixty}।",
+            "स्नान आपके लेने तक आपके खाते में रहते हैं। कुछ भी समाप्त नहीं होता, कुछ भी स्वयं नवीनीकृत नहीं होता, और कोई डिब्बी आपके लिए पहले से चुनी हुई नहीं होती।",
           ],
         },
         {
           id: "eleven",
           q: "एक-एक क्यों नहीं, ग्यारह एक साथ क्यों?",
           a: [
-            "इसका कारण साधारण है जिसे हम छिपाने के बजाय छाप देना ठीक समझते हैं। कार्ड नेटवर्क से गुज़रता एक अकेला डॉलर अपना लगभग एक तिहाई शुल्क में गँवा देता है। एक साथ गुज़रते ग्यारह डॉलर लगभग छह प्रतिशत।",
-            "एक स्नान एक डॉलर पर केवल इसी तरह टिक सकता है। यदि हम उसी मूल्य पर एक-एक बेचते, तो आपके दिए हुए का एक तिहाई कार्ड नेटवर्क को जाता और मूल्य बढ़ाना पड़ता।",
+            "कारण साधारण है जिसे हम छिपाने के बजाय छाप देना ठीक समझते हैं। एक अकेला भुगतान अपना लगभग एक तिहाई कार्ड शुल्क में गँवा देता है। एक साथ गुज़रते ग्यारह लगभग छह प्रतिशत।",
+            "मूल्य ग्यारह के कारण ही टिकता है। एक-एक बेचते, तो आपके दिए हुए का एक तिहाई कार्ड नेटवर्क को जाता और मूल्य बढ़ाना पड़ता।",
           ],
         },
         {
           id: "india",
           q: "भारत का मूल्य अलग क्यों है?",
           a: [
-            "क्योंकि जो मूल्य यह नहीं देखता कि व्यक्ति कहाँ रहता है, वह एक मूल्य नहीं, एक दीवार है। भारत दर हर जगह विश्व दर के साथ छपी रहती है, आपकी जानकारी के बिना, आपके संपर्क के आधार पर, चुपचाप बदली नहीं जाती।",
+            "क्योंकि जो मूल्य यह नहीं देखता कि व्यक्ति कहाँ रहता है, वह एक मूल्य नहीं, एक दीवार है। भारत में रुपया, कनाडा में कनाडाई डॉलर, यूरो-क्षेत्र में यूरो, और शेष सर्वत्र अमेरिकी डॉलर।",
             "अंक के अतिरिक्त दोनों में कुछ भी भिन्न नहीं। वही बैठकें, वही जल, वही चिह्न।",
           ],
         },
