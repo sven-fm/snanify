@@ -38,7 +38,7 @@ const en = {
     eyebrow: "The sky",
     title: "The river comes to you.",
     titleB: "So does the sky above it.",
-    lede: "Two public, checkable things meet at a single instant: the water level and flow of a real river, and the position of the moon against the fixed stars. Neither is ours. Both can be verified by anyone. Everything on this page is computed on our own server from an ephemeris, with no network call and no astrology service, and the arithmetic is published.",
+    lede: "Two public, checkable things meet at a single instant: the level and flow of a real river, and the position of the moon against the fixed stars. Neither is ours and both can be verified. Everything here is computed on our own server from an ephemeris, with no network call and no astrology service, and the arithmetic is published.",
     liveBadge: "Computed now, offline",
   },
 
@@ -64,14 +64,14 @@ const en = {
     },
     boundaryHeading: "This reading is near a boundary",
     boundaryBody:
-      "The moon is close to the edge of its segment. Panchangs in ordinary use disagree about where that edge is by up to 1.37 degrees, which the moon crosses in about two and a half hours, so a reading this close to an edge is a reading two traditions would report differently. Both names are printed above. Neither is wrong.",
+      "The moon is close to the edge of its segment. Panchangs in ordinary use disagree about where that edge is by up to 1.37 degrees, which the moon crosses in about two and a half hours. Both names are printed above, and neither is wrong.",
     contestedHeading: "Two traditions would name this moment differently",
   },
 
   star: {
     eyebrow: "The marker",
     title: "A real star, not a symbol.",
-    lede: "Each of the 27 divisions is named after a star or cluster that a person can go outside and find. Rohini is Aldebaran, the red eye of Taurus. Chitra is Spica. Jyeshtha is Antares. Krittika is the Pleiades. Positions here are computed from catalogue coordinates, not copied from a table.",
+    lede: "Each of the 27 divisions is named after a star or cluster you can go outside and find. Rohini is Aldebaran, Chitra is Spica, Jyeshtha is Antares, Krittika is the Pleiades. Positions are computed from catalogue coordinates rather than copied from a table.",
     labels: {
       designation: "Designation",
       bayer: "Bayer",
@@ -91,17 +91,17 @@ const en = {
   drift: {
     eyebrow: "Where the scheme and the sky part company",
     title: "Seven stars are not in their own segment.",
-    lede: "The 27 divisions are equal arcs of 13 degrees 20 minutes. The stars are where they are. These two things were close when the scheme was fixed and they are not identical now, and seven junction stars fall outside the segment that carries their name. Nunki misses by more than eight degrees; Arcturus, which sits 31 degrees north of the moon's road, misses by six. We publish the gap instead of quietly rounding it away.",
+    lede: "The 27 divisions are equal arcs of 13 degrees 20 minutes, and the stars are where they are. The two were close when the scheme was fixed and are not identical now: seven junction stars fall outside the segment that carries their name. Nunki misses by more than eight degrees, Arcturus by six. We publish the gap rather than rounding it away.",
     columns: { nakshatra: "Nakshatra", star: "Star", starAt: "Star at", segment: "Its segment", gap: "Short by" },
     contestedHeading: "Eleven where the sources disagree about the star",
     contestedLede:
-      "For eleven of the 27, lists in ordinary use name different junction stars. Where that happens the rival is named in the data with its designation, and where the choice moves the marker across a segment boundary that is said too. We do not pick the brighter star and hope nobody checks.",
+      "For eleven of the 27, lists in ordinary use name different junction stars. Where that happens the rival is named in the data with its designation, and where the choice moves the marker across a segment boundary that is said too.",
   },
 
   calendars: {
     eyebrow: "The same moon, six reckonings",
     title: "What this lunar moment is, in the calendars kept in India.",
-    lede: "Every tradition below turns on the moon, but not on the same feature of it, and not by the same rule. Read them separately. Two of them are on this page precisely because their moon is not the one we just computed.",
+    lede: "Every tradition below turns on the moon, but not on the same feature of it and not by the same rule. Read them separately. Two are here precisely because their moon is not the one we just computed.",
     usesLabel: "Turns on",
     ruleLabel: "The rule",
     thisMomentLabel: "At this moment",
@@ -112,7 +112,7 @@ const en = {
         id: "hindu",
         tradition: "Hindu",
         uses: "Tithi and nakshatra together",
-        rule: "A tithi is 12 degrees of the moon's elongation from the sun, so it is not a day and its length runs from about 19 to about 26 hours. Most festivals are fixed by tithi. Some are fixed by nakshatra instead, and a few by both, Janmashtami being the well-known case of Ashtami falling with Rohini. The muhurat traditions add the nakshatra on top of the tithi. Purnimanta and amanta reckoning name the same lunar month differently in the north and the south; the ghat pages carry which scheme each place keeps.",
+        rule: "A tithi is 12 degrees of the moon's elongation from the sun, so it is not a day and runs from about 19 to about 26 hours. Most festivals are fixed by tithi, some by nakshatra instead, a few by both, Janmashtami being the known case of Ashtami falling with Rohini. Purnimanta and amanta reckoning name the same lunar month differently in the north and the south, and the ghat pages carry which scheme each place keeps.",
         moment:
           "The tithi and the nakshatra are both printed above, with the instant each one turns.",
         caution:
@@ -122,16 +122,16 @@ const en = {
         id: "buddhist",
         tradition: "Buddhist",
         uses: "The four lunar quarters",
-        rule: "Uposatha is observed on the new moon, the full moon and the two quarter days. Vesak, Buddha Purnima, falls on the full moon of Vaisakha and is a gazetted holiday in India. Ashadha Purnima is Dhamma Chakra Pravartana Day, kept as the anniversary of the first sermon at Sarnath, and opens Vassa, the rains retreat. The Ambedkarite tradition in Maharashtra keeps these days alongside the Theravada lineages, and adds days of its own that are not lunar at all, the Deekshabhoomi anniversary being fixed to Ashoka Vijayadashami.",
+        rule: "Uposatha is observed on the new moon, the full moon and the two quarter days. Vesak, Buddha Purnima, falls on the full moon of Vaisakha and is a gazetted holiday in India. Ashadha Purnima is Dhamma Chakra Pravartana Day, kept as the anniversary of the first sermon at Sarnath, and opens Vassa. The Ambedkarite tradition in Maharashtra keeps these days alongside the Theravada lineages and adds days of its own that are not lunar at all.",
         moment: "The phase and the days to the next full and new moon are printed above.",
         caution:
-          "Different Buddhist countries settle the calendar differently and the Indian, Sri Lankan, Thai and Tibetan reckonings do not always give the same date for Vesak. We do not announce one.",
+          "Buddhist countries settle the calendar differently, and the Indian, Sri Lankan, Thai and Tibetan reckonings do not always give the same date for Vesak.",
       },
       {
         id: "jain",
         tradition: "Jain",
         uses: "Tithi, and four parva days each month",
-        rule: "The two Ashtamis and the two Chaturdashis of each month are parva tithis and are widely kept as days of fasting and pratikraman. Mahavir Janma Kalyanak falls on Chaitra Shukla Trayodashi. Diwali is kept as the nirvana of Mahavira and falls on the Kartik amavasya. Paryushan in the Shvetambara tradition ends on Samvatsari; Das Lakshana in the Digambara tradition ends on Ananta Chaturdashi, and the two do not coincide.",
+        rule: "The two Ashtamis and the two Chaturdashis of each month are parva tithis, widely kept as days of fasting and pratikraman. Mahavir Janma Kalyanak falls on Chaitra Shukla Trayodashi. Diwali is kept as the nirvana of Mahavira, on the Kartik amavasya. Paryushan in the Shvetambara tradition ends on Samvatsari; Das Lakshana in the Digambara tradition ends on Ananta Chaturdashi, and the two do not coincide.",
         moment: "Whether this tithi is one of the four parva tithis is stated in the panel above.",
         caution:
           "Shvetambara and Digambara calendars differ, including on the date of Paryushan and on Mahavir Jayanti in some years. We report the tithi and name the difference, we do not resolve it.",
@@ -140,7 +140,7 @@ const en = {
         id: "sikh",
         tradition: "Sikh",
         uses: "Puranmashi, the full moon, for part of the calendar",
-        rule: "Guru Nanak Dev Ji's Prakash Purab is kept on Kattak di Puranmashi, the full moon of Kartik. Bandi Chhor Divas falls with Diwali on the Kartik amavasya. Hola Mohalla follows Holi. Most other gurpurabs were moved to fixed solar dates by the Nanakshahi calendar adopted in 1999, and the later revisions to that calendar are themselves disputed between the SGPC and other bodies, so which gurpurabs are lunar today depends on which calendar a gurdwara keeps.",
+        rule: "Guru Nanak Dev Ji's Prakash Purab is kept on Kattak di Puranmashi, the full moon of Kartik. Bandi Chhor Divas falls with Diwali on the Kartik amavasya, and Hola Mohalla follows Holi. Most other gurpurabs were moved to fixed solar dates by the Nanakshahi calendar adopted in 1999, and the later revisions are themselves disputed between the SGPC and other bodies, so which gurpurabs are lunar today depends on which calendar a gurdwara keeps.",
         moment: "Whether this is Puranmashi or the amavasya is printed above.",
         caution:
           "The Nanakshahi calendar is a live disagreement inside the Panth. We state that it exists. We do not take a side in it and we do not print a gurpurab date.",
@@ -149,27 +149,27 @@ const en = {
         id: "muslim",
         tradition: "Muslim, in India",
         uses: "The first sighting of the crescent",
-        rule: "A Hijri month begins when the new crescent is actually seen, not when the astronomical conjunction happens. The conjunction is the moment the moon and sun share a longitude, and the earliest possible sighting is roughly fifteen to thirty hours after it, depending on elongation, the moon's altitude at sunset and the sky. In India the decision is announced by local Ruet-e-Hilal committees, and the announced date can differ between cities and from the date kept in Saudi Arabia.",
+        rule: "A Hijri month begins when the new crescent is actually seen, not when the astronomical conjunction happens. The earliest possible sighting is roughly fifteen to thirty hours after conjunction, depending on elongation, the moon's altitude at sunset and the sky. In India the decision is announced by local Ruet-e-Hilal committees, and the announced date can differ between cities and from the date kept in Saudi Arabia.",
         moment:
           "We print the moon's age since conjunction and its elongation from the sun. That is astronomy. It is an input a committee may consider; it is not a date.",
         caution:
-          "We will not predict a sighting, announce the start of a month, or print a date for Ramadan, Eid, Muharram or Shab-e-Barat. That decision belongs to the committees that make it and we have no standing in it.",
+          "That decision belongs to the committees that make it, and we have no standing in it.",
       },
       {
         id: "christian",
         tradition: "Christian, in India",
         uses: "A tabular moon, not this one",
-        rule: "Easter is the first Sunday after the ecclesiastical full moon that falls on or after 21 March. The ecclesiastical full moon is computed from a table, the epact, built on a 19-year cycle, and it is deliberately not the astronomical full moon; the two can differ by up to about two days. The Gregorian computus gives one date and the Julian computus another, so the Syriac and Orthodox churches in Kerala and elsewhere keep Easter on a different Sunday from the Latin and Protestant churches in most years.",
+        rule: "Easter is the first Sunday after the ecclesiastical full moon falling on or after 21 March. That full moon is computed from a table, the epact, built on a 19-year cycle, and is deliberately not the astronomical one; the two can differ by up to about two days. The Gregorian computus gives one date and the Julian another, so the Syriac and Orthodox churches in Kerala keep Easter on a different Sunday from the Latin and Protestant churches in most years.",
         moment:
           "Nothing on this page feeds the computus. The moon we compute is the real one, and the moon that fixes Easter is not.",
         caution:
-          "We do not print an Easter date and we do not present the astronomical full moon as the paschal one. Saying they are the same thing is the commonest error made about this calendar.",
+          "Treating the astronomical full moon as the paschal one is the commonest error made about this calendar.",
       },
       {
         id: "parsi",
         tradition: "Parsi Zoroastrian",
         uses: "Nothing on this page",
-        rule: "The Shahenshahi calendar in general use among Parsis in India is a 365-day calendar with no intercalation at all, so it drifts against the seasons by about a day every four years. It is neither lunar nor astronomically solar. The Fasli and Qadimi calendars in use by smaller communities differ again.",
+        rule: "The Shahenshahi calendar in general use among Parsis in India is a 365-day calendar with no intercalation at all, so it drifts against the seasons by about a day every four years. It is neither lunar nor astronomically solar, and the Fasli and Qadimi calendars in use by smaller communities differ again.",
         moment: "No reading on this page has any bearing on it.",
         caution:
           "This entry is here because a page about the moon in India that quietly left out a community for whom the moon does nothing would be making a claim by omission.",
@@ -178,10 +178,10 @@ const en = {
 
     disagreementHeading: "Where they do not agree, said plainly",
     disagreements: [
-      "A full moon is not one thing. For a Hindu it closes the bright half of a month; for a Theravada Buddhist it is an uposatha day; for a Sikh, Kattak di Puranmashi is the Prakash Purab of Guru Nanak Dev Ji; for a Jain, Kartik Purnima is a day of pilgrimage to Shatrunjaya. These are four different observances that happen to land on the same night. They are not four versions of one thing.",
-      "Kartik Purnima is the clearest case. Hindus, Sikhs and Jains all keep that night, and the reasons have nothing to do with one another. Printing them under a single heading would be the flattening this page exists to avoid, so they are printed as separate entries with separate reasons.",
-      "Two of the six do not use the moon we compute. The Hijri month waits on a human sighting, and Easter uses a tabular moon that is deliberately not the astronomical one. Presenting either as an output of an ephemeris would be wrong on the astronomy as well as disrespectful of the practice.",
-      "Even inside a single tradition the calendar is contested. Purnimanta against amanta among Hindus, Shvetambara against Digambara among Jains, and the Nanakshahi revisions among Sikhs are all live. We name the disagreement and stop there.",
+      "A full moon is not one thing. For a Hindu it closes the bright half of a month; for a Theravada Buddhist it is an uposatha day; for a Sikh, Kattak di Puranmashi is the Prakash Purab of Guru Nanak Dev Ji; for a Jain, Kartik Purnima is a day of pilgrimage to Shatrunjaya. Four observances that land on the same night, not four versions of one.",
+      "Kartik Purnima is the clearest case. Hindus, Sikhs and Jains all keep that night, for reasons that have nothing to do with one another, so they are printed as separate entries with separate reasons.",
+      "Two of the six do not use the moon we compute. The Hijri month waits on a human sighting, and Easter uses a tabular moon deliberately not the astronomical one. Presenting either as an output of an ephemeris would be wrong on the astronomy and disrespectful of the practice.",
+      "Even inside a single tradition the calendar is contested: purnimanta against amanta among Hindus, Shvetambara against Digambara among Jains, the Nanakshahi revisions among Sikhs. We name the disagreement and stop there.",
     ],
   },
 
@@ -297,7 +297,7 @@ const hi: typeof en = {
     eyebrow: "आकाश",
     title: "नदी आप तक आती है।",
     titleB: "उसके ऊपर का आकाश भी।",
-    lede: "दो सार्वजनिक, जाँची जा सकने वाली वस्तुएँ एक ही क्षण पर मिलती हैं: एक वास्तविक नदी का जलस्तर तथा प्रवाह, और स्थिर तारों के सापेक्ष चंद्रमा की स्थिति। दोनों में से कोई हमारी नहीं। दोनों कोई भी जाँच सकता है। इस पृष्ठ की हर बात हमारे अपने सर्वर पर एक ephemeris से गणना की जाती है, बिना किसी नेटवर्क अनुरोध और बिना किसी ज्योतिष सेवा के, और गणित प्रकाशित है।",
+    lede: "दो सार्वजनिक, जाँची जा सकने वाली वस्तुएँ एक ही क्षण पर मिलती हैं: एक वास्तविक नदी का जलस्तर तथा प्रवाह, और स्थिर तारों के सापेक्ष चंद्रमा की स्थिति। दोनों में से कोई हमारी नहीं, और दोनों कोई भी जाँच सकता है। हर बात हमारे अपने सर्वर पर एक ephemeris से गणना की जाती है, बिना किसी नेटवर्क अनुरोध और बिना किसी ज्योतिष सेवा के, और गणित प्रकाशित है।",
     liveBadge: "अभी गणना किया गया, बिना नेटवर्क",
   },
 
@@ -323,14 +323,14 @@ const hi: typeof en = {
     },
     boundaryHeading: "यह गणना सीमा के निकट है",
     boundaryBody:
-      "चंद्रमा अपने खंड के किनारे के पास है। प्रचलित पंचांग उस किनारे की स्थिति पर 1.37 अंश तक असहमत हैं, जिसे चंद्रमा लगभग ढाई घंटे में पार करता है, अतः किनारे के इतने निकट की गणना वह है जिसे दो परंपराएँ भिन्न रूप से बताएँगी। ऊपर दोनों नाम छापे गए हैं। दोनों में से कोई ग़लत नहीं।",
+      "चंद्रमा अपने खंड के किनारे के पास है। प्रचलित पंचांग उस किनारे की स्थिति पर 1.37 अंश तक असहमत हैं, जिसे चंद्रमा लगभग ढाई घंटे में पार करता है। ऊपर दोनों नाम छापे गए हैं, और दोनों में से कोई ग़लत नहीं।",
     contestedHeading: "इस क्षण को दो परंपराएँ भिन्न नाम देंगी",
   },
 
   star: {
     eyebrow: "चिह्नक",
     title: "एक वास्तविक तारा, प्रतीक नहीं।",
-    lede: "सत्ताईस विभागों में से प्रत्येक का नाम उस तारे या तारागुच्छ पर है जिसे कोई भी बाहर निकलकर ढूँढ सकता है। रोहिणी अल्देबरान है, वृषभ की रक्तिम आँख। चित्रा स्पाइका है। ज्येष्ठा अंतारेस। कृत्तिका कृत्तिका-गुच्छ, प्लीएडीज़। यहाँ की स्थितियाँ सूची-निर्देशांकों से गणना की गई हैं, किसी तालिका से उतारी नहीं गईं।",
+    lede: "सत्ताईस विभागों में से प्रत्येक का नाम उस तारे या तारागुच्छ पर है जिसे कोई भी बाहर निकलकर ढूँढ सकता है। रोहिणी अल्देबरान, चित्रा स्पाइका, ज्येष्ठा अंतारेस, कृत्तिका प्लीएडीज़। यहाँ की स्थितियाँ सूची-निर्देशांकों से गणना की गई हैं, किसी तालिका से उतारी नहीं गईं।",
     labels: {
       designation: "पदनाम",
       bayer: "बायर",
@@ -350,11 +350,11 @@ const hi: typeof en = {
   drift: {
     eyebrow: "जहाँ योजना और आकाश अलग हो जाते हैं",
     title: "सात तारे अपने ही खंड में नहीं हैं।",
-    lede: "सत्ताईस विभाग 13 अंश 20 कला के समान चाप हैं। तारे जहाँ हैं वहीं हैं। योजना जब निश्चित हुई तब ये दोनों निकट थे, आज समरूप नहीं, और सात योगतारे उस खंड के बाहर पड़ते हैं जो उनका नाम धारण करता है। नुंकी आठ अंश से अधिक चूकता है; आर्कटुरस, जो चंद्रपथ से 31 अंश उत्तर बैठता है, छह अंश से। हम इस अंतर को चुपचाप गोल करने के बजाय प्रकाशित करते हैं।",
+    lede: "सत्ताईस विभाग 13 अंश 20 कला के समान चाप हैं, और तारे जहाँ हैं वहीं हैं। योजना जब निश्चित हुई तब ये निकट थे, आज समरूप नहीं: सात योगतारे उस खंड के बाहर पड़ते हैं जो उनका नाम धारण करता है। नुंकी आठ अंश से अधिक चूकता है, आर्कटुरस छह से। हम इस अंतर को गोल करने के बजाय प्रकाशित करते हैं।",
     columns: { nakshatra: "नक्षत्र", star: "तारा", starAt: "तारा यहाँ", segment: "उसका खंड", gap: "इतना पीछे" },
     contestedHeading: "ग्यारह, जहाँ तारे को लेकर स्रोत असहमत हैं",
     contestedLede:
-      "सत्ताईस में से ग्यारह के लिए प्रचलित सूचियाँ भिन्न योगतारे बताती हैं। जहाँ ऐसा है, प्रतिद्वंद्वी तारा अपने पदनाम सहित आँकड़ों में नामित है, और जहाँ यह चुनाव चिह्नक को खंड-सीमा के पार ले जाता है, वह भी लिखा है। हम अधिक चमकीला तारा चुनकर यह आशा नहीं करते कि कोई जाँचेगा नहीं।",
+      "सत्ताईस में से ग्यारह के लिए प्रचलित सूचियाँ भिन्न योगतारे बताती हैं। जहाँ ऐसा है, प्रतिद्वंद्वी तारा अपने पदनाम सहित आँकड़ों में नामित है, और जहाँ यह चुनाव चिह्नक को खंड-सीमा के पार ले जाता है, वह भी लिखा है।",
   },
 
   calendars: {
@@ -371,7 +371,7 @@ const hi: typeof en = {
         id: "hindu",
         tradition: "हिंदू",
         uses: "तिथि और नक्षत्र, दोनों साथ",
-        rule: "तिथि सूर्य से चंद्रमा की 12 अंश की दूरी है, अतः वह दिन नहीं है और उसकी अवधि लगभग 19 से 26 घंटे तक चलती है। अधिकांश पर्व तिथि से निश्चित होते हैं। कुछ नक्षत्र से, और कुछ दोनों से, जन्माष्टमी वह प्रसिद्ध स्थिति है जहाँ अष्टमी रोहिणी के साथ पड़ती है। मुहूर्त परंपरा तिथि के ऊपर नक्षत्र भी जोड़ती है। पूर्णिमांत और अमांत गणना उत्तर और दक्षिण में एक ही चांद्र मास को भिन्न नाम देती है; कौन-सा स्थान कौन-सी पद्धति रखता है, यह घाट के पृष्ठों पर अंकित है।",
+        rule: "तिथि सूर्य से चंद्रमा की 12 अंश की दूरी है, अतः वह दिन नहीं है और उसकी अवधि लगभग 19 से 26 घंटे चलती है। अधिकांश पर्व तिथि से निश्चित होते हैं, कुछ नक्षत्र से, कुछ दोनों से, जन्माष्टमी वह प्रसिद्ध स्थिति है जहाँ अष्टमी रोहिणी के साथ पड़ती है। पूर्णिमांत और अमांत गणना उत्तर और दक्षिण में एक ही चांद्र मास को भिन्न नाम देती है, और कौन-सा स्थान कौन-सी पद्धति रखता है यह घाट के पृष्ठों पर अंकित है।",
         moment: "तिथि और नक्षत्र दोनों ऊपर छपे हैं, उनके बदलने के क्षण सहित।",
         caution:
           "हम स्थिति की गणना करते हैं। कौन-सा पर्व किस सिविल दिन पड़ेगा, इसका निर्णय हम नहीं देते, क्योंकि उसके लिए सूर्योदय चाहिए, सूर्योदय के लिए स्थान के सर्वेक्षित निर्देशांक चाहिए, और वे हमारे पास नहीं हैं।",
@@ -380,16 +380,16 @@ const hi: typeof en = {
         id: "buddhist",
         tradition: "बौद्ध",
         uses: "चंद्रमा के चार चरण",
-        rule: "उपोसथ अमावस्या, पूर्णिमा तथा दोनों अष्टमियों को रखा जाता है। वेसाक, बुद्ध पूर्णिमा, वैशाख की पूर्णिमा को पड़ती है और भारत में राजपत्रित अवकाश है। आषाढ़ पूर्णिमा धम्मचक्र प्रवर्तन दिवस है, सारनाथ के प्रथम उपदेश की स्मृति में, और वर्षावास का आरंभ। महाराष्ट्र की आंबेडकरवादी परंपरा इन दिनों को थेरवाद परंपराओं के साथ रखती है, और अपने कुछ दिन जोड़ती है जो चांद्र हैं ही नहीं, जैसे दीक्षाभूमि की वर्षगाँठ, जो अशोक विजयादशमी से बँधी है।",
+        rule: "उपोसथ अमावस्या, पूर्णिमा तथा दोनों अष्टमियों को रखा जाता है। वेसाक, बुद्ध पूर्णिमा, वैशाख की पूर्णिमा को पड़ती है और भारत में राजपत्रित अवकाश है। आषाढ़ पूर्णिमा धम्मचक्र प्रवर्तन दिवस है, सारनाथ के प्रथम उपदेश की स्मृति में, और वर्षावास का आरंभ। महाराष्ट्र की आंबेडकरवादी परंपरा इन दिनों को थेरवाद परंपराओं के साथ रखती है, और अपने कुछ दिन जोड़ती है जो चांद्र हैं ही नहीं।",
         moment: "कला तथा अगली पूर्णिमा और अमावस्या तक के दिन ऊपर छपे हैं।",
         caution:
-          "भिन्न बौद्ध देश पंचांग भिन्न रूप से निश्चित करते हैं और भारतीय, श्रीलंकाई, थाई तथा तिब्बती गणनाएँ वेसाक की एक ही तिथि सदा नहीं देतीं। हम कोई एक घोषित नहीं करते।",
+          "भिन्न बौद्ध देश पंचांग भिन्न रूप से निश्चित करते हैं, और भारतीय, श्रीलंकाई, थाई तथा तिब्बती गणनाएँ वेसाक की एक ही तिथि सदा नहीं देतीं।",
       },
       {
         id: "jain",
         tradition: "जैन",
         uses: "तिथि, और प्रत्येक मास के चार पर्व दिन",
-        rule: "प्रत्येक मास की दोनों अष्टमियाँ तथा दोनों चतुर्दशियाँ पर्व तिथियाँ हैं और व्यापक रूप से उपवास तथा प्रतिक्रमण के दिन के रूप में रखी जाती हैं। महावीर जन्म कल्याणक चैत्र शुक्ल त्रयोदशी को पड़ता है। दीपावली महावीर के निर्वाण के रूप में रखी जाती है और कार्तिक अमावस्या को पड़ती है। श्वेतांबर परंपरा में पर्युषण संवत्सरी पर समाप्त होता है; दिगंबर परंपरा में दस लक्षण अनंत चतुर्दशी पर, और दोनों एक साथ नहीं पड़ते।",
+        rule: "प्रत्येक मास की दोनों अष्टमियाँ तथा दोनों चतुर्दशियाँ पर्व तिथियाँ हैं, व्यापक रूप से उपवास तथा प्रतिक्रमण के दिन। महावीर जन्म कल्याणक चैत्र शुक्ल त्रयोदशी को पड़ता है। दीपावली महावीर के निर्वाण के रूप में कार्तिक अमावस्या को रखी जाती है। श्वेतांबर परंपरा में पर्युषण संवत्सरी पर समाप्त होता है; दिगंबर परंपरा में दस लक्षण अनंत चतुर्दशी पर, और दोनों एक साथ नहीं पड़ते।",
         moment: "यह तिथि चार पर्व तिथियों में से है या नहीं, यह ऊपर के पटल में लिखा है।",
         caution:
           "श्वेतांबर और दिगंबर पंचांग भिन्न हैं, पर्युषण की तिथि सहित और कुछ वर्षों में महावीर जयंती पर भी। हम तिथि बताते हैं और अंतर नामित करते हैं, उसका निपटारा नहीं करते।",
@@ -398,7 +398,7 @@ const hi: typeof en = {
         id: "sikh",
         tradition: "सिख",
         uses: "पूरनमाशी, पूर्णिमा, पंचांग के एक भाग के लिए",
-        rule: "गुरु नानक देव जी का प्रकाश पुरब कत्तक दी पूरनमाशी को, कार्तिक की पूर्णिमा को रखा जाता है। बंदी छोड़ दिवस दीपावली के साथ कार्तिक अमावस्या को पड़ता है। होला मोहल्ला होली के पश्चात्। शेष अधिकांश गुरपुरब 1999 में स्वीकृत नानकशाही पंचांग द्वारा स्थिर सौर तिथियों पर ले जाए गए, और उस पंचांग के बाद के संशोधन स्वयं शिरोमणि गुरुद्वारा प्रबंधक कमेटी तथा अन्य संस्थाओं के बीच विवादित हैं, अतः आज कौन-से गुरपुरब चांद्र हैं, यह इस पर निर्भर है कि कोई गुरुद्वारा कौन-सा पंचांग रखता है।",
+        rule: "गुरु नानक देव जी का प्रकाश पुरब कत्तक दी पूरनमाशी को, कार्तिक की पूर्णिमा को रखा जाता है। बंदी छोड़ दिवस दीपावली के साथ कार्तिक अमावस्या को पड़ता है, और होला मोहल्ला होली के पश्चात्। शेष अधिकांश गुरपुरब 1999 में स्वीकृत नानकशाही पंचांग द्वारा स्थिर सौर तिथियों पर ले जाए गए, और उसके बाद के संशोधन स्वयं शिरोमणि गुरुद्वारा प्रबंधक कमेटी तथा अन्य संस्थाओं के बीच विवादित हैं, अतः आज कौन-से गुरपुरब चांद्र हैं यह इस पर निर्भर है कि गुरुद्वारा कौन-सा पंचांग रखता है।",
         moment: "यह पूरनमाशी है या अमावस्या, ऊपर छपा है।",
         caution:
           "नानकशाही पंचांग पंथ के भीतर एक जीवंत असहमति है। हम इतना कहते हैं कि वह है। हम उसमें पक्ष नहीं लेते और कोई गुरपुरब तिथि नहीं छापते।",
@@ -407,17 +407,17 @@ const hi: typeof en = {
         id: "muslim",
         tradition: "मुस्लिम, भारत में",
         uses: "नए चाँद का पहला दीदार",
-        rule: "हिजरी मास तब आरंभ होता है जब नया चाँद वास्तव में देखा जाता है, तब नहीं जब खगोलीय युति होती है। युति वह क्षण है जब चंद्र और सूर्य का देशांतर एक होता है, और सबसे पहला संभव दीदार उसके लगभग पंद्रह से तीस घंटे बाद होता है, जो दूरी, सूर्यास्त के समय चंद्रमा की ऊँचाई तथा आकाश पर निर्भर है। भारत में यह निर्णय स्थानीय रूयत-ए-हिलाल कमेटियाँ घोषित करती हैं, और घोषित तिथि नगर-नगर में तथा सऊदी अरब की तिथि से भिन्न हो सकती है।",
+        rule: "हिजरी मास तब आरंभ होता है जब नया चाँद वास्तव में देखा जाता है, तब नहीं जब खगोलीय युति होती है। सबसे पहला संभव दीदार युति के लगभग पंद्रह से तीस घंटे बाद होता है, जो दूरी, सूर्यास्त के समय चंद्रमा की ऊँचाई तथा आकाश पर निर्भर है। भारत में यह निर्णय स्थानीय रूयत-ए-हिलाल कमेटियाँ घोषित करती हैं, और घोषित तिथि नगर-नगर में तथा सऊदी अरब की तिथि से भिन्न हो सकती है।",
         moment:
           "हम युति के बाद से चंद्रमा की आयु और सूर्य से उसकी दूरी छापते हैं। यह खगोल है। यह वह सामग्री है जिस पर कोई कमेटी विचार कर सकती है; यह तिथि नहीं है।",
         caution:
-          "हम दीदार का पूर्वानुमान नहीं देंगे, मास का आरंभ घोषित नहीं करेंगे, और रमज़ान, ईद, मुहर्रम या शब-ए-बरात की कोई तिथि नहीं छापेंगे। वह निर्णय उन कमेटियों का है जो उसे करती हैं और उसमें हमारा कोई स्थान नहीं।",
+          "वह निर्णय उन कमेटियों का है जो उसे करती हैं, और उसमें हमारा कोई स्थान नहीं।",
       },
       {
         id: "christian",
         tradition: "ईसाई, भारत में",
         uses: "एक तालिका का चंद्रमा, यह नहीं",
-        rule: "ईस्टर उस पहले रविवार को है जो 21 मार्च को अथवा उसके बाद पड़ने वाली कलीसियाई पूर्णिमा के पश्चात् आता है। कलीसियाई पूर्णिमा एक तालिका से, एपैक्ट से, 19 वर्ष के चक्र पर गणना होती है, और वह जानबूझकर खगोलीय पूर्णिमा नहीं है; दोनों में लगभग दो दिन तक का अंतर हो सकता है। ग्रेगोरियन गणना एक तिथि देती है और जूलियन दूसरी, अतः केरल तथा अन्यत्र की सिरियाई एवं ऑर्थोडॉक्स कलीसियाएँ अधिकांश वर्षों में लैटिन तथा प्रोटेस्टेंट कलीसियाओं से भिन्न रविवार को ईस्टर रखती हैं।",
+        rule: "ईस्टर उस पहले रविवार को है जो 21 मार्च को अथवा उसके बाद पड़ने वाली कलीसियाई पूर्णिमा के पश्चात् आता है। वह पूर्णिमा एक तालिका से, एपैक्ट से, 19 वर्ष के चक्र पर गणना होती है, और जानबूझकर खगोलीय पूर्णिमा नहीं है; दोनों में लगभग दो दिन तक का अंतर हो सकता है। ग्रेगोरियन गणना एक तिथि देती है और जूलियन दूसरी, अतः केरल की सिरियाई एवं ऑर्थोडॉक्स कलीसियाएँ अधिकांश वर्षों में लैटिन तथा प्रोटेस्टेंट कलीसियाओं से भिन्न रविवार को ईस्टर रखती हैं।",
         moment:
           "इस पृष्ठ की कोई वस्तु उस गणना में नहीं जाती। हम जिस चंद्रमा की गणना करते हैं वह वास्तविक है, और जो चंद्रमा ईस्टर तय करता है वह नहीं।",
         caution:
