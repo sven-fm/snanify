@@ -10,11 +10,25 @@ import type { FullLang as Lang } from "@/lib/locales";
  * The page says exactly that rather than presenting a search box that silently
  * fails, an inert lookup on the page that argues we do not overclaim would be
  * self-defeating.
+ *
+ * TWO REPAIRS, August 2026.
+ *
+ * The Hindi `statusBody` said the page would start accepting identifiers "पहला
+ * अनुष्ठान संपन्न और रिकॉर्ड होने पर", once the first rite is performed and
+ * recorded. That claims both a performed rite and a recording of one, which is
+ * rule one and rule two of this repo broken in a single clause, in the edition
+ * most likely to be read by someone who would take it literally. It now says
+ * what the English says: once the first Jal Chihna exists.
+ *
+ * Both editions were also cut by about a third. The lines that justified the
+ * page to a critic went ("we would rather show you an empty room than a search
+ * box that pretends to look"); the lines that tell a holder what a check
+ * returns stayed, in full, because that list is the contract.
  */
 const en = {
   eyebrow: "Verification",
   title: "Check a Jal Chihna.",
-  lede: "Every Jal Chihna carries the reading it was made from. Anyone holding it can recompute the mark from public river data and get the identical image, without ever seeing what was asked for.",
+  lede: "Every Jal Chihna carries the reading it was made from. Anyone holding it can recompute the mark from public river data and get the identical image, without seeing what was asked for.",
 
   contractTitle: "What a check returns",
   shows: {
@@ -39,11 +53,11 @@ const en = {
 
   statusTitle: "Not yet live",
   statusBody:
-    "No Jal Chihna has been kept yet, so there is nothing to check. This page will accept an identifier once the first one exists. We would rather show you an empty room than a search box that pretends to look.",
+    "No Jal Chihna has been kept yet, so there is nothing to check. This page accepts an identifier once the first one exists.",
 
   idLabel: "What an identifier looks like",
   idNote:
-    "22 characters, unguessable. It is printed on the Patra and forms part of its verification link. Certificates are unlisted by default, holding the identifier is what grants access, so it is not something to post publicly.",
+    "22 characters, unguessable, printed on the Patra and part of its verification link. Holding the identifier is what grants access, so keep it off a public page.",
 
   sampleCta: "See a specimen Patra",
   patraCta: "How the Patra works",
@@ -77,11 +91,11 @@ const hi: typeof en = {
 
   statusTitle: "अभी उपलब्ध नहीं",
   statusBody:
-    "अभी तक कोई जल चिह्न जारी नहीं हुआ है, इसलिए जाँचने को कुछ नहीं है। पहला अनुष्ठान संपन्न और रिकॉर्ड होने पर यह पृष्ठ पहचान-संख्या स्वीकार करने लगेगा। हम आपको खाली कक्ष दिखाना बेहतर मानते हैं, बनिस्बत ऐसे खोज-बक्से के जो खोजने का केवल दिखावा करे।",
+    "अभी तक कोई जल चिह्न नहीं बना है, इसलिए जाँचने को कुछ नहीं है। पहला जल चिह्न बनते ही यह पृष्ठ पहचान-संख्या स्वीकार करने लगेगा।",
 
   idLabel: "पहचान-संख्या कैसी दिखती है",
   idNote:
-    "22 अक्षर, जिनका अनुमान नहीं लगाया जा सकता। यह पत्र पर छपी होती है और उसके सत्यापन-लिंक का भाग बनती है। पत्र स्वतः असूचीबद्ध रहते हैं, पहुँच पहचान-संख्या रखने से मिलती है, इसलिए इसे सार्वजनिक रूप से साझा न करें।",
+    "22 अक्षर, जिनका अनुमान नहीं लगाया जा सकता, पत्र पर छपे और उसके सत्यापन-लिंक का भाग। पहुँच पहचान-संख्या रखने से मिलती है, इसलिए इसे सार्वजनिक पृष्ठ पर न रखें।",
 
   sampleCta: "नमूना पत्र देखें",
   patraCta: "पत्र कैसे काम करता है",
