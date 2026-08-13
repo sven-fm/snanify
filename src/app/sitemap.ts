@@ -16,6 +16,35 @@ import { hreflangMap, localeUrl, localesForPath, DEFAULT_LANG } from "@/lib/loca
    `/rivers` is listed in twelve locales; `/rivers/ganga-haridwar` in two. That
    asymmetry is the whole point of the route manifest, and it is why the detail
    routes are built with `isFullOnlyPath` rather than assumed.
+
+   THERE IS NO `lastModified` HERE, AND THAT IS A DECISION RATHER THAN AN
+   OVERSIGHT. It was an oversight until August 2026; this paragraph is the point
+   at which it stopped being one, so nobody adds one in good faith later.
+
+   Google uses `lastmod` only while it is consistently and verifiably accurate,
+   and discounts the whole signal once it is not. Every implementation available
+   to this repo fails that test:
+
+     · Build time on every entry claims all 104 URLs changed on every deploy.
+       That is false on 103 of them for a one-line copy fix, and it is the
+       version that gets the signal ignored.
+     · A date derived from `git log -1` over the content file behind each route
+       is accurate, but Vercel clones shallow by default, so it returns empty in
+       CI and silently ships a sitemap with no lastmod anyway, or worse, with
+       the clone boundary's date on everything.
+     · A committed manifest is accurate on the day it is generated and quietly
+       wrong from the next content commit onward, which is the worst of the
+       three because it looks maintained.
+
+   The upside is small enough to make that trade obvious: 104 URLs is far inside
+   any crawl budget, and `changefreq` and `priority` below already say which
+   routes move. `/live` is daily, the river pages are monthly, the occasions are
+   weekly.
+
+   The rule this file is under is the same one the shraddha ladder on /panchang
+   is under: we would rather publish nothing than publish a date we cannot stand
+   behind. If a real content-modification date ever becomes available, from a
+   CMS or a build step that can see full history, this is where it goes.
    --------------------------------------------------------------------------- */
 
 type Route = {

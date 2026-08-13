@@ -199,7 +199,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
       status: "contested",
       alternatives: [{ designation: "alpha Arietis", proper: "Hamal" }],
       note: {
-        en: "Most Indian lists give beta Arietis as the junction star and the head of the horse as beta with gamma. Several give alpha Arietis, the brighter star, instead. Note that alpha Arietis computes to sidereal 13.81 degrees, which is already inside Bharani's segment, so the choice moves the marker across a boundary.",
+        en: "Most Indian lists give beta Arietis as the junction star and the head of the horse as beta with gamma. Several give alpha Arietis, the brighter star. Alpha computes to sidereal 13.81 degrees, already inside Bharani's segment, so the choice moves the marker across a boundary.",
         hi: "अधिकांश भारतीय सूचियाँ बीटा मेष को योगतारा मानती हैं और अश्व का मस्तक बीटा तथा गामा से बनाती हैं। कई सूचियाँ अधिक चमकीले अल्फ़ा मेष को लेती हैं। ध्यान दें कि अल्फ़ा मेष का सायन-रहित देशांतर 13.81 अंश निकलता है, जो भरणी के खंड में आ जाता है, अतः यह चुनाव तारे को खंड-सीमा के पार ले जाता है।",
       },
     },
@@ -438,7 +438,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
       status: "contested",
       alternatives: [{ designation: "alpha Canis Majoris", proper: "Sirius" }],
       note: {
-        en: "Betelgeuse is the mainstream identification and the one used here. A minority of scholars read Ardra as Sirius, on the strength of the older descriptions and the name's sense of moisture. The two are twenty degrees apart, so this is not a small disagreement. Note also that Betelgeuse computes to sidereal 64.91 degrees, which falls short of Ardra's own segment by 1.76 degrees, and Sirius computes to 80.23, which overshoots the far end by 0.23.",
+        en: "Betelgeuse is the mainstream identification and the one used here. A minority read Ardra as Sirius, on the older descriptions and the name's sense of moisture, and the two are twenty degrees apart. Betelgeuse computes to sidereal 64.91 degrees, short of Ardra's segment by 1.76; Sirius computes to 80.23, overshooting the far end by 0.23.",
         hi: "बेटेलगूज़ मुख्यधारा की पहचान है और यहाँ वही ली गई है। कुछ विद्वान आर्द्रा को व्याध (सिरियस) मानते हैं, प्राचीन वर्णनों तथा नाम में निहित आर्द्रता के आधार पर। दोनों में बीस अंश का अंतर है, अतः यह मतभेद छोटा नहीं। यह भी ध्यान दें कि बेटेलगूज़ का देशांतर 64.91 अंश निकलता है, जो आर्द्रा के अपने खंड से 1.76 अंश पहले है, और सिरियस का 80.23, जो दूसरे छोर से 0.23 अंश आगे।",
       },
     },
@@ -601,7 +601,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
       status: "contested",
       alternatives: [{ designation: "alpha Hydrae", proper: "Alphard" }],
       note: {
-        en: "The head of Hydra, five faint stars, is the group everyone agrees on; which of them is the junction star is not agreed. Epsilon Hydrae is the commonest choice and is used here. Some lists take Alphard, alpha Hydrae, which is far brighter but computes to sidereal 123.43 degrees, inside Magha's segment.",
+        en: "The head of Hydra, five faint stars, is the group everyone agrees on; which of them is the junction star is not. Epsilon Hydrae is the commonest choice and is used here. Some lists take Alphard, alpha Hydrae, far brighter but computing to sidereal 123.43 degrees, inside Magha's segment.",
         hi: "हाइड्रा का शीर्ष, पाँच मंद तारे, वह समूह है जिस पर सब सहमत हैं; उनमें योगतारा कौन है, इस पर सहमति नहीं। एप्सिलॉन हाइड्रा सर्वाधिक प्रचलित चुनाव है और यहाँ वही लिया गया है। कुछ सूचियाँ अल्फ़ार्ड, अल्फ़ा हाइड्रा, को लेती हैं, जो कहीं अधिक चमकीला है किंतु जिसका देशांतर 123.43 अंश है, अर्थात् मघा के खंड में।",
       },
     },
@@ -790,7 +790,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
       status: "contested",
       alternatives: [{ designation: "gamma Corvi", proper: "Gienah" }],
       note: {
-        en: "The five stars of Corvus make the hand; sources differ on whether delta or gamma is the junction star. Both fall inside Hasta's segment, so unlike most of the contested cases this one does not move the marker across a boundary.",
+        en: "The five stars of Corvus make the hand, and sources differ on whether delta or gamma is the junction star. Both fall inside Hasta's segment, so unlike most contested cases this one does not move the marker across a boundary.",
         hi: "काकध्वज (कॉर्वस) के पाँच तारे हाथ बनाते हैं; योगतारा डेल्टा है या गामा, इस पर स्रोत भिन्न हैं। दोनों हस्त के खंड के भीतर पड़ते हैं, अतः अधिकांश विवादित प्रकरणों के विपरीत यहाँ चुनाव तारे को खंड-सीमा के पार नहीं ले जाता।",
       },
     },
@@ -859,7 +859,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
     identification: { status: "settled", alternatives: [] },
     segment: seg(14, 180.387),
     signifies: {
-      en: "Vayu's station, the one that goes by itself. Arcturus sits nearly 31 degrees north of the ecliptic, the furthest of the twenty-seven from the moon's road, and so its longitude falls more than six degrees short of the segment named after it. Tradition associates it with wind, independence and movement.",
+      en: "Vayu's station, the one that goes by itself. Arcturus sits nearly 31 degrees north of the ecliptic, the furthest of the twenty-seven from the moon's road, so its longitude falls more than six degrees short of the segment named after it. Tradition associates it with wind, independence and movement.",
       hi: "वायु का नक्षत्र, वह जो स्वयं चलता है। आर्कटुरस क्रांतिवृत्त से लगभग 31 अंश उत्तर है, सत्ताईस में चंद्रपथ से सर्वाधिक दूर, इसीलिए इसका देशांतर उसी खंड से छह अंश से अधिक पीछे रह जाता है जो इसके नाम पर है। परंपरा इसे वायु, स्वतंत्रता तथा गति से जोड़ती है।",
     },
   },
@@ -1107,7 +1107,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
       status: "contested",
       alternatives: [{ designation: "epsilon Sagittarii", proper: "Kaus Australis" }],
       note: {
-        en: "Delta and epsilon Sagittarii, the middle and southern parts of the archer's bow, are the pair. Sources split on which is the junction star; delta is used here. Either way the star falls short of its own segment, delta by 2.6 degrees.",
+        en: "Delta and epsilon Sagittarii, the middle and southern parts of the archer's bow, are the pair, and sources split on which is the junction star. Delta is used here. Either way the star falls short of its own segment, delta by 2.6 degrees.",
         hi: "डेल्टा और एप्सिलॉन धनु, धनुर्धर के धनुष के मध्य तथा दक्षिण भाग, यह जोड़ी है। योगतारा कौन है, इस पर स्रोत बँटे हैं; यहाँ डेल्टा लिया गया है। दोनों ही स्थिति में तारा अपने खंड से पीछे रह जाता है, डेल्टा 2.6 अंश।",
       },
     },
@@ -1158,7 +1158,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
       status: "contested",
       alternatives: [{ designation: "zeta Sagittarii", proper: "Ascella" }],
       note: {
-        en: "Sigma and zeta Sagittarii are the pair, and sources split on the junction star. This is the widest divergence in the whole catalogue between star and segment: sigma computes to sidereal 258.54 degrees, more than eight degrees short of the segment named after it, and lands inside Purva Ashadha instead.",
+        en: "Sigma and zeta Sagittarii are the pair, and sources split on the junction star. This is the widest divergence in the catalogue between star and segment: sigma computes to sidereal 258.54 degrees, more than eight degrees short of the segment named after it, landing inside Purva Ashadha.",
         hi: "सिग्मा और ज़ीटा धनु यह जोड़ी है, और योगतारा पर स्रोत बँटे हैं। तारे और खंड के बीच पूरे संग्रह का सबसे बड़ा अंतर यही है: सिग्मा का देशांतर 258.54 अंश निकलता है, अपने नाम वाले खंड से आठ अंश से अधिक पीछे, और पूर्वाषाढ़ा के भीतर जा पड़ता है।",
       },
     },
@@ -1418,7 +1418,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
       status: "contested",
       alternatives: [{ designation: "alpha Andromedae", proper: "Alpheratz" }],
       note: {
-        en: "The back legs of the square are gamma Pegasi and alpha Andromedae, the corner star that Pegasus and Andromeda share. Which is the junction star is not agreed. Gamma is used here; Alpheratz computes to sidereal 350.46 degrees, which is inside Revati's segment.",
+        en: "The back legs of the square are gamma Pegasi and alpha Andromedae, the corner star Pegasus and Andromeda share. Which is the junction star is not agreed. Gamma is used here; Alpheratz computes to sidereal 350.46 degrees, inside Revati's segment.",
         hi: "चतुष्कोण का पिछला भाग गामा पेगासस तथा अल्फ़ा एंड्रोमेडा है, वह कोने का तारा जो पेगासस और एंड्रोमेडा दोनों का है। योगतारा कौन है, इस पर सहमति नहीं। यहाँ गामा लिया गया है; अल्फ़ेरात्ज़ का देशांतर 350.46 अंश निकलता है, जो रेवती के खंड में है।",
       },
     },
@@ -1455,7 +1455,7 @@ export const NAKSHATRAS: readonly Nakshatra[] = [
     identification: { status: "settled", alternatives: [] },
     segment: seg(26, 356.035),
     signifies: {
-      en: "Pushan, who guards the roads. Zeta Piscium is the faintest of the twenty-seven junction stars at magnitude 5.2, near the limit of what an unaided eye sees from a dark place, and it sits almost exactly on the ecliptic. Tradition associates it with safe arrival, shelter, and the end that completes a circle.",
+      en: "Pushan, who guards the roads. Zeta Piscium is the faintest of the twenty-seven junction stars at magnitude 5.2, near the limit of the unaided eye from a dark place, and sits almost exactly on the ecliptic. Tradition associates it with safe arrival, shelter, and the end that completes a circle.",
       hi: "पूषन्, जो मार्गों की रक्षा करते हैं। ज़ीटा मीन सत्ताईस योगतारों में सबसे मंद है, कांतिमान 5.2, अंधेरे स्थान से नंगी आँख की सीमा के निकट, और यह लगभग ठीक क्रांतिवृत्त पर बैठता है। परंपरा इसे कुशल पहुँच, आश्रय तथा उस अंत से जोड़ती है जो चक्र को पूरा करता है।",
     },
   },
@@ -1488,7 +1488,7 @@ export const ABHIJIT = {
     eclipticLat: 61.73,
   },
   note: {
-    en: "The older lists count 28 nakshatras. Abhijit, Vega, was dropped when the scheme was regularised into 27 equal divisions, and its traditional slot, the last quarter of Uttara Ashadha and the first fifteenth of Shravana, was absorbed by its neighbours. The reason is visible in the numbers: Vega sits nearly 62 degrees north of the ecliptic, so it has no meaningful ecliptic longitude of its own, and its computed 261.5 degrees lands in Purva Ashadha, nowhere near the slot the tradition assigns it. Its position in the sky was always fixed by when it crosses the meridian, not by where it sits on the moon's road. The Abhijit muhurat, the eighth part of the day around noon, keeps the name.",
+    en: "The older lists count 28 nakshatras. Abhijit, Vega, was dropped when the scheme was regularised into 27 equal divisions, and its slot, the last quarter of Uttara Ashadha and the first fifteenth of Shravana, was absorbed by its neighbours. The reason is in the numbers: Vega sits nearly 62 degrees north of the ecliptic, so it has no meaningful ecliptic longitude of its own, and its computed 261.5 degrees lands in Purva Ashadha, nowhere near its traditional slot. Its position was always fixed by when it crosses the meridian, not by where it sits on the moon's road. The Abhijit muhurat, the eighth part of the day around noon, keeps the name.",
     hi: "प्राचीन सूचियाँ अट्ठाईस नक्षत्र गिनती हैं। अभिजित्, अर्थात् वेगा, तब हटा दिया गया जब योजना को 27 समान भागों में नियमित किया गया, और उसका पारंपरिक स्थान, उत्तराषाढ़ा का अंतिम चरण तथा श्रवण का पहला पंद्रहवाँ भाग, पड़ोसियों में समा गया। कारण संख्याओं में दिखता है: वेगा क्रांतिवृत्त से लगभग 62 अंश उत्तर है, अतः उसका अपना कोई सार्थक क्रांतिवृत्तीय देशांतर नहीं, और गणना से निकला 261.5 अंश पूर्वाषाढ़ा में जा पड़ता है, उस स्थान से बहुत दूर जो परंपरा उसे देती है। आकाश में उसकी स्थिति सदा इससे तय होती थी कि वह मध्यरेखा कब पार करता है, इससे नहीं कि वह चंद्रपथ पर कहाँ बैठता है। अभिजित् मुहूर्त, दिन का आठवाँ भाग जो मध्याह्न के आसपास पड़ता है, यह नाम आज भी रखता है।",
   },
 } as const;

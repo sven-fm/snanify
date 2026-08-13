@@ -52,6 +52,26 @@ drift.
 Expect roughly 104 URLs today: four routes in twelve locales each, nine routes
 in English and Hindi only, and 6 waters plus 13 occasions in two locales each.
 
+### There is no `lastmod`, on purpose
+
+Search Console will not complain about its absence, and you should not add one
+to make a report look tidier. The reasoning is written out at the top of
+`src/app/sitemap.ts`; the short version is that Google uses `lastmod` only while
+it stays verifiably accurate and discounts it once it does not, and none of the
+three implementations open to this repo stays accurate:
+
+| Approach | Fails because |
+| --- | --- |
+| Build time on every entry | claims all 104 URLs changed on every deploy |
+| `git log -1` per route | Vercel clones shallow, so it returns empty in CI |
+| Committed manifest | correct the day it is generated, wrong from the next content commit, and looks maintained |
+
+`changefreq` and `priority` already carry which routes move. At 104 URLs there
+is no crawl budget problem for `lastmod` to solve.
+
+If you ever see a recrawl-latency problem that you can actually attribute to
+this, the fix is a build step with full git history, not a stamped date.
+
 ## 3. Do NOT set international targeting
 
 Legacy "International Targeting" is retired, and country targeting would be

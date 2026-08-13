@@ -348,12 +348,12 @@ export const kumbhContent = {
       kicker: "Nashik and Trimbakeshwar, on the Godavari",
       standfirst:
         "Opens 31 October 2026. Bathing days in August and September 2027.",
-      lede: "What a Simhastha is and how it is reckoned, why it is kept here of all places, what the Godavari is at Nashik, when the published bathing days fall, and what a business like ours can and cannot honestly do at a gathering of that size. Every date on this page is provisional and is labelled so.",
+      lede: "What a Simhastha is and how it is reckoned, why it is kept here, what the Godavari is at Nashik, when the published bathing days fall, and what a business like ours can honestly do at a gathering that size. Every date is provisional and labelled so.",
     },
     provenance: {
       badge: "Provisional · to be confirmed against a named source",
       badgeShort: "Provisional",
-      line: "We have not read the Government of Maharashtra's own notification. Every date here is taken from press reporting of the schedule release and from published guides, and no panchang provider has been named on this site. Tithi based dates in particular remain subject to confirmation by the mela committee. When a source is named and a person here has checked it, these labels change and this sentence changes with them.",
+      line: "Every date here is taken from press reporting of the schedule release and from published guides, rather than from the Government of Maharashtra's own notification, and no panchang provider has been named on this site. Tithi based dates remain subject to confirmation by the mela committee. When a source is named and checked here, these labels change and this sentence changes with them.",
     },
     facts: {
       label: "The standing entry",
@@ -399,13 +399,13 @@ export const kumbhContent = {
       eyebrow: "The reckoning",
       title: "What a Simhastha is.",
       paras: [
-        "The Kumbh is not one fair. It is a cycle of them, kept at four places on four rivers, each falling when the sun, the moon and Jupiter stand in a stated relation to one another. Jupiter takes close to twelve of our years to travel once round the zodiac, and that circuit is what sets the interval between one mela at a given place and the next.",
+        "The Kumbh is not one fair. It is a cycle of them, kept at four places on four rivers, each falling when the sun, the moon and Jupiter stand in a stated relation. Jupiter takes close to twelve of our years to travel once round the zodiac, and that circuit sets the interval between one mela at a given place and the next.",
         "Nashik's is called the Simhastha, from simha, the lion, the sign that Latin names Leo. It is kept while Jupiter is resident in that sign. A second rule is also stated for this mela, that it falls when Jupiter, the sun and the moon stand together in Karka at the lunar conjunction. The two rules do not always point at the same fortnight, and where they part the matter is settled by the assembly of akhadas together with the mela authority rather than by a calculation. The dates further down this page are the ones they have published.",
         "Ujjain keeps a Simhastha of its own, reckoned on the sun's position as well as Jupiter's, which is why the two fall near each other without being the same event. Because Jupiter's year is not exactly twelve of ours, the gap between one Nashik Simhastha and the next is near twelve years rather than exactly twelve, and the arithmetic is done afresh each cycle.",
-        "In practice the mela is a period rather than a day. Months of ascetic encampment, the akhadas arriving in their agreed order, ordinary bathing going on every morning as it does the rest of the year, and a small number of days on which the akhadas bathe in procession. Those are the Amrit Snan days. Older accounts, and much of the press, still call them Shahi Snan.",
+        "In practice the mela is a period rather than a day: months of ascetic encampment, the akhadas arriving in their agreed order, ordinary bathing every morning as the rest of the year, and a small number of days on which the akhadas bathe in procession. Those are the Amrit Snan days, which older accounts and much of the press still call Shahi Snan.",
       ],
       noteLabel: "On the twelve years",
-      note: "We state the interval because it is astronomy, and astronomy belongs in a calendar. We will not use it to hurry you. There is no countdown on this page, no seat count, no notice that a day will not return, and there will not be one. If a rite here is ever sold, the price will be the same as on any ordinary morning.",
+      note: "We state the interval because it is astronomy, and astronomy belongs in a calendar. There is no countdown on this page, no seat count, and no notice that a day will not return. If a rite here is ever sold, the price will be the same as on any ordinary morning.",
     },
     place: {
       eyebrow: "The place",
@@ -423,7 +423,7 @@ export const kumbhContent = {
       paras: [
         "The Godavari rises at Brahmagiri, the hill above Trimbakeshwar, a short way upstream of Nashik. Her older name is Gautami, from the sage Gautama; the account is that he brought her down through Shiva's intercession, in expiation of a cow's death, and Gautami is the name still used when she is invoked. She is the longest river of the peninsula and the one by which the Deccan reckons its tirthas. She carries her own account and her own names, and this page describes her by them rather than by another river's.",
         "Because the source is so close, the water at Ram Kund is a young river rather than a broad one, and the kund is cut into stone so that it holds water even when the river runs low. That is why the ghat is usable through the dry months, and it is part of why the rites that belong here belong here.",
-        "The 2027 bathing days fall in Shravana and Bhadrapada, which is late monsoon. The Godavari at Nashik runs high in August and September, and how much water stands at the kund on a given morning depends on what is released from the Gangapur dam upstream. The steps can go under. For anyone planning to be there in person this matters more than anything else on this page, and it is the reason the local administration closes the kund at short notice on a heavy day.",
+        "The 2027 bathing days fall in Shravana and Bhadrapada, which is late monsoon. The Godavari at Nashik runs high in August and September, and how much water stands at the kund depends on what is released from the Gangapur dam upstream. The steps can go under. For anyone planning to be there in person this matters more than anything else on this page, and it is why the administration closes the kund at short notice on a heavy day.",
       ],
     },
     calendar: {
@@ -471,7 +471,7 @@ export const kumbhContent = {
         open: "Dhwajarohan, the opening",
       },
       amritNote:
-        "Amrit Snan is the term the mela administration now uses for what older accounts and much of the press still call Shahi Snan. On those mornings the ghats are given over to the akhadas in an agreed order for stated hours, and everyone else bathes outside them. The mela runs for well over six hundred days; five of them are in this table.",
+        "Amrit Snan is the term the mela administration now uses for what older accounts still call Shahi Snan. On those mornings the ghats are given over to the akhadas in an agreed order for stated hours, and everyone else bathes outside them. The mela runs for well over six hundred days; five of them are in this table.",
       plateCaption: "Marked days only. Ordinary bathing goes on every morning.",
     },
     offer: {
@@ -481,16 +481,16 @@ export const kumbhContent = {
       permitLabel: "Our presence at Ram Kund",
       permitStatus: "None. We are not there.",
       permitBody:
-        "Snanify holds no permission at Ram Kund and needs none, because it does nothing there. Nobody stands at that ghat for us, nothing is performed, nothing is filmed. During a Simhastha the ghats fall under the mela authority alongside the municipal corporation and the police, and the bathing mornings are settled between them and the akhada council. That is worth knowing if you are going in person. It has no bearing on what this site does, which is to read the Godavari's measured state from a public source and show it to you.",
+        "Snanify holds no permission at Ram Kund and needs none, because it does nothing there. During a Simhastha the ghats fall under the mela authority alongside the municipal corporation and the police, and the bathing mornings are settled between them and the akhada council. That is worth knowing if you are going in person. It has no bearing on what this site does, which is to read the Godavari's measured state from a public source and show it to you.",
       authorityLabel: "Who controls the ghats during the mela",
       authority:
         "The Nashik-Trimbakeshwar Kumbh Mela Authority, constituted by the Government of Maharashtra and sitting under the Divisional Commissioner, Nashik, with the Nashik Municipal Corporation, the Trimbakeshwar temple trust, the police, and the akhada council. Permission at these places is not a municipal formality; the bodies that hold it are trusts, samitis and hereditary purohit families whose consent is a different thing from a licence.",
       cannotTitle: "What is not realistic, and we will not imply otherwise",
       cannot: [
-        "A camera on the kund steps on an Amrit Snan morning. Those hours belong to the akhadas in procession. It is not a permission a private company should expect, and we will not sell against the possibility that we might get it.",
+        "A camera on the kund steps on an Amrit Snan morning. Those hours belong to the akhadas in procession, and it is not a permission a private company should expect.",
         "Anything that asks the crowd to be moved, held, parted or arranged around a rite of ours. At the densities involved that is not an inconvenience, it is a danger.",
-        "Any footage at all. Snanify films nothing, at a mela or anywhere else, and has nobody at Ram Kund to point a camera with. What arrives from the Godavari during the Simhastha is the same thing that arrives from it on an ordinary Tuesday: its measured state, from a public source.",
-        "Any claim that a rite performed during a Simhastha carries more than the same rite performed on an ordinary Tuesday. Our offerings differ in what we do for you, never in what a rite is worth, and that does not change because a mela is on.",
+        "Any footage at all. Snanify films nothing, at a mela or anywhere else. What arrives from the Godavari during the Simhastha is what arrives on an ordinary Tuesday: its measured state, from a public source.",
+        "Any claim that a rite performed during a Simhastha carries more than the same rite on an ordinary Tuesday. Our offerings differ in what we do for you, never in what a rite is worth.",
         "Any claim of association with an akhada, a math, the mela authority or the purohit bodies at the ghat. If one of them ever signs a dated letter, we will publish it, and they will be free to withdraw it.",
       ],
       canTitle: "What might be realistic, if permission is granted",
@@ -510,42 +510,42 @@ export const kumbhContent = {
         {
           key: "two-centres",
           q: "It is two places, not one",
-          a: "Nashik and Trimbakeshwar are about forty five kilometres apart, and on the September dates they hold different bathing days. Plan a day for one or the other, not both. Road time between them on a peak day bears no relation to road time on an ordinary one.",
+          a: "Nashik and Trimbakeshwar are about forty five kilometres apart, and on the September dates they hold different bathing days. Plan a day for one or the other, not both. Road time between them on a peak day bears no relation to an ordinary one.",
         },
         {
           key: "peak-days",
           q: "The bathing days are the hardest days",
-          a: "On an Amrit Snan the ghats are given to the akhada processions for stated hours and everyone else bathes around them. The days on either side are far easier and the water is the same water. If your reason for going is the river rather than the procession, consider deliberately not going on the peak day.",
+          a: "On an Amrit Snan the ghats are given to the akhada processions for stated hours and everyone else bathes around them. The days on either side are far easier and the water is the same water. If your reason for going is the river rather than the procession, consider deliberately avoiding the peak day.",
         },
         {
           key: "crowd",
           q: "Crowd risk is real, and worth planning for",
-          a: "Thirty nine people were killed in a crush at Ram Kund during the 2003 Simhastha. Melas since have been run with far more control and far more money, and the 2027 administration has been planning crowd management and surveillance for years. Still, the honest planning assumption at a bathing ghat on a peak morning is dense standing crowd, movement in one direction only, and no way back the way you came. Agree a meeting point away from the ghat, keep children within arm's reach rather than within sight, and carry nothing into the water you cannot afford to lose.",
+          a: "Thirty nine people were killed in a crush at Ram Kund during the 2003 Simhastha. Melas since have been run with far more control and money, and the 2027 administration has been planning crowd management for years. Still, the honest planning assumption at a bathing ghat on a peak morning is dense standing crowd, movement in one direction only, and no way back the way you came. Agree a meeting point away from the ghat, keep children within arm's reach, and carry nothing into the water you cannot afford to lose.",
         },
         {
           key: "passes",
           q: "Registration, passes and the official channels",
-          a: "As of August 2026 the Maharashtra government had not launched a general e-pass or pilgrim registration, and indicated that the portal would follow closer to the flag hoisting. Check the mela authority's own channels rather than a travel site, ours included. The authority sits under the Divisional Commissioner, Nashik; the contact published at the time of writing is kumbhmela.2027@mah.gov.in and 0253 2461909. We list it because it is a government office. We hold no relationship with it.",
+          a: "As of August 2026 the Maharashtra government had not launched a general e-pass or pilgrim registration, and indicated the portal would follow closer to the flag hoisting. Check the mela authority's own channels rather than a travel site, ours included. The contact published at the time of writing is kumbhmela.2027@mah.gov.in and 0253 2461909. We list it because it is a government office, and we hold no relationship with it.",
         },
         {
           key: "river",
           q: "The river in August and September",
-          a: "Late monsoon. The Godavari runs high and the water standing at Ram Kund depends on release from the Gangapur dam upstream. The steps can be submerged, and the administration closes the kund at short notice when they are. Build a spare day into any trip that has a specific morning in it.",
+          a: "Late monsoon. The Godavari runs high and the water standing at Ram Kund depends on release from the Gangapur dam upstream. The steps can be submerged, and the administration closes the kund at short notice when they are. Build a spare day into any trip with a specific morning in it.",
         },
         {
           key: "pitru",
           q: "If you are going for asthi visarjan or shraddha",
-          a: "Ram Kund does this work all year and it is done through the purohits at the ghat. Ask your own family purohit first about what applies to you, because eligibility and order vary by community and by region. If you have a choice of dates, the Simhastha weeks are the worst of them, and you probably do have a choice.",
+          a: "Ram Kund does this work all year, through the purohits at the ghat. Ask your own family purohit first about what applies to you, because eligibility and order vary by community and region. If you have a choice of dates, the Simhastha weeks are the worst of them.",
         },
         {
           key: "staying",
           q: "Where people stay",
-          a: "The state builds a sadhugram, a tent settlement for the akhadas and the ascetics who come with them. It is not general accommodation. Nashik's own rooms are finite and go early around the bathing days; a great many visitors travel in for the morning from further out and leave the same day.",
+          a: "The state builds a sadhugram, a tent settlement for the akhadas and the ascetics who come with them. It is not general accommodation. Nashik's own rooms are finite and go early around the bathing days, and many visitors travel in for the morning and leave the same day.",
         },
         {
           key: "around",
           q: "What else is there, and why to arrive early",
-          a: "Kapaleshwar temple stands above the kund, Sita Gufa is a short walk into Panchavati, and Trimbakeshwar holds the jyotirlinga, the Kushavarta kund and the climb up Brahmagiri to where the river rises. None of it is seeable on a peak morning. All of it is seeable on an ordinary one, which is the argument for arriving a few days ahead rather than on the day.",
+          a: "Kapaleshwar temple stands above the kund, Sita Gufa is a short walk into Panchavati, and Trimbakeshwar holds the jyotirlinga, the Kushavarta kund and the climb up Brahmagiri to where the river rises. None of it is seeable on a peak morning and all of it on an ordinary one, which is the argument for arriving a few days ahead.",
         },
       ],
       closing:
@@ -554,7 +554,7 @@ export const kumbhContent = {
     register: {
       eyebrow: "The register",
       title: "There is nothing to buy here.",
-      body: "Booking is not open. No permission has been granted at Ram Kund, no price for a rite during the Simhastha has been set, and until both of those are true there is nothing on this page that could honestly take your money. What you can do is leave your name and be told, once, when the position changes.",
+      body: "Booking is not open. No permission has been granted at Ram Kund and no price for a rite during the Simhastha has been set, and until both are true there is nothing here that could honestly take your money. What you can do is leave your name and be told, once, when the position changes.",
       doesTitle: "What leaving your name does",
       does: [
         "One message when we have an answer about Ram Kund, whether that answer is yes or no.",
