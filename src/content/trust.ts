@@ -77,13 +77,13 @@ const ethicsEn = {
   meta: {
     title: "Manifesto: what a digital snan is, and what it is not · Snanify",
     description:
-      "No priest, no ghat, no performance, nothing done on your behalf by anyone. A digital snan is the real measured state of a sacred river, the real panchang, and words only you say. What we will never claim, exactly what runs on this site, and what we have not settled.",
+      "A digital snan is the real measured state of a sacred river, the real panchang, and words only you say. What we will never claim, exactly what runs on this site, and what we have not settled.",
   },
   eyebrow: "Manifesto",
   title: "A digital snan is a real thing to do.",
-  lede: "You sit, wherever you are, at an hour the panchang names, with a river whose actual condition that day is on the screen, and you say what you came to say. That is the whole product, and we think it is enough.",
+  lede: "You sit at an hour the panchang names, wherever you are, with a river whose real condition that day is on the screen, and you say what you came to say. That is the whole product.",
   version:
-    "Version 2, written at the pivot to a purely digital snan. The date of publication is recorded on the day this page goes live, and every later revision is kept and dated beside it. This page is not edited silently.",
+    "Version 2, written at the pivot to a purely digital snan. Every revision is kept and dated beside the one before it. This page is never edited silently.",
   tocLabel: "On this page",
 
   s1: {
@@ -91,9 +91,9 @@ const ethicsEn = {
     id: "position",
     h: "The plain statement",
     body: [
-      "There is no priest here. There is no ceremony at a ghat. Nothing is performed on your behalf, anywhere, by anyone, and nothing on this site is a recording of a rite.",
-      "What there is: the real state of a real river, read today from the public flood model that watches it. The real panchang, so the hour you sit in is an hour that means something. The sound of moving water. And a form of words that you, and only you, say.",
-      "We are not a temple and we are not standing in for one. We are a place to sit, at four in the morning, with the river you are from.",
+      "There is no priest here and no ceremony at a ghat. Nothing is performed on your behalf, by anyone, and nothing here is a recording of a rite.",
+      "What there is: the real state of a real river, read today from the public flood model that watches it. The real panchang, so the hour means something. The sound of moving water. And words that you, and only you, say.",
+      "We are not a temple, and not standing in for one. We are a place to sit at four in the morning with the river you are from.",
     ],
     pull: "We describe what is on the screen. We do not describe what it does to your soul.",
   },
@@ -104,8 +104,8 @@ const ethicsEn = {
     h: "Our servers are in the river",
     body: [
       "It sounds like a line. It is a specification.",
-      "The Ganga at Haridwar carried about 1,444 cubic metres a second on the eleventh of August, which is an ordinary flow for that week of the year. The Godavari at Nashik was at the ninety-fifth percentile of everything it has done in that week since 1997. Both numbers went into this site the day they existed, and the Godavari sounded like it.",
-      "So when the Ganga rises, this website rises with it. When the Shipra runs thin in April, it runs thin here. There is no generated water anywhere in this product and there never will be.",
+      "The Ganga at Haridwar carried about 1,444 cubic metres a second on the eleventh of August, an ordinary flow for that week. The Godavari at Nashik was at the ninety-fifth percentile of everything it has done in that week since 1997, and the site sounded like it.",
+      "When the Ganga rises, this site rises with it. When the Shipra runs thin in April, it runs thin here. No water in this product is generated, and none ever will be.",
     ],
     specH: "Exactly what the number is",
     spec: [
@@ -119,7 +119,7 @@ const ethicsEn = {
       },
       {
         k: "What the percentile means",
-        v: "Where today sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Six hundred and nine days of that river's own history, and the only honest way to compare a river to anything.",
+        v: "Where today sits against every daily value that cell has produced in this week of the year from 1997 to 2025. Six hundred and nine days of that river's own history, and the only honest way to compare a river to anything.",
       },
       {
         k: "How old it is",
@@ -127,11 +127,11 @@ const ethicsEn = {
       },
       {
         k: "When we cannot reach it",
-        v: "The page says so, and prints the twenty-nine year median for today's date, labelled as exactly that. We never interpolate, and we never invent a plausible number.",
+        v: "The page says so, and prints the twenty-nine year median for today's date, labelled as that. We never interpolate and we never invent a plausible number.",
       },
       {
         k: "The named stations",
-        v: "Where a government gauge exists we name it: station, agency, coordinates and datum, from the Central Water Commission's own registry. Four of the six waters have no CWC river level telemetry published at all, and those pages say so rather than borrow a number from elsewhere.",
+        v: "Where a government gauge exists we name it: station, agency, coordinates and datum, from the Central Water Commission's own registry. Four of the six waters have no CWC telemetry published at all, and those pages say so rather than borrow a number.",
       },
       {
         k: "What we measure ourselves",
@@ -153,8 +153,8 @@ const ethicsEn = {
     verse: ["गङ्गे च यमुने चैव गोदावरि सरस्वति।", "नर्मदे सिन्धु कावेरि जलेऽस्मिन् सन्निधिं कुरु॥"],
     verseGloss: "Ganga and Yamuna, Godavari, Saraswati, Narmada, Sindhu, Kaveri: be present in this water.",
     after: [
-      "That is said over a bucket in Lucknow. Over a shower in Leicester. Over a tap in New Jersey, by people who have not seen any of those seven rivers in twenty years. It is not a metaphor that got out of hand. It is a protocol, and an old one, for making a distant river present in the water in front of you, and the tradition has never treated it as a lesser act.",
-      "We did not invent bringing the river to you. Your grandmother does it before breakfast. We built a better instrument for it, one that can tell you what the Ganga is actually doing today.",
+      "That is said over a bucket in Lucknow. Over a shower in Leicester. Over a tap in New Jersey, by people who have not seen those rivers in twenty years. It is a protocol, and an old one, for making a distant river present in the water in front of you, and the tradition has never treated it as a lesser act.",
+      "We did not invent bringing the river to you. Your grandmother does it before breakfast. We built a better instrument for it, one that can tell you what the Ganga is doing today.",
     ],
   },
 
@@ -188,9 +188,9 @@ const ethicsEn = {
     h: "“You cannot wash sins over wifi”",
     body: [
       "Correct. You cannot. Neither can we, and we have never said we could.",
-      "Look at what is actually being sold: an hour, a water, a true reading of that water, a form of words, and a mark to keep. Read every price on this site and you will find no promised outcome. If that is what you came for, we are genuinely the wrong shop.",
-      "The rest of the objection is usually not about plumbing. It is about seriousness, and that is a fair thing to worry about. So here is the test, and it is not ours.",
-      "Nobody has ever complained that a mala is only string. Or that a diya is only a wick in oil. Or that a temple is only granite that people carried up a hill. The instrument was never the point.",
+      "Look at what is being sold: an hour, a water, a true reading of it, a form of words, and a mark to keep. No price on this site promises an outcome. If that is what you came for, we are the wrong shop.",
+      "The rest of the objection is not about plumbing. It is about seriousness, which is a fair thing to worry about. So here is the test, and it is not ours.",
+      "Nobody has ever complained that a mala is only string, or a diya only a wick in oil, or a temple only granite that people carried up a hill. The instrument was never the point.",
     ],
     pull: "Attention is the point, and attention has always needed somewhere to stand.",
     close:
@@ -202,7 +202,7 @@ const ethicsEn = {
     id: "for",
     h: "Who this is for",
     items: [
-      "The person whose passport says one country and whose calendar says another. The grandson in Frankfurt who knows the tithi by heart and has never seen the ghat. The mother in Toronto with three weeks of leave a year and a father whose shraddh falls in none of them.",
+      "The person whose passport says one country and whose calendar says another. The grandson in Frankfurt who knows the tithi by heart and has never seen the ghat. The mother in Toronto with three weeks of leave and a father whose shraddh falls in none of them.",
       "Anyone in India for whom the ghat is not far but unreachable. A night on a train and thirty wet steps have kept more people from the water than distance ever has.",
       "People who want the practice and not the institution. No intermediary, no queue, no counter to hand your name across, and nobody deciding whether your gotra qualifies you.",
       "And people who are simply curious, for the price of a coffee, without being told first that something is wrong with their lives.",
@@ -216,7 +216,7 @@ const ethicsEn = {
     items: [
       {
         t: "If you can get to the water, go",
-        d: "We mean this, and we have put it at the top of every version of this page we have ever written. This is not a competitor to a pilgrimage and it loses that comparison every single time.",
+        d: "We mean this, and it has been at the top of every version of this page. This is not a competitor to a pilgrimage, and it loses that comparison every time.",
       },
       {
         t: "If you want a guarantee",
@@ -224,7 +224,7 @@ const ethicsEn = {
       },
       {
         t: "If a rite counts only when a qualified man performs it for you at the tirth",
-        d: "That is a coherent position, held by serious people, and this product is not built for you. We are not going to argue you out of it, and we are not going to write copy pretending you do not exist. Go with our respect.",
+        d: "That is a coherent position, held by serious people, and this product is not built for you. We are not going to argue you out of it. Go with our respect.",
       },
     ],
   },
@@ -233,7 +233,7 @@ const ethicsEn = {
     n: "08",
     id: "never",
     h: "Claims we will never make",
-    lede: "This list is binding on us, on anyone we pay, and on anyone who writes about us on our behalf. We will never state, imply, or allow a partner, an email or an advertisement to state:",
+    lede: "This list binds us, anyone we pay, and anyone who writes about us on our behalf. We will never state, imply, or allow a partner, an email or an advertisement to state:",
     items: [
       "That anything was performed on your behalf.",
       "That your sins are washed away.",
@@ -244,11 +244,11 @@ const ethicsEn = {
       "That any dosha exists in your chart, or that we can find one or remove one.",
       "That this produces any outcome in your life, health, a child, a visa, a marriage, a case, an examination, work, money.",
       "That it replaces a rite your own tradition asks you to perform yourself.",
-      "That any acharya, math, akhara, temple trust or ghat authority endorses us, unless they have signed a dated letter that we publish, and that they can withdraw whenever they wish.",
+      "That any acharya, math, akhara, temple trust or ghat authority endorses us, unless they have signed a dated letter we publish and can withdraw whenever they wish.",
       "That the water at any ghat is clean, safe to drink, or medicinal.",
       "That your body has been purified.",
-      "That a muhurat is the last one, or that it will not return in your lifetime. Astronomy belongs in a calendar; it will never appear inside a payment page.",
-      "That any image on this site is a live view of a river. There is no video anywhere in this product, no generative footage, no synthetic voice, and no simulated river data. A reading we could not fetch is printed as a reading we could not fetch.",
+      "That a muhurat is the last one, or that it will not return in your lifetime. Astronomy belongs in a calendar, and will never appear inside a payment page.",
+      "That any image on this site is a live view of a river. There is no video in this product, no generative footage, no synthetic voice, no simulated river data. A reading we could not fetch is printed as a reading we could not fetch.",
       "That a person who has died received anything, or was affected by anything.",
       "Any use of a person who has died in an advertisement, a case study, or a testimonial.",
       "Any sentence built on a threat, that time is running out, that something will come to your family, that you will regret not having done this.",
@@ -256,7 +256,7 @@ const ethicsEn = {
       "We will never sell, share, license, or build a product out of the names, gotras and intentions people entrust to us.",
     ],
     report:
-      "If you ever see us make one of these claims, write to us. We will take it down, say so publicly, and keep the correction on the record with its date. We publish the corrections, including the ones that were embarrassing.",
+      "If you ever see us make one of these claims, write to us. We will take it down, say so publicly, and keep the correction on the record with its date, including the embarrassing ones.",
   },
 
   s9: {
@@ -267,7 +267,7 @@ const ethicsEn = {
       "No countdown on a muhurat. A real hour is a fact about the sky, not a device for hurrying you.",
       "No invented scarcity. Nothing here has a queue, a waiting list or a last remaining place, because nothing here could.",
       "No message on the anniversary of a death unless you asked us for one, and one tap in that message stops it forever.",
-      "No streaks, no badges, no levels, no “you have not sat since March”. Your register is a record, not a score, which is exactly why it is worth keeping.",
+      "No streaks, no badges, no levels, no “you have not sat since March”. Your register is a record, not a score, which is why it is worth keeping.",
       "No advertising placed against grief, funerals, obituaries or illness.",
       "No price that rises because a day is auspicious, and none that changes because of who you appear to be.",
       "No box ticked for you, not an add-on, not a renewal, not a mailing list.",
@@ -285,24 +285,24 @@ const ethicsEn = {
     id: "data",
     h: "Your name, your gotra, your sankalp",
     body: [
-      "A gotra is lineage. A sankalp may hold an illness, a death, a fear. This is not ordinary customer data, and we do not treat it as such, not in law, where it is special-category religious data, and not in practice.",
+      "A gotra is lineage. A sankalp may hold an illness, a death, a fear. This is not ordinary customer data, in law, where it is special-category religious data, or in practice.",
     ],
     gotraH: "Gotra is optional here",
     gotra: [
       "Many families keep no gotra, and a form that insists on one sorts people by caste. Leave it blank and the sankalp says the gotra is not stated, or uses the customary Kashyapa gotra, or your family's own convention.",
-      "Where you name several people, each name may carry its own gotra, because households are not uniform, a woman who married in, an adopted child, an inter-caste marriage. One gotra for six names would produce a sankalp that is simply wrong for most families.",
+      "Each name may carry its own gotra, because households are not uniform: a woman who married in, an adopted child, an inter-caste marriage. One gotra for six names would produce a sankalp that is simply wrong for most families.",
     ],
     sankalpH: "The sankalp text",
     sankalp: [
-      "Your sankalp is shown to you and to nobody else. It is never spoken aloud, by anyone, anywhere, because there is nobody in this product to speak it. You read your own words, in your own head or out loud in your own room, and that is the whole of it.",
+      "Your sankalp is shown to you and to nobody else. It is never spoken aloud, because there is nobody in this product to speak it. You read your own words, in your own head or in your own room, and that is the whole of it.",
       "It is never printed on anything public. It is not in the register line, it is not on the mark you keep, and the verification page will not return it to anyone holding the identifier.",
-      "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, it is logged permanently, and you are emailed within a day telling you that it was read, by whom, and why. That costs us something, which is why it is worth believing.",
-      "One automated safety check runs over the text. No person sees it as a result of that check. If the text suggests someone may be in danger, you receive a message with places you can call, written so that nothing in it implies a person read your words, because none did. We will not hold a sankalp intended to harm a named person, and that refusal is one of the very few reasons a human would ever be shown the text.",
+      "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, is logged permanently, and you are emailed within a day telling you it was read, by whom, and why.",
+      "One automated safety check runs over the text, and no person sees it as a result. If the text suggests someone may be in danger, you receive a message with places you can call, written so that nothing in it implies a person read your words, because none did. We will not hold a sankalp intended to harm a named person, and that is one of the very few reasons a human would ever be shown the text.",
       "We never train anything on it. We never advertise from it. We never quote it, and we never turn it into a testimonial.",
     ],
     othersH: "Names that are not yours",
     others: [
-      "When you name a living relative you are handing us their information, not your own, and we ask you to confirm they would not object. We remove any living person's details at that person's own request, without asking your permission first. Naming a child requires you to say you are their guardian.",
+      "When you name a living relative you are handing us their information, not your own, and we ask you to confirm they would not object. We remove any living person's details at that person's request, without asking your permission first. Naming a child requires you to say you are their guardian.",
     ],
     retentionH: "What is kept, and for how long",
     retention: [
@@ -314,8 +314,8 @@ const ethicsEn = {
     ],
     eraseH: "Erasure",
     erase: [
-      "One button deletes everything, across copies and backups, within seven days. It works by destroying the key your record was encrypted with, which is why it holds even where the storage itself cannot be overwritten.",
-      "The mark you downloaded keeps working afterwards, because what it stands on is a public river reading and not a row in our database. Deleting removes our ability to hold your sankalp, not your ability to prove what the river was doing.",
+      "One button deletes everything, across copies and backups, within seven days. It works by destroying the key your record was encrypted with, which is why it holds even where storage cannot be overwritten.",
+      "The mark you downloaded keeps working, because what it stands on is a public river reading rather than a row in our database. Deleting removes our ability to hold your sankalp, not your ability to prove what the river was doing.",
       "The confirmation lists what was deleted, what was kept, and why, including the invoices the law requires.",
     ],
     trackingH: "What runs on this site",
@@ -335,27 +335,27 @@ const ethicsEn = {
     rows: [
       {
         q: "The panchang",
-        a: "We have not yet named a source. Until we do, every exact time on this site is labelled provisional where it appears, and where sources disagree we show the range rather than a false precision. When a source is named, the method, the ayanamsa and the coordinates of the ghat itself are published beside the times.",
+        a: "We have not yet named a source. Until we do, every exact time is labelled provisional where it appears, and where sources disagree we show the range rather than a false precision. When a source is named, the method, the ayanamsa and the ghat's own coordinates are published beside the times.",
       },
       {
         q: "The river data licence",
-        a: "Copernicus flood data is CC BY 4.0 and we carry the attribution. What is not settled is the commercial tier and the rate limits of the service we read it through, and the exact attribution wording that service requires. Until it is, this line is the honest state of it.",
+        a: "Copernicus flood data is CC BY 4.0 and we carry the attribution. What is unsettled is the commercial tier and rate limits of the service we read it through, and the exact attribution wording it requires.",
       },
       {
         q: "Which waters have a named gauge",
-        a: "The Central Water Commission's public portal carries no river level telemetry for the Ganga or the Yamuna basins, so four of the six waters have no named government station we can print. We would rather show a modelled figure and say it is modelled than name a station that is not there.",
+        a: "The Central Water Commission's public portal carries no river level telemetry for the Ganga or Yamuna basins, so four of the six waters have no named government station we can print. Those pages show the modelled figure and say that is what it is.",
       },
       {
         q: "The sound",
-        a: "Every stem needs a licence and a named recordist before it plays. A water we have no honest recording of ships silent, and its page says so. Nothing here is generated audio and nothing is a live feed from any ghat.",
+        a: "Every stem needs a licence and a named recordist before it plays. A water we have no honest recording of ships silent, and its page says so. Nothing here is generated audio and nothing is a live feed.",
       },
       {
         q: "The verse in section 03",
-        a: "It is quoted from ordinary daily use rather than from a named published edition. It is the load-bearing paragraph on this page, so it should be the best-sourced line on the site, and it is not yet. The edition will be cited here when it is fixed.",
+        a: "It is quoted from ordinary daily use rather than a named published edition. It is the load-bearing paragraph on this page, so it should be the best-sourced line on the site, and it is not yet. The edition will be cited here when it is fixed.",
       },
       {
         q: "Money, tax and jurisdiction",
-        a: "Where the company sits, how this is taxed, and which law governs your data are real questions with real answers that we are still taking from counsel. Your data is meant to sit in India, with a European copy for those who ask. Until that is settled, this sentence is the honest state of it.",
+        a: "Where the company sits, how this is taxed, and which law governs your data are questions we are still taking from counsel. Your data is meant to sit in India, with a European copy for those who ask.",
       },
     ],
   },
@@ -365,8 +365,8 @@ const ethicsEn = {
     id: "ask",
     h: "Ask someone whose judgement you trust",
     body: [
-      "Before you pay us anything, ask someone whose judgement you trust in these matters, your own purohit, your family's acharya, your elders. If they tell you this is not the right thing for you, they are right, and we are not offended.",
-      "And if you think we have got any of this wrong, the shastra, the price, the data, write to us. We publish objections made in good faith and what we did about them, including the ones we decided not to act on, and why.",
+      "Before you pay us anything, ask someone whose judgement you trust: your own purohit, your family's acharya, your elders. If they tell you this is not right for you, they are right, and we are not offended.",
+      "And if you think we have got any of this wrong, the shastra, the price, the data, write to us. We publish objections made in good faith and what we did about them, including the ones we decided not to act on.",
     ],
     mailLabel: "Write to us",
   },
@@ -382,13 +382,13 @@ export const ethicsContent = { en: ethicsEn, hi: {
   meta: {
     title: "घोषणा: डिजिटल स्नान क्या है, और क्या नहीं · स्नानिफ़ाई",
     description:
-      "न पुरोहित, न घाट पर अनुष्ठान, न कोई प्रदर्शन, न आपकी ओर से किसी के द्वारा कुछ किया जाना। डिजिटल स्नान अर्थात किसी पवित्र नदी की वास्तविक मापी हुई स्थिति, सच्चा पंचांग, और वे शब्द जिन्हें केवल आप कहते हैं। जो दावे हम कभी नहीं करेंगे, इस साइट पर ठीक-ठीक क्या चलता है, और क्या अभी तय नहीं हुआ।",
+      "डिजिटल स्नान अर्थात किसी पवित्र नदी की वास्तविक मापी हुई स्थिति, सच्चा पंचांग, और वे शब्द जिन्हें केवल आप कहते हैं। जो दावे हम कभी नहीं करेंगे, इस साइट पर ठीक-ठीक क्या चलता है, और क्या अभी तय नहीं हुआ।",
   },
   eyebrow: "घोषणा",
   title: "डिजिटल स्नान करने योग्य सच्चा कर्म है।",
-  lede: "आप जहाँ हैं वहीं बैठते हैं, उस घड़ी में जिसे पंचांग नाम देता है, सामने उस नदी की उसी दिन की वास्तविक स्थिति होती है, और आप स्वयं वही कहते हैं जो कहने आए थे। यही पूरा उत्पाद है, और हमारे मत में यह पर्याप्त है।",
+  lede: "आप जहाँ हैं वहीं बैठते हैं, उस घड़ी में जिसे पंचांग नाम देता है, सामने उस नदी की उसी दिन की वास्तविक स्थिति होती है, और आप स्वयं वही कहते हैं जो कहने आए थे। यही पूरा उत्पाद है।",
   version:
-    "संस्करण २, जो पूर्णतः डिजिटल स्नान की ओर मुड़ते समय लिखा गया। प्रकाशन की तिथि उसी दिन दर्ज होती है जिस दिन यह पृष्ठ सार्वजनिक होता है, और हर बाद का संशोधन तिथि सहित साथ रखा जाता है। यह पृष्ठ चुपचाप नहीं बदला जाता।",
+    "संस्करण २, जो पूर्णतः डिजिटल स्नान की ओर मुड़ते समय लिखा गया। हर संशोधन पिछले के साथ, तिथि सहित, रखा जाता है। यह पृष्ठ चुपचाप कभी नहीं बदला जाता।",
   tocLabel: "इस पृष्ठ पर",
 
   s1: {
@@ -396,8 +396,8 @@ export const ethicsContent = { en: ethicsEn, hi: {
     id: "position",
     h: "सीधी बात",
     body: [
-      "यहाँ कोई पुरोहित नहीं है। किसी घाट पर कोई अनुष्ठान नहीं होता। आपकी ओर से, कहीं भी, कोई कुछ नहीं करता, और इस साइट पर कुछ भी किसी विधि की रिकॉर्डिंग नहीं है।",
-      "जो है, वह यह: एक सच्ची नदी की सच्ची स्थिति, आज उसी सार्वजनिक बाढ़-मॉडल से पढ़ी हुई जो उस पर दृष्टि रखता है। सच्चा पंचांग, ताकि जिस घड़ी में आप बैठें उसका अर्थ हो। बहते जल की ध्वनि। और वे शब्द, जिन्हें केवल आप कहते हैं।",
+      "यहाँ कोई पुरोहित नहीं है और किसी घाट पर कोई अनुष्ठान नहीं होता। आपकी ओर से कोई कुछ नहीं करता, और यहाँ कुछ भी किसी विधि की रिकॉर्डिंग नहीं है।",
+      "जो है, वह यह: एक सच्ची नदी की सच्ची स्थिति, आज उसी सार्वजनिक बाढ़-मॉडल से पढ़ी हुई जो उस पर दृष्टि रखता है। सच्चा पंचांग, ताकि घड़ी का अर्थ हो। बहते जल की ध्वनि। और वे शब्द, जिन्हें केवल आप कहते हैं।",
       "हम न मंदिर हैं, न किसी मंदिर की जगह ले रहे हैं। हम बैठने का एक स्थान हैं, तड़के चार बजे, उसी नदी के साथ जहाँ से आप हैं।",
     ],
     pull: "हम बताते हैं कि स्क्रीन पर क्या है। यह नहीं बताते कि उससे आपकी आत्मा का क्या होगा।",
@@ -409,8 +409,8 @@ export const ethicsContent = { en: ethicsEn, hi: {
     h: "हमारे सर्वर नदी में हैं",
     body: [
       "यह वाक्य नारे जैसा लगता है। असल में यह एक तकनीकी विवरण है।",
-      "ग्यारह अगस्त को हरिद्वार में गंगा लगभग १,४४४ घन मीटर प्रति सेकंड बह रही थीं, जो वर्ष के उस सप्ताह के लिए सामान्य बहाव है। उसी दिन नासिक में गोदावरी उस सप्ताह के अपने ३५ वर्षों के इतिहास के ९५वें प्रतिशतक पर थीं। दोनों अंक उसी दिन इस साइट में आए, और गोदावरी वैसी ही सुनाई भी दीं।",
-      "तो जब गंगा चढ़ती हैं, यह वेबसाइट भी उन्हीं के साथ चढ़ती है। अप्रैल में शिप्रा क्षीण होती हैं, तो यहाँ भी क्षीण होती हैं। इस साइट पर कुछ भी लूप नहीं है, न कोई तैयार दृश्य, न कोई सजाया हुआ वीडियो। इस उत्पाद में कहीं कोई कृत्रिम रूप से बनाया गया जल नहीं है, और कभी होगा भी नहीं।",
+      "ग्यारह अगस्त को हरिद्वार में गंगा लगभग १,४४४ घन मीटर प्रति सेकंड बह रही थीं, जो उस सप्ताह के लिए सामान्य बहाव है। उसी दिन नासिक में गोदावरी १९९७ से उस सप्ताह में किए हुए सब कुछ के ९५वें प्रतिशतक पर थीं, और साइट वैसी ही सुनाई भी दी।",
+      "जब गंगा चढ़ती हैं, यह साइट भी उन्हीं के साथ चढ़ती है। अप्रैल में शिप्रा क्षीण होती हैं, तो यहाँ भी क्षीण होती हैं। इस उत्पाद का कोई जल कृत्रिम रूप से बनाया हुआ नहीं है, और कभी होगा भी नहीं।",
     ],
     specH: "वह अंक ठीक-ठीक है क्या",
     spec: [
@@ -424,7 +424,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
       },
       {
         k: "प्रतिशतक का अर्थ",
-        v: "आज का मान उसी खंड के उन सब दैनिक मानों के सामने कहाँ बैठता है जो वर्ष के इसी सप्ताह में १९९७ से २०२५ तक आए। उस नदी के अपने इतिहास के छह सौ नौ दिन, और किसी नदी की तुलना करने का एकमात्र सच्चा ढंग।",
+        v: "आज का मान उसी खंड के उन सब दैनिक मानों के सामने कहाँ बैठता है जो इसी सप्ताह में १९९७ से २०२५ तक आए। उस नदी के अपने इतिहास के छह सौ नौ दिन, और किसी नदी की तुलना करने का एकमात्र सच्चा ढंग।",
       },
       {
         k: "वह कितना पुराना है",
@@ -432,11 +432,11 @@ export const ethicsContent = { en: ethicsEn, hi: {
       },
       {
         k: "जब हम नदी तक न पहुँच सकें",
-        v: "पृष्ठ यही कहता है, और आज की तिथि का उनतीस-वर्षीय मध्यमान छापता है, ठीक इसी नाम से। हम न बीच के मान गढ़ते हैं, न कोई विश्वसनीय दिखने वाला अंक बनाते हैं।",
+        v: "पृष्ठ यही कहता है, और आज की तिथि का उनतीस-वर्षीय मध्यमान इसी नाम से छापता है। हम न बीच के मान गढ़ते हैं, न कोई विश्वसनीय दिखने वाला अंक बनाते हैं।",
       },
       {
         k: "नामित मापक केंद्र",
-        v: "जहाँ सरकारी गेज है, वहाँ हम उसे नाम देते हैं: केंद्र, संस्था, निर्देशांक और शून्य-तल, केंद्रीय जल आयोग की अपनी सूची से। छह में से चार जलों के लिए इस पोर्टल पर कोई नदी-जलस्तर दूरमापी है ही नहीं, और वे पृष्ठ यही कहते हैं, कहीं और से अंक उधार नहीं लेते।",
+        v: "जहाँ सरकारी गेज है, वहाँ हम उसे नाम देते हैं: केंद्र, संस्था, निर्देशांक और शून्य-तल, केंद्रीय जल आयोग की अपनी सूची से। छह में से चार जलों के लिए कोई दूरमापी है ही नहीं, और वे पृष्ठ यही कहते हैं, कहीं और से अंक उधार नहीं लेते।",
       },
       {
         k: "हम स्वयं क्या मापते हैं",
@@ -458,8 +458,8 @@ export const ethicsContent = { en: ethicsEn, hi: {
     verse: ["गङ्गे च यमुने चैव गोदावरि सरस्वति।", "नर्मदे सिन्धु कावेरि जलेऽस्मिन् सन्निधिं कुरु॥"],
     verseGloss: "गंगा और यमुना, गोदावरी, सरस्वती, नर्मदा, सिंधु, कावेरी: इस जल में सन्निधि कीजिए।",
     after: [
-      "यह लखनऊ में बाल्टी पर कहा जाता है। लेस्टर में शॉवर के नीचे। न्यू जर्सी में नल पर, उन लोगों के द्वारा जिन्होंने इनमें से एक भी नदी बीस वर्षों से नहीं देखी। यह कोई बहकी हुई उपमा नहीं है। यह एक विधि है, और बहुत पुरानी, जिससे दूर की नदी सामने रखे जल में सन्निहित होती है, और परंपरा ने इसे कभी छोटा कर्म नहीं माना।",
-      "नदी को आप तक लाना हमने नहीं गढ़ा। आपकी दादी नाश्ते से पहले यही करती हैं। हमने उसके लिए एक बेहतर यंत्र बनाया है, जो आपको बता सकता है कि गंगा आज वास्तव में क्या कर रही हैं।",
+      "यह लखनऊ में बाल्टी पर कहा जाता है। लेस्टर में शॉवर के नीचे। न्यू जर्सी में नल पर, उन लोगों के द्वारा जिन्होंने इनमें से एक भी नदी बीस वर्षों से नहीं देखी। यह एक विधि है, और बहुत पुरानी, जिससे दूर की नदी सामने रखे जल में सन्निहित होती है, और परंपरा ने इसे कभी छोटा कर्म नहीं माना।",
+      "नदी को आप तक लाना हमने नहीं गढ़ा। आपकी दादी नाश्ते से पहले यही करती हैं। हमने उसके लिए एक बेहतर यंत्र बनाया है, जो बता सकता है कि गंगा आज क्या कर रही हैं।",
     ],
   },
 
@@ -493,9 +493,9 @@ export const ethicsContent = { en: ethicsEn, hi: {
     h: "“वाई-फ़ाई से पाप नहीं धुलते”",
     body: [
       "सही बात है। नहीं धुलते। हमसे भी नहीं धुलते, और हमने कभी कहा भी नहीं कि धुलते हैं।",
-      "देखिए कि यहाँ बेचा क्या जा रहा है: एक घड़ी, एक जल, उस जल का सच्चा पाठ, कुछ शब्द, और रखने योग्य एक चिह्न। इस साइट का हर मूल्य पढ़ जाइए, आपको एक भी वचन नहीं मिलेगा। न पाप धुलने का। न पुण्य गिनने का। न किसी दोष का, जो थोड़े और शुल्क पर खोजकर हटा दिया जाए। यदि आप इसी के लिए आए हैं, तो हम सचमुच ग़लत दुकान हैं, और दुकानें और भी बहुत हैं।",
+      "देखिए कि यहाँ बेचा क्या जा रहा है: एक घड़ी, एक जल, उस जल का सच्चा पाठ, कुछ शब्द, और रखने योग्य एक चिह्न। इस साइट का कोई मूल्य किसी फल का वचन नहीं देता। यदि आप इसी के लिए आए हैं, तो हम ग़लत दुकान हैं।",
       "बाक़ी आपत्ति प्रायः तकनीक की नहीं होती। वह गंभीरता की होती है, और यह चिंता उचित है। तो यह रही कसौटी, और यह हमारी बनाई हुई नहीं है।",
-      "किसी ने कभी शिकायत नहीं की कि माला केवल धागा है। या दीया केवल तेल में बाती है। या मंदिर केवल वह पत्थर है जिसे लोग पहाड़ी पर ढो लाए। साधन कभी मुद्दा नहीं था।",
+      "किसी ने कभी शिकायत नहीं की कि माला केवल धागा है, या दीया केवल तेल में बाती, या मंदिर केवल वह पत्थर जिसे लोग पहाड़ी पर ढो लाए। साधन कभी मुद्दा नहीं था।",
     ],
     pull: "मुद्दा ध्यान है, और ध्यान को सदा खड़े होने के लिए कोई जगह चाहिए रही है।",
     close:
@@ -521,7 +521,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
     items: [
       {
         t: "यदि आप जल तक पहुँच सकते हैं, जाइए",
-        d: "यह हम गंभीरता से कहते हैं और इस पृष्ठ के हर रूप में इसे सबसे ऊपर रखा है। यह तीर्थयात्रा का प्रतिद्वंद्वी नहीं है और उस तुलना में हर बार हारता है।",
+        d: "यह हम गंभीरता से कहते हैं, और इस पृष्ठ के हर रूप में यह सबसे ऊपर रहा है। यह तीर्थयात्रा का प्रतिद्वंद्वी नहीं है और उस तुलना में हर बार हारता है।",
       },
       {
         t: "यदि आपको कोई गारंटी चाहिए",
@@ -529,7 +529,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
       },
       {
         t: "यदि आपके मत में अनुष्ठान तभी मान्य है जब कोई योग्य व्यक्ति तीर्थ पर आपकी ओर से उसे संपन्न करे",
-        d: "वह एक सुसंगत मत है, गंभीर लोगों का मत है, और यह उत्पाद आपके लिए नहीं बना। हम आपसे बहस नहीं करेंगे, और ऐसा लिखेंगे भी नहीं मानो आप हैं ही नहीं। हमारे आदर सहित जाइए।",
+        d: "वह एक सुसंगत मत है, गंभीर लोगों का मत है, और यह उत्पाद आपके लिए नहीं बना। हम आपसे बहस नहीं करेंगे। हमारे आदर सहित जाइए।",
       },
     ],
   },
@@ -538,7 +538,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
     n: "०८",
     id: "never",
     h: "जो दावे हम कभी नहीं करेंगे",
-    lede: "यह सूची हम पर बाध्यकारी है, हम पर, हमारे हर सहयोगी पर, और हमारी ओर से लिखने वाले हर व्यक्ति पर। हम कभी यह न कहेंगे, न संकेत करेंगे, न किसी साझेदार, ईमेल या विज्ञापन को कहने देंगे:",
+    lede: "यह सूची हम पर, हमारे हर सहयोगी पर, और हमारी ओर से लिखने वाले हर व्यक्ति पर बाध्यकारी है। हम कभी यह न कहेंगे, न संकेत करेंगे, न किसी साझेदार, ईमेल या विज्ञापन को कहने देंगे:",
     items: [
       "कि आपकी ओर से कुछ संपन्न किया गया। कुछ नहीं किया जाता। घाट पर कोई नहीं है, और इस उत्पाद में कोई पुरोहित है ही नहीं।",
       "कि आपके पाप धुल गए।",
@@ -553,7 +553,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
       "कि किसी घाट का जल स्वच्छ, पीने योग्य या औषधीय है।",
       "कि आपकी देह शुद्ध हो गई।",
       "कि कोई मुहूर्त अंतिम है, या आपके जीवन में फिर नहीं आएगा। खगोल का स्थान पंचांग है; भुगतान के पृष्ठ पर वह कभी नहीं आएगा।",
-      "कि इस साइट का कोई चित्र किसी नदी का सजीव दृश्य है। इस उत्पाद में कहीं कोई वीडियो नहीं है, न कृत्रिम रूप से बनाया गया दृश्य, न कृत्रिम स्वर, न गढ़े हुए नदी-आँकड़े। जो पाठ हम नहीं ला सके, वह “नहीं ला सके” ही छपता है।",
+      "कि इस साइट का कोई चित्र किसी नदी का सजीव दृश्य है। इस उत्पाद में कोई वीडियो नहीं, न कृत्रिम दृश्य, न कृत्रिम स्वर, न गढ़े हुए नदी-आँकड़े। जो पाठ हम नहीं ला सके, वह “नहीं ला सके” ही छपता है।",
       "कि किसी दिवंगत व्यक्ति को कुछ प्राप्त हुआ, या उन पर कुछ प्रभाव पड़ा।",
       "किसी दिवंगत व्यक्ति का उपयोग विज्ञापन, उदाहरण या प्रशंसापत्र में।",
       "कोई भी वाक्य जो भय पर टिका हो, कि समय बीता जा रहा है, कि आपके घर पर कुछ आ पड़ेगा, कि न करने का पछतावा रहेगा।",
@@ -561,7 +561,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
       "जो नाम, गोत्र और संकल्प लोग हमें सौंपते हैं, उन्हें हम न बेचेंगे, न साझा करेंगे, न उनसे कोई उत्पाद बनाएँगे।",
     ],
     report:
-      "यदि कभी हमें इनमें से कोई दावा करते देखें, हमें लिखिए। हम उसे हटाएँगे, सार्वजनिक रूप से स्वीकार करेंगे, और सुधार को तिथि सहित अभिलेख में रखेंगे। सुधार हम प्रकाशित करते हैं, वे भी जो हमारे लिए असहज थे।",
+      "यदि कभी हमें इनमें से कोई दावा करते देखें, हमें लिखिए। हम उसे हटाएँगे, सार्वजनिक रूप से स्वीकार करेंगे, और सुधार को तिथि सहित अभिलेख में रखेंगे, वे भी जो हमारे लिए असहज थे।",
   },
 
   s9: {
@@ -590,24 +590,24 @@ export const ethicsContent = { en: ethicsEn, hi: {
     id: "data",
     h: "आपका नाम, आपका गोत्र, आपका संकल्प",
     body: [
-      "गोत्र वंश है। संकल्प में कोई रोग हो सकता है, कोई मृत्यु, कोई भय। यह सामान्य ग्राहक-सूचना नहीं है, और हम इसे वैसा नहीं मानते, न क़ानून में, जहाँ यह विशेष श्रेणी की धार्मिक सूचना है, न व्यवहार में।",
+      "गोत्र वंश है। संकल्प में कोई रोग हो सकता है, कोई मृत्यु, कोई भय। यह सामान्य ग्राहक-सूचना नहीं है, न क़ानून में, जहाँ यह विशेष श्रेणी की धार्मिक सूचना है, न व्यवहार में।",
     ],
     gotraH: "यहाँ गोत्र वैकल्पिक है",
     gotra: [
-      "बहुत से परिवार गोत्र नहीं मानते, और जो फ़ॉर्म गोत्र पर अड़ता है वह लोगों को जाति से छाँटने वाला फ़ॉर्म है। हमारा नहीं अड़ता। रिक्त छोड़िए और संकल्प में लिखा जाएगा कि गोत्र अनुक्त है, या प्रचलित कश्यप गोत्र लिया जाएगा, या आपके परिवार की अपनी परिपाटी, यदि आप बता दें।",
-      "जहाँ आप कई नाम लिखते हैं, वहाँ हर नाम का अपना गोत्र हो सकता है, क्योंकि घर एकरूप नहीं होते, विवाह कर आई स्त्री, गोद लिया बच्चा, अंतर्जातीय विवाह। छह नामों पर एक ही गोत्र अधिकांश परिवारों के लिए ग़लत संकल्प बनाता।",
+      "बहुत से परिवार गोत्र नहीं मानते, और जो फ़ॉर्म गोत्र पर अड़ता है वह लोगों को जाति से छाँटता है। रिक्त छोड़िए और संकल्प में लिखा जाएगा कि गोत्र अनुक्त है, या प्रचलित कश्यप गोत्र लिया जाएगा, या आपके परिवार की अपनी परिपाटी।",
+      "हर नाम का अपना गोत्र हो सकता है, क्योंकि घर एकरूप नहीं होते: विवाह कर आई स्त्री, गोद लिया बच्चा, अंतर्जातीय विवाह। छह नामों पर एक ही गोत्र अधिकांश परिवारों के लिए ग़लत संकल्प बनाता।",
     ],
     sankalpH: "संकल्प-पाठ",
     sankalp: [
-      "आपका संकल्प केवल आपको दिखता है, और किसी को नहीं। उसे कहीं भी, कोई भी, ऊँचे स्वर में नहीं पढ़ता, क्योंकि इस उत्पाद में पढ़ने वाला कोई है ही नहीं। आप अपने ही शब्द पढ़ते हैं, मन में या अपने कमरे में स्वर के साथ, और बस इतना ही होता है।",
+      "आपका संकल्प केवल आपको दिखता है, और किसी को नहीं। उसे कोई ऊँचे स्वर में नहीं पढ़ता, क्योंकि इस उत्पाद में पढ़ने वाला कोई है ही नहीं। आप अपने ही शब्द पढ़ते हैं, मन में या अपने कमरे में, और बस इतना ही होता है।",
       "वह कहीं सार्वजनिक रूप से नहीं छपता। न पंजिका की पंक्ति में, न उस चिह्न पर जो आप रखते हैं, और सत्यापन पृष्ठ उसे किसी को नहीं दिखाता, चाहे उसके पास पहचान-संख्या हो।",
-      "स्नानिफ़ाई में कोई संकल्प यूँ ही नहीं पढ़ता। पढ़ने के लिए दो अनुमतियाँ और लिखित कारण चाहिए, वह स्थायी रूप से दर्ज होता है, और एक दिन के भीतर आपको सूचित किया जाता है कि पढ़ा गया, किसने और क्यों। इसकी क़ीमत हमें चुकानी पड़ती है, इसीलिए यह विश्वास योग्य है।",
-      "पाठ पर एक स्वचालित सुरक्षा-जाँच चलती है। उस जाँच के कारण कोई व्यक्ति उसे नहीं देखता। यदि पाठ से लगे कि कोई संकट में हो सकता है, तो आपको एक संदेश मिलता है जिसमें वे स्थान लिखे होते हैं जहाँ आप बात कर सकते हैं, और वह इस तरह लिखा जाता है कि उससे यह संकेत न मिले कि किसी ने आपके शब्द पढ़े, क्योंकि किसी ने नहीं पढ़े। किसी नामित व्यक्ति की हानि के उद्देश्य से लिखा संकल्प हम नहीं रखेंगे, और वही उन गिने-चुने कारणों में है जिनमें कोई व्यक्ति पाठ देख सकता है।",
+      "स्नानिफ़ाई में कोई संकल्प यूँ ही नहीं पढ़ता। पढ़ने के लिए दो अनुमतियाँ और लिखित कारण चाहिए, वह स्थायी रूप से दर्ज होता है, और एक दिन के भीतर आपको सूचित किया जाता है कि पढ़ा गया, किसने और क्यों।",
+      "पाठ पर एक स्वचालित सुरक्षा-जाँच चलती है, और उसके कारण कोई व्यक्ति उसे नहीं देखता। यदि पाठ से लगे कि कोई संकट में हो सकता है, तो आपको एक संदेश मिलता है जिसमें वे स्थान लिखे होते हैं जहाँ आप बात कर सकते हैं, और वह इस तरह लिखा जाता है कि उससे यह संकेत न मिले कि किसी ने आपके शब्द पढ़े, क्योंकि किसी ने नहीं पढ़े। किसी नामित व्यक्ति की हानि के उद्देश्य से लिखा संकल्प हम नहीं रखेंगे, और वही उन गिने-चुने कारणों में है जिनमें कोई व्यक्ति पाठ देख सकता है।",
       "हम इस पर कुछ प्रशिक्षित नहीं करते। इससे विज्ञापन नहीं करते। इसे उद्धृत नहीं करते। प्रशंसापत्र नहीं बनाते।",
     ],
     othersH: "वे नाम जो आपके अपने नहीं",
     others: [
-      "जब आप किसी जीवित संबंधी का नाम देते हैं, तो आप हमें उनकी सूचना सौंप रहे हैं, अपनी नहीं, और हम आपसे पुष्टि माँगते हैं कि उन्हें आपत्ति न होगी। किसी भी जीवित व्यक्ति की सूचना उन्हीं के कहने पर हटा दी जाती है, आपकी अनुमति लिए बिना। किसी बच्चे का नाम देने के लिए आपको यह कहना होता है कि आप उनके संरक्षक हैं।",
+      "किसी जीवित संबंधी का नाम देते समय आप हमें उनकी सूचना सौंप रहे हैं, अपनी नहीं, और हम आपसे पुष्टि माँगते हैं कि उन्हें आपत्ति न होगी। किसी भी जीवित व्यक्ति की सूचना उन्हीं के कहने पर हटा दी जाती है, आपकी अनुमति लिए बिना। किसी बच्चे का नाम देने के लिए आपको यह कहना होता है कि आप उनके संरक्षक हैं।",
     ],
     retentionH: "क्या रखा जाता है, और कितने समय",
     retention: [
@@ -619,14 +619,14 @@ export const ethicsContent = { en: ethicsEn, hi: {
     ],
     eraseH: "सब कुछ मिटाना",
     erase: [
-      "एक बटन सब कुछ मिटा देता है, प्रतियों और बैकअप सहित, सात दिन के भीतर। यह उस कुंजी को नष्ट करके होता है जिससे आपका अभिलेख एन्क्रिप्ट किया गया था, इसीलिए यह वहाँ भी चलता है जहाँ भंडारण स्वयं मिटाया नहीं जा सकता।",
-      "आपका उतारा हुआ चिह्न उसके बाद भी काम करता रहता है, क्योंकि वह जिस पर टिका है वह नदी का सार्वजनिक पाठ है, हमारी तालिका की कोई पंक्ति नहीं। मिटाने से आपका संकल्प रखने की हमारी क्षमता जाती है, नदी की स्थिति सिद्ध करने की आपकी क्षमता नहीं।",
+      "एक बटन सब कुछ मिटा देता है, प्रतियों और बैकअप सहित, सात दिन के भीतर। यह उस कुंजी को नष्ट करके होता है जिससे आपका अभिलेख एन्क्रिप्ट हुआ था, इसीलिए यह वहाँ भी चलता है जहाँ भंडारण मिटाया नहीं जा सकता।",
+      "आपका उतारा हुआ चिह्न बाद में भी काम करता रहता है, क्योंकि वह नदी के सार्वजनिक पाठ पर टिका है, हमारी तालिका की किसी पंक्ति पर नहीं। मिटाने से आपका संकल्प रखने की हमारी क्षमता जाती है, नदी की स्थिति सिद्ध करने की आपकी क्षमता नहीं।",
       "पुष्टि-संदेश में लिखा होता है कि क्या मिटा, क्या रखा गया, और क्यों, उन रसीदों सहित जो क़ानून माँगता है।",
     ],
     trackingH: "इस साइट पर क्या चलता है",
     tracking: [
       "इस साइट पर कोई विज्ञापन या स्क्रीन-रिकॉर्डिंग स्क्रिप्ट नहीं चलती, कभी नहीं। जिस पृष्ठ पर आप अपना संकल्प लिखते हैं, उसे कुछ भी रिकॉर्ड नहीं करता।",
-      "एक विश्लेषण स्क्रिप्ट पृष्ठ-दृश्य गिनती है: Vercel Web Analytics। वह कोई कुकी नहीं रखती, आपका पीछा किसी दूसरी साइट तक नहीं करती, और किसी फ़ॉर्म की सामग्री कभी नहीं देखती। जो शून्य हमारे पास नहीं है, उसका दावा करने से अच्छा है उसका नाम बता देना।",
+      "एक विश्लेषण स्क्रिप्ट पृष्ठ-दृश्य गिनती है: Vercel Web Analytics। वह कोई कुकी नहीं रखती, आपका पीछा किसी दूसरी साइट तक नहीं करती, और किसी फ़ॉर्म की सामग्री कभी नहीं देखती। जो शून्य हमारे पास नहीं है, उसका दावा करने से अच्छा है नाम बता देना।",
       "उत्पाद में केवल एक और बाहरी स्क्रिप्ट है: भुगतान सेवा की, केवल भुगतान वाले चरण पर, और उसी पृष्ठ पर उसका नाम लिखा रहता है।",
       "पहली सशुल्क बैठक से यह पृष्ठ यह गिनती भी रखेगा कि सूचना के लिए कितनी गुप्त माँगें हमें मिलीं। यदि वह वाक्य कभी बदलने के बजाय हटा दिया जाए, तो हटाए जाने को ही पढ़िए।",
     ],
@@ -640,27 +640,27 @@ export const ethicsContent = { en: ethicsEn, hi: {
     rows: [
       {
         q: "पंचांग",
-        a: "हमने अभी कोई स्रोत तय नहीं किया। जब तक न हो, इस साइट का हर सटीक समय जहाँ आता है वहीं “अस्थायी” अंकित रहता है, और जहाँ स्रोत भिन्न हों वहाँ झूठी सटीकता के बजाय हम पूरी सीमा दिखाते हैं। स्रोत तय होते ही गणना-पद्धति, अयनांश और घाट के अपने निर्देशांक समयों के साथ प्रकाशित होंगे।",
+        a: "हमने अभी कोई स्रोत तय नहीं किया। तब तक हर सटीक समय जहाँ आता है वहीं “अस्थायी” अंकित रहता है, और जहाँ स्रोत भिन्न हों वहाँ झूठी सटीकता के बजाय पूरी सीमा दिखाई जाती है। स्रोत तय होते ही गणना-पद्धति, अयनांश और घाट के अपने निर्देशांक समयों के साथ प्रकाशित होंगे।",
       },
       {
         q: "नदी-आँकड़ों की अनुज्ञप्ति",
-        a: "कोपरनिकस के बाढ़-आँकड़े CC BY 4.0 हैं और हम उनका श्रेय देते हैं। जो तय नहीं है वह यह कि जिस सेवा के माध्यम से हम उन्हें पढ़ते हैं उसका वाणिज्यिक स्तर, उसकी सीमाएँ, और श्रेय का ठीक-ठीक वाक्य क्या होगा। जब तक तय न हो, यही वाक्य इसकी सच्ची स्थिति है।",
+        a: "कोपरनिकस के बाढ़-आँकड़े CC BY 4.0 हैं और हम उनका श्रेय देते हैं। जो तय नहीं है वह यह कि जिस सेवा से हम उन्हें पढ़ते हैं उसका वाणिज्यिक स्तर, उसकी सीमाएँ, और श्रेय का ठीक-ठीक वाक्य क्या होगा।",
       },
       {
         q: "किन जलों का नामित गेज है",
-        a: "केंद्रीय जल आयोग के सार्वजनिक पोर्टल पर गंगा और यमुना बेसिन के लिए नदी-जलस्तर दूरमापी है ही नहीं, इसलिए छह में से चार जलों के लिए हम कोई नामित सरकारी केंद्र नहीं छाप सकते। हम प्रतिरूपित अंक दिखाकर उसे प्रतिरूपित कहना अधिक ठीक मानते हैं, बनिस्बत ऐसे केंद्र का नाम लेने के जो है ही नहीं।",
+        a: "केंद्रीय जल आयोग के सार्वजनिक पोर्टल पर गंगा और यमुना बेसिन के लिए नदी-जलस्तर दूरमापी है ही नहीं, इसलिए छह में से चार जलों के लिए हम कोई नामित सरकारी केंद्र नहीं छाप सकते। वे पृष्ठ प्रतिरूपित अंक दिखाते हैं और उसे प्रतिरूपित ही कहते हैं।",
       },
       {
         q: "ध्वनि",
-        a: "हर ध्वनि-खंड के लिए बजने से पहले अनुज्ञप्ति और रिकॉर्ड करने वाले का नाम चाहिए। जिस जल की हमारे पास सच्ची रिकॉर्डिंग नहीं, वह मौन ही आता है, और उसका पृष्ठ यही कहता है। यहाँ कुछ भी कृत्रिम रूप से बनाई गई ध्वनि नहीं है और न किसी घाट से कोई सजीव प्रसारण।",
+        a: "हर ध्वनि-खंड के लिए बजने से पहले अनुज्ञप्ति और रिकॉर्ड करने वाले का नाम चाहिए। जिस जल की हमारे पास सच्ची रिकॉर्डिंग नहीं, वह मौन ही आता है, और उसका पृष्ठ यही कहता है। यहाँ कोई कृत्रिम ध्वनि नहीं है और न कोई सजीव प्रसारण।",
       },
       {
         q: "खंड ०३ का श्लोक",
-        a: "वह रोज़ के प्रचलन से उद्धृत है, किसी नामित प्रकाशित संस्करण से नहीं। इस पृष्ठ का सबसे भार उठाने वाला अनुच्छेद वही है, इसलिए उसे साइट की सबसे अच्छी तरह स्रोत-सहित पंक्ति होना चाहिए, और अभी वह नहीं है। संस्करण तय होते ही यहीं उद्धृत होगा।",
+        a: "वह रोज़ के प्रचलन से उद्धृत है, किसी नामित प्रकाशित संस्करण से नहीं। इस पृष्ठ का सबसे भार उठाने वाला अनुच्छेद वही है, इसलिए उसे साइट की सबसे अच्छी तरह स्रोत-सहित पंक्ति होना चाहिए, और अभी वह नहीं है।",
       },
       {
         q: "धन, कर और अधिकार-क्षेत्र",
-        a: "कंपनी कहाँ बैठेगी, इस पर कर कैसे लगेगा, और आपकी सूचना पर कौन-सा क़ानून चलेगा, ये वास्तविक प्रश्न हैं जिनके उत्तर हम अभी विधि-सलाहकारों से ले रहे हैं। आपकी सूचना भारत में रहनी है, और जो चाहें उनके लिए यूरोप में एक प्रति। जब तक यह तय न हो, यही वाक्य इसकी सच्ची स्थिति है।",
+        a: "कंपनी कहाँ बैठेगी, इस पर कर कैसे लगेगा, और आपकी सूचना पर कौन-सा क़ानून चलेगा, ये प्रश्न हम अभी विधि-सलाहकारों से ले रहे हैं। आपकी सूचना भारत में रहनी है, और जो चाहें उनके लिए यूरोप में एक प्रति।",
       },
     ],
   },
@@ -670,8 +670,8 @@ export const ethicsContent = { en: ethicsEn, hi: {
     id: "ask",
     h: "जिनका विवेक आप मानते हैं, उनसे पूछिए",
     body: [
-      "हमें कुछ भी देने से पहले किसी ऐसे व्यक्ति से पूछिए जिनके विवेक पर आप इन विषयों में भरोसा करते हैं, अपने पुरोहित, अपने परिवार के आचार्य, अपने बड़े। यदि वे कहें कि यह आपके लिए उचित नहीं, तो वे ठीक कहते हैं, और हमें बुरा नहीं लगेगा।",
-      "और यदि आपको लगे कि हमसे कहीं चूक हुई है, शास्त्र में, मूल्य में, आँकड़ों में, हमें लिखिए। सद्भाव से की गई आपत्तियाँ और उन पर हमारा किया, दोनों हम प्रकाशित करते हैं, वे भी जिन पर हमने कुछ नहीं किया, और क्यों नहीं किया।",
+      "हमें कुछ भी देने से पहले किसी ऐसे व्यक्ति से पूछिए जिनके विवेक पर आप भरोसा करते हैं: अपने पुरोहित, अपने परिवार के आचार्य, अपने बड़े। यदि वे कहें कि यह आपके लिए उचित नहीं, तो वे ठीक कहते हैं, और हमें बुरा नहीं लगेगा।",
+      "और यदि आपको लगे कि हमसे कहीं चूक हुई है, शास्त्र में, मूल्य में, आँकड़ों में, हमें लिखिए। सद्भाव से की गई आपत्तियाँ और उन पर हमारा किया, दोनों हम प्रकाशित करते हैं, वे भी जिन पर हमने कुछ नहीं किया।",
     ],
     mailLabel: "हमें लिखिए",
   },
@@ -689,7 +689,7 @@ const howEn = {
   meta: {
     title: "How it works: four and a half minutes, five limbs · Snanify",
     description:
-      "Jal Sankalp, the digital snan, at full length: the reading, the breath, the vow held for eleven seconds, ninety seconds of black screen, and the mark. What is on the screen, what you do, where the river figures come from, and what the whole thing costs.",
+      "Jal Sankalp at full length: the reading, the breath, the vow held for eleven seconds, ninety seconds of black screen, and the mark. What is on the screen, what you do, where the river figures come from, and what it costs.",
   },
   eyebrow: "How it works",
   title: "Four and a half minutes. The same five limbs, every day.",
@@ -700,7 +700,7 @@ const howEn = {
     title: "Nothing is shipped to you, and nothing is done for you.",
     body: [
       "Everything Snanify gives you is on a screen: four and a half minutes with the river, a mark that the day leaves behind, and one ruled line in a register you keep. No water, no prasad, no thread, no ash, no parcel, nothing that needs a customs form.",
-      "If what you want is Ganga jal in your hand, or a rite done for you by somebody at the river, we are not that service, and we would rather say so here than take your money and disappoint you later.",
+      "If what you want is Ganga jal in your hand, or a rite done for you at the river, we are not that service, and we would rather say so here than disappoint you later.",
     ],
   },
 
@@ -718,7 +718,7 @@ const howEn = {
     setup: [
       { k: "Your name", v: "In Latin or in Devanagari, whichever you would rather read at six in the morning." },
       { k: "Your gotra", v: "Not every family keeps one. Leave it and the sankalp says so, plainly, with no apology in it." },
-      { k: "What you carry", v: "Your sankalp, in your own words. Nothing is suggested to you and no machine writes it. You will read it back every morning, which is the reason you only type it once." },
+      { k: "What you carry", v: "Your sankalp, in your own words. Nothing is suggested and no machine writes it. You will read it back every morning, which is why you only type it once." },
       { k: "Which water", v: "Ganga at Har Ki Pauri, Triveni at Prayagraj, Yamuna at Mathura, Godavari at Nashik, Shipra at Ujjain, Kaveri at Talakaveri." },
       { k: "When you wake", v: "We bring the river to that hour, in your own timezone, against the muhurat computed for that ghat's true sunrise." },
     ],
@@ -739,7 +739,7 @@ const howEn = {
       deva: "जल-पाठ · Jal Path",
       body: [
         "All the chrome leaves the screen and five almanac lines arrive, one every four seconds, set as a printed entry rather than an interface. The last line is the one people talk about afterwards, because it is about you rather than the river.",
-        "Behind the type, a single hairline sits at the river's real position between its own low and high water for this week of the year. On a day the Godavari is in spate the phone is nearly all dark water. In February it sits near the bottom, and within a week you read it without looking.",
+        "Behind the type, one hairline sits at the river's real position between its own low and high water for this week. On a day the Godavari is in spate the phone is nearly all dark water; in February it sits near the bottom. Within a week you read it without looking.",
       ],
       specimenH: "A specimen, with the figures the Ganga actually carried on the eleventh of August",
       specimen: [
@@ -749,7 +749,7 @@ const howEn = {
         "READ 04:00 IST · COPERNICUS EMS VIA OPEN-METEO",
         "YOU ARE 6,714 km FROM THIS WATER",
       ],
-      note: "If we could not reach the river, the fourth line says so and prints the twenty-nine year median for the date instead, labelled as exactly that. A stale honest number is completely fine. A fabricated fresh one would be the end of this business.",
+      note: "If we could not reach the river, the fourth line says so and prints the twenty-nine year median for the date instead, labelled as that. A stale honest number is fine. A fabricated fresh one would be the end of this business.",
     },
     {
       id: "breath",
@@ -759,9 +759,9 @@ const howEn = {
       label: "The breath",
       deva: "श्वास · Shwas",
       body: [
-        "The waterline rises for four seconds and falls for six, six times over. That is six breaths a minute with the exhale longer than the inhale, which is the rate the body settles at, and it is the only instruction in the whole product.",
+        "The waterline rises for four seconds and falls for six, six times over. That is six breaths a minute with the exhale longer than the inhale, the rate the body settles at, and it is the only instruction in the product.",
         "The words “in” and “out” appear on the first two cycles and then never again. The instruction removes itself once your body has the pattern, which is the difference between a ritual and an interface.",
-        "How far the line travels is set by today's flow. A river in spate breathes bigger. Same sixty seconds, physically different every morning, and neither of us did anything to make that happen.",
+        "How far the line travels is set by today's flow. A river in spate breathes bigger. The same sixty seconds, physically different every morning, and neither of us did anything to make that happen.",
       ],
       specimenH: "On the screen",
       specimen: ["Breathe with the water.", "in", "out"],
@@ -775,13 +775,13 @@ const howEn = {
       label: "The vow",
       deva: "संकल्प · Sankalp",
       body: [
-        "The water goes still and one line appears: say who you are. Beneath it the sankalp is already filled in: the masa, paksha and tithi, your name, your gotra, your city, and the water you chose. Your own words sit in the last line, exactly as you typed them on the first day.",
-        "Then you press and hold anywhere on the screen. While you hold, the text fills with vermillion from left to right, the way ink soaks into paper, over eleven seconds. Let go early and the ink drains back. There is no error, no red, and no scolding. You simply begin again.",
-        "Eleven seconds of holding a thumb still while reading your own words is a long time, and it is meant to be. It cannot be hurried and it cannot be skipped, which is the whole reason this is not a form.",
+        "The water goes still and one line appears: say who you are. Beneath it the sankalp is already filled in: the masa, paksha and tithi, your name, your gotra, your city, and the water you chose. Your own words sit in the last line, exactly as you typed them.",
+        "Then you press and hold anywhere on the screen. While you hold, the text fills with vermillion from left to right, the way ink soaks into paper, over eleven seconds. Let go early and the ink drains back. There is no error and no scolding. You begin again.",
+        "Eleven seconds of holding a thumb still while reading your own words is a long time, and it is meant to be. It cannot be hurried and it cannot be skipped, which is why this is not a form.",
       ],
       specimenH: "What appears when the eleven seconds are up",
       specimen: ["Spoken."],
-      note: "Not “recorded”, not “offered”, not “accepted”. Spoken, because that is the only thing that happened, and it is true. If the tithi has no sourced panchang behind it, that line is left out of the sankalp entirely rather than guessed at.",
+      note: "Not “recorded”, not “offered”, not “accepted”. Spoken, because that is the only thing that happened. If the tithi has no sourced panchang behind it, that line is left out of the sankalp rather than guessed at.",
     },
     {
       id: "stillness",
@@ -791,12 +791,12 @@ const howEn = {
       label: "The stillness",
       deva: "मौन · Maun",
       body: [
-        "The screen tells you to put the phone down, and then the screen goes away. Fully black, brightness dropped, the river still running in your ears, for ninety of the two hundred and seventy seconds.",
+        "The screen tells you to put the phone down, and then the screen goes away. Fully black, brightness dropped, the river still running in your ears, for ninety seconds.",
         "If you pick the phone up nothing happens. No counter, no penalty, no note that you moved. A practice does not police you. One bell at ninety seconds brings you back.",
       ],
       specimenH: "On the screen, and then not on the screen",
       specimen: ["Put the phone down. Face down, if you like.", "The river runs for ninety seconds."],
-      note: "The best minute of this product is the minute your screen is off. A screen reader is told the same thing in words: ninety seconds of stillness, the screen is dark on purpose.",
+      note: "The best minute of this product is the minute your screen is off. A screen reader is told the same in words: ninety seconds of stillness, the screen is dark on purpose.",
     },
     {
       id: "mark",
@@ -807,7 +807,7 @@ const howEn = {
       deva: "चिह्न · Chihn",
       body: [
         "The screen returns at a fifth of its brightness and the day writes itself into your register as one ruled line, the way an almanac sets an entry. Beneath it, the count, stated as an almanac would state it and never as a game.",
-        "Then the mark itself: one engraving drawn from that day's actual reading, so a monsoon morning is a dark, crowded, high-horizoned sheet and a January morning is a pale and open one. You can tell what the river was doing from across the room, and nobody had to tell you.",
+        "Then the mark itself: one engraving drawn from that day's actual reading, so a monsoon morning is a dark, crowded, high-horizoned sheet and a January morning a pale and open one. You can tell what the river was doing from across the room.",
       ],
       specimenH: "The register line and the count",
       specimen: [
@@ -827,7 +827,7 @@ const howEn = {
       {
         t: "The mark, one per sitting",
         d: [
-          "An engraving generated from the exact reading you sat with: the water, the station or the model cell, the flow, the percentile, the minute, your name and gotra. Two colours, no photograph, nothing generative in the modern sense of the word, just an old plate drawn by arithmetic.",
+          "An engraving generated from the exact reading you sat with: the water, the station or model cell, the flow, the percentile, the minute, your name and gotra. Two colours, no photograph, nothing generative in the modern sense, just an old plate drawn by arithmetic.",
           "Anyone can recompute it. The page publishes the exact string the image was made from, so a stranger can hash it themselves and redraw the identical sheet. Forging one would mean forging a public river record.",
         ],
       },
@@ -850,8 +850,8 @@ const howEn = {
   sound: {
     label: "About the sound",
     body: [
-      "Four recordings of moving water are mixed live against the river's actual percentile, so a river in spate is broken and urgent and a slack river is wide and slow. Rain fades in when it is raining at that ghat.",
-      "The sound is real water, recorded, licensed and credited, and nothing in it is generated. A water we have no honest recording of ships silent, and its page says so rather than borrowing somebody else's river.",
+      "Four recordings of moving water are mixed live against the river's actual percentile, so a river in spate is broken and urgent and a slack river wide and slow. Rain fades in when it is raining at that ghat.",
+      "The sound is real water, recorded, licensed and credited, and nothing in it is generated. A water we have no honest recording of ships silent, and its page says so.",
     ],
   },
 
@@ -871,7 +871,7 @@ const howEn = {
 
   closing: {
     title: "The longer answer to “is this legitimate?”",
-    body: "The manifesto: what a digital snan is, what it is not, what we will never claim, exactly what runs on this site, and what we have not settled yet.",
+    body: "The manifesto: what a digital snan is, what we will never claim, exactly what runs on this site, and what we have not settled yet.",
     ethicsLabel: "Read the manifesto",
     faqLabel: "Questions people ask",
   },
@@ -881,7 +881,7 @@ export const howItWorksContent = { en: howEn, hi: {
   meta: {
     title: "कैसे काम करता है: साढ़े चार मिनट, पाँच अंग · स्नानिफ़ाई",
     description:
-      "जल संकल्प, अर्थात डिजिटल स्नान, पूरे विस्तार से: पाठ, श्वास, ग्यारह सेकंड तक थामा गया संकल्प, नब्बे सेकंड की अंधेरी स्क्रीन, और चिह्न। स्क्रीन पर क्या है, आप क्या करते हैं, नदी के अंक कहाँ से आते हैं, और पूरा मूल्य क्या है।",
+      "जल संकल्प पूरे विस्तार से: पाठ, श्वास, ग्यारह सेकंड तक थामा गया संकल्प, नब्बे सेकंड की अंधेरी स्क्रीन, और चिह्न। स्क्रीन पर क्या है, आप क्या करते हैं, नदी के अंक कहाँ से आते हैं, और मूल्य क्या है।",
   },
   eyebrow: "कैसे काम करता है",
   title: "साढ़े चार मिनट। वही पाँच अंग, हर दिन।",
@@ -892,7 +892,7 @@ export const howItWorksContent = { en: howEn, hi: {
     title: "आपके पास कुछ भेजा नहीं जाता, और आपके लिए कुछ किया नहीं जाता।",
     body: [
       "स्नानिफ़ाई जो देती है वह सब स्क्रीन पर है: नदी के साथ साढ़े चार मिनट, उस दिन का छोड़ा हुआ एक चिह्न, और एक पंजिका में एक पंक्ति जो आपकी रहती है। न जल, न प्रसाद, न मौली, न भस्म, न कोई पार्सल, न कोई ऐसी वस्तु जिसके लिए सीमा-शुल्क फ़ॉर्म चाहिए।",
-      "और आपकी ओर से कुछ भी संपन्न नहीं किया जाता। इस उत्पाद में कोई पुरोहित नहीं है, कोई आपके लिए किसी घाट पर खड़ा नहीं होता, किसी जल पर कोई कैमरा नहीं है, और इसका कोई अंश किसी अनुष्ठान की रिकॉर्डिंग नहीं है। यदि आपको हाथ में गंगाजल चाहिए, या नदी पर किसी के द्वारा आपके लिए किया गया अनुष्ठान चाहिए, तो हम वह सेवा नहीं हैं, और यह हम यहीं कह देना चाहेंगे, बजाय इसके कि आपकी राशि लेकर बाद में निराश करें।",
+      "और आपकी ओर से कुछ भी संपन्न नहीं किया जाता। इस उत्पाद में कोई पुरोहित नहीं है, कोई आपके लिए किसी घाट पर खड़ा नहीं होता, और इसका कोई अंश किसी अनुष्ठान की रिकॉर्डिंग नहीं है। यदि आपको हाथ में गंगाजल चाहिए, या नदी पर आपके लिए किया गया अनुष्ठान, तो हम वह सेवा नहीं हैं, और यह यहीं कह देना बाद में निराश करने से अच्छा है।",
     ],
   },
 
@@ -930,8 +930,8 @@ export const howItWorksContent = { en: howEn, hi: {
       label: "पाठ",
       deva: "जल-पाठ · Jal Path",
       body: [
-        "स्क्रीन से सब कुछ हट जाता है और पंचांग की पाँच पंक्तियाँ आती हैं, हर चार सेकंड में एक, किसी छपी हुई प्रविष्टि की तरह, किसी इंटरफ़ेस की तरह नहीं। अंतिम पंक्ति ही वह है जिसकी चर्चा लोग बाद में करते हैं, क्योंकि वह नदी के बारे में नहीं, आपके बारे में है।",
-        "अक्षरों के पीछे एक महीन जल-रेखा ठीक उस स्थान पर रहती है जहाँ नदी वर्ष के इस सप्ताह के अपने न्यूनतम और अधिकतम के बीच आज है। जिस दिन गोदावरी उफान पर हों, फ़ोन लगभग पूरा गहरा जल होता है। फ़रवरी में वह रेखा नीचे बैठती है, और सप्ताह भर में आप उसे बिना देखे पढ़ने लगते हैं।",
+        "स्क्रीन से सब हट जाता है और पंचांग की पाँच पंक्तियाँ आती हैं, हर चार सेकंड में एक, किसी छपी प्रविष्टि की तरह, इंटरफ़ेस की तरह नहीं। अंतिम पंक्ति की चर्चा लोग बाद में करते हैं, क्योंकि वह नदी के बारे में नहीं, आपके बारे में है।",
+        "अक्षरों के पीछे एक महीन जल-रेखा उस स्थान पर रहती है जहाँ नदी इस सप्ताह के अपने न्यूनतम और अधिकतम के बीच आज है। गोदावरी उफान पर हों तो फ़ोन लगभग पूरा गहरा जल होता है; फ़रवरी में वह रेखा नीचे बैठती है। सप्ताह भर में आप उसे बिना देखे पढ़ने लगते हैं।",
       ],
       specimenH: "एक नमूना, उन्हीं अंकों के साथ जो ग्यारह अगस्त को गंगा में थे",
       specimen: [
@@ -941,7 +941,7 @@ export const howItWorksContent = { en: howEn, hi: {
         "पाठ ०४:०० भा.मा.स. · कोपरनिकस EMS, Open-Meteo के माध्यम से",
         "आप इस जल से ६,७१४ किमी दूर हैं",
       ],
-      note: "यदि हम नदी तक न पहुँच सके, तो चौथी पंक्ति यही कहती है और उसकी जगह उस तिथि का उनतीस-वर्षीय मध्यमान छापती है, ठीक इसी नाम से। पुराना पर सच्चा अंक पूर्णतः ठीक है। गढ़ा हुआ ताज़ा अंक इस व्यापार का अंत होगा।",
+      note: "यदि हम नदी तक न पहुँच सके, तो चौथी पंक्ति यही कहती है और उसकी जगह उस तिथि का उनतीस-वर्षीय मध्यमान इसी नाम से छापती है। पुराना पर सच्चा अंक ठीक है। गढ़ा हुआ ताज़ा अंक इस व्यापार का अंत होगा।",
     },
     {
       id: "breath",
@@ -951,9 +951,9 @@ export const howItWorksContent = { en: howEn, hi: {
       label: "श्वास",
       deva: "श्वास · Shwas",
       body: [
-        "जल-रेखा चार सेकंड चढ़ती है और छह सेकंड उतरती है, छह बार। यह एक मिनट में छह साँसें हैं, जिनमें छोड़ना लेने से लंबा है, और यही वह गति है जिस पर देह शांत होती है। पूरे उत्पाद में निर्देश बस यही एक है।",
-        "“भीतर” और “बाहर” पहले दो चक्रों में दिखते हैं और फिर कभी नहीं। जैसे ही देह को लय मिल जाती है, निर्देश स्वयं हट जाता है, और यही अंतर है साधना और इंटरफ़ेस में।",
-        "रेखा कितनी दूर तक जाती है, यह आज के प्रवाह से तय होता है। उफान पर बहती नदी बड़ी साँस लेती है। वही साठ सेकंड, हर सुबह भौतिक रूप से अलग, और इसके लिए हममें से किसी ने कुछ नहीं किया।",
+        "जल-रेखा चार सेकंड चढ़ती है और छह सेकंड उतरती है, छह बार। यह एक मिनट में छह साँसें हैं, जिनमें छोड़ना लेने से लंबा है, वही गति जिस पर देह शांत होती है, और पूरे उत्पाद में निर्देश बस यही एक है।",
+        "“भीतर” और “बाहर” पहले दो चक्रों में दिखते हैं, फिर कभी नहीं। देह को लय मिलते ही निर्देश स्वयं हट जाता है, और यही अंतर है साधना और इंटरफ़ेस में।",
+        "रेखा कितनी दूर जाती है, यह आज के प्रवाह से तय होता है। उफान पर बहती नदी बड़ी साँस लेती है। वही साठ सेकंड, हर सुबह भौतिक रूप से अलग, और इसके लिए हममें से किसी ने कुछ नहीं किया।",
       ],
       specimenH: "स्क्रीन पर",
       specimen: ["जल के साथ साँस लीजिए।", "भीतर", "बाहर"],
@@ -967,13 +967,13 @@ export const howItWorksContent = { en: howEn, hi: {
       label: "संकल्प",
       deva: "संकल्प · Sankalp",
       body: [
-        "जल स्थिर हो जाता है और एक पंक्ति आती है: कहिए, आप कौन हैं। उसके नीचे संकल्प पहले से भरा हुआ है: मास, पक्ष और तिथि, आपका नाम, गोत्र, आपका नगर, और चुना हुआ जल। अंतिम पंक्ति में आपके अपने शब्द, ठीक वैसे जैसे आपने पहले दिन लिखे थे।",
-        "फिर आप स्क्रीन पर कहीं भी दबाकर थामे रहते हैं। जब तक आप थामे हैं, अक्षर बाएँ से दाएँ सिंदूरी रंग से भरते जाते हैं, जैसे काग़ज़ में स्याही उतरती है, ग्यारह सेकंड में। पहले छोड़ देंगे तो स्याही लौट जाएगी। न कोई त्रुटि, न लाल रंग, न कोई डाँट। आप बस फिर से आरंभ करते हैं।",
-        "अपने ही शब्द पढ़ते हुए ग्यारह सेकंड तक अंगूठा स्थिर रखना लंबा समय है, और उसे लंबा ही होना है। उसे न जल्दी किया जा सकता है, न छोड़ा जा सकता है, और यही पूरा कारण है कि यह कोई फ़ॉर्म नहीं है।",
+        "जल स्थिर हो जाता है और एक पंक्ति आती है: कहिए, आप कौन हैं। नीचे संकल्प पहले से भरा है: मास, पक्ष और तिथि, आपका नाम, गोत्र, आपका नगर, और चुना हुआ जल। अंतिम पंक्ति में आपके अपने शब्द, ठीक वैसे जैसे आपने लिखे थे।",
+        "फिर आप स्क्रीन पर कहीं भी दबाकर थामे रहते हैं। जब तक थामे हैं, अक्षर बाएँ से दाएँ सिंदूरी रंग से भरते जाते हैं, जैसे काग़ज़ में स्याही उतरती है, ग्यारह सेकंड में। पहले छोड़ देंगे तो स्याही लौट जाएगी। न कोई त्रुटि, न कोई डाँट। आप फिर से आरंभ करते हैं।",
+        "अपने ही शब्द पढ़ते हुए ग्यारह सेकंड तक अंगूठा स्थिर रखना लंबा समय है, और उसे लंबा ही होना है। उसे न जल्दी किया जा सकता है, न छोड़ा, और इसीलिए यह कोई फ़ॉर्म नहीं है।",
       ],
       specimenH: "ग्यारह सेकंड पूरे होने पर क्या आता है",
       specimen: ["उच्चारित।"],
-      note: "न “रिकॉर्ड हुआ”, न “अर्पित हुआ”, न “स्वीकृत”। उच्चारित, क्योंकि केवल यही हुआ, और यह सच है। यदि तिथि के पीछे कोई स्रोत-सहित पंचांग नहीं है, तो वह पंक्ति संकल्प से पूरी हटा दी जाती है, अनुमान से भरी नहीं जाती।",
+      note: "न “रिकॉर्ड हुआ”, न “अर्पित हुआ”, न “स्वीकृत”। उच्चारित, क्योंकि केवल यही हुआ। यदि तिथि के पीछे कोई स्रोत-सहित पंचांग नहीं है, तो वह पंक्ति संकल्प से हटा दी जाती है, अनुमान से भरी नहीं जाती।",
     },
     {
       id: "stillness",
@@ -983,7 +983,7 @@ export const howItWorksContent = { en: howEn, hi: {
       label: "मौन",
       deva: "मौन · Maun",
       body: [
-        "स्क्रीन कहती है कि फ़ोन नीचे रख दीजिए, और फिर स्क्रीन स्वयं चली जाती है। पूरी तरह काली, चमक घटी हुई, कानों में नदी बहती हुई, दो सौ सत्तर में से नब्बे सेकंड तक।",
+        "स्क्रीन कहती है कि फ़ोन नीचे रख दीजिए, और फिर स्क्रीन स्वयं चली जाती है। पूरी तरह काली, चमक घटी हुई, कानों में नदी बहती हुई, नब्बे सेकंड तक।",
         "यदि आप फ़ोन उठा लें तो कुछ नहीं होता। न कोई गिनती, न दंड, न यह टिप्पणी कि आप हिले। साधना पहरा नहीं देती। नब्बे सेकंड पर एक घंटी आपको वापस बुला लेती है।",
       ],
       specimenH: "स्क्रीन पर, और फिर स्क्रीन पर कुछ नहीं",
@@ -1094,8 +1094,8 @@ const faqEn = {
           q: "Does this actually work?",
           a: [
             "Define works.",
-            "If you mean does the flow on your screen match what the river is doing, yes, and the source is public, linked, and checkable by you without asking us anything.",
-            "If you mean does it change your fate, we have no idea, and neither does anyone charging you more. What we sell is an hour, a river, a true reading of it, and words you say yourself. Everything after that is between you and your tradition.",
+            "If you mean does the flow on your screen match what the river is doing, yes, and the source is public, linked, and checkable without asking us anything.",
+            "If you mean does it change your fate, we have no idea, and neither does anyone charging you more. We sell an hour, a river, a true reading of it, and words you say yourself. The rest is between you and your tradition.",
           ],
         },
         {
@@ -1103,8 +1103,8 @@ const faqEn = {
           q: "Is there a priest? Who performs it?",
           a: [
             "There is no priest. There never is, and that is the point rather than a shortcut.",
-            "You sit for four and a half minutes with the real state of a real river and say your own sankalp. That is a smaller claim than the alternative, and it is the only one we can make truthfully.",
-            "If you hold that a rite counts only when a qualified person performs it for you at the tirth, that is a coherent position and this product is not built for you. We are not going to argue you out of it.",
+            "You sit for four and a half minutes with the real state of a real river and say your own sankalp. That is a smaller claim than the alternative, and the only one we can make truthfully.",
+            "If you hold that a rite counts only when a qualified person performs it for you at the tirth, that is a coherent position and this product is not built for you.",
           ],
         },
         {
@@ -1129,8 +1129,8 @@ const faqEn = {
           q: "How do I know this is not a scam?",
           a: [
             "Partly by what you can check yourself, and partly by what we refuse to say.",
-            "What you can check: the river figure on any page is modelled discharge from the Copernicus global flood model, public and open, and every page prints the hour it was read. The mark you keep carries the exact string it was generated from, so a stranger can recompute the image and confirm it against the source.",
-            "The refusal is the stronger signal. We publish a list of claims we will never make, and an address to report us if we ever break it. A business selling fake punya would not publish that list, because the list is the whole product they would be selling.",
+            "The river figure on any page is modelled discharge from the Copernicus global flood model, public and open, and every page prints the hour it was read. The mark you keep carries the string it was generated from, so a stranger can recompute the image and confirm it against the source.",
+            "The refusal is the stronger signal. We publish a list of claims we will never make, and an address to report us if we break it. A business selling fake punya would not publish that list, because the list is the product they would be selling.",
           ],
         },
         {
@@ -1138,7 +1138,7 @@ const faqEn = {
           q: "Do I get more punya if I pay more?",
           a: [
             "No, and anyone who tells you otherwise is selling the thing we refuse to sell.",
-            "The three lines differ in how many snans they hold and what each one costs us to process. They do not differ in what a sitting is. Eleven snans are eleven sittings, not more merit per sitting.",
+            "The three lines differ in how many snans they hold and what each costs us to process. They do not differ in what a sitting is. Eleven snans are eleven sittings, not more merit per sitting.",
           ],
         },
         {
@@ -1195,8 +1195,8 @@ const faqEn = {
           q: "Is the sound real? Is it live?",
           a: [
             "It is real water, and it is not live.",
-            "Four recordings of moving water are mixed against the river's actual percentile, so a river in spate sounds broken and urgent and a slack river sounds wide and slow. Rain fades in when it is raining at that ghat. Every recording is licensed and credited.",
-            "There is no microphone at any ghat, no live feed from anywhere, and no generated audio. A water we have no honest recording of ships silent, and its page says so rather than borrowing somebody else's river.",
+            "Four recordings of moving water are mixed against the river's actual percentile, so a river in spate sounds broken and urgent and a slack river wide and slow. Rain fades in when it is raining at that ghat. Every recording is licensed and credited.",
+            "There is no microphone at any ghat, no live feed, and no generated audio. A water we have no honest recording of ships silent, and its page says so.",
           ],
         },
         {
@@ -1212,7 +1212,7 @@ const faqEn = {
           id: "mark",
           q: "What is the mark I keep?",
           a: [
-            "One engraving per sitting, drawn from the exact reading you sat with: the water, the flow, where that flow sits against twenty-nine years of the same week, the minute, and your name and gotra. A monsoon morning is dark and crowded. A January morning is pale and open.",
+            "One engraving per sitting, drawn from the reading you sat with: the water, the flow, where that flow sits against twenty-nine years of the same week, the minute, and your name and gotra. A monsoon morning is dark and crowded; a January morning pale and open.",
             "It carries the string it was generated from, so anyone can recompute it and check the river figure against the public source. Forging one would mean forging a public river record.",
             "At the foot of every sheet, at full weight and not in fine print: no rite was performed for you, this sheet records a river, a minute, and the words you chose to say into it.",
           ],
@@ -1227,8 +1227,8 @@ const faqEn = {
           id: "data",
           q: "Where does the river data come from?",
           a: [
-            "Modelled river discharge from the Copernicus Emergency Management Service global flood model, read through Open-Meteo at the grid cell covering that reach of the river. It is public data, licensed CC BY 4.0, and we carry the attribution on every page that shows a number.",
-            "It is a model, not a gauge reading, and we write “modelled” every single time rather than letting you assume there is an instrument in the water with our name on it.",
+            "Modelled river discharge from the Copernicus Emergency Management Service global flood model, read through Open-Meteo at the grid cell covering that reach. It is public data, licensed CC BY 4.0, and we carry the attribution on every page that shows a number.",
+            "It is a model, not a gauge reading, and we write “modelled” every time rather than let you assume there is an instrument in the water with our name on it.",
             "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates. Tithi and the muhurat windows are computed from the panchang against that ghat's true sunrise.",
           ],
         },
@@ -1237,14 +1237,14 @@ const faqEn = {
           q: "What does the percentile mean?",
           a: [
             "Where today's flow sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Six hundred and nine days of that river's own history.",
-            "It is the only honest way to compare a river to anything. The Kaveri at Talakaveri runs at about six cubic metres a second and the Sangam at five thousand, and neither number tells you whether either river is behaving unusually. The percentile does.",
+            "It is the only honest way to compare a river to anything. The Kaveri at Talakaveri runs at about six cubic metres a second and the Sangam at five thousand, and neither number tells you whether either is behaving unusually. The percentile does.",
           ],
         },
         {
           id: "offline",
           q: "What happens when you cannot reach the river?",
           a: [
-            "The page says so and prints the twenty-nine year median for today's date, labelled as exactly that: this is what this river usually does on the eleventh of August, taken from twenty-nine years of Augusts.",
+            "The page says so and prints the twenty-nine year median for today's date, labelled as that: what this river usually does on the eleventh of August, taken from twenty-nine years of Augusts.",
             "We never interpolate and we never invent a plausible number. A reading a day old is served with its true timestamp and no apology, because a river moves on the scale of days.",
             "The one time the model goes quiet and the page says the model has gone quiet is worth more to us than a year of marketing.",
           ],
@@ -1253,7 +1253,7 @@ const faqEn = {
           id: "gauge",
           q: "Is there a government gauge at each ghat?",
           a: [
-            "No, and we will not pretend there is. The Central Water Commission's public portal carries no river level telemetry for the Ganga or Yamuna basins at all, so four of the six waters have no named government station we can honestly print.",
+            "No. The Central Water Commission's public portal carries no river level telemetry for the Ganga or Yamuna basins at all, so four of the six waters have no named government station we can print.",
             "Where a station does exist we name it: station, agency, coordinates and datum, from the Commission's own registry. Where it does not, the page shows the modelled figure and says that is what it is.",
           ],
         },
@@ -1269,7 +1269,7 @@ const faqEn = {
           id: "temperature",
           q: "Why do you not show the water temperature?",
           a: [
-            "Because we could not find a live water temperature for these six waters from any source we can actually reach, and we will not print a number we cannot stand behind.",
+            "Because we could not find a live water temperature for these six waters from any source we can reach, and we will not print a number we cannot stand behind.",
             "Air temperature at the ghat is real and we show that instead. If a genuine water temperature feed appears for at least three of the six, we will add it and say where it came from.",
           ],
         },
@@ -1292,7 +1292,7 @@ const faqEn = {
           q: "Is there a free version?",
           a: [
             "Not of the snan. There is no free snan and no trial.",
-            "Everything that is a page rather than a practice is free forever, with no account: the live state of all six waters, the panchang, the muhurat calendar and its occasions. Read all of it, every day, and pay nothing.",
+            "Everything that is a page rather than a practice is free forever, with no account: the live state of all six waters, the panchang, and the muhurat calendar. Read all of it, every day, and pay nothing.",
             "We would rather charge for the thing itself than dress a free tier up as generosity and sell your attention instead.",
           ],
         },
@@ -1327,7 +1327,7 @@ const faqEn = {
           q: "Can I get a refund?",
           a: [
             "Yes. Any snans you have not used are refunded in full, on one click, without being asked why.",
-            "A sitting you have already done is not refundable, and we would rather say that plainly than pretend otherwise. Nothing was consumed except four and a half minutes of your own attention, and we cannot give those back either.",
+            "A sitting you have already done is not refundable, and we would rather say that plainly. Nothing was consumed except four and a half minutes of your own attention, and we cannot give those back either.",
             "If the site failed you, the model was stale and we did not say so, or the sound did not play, write to us and we will refund the sitting itself.",
           ],
         },
@@ -1349,14 +1349,14 @@ const faqEn = {
           q: "I do not know my gotra, or my family does not use one.",
           a: [
             "Then leave it blank. A form that insists on a gotra is a form that sorts people by caste, and ours does not insist.",
-            "If the field is empty the sankalp says the gotra is not stated, plainly, with no apology in it. If you would rather use the customary Kashyapa gotra, or your family's own convention, tell us and we will use that instead.",
+            "If the field is empty the sankalp says the gotra is not stated, plainly and with no apology. If you would rather use the customary Kashyapa gotra, or your family's own convention, tell us and we will use that.",
           ],
         },
         {
           id: "names",
           q: "Can I include several people? What if they have different gotras?",
           a: [
-            "Yes, and yes. Each name may carry its own gotra, because households are not uniform, a woman who married in, an adopted child, an inter-caste marriage. One gotra imposed on six names would produce a sankalp that is simply wrong for most families.",
+            "Yes, and yes. Each name may carry its own gotra, because households are not uniform: a woman who married in, an adopted child, an inter-caste marriage. One gotra imposed on six names would be simply wrong for most families.",
             "You will be asked to confirm that anyone living whom you name would not object. If they later ask us to remove their details, we do it, without asking your permission first.",
           ],
         },
@@ -1365,7 +1365,7 @@ const faqEn = {
           q: "Can I do this in memory of someone who has died?",
           a: [
             "You can name them in your own sankalp, in your own words, and sit with them in mind. We will label that as remembrance and nothing more.",
-            "It is not a shraddh and it is not a tarpan. No rite is performed here at all, by anyone, so nothing is being offered on anyone's behalf. We will never say that a person who has died received anything, was affected by anything, or is waiting for anything.",
+            "It is not a shraddh and it is not a tarpan. No rite is performed here at all, so nothing is offered on anyone's behalf. We will never say that a person who has died received anything, was affected by anything, or is waiting for anything.",
             "If a tithi matters to you, tell us and we will bring the river on that tithi, once a year, and never mention it otherwise.",
           ],
         },
@@ -1389,7 +1389,7 @@ const faqEn = {
           a: [
             "Nobody. It is shown to you and to no one else, and it is never spoken aloud by anyone anywhere, because there is nobody in this product to speak it.",
             "It is not printed on your mark, it is not in your register line, and the verification page will not return it to anyone holding the identifier.",
-            "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, it is logged permanently, and you are emailed within a day telling you that it was read, by whom, and why. One automated safety check runs over the text; no person sees it as a result of that check.",
+            "Nobody at Snanify browses sankalps. Reading one requires two approvals and a written reason, is logged permanently, and you are emailed within a day telling you it was read, by whom, and why. One automated safety check runs over the text; no person sees it as a result.",
           ],
         },
         {
@@ -1397,7 +1397,7 @@ const faqEn = {
           q: "Can I delete everything?",
           a: [
             "Yes. One button, across copies and backups, within seven days. It works by destroying the key your record was encrypted with, which is why it holds even where storage cannot be overwritten.",
-            "The mark you downloaded keeps working afterwards, because what it stands on is a public river reading rather than a row in our database. Deleting removes our ability to hold your sankalp, not your ability to prove what the river was doing.",
+            "The mark you downloaded keeps working, because what it stands on is a public river reading rather than a row in our database. Deleting removes our ability to hold your sankalp, not your ability to prove what the river was doing.",
             "The confirmation lists what was deleted and what was kept, including the invoices tax law requires.",
           ],
         },
@@ -1406,7 +1406,7 @@ const faqEn = {
           q: "What is tracking me on this site?",
           a: [
             "No advertising script and no session-replay script, anywhere, ever. Nothing records the screen where you type your sankalp.",
-            "Two third-party scripts exist in the whole product, and we name both. Vercel Web Analytics counts page views: no cookies, no cross-site following, no sight of any form. The payment processor's script runs on the payment step alone. We would rather qualify an absolute than break one.",
+            "Two third-party scripts exist in the whole product, and we name both. Vercel Web Analytics counts page views: no cookies, no cross-site following, no sight of any form. The payment processor's script runs on the payment step alone.",
           ],
         },
         {
@@ -1414,7 +1414,7 @@ const faqEn = {
           q: "Why are some timings marked provisional?",
           a: [
             "Because we have not yet named a panchang source, and a precise time with nothing behind it is an invented fact.",
-            "Until a source is named, every exact time carries that label, and where sources disagree we show the range rather than pick the one that suits us. When a source is named, the method, the ayanamsa and the ghat coordinates are published beside the times.",
+            "Until a source is named, every exact time carries that label, and where sources disagree we show the range rather than pick the one that suits us. When a source is named, the method, the ayanamsa and the ghat's coordinates are published beside the times.",
           ],
         },
       ],
@@ -1423,7 +1423,7 @@ const faqEn = {
 
   closing: {
     title: "Not answered here?",
-    body: "Write to us. If it is a question others will have, we will add it to this page, and if you think we have got something wrong, we publish objections made in good faith along with what we did about them.",
+    body: "Write to us. If it is a question others will have, we add it to this page. If you think we have got something wrong, we publish objections made in good faith along with what we did about them.",
     mailLabel: "Write to us",
   },
 };
@@ -1754,7 +1754,7 @@ export const faqContent = { en: faqEn, hi: {
           q: "क्या मैं सब कुछ मिटा सकता हूँ?",
           a: [
             "हाँ। एक बटन, प्रतियों और बैकअप सहित, सात दिन के भीतर। यह उस कुंजी को नष्ट करके होता है जिससे आपका अभिलेख एन्क्रिप्ट किया गया था, इसीलिए यह वहाँ भी चलता है जहाँ भंडारण मिटाया नहीं जा सकता।",
-            "आपका उतारा हुआ चिह्न उसके बाद भी काम करता रहता है, क्योंकि वह जिस पर टिका है वह नदी का सार्वजनिक पाठ है, हमारी तालिका की कोई पंक्ति नहीं। मिटाने से आपका संकल्प रखने की हमारी क्षमता जाती है, नदी की स्थिति सिद्ध करने की आपकी क्षमता नहीं।",
+            "आपका उतारा हुआ चिह्न बाद में भी काम करता रहता है, क्योंकि वह नदी के सार्वजनिक पाठ पर टिका है, हमारी तालिका की किसी पंक्ति पर नहीं। मिटाने से आपका संकल्प रखने की हमारी क्षमता जाती है, नदी की स्थिति सिद्ध करने की आपकी क्षमता नहीं।",
             "पुष्टि-संदेश में लिखा रहता है कि क्या मिटा और क्या रखा गया, उन रसीदों सहित जो कर-क़ानून माँगता है।",
           ],
         },

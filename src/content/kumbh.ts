@@ -476,32 +476,32 @@ export const kumbhContent = {
     },
     offer: {
       eyebrow: "The honest part",
-      title: "What we can and cannot do here.",
-      lede: "A mela is not a quiet dawn at a working ghat. Nothing about it is convenient for a camera, and most of what a company would want to promise about it cannot be promised.",
+      title: "What this site does at a mela, and what it does not.",
+      lede: "A mela is not a quiet dawn at a working ghat. Most of what a company would want to promise about one cannot be promised.",
       permitLabel: "Our presence at Ram Kund",
       permitStatus: "None. We are not there.",
       permitBody:
-        "Snanify holds no permission at Ram Kund and needs none, because it does nothing there. During a Simhastha the ghats fall under the mela authority alongside the municipal corporation and the police, and the bathing mornings are settled between them and the akhada council. That is worth knowing if you are going in person. It has no bearing on what this site does, which is to read the Godavari's measured state from a public source and show it to you.",
+        "Snanify holds no permission at Ram Kund and needs none, because it does nothing there. During a Simhastha the ghats fall under the mela authority alongside the municipal corporation and the police, and the bathing mornings are settled between them and the akhada council. That is worth knowing if you are going in person. It has no bearing on this site, which reads the Godavari's measured state from a public source and shows it to you.",
       authorityLabel: "Who controls the ghats during the mela",
       authority:
-        "The Nashik-Trimbakeshwar Kumbh Mela Authority, constituted by the Government of Maharashtra and sitting under the Divisional Commissioner, Nashik, with the Nashik Municipal Corporation, the Trimbakeshwar temple trust, the police, and the akhada council. Permission at these places is not a municipal formality; the bodies that hold it are trusts, samitis and hereditary purohit families whose consent is a different thing from a licence.",
-      cannotTitle: "What is not realistic, and we will not imply otherwise",
+        "The Nashik-Trimbakeshwar Kumbh Mela Authority, constituted by the Government of Maharashtra and sitting under the Divisional Commissioner, Nashik, with the Nashik Municipal Corporation, the Trimbakeshwar temple trust, the police, and the akhada council. Permission at these places is not a municipal formality: the bodies that hold it are trusts, samitis and hereditary purohit families, whose consent is a different thing from a licence.",
+      cannotTitle: "What you will not find here",
       cannot: [
-        "A camera on the kund steps on an Amrit Snan morning. Those hours belong to the akhadas in procession, and it is not a permission a private company should expect.",
-        "Anything that asks the crowd to be moved, held, parted or arranged around a rite of ours. At the densities involved that is not an inconvenience, it is a danger.",
-        "Any footage at all. Snanify films nothing, at a mela or anywhere else. What arrives from the Godavari during the Simhastha is what arrives on an ordinary Tuesday: its measured state, from a public source.",
-        "Any claim that a rite performed during a Simhastha carries more than the same rite on an ordinary Tuesday. Our offerings differ in what we do for you, never in what a rite is worth.",
-        "Any claim of association with an akhada, a math, the mela authority or the purohit bodies at the ghat. If one of them ever signs a dated letter, we will publish it, and they will be free to withdraw it.",
+        "A camera on the kund steps, or anywhere else. Snanify films nothing, and there is no footage in this product.",
+        "A rite, at Ram Kund or at any of the six waters. Nobody stands in the water in your name, during a Simhastha or on an ordinary Tuesday.",
+        "A claim that a morning inside the mela carries more than a morning outside it. The reading is the reading, and the sankalp is yours either way.",
+        "A claim of association with an akhada, a math, the mela authority or the purohit bodies at the ghat. If one of them ever signs a dated letter, we publish it, and they stay free to withdraw it.",
       ],
-      canTitle: "What might be realistic, if permission is granted",
+      canTitle: "What is here, on every morning of the mela",
       can: [
-        "An ordinary morning inside the mela period, of which there are more than six hundred, at a stated hour, with the same rite, the same recording and the same proof chain that any other morning would carry.",
-        "A ghat upstream or downstream of the kund, named on the record as the place it actually was, if Ram Kund itself is closed or given over that day.",
-        "Nothing at all, and your money back, if the honest answer on the day is that it could not be done. The public record would say which of those happened.",
+        "The Godavari's measured state at Ram Kund, read during the Simhastha from the same public source as on any other day.",
+        "The mela's own calendar: every bathing day, how each is reckoned, and which of them are settled between the authority and the akhadas rather than derived.",
+        "Your own sankalp, at an hour the panchang names, wherever in the world you are.",
       ],
       closing:
-        "If we do not obtain written permission in time, we will publish that we did not obtain it, and this page will say so at the top. It will not quietly become a page about something else.",
+        "A Simhastha changes the Godavari, the crowd and the calendar. It changes nothing about how this site reads the river, and reading it from a public record is the whole reason for that.",
     },
+
     attend: {
       eyebrow: "If you are going",
       title: "For someone travelling to Nashik.",
@@ -744,32 +744,32 @@ export const kumbhContent = {
     },
     offer: {
       eyebrow: "स्पष्ट बात",
-      title: "यहाँ हम क्या कर सकते हैं और क्या नहीं।",
-      lede: "मेला किसी कार्यरत घाट की शांत भोर नहीं होता। उसमें कैमरे के अनुकूल कुछ भी नहीं है, और उसके विषय में कोई उपक्रम जो-जो वचन देना चाहेगा, उनमें से अधिकांश दिए ही नहीं जा सकते।",
+      title: "मेले में यह साइट क्या करती है, और क्या नहीं।",
+      lede: "मेला किसी कार्यरत घाट की शांत भोर नहीं होता। उसके विषय में कोई उपक्रम जो-जो वचन देना चाहेगा, उनमें से अधिकांश दिए ही नहीं जा सकते।",
       permitLabel: "रामकुंड पर हमारी उपस्थिति",
       permitStatus: "कोई नहीं। हम वहाँ हैं ही नहीं।",
       permitBody:
-        "रामकुंड पर, अथवा इस साइट के छह में से किसी भी जल पर, सशुल्क कर्म करने या उसका चित्रांकन करने की कोई लिखित अनुमति स्नानिफ़ाई के पास नहीं है। न कुछ माँगा गया है, न कुछ मिला है। यह वाक्य हर घाट के पृष्ठ पर खड़ा है और अवसर बड़ा होने के कारण यहाँ उसे हल्का नहीं किया गया। सिंहस्थ के दिनों में अनुमति और भी अलग विषय है: उस अवधि में घाट महानगरपालिका और पुलिस के साथ-साथ मेला प्राधिकरण के अधीन आ जाते हैं, और स्नान की सुबहों में क्या होगा यह उनके तथा अखाड़ा परिषद के बीच तय होता है। उस श्रृंखला में आज कोई ऐसा नहीं है जिससे हम अनुबंध कर सकें।",
+        "रामकुंड पर स्नानिफ़ाई के पास कोई अनुमति नहीं है, और आवश्यकता भी नहीं, क्योंकि वहाँ वह कुछ करती ही नहीं। सिंहस्थ के दिनों में घाट महानगरपालिका और पुलिस के साथ-साथ मेला प्राधिकरण के अधीन आ जाते हैं, और स्नान की सुबहें उनके तथा अखाड़ा परिषद के बीच तय होती हैं। स्वयं जाने वालों के लिए यह जानना उपयोगी है। इस साइट पर इसका कोई प्रभाव नहीं, जो गोदावरी की मापी हुई अवस्था एक सार्वजनिक स्रोत से पढ़कर आपको दिखाती है।",
       authorityLabel: "मेले के दिनों में घाट किसके नियंत्रण में",
       authority:
         "नासिक-त्र्यंबकेश्वर कुंभ मेला प्राधिकरण, जो महाराष्ट्र शासन द्वारा गठित है और विभागीय आयुक्त, नासिक के अधीन बैठता है; उसके साथ नासिक महानगरपालिका, त्र्यंबकेश्वर देवस्थान न्यास, पुलिस और अखाड़ा परिषद। इन स्थानों पर अनुमति कोई नगरपालिका औपचारिकता नहीं है; जिनके पास वह है वे न्यास, समितियाँ और परंपरागत पुरोहित-परिवार हैं, और उनकी सहमति किसी लाइसेंस से भिन्न वस्तु है।",
-      cannotTitle: "जो व्यावहारिक नहीं है, और हम उसका संकेत भी नहीं देंगे",
+      cannotTitle: "यहाँ जो आपको नहीं मिलेगा",
       cannot: [
-        "अमृत स्नान की सुबह कुंड की सीढ़ियों पर कैमरा। वे घंटे शोभायात्रा-सहित अखाड़ों के हैं। यह ऐसी अनुमति नहीं है जिसकी आशा किसी निजी उपक्रम को रखनी चाहिए, और हम इस संभावना के भरोसे कुछ नहीं बेचेंगे।",
-        "ऐसा कुछ भी जिसमें हमारे किसी कर्म के लिए भीड़ को हटाना, रोकना, बाँटना या व्यवस्थित करना पड़े। उस घनत्व पर यह असुविधा नहीं, संकट है।",
-        "ऐसा कोई चित्रांकन जिसमें किसी अपरिचित का चेहरा, या किसी अपरिचित परिवार का अपना कर्म, आपकी रिकॉर्डिंग में आ जाए। मेले के लिए हमारा कैमरा-नियम ढीला नहीं होता: कैमरा ऋत्विक, अर्पण और जल पर ही रहेगा, और संचालक उसे किसी परिवार की ओर मोड़ने के बजाय प्रसारण बंद कर देगा।",
-        "यह दावा कि सिंहस्थ में किया गया कर्म किसी साधारण मंगलवार को किए गए उसी कर्म से अधिक है। हमारी सेवाएँ इसमें भिन्न हैं कि हम आपके लिए क्या करते हैं, इसमें कभी नहीं कि कोई कर्म कितने मूल्य का है, और मेला लगने से यह नहीं बदलता।",
+        "कुंड की सीढ़ियों पर, या कहीं भी, कैमरा। स्नानिफ़ाई कुछ भी फ़िल्म नहीं करती, और इस उत्पाद में कोई दृश्य-सामग्री नहीं है।",
+        "कोई अनुष्ठान, रामकुंड पर अथवा छह में से किसी भी जल पर। आपके नाम से जल में कोई नहीं उतरता, न सिंहस्थ में, न किसी साधारण मंगलवार को।",
+        "यह दावा कि मेले के भीतर की सुबह उसके बाहर की सुबह से अधिक है। पाठ वही पाठ है, और संकल्प दोनों दिन आपका ही है।",
         "किसी अखाड़े, मठ, मेला प्राधिकरण या घाट के पुरोहित-निकाय से संबंध का कोई दावा। यदि उनमें से कोई कभी दिनांकित पत्र पर हस्ताक्षर करेगा, तो हम उसे प्रकाशित करेंगे, और वे जब चाहें उसे वापस ले सकेंगे।",
       ],
-      canTitle: "अनुमति मिलने पर जो संभव हो सकता है",
+      canTitle: "मेले की हर सुबह यहाँ जो है",
       can: [
-        "मेला-काल की कोई साधारण सुबह, जो छह सौ से अधिक हैं, एक तय समय पर, वही कर्म, वही रिकॉर्डिंग और वही प्रमाण-श्रृंखला जो किसी भी दूसरी सुबह के साथ होती।",
-        "कुंड से ऊपर या नीचे का कोई घाट, अभिलेख में उसी नाम से दर्ज जो वह वस्तुतः था, यदि रामकुंड उस दिन बंद हो या अखाड़ों को सौंपा गया हो।",
-        "कुछ भी नहीं, और आपका धन वापस, यदि उस दिन सच्चा उत्तर यही हो कि यह नहीं हो सका। सार्वजनिक अभिलेख में लिखा रहेगा कि इनमें से क्या हुआ।",
+        "रामकुंड पर गोदावरी की मापी हुई अवस्था, सिंहस्थ में उसी सार्वजनिक स्रोत से पढ़ी हुई जिससे किसी भी और दिन।",
+        "मेले का अपना पंचांग: हर स्नान-दिवस, उसका निर्धारण कैसे होता है, और उनमें से कौन-से प्राधिकरण तथा अखाड़ों के बीच तय होते हैं, गणना से नहीं।",
+        "आपका अपना संकल्प, पंचांग की बताई घड़ी में, आप संसार में कहीं भी हों।",
       ],
       closing:
-        "यदि समय रहते लिखित अनुमति नहीं मिली, तो हम यह प्रकाशित करेंगे कि नहीं मिली, और यह पृष्ठ सबसे ऊपर यही कहेगा। यह चुपचाप किसी और विषय का पृष्ठ नहीं बन जाएगा।",
+        "सिंहस्थ गोदावरी को, भीड़ को और पंचांग को बदलता है। यह साइट नदी को जिस तरह पढ़ती है, उसे वह नहीं बदलता, और सार्वजनिक अभिलेख से पढ़ने का पूरा अर्थ ही यही है।",
     },
+
     attend: {
       eyebrow: "यदि आप जा रहे हैं",
       title: "नासिक की यात्रा करने वालों के लिए।",

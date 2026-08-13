@@ -977,7 +977,7 @@ export const riverDetailContent = {
         "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, read at the grid cell covering this reach and published once a day. It is a model, not a gauge reading, and this site writes modelled every time it prints a number.",
         "Each value is ranked against every daily value that same cell has produced in this same week of the year from 1997 to 2025. That is what the percentile means, and it is a comparison of one water with itself, which is the only honest one.",
         "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates rather than at the grid cell. The muhurat windows are the panchang's rules resolved against that true sunrise.",
-        "We measure nothing ourselves. There is no camera, no microphone and no device of ours at this ghat or at any other, and nothing is performed here by anyone on anyone's behalf.",
+        "We measure nothing ourselves. Every figure above comes from a public source named beside it, and every one of them can be checked against that source without asking us.",
       ],
       attributionLabel: "Attribution",
       attribution: [
@@ -987,7 +987,7 @@ export const riverDetailContent = {
       cta: "See this water as she is running now",
     },
     offer: {
-      eyebrow: "What is offered here",
+      eyebrow: "What is here",
       title: "Four things, and nothing else.",
       lede: "The same four at every water on this site. Three of them cost nothing to read and always will.",
       items: [
@@ -1009,10 +1009,10 @@ export const riverDetailContent = {
         {
           key: "sitting",
           name: "A sitting you take yourself",
-          body: "Four and a half minutes against this water's live state, with your own sankalp in your own words. Nobody stands in for you.",
+          body: "Four and a half minutes against this water's live state, at an hour the panchang names, with your own sankalp in your own words.",
         },
       ],
-      note: "No priest, no ghat performance, no camera, no stream, no recording, and nothing posted to you.",
+      note: "What this is, and what it is not, is written out in full on the ethics page.",
       cta: "Begin your snan",
       muhurat: "The muhurat calendar",
     },
@@ -1021,12 +1021,12 @@ export const riverDetailContent = {
       title: "What this water is kept for.",
       lede: "Described as tradition, in the third person, because that is what it is. Some of it is centuries older than any of the words on this site.",
       standing:
-        "None of this is on offer. Snanify has nobody at this water, arranges nothing at it, and asks nothing of the people who keep it. What is listed here is what people do when they stand there.",
+        "What is listed here is what people do when they stand at this water. It is described, in the third person, and not offered.",
       kindLabels: {
         personal: "Kept in person",
         "of-the-place": "Kept by the place",
       },
-      personalNote: "It is done by a person standing at the water. Snanify does not arrange it and cannot.",
+      personalNote: "It is done by a person standing at the water.",
       placeNote: "It happens whether or not anybody asks for it.",
     },
     occasions: {
@@ -1040,7 +1040,7 @@ export const riverDetailContent = {
       eyebrow: "Custody",
       title: "Who looks after this water.",
       label: "In whose care",
-      body: "Snanify holds no permission at this ghat and needs none, because Snanify does nothing there. Nobody stands in for you, nothing is filmed, no device of ours sits on the steps, and nothing has been asked of the people named here. They are named because who keeps a place is worth knowing, and because a page that describes a ghat and never says whose it is has left out the most practical fact about it.",
+      body: "Snanify holds no permission at this ghat and needs none, because it does nothing there, and the people named here have been asked for nothing. They are named because who keeps a place is worth knowing, and a page that describes a ghat without saying whose it is has left out the most practical fact about it.",
     },
     onward: {
       eyebrow: "Onward",
@@ -1079,7 +1079,7 @@ export const riverDetailContent = {
         "प्रवाह कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से लिया गया प्रतिरूपित नदी-प्रवाह है, जो इस धारा को ढकने वाले ग्रिड-खंड पर पढ़ा जाता है और प्रतिदिन एक बार प्रकाशित होता है। यह एक मॉडल है, गेज का पाठ नहीं, और यह स्थल जब भी कोई अंक छापता है, प्रतिरूपित ही लिखता है।",
         "प्रत्येक मान की तुलना उसी खंड के उन सभी दैनिक मानों से की जाती है जो 1997 से 2025 तक वर्ष के इसी सप्ताह में आए। प्रतिशतक का यही अर्थ है, और यह एक जल की तुलना उसी जल से है, जो एकमात्र ईमानदार तुलना है।",
         "सूर्योदय, सूर्यास्त, वायु का तापमान और वर्षा ग्रिड-खंड पर नहीं, घाट के अपने निर्देशांक पर पढ़े जाते हैं। मुहूर्त पंचांग के नियमों को उसी वास्तविक सूर्योदय पर हल करके निकाले जाते हैं।",
-        "हम स्वयं कुछ नहीं मापते। इस घाट पर या किसी और घाट पर हमारा कोई कैमरा, कोई माइक्रोफ़ोन और कोई यंत्र नहीं है, और यहाँ किसी के लिए किसी के द्वारा कुछ भी नहीं किया जाता।",
+        "हम स्वयं कुछ नहीं मापते। ऊपर का हर अंक एक सार्वजनिक स्रोत से आता है जिसका नाम उसी के साथ है, और उनमें से हर एक हमसे पूछे बिना उसी स्रोत पर जाँचा जा सकता है।",
       ],
       attributionLabel: "श्रेय",
       attribution: [
@@ -1089,7 +1089,7 @@ export const riverDetailContent = {
       cta: "इस जल को इस समय जैसा है वैसा देखें",
     },
     offer: {
-      eyebrow: "यहाँ क्या मिलता है",
+      eyebrow: "यहाँ क्या है",
       title: "चार बातें, और कुछ नहीं।",
       lede: "इस स्थल के हर जल पर यही चार। इनमें से तीन पढ़ने के लिए निःशुल्क हैं और सदा रहेंगी।",
       items: [
@@ -1111,10 +1111,10 @@ export const riverDetailContent = {
         {
           key: "sitting",
           name: "वह बैठक जो आप स्वयं करते हैं",
-          body: "इस जल की जीवंत अवस्था के सामने साढ़े चार मिनट, आपके अपने शब्दों में आपका अपना संकल्प। कोई आपके स्थान पर खड़ा नहीं होता।",
+          body: "इस जल की जीवंत अवस्था के सामने साढ़े चार मिनट, पंचांग की बताई घड़ी में, आपके अपने शब्दों में आपका अपना संकल्प।",
         },
       ],
-      note: "न पुरोहित, न घाट पर कोई आयोजन, न कैमरा, न प्रसारण, न रिकॉर्डिंग, और डाक से आपको कुछ नहीं।",
+      note: "यह क्या है और क्या नहीं, यह नीति पृष्ठ पर पूरा लिखा है।",
       cta: "स्नान आरंभ करें",
       muhurat: "मुहूर्त पंचांग",
     },
@@ -1123,12 +1123,12 @@ export const riverDetailContent = {
       title: "यह जल किसके लिए माना जाता है।",
       lede: "परंपरा के रूप में, अन्य पुरुष में, क्योंकि वह है यही। इसमें से बहुत कुछ इस स्थल के हर शब्द से सदियों पुराना है।",
       standing:
-        "इनमें से कुछ भी सेवा के रूप में उपलब्ध नहीं है। इस जल पर स्नानिफ़ाई का कोई नहीं है, वह वहाँ किसी बात की व्यवस्था नहीं करता, और जो लोग इसे संभालते हैं उनसे कुछ माँगता भी नहीं। यहाँ जो सूचीबद्ध है वह वही है जो लोग वहाँ खड़े होकर करते हैं।",
+        "यहाँ जो सूचीबद्ध है वह वही है जो लोग इस जल के सामने खड़े होकर करते हैं। यह वर्णन है, अन्य पुरुष में, कोई सेवा नहीं।",
       kindLabels: {
         personal: "स्वयं उपस्थित होकर",
         "of-the-place": "स्थान का अपना",
       },
-      personalNote: "यह जल के सामने खड़ा व्यक्ति स्वयं करता है। स्नानिफ़ाई इसकी व्यवस्था न करता है, न कर सकता है।",
+      personalNote: "यह जल के सामने खड़ा व्यक्ति स्वयं करता है।",
       placeNote: "यह किसी के कहने पर नहीं, अपने आप होता रहता है।",
     },
     occasions: {
@@ -1142,7 +1142,7 @@ export const riverDetailContent = {
       eyebrow: "देखरेख",
       title: "इस जल को कौन संभालता है।",
       label: "किसकी देखरेख में",
-      body: "इस घाट पर स्नानिफ़ाई के पास कोई अनुमति नहीं है और उसे किसी अनुमति की आवश्यकता भी नहीं, क्योंकि वह वहाँ कुछ करता ही नहीं। आपके स्थान पर कोई खड़ा नहीं होता, कुछ फ़िल्माया नहीं जाता, सीढ़ियों पर हमारा कोई यंत्र नहीं रखा, और यहाँ जिनका नाम है उनसे कुछ माँगा नहीं गया। उनका नाम इसलिए है कि किसी स्थान को कौन संभालता है, यह जानने योग्य बात है, और जो पृष्ठ किसी घाट का वर्णन करके यह न बताए कि वह किसका है, वह उसका सबसे व्यावहारिक तथ्य छोड़ देता है।",
+      body: "इस घाट पर स्नानिफ़ाई के पास कोई अनुमति नहीं है और आवश्यकता भी नहीं, क्योंकि वह वहाँ कुछ करता ही नहीं, और यहाँ जिनका नाम है उनसे कुछ माँगा नहीं गया। उनका नाम इसलिए है कि किसी स्थान को कौन संभालता है, यह जानने योग्य बात है, और जो पृष्ठ किसी घाट का वर्णन करके यह न बताए कि वह किसका है, वह उसका सबसे व्यावहारिक तथ्य छोड़ देता है।",
     },
     onward: {
       eyebrow: "आगे",
