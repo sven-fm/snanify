@@ -99,7 +99,7 @@ const ethicsEn = {
     h: "Our servers are in the river",
     body: [
       "It sounds like a line. It is a specification.",
-      "The Ganga at Haridwar carried about 1,444 cubic metres a second on the eleventh of August, which is an ordinary flow for that week of the year. The Godavari at Nashik was at the ninety-fifth percentile of everything it has done in that week since 1991. Both numbers went into this site the day they existed, and the Godavari sounded like it.",
+      "The Ganga at Haridwar carried about 1,444 cubic metres a second on the eleventh of August, which is an ordinary flow for that week of the year. The Godavari at Nashik was at the ninety-fifth percentile of everything it has done in that week since 1997. Both numbers went into this site the day they existed, and the Godavari sounded like it.",
       "So when the Ganga rises, this website rises with it. When the Shipra runs thin in April, it runs thin here. Nothing on this site is a loop, a stock clip, or a mood video with a filter on it. There is no generated water anywhere in this product and there never will be.",
     ],
     specH: "Exactly what the number is",
@@ -114,7 +114,7 @@ const ethicsEn = {
       },
       {
         k: "What the percentile means",
-        v: "Where today sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Four hundred and thirty-five days of that river's own history, and the only honest way to compare a river to anything.",
+        v: "Where today sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Six hundred and nine days of that river's own history, and the only honest way to compare a river to anything.",
       },
       {
         k: "How old it is",
@@ -122,7 +122,7 @@ const ethicsEn = {
       },
       {
         k: "When we cannot reach it",
-        v: "The page says so, and prints the thirty-five year median for today's date, labelled as exactly that. We never interpolate, and we never invent a plausible number.",
+        v: "The page says so, and prints the twenty-nine year median for today's date, labelled as exactly that. We never interpolate, and we never invent a plausible number.",
       },
       {
         k: "The named stations",
@@ -419,7 +419,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
       },
       {
         k: "प्रतिशतक का अर्थ",
-        v: "आज का मान उसी खंड के उन सब दैनिक मानों के सामने कहाँ बैठता है जो वर्ष के इसी सप्ताह में १९९१ से २०२५ तक आए। उस नदी के अपने इतिहास के चार सौ पैंतीस दिन, और किसी नदी की तुलना करने का एकमात्र सच्चा ढंग।",
+        v: "आज का मान उसी खंड के उन सब दैनिक मानों के सामने कहाँ बैठता है जो वर्ष के इसी सप्ताह में १९९७ से २०२५ तक आए। उस नदी के अपने इतिहास के छह सौ नौ दिन, और किसी नदी की तुलना करने का एकमात्र सच्चा ढंग।",
       },
       {
         k: "वह कितना पुराना है",
@@ -427,7 +427,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
       },
       {
         k: "जब हम नदी तक न पहुँच सकें",
-        v: "पृष्ठ यही कहता है, और आज की तिथि का पैंतीस-वर्षीय मध्यमान छापता है, ठीक इसी नाम से। हम न बीच के मान गढ़ते हैं, न कोई विश्वसनीय दिखने वाला अंक बनाते हैं।",
+        v: "पृष्ठ यही कहता है, और आज की तिथि का उनतीस-वर्षीय मध्यमान छापता है, ठीक इसी नाम से। हम न बीच के मान गढ़ते हैं, न कोई विश्वसनीय दिखने वाला अंक बनाते हैं।",
       },
       {
         k: "नामित मापक केंद्र",
@@ -706,7 +706,7 @@ const howEn = {
     lede: "The first time you open it, before anything else happens, you are shown this. Once, and never again.",
     screen: [
       "No priest does anything for you here. No rite is performed at any ghat in your name. There is no camera on the water.",
-      "What is real: the river, its flow today, modelled by the Copernicus global flood model and ranked against thirty-five years of its own history. The panchang. And your own words.",
+      "What is real: the river, its flow today, modelled by the Copernicus global flood model and ranked against twenty-nine years of its own history. The panchang. And your own words.",
       "That is the whole of it, and it is enough.",
     ],
     setupH: "Then three questions, asked once",
@@ -744,7 +744,7 @@ const howEn = {
         "READ 04:00 IST · COPERNICUS EMS VIA OPEN-METEO",
         "YOU ARE 6,714 km FROM THIS WATER",
       ],
-      note: "If we could not reach the river, the fourth line says so and prints the thirty-five year median for the date instead, labelled as exactly that. A stale honest number is completely fine. A fabricated fresh one would be the end of this business.",
+      note: "If we could not reach the river, the fourth line says so and prints the twenty-nine year median for the date instead, labelled as exactly that. A stale honest number is completely fine. A fabricated fresh one would be the end of this business.",
     },
     {
       id: "breath",
@@ -898,7 +898,7 @@ export const howItWorksContent = { en: howEn, hi: {
     lede: "पहली बार खोलने पर, किसी और चीज़ से पहले, आपको यही दिखाया जाता है। एक बार, और फिर कभी नहीं।",
     screen: [
       "यहाँ कोई पुरोहित आपके लिए कुछ नहीं करता। आपके नाम से किसी घाट पर कोई अनुष्ठान नहीं होता। जल पर कोई कैमरा नहीं है।",
-      "जो सत्य है: नदी, आज उसका प्रवाह, कोपरनिकस के वैश्विक बाढ़ मॉडल से प्रतिरूपित और उसी नदी के पैंतीस वर्षों के इतिहास के सामने तौला हुआ। पंचांग। और आपके अपने शब्द।",
+      "जो सत्य है: नदी, आज उसका प्रवाह, कोपरनिकस के वैश्विक बाढ़ मॉडल से प्रतिरूपित और उसी नदी के उनतीस वर्षों के इतिहास के सामने तौला हुआ। पंचांग। और आपके अपने शब्द।",
       "बस इतना ही है, और इतना पर्याप्त है।",
     ],
     setupH: "फिर तीन प्रश्न, केवल एक बार",
@@ -936,7 +936,7 @@ export const howItWorksContent = { en: howEn, hi: {
         "पाठ ०४:०० भा.मा.स. · कोपरनिकस EMS, Open-Meteo के माध्यम से",
         "आप इस जल से ६,७१४ किमी दूर हैं",
       ],
-      note: "यदि हम नदी तक न पहुँच सके, तो चौथी पंक्ति यही कहती है और उसकी जगह उस तिथि का पैंतीस-वर्षीय मध्यमान छापती है, ठीक इसी नाम से। पुराना पर सच्चा अंक पूर्णतः ठीक है। गढ़ा हुआ ताज़ा अंक इस व्यापार का अंत होगा।",
+      note: "यदि हम नदी तक न पहुँच सके, तो चौथी पंक्ति यही कहती है और उसकी जगह उस तिथि का उनतीस-वर्षीय मध्यमान छापती है, ठीक इसी नाम से। पुराना पर सच्चा अंक पूर्णतः ठीक है। गढ़ा हुआ ताज़ा अंक इस व्यापार का अंत होगा।",
     },
     {
       id: "breath",
@@ -1207,7 +1207,7 @@ const faqEn = {
           id: "mark",
           q: "What is the mark I keep?",
           a: [
-            "One engraving per sitting, drawn from the exact reading you sat with: the water, the flow, where that flow sits against thirty-five years of the same week, the minute, and your name and gotra. A monsoon morning is dark and crowded. A January morning is pale and open.",
+            "One engraving per sitting, drawn from the exact reading you sat with: the water, the flow, where that flow sits against twenty-nine years of the same week, the minute, and your name and gotra. A monsoon morning is dark and crowded. A January morning is pale and open.",
             "It carries the string it was generated from, so anyone can recompute it and check the river figure against the public source. Forging one would mean forging a public river record.",
             "At the foot of every sheet, at full weight and not in fine print: no rite was performed for you, this sheet records a river, a minute, and the words you chose to say into it.",
           ],
@@ -1231,7 +1231,7 @@ const faqEn = {
           id: "percentile",
           q: "What does the percentile mean?",
           a: [
-            "Where today's flow sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Four hundred and thirty-five days of that river's own history.",
+            "Where today's flow sits against every daily value that same cell has produced in this same week of the year from 1997 to 2025. Six hundred and nine days of that river's own history.",
             "It is the only honest way to compare a river to anything. The Kaveri at Talakaveri runs at about six cubic metres a second and the Sangam at five thousand, and neither number tells you whether either river is behaving unusually. The percentile does.",
           ],
         },
@@ -1239,7 +1239,7 @@ const faqEn = {
           id: "offline",
           q: "What happens when you cannot reach the river?",
           a: [
-            "The page says so and prints the thirty-five year median for today's date, labelled as exactly that: this is what this river usually does on the eleventh of August, taken from thirty-five years of Augusts.",
+            "The page says so and prints the twenty-nine year median for today's date, labelled as exactly that: this is what this river usually does on the eleventh of August, taken from twenty-nine years of Augusts.",
             "We never interpolate and we never invent a plausible number. A reading a day old is served with its true timestamp and no apology, because a river moves on the scale of days.",
             "The one time the model goes quiet and the page says the model has gone quiet is worth more to us than a year of marketing.",
           ],
@@ -1564,7 +1564,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "mark",
           q: "जो चिह्न मुझे मिलता है, वह क्या है?",
           a: [
-            "हर बैठक पर एक कृति, ठीक उसी पाठ से खींची हुई जिसके साथ आप बैठे: जल, प्रवाह, वह प्रवाह उसी सप्ताह के पैंतीस वर्षों के सामने कहाँ बैठता है, वह मिनट, और आपका नाम तथा गोत्र। वर्षा की सुबह गहरी और भरी हुई होती है। जनवरी की सुबह हल्की और खुली।",
+            "हर बैठक पर एक कृति, ठीक उसी पाठ से खींची हुई जिसके साथ आप बैठे: जल, प्रवाह, वह प्रवाह उसी सप्ताह के उनतीस वर्षों के सामने कहाँ बैठता है, वह मिनट, और आपका नाम तथा गोत्र। वर्षा की सुबह गहरी और भरी हुई होती है। जनवरी की सुबह हल्की और खुली।",
             "उस पर वही पंक्ति रहती है जिससे वह बना, इसलिए कोई भी उसे दोबारा बनाकर नदी के अंक सार्वजनिक स्रोत से मिला सकता है। इसे नक़ली बनाने का अर्थ होगा नदी का सार्वजनिक अभिलेख नक़ली बनाना।",
             "हर पत्र के पाद पर, पूरे भार में और किसी छोटे अक्षर में नहीं: आपके लिए कोई अनुष्ठान नहीं किया गया। यह पत्र एक नदी, एक क्षण, और वे शब्द अंकित करता है जो आपने उसमें कहे।",
           ],
@@ -1588,7 +1588,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "percentile",
           q: "प्रतिशतक का अर्थ क्या है?",
           a: [
-            "आज का प्रवाह उन सब दैनिक मानों के सामने कहाँ बैठता है जो उसी खंड पर वर्ष के इसी सप्ताह में १९९१ से २०२५ तक आए। उस नदी के अपने इतिहास के चार सौ पैंतीस दिन।",
+            "आज का प्रवाह उन सब दैनिक मानों के सामने कहाँ बैठता है जो उसी खंड पर वर्ष के इसी सप्ताह में १९९७ से २०२५ तक आए। उस नदी के अपने इतिहास के छह सौ नौ दिन।",
             "किसी नदी की तुलना करने का यही एकमात्र सच्चा ढंग है। तालकावेरी में कावेरी लगभग छह घन मीटर प्रति सेकंड बहती हैं और संगम पर पाँच हज़ार, और इनमें से कोई अंक यह नहीं बताता कि कोई नदी असामान्य व्यवहार कर रही है या नहीं। प्रतिशतक बताता है।",
           ],
         },
@@ -1596,7 +1596,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "offline",
           q: "जब आप नदी तक न पहुँच सकें तब क्या होता है?",
           a: [
-            "पृष्ठ यही कहता है और आज की तिथि का पैंतीस-वर्षीय मध्यमान छापता है, ठीक इसी नाम से: यह वह है जो यह नदी सामान्यतः ग्यारह अगस्त को करती है, पैंतीस वर्षों के अगस्त से लिया गया।",
+            "पृष्ठ यही कहता है और आज की तिथि का उनतीस-वर्षीय मध्यमान छापता है, ठीक इसी नाम से: यह वह है जो यह नदी सामान्यतः ग्यारह अगस्त को करती है, उनतीस वर्षों के अगस्त से लिया गया।",
             "हम न बीच के मान गढ़ते हैं, न कोई विश्वसनीय दिखने वाला अंक बनाते हैं। एक दिन पुराना पाठ अपने सच्चे समय के साथ दिखाया जाता है, बिना किसी सफ़ाई के, क्योंकि नदी दिनों की गति से बदलती है।",
             "जिस दिन मॉडल चुप हो जाए और पृष्ठ कह दे कि मॉडल चुप है, वह दिन हमारे लिए वर्ष भर के विज्ञापन से अधिक मूल्यवान है।",
           ],

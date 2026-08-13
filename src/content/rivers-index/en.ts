@@ -114,7 +114,7 @@ export const en = {
     title: "What this is, and what it is not.",
     isLabel: "This is",
     isBody:
-      "Four and a half minutes on your own screen, against the state a river is in at the hour you sit with her. Her modelled flow ranked against thirty years of her own history, her sunrise, and your own sankalp in your own words.",
+      "Four and a half minutes on your own screen, against the state a river is in at the hour you sit with her. Her modelled flow ranked against twenty-nine years of her own history, her sunrise, and your own sankalp in your own words.",
     isNotLabel: "This is not",
     isNotBody:
       "A rite performed at a ghat, a recording made at one, or a claim about your health, your fortune or any other outcome. The ethics page states the commitment in full.",

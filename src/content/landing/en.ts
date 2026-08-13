@@ -36,7 +36,7 @@
    could go and check it:
      · 6            the six waters in rivers.ts
      · 48           two upstream reads an hour against the flood model, per day
-     · 1,20,000+    daily river values on the public record since 1991
+     · 1,20,000+    daily river values on the public record since 1997
    The badge reading is a placeholder shape until the live spine lands. Replace
    it with the real reading; never re-dress it to look fresher.
 
@@ -77,7 +77,7 @@ export const en = {
       title: "Ganga, Har Ki Pauri",
       rows: [
         { k: "Flow", v: "1,444 m³/s, her usual run" },
-        { k: "Ranked", v: "41st percentile since 1991" },
+        { k: "Ranked", v: "41st percentile since 1997" },
         { k: "Read", v: "06:00 IST, modelled" },
         { k: "Next muhurat", v: "Brahma Muhurat, 04:24" },
       ],
@@ -86,7 +86,7 @@ export const en = {
     stats: [
       { n: "6", l: "waters, read hourly" },
       { n: "48", l: "reads a day" },
-      { n: "1,20,000+", l: "daily values since 1991" },
+      { n: "1,20,000+", l: "daily values since 1997" },
     ],
   },
   rivers: {
@@ -125,7 +125,7 @@ export const en = {
         name: "The Reading",
         alt: "जल-पाठ",
         len: "21 seconds",
-        d: "Five lines print: the water, its flow, its rank against thirty-five years, the minute, your distance from it.",
+        d: "Five lines print: the water, its flow, its rank against twenty-nine years, the minute, your distance from it.",
       },
       {
         clock: "0:25",
@@ -183,7 +183,7 @@ export const en = {
       items: [
         {
           name: "The river, now",
-          d: "Six waters, the flow at each this hour, ranked against thirty-five years.",
+          d: "Six waters, the flow at each this hour, ranked against twenty-nine years.",
           href: "/rivers",
         },
         {

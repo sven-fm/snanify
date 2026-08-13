@@ -221,7 +221,7 @@ const en = {
       {
         n: 8,
         name: "Flow, and level",
-        body: "Modelled river discharge for the reach, in cubic metres a second, ranked against every reading at that cell in this same week of the year since 1991. Beside it, the published gauge level where a gauge on that reach publishes one. Where none does, the cell says so and names what is missing.",
+        body: "Modelled river discharge for the reach, in cubic metres a second, ranked against every reading at that cell in this same week of the year since 1997. Beside it, the published gauge level where a gauge on that reach publishes one. Where none does, the cell says so and names what is missing.",
       },
       {
         n: 9,
@@ -554,7 +554,7 @@ const hi: typeof en = {
       {
         n: 8,
         name: "प्रवाह, और जलस्तर",
-        body: "उस धारा का प्रतिरूपित नदी-प्रवाह, घन मीटर प्रति सेकंड में, और उसकी तुलना 1991 से वर्ष के इसी सप्ताह में उसी खंड के हर पाठ से। उसके साथ प्रकाशित गेज-जलस्तर, जहाँ उस धारा पर कोई गेज उसे प्रकाशित करता है। जहाँ नहीं करता, वहाँ खाना यही बात लिखता है और बताता है कि क्या उपलब्ध नहीं।",
+        body: "उस धारा का प्रतिरूपित नदी-प्रवाह, घन मीटर प्रति सेकंड में, और उसकी तुलना 1997 से वर्ष के इसी सप्ताह में उसी खंड के हर पाठ से। उसके साथ प्रकाशित गेज-जलस्तर, जहाँ उस धारा पर कोई गेज उसे प्रकाशित करता है। जहाँ नहीं करता, वहाँ खाना यही बात लिखता है और बताता है कि क्या उपलब्ध नहीं।",
       },
       {
         n: 9,
@@ -880,8 +880,8 @@ export function specimenChihna(lang: Lang): ChihnaRecord {
     flow: {
       value: hi ? "1,444 घन मी/से" : "1,444 m³/s",
       note: hi
-        ? "1991 से वर्ष के इसी सप्ताह के 41% पाठों से अधिक"
-        : "higher than 41% of readings here in this week of the year since 1991",
+        ? "1997 से वर्ष के इसी सप्ताह के 41% पाठों से अधिक"
+        : "higher than 41% of readings here in this week of the year since 1997",
     },
     levelUnavailable: {
       value: hi ? "इस धारा के लिए प्रकाशित नहीं" : "Not published for this reach",
