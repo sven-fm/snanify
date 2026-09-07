@@ -84,7 +84,7 @@ export const en = {
       link: "All six waters, live",
     },
     stats: [
-      { n: "6", l: "waters, read hourly" },
+      { n: "6", l: "waters, read daily" },
       { n: "48", l: "reads a day" },
       { n: "1,20,000+", l: "daily values since 1997" },
     ],

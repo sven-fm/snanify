@@ -15,6 +15,7 @@ import { snanContent } from "@/content/snan";
    therefore the full-depth pair and not the twelve locales the site serves, and
    `FULL_LANGS` is what narrows the prerender set away from the layout default. */
 import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { SOURCES } from "@/lib/riverdata";
 import { pageMetadata } from "@/lib/seo";
 
 /* Public URL shape: English unprefixed, Hindi under /hi. Built through
@@ -72,11 +73,13 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         publisher: organizationRef(),
         creator: organizationRef(),
         /* The one externally checkable fact on the page, named where a machine
-           reads it, exactly as it is named where a person does. */
+           reads it, exactly as it is named where a person does: modelled
+           discharge, daily, the same Dataset /live emits. */
         isBasedOn: {
           "@type": "Dataset",
-          name: "River Water Level (Telemetry, Hourly), Central Water Commission",
-          url: "https://nwdp.nwic.gov.in/dataset/river-water-level-telemetry-hourly-central-water-commission-cwc",
+          name: "River discharge, modelled, " + SOURCES.discharge.model,
+          url: SOURCES.discharge.modelHref,
+          license: "https://creativecommons.org/licenses/by/4.0/",
         },
       },
       breadcrumb: breadcrumbList(lang, [

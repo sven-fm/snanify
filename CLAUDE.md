@@ -42,9 +42,13 @@ not need the lie.
 
 ## What is actually true, and therefore load-bearing
 
-- **The river is real and public.** India's Central Water Commission publishes river gauge
-  telemetry. Level and flow at real stations drive the product. This is what makes
-  "our servers are in the river" a literal statement rather than a metaphor.
+- **The river is real and public.** The flow at each of the six waters is modelled
+  discharge from the Copernicus GloFAS global flood model, read through Open-Meteo, one
+  value per day, CC BY 4.0. It is a model at a calibrated grid cell, not an instrument at
+  the ghat, and every surface says "modelled". India's Central Water Commission portal is
+  the register of stations and nothing more: four of the six waters have no published level
+  there. The number on the page is a published figure anyone can fetch and check, and that
+  is the whole point. See `src/lib/riverdata.ts`.
 - **The panchang is real.** Tithi, nakshatra and muhurat are computed, not invented.
 - **The sky is real.** The moon's position is computed offline and deterministically with
   `astronomy-engine`. No API, no key. See `src/lib/sky.ts` and `src/content/nakshatra.ts`.
@@ -52,8 +56,8 @@ not need the lie.
 - **The six waters are real places** with real traditions. See `src/content/rivers.ts`.
 
 If a number is not sourced, it is labelled as unsourced, everywhere it appears. Never
-fabricate a gauge reading, a panchang timing or a statistic and present it as fact. The
-artefact's whole value rests on its numbers being checkable against a government record.
+fabricate a river figure, a panchang timing or a statistic and present it as fact. The
+artefact's whole value rests on its numbers being checkable against a public record.
 
 ## The product
 
@@ -67,9 +71,10 @@ artefact's whole value rests on its numbers being checkable against a government
 | Maun, the stillness | 90s | The screen goes fully black |
 | Chihn, the mark | 35s | One line writes itself into your register |
 
-The artefact is the **Jal Chihna**, the Watermark: a generative engraving seeded by the
-river's published gauge reading at that instant, so no two are alike and none can be forged
-without forging the agency's record.
+The artefact is the **Sankalp Patra**: a generative engraving seeded by the river's
+published modelled flow for that day, so no two days are alike and none can be forged
+without forging the public record. (Older code and docs call it the Jal Chihna or the
+Watermark; `build-plan.md` retires those names.)
 
 **Pricing is paid-only, and there is exactly one price**, shown in the reader's own currency:
 rupees in India, Canadian dollars in Canada, euro in the eurozone, US dollars everywhere

@@ -137,15 +137,16 @@ ayanamsa choice shifts the edges slightly.
 
 ### Fetched, and therefore fallible
 
-River gauge readings come from the Central Water Commission. That path needs a cache, a
-staleness policy and an honest degradation chain:
+River discharge is modelled by the Copernicus GloFAS global flood model and read through
+Open-Meteo, one value per grid cell per day. That path needs a cache, a staleness policy and
+an honest degradation chain:
 
-1. A fresh reading, shown with its timestamp and source agency.
-2. A stale reading, **labelled stale** with its age.
-3. No reading, and the UI says the feed is not connected.
+1. A fresh model day, shown with its date and source.
+2. A stale model day, **labelled stale** with its age.
+3. No model day, and the page falls to the 1997 to 2025 seasonal normals, labelled as such.
 
-The rule that matters: **never synthesise a gauge number.** The artefact's unforgeability
-rests on that number being checkable against a government record, so a fabricated placeholder
+The rule that matters: **never synthesise a river number.** The artefact's unforgeability
+rests on that number being checkable against a public record, so a fabricated placeholder
 presented as live would quietly destroy the only genuinely defensible asset in the product.
 
 Every raw agency response is stored with its fetch time and a hash, because agency endpoints

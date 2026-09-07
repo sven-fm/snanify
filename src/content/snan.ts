@@ -31,9 +31,9 @@ import type { TierKey } from "@/content/prices";
  * answer is two sentences, a tariff row is one. The reader is on a phone at six
  * in the morning, and for many of them English is a third language.
  *
- * What is claimed, and what is true: a real river's published gauge reading
- * genuinely arrives at the reader, at the hour it was measured, with its true
- * age printed beside it.
+ * What is claimed, and what is true: the river's flow for today, modelled by
+ * Copernicus GloFAS and published through Open-Meteo, arrives at the reader
+ * with its model day printed beside it. The word is "modelled", every time.
  *
  * Every figure in a specimen block is labelled a specimen where it appears. The
  * live readings live on the free water pages, and this page never prints an
@@ -210,7 +210,7 @@ const en: Copy = {
   meta: {
     title: "The snan, four and a half minutes with a real river",
     description:
-      "A digital snan. Four and a half minutes with a river's gauge reading this hour, a vow held eleven seconds, ninety seconds of black screen, and one mark drawn from the public record.",
+      "A digital snan. Four and a half minutes with a river's flow today, modelled by Copernicus and checkable by anyone, a vow held eleven seconds, ninety seconds of black screen, and one mark drawn from the public record.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
@@ -219,7 +219,7 @@ const en: Copy = {
     eyebrow: "Jal Sankalp",
     titleA: "Four and a half minutes.",
     titleB: "The river comes to you.",
-    lede: "Two hundred and seventy seconds with a river at the level she stands this hour, measured by the Central Water Commission. Breathe at her rhythm. Hold your vow for eleven seconds. Put the phone down for ninety.",
+    lede: "Two hundred and seventy seconds with a river at the flow she carries today, modelled by Copernicus and published for anyone to check. Breathe at her rhythm. Hold your vow for eleven seconds. Put the phone down for ninety.",
     offer:
       "Eleven mornings for {price}, one for each morning. Everything you can read stays free.",
     ctaPrimary: "Take eleven mornings, {price}",
@@ -235,7 +235,7 @@ const en: Copy = {
     label: "What is actually true",
     title: "Everything here is real, and it is yours.",
     body: [
-      "A river at the level she stands this hour, measured by the Central Water Commission. The panchang, computed. Your own words, read back every morning.",
+      "A river at the flow she carries today, modelled by Copernicus and published for anyone to check. The panchang, computed. Your own words, read back every morning.",
       "The practice is yours. You say it, you keep it, and the mark carries a number a stranger can check.",
       "Our servers sit downstream, in the river.",
     ],
@@ -481,7 +481,7 @@ const hi: Copy = {
   meta: {
     title: "स्नान, साढ़े चार मिनट एक सच्ची नदी के साथ",
     description:
-      "एक डिजिटल स्नान। साढ़े चार मिनट, इस घंटे के गेज पाठ के साथ; ग्यारह सेकंड थमा हुआ संकल्प; नब्बे सेकंड की काली स्क्रीन; और एक चिह्न, जो सार्वजनिक अभिलेख से खिंचता है।",
+      "एक डिजिटल स्नान। साढ़े चार मिनट, नदी के आज के प्रवाह के साथ, जिसे कोपरनिकस ने मॉडल किया है और कोई भी जाँच सकता है; ग्यारह सेकंड थमा हुआ संकल्प; नब्बे सेकंड की काली स्क्रीन; और एक चिह्न, जो सार्वजनिक अभिलेख से खिंचता है।",
   },
 
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
@@ -490,7 +490,7 @@ const hi: Copy = {
     eyebrow: "जल संकल्प",
     titleA: "साढ़े चार मिनट।",
     titleB: "नदी आप तक आती है।",
-    lede: "दो सौ सत्तर सेकंड, उस नदी के साथ जो इस घंटे वास्तव में जिस स्तर पर है, केंद्रीय जल आयोग द्वारा मापी हुई। उसकी लय पर साँस लीजिए। संकल्प ग्यारह सेकंड थामे रखिए। नब्बे सेकंड के लिए फ़ोन नीचे रख दीजिए।",
+    lede: "दो सौ सत्तर सेकंड, उस नदी के साथ जो आज जिस प्रवाह पर बह रही है, कोपरनिकस द्वारा मॉडल की हुई और सबके लिए प्रकाशित। उसकी लय पर साँस लीजिए। संकल्प ग्यारह सेकंड थामे रखिए। नब्बे सेकंड के लिए फ़ोन नीचे रख दीजिए।",
     offer: "ग्यारह सुबहें {price} में, हर सुबह के लिए एक। जो पढ़ने का है, वह सदा निःशुल्क।",
     ctaPrimary: "ग्यारह सुबहें लीजिए, {price}",
     ctaSecondary: "पाँच अंग देखिए",
@@ -505,7 +505,7 @@ const hi: Copy = {
     label: "जो वास्तव में सत्य है",
     title: "यहाँ सब कुछ वास्तविक है, और वह आपका है।",
     body: [
-      "एक नदी, इस घंटे वह जिस जलस्तर पर वास्तव में है, केंद्रीय जल आयोग द्वारा मापी हुई। पंचांग, गणना किया हुआ। और आपके अपने शब्द, हर सुबह लौटाकर पढ़ाए जाते।",
+      "एक नदी, आज जिस प्रवाह पर वह बह रही है, कोपरनिकस द्वारा मॉडल की हुई और सबके लिए प्रकाशित। पंचांग, गणना किया हुआ। और आपके अपने शब्द, हर सुबह लौटाकर पढ़ाए जाते।",
       "साधना आपकी है। आप उसे कहते हैं, आप उसे निभाते हैं, और चिह्न पर वह अंक होता है जिसे कोई अजनबी जाकर जाँच सकता है।",
       "हमारे सर्वर नदी के नीचे, नदी में ही बैठे हैं।",
     ],
