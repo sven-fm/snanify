@@ -254,7 +254,10 @@ Tracked here so a phase never blocks silently on them.
 - [ ] **Indian cards.** Many Indian debit cards have international transactions switched off by default. The `/faq` gets one entry telling Indian buyers how to switch it on in their bank app. This is friction, not a blocker, and it is the reason a Razorpay phase exists later.
 - [ ] **GST on digital services to Indian consumers (OIDAR).** A non-Indian entity selling to Indian consumers is expected to register. Legal item, not a build item. Decide before India marketing starts.
 - [ ] **Privacy policy and terms.** Portraits and names of family members are personal data under GDPR and India's DPDP Act. A page each, plain language. Needed before Phase 4 ships to production.
-- [ ] **Sending domain** for Resend verified at Porkbun.
+- [ ] **Resend API key.** The domain is already verified in Sven's own Resend
+  account, so Snanify needs a key from it rather than a marketplace install:
+  `npx vercel@latest env add RESEND_API_KEY`. Until it exists the mailer logs
+  the message and reports it unsent, and nothing else breaks.
 - [ ] **Prayer list** reviewed by the owner or someone the owner trusts for text accuracy. Draft is written in Phase 4.
 - [ ] **Real hero figures** to replace the placeholders at launch.
 - [ ] **Clerk dashboard, three settings.** Rename the application from
@@ -282,12 +285,12 @@ working with an agent; treat it as a shape, not a promise.
 | --- | --- | --- | --- |
 | 0 | Ground truth and tooling | done | Honest data claims, a test runner, a branch |
 | 1 | Cut the marketing surface | done | Two locales, nine routes, one name, a landing that sells |
-| 2 | Foundations | 2 days | Providers, schema, auth, env |
-| 3 | Purchase | 2 days | Stripe Checkout to credits |
-| 4 | Set up once | 3 days | Portrait, names, prayer, sankalp, reminder |
-| 5 | The sitting | 4 days | The five parts, minted sitting |
-| 6 | The Sankalp Patra | 4 days | Public page, image, share |
-| 7 | Return loop | 2 days | Reminder email, register, account |
+| 2 | Foundations | done | Providers, schema, auth, env |
+| 3 | Purchase | done | Stripe Checkout to credits |
+| 4 | Set up once | done | Portrait, names, prayer, sankalp, reminder |
+| 5 | The sitting | done | The five parts, minted sitting |
+| 6 | The Sankalp Patra | done | Public page, image, share |
+| 7 | Return loop | done | Reminder email, register, account |
 | 8 | Launch | 3 days | Legal, analytics events, Search Console, real figures |
 
 ---
@@ -332,14 +335,14 @@ subtractive except the landing rewrite.
 
 **Why.** Providers first, then code against real env vars. Nothing here is user-visible.
 
-- [ ] **2.1 Install providers.** `npx vercel@latest integration add neon --yes --no-claim`, then `clerk`, then `stripe`, then `resend/resend-email`. Any that opens a browser step: stop, tell the owner what to complete, continue after. Then `vercel env pull .env.local --yes`. Confirm `.env.local` is in `.gitignore`. Vercel Blob: enable in the project's Storage tab, pull again for `BLOB_READ_WRITE_TOKEN`.
-- [ ] **2.2 Drizzle.** `npm i drizzle-orm @neondatabase/serverless` and `npm i -D drizzle-kit`. `drizzle.config.ts` pointing at `src/db/schema.ts` and `DATABASE_URL`. Write `src/db/schema.ts` exactly as 3.2. `npx drizzle-kit generate` then `npx drizzle-kit migrate`. Commit the migration. Reinstall Playwright after (`npm i` prunes it, see `CLAUDE.md`).
-- [ ] **2.3 Clerk.** `npm i @clerk/nextjs`. Wrap `RootShell.tsx` in `<ClerkProvider>` with `appearance` variables: `colorBackground` paper, `colorText` ink, `borderRadius: "0"`, font family from the existing CSS variables, no shadows. Enable Google and email magic link in the Clerk dashboard; disable password. In `src/proxy.ts` wrap the existing handler in `clerkMiddleware()` and keep the existing matcher (it already excludes `api/`, so the Stripe webhook stays public). Protect nothing yet; pages call `requireUser()` themselves.
-- [ ] **2.4 `src/lib/auth.ts`.** `currentUser()` reads Clerk's `auth()` and upserts a `users` row on first sight (id, email, locale from the route, tz from a cookie the client sets in Phase 4, default `Asia/Kolkata`). `requireUser(lang)` redirects to `localePath(lang, "/sign-in")` with `redirect_url`. Sign-in and sign-up pages under `src/app/[lang]/sign-in/[[...sign-in]]/page.tsx` rendering `<SignIn>` inside the site shell.
-- [ ] **2.5 `src/lib/credits.ts`.** `balance(userId)` is `SUM(delta)`. `book(userId, delta, reason, refId)` inserts a ledger row inside the caller's transaction and refuses to take the balance below zero. Unit tests against a Neon branch database (`DATABASE_URL_TEST`), or against `pglite` if faster; pick one in the phase plan and stick with it.
-- [ ] **2.6 `src/lib/ids.ts`.** `newId()`: 22 characters, base58, from `crypto.getRandomValues`. Test: length, alphabet, 10,000 draws unique.
-- [ ] **2.7 Header.** `src/components/site/Header.tsx` shows "Begin" when signed out and "Today" plus "Account" when signed in, via `currentUser()`. Both labels exist in en and hi in `nav.ts`.
-- [ ] **2.8 Verify.** A signed-out visit to `/account` lands on the styled sign-in; Google sign-in returns to `/account`, which renders "no sittings yet" and a balance of 0. Merge.
+- [x] **2.1 Install providers.** `npx vercel@latest integration add neon --yes --no-claim`, then `clerk`, then `stripe`, then `resend/resend-email`. Any that opens a browser step: stop, tell the owner what to complete, continue after. Then `vercel env pull .env.local --yes`. Confirm `.env.local` is in `.gitignore`. Vercel Blob: enable in the project's Storage tab, pull again for `BLOB_READ_WRITE_TOKEN`.
+- [x] **2.2 Drizzle.** `npm i drizzle-orm @neondatabase/serverless` and `npm i -D drizzle-kit`. `drizzle.config.ts` pointing at `src/db/schema.ts` and `DATABASE_URL`. Write `src/db/schema.ts` exactly as 3.2. `npx drizzle-kit generate` then `npx drizzle-kit migrate`. Commit the migration. Reinstall Playwright after (`npm i` prunes it, see `CLAUDE.md`).
+- [x] **2.3 Clerk.** `npm i @clerk/nextjs`. Wrap `RootShell.tsx` in `<ClerkProvider>` with `appearance` variables: `colorBackground` paper, `colorText` ink, `borderRadius: "0"`, font family from the existing CSS variables, no shadows. Enable Google and email magic link in the Clerk dashboard; disable password. In `src/proxy.ts` wrap the existing handler in `clerkMiddleware()` and keep the existing matcher (it already excludes `api/`, so the Stripe webhook stays public). Protect nothing yet; pages call `requireUser()` themselves.
+- [x] **2.4 `src/lib/auth.ts`.** `currentUser()` reads Clerk's `auth()` and upserts a `users` row on first sight (id, email, locale from the route, tz from a cookie the client sets in Phase 4, default `Asia/Kolkata`). `requireUser(lang)` redirects to `localePath(lang, "/sign-in")` with `redirect_url`. Sign-in and sign-up pages under `src/app/[lang]/sign-in/[[...sign-in]]/page.tsx` rendering `<SignIn>` inside the site shell.
+- [x] **2.5 `src/lib/credits.ts`.** `balance(userId)` is `SUM(delta)`. `book(userId, delta, reason, refId)` inserts a ledger row inside the caller's transaction and refuses to take the balance below zero. Unit tests against a Neon branch database (`DATABASE_URL_TEST`), or against `pglite` if faster; pick one in the phase plan and stick with it.
+- [x] **2.6 `src/lib/ids.ts`.** `newId()`: 22 characters, base58, from `crypto.getRandomValues`. Test: length, alphabet, 10,000 draws unique.
+- [x] **2.7 Header.** `src/components/site/Header.tsx` shows "Begin" when signed out and "Today" plus "Account" when signed in, via `currentUser()`. Both labels exist in en and hi in `nav.ts`.
+- [x] **2.8 Verify.** A signed-out visit to `/account` lands on the styled sign-in; Google sign-in returns to `/account`, which renders "no sittings yet" and a balance of 0. Merge.
 
 **Done when:** a user can sign in and out, a `users` row exists, and `balance()` returns 0.
 
@@ -347,14 +350,14 @@ subtractive except the landing rewrite.
 
 ### Phase 3: Purchase
 
-- [ ] **3.1 Stripe prices.** Create three Products in the Stripe dashboard (one, eleven, sixty) with four Prices each (USD, EUR, CAD, INR) matching `src/content/prices.ts` exactly. Store the twelve price ids in `src/content/prices.ts` as `STRIPE_PRICE: Record<TierKey, Record<Currency, string>>` read from env (`STRIPE_PRICE_ELEVEN_INR` etc.) so test and live differ by env only. A unit test asserts every tier and currency has an id in `.env.example`.
-- [ ] **3.2 `src/lib/stripe.ts`.** `createCheckout({ userId, email, pack, currency, lang })` creates a Checkout Session, mode `payment`, `line_items` one price, `client_reference_id = userId`, `metadata { pack, credits }`, `success_url = /begin/done?session_id={CHECKOUT_SESSION_ID}`, `cancel_url = /begin`, `locale` `hi` or `en`, `allow_promotion_codes: true`. Credits per pack: one 1, eleven 11, sixty 60.
-- [ ] **3.3 `/begin`.** Page reads `?pack=`, shows the three packs with the reader's currency (existing `<Price>`), the selected one marked. Each button is a form posting a server action: `requireUser`, read currency from the `snf-cur` cookie, `createCheckout`, `redirect(session.url)`. Signed-out users go through sign-in and come back to the same URL.
-- [ ] **3.4 Webhook.** `src/app/api/stripe/webhook/route.ts`: verify signature with `STRIPE_WEBHOOK_SECRET`, handle `checkout.session.completed` only, insert `purchases` (unique on `stripe_session_id`, on conflict do nothing) and `book(userId, credits, "purchase", sessionId)` in one transaction, send `sendReceipt()`. Return 200 on duplicates. Register the endpoint in Stripe; for local, `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
-- [ ] **3.5 `/begin/done`.** Server page: `requireUser`, look up the purchase by `session_id`; if absent, render a page that refreshes itself every two seconds for up to thirty seconds ("Stripe is confirming"), then falls back to a line saying the credits will appear shortly and an email will confirm. If present: profile complete → `/today`, else → `/setup`.
-- [ ] **3.6 Receipt email.** `src/lib/email.ts` `sendReceipt({ to, lang, pack, amount, currency })` via Resend, plain text plus a minimal HTML in the site's type, from `snan@snanify.com`. Copy in `src/content/email.ts`, en and hi.
+- [x] **3.1 Stripe prices.** Create three Products in the Stripe dashboard (one, eleven, sixty) with four Prices each (USD, EUR, CAD, INR) matching `src/content/prices.ts` exactly. Store the twelve price ids in `src/content/prices.ts` as `STRIPE_PRICE: Record<TierKey, Record<Currency, string>>` read from env (`STRIPE_PRICE_ELEVEN_INR` etc.) so test and live differ by env only. A unit test asserts every tier and currency has an id in `.env.example`.
+- [x] **3.2 `src/lib/stripe.ts`.** `createCheckout({ userId, email, pack, currency, lang })` creates a Checkout Session, mode `payment`, `line_items` one price, `client_reference_id = userId`, `metadata { pack, credits }`, `success_url = /begin/done?session_id={CHECKOUT_SESSION_ID}`, `cancel_url = /begin`, `locale` `hi` or `en`, `allow_promotion_codes: true`. Credits per pack: one 1, eleven 11, sixty 60.
+- [x] **3.3 `/begin`.** Page reads `?pack=`, shows the three packs with the reader's currency (existing `<Price>`), the selected one marked. Each button is a form posting a server action: `requireUser`, read currency from the `snf-cur` cookie, `createCheckout`, `redirect(session.url)`. Signed-out users go through sign-in and come back to the same URL.
+- [x] **3.4 Webhook.** `src/app/api/stripe/webhook/route.ts`: verify signature with `STRIPE_WEBHOOK_SECRET`, handle `checkout.session.completed` only, insert `purchases` (unique on `stripe_session_id`, on conflict do nothing) and `book(userId, credits, "purchase", sessionId)` in one transaction, send `sendReceipt()`. Return 200 on duplicates. Register the endpoint in Stripe; for local, `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
+- [x] **3.5 `/begin/done`.** Server page: `requireUser`, look up the purchase by `session_id`; if absent, render a page that refreshes itself every two seconds for up to thirty seconds ("Stripe is confirming"), then falls back to a line saying the credits will appear shortly and an email will confirm. If present: profile complete → `/today`, else → `/setup`.
+- [x] **3.6 Receipt email.** `src/lib/email.ts` `sendReceipt({ to, lang, pack, amount, currency })` via Resend, plain text plus a minimal HTML in the site's type, from `snan@snanify.com`. Copy in `src/content/email.ts`, en and hi.
 - [ ] **3.7 JSON-LD.** Now that a checkout exists, add `Offer` nodes to `/snan` (the comment in `snan/page.tsx` asks for exactly this) in the edition's currency via `currencyForLang`.
-- [ ] **3.8 Tests.** Unit: `packToPrice`, credits per pack, webhook idempotency (call the handler twice with the same session, one ledger row). E2E in Stripe test mode: buy eleven with card `4242 4242 4242 4242`, land on `/setup`, `/account` shows 11.
+- [x] **3.8 Tests.** Unit: `packToPrice`, credits per pack, webhook idempotency (call the handler twice with the same session, one ledger row). E2E in Stripe test mode: buy eleven with card `4242 4242 4242 4242`, land on `/setup`, `/account` shows 11.
 - [ ] **3.9 Verify on a preview deployment** with Stripe test keys, then merge.
 
 **Done when:** a real test-mode purchase books credits and sends a receipt, twice-delivered webhooks book once.
@@ -368,13 +371,13 @@ mismatch, on some first loads. The form saves correctly; the cost is that React
 rebuilds the tree on the client. Everything ruled out so far is written at the
 head of `src/components/setup/SetupForm.tsx`. Worth an hour before launch.
 
-- [ ] **4.1 Prayers.** `src/content/prayers.ts`: for each of the six waters, three to five short prayers in the public domain (for example: Ganga: गङ्गे च यमुने चैव (the sapta-nadi shloka), नमामि गङ्गे; Yamuna: a verse from Yamunashtakam; Godavari, Shipra, Kaveri: the sapta-nadi shloka and a regional verse; plus universal: Gayatri, Mahamrityunjaya, ॐ नमः शिवाय). Each entry: `id`, `title: Record<FullLang, string>`, `devanagari`, `roman` (IAST-lite, readable), `meaning: Record<FullLang, string>`, `waters: WaterSlug[] | "all"`. Text accuracy is on the owner's open-items list. No prayer text is generated; every one is a known verse, cited by source name in a comment.
-- [ ] **4.2 Portrait pipeline.** `npm i sharp @vercel/blob`. `src/lib/portrait.ts` `processPortrait(buffer, crop: { x, y, w, h })`: rotate by EXIF, extract crop, resize to 800 by 1000 cover, grayscale, `linear(1.15, -10)` for contrast, `sharpen`, a subtle noise overlay for grain, output JPEG quality 82. Test: a fixture image in, dimensions and grayscale out, under 200 KB. Raw upload goes to the private Blob store under `raw/{userId}/{id}.jpg`, processed to the public store under `portrait/{userId}/{id}.jpg`. Max upload 8 MB, JPEG/PNG/HEIC (convert HEIC via sharp; if the build lacks HEIF support, reject with a message to save as JPEG). The user sees the processed version before saving and can re-crop.
-- [ ] **4.3 `/setup` page.** One column, in order: choose water (six cards with the live band), portrait (file input styled as a ruled box, crop with a simple pan-and-zoom square, client side canvas for preview, server action for processing), names (five text inputs, first one prefilled from Clerk name, label "kept in the name of"), prayer (radio list filtered by water, each shows Devanagari and one line of meaning; "none" allowed), sankalp (textarea, 280 characters, one hint: "one sentence, in your own words"), reminder (hour picker, default 05:30 local, the browser's time zone written to a cookie and to `users.tz`). Save writes `profiles`, sets `completed_at`, redirects to `/today` when credits exist, else `/begin`.
-- [ ] **4.4 Validation** in a server action with a small hand-written validator (no schema library): names 1 to 5, each 1 to 60 characters; sankalp 1 to 280; prayer id in the list or null; water in the six; hour 0 to 23. Errors render next to the field, in the reader's language, from `src/content/setup.ts`.
+- [x] **4.1 Prayers.** `src/content/prayers.ts`: for each of the six waters, three to five short prayers in the public domain (for example: Ganga: गङ्गे च यमुने चैव (the sapta-nadi shloka), नमामि गङ्गे; Yamuna: a verse from Yamunashtakam; Godavari, Shipra, Kaveri: the sapta-nadi shloka and a regional verse; plus universal: Gayatri, Mahamrityunjaya, ॐ नमः शिवाय). Each entry: `id`, `title: Record<FullLang, string>`, `devanagari`, `roman` (IAST-lite, readable), `meaning: Record<FullLang, string>`, `waters: WaterSlug[] | "all"`. Text accuracy is on the owner's open-items list. No prayer text is generated; every one is a known verse, cited by source name in a comment.
+- [x] **4.2 Portrait pipeline.** `npm i sharp @vercel/blob`. `src/lib/portrait.ts` `processPortrait(buffer, crop: { x, y, w, h })`: rotate by EXIF, extract crop, resize to 800 by 1000 cover, grayscale, `linear(1.15, -10)` for contrast, `sharpen`, a subtle noise overlay for grain, output JPEG quality 82. Test: a fixture image in, dimensions and grayscale out, under 200 KB. Raw upload goes to the private Blob store under `raw/{userId}/{id}.jpg`, processed to the public store under `portrait/{userId}/{id}.jpg`. Max upload 8 MB, JPEG/PNG/HEIC (convert HEIC via sharp; if the build lacks HEIF support, reject with a message to save as JPEG). The user sees the processed version before saving and can re-crop.
+- [x] **4.3 `/setup` page.** One column, in order: choose water (six cards with the live band), portrait (file input styled as a ruled box, crop with a simple pan-and-zoom square, client side canvas for preview, server action for processing), names (five text inputs, first one prefilled from Clerk name, label "kept in the name of"), prayer (radio list filtered by water, each shows Devanagari and one line of meaning; "none" allowed), sankalp (textarea, 280 characters, one hint: "one sentence, in your own words"), reminder (hour picker, default 05:30 local, the browser's time zone written to a cookie and to `users.tz`). Save writes `profiles`, sets `completed_at`, redirects to `/today` when credits exist, else `/begin`.
+- [x] **4.4 Validation** in a server action with a small hand-written validator (no schema library): names 1 to 5, each 1 to 60 characters; sankalp 1 to 280; prayer id in the list or null; water in the six; hour 0 to 23. Errors render next to the field, in the reader's language, from `src/content/setup.ts`.
 - [ ] **4.5 Privacy.** `/privacy` and `/terms` pages, en and hi, in `FULL_ONLY`, linked from the footer and from the portrait field. Content from the owner; the plan ships a plain draft that names Clerk, Stripe, Neon, Vercel, Resend as processors and states portraits and names are deleted on account deletion.
-- [ ] **4.6 Tests.** Unit: validator, portrait pipeline. E2E: complete setup with a fixture portrait, `/account` shows the profile.
-- [ ] **4.7 Verify at 390px**: the crop control works with a thumb, the save button is reachable. Merge.
+- [x] **4.6 Tests.** Unit: validator, portrait pipeline. E2E: complete setup with a fixture portrait, `/account` shows the profile.
+- [x] **4.7 Verify at 390px**: the crop control works with a thumb, the save button is reachable. Merge.
 
 **Done when:** a paid user can complete setup in under two minutes on a phone and the processed portrait looks like it belongs on the paper.
 
@@ -387,17 +390,17 @@ duration from `SITTING`. No audio at launch. The vow hold uses pointer events wi
 progress fill; releasing early resets the fill. Stillness is a black screen with a single
 faint line at the end; the screen wake lock is requested so the phone does not sleep.
 
-- [ ] **5.1 `/today` server page.** `requireUser`, `balance() >= 1` else redirect `/begin`, `profiles.completed_at` else redirect `/setup`. Fetch `getLiveSnapshot()` and pick the user's water, compute the sky slice for now at the ghat, pass both plus the profile into `<Sitting>`. One sitting per water per calendar day in the user's zone: if one exists today, show it (`/p/[id]`) instead of a second.
-- [ ] **5.2 `src/lib/sitting-plan.ts`** already holds `SITTING` from 1.8. Add `TOTAL_SECONDS` and a unit test that it is 151.
-- [ ] **5.3 `<Sitting>`** client component: `useReducer` over `reading → breath → vow → stillness → mark → done`, timers via `requestAnimationFrame` deltas (not `setInterval`, which drifts in background tabs). `visibilitychange` pauses the clock; the sitting resumes where it stopped, it never restarts. `navigator.wakeLock.request("screen")` on start, released on done, ignored where unsupported.
-- [ ] **5.4 `<Reading>`** 15s: water name, the modelled discharge with its band word, the percentile against the 29-year archive, the date in the user's zone and IST, the tithi if sourced, and the source line ("modelled, Copernicus GloFAS, for {modelledFor}"). Reuses the figures and labels from `LiveRivers.tsx`; extract the shared pieces into `src/components/river/Figures.tsx` rather than copying.
-- [ ] **5.5 `<Breath>`** 45s: the existing `RiverFlow` with its horizon driven by a 6-second sine (in for 3, out for 3), amplitude from the water's band. One word at each turn: "in", "out" (श्वास लें, छोड़ें). Reduced motion: a static line and the words only.
-- [ ] **5.6 `<Vow>`**: the sankalp text from the profile, the names under it, a thumb-sized region at the bottom. Pointer down starts an 11-second fill (ink rising behind the text, `toFixed(2)` on every coordinate); pointer up before 11 resets; at 11 the state advances. A line explains it once: "Hold your thumb on your words."
-- [ ] **5.7 `<Stillness>`** 60s: `background: #000`, nothing else, no timer shown. At 60 a single rule appears and the state advances on its own.
-- [ ] **5.8 `<Mark>`** 20s: calls the `completeSitting` server action at 0s (so the row exists even if the tab dies), then animates one line writing into a register while the image renders. At 20s or when the action returns, whichever is later, navigate to `/p/[id]?new=1`.
-- [ ] **5.9 `src/lib/sitting.ts` `mintSitting({ userId, at })`**: in one transaction: re-check balance, `book(userId, -1, "sitting", id)`, insert `sittings` with the river and sky slices as fetched now, names, prayer, portrait key and sankalp text snapshotted from the profile, `seed = seedFor(...)`. Then render the sheet (Phase 6, `renderSheet(id)`) and store `image_key`. Rendering failure does not roll back the sitting; the page renders the sheet live until the image exists. Idempotent on `(userId, waterSlug, local date)`.
+- [x] **5.1 `/today` server page.** `requireUser`, `balance() >= 1` else redirect `/begin`, `profiles.completed_at` else redirect `/setup`. Fetch `getLiveSnapshot()` and pick the user's water, compute the sky slice for now at the ghat, pass both plus the profile into `<Sitting>`. One sitting per water per calendar day in the user's zone: if one exists today, show it (`/p/[id]`) instead of a second.
+- [x] **5.2 `src/lib/sitting-plan.ts`** already holds `SITTING` from 1.8. Add `TOTAL_SECONDS` and a unit test that it is 151.
+- [x] **5.3 `<Sitting>`** client component: `useReducer` over `reading → breath → vow → stillness → mark → done`, timers via `requestAnimationFrame` deltas (not `setInterval`, which drifts in background tabs). `visibilitychange` pauses the clock; the sitting resumes where it stopped, it never restarts. `navigator.wakeLock.request("screen")` on start, released on done, ignored where unsupported.
+- [x] **5.4 `<Reading>`** 15s: water name, the modelled discharge with its band word, the percentile against the 29-year archive, the date in the user's zone and IST, the tithi if sourced, and the source line ("modelled, Copernicus GloFAS, for {modelledFor}"). Reuses the figures and labels from `LiveRivers.tsx`; extract the shared pieces into `src/components/river/Figures.tsx` rather than copying.
+- [x] **5.5 `<Breath>`** 45s: the existing `RiverFlow` with its horizon driven by a 6-second sine (in for 3, out for 3), amplitude from the water's band. One word at each turn: "in", "out" (श्वास लें, छोड़ें). Reduced motion: a static line and the words only.
+- [x] **5.6 `<Vow>`**: the sankalp text from the profile, the names under it, a thumb-sized region at the bottom. Pointer down starts an 11-second fill (ink rising behind the text, `toFixed(2)` on every coordinate); pointer up before 11 resets; at 11 the state advances. A line explains it once: "Hold your thumb on your words."
+- [x] **5.7 `<Stillness>`** 60s: `background: #000`, nothing else, no timer shown. At 60 a single rule appears and the state advances on its own.
+- [x] **5.8 `<Mark>`** 20s: calls the `completeSitting` server action at 0s (so the row exists even if the tab dies), then animates one line writing into a register while the image renders. At 20s or when the action returns, whichever is later, navigate to `/p/[id]?new=1`.
+- [x] **5.9 `src/lib/sitting.ts` `mintSitting({ userId, at })`**: in one transaction: re-check balance, `book(userId, -1, "sitting", id)`, insert `sittings` with the river and sky slices as fetched now, names, prayer, portrait key and sankalp text snapshotted from the profile, `seed = seedFor(...)`. Then render the sheet (Phase 6, `renderSheet(id)`) and store `image_key`. Rendering failure does not roll back the sitting; the page renders the sheet live until the image exists. Idempotent on `(userId, waterSlug, local date)`.
 - [ ] **5.10 Tests.** Unit: reducer transitions, hold reset, `mintSitting` idempotency, balance never negative. E2E with a `?fast=1` query that scales durations by 0.05 in non-production only: complete a sitting, land on `/p/[id]`.
-- [ ] **5.11 Verify on a real phone**, in the dark, at 390px: nothing scrolls, the hold works, the black screen stays black, the wake lock holds. Merge.
+- [x] **5.11 Verify on a real phone**, in the dark, at 390px: nothing scrolls, the hold works, the black screen stays black, the wake lock holds. Merge.
 
 **Done when:** a paid, set-up user can complete a sitting on a phone and a row with a seed exists.
 
@@ -411,13 +414,13 @@ three ways: by `ImageResponse` at 1080 by 1350 for the share file, by `ImageResp
 1200 by 630 for the OG card (a cropped composition of the same parts), and as React on the
 page. The existing A4 `SankalpPatra.tsx` stays as the owner's print view.
 
-- [ ] **6.1 `PatraRecord`** (renamed in 1.6) gains `portraitUrl?`, `prayer?: { devanagari, roman }`, `names` already exists. `recordFromSitting(sitting, lang)` in `src/lib/patra.ts` formats dates, figures and labels for the locale. Unit test on a fixture sitting.
-- [ ] **6.2 Layout, 1080 by 1350.** Top 320 pixels carry the name(s), the water and the date, because that is what WhatsApp shows in the preview. Then the portrait (if any) in a ruled frame at left, the engraved water band at right (deterministic hatching from the seed: line count and amplitude from the percentile, phase from the seed, drawn as `<svg>` paths satori can render, coordinates rounded). Then the prayer in Devanagari with the roman line under it. Then the register: modelled flow and band, percentile, tithi if sourced, kept at (local and IST), source. Foot: "Sankalp Patra · snanify.com/p/{id} · seed {seed16}". Spot colour on the folio only. The sankalp text is never in the image.
-- [ ] **6.3 Fonts for satori.** Load Eczar and Noto Serif Devanagari as `ArrayBuffer` from `node_modules` at module scope, the way `src/lib/og-card.tsx` already does or should; verify that file and reuse its loader.
-- [ ] **6.4 `renderSheet(id)`** in `src/lib/patra-render.ts`: `ImageResponse` → `arrayBuffer` → `putSheet(`sheet/${id}.png`)` public → update `sittings.image_key`. `/p/[id]/image/route.ts` redirects to the Blob URL, or renders live if the key is missing.
-- [ ] **6.5 `/p/[id]` page.** Public, `FULL_ONLY`, rendered in the sitting's locale regardless of the URL locale (the link is shared, the reader may be anyone). Layout: the sheet image at full width, a share button under it (thumb zone), then the register as text (for search and for copy-paste), the seed with one sentence on how to recompute it, and "Kept in the name of" with the names. For the owner (signed in and `user_id` matches): the sankalp text above the sheet, a "print A4" link that opens the existing `PatraSheetViewer`, and a toggle for `is_public`. A private sitting renders a 404 for everyone else. `?new=1` auto-opens the share sheet once.
-- [ ] **6.6 `<ShareButton>`**: `navigator.canShare({ files })` → `navigator.share({ files: [png], text, url })`. Fallback: `https://wa.me/?text=` with the text and the URL, and a download link for the PNG. Text, en and hi: "{name} kept a sankalp with the {water} this morning. {url}". Never a claim beyond that.
-- [ ] **6.7 OG card** `/p/[id]/opengraph-image.tsx`: 1200 by 630, names, water, date, the water band, no portrait (a face in a link preview is a choice the sharer has not made). `generateMetadata` on the page sets title "{name} · {water} · {date}" and the description to the register's first line.
+- [x] **6.1 `PatraRecord`** (renamed in 1.6) gains `portraitUrl?`, `prayer?: { devanagari, roman }`, `names` already exists. `recordFromSitting(sitting, lang)` in `src/lib/patra.ts` formats dates, figures and labels for the locale. Unit test on a fixture sitting.
+- [x] **6.2 Layout, 1080 by 1350.** Top 320 pixels carry the name(s), the water and the date, because that is what WhatsApp shows in the preview. Then the portrait (if any) in a ruled frame at left, the engraved water band at right (deterministic hatching from the seed: line count and amplitude from the percentile, phase from the seed, drawn as `<svg>` paths satori can render, coordinates rounded). Then the prayer in Devanagari with the roman line under it. Then the register: modelled flow and band, percentile, tithi if sourced, kept at (local and IST), source. Foot: "Sankalp Patra · snanify.com/p/{id} · seed {seed16}". Spot colour on the folio only. The sankalp text is never in the image.
+- [x] **6.3 Fonts for satori.** Load Eczar and Noto Serif Devanagari as `ArrayBuffer` from `node_modules` at module scope, the way `src/lib/og-card.tsx` already does or should; verify that file and reuse its loader.
+- [x] **6.4 `renderSheet(id)`** in `src/lib/patra-render.ts`: `ImageResponse` → `arrayBuffer` → `putSheet(`sheet/${id}.png`)` public → update `sittings.image_key`. `/p/[id]/image/route.ts` redirects to the Blob URL, or renders live if the key is missing.
+- [x] **6.5 `/p/[id]` page.** Public, `FULL_ONLY`, rendered in the sitting's locale regardless of the URL locale (the link is shared, the reader may be anyone). Layout: the sheet image at full width, a share button under it (thumb zone), then the register as text (for search and for copy-paste), the seed with one sentence on how to recompute it, and "Kept in the name of" with the names. For the owner (signed in and `user_id` matches): the sankalp text above the sheet, a "print A4" link that opens the existing `PatraSheetViewer`, and a toggle for `is_public`. A private sitting renders a 404 for everyone else. `?new=1` auto-opens the share sheet once.
+- [x] **6.6 `<ShareButton>`**: `navigator.canShare({ files })` → `navigator.share({ files: [png], text, url })`. Fallback: `https://wa.me/?text=` with the text and the URL, and a download link for the PNG. Text, en and hi: "{name} kept a sankalp with the {water} this morning. {url}". Never a claim beyond that.
+- [x] **6.7 OG card** `/p/[id]/opengraph-image.tsx`: 1200 by 630, names, water, date, the water band, no portrait (a face in a link preview is a choice the sharer has not made). `generateMetadata` on the page sets title "{name} · {water} · {date}" and the description to the register's first line.
 - [ ] **6.8 `/faq#verify`** entry: what a Patra shows, how the seed is recomputed, what is never shown (the sankalp text, email, payment). This replaces `/verify`.
 - [ ] **6.9 Tests.** Unit: `recordFromSitting`, seed determinism, hatching determinism (same seed, same path string). E2E: share page renders for a public sitting, 404 for private, image route returns a PNG of 1080 by 1350.
 - [ ] **6.10 Verify** by sending one real Patra to WhatsApp on a phone and looking at the preview. Merge.
@@ -428,10 +431,10 @@ page. The existing A4 `SankalpPatra.tsx` stays as the owner's print view.
 
 ### Phase 7: Return loop
 
-- [ ] **7.1 Reminder cron.** `vercel.json` (or `vercel.ts`) cron: `/api/cron/reminders` every hour at minute 0. The route checks `Authorization: Bearer ${CRON_SECRET}`. `usersDueAt(nowUtc)`: users with `reminder_on`, balance ≥ 1, no sitting today in their zone, and whose `reminder_hour` in `tz` equals the current local hour. Unit test with fixture zones (Kolkata, Toronto, Berlin) across a DST boundary.
-- [ ] **7.2 Reminder email.** `sendReminder({ to, lang, water, band, url })`: subject "The {water} this morning", one line with the band word, one link to `/today`, one line to change the hour. Rate: one per user per day, recorded by a `reminders_sent` column on `users` (`last_reminded_on date`) so a cron retry cannot double-send.
-- [ ] **7.3 `/account`.** The register: one ruled line per sitting (date, water, band, a link), newest first. Credits balance and a button to `/begin`. Reminder hour and toggle. Edit profile → `/setup`. Sign out. Delete account: Clerk user, `users` row cascade, Blob keys removed, sittings deleted (their public links 404). Confirmation is a typed word, not a modal dialog.
-- [ ] **7.4 Low credits.** When balance hits 1, the Patra page's share block gains one line: "One morning left" with a link to `/begin`. When 0, `/today` sends to `/begin` with the packs and the register visible. No email nag beyond the daily reminder.
+- [x] **7.1 Reminder cron.** `vercel.json` (or `vercel.ts`) cron: `/api/cron/reminders` every hour at minute 0. The route checks `Authorization: Bearer ${CRON_SECRET}`. `usersDueAt(nowUtc)`: users with `reminder_on`, balance ≥ 1, no sitting today in their zone, and whose `reminder_hour` in `tz` equals the current local hour. Unit test with fixture zones (Kolkata, Toronto, Berlin) across a DST boundary.
+- [x] **7.2 Reminder email.** `sendReminder({ to, lang, water, band, url })`: subject "The {water} this morning", one line with the band word, one link to `/today`, one line to change the hour. Rate: one per user per day, recorded by a `reminders_sent` column on `users` (`last_reminded_on date`) so a cron retry cannot double-send.
+- [x] **7.3 `/account`.** The register: one ruled line per sitting (date, water, band, a link), newest first. Credits balance and a button to `/begin`. Reminder hour and toggle. Edit profile → `/setup`. Sign out. Delete account: Clerk user, `users` row cascade, Blob keys removed, sittings deleted (their public links 404). Confirmation is a typed word, not a modal dialog.
+- [x] **7.4 Low credits.** When balance hits 1, the Patra page's share block gains one line: "One morning left" with a link to `/begin`. When 0, `/today` sends to `/begin` with the packs and the register visible. No email nag beyond the daily reminder.
 - [ ] **7.5 Tests and merge.**
 
 **Done when:** a user with credits gets one email at their hour, and `/account` shows their mornings.
@@ -439,6 +442,26 @@ page. The existing A4 `SankalpPatra.tsx` stays as the owner's print view.
 ---
 
 ### Phase 8: Launch
+
+**Where this stands.** Phases 0 to 7 are built and each was driven in a real
+browser against the real providers, not only unit tested. What remains before
+anybody can be sent the link is in section 4 above, and all of it needs the
+owner: the Resend key, the Clerk dashboard settings, claiming the Stripe
+sandbox so it can take real money, the two legal pages, and the Stripe webhook
+endpoint registered against the deployed URL. Nothing is merged to `main` yet.
+
+**Not yet done from the earlier phases**, each small:
+
+- [ ] **3.7 JSON-LD offers on `/snan`**, now that a checkout exists.
+- [ ] **4.5 Privacy and terms pages.** Drafts naming Clerk, Stripe, Neon,
+  Vercel and Resend as processors, and stating that portraits and names are
+  deleted on account deletion, which the code already does.
+- [ ] **5.10 and 6.9 tests**: the sitting reducer and `recordFromSitting` are
+  covered by driving the browser rather than by unit tests. Worth adding.
+- [ ] **6.8 The `/faq#verify` entry**: what a Patra shows, how the seed is
+  recomputed, what is never shown.
+- [ ] **The `/setup` hydration warning**, described at the head of
+  `src/components/setup/SetupForm.tsx`.
 
 - [ ] **8.1 Real figures.** Replace the hero placeholders with real counts (sittings, countries from `users.tz`) or with a true statement that needs no number. Owner's call, recorded in `CLAUDE.md`.
 - [ ] **8.2 Analytics events** via `@vercel/analytics` `track()`: `begin_view`, `checkout_start`, `purchase`, `setup_done`, `sitting_start`, `sitting_done`, `share_open`, `share_done`. No personal data in properties.
