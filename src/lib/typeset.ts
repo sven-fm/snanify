@@ -197,12 +197,7 @@ export async function measure(
   text: string,
   options: { size: number; weight?: Weight; tracking?: number },
 ): Promise<number> {
-  const { svg: _ignored, width } = await typeset(text, {
-    ...options,
-    x: 0,
-    y: 0,
-  });
-  return width;
+  return (await typeset(text, { ...options, x: 0, y: 0 })).width;
 }
 
 /**
