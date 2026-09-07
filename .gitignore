@@ -52,3 +52,7 @@ next-env.d.ts
 /hyd2.mjs
 /shot2.mjs
 /liveshot.mjs
+
+# playwright
+/test-results
+/playwright-report
