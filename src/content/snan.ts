@@ -208,18 +208,18 @@ type Copy = {
 
 const en: Copy = {
   meta: {
-    title: "The snan, four and a half minutes with a real river",
+    title: "The snan, three minutes with a real river",
     description:
-      "A digital snan. Four and a half minutes with a river's flow today, modelled by Copernicus and checkable by anyone, a vow held eleven seconds, ninety seconds of black screen, and one mark drawn from the public record.",
+      "A digital snan. Three minutes with a river's flow today, modelled by Copernicus and checkable by anyone, a vow held eleven seconds, sixty seconds of black screen, and one mark drawn from the public record.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
 
   hero: {
     eyebrow: "Jal Sankalp",
-    titleA: "Four and a half minutes.",
+    titleA: "Three minutes.",
     titleB: "The river comes to you.",
-    lede: "Two hundred and seventy seconds with a river at the flow she carries today, modelled by Copernicus and published for anyone to check. Breathe at her rhythm. Hold your vow for eleven seconds. Put the phone down for ninety.",
+    lede: "Three minutes with a river at the flow she carries today, modelled by Copernicus and published for anyone to check. Breathe at her rhythm. Hold your vow for eleven seconds. Put the phone down for ninety.",
     offer:
       "Eleven mornings for {price}, one for each morning. Everything you can read stays free.",
     ctaPrimary: "Take eleven mornings, {price}",
@@ -243,15 +243,15 @@ const en: Copy = {
 
   form: {
     eyebrow: "The form",
-    title: "Five limbs, two hundred and seventy seconds, the same every day.",
-    lede: "The same five limbs, the same order, the same lengths. Four seconds to clear the screen, and after that only the river changes.",
+    title: "Five parts, three minutes, the same every day.",
+    lede: "The same five parts, the same order, the same lengths. Only the river changes, and she changes on her own.",
     clockHead: "Clock",
     lengthHead: "Length",
     limbs: [
       {
         id: "reading",
-        clock: "0:04",
-        length: "21 seconds",
+        clock: "0:00",
+        length: "15 seconds",
         deva: "जल-पाठ",
         name: "Jal Path",
         gloss: "The reading",
@@ -263,9 +263,9 @@ const en: Copy = {
           note: "Set as it prints. These figures are a specimen. The live readings sit on the six water pages, free.",
           lines: [
             "GANGA · HAR KI PAURI · HARIDWAR",
-            "LEVEL 293.11 m · RISEN 4 cm SINCE MIDNIGHT",
-            "FLOW 1,240 cumec",
-            "READ 04:38 IST · CENTRAL WATER COMMISSION",
+            "FLOW 1,444 m3/s · HER USUAL RUN",
+            "41st PERCENTILE SINCE 1997",
+            "MODELLED FOR 11 AUG · COPERNICUS GloFAS",
             "YOU ARE 6,714 km FROM THIS WATER",
           ],
         },
@@ -277,8 +277,8 @@ const en: Copy = {
       },
       {
         id: "breath",
-        clock: "0:25",
-        length: "60 seconds",
+        clock: "0:15",
+        length: "45 seconds",
         deva: "श्वास",
         name: "Shwas",
         gloss: "The breath",
@@ -289,8 +289,8 @@ const en: Copy = {
       },
       {
         id: "sankalp",
-        clock: "1:25",
-        length: "60 seconds",
+        clock: "1:00",
+        length: "11 seconds, held",
         deva: "संकल्प",
         name: "Sankalp",
         gloss: "The vow",
@@ -301,26 +301,26 @@ const en: Copy = {
       },
       {
         id: "stillness",
-        clock: "2:25",
-        length: "90 seconds",
+        clock: "1:11",
+        length: "60 seconds",
         deva: "मौन",
         name: "Maun",
         gloss: "The stillness",
         body: [
           "Put the phone down, face down if you like. The screen goes fully black, the brightness drops, the wake lock holds, and the river keeps running.",
           "Pick the phone up in the middle and the river runs on regardless. A ritual keeps its own counsel.",
-          "One bell at ninety seconds, and the screen returns at a fifth of its brightness.",
+          "One bell at sixty seconds, and the screen returns at a fifth of its brightness.",
         ],
       },
       {
         id: "mark",
-        clock: "3:55",
-        length: "35 seconds",
+        clock: "2:11",
+        length: "20 seconds",
         deva: "चिह्न",
         name: "Chihn",
         gloss: "The mark",
         body: [
-          "The morning writes itself into your register as one ruled line: the date, the tithi, the water and her level, the hour the gauge was read, and the ninety seconds.",
+          "The morning writes itself into your register as one ruled line: the date, the tithi, the water and her level, the hour the gauge was read, and the sixty seconds.",
           "Beneath it, the count. Then the mark is drawn from the reading, and the river fades over eight seconds.",
         ],
       },
@@ -344,11 +344,11 @@ const en: Copy = {
   },
 
   still: {
-    label: "Ninety seconds",
+    label: "Sixty seconds",
     title: "The best minute of this is the minute your screen is off.",
     body: "Most of what is on your phone is built to keep you looking at it. This one turns itself off in the middle and asks you to put it down. That is the spine of the thing.",
-    lines: ["Put the phone down. Face down, if you like.", "The river runs for ninety seconds."],
-    note: "Full black, brightness dropped, wake lock held, the water still running. Ninety seconds, today and every day.",
+    lines: ["Put the phone down. Face down, if you like.", "The river runs for sixty seconds."],
+    note: "Full black, brightness dropped, wake lock held, the water still running. Sixty seconds, today and every day.",
   },
 
   mark: {
@@ -417,7 +417,7 @@ const en: Copy = {
       },
       {
         q: "Can I shorten it?",
-        a: "The form runs its full length every morning, the ninety seconds included. A practice you can hurry is a preference.",
+        a: "The form runs its full length every morning, the sixty seconds included. A practice you can hurry is a preference.",
       },
       {
         q: "Who sees my sankalp?",
@@ -429,7 +429,7 @@ const en: Copy = {
   tariff: {
     eyebrow: "The tariff",
     title: "Paid, and priced like a morning.",
-    lede: "The live water, the panchang, every muhurat and all six river pages stay free forever, to anybody. The four and a half minutes are the part you buy.",
+    lede: "The live water, the panchang, every muhurat and all six river pages stay free forever, to anybody. The three minutes are the part you buy.",
     heads: { price: "Price", per: "Per snan" },
     rows: [
       {
@@ -437,7 +437,7 @@ const en: Copy = {
         name: "Ek Dhara",
         deva: "एक धारा",
         what: "One snan",
-        body: "One morning, taken once. Enough to find out what four and a half minutes with a real river is like.",
+        body: "One morning, taken once. Enough to find out what three minutes with a real river is like.",
       },
       {
         key: "eleven",
@@ -470,7 +470,7 @@ const en: Copy = {
 
   closing: {
     title: "The Ganga stands at her own level this hour.",
-    body: "Be one of the people watching, for four and a half minutes, before the day starts.",
+    body: "Be one of the people watching, for three minutes, before the day starts.",
     cta: "Take eleven mornings",
   },
 };
@@ -479,18 +479,18 @@ const en: Copy = {
 
 const hi: Copy = {
   meta: {
-    title: "स्नान, साढ़े चार मिनट एक सच्ची नदी के साथ",
+    title: "स्नान, तीन मिनट एक सच्ची नदी के साथ",
     description:
-      "एक डिजिटल स्नान। साढ़े चार मिनट, नदी के आज के प्रवाह के साथ, जिसे कोपरनिकस ने मॉडल किया है और कोई भी जाँच सकता है; ग्यारह सेकंड थमा हुआ संकल्प; नब्बे सेकंड की काली स्क्रीन; और एक चिह्न, जो सार्वजनिक अभिलेख से खिंचता है।",
+      "एक डिजिटल स्नान। तीन मिनट, नदी के आज के प्रवाह के साथ, जिसे कोपरनिकस ने मॉडल किया है और कोई भी जाँच सकता है; ग्यारह सेकंड थमा हुआ संकल्प; साठ सेकंड की काली स्क्रीन; और एक चिह्न, जो सार्वजनिक अभिलेख से खिंचता है।",
   },
 
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
 
   hero: {
     eyebrow: "जल संकल्प",
-    titleA: "साढ़े चार मिनट।",
+    titleA: "तीन मिनट।",
     titleB: "नदी आप तक आती है।",
-    lede: "दो सौ सत्तर सेकंड, उस नदी के साथ जो आज जिस प्रवाह पर बह रही है, कोपरनिकस द्वारा मॉडल की हुई और सबके लिए प्रकाशित। उसकी लय पर साँस लीजिए। संकल्प ग्यारह सेकंड थामे रखिए। नब्बे सेकंड के लिए फ़ोन नीचे रख दीजिए।",
+    lede: "तीन मिनट, उस नदी के साथ जो आज जिस प्रवाह पर बह रही है, कोपरनिकस द्वारा मॉडल की हुई और सबके लिए प्रकाशित। उसकी लय पर साँस लीजिए। संकल्प ग्यारह सेकंड थामे रखिए। साठ सेकंड के लिए फ़ोन नीचे रख दीजिए।",
     offer: "ग्यारह सुबहें {price} में, हर सुबह के लिए एक। जो पढ़ने का है, वह सदा निःशुल्क।",
     ctaPrimary: "ग्यारह सुबहें लीजिए, {price}",
     ctaSecondary: "पाँच अंग देखिए",
@@ -513,15 +513,15 @@ const hi: Copy = {
 
   form: {
     eyebrow: "स्वरूप",
-    title: "पाँच अंग, दो सौ सत्तर सेकंड, हर दिन वही।",
-    lede: "वही पाँच अंग, वही क्रम, वही अवधि। आरंभ के चार सेकंड में स्क्रीन साफ़ हो जाती है, और उसके बाद केवल नदी बदलती है।",
+    title: "पाँच अंग, तीन मिनट, हर दिन वही।",
+    lede: "वही पाँच अंग, वही क्रम, वही अवधि। केवल नदी बदलती है, और वह अपने आप बदलती है।",
     clockHead: "घड़ी",
     lengthHead: "अवधि",
     limbs: [
       {
         id: "reading",
-        clock: "०:०४",
-        length: "२१ सेकंड",
+        clock: "०:००",
+        length: "१५ सेकंड",
         deva: "जल-पाठ",
         name: "Jal Path",
         gloss: "पाठ",
@@ -533,9 +533,9 @@ const hi: Copy = {
           note: "जैसा छपता है, वैसा ही। ये अंक नमूना हैं। सजीव पाठ छहों जल-पृष्ठों पर हैं, निःशुल्क।",
           lines: [
             "गंगा · हर की पौड़ी · हरिद्वार",
-            "जलस्तर २९३·११ मी · आधी रात से ४ सेमी ऊपर",
-            "प्रवाह १,२४० क्यूमेक",
-            "पाठ ०४:३८ भा.मा.स. · केंद्रीय जल आयोग",
+            "प्रवाह १,४४४ घन मी/से · सामान्य बहाव",
+            "१९९७ से ४१वाँ प्रतिशतक",
+            "११ अगस्त के लिए मॉडल · कोपरनिकस GloFAS",
             "आप इस जल से ६,७१४ किमी दूर हैं",
           ],
         },
@@ -547,8 +547,8 @@ const hi: Copy = {
       },
       {
         id: "breath",
-        clock: "०:२५",
-        length: "६० सेकंड",
+        clock: "०:१५",
+        length: "४५ सेकंड",
         deva: "श्वास",
         name: "Shwas",
         gloss: "साँस",
@@ -559,8 +559,8 @@ const hi: Copy = {
       },
       {
         id: "sankalp",
-        clock: "१:२५",
-        length: "६० सेकंड",
+        clock: "१:००",
+        length: "११ सेकंड, थामे",
         deva: "संकल्प",
         name: "Sankalp",
         gloss: "संकल्प",
@@ -571,26 +571,26 @@ const hi: Copy = {
       },
       {
         id: "stillness",
-        clock: "२:२५",
-        length: "९० सेकंड",
+        clock: "१:११",
+        length: "६० सेकंड",
         deva: "मौन",
         name: "Maun",
         gloss: "मौन",
         body: [
           "फ़ोन नीचे रख दीजिए, चाहें तो उल्टा। स्क्रीन पूरी तरह काली हो जाती है, चमक गिर जाती है, जागरण-ताला लगा रहता है, और नदी बहती रहती है।",
           "बीच में फ़ोन उठा लें तो नदी वैसे ही बहती रहती है। साधना पहरा नहीं देती।",
-          "नब्बे सेकंड पर एक घंटी, और स्क्रीन पाँचवें हिस्से की चमक पर लौट आती है।",
+          "साठ सेकंड पर एक घंटी, और स्क्रीन पाँचवें हिस्से की चमक पर लौट आती है।",
         ],
       },
       {
         id: "mark",
-        clock: "३:५५",
-        length: "३५ सेकंड",
+        clock: "२:११",
+        length: "२० सेकंड",
         deva: "चिह्न",
         name: "Chihn",
         gloss: "चिह्न",
         body: [
-          "वह सुबह आपकी पंजिका में एक ही पंक्ति में स्वयं लिख जाती है: दिनांक, तिथि, जल और उसका स्तर, पाठ का घंटा, और वे नब्बे सेकंड।",
+          "वह सुबह आपकी पंजिका में एक ही पंक्ति में स्वयं लिख जाती है: दिनांक, तिथि, जल और उसका स्तर, पाठ का घंटा, और वे साठ सेकंड।",
           "उसके नीचे गणना। फिर उसी पाठ से चिह्न खिंचता है, और नदी आठ सेकंड में धीरे-धीरे शांत हो जाती है।",
         ],
       },
@@ -614,11 +614,11 @@ const hi: Copy = {
   },
 
   still: {
-    label: "नब्बे सेकंड",
+    label: "साठ सेकंड",
     title: "इसका सबसे अच्छा मिनट वह है जब आपकी स्क्रीन बंद रहती है।",
     body: "आपके फ़ोन में जो कुछ है, उसका अधिकांश इसी के लिए बना है कि आप देखते रहें। यह बीच में स्वयं को बुझा देता है और कहता है कि फ़ोन नीचे रख दीजिए। यही इसकी रीढ़ है।",
-    lines: ["फ़ोन नीचे रख दीजिए। चाहें तो उल्टा।", "नब्बे सेकंड नदी बहती रहेगी।"],
-    note: "पूरी तरह काली स्क्रीन, घटी हुई चमक, लगा हुआ जागरण-ताला, और बहता हुआ जल। नब्बे सेकंड, आज और हर दिन।",
+    lines: ["फ़ोन नीचे रख दीजिए। चाहें तो उल्टा।", "साठ सेकंड नदी बहती रहेगी।"],
+    note: "पूरी तरह काली स्क्रीन, घटी हुई चमक, लगा हुआ जागरण-ताला, और बहता हुआ जल। साठ सेकंड, आज और हर दिन।",
   },
 
   mark: {
@@ -687,7 +687,7 @@ const hi: Copy = {
       },
       {
         q: "क्या इसे छोटा किया जा सकता है?",
-        a: "स्वरूप हर सुबह अपनी पूरी अवधि चलता है, वे नब्बे सेकंड भी। जिस विधि को जल्दी निपटाया जा सके, वह सुविधा है।",
+        a: "स्वरूप हर सुबह अपनी पूरी अवधि चलता है, वे साठ सेकंड भी। जिस विधि को जल्दी निपटाया जा सके, वह सुविधा है।",
       },
       {
         q: "मेरा संकल्प कौन देखता है?",
@@ -699,7 +699,7 @@ const hi: Copy = {
   tariff: {
     eyebrow: "शुल्क",
     title: "सशुल्क, और एक सुबह के भाव पर।",
-    lede: "सजीव जल, पंचांग, हर मुहूर्त और छहों नदियों के अपने पृष्ठ सदा निःशुल्क हैं, किसी के लिए भी। शुल्क उन साढ़े चार मिनटों का है।",
+    lede: "सजीव जल, पंचांग, हर मुहूर्त और छहों नदियों के अपने पृष्ठ सदा निःशुल्क हैं, किसी के लिए भी। शुल्क उन तीन मिनटों का है।",
     heads: { price: "मूल्य", per: "प्रति स्नान" },
     rows: [
       {
@@ -707,7 +707,7 @@ const hi: Copy = {
         name: "Ek Dhara",
         deva: "एक धारा",
         what: "एक स्नान",
-        body: "एक सुबह, एक बार। इतना जान लेने के लिए कि एक सच्ची नदी के साथ साढ़े चार मिनट कैसे बीतते हैं।",
+        body: "एक सुबह, एक बार। इतना जान लेने के लिए कि एक सच्ची नदी के साथ तीन मिनट कैसे बीतते हैं।",
       },
       {
         key: "eleven",
@@ -740,7 +740,7 @@ const hi: Copy = {
 
   closing: {
     title: "गंगा इस घंटे अपने ही स्तर पर हैं।",
-    body: "दिन आरंभ होने से पहले, साढ़े चार मिनट के लिए, आप उन लोगों में हो सकते हैं जो देख रहे हैं।",
+    body: "दिन आरंभ होने से पहले, तीन मिनट के लिए, आप उन लोगों में हो सकते हैं जो देख रहे हैं।",
     cta: "ग्यारह सुबहें लीजिए",
   },
 };

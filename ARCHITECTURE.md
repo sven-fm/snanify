@@ -26,16 +26,15 @@ and a scheduled fetch.
 ```
 src/
   app/
-    [lang]/              one route tree, twelve locales
+    [lang]/              one route tree, two locales
       page.tsx           /            and /hi, /ta, /bn, ...
       live/              /live        the six waters right now, free
-      snan/              /snan        the product page
+      snan/              /snan        the product page, five parts and the tariff
       rivers/[river]/    six waters
       muhurat/[occasion] the calendar
       panchang/          the free timing tool
       kumbh/             Nashik Simhastha 2027
-      patra/             the artefact, plus /patra/sample
-      ethics/ faq/ how-it-works/ verify/ rituals/
+      ethics/ faq/
       layout.tsx         root layout, per-locale metadata
       not-found.tsx
     sitemap.ts           every route x the locales that serve it, reciprocal hreflang
@@ -54,6 +53,7 @@ src/
                          prices.ts, names.ts and months.ts are locale-independent
   lib/
     locales.ts           the locale registry, the tier split, hreflang and route manifest
+    sitting-plan.ts      the five parts and their lengths, read by copy and by the machine
     i18n.ts              short re-exports of the URL helpers
     seo.ts               pageMetadata: canonical, hreflang cluster, OG locales
     currency.ts          one price, picked from Vercel geo, stamped before first paint
@@ -64,19 +64,21 @@ src/
 docs/                    design and research, see CLAUDE.md
 ```
 
-## The twelve-locale URL scheme
+## The URL scheme
 
 English is unprefixed, every other locale lives under its ISO 639-1 code, and the route tree
 is authored **once**.
 
 ```
 /rivers      -> rewrite  /en/rivers    the URL bar still reads /rivers
-/ta/rivers   -> pass through, matches [lang]=ta
+/hi/rivers   -> pass through, matches [lang]=hi
 /en/rivers   -> 308 redirect to /rivers
 ```
 
 `src/proxy.ts` does this, deriving the prefix set from `src/lib/locales.ts`, and stamps the
-currency cookie on the way through. Slugs are identical in every locale and Latin-script,
+currency cookie on the way through. It also 308s the ten retired locale prefixes and the
+four folded routes (`/how-it-works`, `/patra`, `/patra/sample`, `/verify`), so no indexed URL
+lands on a 404. Slugs are identical in every locale and Latin-script,
 because
 Devanagari URLs percent-encode into unreadable strings when pasted into WhatsApp, which is
 the primary diaspora sharing channel.
@@ -88,7 +90,7 @@ roughly five times as much.
 
 ### Adding a page
 
-1. Decide its tier. A page in all twelve locales is `satisfies Record<Lang, ...>`; a
+1. Decide its tier. A surface-tier page is `satisfies Record<Lang, ...>`; a
    full-depth page is `Record<FullLang, ...>` and its route goes in `FULL_ONLY`.
 2. Add its copy, one file per locale under `src/content/<domain>/`, English defining the shape.
 3. Create `src/app/[lang]/<route>/page.tsx` as a thin wrapper around one component that takes
@@ -112,7 +114,7 @@ counterparts is a **compile error**. This is the single most useful invariant in
 reach it.
 
 **Prices are not content.** They live in `src/content/prices.ts` in four currencies, because a
-price is not a translation. Proper nouns that must exist in all twelve (rivers, ghats, cities,
+price is not a translation. Proper nouns (rivers, ghats, cities,
 occasions, muhurat windows) live in `src/content/names.ts`, and month names in
 `src/content/months.ts`, which is a separate module only to avoid a require cycle with
 `muhurat.ts`.

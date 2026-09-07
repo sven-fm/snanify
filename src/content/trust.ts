@@ -13,7 +13,7 @@ import type { FullLang as Lang } from "@/lib/locales";
  *
  * THE PRODUCT THIS FILE DESCRIBES: a purely digital snan. No priest, no ghat
  * performance, no camera, no recording, nothing done on anyone's behalf. The
- * user sits for four and a half minutes with the live measured state of a
+ * user sits for three minutes with the live measured state of a
  * sacred river, says a sankalp in their own words, and keeps a mark and a
  * register line. Two rules bind every sentence below:
  *
@@ -251,16 +251,16 @@ const faqEn = {
           id: "what-happens",
           q: "What is actually on my screen?",
           a: [
-            "Five limbs, always the same, four and a half minutes end to end. Twenty-one seconds of the river's reading. Sixty seconds of breathing with a waterline that rises for four and falls for six. Sixty seconds with your own sankalp, held for eleven while the words fill with vermillion. Ninety seconds of black screen with the river running. Thirty-five seconds in which the day writes itself into your register.",
+            "Five limbs, always the same, three minutes end to end. Twenty-one seconds of the river's reading. Sixty seconds of breathing with a waterline that rises for four and falls for six. Sixty seconds with your own sankalp, held for eleven while the words fill with vermillion. Sixty seconds of black screen with the river running. Thirty-five seconds in which the day writes itself into your register.",
             "The waterline is the only thing telling you time is passing, and it is busy doing something else.",
           ],
         },
         {
           id: "black-screen",
-          q: "Ninety seconds of a black screen? Really?",
+          q: "Sixty seconds of a black screen? Really?",
           a: [
             "Yes, and it is the best part. The screen tells you to put the phone down, and then it goes away.",
-            "If you pick it up, nothing happens. No counter, no penalty, no note that you moved. One bell brings you back at ninety seconds.",
+            "If you pick it up, nothing happens. No counter, no penalty, no note that you moved. One bell brings you back at sixty seconds.",
             "A digital product whose best minute is the minute the screen is off is a strange thing to build and an easy thing to defend.",
           ],
         },
@@ -391,7 +391,7 @@ const faqEn = {
           q: "Can I get a refund?",
           a: [
             "Yes. Any snans you have not used are refunded in full, on one click, without being asked why.",
-            "A sitting you have already done is not refundable, and we would rather say that plainly. Nothing was consumed except four and a half minutes of your own attention, and we cannot give those back either.",
+            "A sitting you have already done is not refundable, and we would rather say that plainly. Nothing was consumed except three minutes of your own attention, and we cannot give those back either.",
             "If the site failed you, the model was stale and we did not say so, or the sound did not play, write to us and we will refund the sitting itself.",
           ],
         },
@@ -514,16 +514,16 @@ export const faqContent = { en: faqEn, hi: {
           id: "what-happens",
           q: "मेरी स्क्रीन पर वास्तव में क्या होता है?",
           a: [
-            "पाँच अंग, सदा वही, आरंभ से अंत तक साढ़े चार मिनट। इक्कीस सेकंड नदी का पाठ। साठ सेकंड श्वास, जिसमें जल-रेखा चार सेकंड चढ़ती और छह सेकंड उतरती है। साठ सेकंड अपने संकल्प के साथ, ग्यारह सेकंड थामे हुए, जब अक्षर सिंदूरी रंग से भर जाते हैं। नब्बे सेकंड अंधेरी स्क्रीन, नदी बहती हुई। और पैंतीस सेकंड, जिनमें वह दिन आपकी पंजिका में लिख जाता है।",
+            "पाँच अंग, सदा वही, आरंभ से अंत तक तीन मिनट। इक्कीस सेकंड नदी का पाठ। साठ सेकंड श्वास, जिसमें जल-रेखा चार सेकंड चढ़ती और छह सेकंड उतरती है। साठ सेकंड अपने संकल्प के साथ, ग्यारह सेकंड थामे हुए, जब अक्षर सिंदूरी रंग से भर जाते हैं। साठ सेकंड अंधेरी स्क्रीन, नदी बहती हुई। और पैंतीस सेकंड, जिनमें वह दिन आपकी पंजिका में लिख जाता है।",
             "इसमें कहीं कोई प्रगति-पट्टी नहीं है, और कोई “जल्दी वाला” रूप नहीं। समय बीतने का एकमात्र संकेत जल-रेखा है, और वह अपने में व्यस्त है।",
           ],
         },
         {
           id: "black-screen",
-          q: "नब्बे सेकंड अंधेरी स्क्रीन? सचमुच?",
+          q: "साठ सेकंड अंधेरी स्क्रीन? सचमुच?",
           a: [
             "हाँ, और वही सबसे अच्छा भाग है। स्क्रीन कहती है कि फ़ोन नीचे रख दीजिए, और फिर वह स्वयं चली जाती है।",
-            "यदि आप उसे उठा लें तो कुछ नहीं होता। न कोई गिनती, न दंड, न यह टिप्पणी कि आप हिले। नब्बे सेकंड पर एक घंटी आपको वापस बुला लेती है।",
+            "यदि आप उसे उठा लें तो कुछ नहीं होता। न कोई गिनती, न दंड, न यह टिप्पणी कि आप हिले। साठ सेकंड पर एक घंटी आपको वापस बुला लेती है।",
             "जिस डिजिटल वस्तु का सबसे अच्छा मिनट वही हो जब स्क्रीन बंद रहे, उसे बनाना विचित्र है और उसका बचाव सरल।",
           ],
         },
@@ -654,7 +654,7 @@ export const faqContent = { en: faqEn, hi: {
           q: "क्या राशि वापस मिल सकती है?",
           a: [
             "हाँ। जो स्नान आपने नहीं लिए, उनकी पूरी राशि एक क्लिक पर वापस, बिना यह पूछे कि क्यों।",
-            "जो बैठक आप कर चुके हैं, वह वापसी योग्य नहीं है, और यह हम साफ़ कह देना चाहेंगे। उसमें आपके अपने ध्यान के साढ़े चार मिनट के अतिरिक्त कुछ ख़र्च नहीं हुआ, और वे मिनट हम भी लौटा नहीं सकते।",
+            "जो बैठक आप कर चुके हैं, वह वापसी योग्य नहीं है, और यह हम साफ़ कह देना चाहेंगे। उसमें आपके अपने ध्यान के तीन मिनट के अतिरिक्त कुछ ख़र्च नहीं हुआ, और वे मिनट हम भी लौटा नहीं सकते।",
             "यदि साइट ने आपका साथ न दिया, मॉडल पुराना था और हमने बताया नहीं, या ध्वनि नहीं बजी, तो हमें लिखिए और हम उस बैठक की राशि लौटा देंगे।",
           ],
         },

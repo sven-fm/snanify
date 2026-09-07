@@ -1009,7 +1009,7 @@ export const riverDetailContent = {
         {
           key: "sitting",
           name: "A sitting you take yourself",
-          body: "Four and a half minutes against this water's live state, at an hour the panchang names, with your own sankalp in your own words.",
+          body: "Three minutes against this water's live state, at an hour the panchang names, with your own sankalp in your own words.",
         },
       ],
       note: "What this is, and what it is not, is written out in full on the ethics page.",
@@ -1111,7 +1111,7 @@ export const riverDetailContent = {
         {
           key: "sitting",
           name: "वह बैठक जो आप स्वयं करते हैं",
-          body: "इस जल की जीवंत अवस्था के सामने साढ़े चार मिनट, पंचांग की बताई घड़ी में, आपके अपने शब्दों में आपका अपना संकल्प।",
+          body: "इस जल की जीवंत अवस्था के सामने तीन मिनट, पंचांग की बताई घड़ी में, आपके अपने शब्दों में आपका अपना संकल्प।",
         },
       ],
       note: "यह क्या है और क्या नहीं, यह नीति पृष्ठ पर पूरा लिखा है।",

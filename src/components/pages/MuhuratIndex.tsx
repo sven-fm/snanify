@@ -31,8 +31,8 @@ export function muhuratNavLinks(lang: Lang) {
   return [
     { href: localePath(lang, "/rivers"), label: t.nav.rivers },
     { href: localePath(lang, "/muhurat"), label: t.nav.muhurat },
-    { href: localePath(lang, "/#how"), label: t.nav.how },
-    { href: localePath(lang, "/#sankalp"), label: t.nav.pricing },
+    { href: localePath(lang, "/snan"), label: t.nav.how },
+    { href: localePath(lang, "/begin"), label: t.nav.pricing },
   ];
 }
 

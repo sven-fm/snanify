@@ -61,17 +61,19 @@ artefact's whole value rests on its numbers being checkable against a public rec
 
 ## The product
 
-**Jal Sankalp**, a four and a half minute form, identical every day. Only the river changes.
+**The snan**, a three minute form, identical every day. Only the river changes.
+Durations live in `src/lib/sitting-plan.ts` and nowhere else; copy reads them from there.
 
-| Limb | Length | What happens |
+| Part | Length | What happens |
 | --- | --- | --- |
-| Jal Path, the reading | 21s | The river's actual level and flow, and how far you are from that water |
-| Shwas, the breath | 60s | The waterline rises and falls at the river's own amplitude |
-| Sankalp, the vow | 60s | Your own words, held under your thumb for 11 seconds while the ink fills |
-| Maun, the stillness | 90s | The screen goes fully black |
-| Chihn, the mark | 35s | One line writes itself into your register |
+| The reading | 15s | The river's flow today, its rank against 29 years, and how far you are from that water |
+| The breath | 45s | The waterline rises and falls at the river's own amplitude |
+| The sankalp | 11s | Your own words, held under your thumb while the ink fills |
+| The stillness | 60s | The screen goes fully black, and it cannot be skipped |
+| The mark | 20s | One line writes itself into your register |
 
-The artefact is the **Sankalp Patra**: a generative engraving seeded by the river's
+The artefact is the **Sankalp Patra**: it carries the sitter's portrait, up to five
+household names, one chosen prayer, and a generative engraving seeded by the river's
 published modelled flow for that day, so no two days are alike and none can be forged
 without forging the public record. (Older code and docs call it the Jal Chihna or the
 Watermark; `build-plan.md` retires those names.)
@@ -100,6 +102,12 @@ in the same commit; nothing recomputes it.
 Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. That is the SEO and daily-return
 surface, not a product tier.
 
+**The routes**, after the cut: `/`, `/snan`, `/rivers`, `/rivers/[river]`, `/live`,
+`/muhurat`, `/muhurat/[occasion]`, `/panchang`, `/kumbh`, `/faq`, `/ethics`.
+`/how-it-works`, `/patra`, `/patra/sample` and `/verify` were folded into `/snan` and `/faq`
+and are 308ed in `src/proxy.ts`. The product routes (`/begin`, `/setup`, `/today`, `/p/[id]`,
+`/account`) arrive in phases 3 to 7 of `build-plan.md`.
+
 ## Working in this repo
 
 ```bash
@@ -110,7 +118,7 @@ npm run lint     # must be 0 errors
 npx tsc --noEmit # must be clean
 ```
 
-### Twelve locales, two tiers
+### Two locales, two tiers
 
 `src/lib/locales.ts` is the registry and the only file that knows the locale set. Everything
 else (routing, the proxy, hreflang, the sitemap, fonts, the language switch, JSON-LD) derives
@@ -119,13 +127,19 @@ from it. **Adding a language is a row in `LOCALES` plus its translations, and no
 | Type | Locales | What exists in them |
 | --- | --- | --- |
 | `FullLang` | `en`, `hi` | Every page on the site |
-| `Lang` | those plus `bn mr te ta gu kn ml or pa as` | The landing page, the header, the footer, all metadata |
+| `Lang` | the same two, today | Kept as a separate type: the surface tier is how a third locale returns |
+
+Launch is English and Hindi. Ten surface locales (`bn mr te ta gu kn ml or pa as`) were
+retired from the registry; their forty copy files are **parked in place**, unimported and
+without their `satisfies` clause, each carrying a PARKED header saying how to bring it back.
+`src/proxy.ts` 308s their URL prefixes to English. Reviving one is a row in `LOCALES`, the
+`satisfies` clause restored, and whatever the compiler then reports.
 
 The tiers are enforced by the type system, not by discipline. Deep content (`rivers.ts`,
 `muhurat.ts`, `panchang.ts`, `trust.ts`, `kumbh.ts`, `patra.ts`, `sky.ts`, `snan.ts`,
 `verify.ts`, `nakshatra.ts`, `live.ts`) is `Record<FullLang, ...>`; those files import
 `FullLang as Lang` under a comment saying so, so their bodies read unchanged and every call
-site from a twelve-locale page fails to compile until it narrows.
+site from a surface-tier page fails to compile until it narrows.
 
 Copy that must exist everywhere is `Record<Lang, ...>`, so a missing translation is a
 **compile error**, never a silent English fallback:
@@ -135,7 +149,7 @@ export const bn = { ... } satisfies LandingCopy;   // src/content/landing/bn.ts
 ```
 
 **`pickDeep` is the only fallback in the codebase.** It is confined to proper nouns (river
-names, ghat names, occasion names) on twelve-locale pages, it is named and typed, and it is
+names, ghat names, occasion names) on surface-tier pages, it is named and typed, and it is
 paired with `deepHref`/`deepLang` so the markup admits which language the string is in. Prose
 never falls back.
 
@@ -160,13 +174,13 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
   produces the canonical, the whole hreflang cluster and the OG locales from the registry.
   Never hand-roll `alternates.languages` again; that is how `x-default` went missing on nine
   pages.
-- **Static params**: `allLangParams()` for a twelve-locale route, `fullLangParams()` for a
-  full-depth-only one. A page with neither inherits the layout's twelve and prerenders ten
-  pages whose copy does not exist.
-- **`FULL_ONLY`** in `locales.ts` is the single list deciding which routes are English and
-  Hindi only. The landing page, `/rivers`, `/live` and `/muhurat` are out of it and served in
-  all twelve. Moving a route out of it publishes that route in twelve languages, and the
-  sitemap, hreflang, nav, footer and language switch all follow.
+- **Static params**: `allLangParams()` for a surface-tier route, `fullLangParams()` for a
+  full-depth-only one. A page with neither inherits the layout's set and prerenders pages
+  whose copy does not exist. The two return the same pair today and will not when a third
+  locale lands, so keep calling the right one.
+- **`FULL_ONLY`** in `locales.ts` is the single list deciding which routes are full-depth
+  only. It matters again the day a third locale lands: the landing page, `/rivers`, `/live`
+  and `/muhurat` sit outside it and are the surface set a new locale gets first.
 - **Navigation must ask `servesPath(lang, path)`**, never `isFullOnlyPath` alone. The latter
   is true for `/snan` even in English, and filtering on it emptied the English nav once.
 
@@ -184,6 +198,13 @@ mid-range Android.
 
 - **Em dashes.** Not in copy, not in comments. Use a comma, a colon, a full stop or
   parentheses. They were all removed once; do not reintroduce them.
+- **Apologetics.** Never explain what the product is not, never answer a critic who is not
+  in the room, never apologise for it being digital. The FAQ's "hard questions" and the
+  twelve-section manifesto were deleted for this reason. Facts about the data are
+  craftsmanship, not disclaimers. If a sentence exists to defend the product, delete it.
+- **Coined names.** The practice is "the snan". The artefact is the "Sankalp Patra". Jal
+  Sankalp, Jal Chihna, Watermark, Jal Path, Shwas, Maun and Chihn are retired; do not
+  reintroduce them into copy.
 - Gradients, glows, blurs, rounded corners, soft shadows. See `DESIGNSYSTEM.md`.
 - Fabricated statistics presented as fact, except the hero figures noted below.
 
@@ -232,6 +253,15 @@ them with real values before launch.
 
 Everything behind the landing page is held to the stricter rule, because `/ethics` publicly
 commits to it. Panchang timings ship labelled provisional until a source is named.
+
+## The plan
+
+**`build-plan.md` at the repo root is the master spec and plan**, and it supersedes
+`docs/digital/` wherever the two disagree. It records the decisions taken on 7 September
+2026 (Stripe only, the snan is paid, two locales, three minute sitting, one Patra per
+morning, Clerk with Google and magic link) and the eight phases from here to a purchasable
+product. Section 3.5 of it lists, by name, everything in `docs/` that is deliberately out of
+scope. Check there before building anything the older docs describe.
 
 ## Where the thinking lives
 

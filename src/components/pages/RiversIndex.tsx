@@ -69,11 +69,6 @@ function Strand({ className = "" }: { className?: string }) {
 export function RiversIndex({ lang }: { lang: Lang }) {
   const t = riversIndexContent[lang];
 
-  const home = localePath(lang, "/");
-
-  /* `home` is "/" or "/hi", so appending the fragment gives /#how and /hi#how. */
-  const anchor = (id: string) => `${home}#${id}`;
-
   const first = RIVERS[0];
   const rest = RIVERS.slice(1);
 
@@ -339,7 +334,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
               {t.closing.title}
             </h2>
             <p className="mx-auto mt-5 max-w-xl leading-[1.75] text-ink2">{t.closing.lede}</p>
-            <a href={anchor("sankalp")} className="mt-9 inline-block">
+            <a href={localePath(lang, "/begin")} className="mt-9 inline-block">
               <CTA className="!px-10 !py-4">{t.closing.cta}</CTA>
             </a>
           </div>

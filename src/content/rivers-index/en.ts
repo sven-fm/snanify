@@ -45,7 +45,7 @@ export const en = {
   lede: "Six rivers, each measured every day, each with its own sunrise and its own calendar. These pages describe the places.",
   presence: {
     label: "What Snanify does at these six places",
-    body: "Snanify carries their measured state, read daily from a public flood model, their sunrises, their muhurat windows, and the four and a half minutes in which you make your own sankalp.",
+    body: "Snanify carries their measured state, read daily from a public flood model, their sunrises, their muhurat windows, and the three minutes in which you make your own sankalp.",
   },
   lead: { label: "The first water", read: "Read this water" },
   index: {
@@ -77,7 +77,7 @@ export const en = {
       {
         key: "sitting",
         name: "A sitting you take yourself",
-        body: "Four and a half minutes on your own screen, against the state that river is in at the hour you sit.",
+        body: "Three minutes on your own screen, against the state that river is in at the hour you sit.",
       },
     ],
     note: "The ethics page states the commitment behind these four in full.",
@@ -114,7 +114,7 @@ export const en = {
     title: "What this is, and what it is not.",
     isLabel: "This is",
     isBody:
-      "Four and a half minutes on your own screen, against the state a river is in at the hour you sit with her. Her modelled flow ranked against twenty-nine years of her own history, her sunrise, and your own sankalp in your own words.",
+      "Three minutes on your own screen, against the state a river is in at the hour you sit with her. Her modelled flow ranked against twenty-nine years of her own history, her sunrise, and your own sankalp in your own words.",
     isNotLabel: "This is not",
     isNotBody:
       "A rite performed at a ghat, a recording made at one, or a claim about your health, your fortune or any other outcome. The ethics page states the commitment in full.",
