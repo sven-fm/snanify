@@ -10,7 +10,7 @@ import { DEFAULT_TIER, PACKS } from "@/lib/packs";
 import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Eyebrow, Price } from "@/components/ui";
+import { CTA, Eyebrow, Price, SubmitButton } from "@/components/ui";
 import { startCheckout } from "@/app/[lang]/begin/actions";
 
 /* ---------------------------------------------------------------------------
@@ -74,9 +74,9 @@ function TierCard({
           </div>
         </dl>
 
-        <CTA className="mt-5 w-full !py-4" variant={flagged ? "solid" : "ghost"}>
+        <SubmitButton className="mt-5 w-full !py-4" variant={flagged ? "solid" : "ghost"}>
           {t.cta}
-        </CTA>
+        </SubmitButton>
       </div>
     </form>
   );

@@ -7,16 +7,19 @@ import { accountContent } from "@/content/account";
 import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 
-/* The sign-in screen sits inside the site rather than on a page of its own,
+/* The sign-up screen sits inside the site rather than on a page of its own,
    because it is the first thing somebody sees after deciding to pay and a bare
-   Clerk card on a white page reads as a different company. */
-const ROUTE = "/sign-in";
+   Clerk card on a white page reads as a different company.
+
+   `path` must be this route. Clerk mounts its own steps underneath it, and
+   when the two disagree the widget renders nothing at all, silently. */
+const ROUTE = "/sign-up";
 
 /* The layout sets `dynamicParams = false`, which is right for the marketing
    tree: an unknown locale should 404 rather than render an empty shell. Clerk
-   routes its own steps (a verification code, a factor choice, a reset) under
-   this catch-all, and those paths cannot be enumerated at build time, so this
-   subtree opts back in. */
+   routes its own steps (a verification code, a factor choice) under this
+   catch-all, and those cannot be enumerated at build time, so this subtree
+   opts back in. */
 export const dynamicParams = true;
 
 export function generateStaticParams() {
