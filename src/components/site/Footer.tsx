@@ -14,22 +14,21 @@ const COMPANY = 1;
 const LEGAL = 2;
 
 const COLUMNS: { at: number; keys: NavKey[] }[] = [
-  { at: SERVICE, keys: ["snan", "live", "rivers", "muhurat", "patra"] },
-  { at: COMPANY, keys: ["how", "ethics", "faq", "panchang"] },
+  { at: SERVICE, keys: ["begin", "snan", "live", "rivers", "muhurat"] },
+  { at: COMPANY, keys: ["panchang", "faq", "ethics"] },
 ];
 
 /** Where a nav key actually points, so the footer never offers a 404. */
 const ROUTE_OF: Record<NavKey, string> = {
+  begin: "/begin",
+  account: "/account",
   rivers: "/rivers",
   snan: "/snan",
   muhurat: "/muhurat",
-  patra: "/patra",
-  how: "/how-it-works",
   ethics: "/ethics",
   faq: "/faq",
   live: "/live",
   panchang: "/panchang",
-  verify: "/verify",
 };
 
 /** The imprint: everything the almanac prints at the back. */

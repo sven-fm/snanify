@@ -4,9 +4,9 @@ import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Colophon, Mark, Wordmark } from "@/components/Logo";
 import {
-  chihnaContent,
+  patraContent,
   SPECIMEN_WATERMARK_TEXT,
-  type ChihnaRecord,
+  type PatraRecord,
 } from "@/content/patra";
 /* This page exists in English and Hindi only; see the tier note and the
    FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
@@ -42,7 +42,7 @@ import type { FullLang as Lang } from "@/lib/locales";
 
    Phones: a fixed-ratio A4 document rendered into 366 usable pixels sets body
    type at about six pixels, which is a picture of a document rather than a
-   document. `ChihnaSheetViewer` is therefore the component pages should reach
+   document. `PatraSheetViewer` is therefore the component pages should reach
    for: it renders the sheet inline and gives the reader a full-size viewer,
    with the controls at the bottom of the screen where a thumb is.
    --------------------------------------------------------------------------- */
@@ -80,7 +80,7 @@ const PRINT_CSS = `
 
 export type ChihnaSheetProps = {
   lang: Lang;
-  data: ChihnaRecord;
+  data: PatraRecord;
   /**
    * Marks the sheet as a specimen: tiled watermark, spot-colour rules, and a
    * stated banner. Anything not issued against a real record must set this.
@@ -161,7 +161,7 @@ export function ChihnaSheet({
   plate,
   className = "",
 }: ChihnaSheetProps) {
-  const t = chihnaContent[lang].sheet;
+  const t = patraContent[lang].sheet;
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const patternId = `chihna-wm-${uid}`;
   /* Devanagari is set in Eczar in both editions: the sheet titles itself in
@@ -586,7 +586,7 @@ export function ChihnaSheet({
  * has to be cheap on a mid-range Android, and the design system has no
  * vocabulary for any of them anyway.
  */
-export function ChihnaSheetViewer({
+export function PatraSheetViewer({
   lang,
   data,
   watermark = false,
@@ -594,7 +594,7 @@ export function ChihnaSheetViewer({
   className = "",
   sheetClassName = "",
 }: ChihnaSheetProps & { sheetClassName?: string }) {
-  const t = chihnaContent[lang].sheet;
+  const t = patraContent[lang].sheet;
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"fit" | "read">("fit");
 

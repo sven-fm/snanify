@@ -18,7 +18,7 @@ export function RootShell({ lang, children }: { lang: Lang; children: React.Reac
       lang={def.tag}
       dir={def.dir}
       data-script={def.script}
-      className={fontClass(lang)}
+      className={fontClass()}
       suppressHydrationWarning
     >
       {/* Must be a real <head> child: React refuses to hydrate a sync <script>

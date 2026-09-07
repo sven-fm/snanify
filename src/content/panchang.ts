@@ -551,7 +551,7 @@ export const panchangContent = {
           note: "What each of the six places is, and what it is kept for.",
         },
         {
-          href: "/how-it-works",
+          href: "/snan",
           label: "How it works",
           note: "The four and a half minutes, limb by limb, and the mark you keep.",
         },
@@ -768,7 +768,7 @@ export const panchangContent = {
           note: "छहों स्थान क्या हैं, और प्रत्येक किसके लिए माना जाता है।",
         },
         {
-          href: "/how-it-works",
+          href: "/snan",
           label: "कैसे काम करता है",
           note: "साढ़े चार मिनट, अंग दर अंग, और वह चिह्न जो आपके पास रहता है।",
         },
