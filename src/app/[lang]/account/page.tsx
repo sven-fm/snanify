@@ -28,7 +28,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
-  const { lang } = await params;
-  return <Account lang={lang} />;
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ lang: Lang }>;
+  searchParams: Promise<{ confirm?: string }>;
+}) {
+  const [{ lang }, query] = await Promise.all([params, searchParams]);
+  return <Account lang={lang} misstyped={query.confirm === "1"} />;
 }

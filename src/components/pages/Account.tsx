@@ -10,7 +10,8 @@ import { requireUser } from "@/lib/auth";
 import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Eyebrow, LinkButton } from "@/components/ui";
+import { CTA, Eyebrow, LinkButton, SubmitButton } from "@/components/ui";
+import { deleteAccount, setReminder } from "@/app/[lang]/account/actions";
 
 /* ---------------------------------------------------------------------------
    /account, which is the register and nothing else.
@@ -36,16 +37,7 @@ function formatKept(keptOn: string, lang: Lang): string {
   }).format(date);
 }
 
-function hourLabel(hour: number, lang: Lang): string {
-  const date = new Date(Date.UTC(2026, 0, 1, hour, 0));
-  return new Intl.DateTimeFormat(lang === "hi" ? "hi-IN" : "en-IN", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "UTC",
-  }).format(date);
-}
-
-export async function Account({ lang }: { lang: Lang }) {
+export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boolean }) {
   const user = await requireUser(lang, "/account");
   const t = accountContent[lang].account;
 
@@ -82,6 +74,7 @@ export async function Account({ lang }: { lang: Lang }) {
           <p className="display mt-2 text-[2.4rem] leading-none text-ink tabular-nums">
             {credits > 0 ? credits : t.creditsNone}
           </p>
+          {credits === 1 && <p className="mt-2 text-sm text-spot">{t.lowCredits}</p>}
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             {credits > 0 && (
@@ -146,14 +139,64 @@ export async function Account({ lang }: { lang: Lang }) {
 
           <div>
             <h2 className="label border-b border-rule pb-3 text-ink">{t.reminderHeading}</h2>
-            <p className="display mt-4 text-[1.6rem] leading-none text-ink">
-              {user.reminderOn ? hourLabel(user.reminderHour, lang) : t.reminderOff}
-            </p>
-            <p className="mt-2 text-sm text-ink2">{user.tz}</p>
+
+            <form action={setReminder.bind(null, lang)} className="mt-4">
+              <select
+                name="reminderHour"
+                defaultValue={String(user.reminderHour)}
+                className="min-h-[48px] w-full border border-rule bg-paper px-4 text-[1.02rem] text-ink outline-none focus:border-spot"
+              >
+                {Array.from({ length: 24 }, (_, hour) => (
+                  <option key={hour} value={hour}>
+                    {String(hour).padStart(2, "0")}:00
+                  </option>
+                ))}
+              </select>
+              <p className="mt-2 text-sm text-ink2">{user.tz}</p>
+
+              <label className="mt-4 flex min-h-[44px] items-center gap-3 text-[0.98rem] text-ink">
+                <input
+                  type="checkbox"
+                  name="reminderOn"
+                  value="1"
+                  defaultChecked={user.reminderOn}
+                  className="h-5 w-5 accent-[var(--color-spot,#b32620)]"
+                />
+                {user.reminderOn ? t.reminderOn : t.reminderOff2}
+              </label>
+
+              <SubmitButton variant="ghost" className="mt-4 w-full">
+                {t.save}
+              </SubmitButton>
+            </form>
           </div>
         </section>
 
-        <div className="mt-16 border-t border-rule pt-6">
+        {/* ---------------- deleting everything ---------------- */}
+        <section className="mt-16 border-t-2 border-rulestrong pt-6">
+          <h2 className="label text-spot">{t.deleteHeading}</h2>
+          <p className="mt-4 max-w-lg text-[0.98rem] leading-[1.7] text-ink2">{t.deleteBody}</p>
+
+          <form action={deleteAccount.bind(null, lang)} className="mt-5 max-w-sm">
+            <input
+              type="text"
+              name="confirm"
+              autoComplete="off"
+              placeholder={t.deletePlaceholder}
+              className="min-h-[48px] w-full border border-rule bg-paper px-4 text-[1.02rem] text-ink outline-none focus:border-spot"
+            />
+            {misstyped && (
+              <p className="mt-2 border-l-2 border-spot pl-3 text-sm text-spot">
+                {t.deleteMisstyped}
+              </p>
+            )}
+            <SubmitButton variant="ghost" className="mt-3 w-full">
+              {t.deleteCta}
+            </SubmitButton>
+          </form>
+        </section>
+
+        <div className="mt-12 border-t border-rule pt-6">
           <SignOutButton redirectUrl={localePath(lang, "/")}>
             <button
               type="button"

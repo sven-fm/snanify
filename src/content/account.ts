@@ -43,6 +43,16 @@ const en = {
     reminderOff: "No reminder.",
     signOut: "Sign out",
     todayCta: "Sit this morning",
+    reminderOn: "Send it",
+    reminderOff2: "Stop sending it",
+    save: "Save",
+    deleteHeading: "Delete everything",
+    deleteBody:
+      "Your account, your register, your sheets and your photograph, gone. The links you have already sent stop working. Type delete to confirm.",
+    deletePlaceholder: "delete",
+    deleteCta: "Delete my account",
+    deleteMisstyped: "Type the word delete to confirm.",
+    lowCredits: "One morning left.",
   },
 };
 
@@ -77,6 +87,16 @@ const hi = {
     reminderOff: "कोई सूचना नहीं।",
     signOut: "बाहर निकलें",
     todayCta: "आज सुबह बैठिए",
+    reminderOn: "भेजिए",
+    reminderOff2: "भेजना बंद कीजिए",
+    save: "सहेजिए",
+    deleteHeading: "सब कुछ मिटा दीजिए",
+    deleteBody:
+      "आपका खाता, आपकी पंजिका, आपके पत्र और आपका चित्र, सब समाप्त। जो कड़ियाँ आपने भेजी हैं, वे भी काम करना बंद कर देंगी। पुष्टि के लिए delete लिखिए।",
+    deletePlaceholder: "delete",
+    deleteCta: "मेरा खाता मिटा दीजिए",
+    deleteMisstyped: "पुष्टि के लिए delete शब्द लिखिए।",
+    lowCredits: "एक सुबह शेष।",
   },
 };
 
