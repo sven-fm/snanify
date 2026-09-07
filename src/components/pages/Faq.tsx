@@ -33,20 +33,12 @@ function numeral(n: number, lang: Lang): string {
 }
 
 /**
- * Questions whose long answer lives on another page. The fragment matters:
- * the manifesto is twelve sections of continuous argument, so a link that
- * lands at its masthead is a link that loses the reader. Every id here is a
- * section id in ethicsContent / howItWorksContent, and those ids are identical
- * in both locales on purpose.
+ * Questions whose long answer lives on another page. The fragment matters: a
+ * link that lands at a masthead is a link that loses the reader. Every id here
+ * is a section id in ethicsContent, and those ids are identical in both
+ * locales on purpose.
  */
 const DEEP_LINKS: Record<string, string> = {
-  "does-it-work": "/ethics#position",
-  priest: "/ethics#is-not",
-  religious: "/ethics#precedent",
-  "same-as-bathing": "/ethics#is-not",
-  scam: "/ethics#river",
-  punya: "/ethics#never",
-  "who-for": "/ethics#for",
   "what-happens": "/snan#form",
   "black-screen": "/snan#form",
   sound: "/snan#form",
@@ -55,16 +47,14 @@ const DEEP_LINKS: Record<string, string> = {
   data: "/ethics#river",
   percentile: "/ethics#river",
   offline: "/ethics#river",
-  gauge: "/ethics#unsettled",
-  camera: "/ethics#never",
   "paying-for": "/snan#price",
   free: "/snan#price",
   prices: "/snan#price",
   eleven: "/snan#price",
-  "sankalp-private": "/ethics#data",
-  delete: "/ethics#data",
-  tracking: "/ethics#data",
-  panchang: "/ethics#unsettled",
+  "sankalp-private": "/ethics#patra",
+  delete: "/ethics#hands",
+  tracking: "/ethics#hands",
+  panchang: "/ethics#sky",
 };
 
 export function Faq({ lang }: { lang: Lang }) {
