@@ -257,6 +257,16 @@ Tracked here so a phase never blocks silently on them.
 - [ ] **Sending domain** for Resend verified at Porkbun.
 - [ ] **Prayer list** reviewed by the owner or someone the owner trusts for text accuracy. Draft is written in Phase 4.
 - [ ] **Real hero figures** to replace the placeholders at launch.
+- [ ] **Clerk dashboard, three settings.** Rename the application from
+  `clerk-bronze-sail` to Snanify, so the magic-link email and the device
+  verification screen say it (the sign-in card itself is already overridden in
+  `src/lib/clerk-look.ts`). Turn off password sign-in and turn on email link, so
+  the offer matches what /snan promises. Add Google OAuth credentials for the
+  production instance.
+- [ ] **Claim the Stripe sandbox.** It provisioned as `stripe-violet-kite`, an
+  unclaimed sandbox in test mode, and Checkout says so on the payment page.
+  Claiming it and naming the business Snanify is what turns test payments into
+  real ones.
 - [ ] **Clerk dashboard**: Google OAuth credentials, production instance, custom domain `clerk.snanify.com` or the Clerk default.
 
 ---
@@ -352,6 +362,11 @@ subtractive except the landing rewrite.
 ---
 
 ### Phase 4: Set up once
+
+**Known issue carried forward.** `/setup` logs React error #418, a hydration
+mismatch, on some first loads. The form saves correctly; the cost is that React
+rebuilds the tree on the client. Everything ruled out so far is written at the
+head of `src/components/setup/SetupForm.tsx`. Worth an hour before launch.
 
 - [ ] **4.1 Prayers.** `src/content/prayers.ts`: for each of the six waters, three to five short prayers in the public domain (for example: Ganga: गङ्गे च यमुने चैव (the sapta-nadi shloka), नमामि गङ्गे; Yamuna: a verse from Yamunashtakam; Godavari, Shipra, Kaveri: the sapta-nadi shloka and a regional verse; plus universal: Gayatri, Mahamrityunjaya, ॐ नमः शिवाय). Each entry: `id`, `title: Record<FullLang, string>`, `devanagari`, `roman` (IAST-lite, readable), `meaning: Record<FullLang, string>`, `waters: WaterSlug[] | "all"`. Text accuracy is on the owner's open-items list. No prayer text is generated; every one is a known verse, cited by source name in a comment.
 - [ ] **4.2 Portrait pipeline.** `npm i sharp @vercel/blob`. `src/lib/portrait.ts` `processPortrait(buffer, crop: { x, y, w, h })`: rotate by EXIF, extract crop, resize to 800 by 1000 cover, grayscale, `linear(1.15, -10)` for contrast, `sharpen`, a subtle noise overlay for grain, output JPEG quality 82. Test: a fixture image in, dimensions and grayscale out, under 200 KB. Raw upload goes to the private Blob store under `raw/{userId}/{id}.jpg`, processed to the public store under `portrait/{userId}/{id}.jpg`. Max upload 8 MB, JPEG/PNG/HEIC (convert HEIC via sharp; if the build lacks HEIF support, reject with a message to save as JPEG). The user sees the processed version before saving and can re-crop.
