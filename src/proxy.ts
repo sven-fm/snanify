@@ -1,3 +1,4 @@
+import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse, type NextRequest } from "next/server";
 import { DEFAULT_LANG, LANGS } from "@/lib/locales";
 import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
@@ -55,7 +56,7 @@ function stampCurrency(res: NextResponse, req: NextRequest): NextResponse {
   return res;
 }
 
-export function proxy(req: NextRequest) {
+function route(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const first = pathname.split("/")[1];
 
@@ -89,6 +90,16 @@ export function proxy(req: NextRequest) {
     req,
   );
 }
+
+/**
+ * Clerk reads its session cookie here so every server component downstream can
+ * ask who is signed in without a round trip of its own. It protects nothing by
+ * itself: pages call `requireUser` and decide for themselves, which keeps the
+ * rule next to the page it applies to rather than in a list here.
+ *
+ * The URL scheme runs inside it, unchanged.
+ */
+export const proxy = clerkMiddleware(async (_auth, req) => route(req));
 
 export const config = {
   /**

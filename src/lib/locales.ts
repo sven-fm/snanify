@@ -151,6 +151,13 @@ export function stripLocale(pathname: string): string {
  */
 const FULL_ONLY: readonly string[] = [
   "/snan",
+  "/begin",
+  "/setup",
+  "/today",
+  "/account",
+  "/sign-in",
+  "/sign-up",
+  "/p/",
   "/panchang",
   "/ethics",
   "/faq",

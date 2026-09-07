@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { accountContent } from "@/content/account";
+import { isSignedIn } from "@/lib/auth";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
@@ -15,7 +17,7 @@ export type NavLink = { href: string; label: string };
  * `currentPath` is the locale-independent route, so the language switch lands
  * on the same page instead of dumping you at home.
  */
-export function Header({
+export async function Header({
   lang,
   links,
   currentPath = "/",
@@ -28,7 +30,13 @@ export function Header({
 }) {
   const t = content[lang];
   const navLinks = links ?? primaryNav(lang);
-  const cta = ctaTo ?? ctaHref(lang);
+
+  /* Somebody signed in has already bought; sending them to the pack picker
+     again is the site forgetting who they are. They get their register. */
+  const signedIn = await isSignedIn();
+  const account = accountContent[lang as "en" | "hi"] ?? accountContent.en;
+  const cta = ctaTo ?? (signedIn ? localePath(lang, "/account") : ctaHref(lang));
+  const ctaLabel = signedIn ? account.account.eyebrow : t.nav.cta;
 
   return (
     <header className="sticky top-0 z-50 bg-paper">
@@ -52,7 +60,7 @@ export function Header({
               href={cta}
               className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
             >
-              {t.nav.cta}
+              {ctaLabel}
             </a>
           </div>
         </div>
