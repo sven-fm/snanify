@@ -7,6 +7,7 @@ import { LIMITS } from "@/lib/profile-input";
 import { saveProfile, type SaveState } from "@/app/[lang]/setup/actions";
 import type { FullLang as Lang } from "@/lib/locales";
 import { SubmitButton } from "@/components/ui";
+import { track } from "@/lib/track";
 
 /* ---------------------------------------------------------------------------
    The setup form.
@@ -129,7 +130,10 @@ export function SetupForm({
 
 
   useEffect(() => {
-    if (state.ok) router.push(`${lang === "en" ? "" : `/${lang}`}/today`);
+    if (!state.ok) return;
+    track("setup_done", { water, lang });
+    router.push(`${lang === "en" ? "" : `/${lang}`}/today`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.ok, lang, router]);
 
   const offered = useMemo(

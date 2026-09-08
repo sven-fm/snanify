@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { track } from "@/lib/track";
 
 /* ---------------------------------------------------------------------------
    Sending the sheet.
@@ -29,6 +30,8 @@ export function ShareButton({
   text,
   label,
   copiedLabel,
+  water,
+  lang,
   auto = false,
 }: {
   url: string;
@@ -36,6 +39,9 @@ export function ShareButton({
   text: string;
   label: string;
   copiedLabel: string;
+  /** A water slug and an edition: the only two things measurement is told. */
+  water: string;
+  lang: string;
   auto?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
@@ -45,21 +51,25 @@ export function ShareButton({
   async function send() {
     if (busy) return;
     setBusy(true);
+    track("share_open", { water, lang });
 
     try {
       const file = await sheetFile(imageUrl);
 
       if (file && navigator.canShare?.({ files: [file] })) {
         await navigator.share({ files: [file], text, url });
+        track("share_done", { water, lang, how: "files" });
         return;
       }
 
       if (navigator.share) {
         await navigator.share({ text, url });
+        track("share_done", { water, lang, how: "link" });
         return;
       }
 
       await navigator.clipboard.writeText(`${text} ${url}`);
+      track("share_done", { water, lang, how: "copied" });
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2500);
     } catch {

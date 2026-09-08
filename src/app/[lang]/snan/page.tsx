@@ -17,6 +17,8 @@ import { snanContent } from "@/content/snan";
 import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
 import { SOURCES } from "@/lib/riverdata";
 import { pageMetadata } from "@/lib/seo";
+import { currencyForLang, PRICE } from "@/content/prices";
+import { PACKS } from "@/lib/packs";
 
 /* Public URL shape: English unprefixed, Hindi under /hi. Built through
    localePath so a route rename cannot strand one locale. */
@@ -49,12 +51,11 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
 
   /* The page is about a practice with a stated price, so it is typed as a
      HowTo-free plain WebPage `about` the digital snan itself.
-     Deliberately absent, and this is the same rule the rest of the graph is
-     written under: no Product, no Offer and no availability. The tariff is
-     printed on the page and is true there, but an Offer node asserts a
-     purchasable, in-stock item at a checkout, and there is no checkout route
-     to point one at yet. Add offers the day the payment route ships, not
-     before. No aggregateRating, no review, no invented counts. */
+     The offers below were deliberately absent until there was a checkout to
+     point them at. There is one now, at /begin, so each pack is declared with
+     the figure the page prints and the currency this edition prints it in.
+     Still no aggregateRating, no review and no invented counts: nothing is
+     asserted to a crawler that is not asserted to a reader. */
   const graph = [
     organization(lang),
     website(),
@@ -75,6 +76,18 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         /* The one externally checkable fact on the page, named where a machine
            reads it, exactly as it is named where a person does: modelled
            discharge, daily, the same Dataset /live emits. */
+        /* Offers hang off the work being sold rather than off the page, which
+           is where schema.org puts them and what a crawler reads. The figure
+           is the one this edition prints: rupees on the Hindi page, US dollars
+           elsewhere, out of currencyForLang. */
+        offers: PACKS.map((pack) => ({
+          "@type": "Offer",
+          name: t.tariff.rows.find((row) => row.key === pack.tier)?.name ?? pack.tier,
+          price: PRICE[pack.tier][currencyForLang(lang)].replace(/[^0-9.]/g, ""),
+          priceCurrency: currencyForLang(lang),
+          availability: "https://schema.org/InStock",
+          url: publicUrl(lang, "/begin"),
+        })),
         isBasedOn: {
           "@type": "Dataset",
           name: "River discharge, modelled, " + SOURCES.discharge.model,
@@ -86,6 +99,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         { name: t.crumbs.home, path: "/" },
         { name: t.crumbs.here, path: ROUTE },
       ]),
+
     }),
   ];
 

@@ -47,6 +47,7 @@ const DEEP_LINKS: Record<string, string> = {
   data: "/ethics#river",
   percentile: "/ethics#river",
   offline: "/ethics#river",
+  verify: "/ethics#patra",
   "paying-for": "/snan#price",
   free: "/snan#price",
   prices: "/snan#price",

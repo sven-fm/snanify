@@ -16,6 +16,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Eyebrow, LinkButton } from "@/components/ui";
 import { Sitting } from "@/components/snan/Sitting";
+import { TrackView } from "@/components/site/TrackView";
 
 /* ---------------------------------------------------------------------------
    /today, the morning itself.
@@ -57,7 +58,7 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ lang: Lang }>;
-  searchParams: Promise<{ fast?: string }>;
+  searchParams: Promise<{ fast?: string; bought?: string }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
   const t = todayContent[lang];
@@ -123,6 +124,7 @@ export default async function Page({
   return (
     <>
       <div className="grain" aria-hidden="true" />
+      {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
       <Header lang={lang} currentPath={ROUTE} />
 
       <main className="pb-16">
@@ -132,6 +134,7 @@ export default async function Page({
           reading={reading}
           sankalp={profile.sankalpText}
           names={names}
+          waterSlug={profile.waterSlug}
           /* Never outside development: a fast sitting is a testing affordance,
              not a way to hurry the practice. */
           speed={process.env.NODE_ENV === "production" ? 1 : query.fast === "1" ? 30 : 1}

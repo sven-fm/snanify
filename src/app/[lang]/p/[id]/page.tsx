@@ -149,6 +149,8 @@ export default async function Page({
             })}
             label={t.share}
             copiedLabel={t.shareCopied}
+            water={sitting.waterSlug}
+            lang={lang}
             auto={query.new === "1"}
           />
         </div>

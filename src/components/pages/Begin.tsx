@@ -10,8 +10,10 @@ import { DEFAULT_TIER, PACKS } from "@/lib/packs";
 import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Eyebrow, Price, SubmitButton } from "@/components/ui";
+import { CTA, Eyebrow, Price } from "@/components/ui";
 import { startCheckout } from "@/app/[lang]/begin/actions";
+import { TrackView } from "@/components/site/TrackView";
+import { TrackedSubmit } from "@/components/site/TrackedSubmit";
 
 /* ---------------------------------------------------------------------------
    /begin, where the site finally takes money.
@@ -74,9 +76,14 @@ function TierCard({
           </div>
         </dl>
 
-        <SubmitButton className="mt-5 w-full !py-4" variant={flagged ? "solid" : "ghost"}>
+        <TrackedSubmit
+          className="mt-5 w-full !py-4"
+          variant={flagged ? "solid" : "ghost"}
+          event="checkout_start"
+          props={{ pack: tier, lang }}
+        >
           {t.cta}
-        </SubmitButton>
+        </TrackedSubmit>
       </div>
     </form>
   );
@@ -108,6 +115,7 @@ export async function Begin({
   return (
     <>
       <div className="grain" aria-hidden="true" />
+      <TrackView event="begin_view" props={{ pack: chosen, lang }} />
       <Header lang={lang} currentPath="/begin" />
 
       <main className="mx-auto max-w-5xl px-5 py-10 pb-16 sm:px-8 sm:py-16">

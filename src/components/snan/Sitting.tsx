@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { LIMB_ORDER, SITTING, type Limb } from "@/lib/sitting-plan";
 import type { todayContent } from "@/content/today";
 import { keepThisMorning } from "@/app/[lang]/today/actions";
+import { track } from "@/lib/track";
 import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
@@ -77,6 +78,7 @@ export function Sitting({
   reading,
   sankalp,
   names,
+  waterSlug,
   reducedMotionDefault = false,
   speed = 1,
 }: {
@@ -85,6 +87,8 @@ export function Sitting({
   reading: Reading;
   sankalp: string;
   names: string[];
+  /** One of six, and the only thing measurement is told about a morning. */
+  waterSlug: string;
   reducedMotionDefault?: boolean;
   /**
    * How many times faster than real time the clock runs. Always 1 in
@@ -194,11 +198,13 @@ export function Sitting({
 
     keepThisMorning(lang)
       .then((result) => {
-        if (result.id) setPatraId(result.id);
-        else setFailed(true);
+        if (result.id) {
+          setPatraId(result.id);
+          track("sitting_done", { water: waterSlug, lang });
+        } else setFailed(true);
       })
       .catch(() => setFailed(true));
-  }, [phase, lang]);
+  }, [phase, lang, waterSlug]);
 
   /* --- and the page moves on once both are finished --------------------- */
   useEffect(() => {
@@ -225,7 +231,10 @@ export function Sitting({
 
         <button
           type="button"
-          onClick={() => setStarted(true)}
+          onClick={() => {
+            track("sitting_start", { water: waterSlug, lang });
+            setStarted(true);
+          }}
           className="label mt-10 min-h-[56px] w-full bg-spot px-8 text-paper transition-colors hover:bg-ink"
         >
           {t.begin.cta}

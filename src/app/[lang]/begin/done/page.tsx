@@ -75,13 +75,18 @@ export default async function Page({
     .limit(1);
 
   if (booked[0]) {
+    /* Counted where the buyer lands rather than in the webhook, which has no
+       browser to report from. The webhook is still what books the credits. */
     const profile = await db
       .select({ completedAt: profiles.completedAt })
       .from(profiles)
       .where(eq(profiles.userId, user.id))
       .limit(1);
 
-    redirect(localePath(lang, profile[0]?.completedAt ? "/today" : "/setup"));
+    /* A redirect throws, so the event has to be reported by the page the
+       buyer is sent to rather than from here. `?bought=1` carries it. */
+    const next = profile[0]?.completedAt ? "/today" : "/setup";
+    redirect(`${localePath(lang, next)}?bought=1`);
   }
 
   /* Not booked yet. Confirm with Stripe that this session is real and paid, so

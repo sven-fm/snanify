@@ -330,6 +330,15 @@ const faqEn = {
           ],
         },
         {
+          id: "verify",
+          q: "How do I know a Sankalp Patra is genuine?",
+          a: [
+            "Every sheet carries the line it was made from and the seed that line hashes to. Take that day's figure from the flood model, hash the line yourself, and you get the same seed and the same engraving.",
+            "That is why the engraving is drawn from the river rather than chosen: forging a sheet means forging Copernicus's published record for that day first.",
+            "A stranger holding your link sees the names on the sheet, the water, the day and the reading. Your sankalp is not among them.",
+          ],
+        },
+        {
           id: "offline",
           q: "What happens when you cannot reach the river?",
           a: [
@@ -590,6 +599,15 @@ export const faqContent = { en: faqEn, hi: {
           a: [
             "आज का प्रवाह उन सब दैनिक मानों के सामने कहाँ बैठता है जो उसी खंड पर वर्ष के इसी सप्ताह में १९९७ से २०२५ तक आए। उस नदी के अपने इतिहास के छह सौ नौ दिन।",
             "किसी नदी की तुलना करने का यही एकमात्र सच्चा ढंग है। तालकावेरी में कावेरी लगभग छह घन मीटर प्रति सेकंड बहती हैं और संगम पर पाँच हज़ार, और इनमें से कोई अंक यह नहीं बताता कि कोई नदी असामान्य व्यवहार कर रही है या नहीं। प्रतिशतक बताता है।",
+          ],
+        },
+        {
+          id: "verify",
+          q: "मुझे कैसे पता चले कि कोई संकल्प पत्र असली है?",
+          a: [
+            "हर पत्र पर वह पंक्ति छपी होती है जिससे वह बना, और वह बीज भी जो उस पंक्ति का हैश है। उस दिन का अंक बाढ़-मॉडल से लीजिए, पंक्ति का हैश स्वयं बनाइए, और वही बीज तथा वही उत्कीर्णन मिलेगा।",
+            "इसीलिए उत्कीर्णन नदी से बनता है, चुना नहीं जाता: पत्र की नकल बनाने के लिए पहले उस दिन का कोपरनिकस का प्रकाशित अभिलेख गढ़ना पड़ेगा।",
+            "आपकी कड़ी रखने वाले किसी अजनबी को पत्र पर के नाम, जल, दिन और उस दिन का पाठ दिखता है। आपका संकल्प उनमें नहीं है।",
           ],
         },
         {

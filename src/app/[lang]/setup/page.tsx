@@ -14,6 +14,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Eyebrow } from "@/components/ui";
 import { SetupForm } from "@/components/setup/SetupForm";
+import { TrackView } from "@/components/site/TrackView";
 
 /* Filled in once, behind a sign-in, so it renders per request with whatever
    the person already chose. */
@@ -39,8 +40,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
-  const { lang } = await params;
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ lang: Lang }>;
+  searchParams: Promise<{ bought?: string }>;
+}) {
+  const [{ lang }, query] = await Promise.all([params, searchParams]);
   const t = setupContent[lang];
 
   const user = await requireUser(lang, ROUTE);
@@ -79,6 +86,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
   return (
     <>
       <div className="grain" aria-hidden="true" />
+      {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
       <Header lang={lang} currentPath={ROUTE} />
 
       <main className="mx-auto max-w-2xl px-5 py-10 pb-16 sm:px-8 sm:py-16">
