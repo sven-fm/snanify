@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { accountContent } from "@/content/account";
+import { HeaderCta } from "@/components/site/HeaderCta";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
+import { Banner } from "@/components/site/Banner";
 
 export type NavLink = { href: string; label: string };
 
@@ -20,18 +23,35 @@ export function Header({
   links,
   currentPath = "/",
   ctaTo,
+  personalised = false,
 }: {
   lang: Lang;
   links?: NavLink[];
   currentPath?: string;
   ctaTo?: string;
+  /**
+   * Swap "Begin" for "Your mornings" when somebody is signed in. Only pages
+   * inside the (app) route group may ask for this: it reads Clerk in the
+   * browser, and Clerk's provider is deliberately absent everywhere else so
+   * its bundle stays off the marketing pages.
+   */
+  personalised?: boolean;
 }) {
   const t = content[lang];
   const navLinks = links ?? primaryNav(lang);
-  const cta = ctaTo ?? ctaHref(lang);
+
+  /* Somebody signed in has already bought; sending them to the pack picker
+     again is the site forgetting who they are. Which of the two they see is
+     decided in the browser, so this page can stay prerendered: see
+     src/components/site/HeaderCta.tsx. */
+  const account = accountContent[lang as "en" | "hi"] ?? accountContent.en;
 
   return (
     <header className="sticky top-0 z-50 bg-paper">
+      {/* Above the masthead and inside the sticky header, so it travels with
+          it rather than scrolling away and leaving the page unexplained. */}
+      <Banner lang={lang} />
+
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* masthead row */}
         <div className="flex h-14 items-center justify-between gap-4">
@@ -48,12 +68,22 @@ export function Header({
 
             <ThemeToggle label={t.themeLabel} />
 
-            <a
-              href={cta}
-              className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
-            >
-              {t.nav.cta}
-            </a>
+            {personalised && !ctaTo ? (
+              <HeaderCta
+                begin={ctaHref(lang)}
+                account={localePath(lang, "/account")}
+                beginLabel={t.nav.cta}
+                accountLabel={account.account.eyebrow}
+                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+              />
+            ) : (
+              <a
+                href={ctaTo ?? ctaHref(lang)}
+                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+              >
+                {t.nav.cta}
+              </a>
+            )}
           </div>
         </div>
       </div>

@@ -32,36 +32,22 @@
 /** The locales in which every page on the site exists. */
 export type FullLang = "en" | "hi";
 
-/** Every locale the site serves. */
-export type Lang =
-  | FullLang
-  | "bn"
-  | "mr"
-  | "te"
-  | "ta"
-  | "gu"
-  | "kn"
-  | "ml"
-  | "or"
-  | "pa"
-  | "as";
+/**
+ * Every locale the site serves.
+ *
+ * Launch is English and Hindi. The site once served ten more locales on its
+ * surface pages; those copy files are still in src/content/<domain>/, out of
+ * the registry and unimported, and a third language returns by adding its row
+ * back here. See build-plan.md, decision "Locales at launch".
+ */
+export type Lang = FullLang;
 
 /**
  * Which writing system a locale is set in. This picks the font pair, and it is
- * deliberately not one-to-one with the locale: Marathi shares Devanagari with
- * Hindi, and Assamese shares its script with Bengali.
+ * deliberately not one-to-one with the locale: Hindi and Marathi share
+ * Devanagari, and a third Devanagari locale would need no new script here.
  */
-export type Script =
-  | "latin"
-  | "devanagari"
-  | "bengali"
-  | "telugu"
-  | "tamil"
-  | "gujarati"
-  | "kannada"
-  | "malayalam"
-  | "oriya"
-  | "gurmukhi";
+export type Script = "latin" | "devanagari";
 
 /** How much of the site a locale carries. See the tier note at the top. */
 export type Depth = "full" | "surface";
@@ -89,16 +75,6 @@ export type LocaleDef = {
 export const LOCALES: readonly LocaleDef[] = [
   { code: "en", tag: "en", og: "en_IN", native: "English",  english: "English",   script: "latin",      dir: "ltr", depth: "full"    },
   { code: "hi", tag: "hi", og: "hi_IN", native: "हिन्दी",     english: "Hindi",     script: "devanagari", dir: "ltr", depth: "full"    },
-  { code: "bn", tag: "bn", og: "bn_IN", native: "বাংলা",      english: "Bengali",   script: "bengali",    dir: "ltr", depth: "surface" },
-  { code: "mr", tag: "mr", og: "mr_IN", native: "मराठी",      english: "Marathi",   script: "devanagari", dir: "ltr", depth: "surface" },
-  { code: "te", tag: "te", og: "te_IN", native: "తెలుగు",     english: "Telugu",    script: "telugu",     dir: "ltr", depth: "surface" },
-  { code: "ta", tag: "ta", og: "ta_IN", native: "தமிழ்",      english: "Tamil",     script: "tamil",      dir: "ltr", depth: "surface" },
-  { code: "gu", tag: "gu", og: "gu_IN", native: "ગુજરાતી",    english: "Gujarati",  script: "gujarati",   dir: "ltr", depth: "surface" },
-  { code: "kn", tag: "kn", og: "kn_IN", native: "ಕನ್ನಡ",      english: "Kannada",   script: "kannada",    dir: "ltr", depth: "surface" },
-  { code: "ml", tag: "ml", og: "ml_IN", native: "മലയാളം",    english: "Malayalam", script: "malayalam",  dir: "ltr", depth: "surface" },
-  { code: "or", tag: "or", og: "or_IN", native: "ଓଡ଼ିଆ",       english: "Odia",      script: "oriya",      dir: "ltr", depth: "surface" },
-  { code: "pa", tag: "pa", og: "pa_IN", native: "ਪੰਜਾਬੀ",     english: "Punjabi",   script: "gurmukhi",   dir: "ltr", depth: "surface" },
-  { code: "as", tag: "as", og: "as_IN", native: "অসমীয়া",    english: "Assamese",  script: "bengali",    dir: "ltr", depth: "surface" },
 ] as const;
 
 /** Every locale code, in registry order. The landing locale is first. */
@@ -175,12 +151,18 @@ export function stripLocale(pathname: string): string {
  */
 const FULL_ONLY: readonly string[] = [
   "/snan",
+  "/begin",
+  "/setup",
+  "/today",
+  "/account",
+  "/sign-in",
+  "/sign-up",
+  "/privacy",
+  "/terms",
+  "/p/",
   "/panchang",
   "/ethics",
-  "/how-it-works",
   "/faq",
-  "/patra",
-  "/verify",
   "/kumbh",
   "/rivers/",
   "/muhurat/",

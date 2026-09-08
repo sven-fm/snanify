@@ -33,38 +33,29 @@ function numeral(n: number, lang: Lang): string {
 }
 
 /**
- * Questions whose long answer lives on another page. The fragment matters:
- * the manifesto is twelve sections of continuous argument, so a link that
- * lands at its masthead is a link that loses the reader. Every id here is a
- * section id in ethicsContent / howItWorksContent, and those ids are identical
- * in both locales on purpose.
+ * Questions whose long answer lives on another page. The fragment matters: a
+ * link that lands at a masthead is a link that loses the reader. Every id here
+ * is a section id in ethicsContent, and those ids are identical in both
+ * locales on purpose.
  */
 const DEEP_LINKS: Record<string, string> = {
-  "does-it-work": "/ethics#position",
-  priest: "/ethics#is-not",
-  religious: "/ethics#precedent",
-  "same-as-bathing": "/ethics#is-not",
-  scam: "/ethics#river",
-  punya: "/ethics#never",
-  "who-for": "/ethics#for",
-  "what-happens": "/how-it-works#form",
-  "black-screen": "/how-it-works#stillness",
-  sound: "/how-it-works#sound",
-  shipping: "/how-it-works#shipping",
-  mark: "/how-it-works#keep",
+  "what-happens": "/snan#form",
+  "black-screen": "/snan#form",
+  sound: "/snan#form",
+  shipping: "/snan#form",
+  mark: "/snan#patra",
   data: "/ethics#river",
   percentile: "/ethics#river",
   offline: "/ethics#river",
-  gauge: "/ethics#unsettled",
-  camera: "/ethics#never",
-  "paying-for": "/how-it-works#price",
-  free: "/how-it-works#price",
-  prices: "/how-it-works#price",
-  eleven: "/how-it-works#price",
-  "sankalp-private": "/ethics#data",
-  delete: "/ethics#data",
-  tracking: "/ethics#data",
-  panchang: "/ethics#unsettled",
+  verify: "/ethics#patra",
+  "paying-for": "/snan#price",
+  free: "/snan#price",
+  prices: "/snan#price",
+  eleven: "/snan#price",
+  "sankalp-private": "/ethics#patra",
+  delete: "/ethics#hands",
+  tracking: "/ethics#hands",
+  panchang: "/ethics#sky",
 };
 
 export function Faq({ lang }: { lang: Lang }) {

@@ -1,4 +1,15 @@
-import type { RiversIndexCopy } from "./en";
+/* PARKED. This locale left the registry when launch was cut to English and
+   Hindi; see build-plan.md, decision "Locales at launch". The file is kept
+   verbatim so the translation is not lost, and it is unimported: nothing in
+   src/lib/content.ts or the domain index files reads it.
+
+   It no longer carries `satisfies` against the English shape, because the
+   English copy moves on and a parked translation failing the build helps
+   nobody. Bringing this locale back means adding its row to LOCALES in
+   src/lib/locales.ts, restoring the `satisfies` clause here, and fixing
+   whatever the compiler then reports. That list is the work, and it is
+   exactly the right list. */
+
 
 /** Gujarati. Respectful register throughout (આપ). Mirrors the August 2026 cut in
     en.ts: the denial blocks state the positive fact, and the /ethics commitment
@@ -100,4 +111,4 @@ export const gu = {
     "temple-tank": "નદીના ઉદ્ગમ પર એક મંદિર-કુંડ",
   },
   notAGhat: "ઘાટ નથી",
-} satisfies RiversIndexCopy;
+};

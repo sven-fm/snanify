@@ -4,9 +4,9 @@ import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Colophon, Mark, Wordmark } from "@/components/Logo";
 import {
-  chihnaContent,
+  patraContent,
   SPECIMEN_WATERMARK_TEXT,
-  type ChihnaRecord,
+  type PatraRecord,
 } from "@/content/patra";
 /* This page exists in English and Hindi only; see the tier note and the
    FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
@@ -14,14 +14,17 @@ import {
 import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
-   जल चिह्न · Jal Chihna, the printable A4 form.
+   संकल्प पत्र · Sankalp Patra, the printable A4 form.
 
-   This file was the Sankalp Patra, a certificate of a rite performed by a
-   person at a ghat. No rite is performed, so that document does not exist any
-   more. The furniture does, and it was always the good part: the double rule,
-   the folio line, the ruled register, the colophon at the foot, the `u()`
-   unit system and the print CSS. All of it is kept. The title block, the field
-   list and the foot line are the Jal Chihna's.
+   This began as a certificate of a rite performed by a person at a ghat. No
+   rite is performed, so that document does not exist any more. The furniture
+   does, and it was always the good part: the double rule, the folio line, the
+   ruled register, the colophon at the foot, the `u()` unit system and the
+   print CSS. All of it is kept.
+
+   It was then orphaned for a while, when /patra/sample was deleted, and it is
+   back as the owner's own print view on /p/[id]: the one copy that carries
+   their sankalp. src/lib/patra-view.ts maps a sitting onto the record below.
 
    What the sheet now asserts, and the whole of it: a name was kept at a stated
    moment, and the water was in a stated condition at that moment, according to
@@ -42,7 +45,7 @@ import type { FullLang as Lang } from "@/lib/locales";
 
    Phones: a fixed-ratio A4 document rendered into 366 usable pixels sets body
    type at about six pixels, which is a picture of a document rather than a
-   document. `ChihnaSheetViewer` is therefore the component pages should reach
+   document. `PatraSheetViewer` is therefore the component pages should reach
    for: it renders the sheet inline and gives the reader a full-size viewer,
    with the controls at the bottom of the screen where a thumb is.
    --------------------------------------------------------------------------- */
@@ -80,7 +83,7 @@ const PRINT_CSS = `
 
 export type ChihnaSheetProps = {
   lang: Lang;
-  data: ChihnaRecord;
+  data: PatraRecord;
   /**
    * Marks the sheet as a specimen: tiled watermark, spot-colour rules, and a
    * stated banner. Anything not issued against a real record must set this.
@@ -161,7 +164,7 @@ export function ChihnaSheet({
   plate,
   className = "",
 }: ChihnaSheetProps) {
-  const t = chihnaContent[lang].sheet;
+  const t = patraContent[lang].sheet;
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const patternId = `chihna-wm-${uid}`;
   /* Devanagari is set in Eczar in both editions: the sheet titles itself in
@@ -267,7 +270,7 @@ export function ChihnaSheet({
                 className="display text-ink"
                 style={{ fontSize: u(30), lineHeight: 1.35, fontFamily: deva }}
               >
-                जल चिह्न
+                संकल्प पत्र
               </p>
               <p
                 className="label text-spot"
@@ -485,7 +488,15 @@ export function ChihnaSheet({
                 may inherit the inscriptional uppercase transform, somebody
                 will type them off a printed sheet. */}
             <Cell label={t.seedLabel}>
-              <span className="tabular" style={{ letterSpacing: "0.06em" }}>
+              {/* Sixty-four hex characters is one unbreakable word, and a word
+                  wider than the sheet pushes the whole document past the
+                  viewport on a phone. It is allowed to wrap: somebody copying
+                  it off paper reads it in two lines quite happily, and the
+                  alternative is a page that scrolls sideways. */}
+              <span
+                className="tabular"
+                style={{ letterSpacing: "0.06em", overflowWrap: "anywhere" }}
+              >
                 {data.seed}
               </span>
             </Cell>
@@ -586,7 +597,7 @@ export function ChihnaSheet({
  * has to be cheap on a mid-range Android, and the design system has no
  * vocabulary for any of them anyway.
  */
-export function ChihnaSheetViewer({
+export function PatraSheetViewer({
   lang,
   data,
   watermark = false,
@@ -594,7 +605,7 @@ export function ChihnaSheetViewer({
   className = "",
   sheetClassName = "",
 }: ChihnaSheetProps & { sheetClassName?: string }) {
-  const t = chihnaContent[lang].sheet;
+  const t = patraContent[lang].sheet;
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"fit" | "read">("fit");
 

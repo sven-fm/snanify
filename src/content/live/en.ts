@@ -240,7 +240,7 @@ export const en = {
   close: {
     eyebrow: "What is free, and what you buy",
     title: "The reading is free. You pay for the morning.",
-    body: "This page, the panchang, the muhurat calendar and all six waters cost nothing to read, always. The four and a half minute snan against this same river data is the part you buy.",
+    body: "This page, the panchang, the muhurat calendar and all six waters cost nothing to read, always. The three minute snan against this same river data is the part you buy.",
     links: {
       rivers: "The six waters",
       muhurat: "The muhurat calendar",

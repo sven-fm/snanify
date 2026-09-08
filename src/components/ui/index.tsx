@@ -76,7 +76,14 @@ export function buttonClass(variant: ButtonVariant = "solid", className = "") {
   return `${buttonBase} ${buttonVariants[variant]} ${className}`;
 }
 
-/** Visual-only button surface, for wrapping in an <a> or <Link>. */
+/**
+ * Visual-only button surface, for wrapping in an <a> or <Link>.
+ *
+ * A <span>, deliberately: it is a skin, not a control. Putting one inside a
+ * <form> and expecting it to submit is the bug it invites, and it did exactly
+ * that on the pack picker once, where three buy buttons rendered perfectly and
+ * did nothing at all. Inside a form, reach for <SubmitButton>.
+ */
 export function CTA({
   children,
   variant = "solid",
@@ -87,6 +94,28 @@ export function CTA({
   className?: string;
 }) {
   return <span className={buttonClass(variant, className)}>{children}</span>;
+}
+
+/**
+ * A real <button type="submit">, wearing the same surface as CTA. Every form on
+ * the site submits through one of these: a server action needs a control that
+ * can actually submit, and a disabled state while it is in flight.
+ */
+export function SubmitButton({
+  children,
+  variant = "solid",
+  className = "",
+  ...rest
+}: {
+  children: React.ReactNode;
+  variant?: ButtonVariant;
+  className?: string;
+} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className">) {
+  return (
+    <button type="submit" className={buttonClass(variant, className)} {...rest}>
+      {children}
+    </button>
+  );
 }
 
 export function LinkButton({

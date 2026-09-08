@@ -1,3 +1,4 @@
+import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse, type NextRequest } from "next/server";
 import { DEFAULT_LANG, LANGS } from "@/lib/locales";
 import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
@@ -20,6 +21,26 @@ import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
 const PREFIXES = new Set<string>(LANGS.filter((l) => l !== DEFAULT_LANG));
 
 /**
+ * The ten locales the site served on its surface pages until launch was cut to
+ * English and Hindi. Their URLs are indexed, so they land on the English page
+ * rather than a 404 while Search Console works through them. The copy files are
+ * still in the tree; a locale coming back means a row in the registry and its
+ * code leaving this list. See build-plan.md, decision "Locales at launch".
+ */
+const RETIRED = new Set(["bn", "mr", "te", "ta", "gu", "kn", "ml", "or", "pa", "as"]);
+
+/**
+ * Routes that were folded into others. A 308 rather than a 404 keeps whatever
+ * link equity they earned and keeps anyone's bookmark working.
+ */
+const FOLDED: Record<string, string> = {
+  "/how-it-works": "/snan",
+  "/patra": "/snan",
+  "/patra/sample": "/snan",
+  "/verify": "/faq",
+};
+
+/**
  * The visitor's country, from Vercel, turned into the currency their price is
  * shown in. Written on every response so a reader who moves country sees the
  * new price on their next load. Not httpOnly: the sync <head> script in
@@ -35,9 +56,24 @@ function stampCurrency(res: NextResponse, req: NextRequest): NextResponse {
   return res;
 }
 
-export function proxy(req: NextRequest) {
+function route(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const first = pathname.split("/")[1];
+
+  // A folded route keeps its readers, in whichever locale asked for it.
+  const withoutPrefix =
+    PREFIXES.has(first) || RETIRED.has(first) ? pathname.slice(first.length + 1) : pathname;
+  const folded = FOLDED[withoutPrefix.replace(/\/$/, "")];
+  if (folded) {
+    const prefix = PREFIXES.has(first) ? `/${first}` : "";
+    return NextResponse.redirect(new URL(`${prefix}${folded}`, req.url), 308);
+  }
+
+  // A retired locale lands on the English page it used to have.
+  if (RETIRED.has(first)) {
+    const rest = pathname.slice(first.length + 1) || "/";
+    return NextResponse.redirect(new URL(rest + search, req.url), 308);
+  }
 
   // /en/... is never canonical, collapse it to the unprefixed form.
   if (first === DEFAULT_LANG) {
@@ -54,6 +90,16 @@ export function proxy(req: NextRequest) {
     req,
   );
 }
+
+/**
+ * Clerk reads its session cookie here so every server component downstream can
+ * ask who is signed in without a round trip of its own. It protects nothing by
+ * itself: pages call `requireUser` and decide for themselves, which keeps the
+ * rule next to the page it applies to rather than in a list here.
+ *
+ * The URL scheme runs inside it, unchanged.
+ */
+export const proxy = clerkMiddleware(async (_auth, req) => route(req));
 
 export const config = {
   /**

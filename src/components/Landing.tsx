@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { content } from "@/lib/content";
 import { RIVERS } from "@/content/rivers";
-import { DATED_OCCASIONS } from "@/content/muhurat";
-import { deepHref, deepLang, pickDeep, type Lang } from "@/lib/locales";
-import { occasionName, waterName } from "@/content/names";
+import { deepHref, type Lang } from "@/lib/locales";
+import { waterName } from "@/content/names";
 import { Mark } from "@/components/Logo";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Reveal } from "@/components/Reveal";
@@ -70,7 +69,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} currentPath="/" ctaTo="#sankalp" />
+      <Header lang={lang} currentPath="/" />
 
       <main>
         {/* ------------------------------------------------ front page ----
@@ -153,14 +152,14 @@ export function Landing({ lang }: { lang: Lang }) {
                 className="ink-in order-5 mt-7 flex flex-col gap-3 sm:order-6 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "240ms" }}
               >
-                <a href="#sankalp" className="block">
+                <Link {...deepHref(lang, "/begin")} className="block">
                   <CTA className="w-full !py-4 sm:w-auto">{t.hero.ctaPrimary}</CTA>
-                </a>
-                <a href="#form" className="block">
+                </Link>
+                <Link {...deepHref(lang, "/live")} className="block">
                   <CTA variant="ghost" className="w-full !py-4 sm:w-auto">
                     {t.hero.ctaSecondary}
                   </CTA>
-                </a>
+                </Link>
               </div>
 
               <p
@@ -232,70 +231,6 @@ export function Landing({ lang }: { lang: Lang }) {
           </div>
         </section>
 
-        {/* ------------------------------------------------ procedure ----- */}
-        <Section id="how">
-          <Reveal>
-            <SectionHeader eyebrow={t.how.eyebrow} title={t.how.title} />
-
-            <ol className="mt-10 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
-              {t.how.steps.map((s, i) => (
-                <li key={s.n} className="tint p-6 sm:p-7">
-                  <span className="display block text-4xl text-spot">{numeral(i + 1, lang)}</span>
-                  <div className="rule-thin mt-4" />
-                  <h3 className="display mt-4 text-2xl">{s.t}</h3>
-                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-        </Section>
-
-        {/* ------------------------------------------------ the form ------
-            The four and a half minutes, set out limb by limb. Nobody guesses
-            that a fifth of a devotional product is a black screen, so the
-            ninety seconds are printed as a reverse block rather than as a
-            bullet: it is the strongest thing in the product.
-
-            The clock and the lengths agree with docs/digital/experience.md:
-            4s transition, 21s reading, 60s breath, 60s sankalp, 90s stillness,
-            35s mark, which is 270 seconds. Change one and change them all. */}
-        <Section id="form" tinted>
-          <Reveal>
-            <SectionHeader eyebrow={t.form.eyebrow} title={t.form.title} lede={t.form.lede} />
-
-            <ol className="mt-10 border-t-2 border-rulestrong">
-              {t.form.limbs.map((l) => (
-                <li
-                  key={l.name}
-                  className="grid grid-cols-[3.25rem_1fr] gap-x-4 gap-y-2 border-b border-rule py-5 sm:grid-cols-[4.5rem_13rem_1fr] sm:gap-x-8"
-                >
-                  <span className="label tabular pt-2 text-spot">{l.clock}</span>
-                  <div>
-                    <h3 className="display text-xl sm:text-2xl">{l.name}</h3>
-                    <p className="label mt-1.5 text-ink2">
-                      {l.alt} · {l.len}
-                    </p>
-                  </div>
-                  <p className="col-start-2 text-sm leading-[1.75] text-ink2 sm:col-start-3">
-                    {l.d}
-                  </p>
-                </li>
-              ))}
-            </ol>
-
-            {/* the black screen, printed as a black screen */}
-            <div className="mt-10 border-2 border-rulestrong bg-ink p-6 text-paper sm:p-8">
-              <p className="label text-spot">{t.form.pull.label}</p>
-              <p className="display mt-3 max-w-2xl text-[1.55rem] leading-tight sm:text-[2.1rem]">
-                {t.form.pull.title}
-              </p>
-              <p className="mt-4 max-w-2xl text-sm leading-[1.8]">{t.form.pull.body}</p>
-            </div>
-
-            <p className="mt-6 max-w-2xl text-sm leading-[1.75] text-ink2">{t.form.note}</p>
-          </Reveal>
-        </Section>
-
         {/* ------------------------------------------------ the six ------- */}
         <Section id="rivers">
           <Reveal>
@@ -328,52 +263,6 @@ export function Landing({ lang }: { lang: Lang }) {
                 </li>
               ))}
             </ul>
-          </Reveal>
-        </Section>
-
-        {/* ------------------------------------------------ calendar ------
-            A ruled register rather than a <table>: at 390px a three-column
-            table is a horizontal scroller, and these are six links, not a
-            dataset. The column heads only appear once the columns do.     */}
-        <Section id="muhurat" tinted>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.muhurat.eyebrow}
-              title={t.muhurat.title}
-              lede={t.muhurat.lede}
-            />
-
-            <div className="mt-10 hidden border-b-2 border-rulestrong pb-2.5 sm:grid sm:grid-cols-[15rem_1fr_9rem] sm:gap-6">
-              <span className="label text-ink2">{t.muhurat.heads.occasion}</span>
-              <span className="label text-ink2">{t.muhurat.heads.reckoning}</span>
-              <span className="label text-right text-ink2">{t.muhurat.heads.window}</span>
-            </div>
-
-            <ul className="mt-10 border-t-2 border-rulestrong sm:mt-0 sm:border-t-0">
-              {DATED_OCCASIONS.slice(0, 6).map((o) => (
-                <li key={o.slug}>
-                  <Link
-                    {...deepHref(lang, `/muhurat/${o.slug}`)}
-                    className="grid gap-1.5 border-b border-rule py-4 transition-colors hover:bg-paper3 sm:grid-cols-[15rem_1fr_9rem] sm:items-baseline sm:gap-6"
-                  >
-                    <span className="display text-xl text-ink underline decoration-rule decoration-1 underline-offset-4">
-                      {occasionName(o, lang)}
-                    </span>
-                    <span
-                      className="text-sm leading-snug text-ink2"
-                      lang={deepLang(lang)}
-                    >
-                      {pickDeep(o.occurrence.note, lang)}
-                    </span>
-                    <span className="label text-ink2 sm:text-right" lang={deepLang(lang)}>
-                      {pickDeep(o.occurrence.label, lang)}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-5 text-sm leading-relaxed text-ink2">{t.muhurat.note}</p>
           </Reveal>
         </Section>
 
@@ -503,9 +392,9 @@ export function Landing({ lang }: { lang: Lang }) {
             <p className="mx-auto mt-5 max-w-lg text-[1.02rem] leading-[1.75] text-ink2">
               {t.closing.lede}
             </p>
-            <a href="#sankalp" className="mt-9 block sm:inline-block">
+            <Link {...deepHref(lang, "/begin")} className="mt-9 block sm:inline-block">
               <CTA className="w-full !py-4 sm:w-auto sm:!px-10">{t.closing.cta}</CTA>
-            </a>
+            </Link>
           </div>
         </section>
       </main>
@@ -525,12 +414,12 @@ export function Landing({ lang }: { lang: Lang }) {
               <Price prices={PRICE.eleven} />
             </p>
           </div>
-          <a
-            href="#sankalp"
+          <Link
+            {...deepHref(lang, "/begin")}
             className="label flex min-h-[48px] shrink-0 items-center bg-spot px-7 text-paper transition-colors hover:bg-ink"
           >
             {t.bar.cta}
-          </a>
+          </Link>
         </div>
       </div>
       {/* keeps the imprint clear of the rail */}

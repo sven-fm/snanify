@@ -21,16 +21,6 @@
 
 import { en, type LandingCopy } from "@/content/landing/en";
 import { hi } from "@/content/landing/hi";
-import { bn } from "@/content/landing/bn";
-import { mr } from "@/content/landing/mr";
-import { te } from "@/content/landing/te";
-import { ta } from "@/content/landing/ta";
-import { gu } from "@/content/landing/gu";
-import { kn } from "@/content/landing/kn";
-import { ml } from "@/content/landing/ml";
-import { or } from "@/content/landing/or";
-import { pa } from "@/content/landing/pa";
-import { as } from "@/content/landing/as";
 import type { Lang } from "@/lib/locales";
 
 export type { Lang, FullLang } from "@/lib/locales";
@@ -40,16 +30,6 @@ export { LANGS, FULL_LANGS } from "@/lib/locales";
 export const content = {
   en,
   hi,
-  bn,
-  mr,
-  te,
-  ta,
-  gu,
-  kn,
-  ml,
-  or,
-  pa,
-  as,
 } satisfies Record<Lang, LandingCopy>;
 
 export type Content = LandingCopy;

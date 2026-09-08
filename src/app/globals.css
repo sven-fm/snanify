@@ -60,6 +60,10 @@
      is swapped in one place. See src/lib/fonts.ts. */
   --font-display: var(--font-eczar), Georgia, serif;
   --font-body: var(--font-martel), ui-sans-serif, system-ui, sans-serif;
+  /* Devanagari is bound under html[data-script="devanagari"] below, and its
+     faces are only attached to <html> on the pages that read it. See
+     src/lib/fonts.ts: declaring both subsets everywhere had every English
+     reader downloading Devanagari they never saw. */
 }
 
 @layer base {
@@ -104,42 +108,16 @@
 
 /* --- Type ---------------------------------------------------------------- */
 
-/* Each script binds the two type tokens to its own pair of faces. `data-script`
-   rather than `lang` because Hindi and Marathi share Devanagari and Bengali and
-   Assamese share a script, so keying on locale would repeat every rule twice.
-   Specificity beats the `:root` defaults above, which is what makes this work. */
-html[data-script="bengali"] {
-  --font-display: var(--font-bn-display), Georgia, serif;
-  --font-body: var(--font-bn-text), ui-sans-serif, system-ui, sans-serif;
+html[data-script="devanagari"] {
+  --font-display: var(--font-eczar-deva), var(--font-eczar), Georgia, serif;
+  --font-body: var(--font-martel-deva), var(--font-martel), ui-sans-serif, system-ui, sans-serif;
 }
-html[data-script="telugu"] {
-  --font-display: var(--font-te-display), Georgia, serif;
-  --font-body: var(--font-te-text), ui-sans-serif, system-ui, sans-serif;
-}
-html[data-script="tamil"] {
-  --font-display: var(--font-ta-display), Georgia, serif;
-  --font-body: var(--font-ta-text), ui-sans-serif, system-ui, sans-serif;
-}
-html[data-script="gujarati"] {
-  --font-display: var(--font-gu-display), Georgia, serif;
-  --font-body: var(--font-gu-text), ui-sans-serif, system-ui, sans-serif;
-}
-html[data-script="kannada"] {
-  --font-display: var(--font-kn-display), Georgia, serif;
-  --font-body: var(--font-kn-text), ui-sans-serif, system-ui, sans-serif;
-}
-html[data-script="malayalam"] {
-  --font-display: var(--font-ml-display), Georgia, serif;
-  --font-body: var(--font-ml-text), ui-sans-serif, system-ui, sans-serif;
-}
-html[data-script="oriya"] {
-  --font-display: var(--font-or-display), Georgia, serif;
-  --font-body: var(--font-or-text), ui-sans-serif, system-ui, sans-serif;
-}
-html[data-script="gurmukhi"] {
-  --font-display: var(--font-pa-display), Georgia, serif;
-  --font-body: var(--font-pa-text), ui-sans-serif, system-ui, sans-serif;
-}
+
+/* `data-script` rather than `lang`, because Hindi and Marathi share Devanagari:
+   keying on locale would repeat every rule. Both locales the site serves are set
+   by the Eczar and Martel pair bound at `:root` above, so no script needs its own
+   binding today; the rules below still key off `data-script` so a third script
+   needs one block here and nothing else. */
 
 @utility display {
   font-family: var(--font-display);

@@ -538,7 +538,7 @@ export const panchangContent = {
     },
     close: {
       title: "That is the whole of the reference.",
-      lede: "If it answered your question, it has done its job and you owe us nothing. The four and a half minute snan is the other half of this site, and the sankalp in it is one you make yourself.",
+      lede: "If it answered your question, it has done its job and you owe us nothing. The three minute snan is the other half of this site, and the sankalp in it is one you make yourself.",
       links: [
         {
           href: "/muhurat",
@@ -551,9 +551,9 @@ export const panchangContent = {
           note: "What each of the six places is, and what it is kept for.",
         },
         {
-          href: "/how-it-works",
+          href: "/snan",
           label: "How it works",
-          note: "The four and a half minutes, limb by limb, and the mark you keep.",
+          note: "The three minutes, limb by limb, and the mark you keep.",
         },
         {
           href: "/ethics",
@@ -755,7 +755,7 @@ export const panchangContent = {
     },
     close: {
       title: "संदर्भ इतना ही है।",
-      lede: "यदि इससे आपका प्रश्न हल हुआ तो इसका काम पूरा हुआ और आप पर कुछ शेष नहीं। साढ़े चार मिनट का स्नान इस साइट का दूसरा भाग है, और उसमें संकल्प आप स्वयं करते हैं।",
+      lede: "यदि इससे आपका प्रश्न हल हुआ तो इसका काम पूरा हुआ और आप पर कुछ शेष नहीं। तीन मिनट का स्नान इस साइट का दूसरा भाग है, और उसमें संकल्प आप स्वयं करते हैं।",
       links: [
         {
           href: "/muhurat",
@@ -768,9 +768,9 @@ export const panchangContent = {
           note: "छहों स्थान क्या हैं, और प्रत्येक किसके लिए माना जाता है।",
         },
         {
-          href: "/how-it-works",
+          href: "/snan",
           label: "कैसे काम करता है",
-          note: "साढ़े चार मिनट, अंग दर अंग, और वह चिह्न जो आपके पास रहता है।",
+          note: "तीन मिनट, अंग दर अंग, और वह चिह्न जो आपके पास रहता है।",
         },
         {
           href: "/ethics",
