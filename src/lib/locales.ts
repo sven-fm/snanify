@@ -157,6 +157,8 @@ const FULL_ONLY: readonly string[] = [
   "/account",
   "/sign-in",
   "/sign-up",
+  "/privacy",
+  "/terms",
   "/p/",
   "/panchang",
   "/ethics",

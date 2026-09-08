@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { content } from "@/lib/content";
-import { servesPath, type Lang } from "@/lib/locales";
+import { localePath, servesPath, type Lang } from "@/lib/locales";
 import { navItem, navLabel, type NavKey } from "@/lib/nav";
 import { Mark, Wordmark } from "@/components/Logo";
 
@@ -9,6 +10,9 @@ import { Mark, Wordmark } from "@/components/Logo";
  * have to be kept in step with it. The indices are the three columns as they
  * are written in src/content/landing/en.ts: service, company, legal.
  */
+/* In the order `t.footer.cols[LEGAL].links` sets them: privacy, terms, refunds. */
+const LEGAL_ROUTES = ["/privacy", "/terms", "/terms#refunds"];
+
 const SERVICE = 0;
 const COMPANY = 1;
 const LEGAL = 2;
@@ -82,13 +86,18 @@ export function Footer({ lang }: { lang: Lang }) {
           <div>
             <h3 className="label text-spot">{t.footer.cols[LEGAL].h}</h3>
             <div className="rule-thin mt-3" />
+            {/* Privacy and terms are real pages now. Refunds is answered
+                inside the terms rather than on a page of its own, so it points
+                at that section instead of at a route that does not exist. */}
             <ul className="mt-4 space-y-2.5">
-              {/* Routes that do not exist yet. Set as plain text rather than
-                  links: a footer full of href="#" is a worse signal than an
-                  honestly inert label. */}
-              {t.footer.cols[LEGAL].links.map((label) => (
-                <li key={label} className="text-sm text-ink2/60">
-                  {label}
+              {t.footer.cols[LEGAL].links.map((label, i) => (
+                <li key={label}>
+                  <Link
+                    href={localePath(lang, LEGAL_ROUTES[i] ?? "/terms")}
+                    className="text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:text-spot"
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>

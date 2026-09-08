@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { accountContent } from "@/content/account";
-import { isSignedIn } from "@/lib/auth";
+import { HeaderCta } from "@/components/site/HeaderCta";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
@@ -17,7 +17,7 @@ export type NavLink = { href: string; label: string };
  * `currentPath` is the locale-independent route, so the language switch lands
  * on the same page instead of dumping you at home.
  */
-export async function Header({
+export function Header({
   lang,
   links,
   currentPath = "/",
@@ -32,11 +32,10 @@ export async function Header({
   const navLinks = links ?? primaryNav(lang);
 
   /* Somebody signed in has already bought; sending them to the pack picker
-     again is the site forgetting who they are. They get their register. */
-  const signedIn = await isSignedIn();
+     again is the site forgetting who they are. Which of the two they see is
+     decided in the browser, so this page can stay prerendered: see
+     src/components/site/HeaderCta.tsx. */
   const account = accountContent[lang as "en" | "hi"] ?? accountContent.en;
-  const cta = ctaTo ?? (signedIn ? localePath(lang, "/account") : ctaHref(lang));
-  const ctaLabel = signedIn ? account.account.eyebrow : t.nav.cta;
 
   return (
     <header className="sticky top-0 z-50 bg-paper">
@@ -56,12 +55,22 @@ export async function Header({
 
             <ThemeToggle label={t.themeLabel} />
 
-            <a
-              href={cta}
-              className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
-            >
-              {ctaLabel}
-            </a>
+            {ctaTo ? (
+              <a
+                href={ctaTo}
+                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+              >
+                {t.nav.cta}
+              </a>
+            ) : (
+              <HeaderCta
+                begin={ctaHref(lang)}
+                account={localePath(lang, "/account")}
+                beginLabel={t.nav.cta}
+                accountLabel={account.account.eyebrow}
+                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+              />
+            )}
           </div>
         </div>
       </div>
