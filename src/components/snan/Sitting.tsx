@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LIMB_ORDER, SITTING, type Limb } from "@/lib/sitting-plan";
 import type { todayContent } from "@/content/today";
-import { keepThisMorning } from "@/app/[lang]/today/actions";
+import { keepThisMorning } from "@/app/[lang]/(app)/today/actions";
 import { track } from "@/lib/track";
 import type { FullLang as Lang } from "@/lib/locales";
 

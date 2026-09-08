@@ -1,8 +1,6 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
 import { themeScript } from "@/components/ThemeToggle";
 import { currencyScript } from "@/lib/currency";
-import { clerkAppearance, clerkLocalization } from "@/lib/clerk-look";
 import { fontClass } from "@/lib/fonts";
 import { localeDef, type Lang } from "@/lib/locales";
 
@@ -16,12 +14,11 @@ export function RootShell({ lang, children }: { lang: Lang; children: React.Reac
   const def = localeDef(lang);
 
   return (
-    <ClerkProvider appearance={clerkAppearance} localization={clerkLocalization(lang)}>
     <html
       lang={def.tag}
       dir={def.dir}
       data-script={def.script}
-      className={fontClass()}
+      className={fontClass(lang)}
       suppressHydrationWarning
     >
       {/* Must be a real <head> child: React refuses to hydrate a sync <script>
@@ -40,6 +37,5 @@ export function RootShell({ lang, children }: { lang: Lang; children: React.Reac
         <Analytics />
       </body>
     </html>
-    </ClerkProvider>
   );
 }

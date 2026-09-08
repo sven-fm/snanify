@@ -111,7 +111,7 @@ export default async function Page({
         <meta httpEquiv="refresh" content={`${EVERY_SECONDS};url=${next}`} />
       )}
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} personalised />
 
       <main className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
         <Eyebrow>{beginContent[lang].eyebrow}</Eyebrow>

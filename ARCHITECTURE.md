@@ -27,6 +27,9 @@ and a scheduled fetch.
 src/
   app/
     [lang]/              one route tree, two locales
+      (app)/             everything behind a sign-in, and the only subtree that
+                         loads Clerk in the browser. A route group, so no URL
+                         changes: /begin is still /begin
       page.tsx           /            and /hi, /ta, /bn, ...
       live/              /live        the six waters right now, free
       snan/              /snan        the product page, five parts and the tariff
@@ -153,6 +156,31 @@ presented as live would quietly destroy the only genuinely defensible asset in t
 
 Every raw agency response is stored with its fetch time and a hash, because agency endpoints
 rotate and expire while the artefact has to outlive them.
+
+## What loads where
+
+Two rules decide it, and both were learned by measuring rather than by design.
+
+**Clerk only wraps the `(app)` group.** `ClerkProvider` sat in the root shell,
+so Clerk's client bundle loaded on the landing page, the six waters, the
+calendar and the panchang: pages with no account on them, which are the free
+crawlable surface and are supposed to be cheap to open. Server-side `auth()`
+needs only `clerkMiddleware` in `src/proxy.ts`, so the provider is now scoped
+to the routes with client-side Clerk widgets. The masthead's personalised
+button is opt-in per page (`<Header personalised />`) for the same reason.
+
+**Fonts are split by script and the Devanagari cuts are not preloaded.** Both
+families were loaded at five weights covering Latin and Devanagari, ten faces,
+and `next/font` preloads everything it declares: an English reader downloaded
+about a hundred and ninety kilobytes of Devanagari they would never paint. The
+design uses three weights, so three are loaded, and the Devanagari faces carry
+`preload: false` and are attached to `<html>` only where they are read. An
+English page went from 285kB of fonts to 122kB.
+
+Anything imported by a client component is in the browser bundle, including
+whatever that module imports in turn. Two hydration failures came from exactly
+that: a validator that pulls the muhurat dataset, and the analytics library at
+module scope. Both are documented where they happened.
 
 ## Rendering
 

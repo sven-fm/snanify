@@ -1,6 +1,8 @@
 import { Eczar, Martel_Sans } from "next/font/google";
 
 
+import { localeDef, type Lang } from "@/lib/locales";
+
 /* ---------------------------------------------------------------------------
    One display face and one text face, covering both locales.
 
@@ -19,24 +21,46 @@ import { Eczar, Martel_Sans } from "next/font/google";
    all fail the build with "Unexpected spread". Both calls are written out in
    full for that reason.
 
+   THREE WEIGHTS, BECAUSE THE DESIGN USES THREE. globals.css asks for 400, 600
+   and 700 and nothing else. Both families were loaded at five weights each,
+   which is ten faces covering Latin and Devanagari: most of a phone's opening
+   connection budget spent on cuts that never render. Adding a weight here
+   without a rule that uses it costs every reader about thirty kilobytes.
+
    ADDING A SCRIPT means a face pair here, a `Script` member in
    src/lib/locales.ts, and a `html[data-script=...]` rule in globals.css. The
    site once carried eight more script pairs, unpreloaded; git remembers them.
    --------------------------------------------------------------------------- */
 
 
-const eczar = Eczar({
-  subsets: ["latin", "devanagari"],
-  weight: ["400", "500", "600", "700", "800"],
+const eczarLatin = Eczar({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
   variable: "--font-eczar",
   display: "swap",
 });
 
-const martel = Martel_Sans({
-  subsets: ["latin", "devanagari"],
-  weight: ["300", "400", "600", "700", "800"],
+const martelLatin = Martel_Sans({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
   variable: "--font-martel",
   display: "swap",
+});
+
+const eczarDeva = Eczar({
+  subsets: ["devanagari"],
+  weight: ["400", "600", "700"],
+  variable: "--font-eczar-deva",
+  display: "swap",
+  preload: false,
+});
+
+const martelDeva = Martel_Sans({
+  subsets: ["devanagari"],
+  weight: ["400", "600", "700"],
+  variable: "--font-martel-deva",
+  display: "swap",
+  preload: false,
 });
 
 
@@ -57,13 +81,27 @@ const martel = Martel_Sans({
 
 
 /**
- * The `<html>` class list that makes the site's faces available.
+ * The `<html>` class list that makes this locale's faces available.
  *
- * Eczar and Martel Sans between them set Latin and Devanagari, which is both
- * locales the site serves, so the class list is the same on every page. A
- * third script adds a face above and a branch here, keyed off
- * `localeDef(lang).script`.
+ * Latin always, Devanagari only where it is read. next/font emits one file per
+ * subset and preloads them, so declaring both subsets on one family meant an
+ * English page downloading about a hundred and ninety kilobytes of Devanagari
+ * it would never paint. Splitting them means an English page fetches the Latin
+ * cuts and stops.
+ *
+ * A Devanagari page still gets both, because the masthead wordmark is Latin
+ * whatever the page is set in.
+ *
+ * `preload: false` ON THE DEVANAGARI CUTS IS LOAD BEARING. next/font emits a
+ * preload hint for every face declared in an imported module, whatever class
+ * list the page ends up with, so splitting the subsets alone changed nothing:
+ * an English page still fetched all of it up front. Unpreloaded, a face is
+ * fetched only when a glyph from it is painted, which costs a Hindi reader one
+ * round trip and saves an English reader the whole Devanagari payload.
  */
-export function fontClass(): string {
-  return `${eczar.variable} ${martel.variable}`;
+export function fontClass(lang: Lang): string {
+  const latin = `${eczarLatin.variable} ${martelLatin.variable}`;
+  if (localeDef(lang).script !== "devanagari") return latin;
+
+  return `${latin} ${eczarDeva.variable} ${martelDeva.variable}`;
 }

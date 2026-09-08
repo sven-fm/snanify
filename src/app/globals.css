@@ -60,6 +60,10 @@
      is swapped in one place. See src/lib/fonts.ts. */
   --font-display: var(--font-eczar), Georgia, serif;
   --font-body: var(--font-martel), ui-sans-serif, system-ui, sans-serif;
+  /* Devanagari is bound under html[data-script="devanagari"] below, and its
+     faces are only attached to <html> on the pages that read it. See
+     src/lib/fonts.ts: declaring both subsets everywhere had every English
+     reader downloading Devanagari they never saw. */
 }
 
 @layer base {
@@ -103,6 +107,11 @@
 }
 
 /* --- Type ---------------------------------------------------------------- */
+
+html[data-script="devanagari"] {
+  --font-display: var(--font-eczar-deva), var(--font-eczar), Georgia, serif;
+  --font-body: var(--font-martel-deva), var(--font-martel), ui-sans-serif, system-ui, sans-serif;
+}
 
 /* `data-script` rather than `lang`, because Hindi and Marathi share Devanagari:
    keying on locale would repeat every rule. Both locales the site serves are set

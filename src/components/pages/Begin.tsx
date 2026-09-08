@@ -11,7 +11,7 @@ import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Eyebrow, Price } from "@/components/ui";
-import { startCheckout } from "@/app/[lang]/begin/actions";
+import { startCheckout } from "@/app/[lang]/(app)/begin/actions";
 import { TrackView } from "@/components/site/TrackView";
 import { TrackedSubmit } from "@/components/site/TrackedSubmit";
 

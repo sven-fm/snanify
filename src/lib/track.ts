@@ -1,6 +1,5 @@
 "use client";
 
-import { track as vercelTrack } from "@vercel/analytics";
 
 /* ---------------------------------------------------------------------------
    The eight moments worth counting.
@@ -20,6 +19,14 @@ import { track as vercelTrack } from "@vercel/analytics";
 
    Vercel Web Analytics is cookieless and does not follow anybody between
    sites, which is why it is the only measurement on the site.
+
+   THE LIBRARY IS LOADED WHEN AN EVENT IS SENT, NOT WHEN THIS MODULE IS
+   IMPORTED. Importing `@vercel/analytics` at the top of a client component
+   made that component fail to hydrate: the sitting, of all pages, was being
+   torn down and rebuilt in the browser roughly one load in three. A dynamic
+   import inside the function means nothing is evaluated during the server
+   render and nothing is in the bundle until somebody does something worth
+   counting.
    --------------------------------------------------------------------------- */
 
 export type Event =
@@ -49,10 +56,10 @@ export function track(event: Event, props: Props = {}): void {
     Object.entries(props).filter(([, v]) => typeof v === "string" && v.length > 0),
   );
 
-  try {
-    vercelTrack(event, clean as Record<string, string>);
-  } catch {
-    /* Measurement is never worth an error in front of somebody who is mid
-       practice. A blocked analytics script is a normal state, not a fault. */
-  }
+  /* Fire and forget, and never awaited: measurement is not worth a millisecond
+     in front of somebody who is mid practice, and a blocked analytics script
+     is a normal state rather than a fault. */
+  void import("@vercel/analytics")
+    .then(({ track: send }) => send(event, clean as Record<string, string>))
+    .catch(() => {});
 }

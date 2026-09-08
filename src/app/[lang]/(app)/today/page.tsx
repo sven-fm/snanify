@@ -84,7 +84,7 @@ export default async function Page({
     return (
       <>
         <div className="grain" aria-hidden="true" />
-        <Header lang={lang} currentPath={ROUTE} />
+        <Header lang={lang} currentPath={ROUTE} personalised />
         <main className="mx-auto max-w-md px-5 py-16 text-center sm:py-24">
           <Eyebrow>{t.begin.eyebrow}</Eyebrow>
           <h1 className="display mt-4 text-[2rem] leading-[1.2]">{t.already.title}</h1>
@@ -125,7 +125,7 @@ export default async function Page({
     <>
       <div className="grain" aria-hidden="true" />
       {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} personalised />
 
       <main className="pb-16">
         <Sitting

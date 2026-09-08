@@ -22,11 +22,19 @@ export function Header({
   links,
   currentPath = "/",
   ctaTo,
+  personalised = false,
 }: {
   lang: Lang;
   links?: NavLink[];
   currentPath?: string;
   ctaTo?: string;
+  /**
+   * Swap "Begin" for "Your mornings" when somebody is signed in. Only pages
+   * inside the (app) route group may ask for this: it reads Clerk in the
+   * browser, and Clerk's provider is deliberately absent everywhere else so
+   * its bundle stays off the marketing pages.
+   */
+  personalised?: boolean;
 }) {
   const t = content[lang];
   const navLinks = links ?? primaryNav(lang);
@@ -55,14 +63,7 @@ export function Header({
 
             <ThemeToggle label={t.themeLabel} />
 
-            {ctaTo ? (
-              <a
-                href={ctaTo}
-                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
-              >
-                {t.nav.cta}
-              </a>
-            ) : (
+            {personalised && !ctaTo ? (
               <HeaderCta
                 begin={ctaHref(lang)}
                 account={localePath(lang, "/account")}
@@ -70,6 +71,13 @@ export function Header({
                 accountLabel={account.account.eyebrow}
                 className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
               />
+            ) : (
+              <a
+                href={ctaTo ?? ctaHref(lang)}
+                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+              >
+                {t.nav.cta}
+              </a>
             )}
           </div>
         </div>

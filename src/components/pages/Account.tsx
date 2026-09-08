@@ -11,7 +11,7 @@ import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Eyebrow, LinkButton, SubmitButton } from "@/components/ui";
-import { deleteAccount, setReminder } from "@/app/[lang]/account/actions";
+import { deleteAccount, setReminder } from "@/app/[lang]/(app)/account/actions";
 
 /* ---------------------------------------------------------------------------
    /account, which is the register and nothing else.
