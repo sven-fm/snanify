@@ -366,10 +366,11 @@ subtractive except the landing rewrite.
 
 ### Phase 4: Set up once
 
-**Known issue carried forward.** `/setup` logs React error #418, a hydration
-mismatch, on some first loads. The form saves correctly; the cost is that React
-rebuilds the tree on the client. Everything ruled out so far is written at the
-head of `src/components/setup/SetupForm.tsx`. Worth an hour before launch.
+**The hydration warning is fixed.** It was one import: the form took `LIMITS`
+from the validator, which imports the muhurat dataset, which parses and
+validates a large JSON file at module load. That whole thing was landing in the
+browser bundle. The constants moved to a leaf module. Eight failures in eight
+loads became zero.
 
 - [x] **4.1 Prayers.** `src/content/prayers.ts`: for each of the six waters, three to five short prayers in the public domain (for example: Ganga: गङ्गे च यमुने चैव (the sapta-nadi shloka), नमामि गङ्गे; Yamuna: a verse from Yamunashtakam; Godavari, Shipra, Kaveri: the sapta-nadi shloka and a regional verse; plus universal: Gayatri, Mahamrityunjaya, ॐ नमः शिवाय). Each entry: `id`, `title: Record<FullLang, string>`, `devanagari`, `roman` (IAST-lite, readable), `meaning: Record<FullLang, string>`, `waters: WaterSlug[] | "all"`. Text accuracy is on the owner's open-items list. No prayer text is generated; every one is a known verse, cited by source name in a comment.
 - [x] **4.2 Portrait pipeline.** `npm i sharp @vercel/blob`. `src/lib/portrait.ts` `processPortrait(buffer, crop: { x, y, w, h })`: rotate by EXIF, extract crop, resize to 800 by 1000 cover, grayscale, `linear(1.15, -10)` for contrast, `sharpen`, a subtle noise overlay for grain, output JPEG quality 82. Test: a fixture image in, dimensions and grayscale out, under 200 KB. Raw upload goes to the private Blob store under `raw/{userId}/{id}.jpg`, processed to the public store under `portrait/{userId}/{id}.jpg`. Max upload 8 MB, JPEG/PNG/HEIC (convert HEIC via sharp; if the build lacks HEIF support, reject with a message to save as JPEG). The user sees the processed version before saving and can re-crop.
@@ -452,19 +453,18 @@ endpoint registered against the deployed URL. Nothing is merged to `main` yet.
 
 **Not yet done from the earlier phases**, each small:
 
-- [ ] **3.7 JSON-LD offers on `/snan`**, now that a checkout exists.
-- [ ] **4.5 Privacy and terms pages.** Drafts naming Clerk, Stripe, Neon,
+- [x] **3.7 JSON-LD offers on `/snan`**, now that a checkout exists.
+- [x] **4.5 Privacy and terms pages.** Drafts naming Clerk, Stripe, Neon,
   Vercel and Resend as processors, and stating that portraits and names are
   deleted on account deletion, which the code already does.
-- [ ] **5.10 and 6.9 tests**: the sitting reducer and `recordFromSitting` are
+- [x] **5.10 and 6.9 tests**: the sitting reducer and `recordFromSitting` are
   covered by driving the browser rather than by unit tests. Worth adding.
-- [ ] **6.8 The `/faq#verify` entry**: what a Patra shows, how the seed is
+- [x] **6.8 The `/faq#verify` entry**: what a Patra shows, how the seed is
   recomputed, what is never shown.
-- [ ] **The `/setup` hydration warning**, described at the head of
-  `src/components/setup/SetupForm.tsx`.
+
 
 - [ ] **8.1 Real figures.** Replace the hero placeholders with real counts (sittings, countries from `users.tz`) or with a true statement that needs no number. Owner's call, recorded in `CLAUDE.md`.
-- [ ] **8.2 Analytics events** via `@vercel/analytics` `track()`: `begin_view`, `checkout_start`, `purchase`, `setup_done`, `sitting_start`, `sitting_done`, `share_open`, `share_done`. No personal data in properties.
+- [x] **8.2 Analytics events** via `@vercel/analytics` `track()`: `begin_view`, `checkout_start`, `purchase`, `setup_done`, `sitting_start`, `sitting_done`, `share_open`, `share_done`. No personal data in properties.
 - [ ] **8.3 Legal.** Privacy, terms, the Indian-card FAQ entry, OIDAR decision recorded in section 4 above. `/ethics` names every processor.
 - [ ] **8.4 Stripe live.** Live keys in Vercel production env, webhook endpoint registered for production, one real purchase of `one` by the owner, refunded.
 - [ ] **8.5 Search Console.** Follow `docs/seo/search-console.md`: resubmit the sitemap, confirm the ten surface-locale URLs report as redirected, confirm the four deleted routes redirect.

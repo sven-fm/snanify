@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { setupContent } from "@/content/setup";
-import { LIMITS } from "@/lib/profile-input";
+import { LIMITS } from "@/lib/limits";
 import { saveProfile, type SaveState } from "@/app/[lang]/setup/actions";
 import type { FullLang as Lang } from "@/lib/locales";
 import { SubmitButton } from "@/components/ui";
@@ -30,16 +30,17 @@ import { track } from "@/lib/track";
    leaves the phone until the form is submitted, and the pressed grey version
    the sheet will actually use is made on the server.
 
-   KNOWN, AND UNRESOLVED: this page logs React error #418, a hydration
-   mismatch, on some first loads and not others. The form works correctly and
-   saves correctly; the cost is that React discards the server HTML and rebuilds
-   this tree on the client. What has been ruled out, by diffing the server HTML
-   against the hydrated DOM until the two were identical: the time zone readout
-   (removed), suppressHydrationWarning, useSyncExternalStore, a DOM write from
-   an effect, and binding the server action inside this component (which was a
-   real bug and is fixed, the edition now travels in a hidden field). The
-   remaining suspect is `useActionState` with a client wrapper around the
-   returned action. Worth another hour before launch, not now.
+   ONE BUG WORTH REMEMBERING. This page used to log React error #418, a
+   hydration mismatch, on most first loads: React would throw away the server
+   HTML and rebuild the whole form in the browser. It was not the time zone,
+   not `useActionState`, not the server action, and not suppressHydrationWarning,
+   all of which were tried. It was a single import. `LIMITS` came from
+   src/lib/profile-input.ts, which imports the muhurat dataset to check a water
+   slug, and that module parses and validates a large JSON file the moment it
+   loads. Importing one constant from it pulled all of that into the browser.
+   The constants live in a leaf module now, and the bisect that found it went:
+   remove the fields, remove the form, remove the markup, remove the hooks,
+   remove the props, then add the imports back one at a time.
    --------------------------------------------------------------------------- */
 
 type Copy = (typeof setupContent)["en"];

@@ -1,4 +1,5 @@
 import { GHAT_BY_ID, type GhatId } from "@/content/muhurat";
+import { LIMITS } from "@/lib/limits";
 import { isPrayerFor } from "@/content/prayers";
 import type { NameEntry } from "@/db/schema";
 
@@ -26,14 +27,10 @@ import type { NameEntry } from "@/db/schema";
    the message is in the reader's language, and this file never holds English.
    --------------------------------------------------------------------------- */
 
-export const LIMITS = {
-  /** Names on a sheet. Five is what the sheet's title block can set. */
-  maxNames: 5,
-  /** One name. Long enough for "Lakshmi Narayanan Venkataraman". */
-  nameChars: 60,
-  /** The vow. Two or three sentences, which is what people actually write. */
-  sankalpChars: 280,
-} as const;
+/* Re-exported so server-side callers keep one import, and defined in a leaf
+   module so a client component can take it without pulling this file's own
+   imports into the browser. See src/lib/limits.ts. */
+export { LIMITS } from "@/lib/limits";
 
 /** Straight off the form, everything a string. */
 export type RawProfile = {
