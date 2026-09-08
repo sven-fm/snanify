@@ -5,7 +5,7 @@ import { db, sittings } from "@/db";
 import { patraPageContent } from "@/content/patra-page";
 import { currentUser } from "@/lib/auth";
 import { isId } from "@/lib/ids";
-import { patraView } from "@/lib/patra-view";
+import { patraView, printableRecord } from "@/lib/patra-view";
 import { seedLine } from "@/lib/seed";
 import type { RiverSlice } from "@/lib/patra-record";
 import { localePath, SITE_ORIGIN, type FullLang as Lang } from "@/lib/locales";
@@ -14,6 +14,9 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Eyebrow, LinkButton } from "@/components/ui";
 import { ShareButton } from "@/components/patra/ShareButton";
+import { PatraSheetViewer } from "@/components/SankalpPatra";
+import { setPatraPublic } from "@/app/[lang]/p/[id]/actions";
+import { SubmitButton } from "@/components/ui";
 
 /* ---------------------------------------------------------------------------
    /p/[id], the sheet somebody was sent.
@@ -160,6 +163,40 @@ export default async function Page({
             <h2 className="label text-spot">{t.yours}</h2>
             <p className="display mt-4 text-[1.5rem] leading-[1.45]">{sitting.sankalpText}</p>
             <p className="mt-4 text-sm text-ink2">{t.privateNote}</p>
+          </section>
+        )}
+
+        {/* ---------------- the owner's own controls ---------------- */}
+        {isOwner && (
+          <section className="mt-12 border-t-2 border-rulestrong pt-6">
+            <h2 className="label text-spot">{t.ownerHeading}</h2>
+
+            {!sitting.isPublic && <p className="mt-4 text-[0.98rem] text-ink">{t.privateNow}</p>}
+
+            <form
+              action={setPatraPublic.bind(null, lang, view.id, !sitting.isPublic)}
+              className="mt-4"
+            >
+              <SubmitButton variant="ghost">
+                {sitting.isPublic ? t.makePrivate : t.makePublic}
+              </SubmitButton>
+            </form>
+
+            {sitting.isPublic && (
+              <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink2">
+                {t.privateWarning}
+              </p>
+            )}
+
+            {/* The A4 sheet, which carries the sankalp and is meant for paper.
+                Its own viewer handles the phone case, where a fixed-ratio
+                document rendered into 366 pixels would set body type at about
+                six. */}
+            <h3 className="label mt-10 border-t border-rule pt-5 text-ink">{t.printHeading}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-ink2">{t.printNote}</p>
+            <div className="mt-5">
+              <PatraSheetViewer lang={lang} data={printableRecord(sitting)} />
+            </div>
           </section>
         )}
 

@@ -162,7 +162,18 @@ export async function mintSitting({
 
   const kept = await db.select().from(sittings).where(eq(sittings.id, id)).limit(1);
 
-  return { outcome: "kept", sitting: kept[0], creditsLeft: await balance(db, userId) };
+  /* Drawn now, so the share button has a file to attach rather than a render
+     to wait for. It is deliberately not inside the transaction: a sheet that
+     fails to draw must not undo a morning somebody kept, and the image route
+     draws one on demand when this has not run. */
+  const { storeSheet } = await import("@/lib/patra-store");
+  const imageKey = await storeSheet(kept[0]);
+
+  return {
+    outcome: "kept",
+    sitting: imageKey ? { ...kept[0], imageKey } : kept[0],
+    creditsLeft: await balance(db, userId),
+  };
 }
 
 /** Today's sitting for this person and water, if they already kept one. */

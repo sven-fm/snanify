@@ -49,6 +49,15 @@ const en = {
 
   privateTitle: "This sheet is private.",
   privateBody: "Whoever kept it has not made it public.",
+
+  ownerHeading: "Yours to do as you like with",
+  makePrivate: "Make this private",
+  makePublic: "Make this shareable again",
+  privateNow: "Private. The link answers nothing, for anybody.",
+  privateWarning: "Anybody you already sent the image to still has it. What stops is the link.",
+  printCta: "Print it",
+  printHeading: "The printed sheet",
+  printNote: "A4. Your sankalp is on this one, and on no other copy.",
 };
 
 const hi = {
@@ -84,6 +93,15 @@ const hi = {
 
   privateTitle: "यह पत्र निजी है।",
   privateBody: "जिन्होंने इसे रखा, उन्होंने इसे सार्वजनिक नहीं किया।",
+
+  ownerHeading: "यह आपका है, जो चाहें कीजिए",
+  makePrivate: "इसे निजी कर दीजिए",
+  makePublic: "इसे फिर साझा योग्य कीजिए",
+  privateNow: "निजी। यह कड़ी अब किसी को कुछ नहीं दिखाती।",
+  privateWarning: "जिन्हें आपने चित्र भेज दिया है, उनके पास वह रहेगा। रुकती केवल कड़ी है।",
+  printCta: "छापिए",
+  printHeading: "छपा हुआ पत्र",
+  printNote: "ए-४। आपका संकल्प केवल इसी प्रति पर है, और किसी पर नहीं।",
 };
 
 export const patraPageContent = { en, hi } satisfies Record<Lang, typeof en>;

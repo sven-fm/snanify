@@ -6,6 +6,8 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { blobUrl } from "@/lib/blob";
 import { shortSeed } from "@/lib/seed";
+import type { PatraRecord } from "@/content/patra";
+import { SITE_ORIGIN } from "@/lib/locales";
 import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
@@ -125,5 +127,69 @@ export function patraView(sitting: Sitting): PatraView {
     seed: sitting.seed,
     seedShort: shortSeed(sitting.seed),
     percentile: river.percentile,
+  };
+}
+
+
+/* ---------------------------------------------------------------------------
+   The same sitting, shaped for the printable A4 sheet.
+
+   `SankalpPatra.tsx` was built for the officiant model and kept when that was
+   cancelled, because the furniture was always the good part: the double rule,
+   the folio line, the ruled register, the colophon and the print CSS. It was
+   orphaned when /patra/sample went, and this is what puts it back to work as
+   the owner's own print view.
+
+   THE SHEET IS THE OWNER'S, SO IT CARRIES THEIR SANKALP. That is the one thing
+   `patraView` deliberately never holds, and it is why this takes the sitting
+   rather than the view: printing your own words is the whole reason to print
+   the sheet, and nothing else renders from this function.
+
+   A field with nothing behind it is left off rather than filled with a
+   plausible value: gotra, the giver, the muhurat window and the gauge level
+   are all absent, and the sheet prints an honest blank for each.
+   --------------------------------------------------------------------------- */
+
+export function printableRecord(sitting: Sitting): PatraRecord {
+  const view = patraView(sitting);
+  const river = sitting.river as RiverSlice;
+
+  return {
+    patraId: sitting.id,
+    names: view.names.map((name) => ({
+      latin: name,
+      /* Already Devanagari, so it is the same string and the sheet sets it
+         once rather than printing a transliteration of itself. */
+      devanagari: /[\u0900-\u097f]/.test(name) ? name : undefined,
+    })),
+    sankalpText: sitting.sankalpText || undefined,
+
+    water: view.water,
+    ghat: view.ghat,
+    place: view.city,
+
+    keptOn: view.keptDate,
+    keptIst: `${view.keptIst} IST`,
+    keptLocal: `${view.keptTime} ${view.keptZone}`,
+
+    /* Only when the panchang has a named source behind it. Until then the
+       sheet leaves the line ruled and empty, which is the honest state. */
+    tithi: { label: view.tithi, confidence: "provisional" },
+
+    flow: {
+      value: view.flow,
+      note:
+        river.kind === "modelled"
+          ? `Modelled for ${river.modelledFor}. ${view.rank ? `${view.rank}th percentile since 1997.` : ""}`.trim()
+          : "Seasonal median, 1997 to 2025.",
+    },
+
+    reading: {
+      at: river.modelledFor ?? sitting.keptOn,
+      agency: river.source,
+    },
+
+    seed: view.seed,
+    verifyUrl: `${SITE_ORIGIN}/p/${sitting.id}`,
   };
 }

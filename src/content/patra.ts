@@ -150,11 +150,11 @@ const en = {
   /* The document itself. Kept beside the page copy so the sheet and the page
      that explains it can never drift apart. */
   sheet: {
-    aria: "Jal Chihna",
-    ariaSpecimen: "Jal Chihna, specimen, not a record of anything issued",
-    titleLatin: "Jal Chihna",
+    aria: "Sankalp Patra",
+    ariaSpecimen: "Sankalp Patra, specimen, not a record of anything issued",
+    titleLatin: "Sankalp Patra",
     subtitle: "The river's own condition, at the moment you kept.",
-    folioLabel: "Chihna",
+    folioLabel: "Patra",
     namesLabel: "Taken in the name of",
     remembranceLabel: "Taken in remembrance of",
     givenByLabel: "Given by",
@@ -210,11 +210,11 @@ const hi: typeof en = {
 
 
   sheet: {
-    aria: "जल चिह्न",
-    ariaSpecimen: "जल चिह्न, नमूना, किसी जारी की गई वस्तु का अभिलेख नहीं",
-    titleLatin: "Jal Chihna",
+    aria: "संकल्प पत्र",
+    ariaSpecimen: "संकल्प पत्र, नमूना, किसी जारी की गई वस्तु का अभिलेख नहीं",
+    titleLatin: "Sankalp Patra",
     subtitle: "उस क्षण नदी की अपनी स्थिति, जो क्षण आपने रखा।",
-    folioLabel: "चिह्न",
+    folioLabel: "पत्र",
     namesLabel: "जिनके नाम से लिया गया",
     remembranceLabel: "जिनके स्मरण में लिया गया",
     givenByLabel: "भेंटकर्ता",

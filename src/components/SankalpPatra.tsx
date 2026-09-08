@@ -14,14 +14,17 @@ import {
 import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
-   जल चिह्न · Jal Chihna, the printable A4 form.
+   संकल्प पत्र · Sankalp Patra, the printable A4 form.
 
-   This file was the Sankalp Patra, a certificate of a rite performed by a
-   person at a ghat. No rite is performed, so that document does not exist any
-   more. The furniture does, and it was always the good part: the double rule,
-   the folio line, the ruled register, the colophon at the foot, the `u()`
-   unit system and the print CSS. All of it is kept. The title block, the field
-   list and the foot line are the Jal Chihna's.
+   This began as a certificate of a rite performed by a person at a ghat. No
+   rite is performed, so that document does not exist any more. The furniture
+   does, and it was always the good part: the double rule, the folio line, the
+   ruled register, the colophon at the foot, the `u()` unit system and the
+   print CSS. All of it is kept.
+
+   It was then orphaned for a while, when /patra/sample was deleted, and it is
+   back as the owner's own print view on /p/[id]: the one copy that carries
+   their sankalp. src/lib/patra-view.ts maps a sitting onto the record below.
 
    What the sheet now asserts, and the whole of it: a name was kept at a stated
    moment, and the water was in a stated condition at that moment, according to
@@ -267,7 +270,7 @@ export function ChihnaSheet({
                 className="display text-ink"
                 style={{ fontSize: u(30), lineHeight: 1.35, fontFamily: deva }}
               >
-                जल चिह्न
+                संकल्प पत्र
               </p>
               <p
                 className="label text-spot"
@@ -485,7 +488,15 @@ export function ChihnaSheet({
                 may inherit the inscriptional uppercase transform, somebody
                 will type them off a printed sheet. */}
             <Cell label={t.seedLabel}>
-              <span className="tabular" style={{ letterSpacing: "0.06em" }}>
+              {/* Sixty-four hex characters is one unbreakable word, and a word
+                  wider than the sheet pushes the whole document past the
+                  viewport on a phone. It is allowed to wrap: somebody copying
+                  it off paper reads it in two lines quite happily, and the
+                  alternative is a page that scrolls sideways. */}
+              <span
+                className="tabular"
+                style={{ letterSpacing: "0.06em", overflowWrap: "anywhere" }}
+              >
                 {data.seed}
               </span>
             </Cell>
