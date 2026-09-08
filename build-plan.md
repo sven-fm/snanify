@@ -432,6 +432,13 @@ page. The existing A4 `SankalpPatra.tsx` stays as the owner's print view.
 
 ### Phase 7: Return loop
 
+- [ ] **The reminder needs an hourly schedule.** Vercel Hobby allows one cron a
+  day, and a daily job would reach only the readers who chose that one UTC hour.
+  `vercel.json` therefore carries no cron and `/api/cron/reminders` waits. Vercel
+  Pro restores the hourly schedule in one line, or any external scheduler can
+  call the endpoint with `CRON_SECRET` as a bearer token. The route's own header
+  carries both.
+
 - [x] **7.1 Reminder cron.** `vercel.json` (or `vercel.ts`) cron: `/api/cron/reminders` every hour at minute 0. The route checks `Authorization: Bearer ${CRON_SECRET}`. `usersDueAt(nowUtc)`: users with `reminder_on`, balance ≥ 1, no sitting today in their zone, and whose `reminder_hour` in `tz` equals the current local hour. Unit test with fixture zones (Kolkata, Toronto, Berlin) across a DST boundary.
 - [x] **7.2 Reminder email.** `sendReminder({ to, lang, water, band, url })`: subject "The {water} this morning", one line with the band word, one link to `/today`, one line to change the hour. Rate: one per user per day, recorded by a `reminders_sent` column on `users` (`last_reminded_on date`) so a cron retry cannot double-send.
 - [x] **7.3 `/account`.** The register: one ruled line per sitting (date, water, band, a link), newest first. Credits balance and a button to `/begin`. Reminder hour and toggle. Edit profile → `/setup`. Sign out. Delete account: Clerk user, `users` row cascade, Blob keys removed, sittings deleted (their public links 404). Confirmation is a typed word, not a modal dialog.
