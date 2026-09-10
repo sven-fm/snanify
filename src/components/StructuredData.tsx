@@ -189,6 +189,57 @@ export function website(): JsonLdNode {
 
 /* --- page ---------------------------------------------------------------- */
 
+/* ---------------------------------------------------------------------------
+   The upstream dataset every river figure on this site stands on.
+
+   ONE DEFINITION, BECAUSE TWO DRIFTED. `/live` described the flood model in
+   full while `/snan` pointed at it with a name and a URL and nothing else, and
+   Google reported the second as a Dataset missing its description and its
+   creator. Anything that cites the source now cites this, so the two cannot
+   disagree again, and `DATASET_FIELDS` below is the list a test checks.
+   --------------------------------------------------------------------------- */
+
+/** What Google requires of a Dataset, and what a reader deserves anyway. */
+export const DATASET_FIELDS = ["name", "description", "creator", "license"] as const;
+
+export const CC_BY_4 = "https://creativecommons.org/licenses/by/4.0/";
+
+export interface SourceDatasetOptions {
+  /** The model's own name, from SOURCES.discharge.model. */
+  readonly name: string;
+  /** Where the model publishes, from SOURCES.discharge.modelHref. */
+  readonly url: string;
+  /** Who serves it to us, from SOURCES.discharge.served. */
+  readonly served: string;
+}
+
+/**
+ * The Copernicus flood model, described completely.
+ *
+ * The creator is Copernicus and not us, because we ran no model, and the
+ * licence is the one the upstream data actually carries. Both are the same
+ * rule the visible copy is written under: nothing asserted to a crawler that
+ * is not asserted on the page.
+ */
+export function sourceDataset(o: SourceDatasetOptions): JsonLdNode {
+  return {
+    "@type": "Dataset",
+    name: `River discharge, modelled, ${o.name}`,
+    description:
+      `Daily modelled river discharge in cubic metres per second at grid cells on six ` +
+      `Indian rivers, from ${o.name}, served through ${o.served}. One value per cell per ` +
+      `day, published as an open dataset.`,
+    url: o.url,
+    creator: {
+      "@type": "Organization",
+      name: o.name,
+      url: o.url,
+    },
+    license: CC_BY_4,
+    isAccessibleForFree: true,
+  };
+}
+
 export interface WebPageOptions {
   readonly lang: Lang;
   /** Route in the internal shape, e.g. "/muhurat/pitru-paksha-2026". */

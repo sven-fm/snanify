@@ -6,6 +6,7 @@ import {
   organization,
   organizationRef,
   publicUrl,
+  CC_BY_4,
   webPage,
   website,
   type JsonLdNode,
@@ -89,7 +90,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
     url,
     inLanguage: lang,
     isAccessibleForFree: true,
-    license: "https://creativecommons.org/licenses/by/4.0/",
+    license: CC_BY_4,
     creator: {
       "@type": "Organization",
       name: SOURCES.discharge.model,

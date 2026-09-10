@@ -6,6 +6,7 @@ import {
   organization,
   organizationRef,
   publicUrl,
+  sourceDataset,
   webPage,
   website,
 } from "@/components/StructuredData";
@@ -88,12 +89,11 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
           availability: "https://schema.org/InStock",
           url: publicUrl(lang, "/begin"),
         })),
-        isBasedOn: {
-          "@type": "Dataset",
-          name: "River discharge, modelled, " + SOURCES.discharge.model,
+        isBasedOn: sourceDataset({
+          name: SOURCES.discharge.model,
           url: SOURCES.discharge.modelHref,
-          license: "https://creativecommons.org/licenses/by/4.0/",
-        },
+          served: SOURCES.discharge.served,
+        }),
       },
       breadcrumb: breadcrumbList(lang, [
         { name: t.crumbs.home, path: "/" },
