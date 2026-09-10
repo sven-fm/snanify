@@ -36,14 +36,17 @@
    Not claiming is not the same as denying. Where the numbers come from is set
    out on /ethics, in the voice of a maker showing the workshop.
 
-   FIGURES. hero.badge and hero.stats carry the owner's placeholder marketing
-   figures, kept at his explicit direction. Each label is written so a reader
-   could go and check it:
+   FIGURES. hero.stats carries the owner's placeholder marketing figures, kept
+   at his explicit direction. Each label is written so a reader could go and
+   check it:
      · 6            the six waters in rivers.ts
      · 48           two upstream reads an hour against the flood model, per day
      · 1,20,000+    daily river values on the public record since 1997
-   The badge reading is a placeholder shape until the live spine lands. Replace
-   it with the real reading; never re-dress it to look fresher.
+   THE BADGE AND THE CARD ARE REAL NOW. They were four hardcoded strings under
+   a heading reading "The river, now", which is exactly the fabricated reading
+   this repo forbids, and it was the first thing anybody read. Both are built
+   in src/app/[lang]/page.tsx from the same snapshot /live uses. What is left
+   here are labels and templates: a figure never goes in this file again.
 
    PRICES ARE NOT IN THIS FILE. One price, in the reader's own currency, out of
    src/content/prices.ts; see src/lib/currency.ts for how that currency is
@@ -70,7 +73,6 @@ export const en = {
   },
   edition: "Samvat 2083 · 2026",
   hero: {
-    badge: "Ganga at Haridwar · 1,444 m³/s · read 06:00 IST",
     titleA: "The river",
     titleB: "comes to you.",
     lede: "Three minutes with the river you grew up near, at an hour the panchang names. Your name and your family's on one sheet, and a morning worth sending them.",
@@ -78,14 +80,14 @@ export const en = {
     ctaSecondary: "The rivers now",
     offer: "Eleven mornings for {price}. One for each morning.",
     card: {
-      label: "The river, now",
-      title: "Ganga, Har Ki Pauri",
-      rows: [
-        { k: "Flow", v: "1,444 m³/s, her usual run" },
-        { k: "Ranked", v: "41st percentile since 1997" },
-        { k: "Read", v: "06:00 IST, modelled" },
-        { k: "Next muhurat", v: "Brahma Muhurat, 04:24" },
-      ],
+      badge: "{river} at {city} · {flow} · modelled for {day}",
+      cardLabel: "The river, now",
+      flow: "Flow",
+      ranked: "Ranked",
+      modelled: "Modelled for",
+      muhurat: "Next muhurat",
+      percentile: "{n}th percentile since 1997",
+      median: "Seasonal median, 1997 to 2025",
       link: "All six waters, live",
     },
     stats: [

@@ -47,7 +47,21 @@ function numeral(n: number, lang: Lang): string {
  * bleed at that size would put the sun through the type and paints far more
  * pixels than a mid-range Android wants at 60fps.
  */
-export function Landing({ lang }: { lang: Lang }) {
+/**
+ * What the hero card shows, built on the server from the day's snapshot.
+ *
+ * It used to be four hardcoded strings under a heading reading "The river,
+ * now", which is precisely the thing this repo forbids: a fabricated reading
+ * presented as fact. The figures are real now, and the card says which day the
+ * model published for rather than implying an hour.
+ */
+export type LiveCard = {
+  badge: string;
+  title: string;
+  rows: { k: string; v: string }[];
+};
+
+export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
   const t = content[lang];
 
   return (
@@ -94,7 +108,7 @@ export function Landing({ lang }: { lang: Lang }) {
           <div className="relative mx-auto w-full max-w-6xl px-5 pt-8 pb-28 sm:px-8 sm:pt-28 sm:pb-16">
             <div className="flex flex-col">
               <div className="ink-in order-1 max-w-full">
-                <StatusBadge live>{t.hero.badge}</StatusBadge>
+                <StatusBadge live>{live.badge}</StatusBadge>
               </div>
 
               {/* The headline runs the full measure and the sun is set into it
@@ -190,13 +204,13 @@ export function Landing({ lang }: { lang: Lang }) {
         <section className="tint border-b-2 border-rulestrong">
           <div className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 sm:py-12 lg:grid-cols-[1fr_20rem] lg:gap-12">
             <div className="boxed bg-paper p-5 sm:p-7">
-              <p className="label text-spot">{t.hero.card.label}</p>
+              <p className="label text-spot">{t.hero.card.cardLabel}</p>
               <p className="display mt-2 text-[1.7rem] leading-tight sm:text-3xl">
-                {t.hero.card.title}
+                {live.title}
               </p>
 
               <dl className="mt-4 border-t border-rule">
-                {t.hero.card.rows.map((r) => (
+                {live.rows.map((r) => (
                   <div
                     key={r.k}
                     className="grid grid-cols-[7rem_1fr] items-baseline gap-4 border-b border-rule py-3 last:border-b-0 sm:grid-cols-[9rem_1fr]"
