@@ -383,7 +383,11 @@ html[data-js] .reveal {
   opacity: 0;
   transform: translateY(8px);
 }
-[data-in] .reveal {
+/* Specificity is load bearing here: the hidden rule above is (0,2,1), this
+   one is (0,3,1), and the nested hold below is (0,4,1). Scoping the hidden
+   rule under html[data-js] once put it above this one and hid every section
+   for good. */
+html[data-js] [data-in] .reveal {
   opacity: 1;
   transform: none;
   transition:
@@ -405,7 +409,7 @@ html[data-js] .grow {
   transform: scaleY(0);
   transform-origin: bottom;
 }
-[data-in] .grow {
+html[data-js] [data-in] .grow {
   transform: scaleY(1);
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 45ms);
 }
