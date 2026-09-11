@@ -95,7 +95,11 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             masthead and the headline are always on sky and never cut by the
             horizon, whatever the viewport does and however the headline wraps
             in twelve languages. */}
-        <section className="relative flex min-h-[92svh] flex-col overflow-hidden border-b-2 border-rulestrong sm:min-h-[86svh] sm:justify-end">
+        {/* Capped at 56rem from `sm` up. The section fills the viewport so
+            the horizon lands under the headline, but on a tall desktop display
+            an uncapped 86svh is a thousand pixels of empty paper above the
+            first word, which read as a broken page. */}
+        <section className="relative flex min-h-[92svh] flex-col overflow-hidden border-b-2 border-rulestrong sm:min-h-[min(86svh,56rem)] sm:justify-end">
           {/* Wide: a full-bleed panorama behind the type, its channel kept
               narrow and far right so the left column stays clean paper. */}
           <RiverFlow
@@ -176,8 +180,12 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 </Link>
               </div>
 
+              {/* From `sm` up the lede sits below the horizon, over the water
+                  lines, and type over hatching is unreadable. It gets the same
+                  paper slip the offer line has, so it reads as printed on a
+                  card laid over the river rather than engraved into it. */}
               <p
-                className="ink-in order-6 mt-7 max-w-xl text-[1.02rem] leading-[1.7] text-ink2 sm:order-5 sm:mt-5 sm:text-[1.05rem] sm:leading-[1.75]"
+                className="ink-in order-6 mt-7 max-w-xl text-[1.02rem] leading-[1.7] text-ink2 sm:order-5 sm:mt-5 sm:bg-paper sm:px-4 sm:py-3 sm:text-[1.05rem] sm:leading-[1.75]"
                 style={{ animationDelay: "160ms" }}
               >
                 {t.hero.lede}
