@@ -505,7 +505,7 @@ export const panchangContent = {
       lede: "A window at the ghat is one moment. Its date and hour on your clock depend on where you live, and in the Americas the morning window falls on the previous evening. Both clocks are printed every time.",
       assumptionHeading: "How this table is drawn",
       assumption:
-        "The four windows are measured from sunrise, noon and sunset. To show them as clock times the table assumes those three moments: 06:00, 12:00 and 18:00 IST on 15 September 2026. It is an illustration, and the date carries no occasion. The gaps in the left column are exact for that date.",
+        "The four windows are counted from sunrise, noon and sunset. To show them as clock times the table assumes those three moments: 06:00, 12:00 and 18:00 IST on 15 September 2026. It is an illustration, and the date carries no occasion. The gaps in the left column are exact for that date.",
       atTheGhat: "At the ghat",
       ghatZone: "Asia/Kolkata, IST",
       place: "Where you are",

@@ -112,7 +112,7 @@ browser step stops and waits for the owner.
 | Identity | Clerk | `clerk` | Google OAuth and email magic link. Custom `appearance` to match paper and ink. |
 | Email | Resend | `resend/resend-email` | Sending domain `snanify.com` verified by the owner at DNS (Porkbun). |
 | Files | Vercel Blob | built in | Private store for raw portraits, public store for processed portraits and rendered sheets. |
-| Cron | Vercel Cron | built in | One hourly job for reminders. |
+| Cron | GitHub Actions | `.github/workflows/reminders.yml` | Hourly call to `/api/cron/reminders` with `CRON_SECRET`; Vercel Hobby allows one cron a day. |
 
 The Vercel CLI installed globally is 54.11.1 and does not know `integration discover`. Use
 `npx vercel@latest` for every marketplace command until the global install is upgraded.
@@ -432,12 +432,11 @@ page. The existing A4 `SankalpPatra.tsx` stays as the owner's print view.
 
 ### Phase 7: Return loop
 
-- [ ] **The reminder needs an hourly schedule.** Vercel Hobby allows one cron a
-  day, and a daily job would reach only the readers who chose that one UTC hour.
-  `vercel.json` therefore carries no cron and `/api/cron/reminders` waits. Vercel
-  Pro restores the hourly schedule in one line, or any external scheduler can
-  call the endpoint with `CRON_SECRET` as a bearer token. The route's own header
-  carries both.
+- [x] **The reminder has an hourly schedule.** Vercel Hobby allows one cron a
+  day, so `vercel.json` carries no cron and `.github/workflows/reminders.yml`
+  calls `/api/cron/reminders` on the hour with `CRON_SECRET` as a bearer token.
+  The first manual run on 11 September 2026 returned 200. Vercel Pro would move
+  the schedule back into `vercel.json` in one line.
 
 - [x] **7.1 Reminder cron.** `vercel.json` (or `vercel.ts`) cron: `/api/cron/reminders` every hour at minute 0. The route checks `Authorization: Bearer ${CRON_SECRET}`. `usersDueAt(nowUtc)`: users with `reminder_on`, balance ≥ 1, no sitting today in their zone, and whose `reminder_hour` in `tz` equals the current local hour. Unit test with fixture zones (Kolkata, Toronto, Berlin) across a DST boundary.
 - [x] **7.2 Reminder email.** `sendReminder({ to, lang, water, band, url })`: subject "The {water} this morning", one line with the band word, one link to `/today`, one line to change the hour. Rate: one per user per day, recorded by a `reminders_sent` column on `users` (`last_reminded_on date`) so a cron retry cannot double-send.
