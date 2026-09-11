@@ -6,7 +6,12 @@ import { content } from "@/lib/content";
 import { allLangParams, parseLang } from "@/lib/locales";
 import { pageMetadata, siteMetadata } from "@/lib/seo";
 
-export const dynamicParams = false;
+/* No `dynamicParams = false` here, on purpose. That setting turns any path
+   not generated at build into a routing-level 404 served by Next's bare
+   default page, with no layout and no copy of ours, and it is inherited by
+   every segment below, catch-all included. Instead `requireLang` below throws
+   notFound() for a stray locale, which renders this segment's not-found page
+   inside the shell. The locales that exist are still prerendered. */
 
 /**
  * Every locale is prerendered at this level. Routes that only English and

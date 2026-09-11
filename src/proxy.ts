@@ -1,6 +1,6 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse, type NextRequest } from "next/server";
-import { DEFAULT_LANG, LANG_HEADER, LANGS } from "@/lib/locales";
+import { DEFAULT_LANG, LANGS } from "@/lib/locales";
 import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
 
 /**
@@ -81,23 +81,12 @@ function route(req: NextRequest) {
     return NextResponse.redirect(new URL(rest + search, req.url), 308);
   }
 
-  // The locale travels as a request header as well as a path segment, because
-  // the segment's not-found page cannot read route params and would otherwise
-  // answer a Hindi URL in English.
-  const headers = new Headers(req.headers);
-
   // /hi/..., /ta/... and the rest already match [lang].
-  if (PREFIXES.has(first)) {
-    headers.set(LANG_HEADER, first);
-    return stampCurrency(NextResponse.next({ request: { headers } }), req);
-  }
+  if (PREFIXES.has(first)) return stampCurrency(NextResponse.next(), req);
 
   // Everything else is English: rewrite without changing the visible URL.
-  headers.set(LANG_HEADER, DEFAULT_LANG);
   return stampCurrency(
-    NextResponse.rewrite(new URL(`/${DEFAULT_LANG}${pathname}${search}`, req.url), {
-      request: { headers },
-    }),
+    NextResponse.rewrite(new URL(`/${DEFAULT_LANG}${pathname}${search}`, req.url)),
     req,
   );
 }

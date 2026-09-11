@@ -21,8 +21,6 @@ import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
 import { pageMetadata } from "@/lib/seo";
 
-export const dynamicParams = false;
-
 /** Every (lang, river) combination, six waters × two locales. */
 export function generateStaticParams() {
   return FULL_LANGS.flatMap((lang) => RIVERS.map((r) => ({ lang, river: r.slug })));

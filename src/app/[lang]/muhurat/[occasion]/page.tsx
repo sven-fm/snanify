@@ -31,8 +31,6 @@ import { pageMetadata } from "@/lib/seo";
 import { muhuratIndexContent } from "@/content/muhurat-index";
 import { occasionName } from "@/content/names";
 
-export const dynamicParams = false;
-
 /** Every (lang, occasion) pair, the slug is identical in both locales. */
 export function generateStaticParams() {
   return FULL_LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));

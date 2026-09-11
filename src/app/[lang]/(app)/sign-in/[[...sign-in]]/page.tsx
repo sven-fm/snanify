@@ -11,12 +11,6 @@ import { pageMetadata } from "@/lib/seo";
    Clerk card on a white page reads as a different company. */
 const ROUTE = "/sign-in";
 
-/* The layout sets `dynamicParams = false`, which is right for the marketing
-   tree: an unknown locale should 404 rather than render an empty shell. Clerk
-   routes its own steps (a verification code, a factor choice, a reset) under
-   this catch-all, and those paths cannot be enumerated at build time, so this
-   subtree opts back in. */
-export const dynamicParams = true;
 
 export function generateStaticParams() {
   return FULL_LANGS.map((lang) => ({ lang, "sign-in": [] as string[] }));
