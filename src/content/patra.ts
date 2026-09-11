@@ -320,7 +320,7 @@ export function specimenPatra(lang: Lang): PatraRecord {
     },
 
     stateLine: hi
-      ? "गंगा वर्ष के इस मोड़ पर अपने सामान्य बहाव में बह रही थीं।"
+      ? "गंगा वर्ष के इस मोड़ पर अपने सामान्य प्रवाह पर बह रही थीं।"
       : "The Ganga was running at its usual level for this time of year.",
 
     seed: SPECIMEN_SEED,

@@ -29,7 +29,7 @@ const LABELS = {
   },
   begin: {
     en: "Begin",
-    hi: "आरंभ करें",
+    hi: "आरंभ कीजिए",
   },
   account: {
     en: "Your mornings",

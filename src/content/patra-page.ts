@@ -84,7 +84,7 @@ const hi = {
 
   visitTitle: "कल सुबह अपनी नदी के साथ बैठिए",
   visitBody: "पंचांग की बताई घड़ी पर तीन मिनट, आप जहाँ भी हों।",
-  visitCta: "आरंभ करें",
+  visitCta: "आरंभ कीजिए",
 
   shareText: "{name} ने {date} को {water} के साथ संकल्प रखा।",
   metaTitle: "{name}, {water}, {date}",

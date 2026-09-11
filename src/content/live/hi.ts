@@ -175,7 +175,7 @@ export const hi = {
     attribution: [
       "नदी-प्रवाह: Copernicus Emergency Management Service, GloFAS, Open-Meteo के माध्यम से, CC BY 4.0.",
       "सूर्य एवं मौसम: Open-Meteo, CC BY 4.0.",
-      "गेज रजिस्टर: केंद्रीय जल आयोग, राष्ट्रीय जल आँकड़ा पोर्टल।",
+      "गेज सूची: केंद्रीय जल आयोग, राष्ट्रीय जल आँकड़ा पोर्टल।",
     ],
   },
 

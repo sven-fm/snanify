@@ -58,7 +58,7 @@ const en = {
 
 const hi = {
   signIn: {
-    meta: "प्रवेश करें | Snanify",
+    meta: "प्रवेश कीजिए | Snanify",
     title: "प्रवेश कीजिए",
     lede: "गूगल से, या आपके ईमेल पर भेजी गई कड़ी से। आपकी सुबहें और आपके संकल्प पत्र वहीं हैं जहाँ आपने छोड़े थे।",
   },
@@ -85,7 +85,7 @@ const hi = {
     profileCta: "बदलिए",
     reminderHeading: "सूचना",
     reminderToggle: "इस घड़ी पर मुझे सूचना भेजिए",
-    signOut: "बाहर निकलें",
+    signOut: "बाहर निकलिए",
     todayCta: "आज सुबह बैठिए",
     setupCta: "अपना पत्र तय कीजिए",
     save: "सहेजिए",
