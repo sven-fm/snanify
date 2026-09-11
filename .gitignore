@@ -56,3 +56,6 @@ next-env.d.ts
 # playwright
 /test-results
 /playwright-report
+_*.tmp.mjs
+_*.tmp.ts
+_*.tmp.config.ts
