@@ -12,21 +12,16 @@ import type { FullLang as Lang } from "@/lib/locales";
 /* ---------------------------------------------------------------------------
    The morning reminder, sent hourly to whoever is due.
 
-   NOTHING IS CALLING THIS YET, AND THE REASON IS THE PLAN. A reminder that
-   respects somebody's own hour has to be checked every hour, and a Vercel
-   Hobby account allows one cron a day: a daily job would reach the readers who
-   happen to have chosen that one UTC hour and silently never reach anybody
-   else, which is worse than not sending at all. So `vercel.json` carries no
-   cron and this endpoint waits.
-
-   Two ways to switch it on, and both are one line. Vercel Pro restores the
-   hourly schedule:
+   GITHUB RUNS THE CLOCK. A reminder that respects somebody's own hour has to
+   be checked every hour, and a Vercel Hobby account allows one cron a day, so
+   `vercel.json` carries no cron and .github/workflows/reminders.yml calls this
+   endpoint on the hour with CRON_SECRET as a bearer token. Vercel Pro would
+   let the schedule move back here in one line:
 
      "crons": [{ "path": "/api/cron/reminders", "schedule": "0 * * * *" }]
 
-   Or point any external scheduler at it hourly with the CRON_SECRET as a
-   bearer token. The endpoint is idempotent per person per local day, so
-   calling it more often than hourly is harmless.
+   The endpoint is idempotent per person per local day, so a late or repeated
+   tick is harmless.
 
    IT SAYS WHAT THE RIVER IS DOING, and nothing else. No streak, no count, no
    day missed. The only true reason to open it is that the water is running the

@@ -1,0 +1,29 @@
+name: Morning reminders
+
+# The hourly scheduler for /api/cron/reminders. Vercel Hobby allows one cron
+# a day and a reminder that respects each person's own hour needs one an hour,
+# so GitHub runs the clock and the endpoint does the work. It is idempotent
+# per person per local day, so a late or repeated tick is harmless.
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Call the endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            code=$(curl -sS -o body.json -w "%{http_code}" --max-time 290 \
+              -H "Authorization: Bearer ${CRON_SECRET}" \
+              https://www.snanify.com/api/cron/reminders) && break || true
+            echo "attempt ${attempt} failed"; sleep 20
+          done
+          echo "status ${code:-none}"; cat body.json 2>/dev/null || true; echo
+          test "${code:-0}" = "200"
