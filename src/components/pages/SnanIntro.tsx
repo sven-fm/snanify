@@ -66,46 +66,50 @@ export function SnanIntro({ lang }: { lang: Lang }) {
 
       <main>
         {/* ------------------------------------------------ masthead ------ */}
+        {/* The river is anchored under the headline's double rule, as the
+            landing anchors it under the headline: everything above the rule
+            is on sky, and the lede and the offer sit on a paper slip below it.
+            The old bottom band put its horizon at half its own height, which
+            on a wide screen ran a line straight through the offer. */}
         <section className="relative overflow-hidden border-b-2 border-rulestrong">
-          {/* A band, not a background. On a phone it sits under the type where
-              it cannot fight the headline for contrast. */}
+          {/* Phone: a band under the type, as before. The panorama tuning's
+              small sun stays inside the band; the portrait one rose into the
+              offer line. */}
           <RiverFlow
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[34%] w-full text-ink lg:h-[58%]"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[34%] w-full text-ink lg:hidden"
+          />
+          {/* Wide: the full panorama behind the type, horizon on the rule. */}
+          <RiverFlow
+            variant="panorama"
+            anchorSelector="[data-snan-horizon]"
+            className="pointer-events-none absolute inset-0 hidden h-full w-full text-ink lg:block"
           />
 
           <div className="relative mx-auto max-w-6xl px-5 pt-10 pb-14 sm:px-8 sm:pt-16 sm:pb-20">
-            <div className="ink-in">
-              <Eyebrow>{t.hero.eyebrow}</Eyebrow>
-            </div>
-
             <h1
-              className="ink-in display mt-5 max-w-4xl text-[2.5rem] leading-[1.06] sm:text-[3.8rem] lg:text-[5rem]"
-              style={{ animationDelay: "60ms" }}
+              className="ink-in display max-w-4xl text-[2.5rem] leading-[1.06] sm:text-[3.8rem] lg:text-[5rem]"
             >
-              {t.hero.titleA}{" "}
-              <span className="text-spot">{t.hero.titleB}</span>
+              {t.hero.titleA} {t.hero.titleB}
             </h1>
 
-            <div className="rule-double mt-7 max-w-xl" />
-
-            <p
-              className="ink-in mt-6 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2"
-              style={{ animationDelay: "140ms" }}
-            >
-              {t.hero.lede}
-            </p>
-
-            <p
-              className="ink-in mt-6 max-w-2xl border-l-2 border-spot pl-4 text-[1rem] leading-[1.8] text-ink"
-              style={{ animationDelay: "200ms" }}
-            >
-              {t.hero.offer.split("{price}")[0]}
-              <Price prices={PRICE.eleven} />
-              {t.hero.offer.split("{price}")[1]}
-            </p>
+            <div data-snan-horizon className="rule-double mt-7 max-w-xl" />
 
             <div
-              className="ink-in mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              className="ink-in mt-6 max-w-2xl lg:bg-paper lg:px-4 lg:py-3"
+              style={{ animationDelay: "140ms" }}
+            >
+              <p className="text-[1.05rem] leading-[1.85] text-ink2">{t.hero.lede}</p>
+              <p className="mt-4 text-[1rem] leading-[1.8] text-ink">
+                {t.hero.offer.split("{price}")[0]}
+                <Price prices={PRICE.eleven} />
+                {t.hero.offer.split("{price}")[1]}
+              </p>
+            </div>
+
+            {/* Paper behind the block on a phone: the band's sun rises behind
+                the buttons there, and a flex gap shows its container's ground. */}
+            <div
+              className="ink-in mt-9 flex flex-col gap-3 bg-paper sm:flex-row sm:flex-wrap sm:items-center lg:bg-transparent"
               style={{ animationDelay: "260ms" }}
             >
               <a

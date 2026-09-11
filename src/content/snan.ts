@@ -101,7 +101,6 @@ type Copy = {
   readonly crumbs: { readonly home: string; readonly here: string };
 
   readonly hero: {
-    readonly eyebrow: string;
     readonly titleA: string;
     readonly titleB: string;
     readonly lede: string;
@@ -216,10 +215,9 @@ const en: Copy = {
   crumbs: { home: "Home", here: "The snan" },
 
   hero: {
-    eyebrow: "Jal Sankalp",
     titleA: "Three minutes.",
     titleB: "The river comes to you.",
-    lede: "Three minutes with a river at the flow she carries today, modelled by Copernicus and published for anyone to check. Breathe at her rhythm. Hold your vow for eleven seconds. Put the phone down for ninety.",
+    lede: "Three minutes with a river at the flow she carries today, modelled by Copernicus and published for anyone to check. Breathe at her rhythm. Hold your vow for eleven seconds. Put the phone down for a minute.",
     offer:
       "Eleven mornings for {price}, one for each morning. Everything you can read stays free.",
     ctaPrimary: "Take eleven mornings, {price}",
@@ -365,7 +363,7 @@ const en: Copy = {
   },
 
   chihna: {
-    eyebrow: "Jal Chihna",
+    eyebrow: "Sankalp Patra",
     title: "The mark the water left.",
     lede: "Every snan ends in one engraving, drawn from the river's published reading at the minute you kept. It carries a number, and it is yours.",
     drawLabel: "What draws it",
@@ -487,7 +485,6 @@ const hi: Copy = {
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
 
   hero: {
-    eyebrow: "जल संकल्प",
     titleA: "तीन मिनट।",
     titleB: "नदी आप तक आती है।",
     lede: "तीन मिनट, उस नदी के साथ जो आज जिस प्रवाह पर बह रही है, कोपरनिकस द्वारा मॉडल की हुई और सबके लिए प्रकाशित। उसकी लय पर साँस लीजिए। संकल्प ग्यारह सेकंड थामे रखिए। साठ सेकंड के लिए फ़ोन नीचे रख दीजिए।",
@@ -635,7 +632,7 @@ const hi: Copy = {
   },
 
   chihna: {
-    eyebrow: "जल चिह्न",
+    eyebrow: "संकल्प पत्र",
     title: "जो चिह्न जल छोड़ गया।",
     lede: "हर स्नान के अंत में एक उत्कीर्ण चित्र बनता है, जो उसी मिनट के नदी के प्रकाशित पाठ से खिंचता है। उस पर एक क्रमांक होता है, और वह आपका है।",
     drawLabel: "इसे क्या बनाता है",

@@ -67,9 +67,9 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       description: t.meta.description,
       about: {
         "@type": "CreativeWork",
-        "@id": `${publicUrl(lang, ROUTE)}#jal-sankalp`,
-        name: lang === "hi" ? "जल संकल्प" : "Jal Sankalp",
-        alternateName: lang === "hi" ? "Jal Sankalp" : "जल संकल्प",
+        "@id": `${publicUrl(lang, ROUTE)}#snan`,
+        name: lang === "hi" ? "स्नान" : "The snan",
+        alternateName: lang === "hi" ? "The snan" : "स्नान",
         description: t.meta.description,
         inLanguage: lang,
         publisher: organizationRef(),
