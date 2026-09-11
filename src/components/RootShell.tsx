@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/next";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { themeScript } from "@/components/ThemeToggle";
 import { currencyScript } from "@/lib/currency";
 import { fontClass } from "@/lib/fonts";
@@ -33,6 +34,7 @@ export function RootShell({ lang, children }: { lang: Lang; children: React.Reac
       </head>
       <body className="antialiased">
         {children}
+        <ScrollReveal />
         {/* Vercel Web Analytics, no cookies, no cross-site identifiers. */}
         <Analytics />
       </body>

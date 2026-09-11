@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WaterBand } from "@/components/WaterBand";
 import { eq } from "drizzle-orm";
 import { db, profiles } from "@/db";
 import { beginContent } from "@/content/begin";
@@ -122,6 +123,7 @@ export async function Begin({
       <main className="mx-auto max-w-5xl px-5 py-10 pb-16 sm:px-8 sm:py-16">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6 max-w-xl" />
+        <WaterBand seed="begin" className="mt-5 h-12 w-full max-w-xl" />
         <p className="mt-5 max-w-xl text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
 
         {cancelled && (

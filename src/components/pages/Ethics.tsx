@@ -1,3 +1,4 @@
+import { WaterBand } from "@/components/WaterBand";
 /* This page exists in English and Hindi only; see the tier note and the
    FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
    the full-depth pair and not the twelve locales the site serves. */
@@ -83,6 +84,7 @@ export function Ethics({ lang }: { lang: Lang }) {
                 {t.title}
               </h1>
               <div className="rule-double mt-7 max-w-xl" />
+              <WaterBand seed="ethics" className="mt-5 h-14 w-full max-w-xl sm:h-16" />
               <p className="mt-6 text-[1.05rem] leading-[1.8] text-ink2 sm:text-[1.1rem]">
                 {t.lede}
               </p>

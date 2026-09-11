@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WaterBand } from "@/components/WaterBand";
 import { localePath } from "@/lib/i18n";
 /* This page exists in English and Hindi only; see the tier note and the
    FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
@@ -134,6 +135,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
                 </h1>
 
                 <div className="rule-double mt-7 max-w-xl" />
+                <WaterBand seed={ghat.slug} className="mt-5 h-14 w-full max-w-xl sm:h-16" />
 
                 <p
                   className="ink-in mt-6 text-xl text-ink sm:text-2xl"

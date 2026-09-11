@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WaterBand } from "@/components/WaterBand";
 import { localePath } from "@/lib/i18n";
 import { deepLang, pickDeep, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
@@ -20,39 +21,6 @@ import { riversIndexContent } from "@/content/rivers-index";
    is not" block. Each was a default, and together they made the page read as
    a template. The small caps voice appears only on a button.
    --------------------------------------------------------------------------- */
-
-/* Six strands of water, cut as an engraving: solid ink, no fade, the front
-   strand pulled heaviest the way a block cutter deepens the nearest line.
-   Every coordinate is an integer literal so the server and the client
-   serialise the same string. */
-function Waterlines({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 1200 180"
-      preserveAspectRatio="none"
-      fill="none"
-      aria-hidden="true"
-      focusable={false}
-    >
-      {[0, 1, 2, 3, 4, 5].map((i) => {
-        const y = 18 + i * 26;
-        const dip = 10 + i * 6;
-        /* Literal widths, no arithmetic: a float that serialises differently on
-           the server and the client is reported as a hydration mismatch. */
-        const width = ["1", "1.4", "1.8", "2.2", "2.6", "3"][i];
-        return (
-          <path
-            key={i}
-            d={`M0 ${y} Q 300 ${y + dip} 600 ${y} T 1200 ${y}`}
-            stroke="currentColor"
-            strokeWidth={width}
-          />
-        );
-      })}
-    </svg>
-  );
-}
 
 export function RiversIndex({ lang }: { lang: Lang }) {
   const t = riversIndexContent[lang];
@@ -89,7 +57,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
 
             {/* the water itself, set as a ruled plate across the page */}
             <div className="mt-12 border-y-2 border-rulestrong py-5">
-              <Waterlines className="h-20 w-full text-ink sm:h-24" />
+              <WaterBand seed="rivers" className="h-20 w-full sm:h-24" />
             </div>
           </div>
         </section>

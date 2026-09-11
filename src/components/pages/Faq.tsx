@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WaterBand } from "@/components/WaterBand";
 import { localePath } from "@/lib/i18n";
 /* This page exists in English and Hindi only; see the tier note and the
    FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
@@ -69,6 +70,7 @@ export function Faq({ lang }: { lang: Lang }) {
                 {t.title}
               </h1>
               <div className="rule-double mt-7 max-w-xl" />
+              <WaterBand seed="faq" className="mt-5 h-14 w-full max-w-xl sm:h-16" />
               <p className="mt-6 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2 sm:text-[1.08rem]">
                 {t.lede}
               </p>

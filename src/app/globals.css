@@ -513,3 +513,35 @@ html:not([data-js]) .ink-picture-lazy {
     animation: none;
   }
 }
+
+/* --- Every page sets itself as the reader scrolls -------------------------
+   src/components/ScrollReveal.tsx marks each section below the first screen
+   `data-reveal`, then `data-in` as it arrives. The section's blocks (the
+   children of its container) come up in six steps, one after another. The
+   hidden state exists only under html[data-js]; without scripts the page
+   shows whole. Specificity: hidden (0,4,1), shown (0,5,1).                */
+html[data-js] main section[data-reveal]:not([data-in]) > * > * {
+  opacity: 0;
+  transform: translateY(8px);
+}
+html[data-js] main section[data-reveal][data-in] > * > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.42s steps(6, end) var(--d, 0ms),
+    transform 0.42s cubic-bezier(0.2, 0.8, 0.3, 1) var(--d, 0ms);
+}
+html[data-js] main section[data-reveal] > * > :nth-child(2) { --d: 70ms; }
+html[data-js] main section[data-reveal] > * > :nth-child(3) { --d: 140ms; }
+html[data-js] main section[data-reveal] > * > :nth-child(4) { --d: 210ms; }
+html[data-js] main section[data-reveal] > * > :nth-child(5) { --d: 280ms; }
+html[data-js] main section[data-reveal] > * > :nth-child(6) { --d: 350ms; }
+html[data-js] main section[data-reveal] > * > :nth-child(n + 7) { --d: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-js] main section[data-reveal] > * > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

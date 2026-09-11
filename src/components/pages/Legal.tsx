@@ -1,3 +1,4 @@
+import { WaterBand } from "@/components/WaterBand";
 import type { FullLang as Lang } from "@/lib/locales";
 import { legalContent } from "@/content/legal";
 import { Header } from "@/components/site/Header";
@@ -33,6 +34,7 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
       <main className="mx-auto max-w-2xl px-5 py-10 pb-20 sm:px-8 sm:py-16">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6" />
+        <WaterBand seed="legal" className="mt-5 h-12 w-full max-w-xl" />
         <p className="mt-6 text-[1.05rem] leading-[1.8] text-ink2">{t.lede}</p>
         <p className="mt-6 border-t border-rule pt-4 text-sm text-ink2">{t.updated}</p>
 

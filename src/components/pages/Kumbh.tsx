@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WaterBand } from "@/components/WaterBand";
 
 import { localePath } from "@/lib/i18n";
 /* This page exists in English and Hindi only; see the tier note and the
@@ -189,6 +190,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
             </p>
 
             <div className="rule-double mt-8 max-w-2xl" />
+            <WaterBand seed="kumbh" className="mt-5 h-14 w-full max-w-2xl sm:h-16" />
 
             <p
               className="ink-in mt-7 max-w-2xl text-xl leading-[1.5] text-ink sm:text-2xl"
