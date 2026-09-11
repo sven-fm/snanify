@@ -42,7 +42,7 @@ export function InView({
           io.disconnect();
         }
       },
-      { rootMargin: margin, threshold: 0.08 },
+      { rootMargin: margin, threshold: 0.02 },
     );
     io.observe(el);
     return () => io.disconnect();

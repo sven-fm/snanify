@@ -134,8 +134,10 @@ function Dial({ percentile, label }: { percentile: number | null; label: string 
           opacity: percentile === null ? 0.25 : 1,
         }}
       >
-        <line x1={CX} y1={CY} x2={CX} y2={CY - R + 14} stroke="var(--spot)" strokeWidth="2.5" />
-        <line x1={CX} y1={CY} x2={CX} y2={CY + 8} stroke="currentColor" strokeWidth="2.5" />
+        <g className="quiver" style={{ transformOrigin: `${CX}px ${CY}px` }}>
+          <line x1={CX} y1={CY} x2={CX} y2={CY - R + 14} stroke="var(--spot)" strokeWidth="2.5" />
+          <line x1={CX} y1={CY} x2={CX} y2={CY + 8} stroke="currentColor" strokeWidth="2.5" />
+        </g>
       </g>
       <circle cx={CX} cy={CY} r="4" fill="currentColor" />
       <line x1="8" y1={CY + 8} x2="192" y2={CY + 8} stroke="currentColor" strokeWidth="1" />
@@ -147,15 +149,19 @@ function Dial({ percentile, label }: { percentile: number | null; label: string 
 
 function Waterline({ slug, percentile }: { slug: string; percentile: number | null }) {
   const drawn = engrave({ seed: seedFor(slug), percentile, width: 1000, height: 300 });
-  const amp = 4 + ((percentile ?? 50) / 100) * 14;
+  /* Screen pixels, on the SVG element itself: a transform on an inner group
+     is in viewBox units, which at a phone's width came to a pixel or two and
+     read as nothing moving at all. */
+  const amp = 6 + ((percentile ?? 50) / 100) * 16;
   return (
     <svg
       viewBox="0 0 1000 300"
       preserveAspectRatio="none"
-      className="absolute inset-x-0 bottom-0 h-[34%] w-full text-ink"
+      className="breathe absolute bottom-0 left-[-4%] h-[36%] w-[108%] text-ink"
+      style={{ ["--amp" as string]: `${amp.toFixed(1)}px` }}
       aria-hidden="true"
     >
-      <g className="breathe" style={{ ["--amp" as string]: `${amp.toFixed(1)}px` }}>
+      <g className="sway">
         {drawn.lines.map((d, i, all) => (
           <path
             key={i}

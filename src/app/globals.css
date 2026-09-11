@@ -480,3 +480,32 @@ html:not([data-js]) .ink-picture-lazy {
 @media (prefers-reduced-motion: reduce) {
   .rise { animation: none; }
 }
+
+/* The water never stops. The band breathes up and down (above) and sways a
+   little side to side on a slower cycle, so the two never line up and the
+   motion reads as water rather than as a metronome. Both loop for ever. */
+@keyframes sway {
+  0% { transform: translateX(-14px); }
+  100% { transform: translateX(14px); }
+}
+.sway {
+  animation: sway 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* A gauge is never quite still: the needle quivers a degree either side of
+   its reading, on a four second cycle, for as long as the page is open. */
+@keyframes quiver {
+  0% { transform: rotate(-1.1deg); }
+  100% { transform: rotate(1.1deg); }
+}
+.quiver {
+  animation: quiver 4s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sway,
+  .quiver {
+    animation: none;
+  }
+}
