@@ -10,6 +10,10 @@ import { StatusBadge } from "@/components/ui";
 import { getGhat } from "@/content/rivers";
 import { WINDOW_BY_ID } from "@/content/muhurat";
 import { fill, liveContent } from "@/content/live";
+import { PICTURES } from "@/content/live/pictures";
+import { LiveHero, type HeroWater } from "@/components/live/LiveHero";
+import { InView } from "@/components/live/InView";
+import { CountUp } from "@/components/live/CountUp";
 import {
   ARCHIVE,
   SOURCES,
@@ -38,10 +42,14 @@ import {
    · Every interactive element is at least 44px in the vertical, and the primary
      action sits in a fixed bar at the bottom of the viewport where a thumb is,
      not in the masthead where it is not.
-   · No `RiverFlow`, no canvas, no requestAnimationFrame. This whole page is
-     server-rendered markup and about seventy SVG rects, so it costs a mid-range
-     Android nothing after paint. The only motion is `ink-in` on the front
-     matter, which is a stepped opacity and stops.
+   · No `RiverFlow` and no canvas. The page is server-rendered markup and a
+     few hundred SVG shapes. What moves is transform and opacity only: the
+     picker's gauge at the head (src/components/live/LiveHero.tsx), the
+     sections setting themselves as the reader reaches them (InView), figures
+     counting up for under a second, and the waterline breathing at the
+     river's amplitude. All of it stops under prefers-reduced-motion.
+   · The six landmark pictures are ink masks (src/content/live/pictures.ts),
+     fetched only when their section arrives.
 
    And the rule that outranks all of the above: a number appears here only with
    its provenance and its date beside it. The `Discharge` union is what makes
@@ -184,6 +192,8 @@ function ElevenDays({ series }: { series: readonly { date: string; cumecs: numbe
         return (
           <rect
             key={day.date}
+            className="grow"
+            style={{ ["--i" as string]: i }}
             x={i * slot + (slot - barWidth) / 2}
             y={34 - height}
             width={barWidth}
@@ -228,9 +238,11 @@ function FlowPanel({
         {/* The unit is set in body type: the caps utility would print it as
             M³/S, which is a unit nobody writes. */}
         <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="display tabular text-[3rem] leading-[0.95] sm:text-[4.5rem]">
-            {cumecs(discharge.cumecs, lang)}
-          </span>
+          <CountUp
+            value={discharge.cumecs}
+            lang={lang}
+            className="display tabular text-[3rem] leading-[0.95] sm:text-[4.5rem]"
+          />
           <span className="text-sm text-ink2">{t.flow.unit}</span>
         </p>
 
@@ -354,24 +366,36 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
   const read = discharge.kind === "modelled" ? discharge : null;
 
   return (
-    <section id={water.slug} className="scroll-mt-20 border-t-2 border-rulestrong">
-      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+    <InView as="section" className="scroll-mt-20 border-t-2 border-rulestrong">
+      <div id={water.slug} className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         {/* ------------------------------------------------------- head --- */}
-        <div className="min-w-0">
-          <h2 className="display text-[1.7rem] leading-tight sm:text-[2.6rem]">
-            {waterName(ghat, "river", lang)}
-          </h2>
-          <p className="mt-1.5 text-sm text-ink2">
-            {waterName(ghat, "ghat", lang)}, {waterName(ghat, "city", lang)},{" "}
-            {waterName(ghat, "state", lang)}
-          </p>
+        <div className="grid gap-6 sm:grid-cols-[1fr_16rem] sm:items-end lg:grid-cols-[1fr_22rem]">
+          <div className="reveal min-w-0">
+            <h2 className="display text-[1.7rem] leading-tight sm:text-[2.6rem]">
+              {waterName(ghat, "river", lang)}
+            </h2>
+            <p className="mt-1.5 text-sm text-ink2">
+              {waterName(ghat, "ghat", lang)}, {waterName(ghat, "city", lang)},{" "}
+              {waterName(ghat, "state", lang)}
+            </p>
+          </div>
+          {/* The landmark, printed as ink; see src/content/live/pictures.ts. */}
+          <div
+            role="img"
+            aria-label={PICTURES[water.slug].alt[lang]}
+            className="reveal ink-picture-lazy boxed aspect-[3/2] w-full"
+            style={{ ["--i" as string]: 1, ["--picture" as string]: `url(${PICTURES[water.slug].src})` }}
+          />
         </div>
 
         <div className="rule-thin mt-6" />
 
         {/* --------------------------------------------- the sentence --- */}
         {read && (
-          <p className="display mt-6 max-w-3xl text-[1.4rem] leading-[1.3] sm:text-[2rem]">
+          <p
+            className="reveal display mt-6 max-w-3xl text-[1.4rem] leading-[1.3] sm:text-[2rem]"
+            style={{ ["--i" as string]: 2 }}
+          >
             {fill(t.bands[read.percentile.band], { river: subject })}
           </p>
         )}
@@ -399,11 +423,14 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
         )}
 
         <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-14">
-          <div>
-            <FlowPanel discharge={discharge} lang={lang} />
-          </div>
+          <InView>
+            <div className="reveal">
+              <FlowPanel discharge={discharge} lang={lang} />
+            </div>
+          </InView>
 
-          <div>
+          <InView>
+            <div className="reveal">
             <SkyPanel sky={sky} lang={lang} />
 
             {/* ------------------------------------------ the register --- */}
@@ -465,14 +492,58 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
             )}
 
             <p className="mt-3 text-[0.9rem] leading-[1.7] text-ink2">{t.windows.basis}</p>
-          </div>
+            </div>
+          </InView>
         </div>
       </div>
-    </section>
+    </InView>
   );
 }
 
 /* --- the page ------------------------------------------------------------- */
+
+/** The six waters as the plain strings and numbers the head of the page needs. */
+function heroWaters(snapshot: LiveSnapshot, lang: Lang): HeroWater[] {
+  const t = liveContent[lang];
+  const out: HeroWater[] = [];
+  for (const water of snapshot.waters) {
+    const ghat = getGhat(water.slug);
+    if (!ghat) continue;
+    const d = water.discharge;
+    const read = d.kind === "modelled" ? d : null;
+    const slot = water.current ?? water.next;
+    const river = waterName(ghat, "river", lang);
+    out.push({
+      slug: water.slug,
+      river,
+      place: `${waterName(ghat, "ghat", lang)}, ${waterName(ghat, "city", lang)}`,
+      sentence: read
+        ? fill(t.bands[read.percentile.band], { river: t.subjects[water.slug] })
+        : t.feed.normalNote,
+      trend: read
+        ? read.deltaPct === null
+          ? t.trendPlain[read.trend]
+          : fill(t.trends[read.trend], { pct: whole(Math.abs(read.deltaPct), lang), since: t.flow.trendSince })
+        : t.feed.normalLabel,
+      caret: read ? CARET[read.trend] : CARET.steady,
+      cumecs: d.cumecs,
+      unit: t.flow.unit,
+      percentile: read ? read.percentile.value : null,
+      bandWord: read ? t.bandWords[read.percentile.band] : t.feed.normalLabel,
+      rankNote: t.feed.normalLabel,
+      modelled:
+        d.kind === "modelled"
+          ? fill(t.flow.modelledFor, { date: longDate(d.modelledFor, lang) })
+          : fill(t.flow.modelledFor, { date: longDate(d.forDate, lang) }),
+      sunrise: clock(water.sky.sunrise),
+      nextWindow: slot ? windowLine(slot, lang) : null,
+      series: read ? read.series.map((x) => x.cumecs) : [],
+      picture: { src: PICTURES[water.slug].src, alt: PICTURES[water.slug].alt[lang] },
+      href: `#${water.slug}`,
+    });
+  }
+  return out;
+}
 
 export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnapshot }) {
   const t = liveContent[lang];
@@ -495,7 +566,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
       <main className="pb-28 lg:pb-0">
         {/* ---------------------------------------------- front matter --- */}
         <section className="border-b-2 border-rulestrong">
-          <div className="mx-auto max-w-6xl px-5 pt-12 pb-12 sm:px-8 sm:pt-16 sm:pb-16">
+          <div className="mx-auto max-w-6xl px-5 pt-8 pb-8 sm:px-8 sm:pt-10 sm:pb-9">
             {/* The badge names the rung the page is actually on. The spot
                 square fills only when the feed is genuinely live, which is the
                 one thing that square is for. */}
@@ -506,26 +577,28 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
             </div>
 
             <h1
-              className="ink-in display mt-7 max-w-4xl text-[2.4rem] leading-[1.05] sm:text-[3.6rem] lg:text-[4.4rem]"
+              className="ink-in display mt-6 max-w-4xl text-[2.2rem] leading-[1.05] sm:text-[3rem] lg:text-[3.4rem]"
               style={{ animationDelay: "80ms" }}
             >
               {t.title}
             </h1>
 
-            <div className="rule-double mt-7 max-w-xl" />
-
             <p
-              className="ink-in mt-6 max-w-2xl text-[1.02rem] leading-[1.75] text-ink2"
+              className="ink-in mt-4 max-w-2xl text-[1.02rem] leading-[1.7] text-ink2"
               style={{ animationDelay: "160ms" }}
             >
               {t.standfirst}
             </p>
-
-            <p className="mt-8 max-w-2xl text-sm leading-[1.7] text-ink2">
-              {fill(t.assembled, { time: assembledAt })} {t.modelledEvery}
-            </p>
           </div>
         </section>
+
+        {/* --------------------------------------------- pick a water --- */}
+        <LiveHero
+          lang={lang}
+          waters={heroWaters(snapshot, lang)}
+          labels={{ ...t.hero, bandWords: t.bandWords }}
+          note={`${fill(t.assembled, { time: assembledAt })} ${t.modelledEvery}`}
+        />
 
         {/* ------------------------------------------------- the index --- */}
         <section className="tint border-b-2 border-rulestrong">
@@ -534,8 +607,8 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
               {t.index.title}
             </h2>
 
-            <ul className="mt-6 border-t-2 border-rulestrong">
-              {snapshot.waters.map((water) => {
+            <InView as="ul" className="mt-6 border-t-2 border-rulestrong">
+              {snapshot.waters.map((water, i) => {
                 const ghat = getGhat(water.slug);
                 if (!ghat) return null;
                 const band =
@@ -544,7 +617,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                   water.discharge.kind === "modelled" ? water.discharge.trend : null;
 
                 return (
-                  <li key={water.slug} className="border-b border-rule">
+                  <li key={water.slug} className="reveal border-b border-rule" style={{ ["--i" as string]: i }}>
                     {/* 56px minimum, so every row is a comfortable tap target
                         and the six of them are a usable index on a phone. */}
                     <a
@@ -571,7 +644,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                   </li>
                 );
               })}
-            </ul>
+            </InView>
 
             <p className="mt-5 max-w-2xl text-[0.95rem] leading-[1.7] text-ink2">{t.index.note}</p>
           </div>
@@ -596,6 +669,20 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 </p>
               ))}
             </div>
+
+            <h3 className="display mt-10 text-xl">{t.pictures.heading}</h3>
+            <ul className="mt-3 max-w-3xl space-y-1.5 text-[0.9rem] leading-[1.6] text-ink2">
+              {snapshot.waters.map((water) => {
+                const pic = PICTURES[water.slug];
+                return (
+                  <li key={water.slug}>
+                    <a href={pic.page} className="underline decoration-rule underline-offset-4 hover:decoration-spot">
+                      {fill(t.pictures.credit, { subject: pic.subject[lang], author: pic.author, license: pic.license })}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
 
             <p className="mt-8 max-w-3xl text-[0.95rem] leading-[1.7] text-ink2">
               {t.sky.noWater}

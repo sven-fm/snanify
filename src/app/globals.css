@@ -370,3 +370,113 @@ html[data-cur="CAD"] .cur-CAD,
 html[data-cur="INR"] .cur-INR {
   display: inline;
 }
+
+/* --- Scroll-driven reveals -------------------------------------------------
+   Content on the long reference pages sets itself as the reader reaches it,
+   with the same stepped impression as `ink-in`: an opacity in six steps and a
+   rise of a few pixels, never a float. `InView` in src/components/live sets
+   `data-in` once, and `--i` staggers siblings. Reduced motion shows everything
+   at once, below.                                                            */
+/* Only once the head script has stamped `data-js`: without JavaScript the
+   reader gets the whole page at once, because nothing was ever hidden. */
+html[data-js] .reveal {
+  opacity: 0;
+  transform: translateY(8px);
+}
+[data-in] .reveal {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.42s steps(6, end) calc(var(--i, 0) * 70ms),
+    transform 0.42s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 70ms);
+}
+/* A nested block that has not arrived yet keeps its own children back, even
+   inside a block that has. */
+html[data-js] [data-armed]:not([data-in]) .reveal {
+  opacity: 0;
+  transform: translateY(8px);
+}
+html[data-js] [data-armed]:not([data-in]) .grow {
+  transform: scaleY(0);
+}
+
+/* A bar that grows from its baseline when its section arrives. */
+html[data-js] .grow {
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+[data-in] .grow {
+  transform: scaleY(1);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 45ms);
+}
+
+/* The waterline breathes at the river's own amplitude: four seconds in, six
+   out, as the sitting does. `--amp` is set from the percentile. */
+@keyframes breathe {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(calc(var(--amp, 6px) * -1)); }
+  100% { transform: translateY(0); }
+}
+.breathe {
+  animation: breathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+/* A photograph printed as ink: the picture is an alpha mask over the ink
+   colour, so it takes the night edition's ink as readily as the day's. */
+.ink-picture {
+  background-color: var(--ink);
+  -webkit-mask-image: var(--picture);
+  mask-image: var(--picture);
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* A picture that is only fetched once its section arrives: the mask URL is
+   applied under `[data-in]`, so six pictures down the page cost a phone
+   nothing until it scrolls to them. */
+.ink-picture-lazy {
+  background-color: var(--ink);
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+[data-in] .ink-picture-lazy,
+html:not([data-js]) .ink-picture-lazy {
+  /* fetched on arrival, or straight away without JavaScript */
+  -webkit-mask-image: var(--picture);
+  mask-image: var(--picture);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .grow {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .breathe {
+    animation: none;
+  }
+}
+
+/* A bar that rises on mount, for the gauge's eleven days when the water
+   changes. `--i` staggers the eleven. */
+@keyframes rise {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+.rise {
+  transform-origin: bottom;
+  animation: rise 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 40ms) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
+}

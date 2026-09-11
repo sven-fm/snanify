@@ -235,10 +235,16 @@ the multi-size ICO; `src/lib/seo.ts` declares all three.
 ## Components
 
 `@/components/ui` exports `Section`, `Card`, `CTA`, `LinkButton`, `buttonClass`, `StatusBadge`,
-`DataRow`. `Eyebrow`, `SectionHeader` and the `Reveal` scroll animation were removed on
-purpose: a tracked caps label above every heading, and a fade-and-rise on every section, are
-the commonest tells of a generated page. A section is a display heading and at most one plain
-sentence. Small caps appear only as the column head of a ruled data row and on a button.
+`DataRow`. `Eyebrow` and `SectionHeader` were removed on purpose: a tracked caps label above
+every heading is the commonest tell of a generated page. A section is a display heading and at
+most one plain sentence. Small caps appear only as the column head of a ruled data row and on
+a button.
+
+Motion, at the owner's direction, is welcome on the reference pages where it shows the data:
+`src/components/live/InView.tsx` sets content as the reader reaches it, in the same six-step
+impression as `ink-in`, and `LiveHero` sweeps a needle and counts a figure up. Transform and
+opacity only, and everything stops under `prefers-reduced-motion`. The generic
+fade-and-float on every block stays out.
 
 `StatusBadge` only pulses when `live` is true. A pulsing dot asserts that something is running
 right now, so it must never decorate a static label.

@@ -1,7 +1,7 @@
 "use client";
 
 /** Runs before paint so the first frame is already the right edition. */
-export const themeScript = `(function(){try{var s=localStorage.getItem("snanify-theme");var d=s?s==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d);}catch(e){document.documentElement.classList.add("dark");}})();`;
+export const themeScript = `(function(){document.documentElement.setAttribute("data-js","");try{var s=localStorage.getItem("snanify-theme");var d=s?s==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d);}catch(e){document.documentElement.classList.add("dark");}})();`;
 
 /**
  * Stateless: the glyph is chosen by the `.dark` class in CSS, so there is

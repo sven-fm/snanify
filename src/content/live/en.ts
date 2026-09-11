@@ -67,8 +67,7 @@ export const en = {
   crumb: "The rivers, live",
   title: "How the rivers are running today.",
   standfirst:
-    "The Ganga at Haridwar, the Sangam at Prayagraj, the Yamuna at Mathura, the Godavari at Nashik, the Shipra at Ujjain and the Kaveri at Talakaveri. For each, the modelled flow, sunrise and sunset, the weather and today's muhurat windows, with the date each figure carries. All of it is free to read.",
-
+    "Six waters, one page. The modelled flow, sunrise and sunset, the weather and today's muhurat windows at each, with the date every figure carries. Free to read.",
   assembled: "This page was assembled at {time} IST.",
   modelledEvery: "The flood model publishes one value per cell per day.",
 
@@ -226,6 +225,25 @@ export const en = {
       "Sun and weather: Open-Meteo, CC BY 4.0.",
       "Gauge register: Central Water Commission, National Water Data Portal.",
     ],
+  },
+
+  /* The picker and the gauge at the head of the page; see
+     src/components/live/LiveHero.tsx. */
+  hero: {
+    pick: "Choose a water",
+    flow: "Flow today",
+    rank: "Rank since 1997",
+    of: "of 100",
+    next: "Next window",
+    sunrise: "Sunrise",
+    open: "Read the full entry",
+    eleven: "Eleven model days",
+    dialLabel: "{river}: {band}, {rank} of 100 since 1997",
+  },
+
+  pictures: {
+    heading: "The pictures",
+    credit: "{subject}. Photograph by {author}, {license}, printed here as ink.",
   },
 
   close: {
