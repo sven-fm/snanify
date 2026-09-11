@@ -49,6 +49,8 @@ export const en = {
     description:
       "A digital snan. Sit three minutes with the river you grew up near, at the hour the panchang names, and send your family the sheet that comes out of it. Six rivers, live and free to read.",
   },
+  /* The one line on the share card a chat app unfurls; see src/lib/site-card.ts. */
+  share: "A digital snan. Three minutes with the river you grew up near, and a sheet to send home.",
   themeLabel: "Change theme",
   langLabel: "Language",
   nav: {
