@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SignIn } from "@clerk/nextjs";
 import { Header } from "@/components/site/Header";
+import { AppHeaderCta } from "@/components/site/AppHeaderCta";
 import { Footer } from "@/components/site/Footer";
 import { accountContent } from "@/content/account";
 import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
@@ -37,7 +38,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} currentPath={ROUTE} personalised />
+      <Header lang={lang} currentPath={ROUTE} cta={<AppHeaderCta lang={lang} />} />
 
       <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-md">

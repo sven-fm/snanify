@@ -31,7 +31,7 @@ export function LangSwitch({
     <details className="group relative">
       <summary
         className="label flex cursor-pointer list-none items-center gap-1.5 border border-rulestrong px-2.5 py-1.5 text-ink transition-colors hover:bg-ink hover:text-paper [&::-webkit-details-marker]:hidden"
-        aria-label={label}
+        aria-label={`${def.native}, ${label}`}
       >
         {def.native}
         <span aria-hidden="true" className="text-[0.6em] leading-none">

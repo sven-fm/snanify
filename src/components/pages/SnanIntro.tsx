@@ -339,7 +339,8 @@ export function SnanIntro({ lang }: { lang: Lang }) {
           Phones only, pinned to the bottom edge inside the thumb arc, and
           padded past the home indicator. No JavaScript, no timer, no offer
           that expires. */}
-      <div
+      <aside
+        aria-label={t.sticky.name}
         className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-rulestrong bg-paper lg:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
@@ -354,7 +355,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
             {t.sticky.cta}
           </Link>
         </div>
-      </div>
+      </aside>
     </>
   );
 }

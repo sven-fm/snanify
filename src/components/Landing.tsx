@@ -398,7 +398,10 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
           is, carrying the hero SKU and its price in the reader's currency. Set
           as a ruled bar on paper, not a floating pill. Hidden from `sm` up,
           where the buttons in the flow are already reachable.             */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden">
+      <aside
+        aria-label={t.bar.label}
+        className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden"
+      >
         <div className="flex items-center justify-between gap-4 px-5 py-2.5">
           <div className="min-w-0">
             <p className="text-xs text-ink2">{t.bar.label}</p>
@@ -413,7 +416,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             {t.bar.cta}
           </Link>
         </div>
-      </div>
+      </aside>
       {/* keeps the imprint clear of the rail */}
       <div className="h-[4.75rem] sm:hidden" aria-hidden="true" />
     </>

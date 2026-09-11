@@ -1,5 +1,5 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
 import { DEFAULT_LANG, LANGS } from "@/lib/locales";
 import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
 
@@ -99,7 +99,20 @@ function route(req: NextRequest) {
  *
  * The URL scheme runs inside it, unchanged.
  */
-export const proxy = clerkMiddleware(async (_auth, req) => route(req));
+const withClerk = clerkMiddleware(async (_auth, req) => route(req));
+
+/**
+ * Only the signed-in routes pass through Clerk. On a marketing page Clerk has
+ * nothing to read, and on a development instance its middleware answered a
+ * first visit with a round trip to clerk.accounts.dev and back, 1.6 seconds
+ * before the landing page could paint. The pages that call `requireUser` or
+ * render Clerk's widgets all live under these prefixes, in either edition.
+ */
+const APP_PATH = /^\/(?:[a-z]{2}\/)?(?:begin|setup|today|account|p|sign-in|sign-up)(?:\/|$)/;
+
+export function proxy(req: NextRequest, event: NextFetchEvent) {
+  return APP_PATH.test(req.nextUrl.pathname) ? withClerk(req, event) : route(req);
+}
 
 export const config = {
   /**

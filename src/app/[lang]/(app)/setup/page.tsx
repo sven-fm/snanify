@@ -11,6 +11,7 @@ import { blobUrl } from "@/lib/blob";
 import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 import { Header } from "@/components/site/Header";
+import { AppHeaderCta } from "@/components/site/AppHeaderCta";
 import { Footer } from "@/components/site/Footer";
 import { SetupForm } from "@/components/setup/SetupForm";
 import { TrackView } from "@/components/site/TrackView";
@@ -86,7 +87,7 @@ export default async function Page({
     <>
       <div className="grain" aria-hidden="true" />
       {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
-      <Header lang={lang} currentPath={ROUTE} personalised />
+      <Header lang={lang} currentPath={ROUTE} cta={<AppHeaderCta lang={lang} />} />
 
       <main className="mx-auto max-w-2xl px-5 py-10 pb-16 sm:px-8 sm:py-16">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>

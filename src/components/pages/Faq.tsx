@@ -202,14 +202,14 @@ export function Faq({ lang }: { lang: Lang }) {
       <Footer lang={lang} />
 
       {/* ---------------- thumb rail, phones only ---------------- */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden">
+      <aside aria-label={t.ctaLabel} className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden">
         <a
           href={cta}
           className="label flex min-h-[3.75rem] items-center justify-center bg-spot px-5 text-paper"
         >
           {t.ctaLabel}
         </a>
-      </div>
+      </aside>
     </>
   );
 }

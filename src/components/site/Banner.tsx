@@ -16,11 +16,11 @@ export function Banner({ lang }: { lang: Lang }) {
   const t = bannerContent[lang as "en" | "hi"] ?? bannerContent.en;
 
   return (
-    <div className="border-b-2 border-rulestrong bg-spot text-paper">
+    <aside className="border-b-2 border-rulestrong bg-spot text-paper">
       <p className="mx-auto max-w-6xl px-5 py-2 text-center text-[0.78rem] leading-snug tracking-wide sm:px-8">
         <span className="sm:hidden">{t.short}</span>
         <span className="hidden sm:inline">{t.text}</span>
       </p>
-    </div>
+    </aside>
   );
 }

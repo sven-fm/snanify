@@ -34,7 +34,7 @@ Two editions of one forme. The night edition is the same press run, overprinted.
 | `--paper-3` | `#ded1b4` | `#24211a` | Deeper tint, hover |
 | `--ink` | `#16130f` | `#ece3cf` | Type |
 | `--ink-2` | `#57513f` | `#99917f` | Secondary type |
-| `--spot` | `#c1272d` | `#e04a40` | **The only accent** |
+| `--spot` | `#b32620` | `#e04a40` | **The only accent**, and the ink the printed sheet uses |
 | `--rule` | `#c3b697` | `#35302a` | Hairline |
 | `--rule-strong` | `#16130f` | `#ece3cf` | Full-strength rule |
 

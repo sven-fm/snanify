@@ -280,7 +280,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
           </div>
 
           {/* the register of days */}
-          <div className="mt-10 overflow-x-auto border-t-2 border-rulestrong">
+          <div className="mt-10 overflow-x-auto border-t-2 border-rulestrong" tabIndex={0}>
             <table className="w-full min-w-[46rem] border-collapse text-left">
               <thead>
                 <tr className="border-b border-rulestrong">

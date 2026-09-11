@@ -62,7 +62,7 @@ export function Footer({ lang }: { lang: Lang }) {
 
             return (
               <div key={col.at}>
-                <h3 className="label text-spot">{t.footer.cols[col.at].h}</h3>
+                <h2 className="label text-spot">{t.footer.cols[col.at].h}</h2>
                 <div className="rule-thin mt-3" />
                 <ul className="mt-4 space-y-2.5">
                   {keys.map((key) => {
@@ -84,7 +84,7 @@ export function Footer({ lang }: { lang: Lang }) {
           })}
 
           <div>
-            <h3 className="label text-spot">{t.footer.cols[LEGAL].h}</h3>
+            <h2 className="label text-spot">{t.footer.cols[LEGAL].h}</h2>
             <div className="rule-thin mt-3" />
             {/* Privacy and terms are real pages now. Refunds is answered
                 inside the terms rather than on a page of its own, so it points

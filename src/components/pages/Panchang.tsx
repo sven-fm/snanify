@@ -151,7 +151,7 @@ function OccasionTable({
   const t = panchangContent[lang].occasions;
 
   return (
-    <div className="mt-8 overflow-x-auto">
+    <div className="mt-8 overflow-x-auto" tabIndex={0}>
       <table className="w-full min-w-[52rem] border-collapse text-left">
         <thead>
           <tr className="border-y-2 border-rulestrong">
@@ -305,7 +305,7 @@ export function Panchang({ lang }: { lang: Lang }) {
 
             {/* the worked pairs */}
             <h3 className="display mt-16 text-2xl">{t.reckoning.pairsHeading}</h3>
-            <div className="mt-6 overflow-x-auto">
+            <div className="mt-6 overflow-x-auto" tabIndex={0}>
               <table className="w-full min-w-[42rem] border-collapse text-left">
                 <thead>
                   <tr className="border-y-2 border-rulestrong">
@@ -388,7 +388,7 @@ export function Panchang({ lang }: { lang: Lang }) {
               </div>
             </div>
 
-            <div className="mt-12 overflow-x-auto">
+            <div className="mt-12 overflow-x-auto" tabIndex={0}>
               <table className="w-full min-w-[44rem] border-collapse text-left">
                 <thead>
                   <tr className="border-y-2 border-rulestrong">
@@ -481,7 +481,7 @@ export function Panchang({ lang }: { lang: Lang }) {
             </div>
 
             {/* the four windows as rules, before any clock is put on them */}
-            <div className="mt-12 overflow-x-auto">
+            <div className="mt-12 overflow-x-auto" tabIndex={0}>
               <table className="w-full min-w-[40rem] border-collapse text-left">
                 <thead>
                   <tr className="border-y-2 border-rulestrong">
@@ -514,7 +514,7 @@ export function Panchang({ lang }: { lang: Lang }) {
               <p className="mt-3 text-sm leading-[1.75] text-ink2">{t.clock.assumption}</p>
             </div>
 
-            <div className="mt-10 overflow-x-auto">
+            <div className="mt-10 overflow-x-auto" tabIndex={0}>
               <table className="w-full min-w-[56rem] border-collapse text-left">
                 <caption className="sr-only">{t.clock.title}</caption>
                 <thead>

@@ -684,14 +684,14 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
 
       {/* The primary action, put where a thumb reaches on a 390px screen.
           Hidden above lg, where the masthead's own button is in reach. */}
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-rulestrong bg-paper px-5 py-3 lg:hidden">
+      <aside aria-label={t.close.title} className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-rulestrong bg-paper px-5 py-3 lg:hidden">
         <a
           href={cta}
           className="label flex min-h-[48px] items-center justify-center bg-spot px-6 text-paper transition-colors hover:bg-ink"
         >
           {site.nav.cta}
         </a>
-      </div>
+      </aside>
     </>
   );
 }
