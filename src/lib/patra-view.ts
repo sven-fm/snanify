@@ -172,9 +172,11 @@ export function printableRecord(sitting: Sitting): PatraRecord {
     keptIst: `${view.keptIst} IST`,
     keptLocal: `${view.keptTime} ${view.keptZone}`,
 
-    /* Only when the panchang has a named source behind it. Until then the
-       sheet leaves the line ruled and empty, which is the honest state. */
-    tithi: { label: view.tithi, confidence: "provisional" },
+    /* Printed since the check of 11 September 2026: the tithi is computed
+       here and was matched against Drik Panchang on eight days, every one to
+       the minute; see docs/panchang-check.md. Before that the sheet left the
+       line ruled and empty. */
+    tithi: { label: view.tithi, confidence: "sourced" },
 
     flow: {
       value: view.flow,

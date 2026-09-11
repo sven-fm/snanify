@@ -134,8 +134,17 @@ export interface MuhuratWindow {
   readonly id: MuhuratWindowId;
   readonly name: Bilingual;
   readonly anchor: WindowAnchor;
+  /**
+   * Which span a muhurta is a fifteenth of for this window. The offsets below
+   * are written for a 48-minute muhurta, the equinox value, and are scaled by
+   * the real day or night length on the day; see `windowsFor` in riverdata.ts.
+   * That is the reckoning Drik Panchang prints, and it is what the basis for
+   * Abhijit already said in words.
+   */
+  readonly scale: "day" | "night";
   readonly offsetStartMin: Minutes;
   readonly offsetEndMin: Minutes;
+  /** Nominal, at the equinox. */
   readonly durationMin: Minutes;
   readonly formula: Bilingual;
   /** Why the tradition keeps this hour. Never why it converts well. */

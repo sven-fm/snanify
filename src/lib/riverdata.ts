@@ -472,13 +472,22 @@ function windowsFor(slug: WaterSlug, sky: Sky, now: Date): readonly WindowSlot[]
   const noon = new Date((sunrise.getTime() + sunset.getTime()) / 2);
   const sunriseTomorrow = istInstant(sky.sunriseTomorrow);
 
+  /* A muhurta is a fifteenth of the day or of the night, not 48 minutes flat.
+     The window offsets are written for the 48-minute equinox muhurta and
+     scaled here by the real length, so Brahma muhurat runs longer in a winter
+     night and Abhijit longer in a summer day. The night is taken as the rest
+     of the twenty-four hours, which is within a minute of the true night. */
+  const dayMinutes = (sunset.getTime() - sunrise.getTime()) / 60_000;
+  const factor = { day: dayMinutes / 15 / 48, night: (1440 - dayMinutes) / 15 / 48 };
+
   const slots: WindowSlot[] = [];
 
   const push = (id: MuhuratWindowId, anchor: Date, onNextDay: boolean) => {
     const w = WINDOWS.find((x) => x.id === id);
     if (!w) return;
-    const startsAt = new Date(anchor.getTime() + w.offsetStartMin * 60_000);
-    const endsAt = new Date(anchor.getTime() + w.offsetEndMin * 60_000);
+    const scale = factor[w.scale];
+    const startsAt = new Date(anchor.getTime() + w.offsetStartMin * scale * 60_000);
+    const endsAt = new Date(anchor.getTime() + w.offsetEndMin * scale * 60_000);
     slots.push({
       id,
       startsAt: withIstOffset(startsAt),

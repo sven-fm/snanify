@@ -85,7 +85,7 @@ const ethicsEn = {
     body: [
       "Tithi, nakshatra and the muhurat windows are computed on our own servers with astronomy-engine, an open astronomy library. We take the moon's position, subtract the Lahiri ayanamsa and divide the sky into twenty-seven parts. No outside service is involved, so the same instant always gives the same answer.",
       "Sunrise and sunset are computed for each ghat's own coordinates. That is why Brahma muhurat in Haridwar differs from Brahma muhurat in Nashik.",
-      "A timing we have not yet checked against a named printed panchang is labelled provisional. Where sources disagree, the page prints the range.",
+      "Tithi, nakshatra and the windows were checked against Drik Panchang on eight days between September 2026 and March 2027, every one to the minute. The day an occasion falls on is labelled provisional until it has been checked the same way. Where sources disagree, the page prints the range.",
     ],
   },
 
@@ -159,7 +159,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
     body: [
       "तिथि, नक्षत्र और मुहूर्त हमारे अपने सर्वर पर astronomy-engine नामक खुली खगोल-लाइब्रेरी से गणना होते हैं। हम चंद्रमा की स्थिति लेते हैं, उसमें से लाहिड़ी अयनांश घटाते हैं, और आकाश को सत्ताईस भागों में बाँटते हैं। इसमें कोई बाहरी सेवा नहीं है, इसलिए एक ही क्षण का उत्तर सदा एक ही आता है।",
       "सूर्योदय और सूर्यास्त हर घाट के अपने निर्देशांकों पर गणना होते हैं। इसीलिए हरिद्वार का ब्रह्म मुहूर्त नासिक के ब्रह्म मुहूर्त से अलग होता है।",
-      "जिस समय को हमने अभी किसी छपे हुए पंचांग से नहीं मिलाया, उस पर 'अस्थायी' लिखा रहता है। जहाँ स्रोत आपस में भिन्न हों, वहाँ पृष्ठ पूरी सीमा छापता है।",
+      "तिथि, नक्षत्र और बेलाएँ सितंबर 2026 से मार्च 2027 के बीच आठ दिनों पर दृक पंचांग से मिलाई गईं, हर एक मिनट तक। किसी पर्व का दिन तब तक 'अस्थायी' अंकित रहता है जब तक उसे इसी तरह जाँच न लिया जाए। जहाँ स्रोत आपस में भिन्न हों, वहाँ पृष्ठ पूरी सीमा छापता है।",
     ],
   },
 
@@ -418,7 +418,7 @@ const faqEn = {
           id: "panchang",
           q: "Why are some timings marked provisional?",
           a: [
-            "We compute tithi and the muhurat windows ourselves, and we have not yet checked them against a named printed panchang. Until we have, every exact time carries the label. Where sources disagree, we show the range.",
+            "We compute tithi, nakshatra and the muhurat windows ourselves. In September 2026 we checked them against Drik Panchang on eight days at Haridwar, and every one matched to the minute. What is still provisional is the calendar day each occasion falls on, which we give as a month until its day rule has been checked the same way. Where sources disagree, we show the range.",
           ],
         },
       ],
@@ -652,7 +652,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "panchang",
           q: "कुछ समयों पर 'अस्थायी' क्यों लिखा है?",
           a: [
-            "तिथि और मुहूर्त हम स्वयं गणना करते हैं, और अभी उन्हें किसी छपे हुए पंचांग से मिलाया नहीं है। जब तक मिला न लें, हर सटीक समय पर यह चिह्न रहता है। जहाँ स्रोत भिन्न हों, वहाँ हम पूरी सीमा दिखाते हैं।",
+            "तिथि, नक्षत्र और मुहूर्त की बेलाएँ हम स्वयं गणना करते हैं। सितंबर 2026 में हमने इन्हें हरिद्वार के लिए आठ दिनों पर दृक पंचांग से मिलाया, और हर एक मिनट तक मिली। अस्थायी अब केवल वह दिन है जिस पर कोई पर्व पड़ता है; उसे हम महीने के रूप में देते हैं, जब तक उसका दिन-नियम इसी तरह जाँच न लिया जाए। जहाँ स्रोत भिन्न हों, वहाँ हम पूरी सीमा दिखाते हैं।",
           ],
         },
       ],

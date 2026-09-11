@@ -361,7 +361,7 @@ export const panchangContent = {
     provenance: {
       heading: "Where the timings come from",
       extra:
-        "Everything below is a rule, a definition or arithmetic. A calendar date for a tithi needs a panchang provider, and one has not been named yet. Until it is, this page gives the rule and leaves the date to your family's panchang.",
+        "Everything below is a rule, a definition or arithmetic. The tithi and nakshatra are computed here and were checked against Drik Panchang on eight days, every one to the minute. The calendar dates of the occasions are not listed here yet, so this page gives the rule and leaves the date to your family's panchang.",
     },
     drift: {
       title: "Why the date moves",
@@ -436,7 +436,7 @@ export const panchangContent = {
       lede: "The fortnight runs from the full moon of Bhadrapada to the next new moon. Each day has its tithi, and a household keeps the day whose tithi matches the one their person died on, not the calendar anniversary.",
       datesHeading: "About the dates",
       dates:
-        "The ladder below is a rule, so it holds in every year. The calendar dates it falls on come from a panchang, and this site has not named its provider yet. Until it does, take the dates from your family's panchang. When the provider is named and checked, the dates appear here.",
+        "The ladder below is a rule, so it holds in every year. The calendar dates it falls on are not listed here yet. Until they are, take them from your family's panchang.",
       cols: { n: "Day", tithi: "Tithi", kept: "How it is kept" },
       defaultKept: "Kept by the households whose person died on this tithi.",
       conventionHeading: "The named days",
@@ -505,7 +505,7 @@ export const panchangContent = {
       lede: "A window at the ghat is one moment. Its date and hour on your clock depend on where you live, and in the Americas the morning window falls on the previous evening. Both clocks are printed every time.",
       assumptionHeading: "How this table is drawn",
       assumption:
-        "The four windows are counted from sunrise, noon and sunset. To show them as clock times the table assumes those three moments: 06:00, 12:00 and 18:00 IST on 15 September 2026. It is an illustration, and the date carries no occasion. The gaps in the left column are exact for that date.",
+        "The four windows are counted in muhurtas from sunrise, noon and sunset. To show them as clock times the table assumes those three moments, 06:00, 12:00 and 18:00 IST on 15 September 2026, and a 48-minute muhurta, which is its length at the equinox. It is an illustration, and the date carries no occasion. The gaps in the left column are exact for that date.",
       atTheGhat: "At the ghat",
       ghatZone: "Asia/Kolkata, IST",
       place: "Where you are",
@@ -560,7 +560,7 @@ export const panchangContent = {
     provenance: {
       heading: "समय कहाँ से आते हैं",
       extra:
-        "नीचे जो कुछ है वह नियम है, परिभाषा है या गणित है। किसी तिथि की अंग्रेज़ी तारीख़ के लिए पंचांग का स्रोत चाहिए, और वह अभी नियुक्त नहीं हुआ है। तब तक यह पृष्ठ नियम बताता है और तारीख़ आपके परिवार के पंचांग पर छोड़ता है।",
+        "नीचे जो कुछ है वह नियम है, परिभाषा है या गणित है। तिथि और नक्षत्र यहीं गणना होते हैं और आठ दिनों पर दृक पंचांग से मिलाए गए, हर एक मिनट तक। पर्वों की अंग्रेज़ी तारीख़ें यहाँ अभी सूचीबद्ध नहीं हैं, इसलिए यह पृष्ठ नियम बताता है और तारीख़ आपके परिवार के पंचांग पर छोड़ता है।",
     },
     drift: {
       title: "तारीख़ क्यों बदलती है",
@@ -635,7 +635,7 @@ export const panchangContent = {
       lede: "यह पक्ष भाद्रपद की पूर्णिमा से अगली अमावस्या तक चलता है। हर दिन की अपनी तिथि है, और परिवार उस दिन श्राद्ध करता है जिसकी तिथि उनके स्वजन के देहावसान की तिथि से मिलती है, अंग्रेज़ी पुण्यतिथि से नहीं।",
       datesHeading: "तारीख़ों के बारे में",
       dates:
-        "नीचे की सूची नियम है, इसलिए हर वर्ष लागू होती है। वह किन अंग्रेज़ी तारीख़ों पर पड़ेगी, यह पंचांग से निकलता है, और इस साइट ने अभी अपना स्रोत नियुक्त नहीं किया है। तब तक तारीख़ें अपने परिवार के पंचांग से लीजिए। स्रोत नियुक्त और जाँचा जाने पर तारीख़ें यहाँ आ जाएँगी।",
+        "नीचे की सूची नियम है, इसलिए हर वर्ष लागू होती है। वह किन अंग्रेज़ी तारीख़ों पर पड़ेगी, यह यहाँ अभी सूचीबद्ध नहीं है। तब तक तारीख़ें अपने परिवार के पंचांग से लीजिए।",
       cols: { n: "दिन", tithi: "तिथि", kept: "किसके लिए" },
       defaultKept: "वे घर जिनके स्वजन का देहावसान इसी तिथि को हुआ था।",
       conventionHeading: "नाम वाले दिन",

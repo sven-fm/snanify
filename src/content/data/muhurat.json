@@ -21,15 +21,15 @@
     "to": "2027-07"
   },
   "provider": {
-    "id": "PLACEHOLDER_PANCHANG_PROVIDER",
+    "id": "computed-checked-drik-panchang-2026-09",
     "displayName": {
-      "en": "To be named",
-      "hi": "नाम तय होना शेष"
+      "en": "Computed here, checked against Drik Panchang",
+      "hi": "यहीं गणना, दृक पंचांग से मिलान"
     },
-    "ayanamsa": null,
+    "ayanamsa": "lahiri",
     "note": {
-      "en": "A panchang source and an ayanamsa are still to be fixed. Until they are, and a named person has checked a sample of days against a reference almanac, every timing here is provisional and is labelled so.",
-      "hi": "पंचांग का स्रोत और अयनांश अभी तय होने हैं। जब तक वे तय न हों, और कोई नामित व्यक्ति कुछ दिनों का मिलान किसी प्रामाणिक पंचांग से न कर ले, तब तक यहाँ का हर समय अनुमानित है, और वैसा ही अंकित है।"
+      "en": "Tithi, nakshatra, sunrise and the four windows are computed here with astronomy-engine and the Lahiri ayanamsa. On 11 September 2026 they were checked against Drik Panchang for Haridwar on eight days between September 2026 and March 2027: every tithi and nakshatra matched, every end time agreed within two minutes, and sunrise agreed within a minute. The method and the table are in docs/panchang-check.md. The calendar day an occasion falls on is still given as a month, and stays labelled provisional until each occasion's day rule has been checked the same way.",
+      "hi": "तिथि, नक्षत्र, सूर्योदय और चारों बेलाएँ यहीं astronomy-engine और लाहिड़ी अयनांश से गणना होती हैं। 11 सितंबर 2026 को इन्हें हरिद्वार के लिए सितंबर 2026 से मार्च 2027 के बीच आठ दिनों पर दृक पंचांग से मिलाया गया: हर तिथि और नक्षत्र मिला, हर समाप्ति-समय दो मिनट के भीतर रहा, और सूर्योदय एक मिनट के भीतर। विधि और तालिका docs/panchang-check.md में है। किसी पर्व का दिन अभी भी महीने के रूप में दिया जाता है, और तब तक अनुमानित अंकित रहता है जब तक हर पर्व का दिन-नियम इसी तरह जाँच न लिया जाए।"
     }
   },
   "ghats": [
@@ -245,8 +245,8 @@
       "offsetEndMin": -48,
       "durationMin": 48,
       "formula": {
-        "en": "Sunrise minus 96 minutes, until sunrise minus 48 minutes.",
-        "hi": "सूर्योदय से 96 मिनट पूर्व से, सूर्योदय से 48 मिनट पूर्व तक।"
+        "en": "Two muhurtas of the night before sunrise, until one muhurta before it. A night muhurta is a fifteenth of the night, about 48 minutes at the equinox and longer in winter.",
+        "hi": "सूर्योदय से रात के दो मुहूर्त पहले से एक मुहूर्त पहले तक। रात का मुहूर्त रात का पंद्रहवाँ भाग है, विषुव पर लगभग 48 मिनट और सर्दियों में अधिक।"
       },
       "basis": {
         "en": "The fourteenth of the fifteen muhurtas of the night, two muhurtas before sunrise and ending one muhurta before it. The classical texts assign this hour to snana, japa and study. It is the one window of the day prescribed for the practice.",
@@ -255,7 +255,8 @@
       "note": {
         "en": "Brahma Muhurat falls before sunrise, so it belongs to the panchang day that opened at the previous sunrise, and the Gregorian date beside it is the next day. The calendar keeps the two apart.",
         "hi": "ब्रह्म मुहूर्त सूर्योदय से पहले आता है, इसलिए यह उस पंचांग-दिवस का है जो पिछले सूर्योदय पर शुरू हुआ था, और इसके साथ लिखी अंग्रेज़ी तारीख़ अगले दिन की होती है। यह पंचांग दोनों को अलग रखता है।"
-      }
+      },
+      "scale": "night"
     },
     {
       "id": "pratah",
@@ -268,8 +269,8 @@
       "offsetEndMin": 96,
       "durationMin": 96,
       "formula": {
-        "en": "Sunrise, until sunrise plus 96 minutes.",
-        "hi": "सूर्योदय से, सूर्योदय के 96 मिनट पश्चात तक।"
+        "en": "Sunrise, until two muhurtas of the day after it. A day muhurta is a fifteenth of the daylight, about 48 minutes at the equinox and longer in summer.",
+        "hi": "सूर्योदय से दिन के दो मुहूर्त बाद तक। दिन का मुहूर्त दिनमान का पंद्रहवाँ भाग है, विषुव पर लगभग 48 मिनट और गर्मियों में अधिक।"
       },
       "basis": {
         "en": "The two muhurtas that open the day. This is the ordinary morning snan of daily practice, the hour the ghats fill, and the window most occasions are kept in.",
@@ -278,7 +279,8 @@
       "note": {
         "en": "This window sits after sunrise, so its panchang day and its Gregorian date agree.",
         "hi": "यह बेला सूर्योदय के बाद है, इसलिए इसका पंचांग-दिवस और इसकी अंग्रेज़ी तारीख़ एक ही होते हैं।"
-      }
+      },
+      "scale": "day"
     },
     {
       "id": "abhijit",
@@ -291,8 +293,8 @@
       "offsetEndMin": 24,
       "durationMin": 48,
       "formula": {
-        "en": "The eighth of fifteen equal day-muhurtas, half a muhurta either side of the sun's true transit, not of clock noon.",
-        "hi": "दिवस के पंद्रह समान मुहूर्तों में आठवाँ, सूर्य के वास्तविक मध्याह्न (खमध्य) के दोनों ओर आधा-आधा मुहूर्त; घड़ी के बारह बजे से इसका संबंध नहीं।"
+        "en": "The eighth of the fifteen equal muhurtas of the day, half a muhurta either side of the sun's true transit, not of clock noon.",
+        "hi": "दिन के पंद्रह बराबर मुहूर्तों में आठवाँ, सूर्य के वास्तविक मध्याह्न के आधे-आधे मुहूर्त इधर-उधर, घड़ी की दोपहर के नहीं।"
       },
       "basis": {
         "en": "The victorious muhurta, held to be free of the ordinary blemishes of the day. Its length follows the length of the day, longer in summer and shorter in winter, and it moves with the sun rather than the clock.",
@@ -301,7 +303,8 @@
       "note": {
         "en": "Tradition leaves Abhijit out on a Wednesday, and so does this calendar.",
         "hi": "परंपरा बुधवार को अभिजित नहीं मानती, और यह पंचांग भी उस दिन इसे छोड़ देता है।"
-      }
+      },
+      "scale": "day"
     },
     {
       "id": "godhuli",
@@ -310,12 +313,12 @@
         "hi": "गोधूलि मुहूर्त"
       },
       "anchor": "sunset",
-      "offsetStartMin": -24,
+      "offsetStartMin": 0,
       "offsetEndMin": 24,
-      "durationMin": 48,
+      "durationMin": 24,
       "formula": {
-        "en": "Sunset minus 24 minutes, until sunset plus 24 minutes.",
-        "hi": "सूर्यास्त से 24 मिनट पूर्व से, सूर्यास्त के 24 मिनट पश्चात तक।"
+        "en": "Sunset, until half a muhurta of the night after it: about 24 minutes, a little longer in winter.",
+        "hi": "सूर्यास्त से रात के आधे मुहूर्त तक: लगभग 24 मिनट, सर्दियों में कुछ अधिक।"
       },
       "basis": {
         "en": "The cow-dust hour, the joint at which the day closes. The evening sandhya is a fixed part of daily observance, and an evening snan before it is settled practice at river ghats, where the evening arati keeps the same hour.",
@@ -324,7 +327,8 @@
       "note": {
         "en": "Godhuli is better known as a wedding muhurta. The evening snan rests on the sandhya rather than on that use.",
         "hi": "गोधूलि विवाह-मुहूर्त के रूप में अधिक जानी जाती है। सायं स्नान का आधार संध्या है, वह प्रयोग नहीं।"
-      }
+      },
+      "scale": "night"
     }
   ],
   "displayedNotActedOn": [
