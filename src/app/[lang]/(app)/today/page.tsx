@@ -53,6 +53,16 @@ export async function generateMetadata({
 
 const NUMBER = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
+/** "11 Sept 2026", the day the model published for, in the reader's edition. */
+function longDay(iso: string, lang: Lang): string {
+  return new Intl.DateTimeFormat(lang === "hi" ? "hi-IN" : "en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${iso}T00:00:00Z`));
+}
+
 export default async function Page({
   params,
   searchParams,
@@ -111,11 +121,11 @@ export default async function Page({
     flow: `${NUMBER.format(d.cumecs)} m³/s`,
     rank:
       d.kind === "modelled"
-        ? `${Math.round(d.percentile.value)}th percentile since 1997`
+        ? t.reading.percentile.replace("{n}", String(Math.round(d.percentile.value)))
         : null,
-    modelledFor: d.kind === "modelled" ? d.modelledFor : null,
+    modelledFor: d.kind === "modelled" ? longDay(d.modelledFor, lang) : null,
     normal: `${NUMBER.format(d.normal.median)} m³/s`,
-    source: `${SOURCES.discharge.model}, modelled daily.`,
+    source: t.reading.source.replace("{model}", SOURCES.discharge.model),
   };
 
   const names = (profile.names as { name: string }[]).map((n) => n.name);

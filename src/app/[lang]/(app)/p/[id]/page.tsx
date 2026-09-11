@@ -18,6 +18,17 @@ import { PatraSheetViewer } from "@/components/SankalpPatra";
 import { setPatraPublic } from "@/app/[lang]/(app)/p/[id]/actions";
 import { SubmitButton } from "@/components/ui";
 
+/** "8 Sept 2026", the day the model published for, from its ISO date. */
+function longDay(iso: string | null, lang: Lang): string {
+  if (!iso) return "";
+  return new Intl.DateTimeFormat(lang === "hi" ? "hi-IN" : "en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${iso}T00:00:00Z`));
+}
+
 /* ---------------------------------------------------------------------------
    /p/[id], the sheet somebody was sent.
 
@@ -214,7 +225,7 @@ export default async function Page({
               k={t.source}
               v={
                 view.figureKind === "modelled"
-                  ? `${view.source}, ${t.modelledFor.replace("{day}", view.modelledFor ?? "")}`
+                  ? `${view.source}, ${t.modelledFor.replace("{day}", longDay(view.modelledFor, lang))}`
                   : `${view.source}, ${t.median}`
               }
             />

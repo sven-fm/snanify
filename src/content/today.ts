@@ -34,6 +34,8 @@ const en = {
     rankLabel: "Ranked",
     modelledLabel: "Modelled for",
     normalLabel: "Seasonal median",
+    percentile: "{n}th percentile since 1997",
+    source: "{model}, modelled daily.",
   },
 
   breath: {
@@ -94,6 +96,8 @@ const hi = {
     rankLabel: "स्थान",
     modelledLabel: "मॉडल दिनांक",
     normalLabel: "ऋतु-मध्यक",
+    percentile: "1997 से {n}वाँ प्रतिशतक",
+    source: "{model}, प्रतिदिन मॉडल-मान।",
   },
 
   breath: {
