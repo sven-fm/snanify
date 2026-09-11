@@ -1,52 +1,40 @@
 /* ---------------------------------------------------------------------------
    The landing edition. English is the source locale: every other file in this
    directory is typed against `LandingCopy` below, so a key added here without a
-   translation is a compile error in eleven places at once, which is the point.
+   translation is a compile error, which is the point.
 
-   HOW THIS COPY IS WRITTEN, and it is not how it used to be.
+   HOW THIS COPY IS WRITTEN.
 
-   SELL THE THING, IN THE ACTIVE VOICE. Say what the reader gets and start the
-   sentence with the verb that gets it: "Sit with a real river", "Speak your own
-   sankalp", "Check every reading". The page once explained itself in the passive
-   ("three minutes are spent", "the reading is taken") and it read as a
-   brochure describing a product rather than a product asking to be used.
+   PLAIN SENTENCES. A noun, a verb, a full stop. The page was once written in
+   the rhythm that generated copy falls into: three parallel clauses to a line
+   ("its own page, its own days, its own reading this hour"), an aphorism for
+   a closing headline, a label on top of every block. Every one of those was
+   rewritten as something a person would say to a friend. If a sentence has a
+   beat to it, it is probably wrong.
+
+   SAY WHAT THE READER GETS. "Sit three minutes with the river you grew up
+   near." "At the end you have a sheet with your family's names on it." Say
+   what the thing is, and stop. Nothing here argues for the product, and
+   nothing here argues against a critic.
 
    NO NEGATIVE CONSTRUCTIONS. If a sentence is built on "no", "nobody",
    "nothing" or "there is no", rewrite it until it is built on a noun and a
-   verb. "Nobody stands in the water for you" becomes "the practice is yours".
-   "There is no quick mode" becomes "the form is the form". This is a rule here,
-   not a preference.
+   verb. This is a rule, not a preference.
 
-   HALF THE WORDS, AND FEWER SECTIONS. The page is a hero, the live card, the
-   six waters, the tariff and a colophon. It used to also teach the five limbs,
-   the calendar and a three-step how-it-works, all of which /snan does at
-   length; a landing page that teaches is a landing page nobody buys from. A
-   lede is two or three short sentences, a tier body is one. The reader is half
-   awake, on a phone, at six in the morning, and for a great many of them
-   English is a second or third language. One idea per sentence, common words,
-   full stops over commas.
+   SHORT. The reader is half awake, on a phone, at six in the morning, and for
+   many of them English is a third language. One idea per sentence. Common
+   words. Full stops over commas.
 
-   PROUD, WARM, AND SELLING. The promise is closeness to home and something to
-   send the family: the river you grew up near, your name and theirs on one
-   sheet. Nothing here explains what the product is not, and nothing apologises
-   for it being digital.
+   THE TWO RULES HOLD: nothing here claims a rite was performed, and nothing
+   promises an outcome. Where the numbers come from is on /ethics.
 
-   THE TWO RULES STILL HOLD, and they are what makes the silence possible:
-   nothing here claims a rite was performed, and nothing promises an outcome.
-   Not claiming is not the same as denying. Where the numbers come from is set
-   out on /ethics, in the voice of a maker showing the workshop.
-
-   FIGURES. hero.stats carries the owner's placeholder marketing figures, kept
-   at his explicit direction. Each label is written so a reader could go and
-   check it:
-     · 6            the six waters in rivers.ts
-     · 48           two upstream reads an hour against the flood model, per day
-     · 1,20,000+    daily river values on the public record since 1997
-   THE BADGE AND THE CARD ARE REAL NOW. They were four hardcoded strings under
-   a heading reading "The river, now", which is exactly the fabricated reading
-   this repo forbids, and it was the first thing anybody read. Both are built
-   in src/app/[lang]/page.tsx from the same snapshot /live uses. What is left
-   here are labels and templates: a figure never goes in this file again.
+   FIGURES. `hero.record` carries the three figures the owner asked to keep on
+   the page, written as a sentence a reader could check: six waters in
+   rivers.ts, forty-eight refreshes a day (the page revalidates every thirty
+   minutes), and a record that runs back to 1997, which is where the flood
+   model's reanalysis starts. The river line and the card are built in
+   src/app/[lang]/page.tsx from the same snapshot /live uses; only templates
+   live here, and a figure never goes in this file.
 
    PRICES ARE NOT IN THIS FILE. One price, in the reader's own currency, out of
    src/content/prices.ts; see src/lib/currency.ts for how that currency is
@@ -59,7 +47,7 @@ export const en = {
   meta: {
     title: "Snanify, the river comes to you",
     description:
-      "A digital snan. Three minutes with the river you grew up near, your family's names on one keepsake sheet, and your own sankalp in your own words. Six waters live, free to read.",
+      "A digital snan. Sit three minutes with the river you grew up near, at the hour the panchang names, and send your family the sheet that comes out of it. Six rivers, live and free to read.",
   },
   themeLabel: "Change theme",
   langLabel: "Language",
@@ -67,68 +55,64 @@ export const en = {
     how: "How it works",
     rivers: "Sacred waters",
     muhurat: "Muhurat",
-    pricing: "Tariff",
+    pricing: "Prices",
     cta: "Begin",
     menu: "Menu",
   },
-  edition: "Samvat 2083 · 2026",
+  edition: "Samvat 2083",
   hero: {
     titleA: "The river",
     titleB: "comes to you.",
-    lede: "Three minutes with the river you grew up near, at an hour the panchang names. Your name and your family's on one sheet, and a morning worth sending them.",
+    lede: "Sit three minutes with the river you grew up near, at the hour the panchang names. At the end you have a sheet with your family's names on it, and you send it home.",
     ctaPrimary: "Begin your snan",
-    ctaSecondary: "The rivers now",
-    offer: "Eleven mornings for {price}. One for each morning.",
+    ctaSecondary: "See the rivers live",
+    offer: "Eleven mornings for {price}. Take them whenever you like.",
     card: {
-      badge: "{river} at {city} · {flow} · modelled for {day}",
-      cardLabel: "The river, now",
+      /* The one live line above the headline. Two forms, because the feed can
+         be quiet, and then the card stands on the seasonal median and says so. */
+      lineModelled: "The {river} at {city} is running at {flow}, modelled for {day}.",
+      lineMedian: "The {river} at {city} is running near its seasonal median.",
       flow: "Flow",
       ranked: "Ranked",
       modelled: "Modelled for",
       muhurat: "Next muhurat",
       percentile: "{n}th percentile since 1997",
       median: "Seasonal median, 1997 to 2025",
-      link: "All six waters, live",
+      link: "See all six waters",
     },
-    stats: [
-      { n: "6", l: "waters, read daily" },
-      { n: "48", l: "reads a day" },
-      { n: "1,20,000+", l: "daily values since 1997" },
-    ],
+    record:
+      "Six waters, refreshed forty-eight times a day and ranked against every day since 1997.",
   },
   rivers: {
-    eyebrow: "Sacred waters",
-    title: "Six waters. One sankalp.",
-    lede: "Each water keeps its own page, its own days, its own reading this hour.",
+    title: "Six sacred waters",
+    lede: "Pick the one you grew up near. Each has a page of its own, with today's flow and the ghat's calendar.",
   },
   pricing: {
-    eyebrow: "The tariff",
     title: "Eleven mornings for eleven.",
-    lede: "One for each morning, in your own currency. Everything that is a page stays free, always.",
+    lede: "The rivers, the panchang and the muhurat calendar are free to read. You pay for the snan and the sheet it leaves behind.",
     free: {
-      label: "Free, and it stays free",
+      label: "Free to read",
       items: [
         {
-          name: "The river, now",
-          d: "Six waters, the flow at each this hour, ranked against twenty-nine years.",
+          name: "The rivers, live",
+          d: "Today's flow at all six waters, and how it compares with past years.",
           href: "/rivers",
         },
         {
           name: "The panchang",
-          d: "Tithi, paksha and nakshatra, with today's windows in IST and yours.",
+          d: "Today's tithi and nakshatra, with the muhurat windows in Indian time and in yours.",
           href: "/panchang",
         },
         {
           name: "Muhurat",
-          d: "Every named occasion in the year, each with its own page.",
+          d: "The year's occasions, with the dates and the bathing windows for each.",
           href: "/muhurat",
         },
       ],
-      note: "Open any of them right now.",
     },
     labels: {
-      snans: "Snans",
-      each: "Each morning",
+      snans: "Mornings",
+      each: "Per morning",
       expiry: "Validity",
     },
     tiers: [
@@ -137,8 +121,7 @@ export const en = {
         name: "Ek Dhara",
         alt: "एक धारा",
         sub: "One snan",
-        flag: "",
-        body: "One morning, whole: the form, a ruled line in your register, one Sankalp Patra.",
+        body: "One morning, and the Sankalp Patra that comes out of it.",
         snans: "One",
         expiry: "Forever",
       },
@@ -147,8 +130,7 @@ export const en = {
         name: "Gyarah",
         alt: "ग्यारह",
         sub: "Eleven snans",
-        flag: "The one to take",
-        body: "Eleven mornings, bought once. Spend them as the year runs: every amavasya, or eleven days straight.",
+        body: "Eleven mornings, paid once. Take them on eleven days in a row or spread them through the year.",
         snans: "Eleven",
         expiry: "Forever",
       },
@@ -157,18 +139,13 @@ export const en = {
         name: "Varsh Kosh",
         alt: "वर्ष कोष",
         sub: "Sixty snans",
-        flag: "",
-        body: "Sixty mornings, five a month for a year, at our lowest price.",
+        body: "Sixty mornings, five a month for a year, at the lowest price per morning.",
         snans: "Sixty",
         expiry: "Forever",
       },
     ],
-    truth: {
-      label: "What you are buying, exactly",
-      body: "A morning with a real river, and a sheet carrying your family's names that anyone can check against the public record.",
-    },
     note: "Prices show before local tax.",
-    cta: "How it is made",
+    cta: "How it works",
   },
   notFound: {
     code: "404",
@@ -177,8 +154,8 @@ export const en = {
     cta: "Return home",
   },
   closing: {
-    title: "Wherever you stand, the water is already there.",
-    lede: "Tomorrow morning, the river you are from, and a sheet to send the family group.",
+    title: "Begin tomorrow morning.",
+    lede: "Set it up tonight and sit with the river before sunrise. The sheet is ready to send the moment you finish.",
     cta: "Begin your snan",
   },
   bar: {
@@ -192,7 +169,7 @@ export const en = {
       { h: "Company", links: ["How it is made", "Panchang", "Questions", "Contact"] },
       { h: "Legal", links: ["Privacy", "Terms", "Refunds"] },
     ],
-    made: "Made with reverence · Prayagraj & Berlin",
+    made: "Prayagraj and Berlin",
     rights: "© 2026 Snanify",
   },
 };

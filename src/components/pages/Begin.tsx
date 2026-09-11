@@ -42,7 +42,7 @@ function TierCard({
   tier: TierKey;
   flagged: boolean;
   t: (typeof beginContent)["en"];
-  labels: { name: string; alt: string; sub: string; body: string; flag: string };
+  labels: { name: string; alt: string; sub: string; body: string };
 }) {
   const pack = PACKS.find((p) => p.tier === tier)!;
 
@@ -55,8 +55,6 @@ function TierCard({
           flagged ? "border-spot" : "border-rulestrong"
         }`}
       >
-        {flagged && <p className="label mb-3 text-spot">{labels.flag}</p>}
-
         <p className="display text-[1.6rem] leading-none text-ink">{labels.name}</p>
         <p className="label mt-2 text-ink2">{labels.sub}</p>
 

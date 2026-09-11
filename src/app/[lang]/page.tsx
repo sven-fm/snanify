@@ -79,12 +79,16 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
   const next = water.next ?? water.current;
   if (next) rows.push({ k: t.muhurat, v: `${windowOpens(next.startsAt)} IST` });
 
+  /* One plain sentence above the headline, in place of the boxed badge that
+     used to join the same facts with middle dots. */
+  const line = (d.kind === "modelled" ? t.lineModelled : t.lineMedian)
+    .replace("{river}", river)
+    .replace("{city}", city)
+    .replace("{flow}", flow)
+    .replace("{day}", d.kind === "modelled" ? shortDay(d.modelledFor, lang) : "");
+
   return {
-    badge: content[lang].hero.card.badge
-      .replace("{river}", river)
-      .replace("{city}", city)
-      .replace("{flow}", flow)
-      .replace("{day}", d.kind === "modelled" ? shortDay(d.modelledFor, lang) : ""),
+    line,
     title: place ? `${river}, ${place}` : river,
     rows,
   };
