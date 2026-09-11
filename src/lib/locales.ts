@@ -78,6 +78,9 @@ export const LOCALES: readonly LocaleDef[] = [
 ] as const;
 
 /** Every locale code, in registry order. The landing locale is first. */
+/** Request header the proxy stamps with the resolved locale; see src/proxy.ts. */
+export const LANG_HEADER = "x-snanify-lang";
+
 export const LANGS: readonly Lang[] = LOCALES.map((l) => l.code);
 
 /** The locales that carry the whole site. */

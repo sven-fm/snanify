@@ -88,17 +88,7 @@ export function renderOgCard() {
             paddingTop: 24,
           }}
         >
-          <div style={{ display: "flex" }}>Ganga</div>
-          <div style={{ display: "flex", color: "#3FA096" }}>·</div>
-          <div style={{ display: "flex" }}>Triveni Sangam</div>
-          <div style={{ display: "flex", color: "#3FA096" }}>·</div>
-          <div style={{ display: "flex" }}>Yamuna</div>
-          <div style={{ display: "flex", color: "#3FA096" }}>·</div>
-          <div style={{ display: "flex" }}>Godavari</div>
-          <div style={{ display: "flex", color: "#3FA096" }}>·</div>
-          <div style={{ display: "flex" }}>Shipra</div>
-          <div style={{ display: "flex", color: "#3FA096" }}>·</div>
-          <div style={{ display: "flex" }}>Kaveri</div>
+          <div style={{ display: "flex" }}>Ganga, Triveni Sangam, Yamuna, Godavari, Shipra, Kaveri</div>
         </div>
       </div>
     ),
