@@ -55,7 +55,7 @@ editions speak in one voice rather than two borrowed ones.
 
 ```css
 .display  /* Eczar 600, tight leading, headings only */
-.label    /* Martel Sans 700 caps, 0.16em tracking, column heads and eyebrows */
+.label    /* Martel Sans 700 caps, 0.16em tracking, column heads and buttons only */
 .wordmark /* the brand lockup only, plus -root -suffix -i -bindu */
 ```
 
@@ -234,8 +234,11 @@ the multi-size ICO; `src/lib/seo.ts` declares all three.
 
 ## Components
 
-`@/components/ui` exports `Section`, `SectionHeader`, `Eyebrow`, `Card`, `CTA`, `LinkButton`,
-`buttonClass`, `StatusBadge`, `DataRow`.
+`@/components/ui` exports `Section`, `Card`, `CTA`, `LinkButton`, `buttonClass`, `StatusBadge`,
+`DataRow`. `Eyebrow`, `SectionHeader` and the `Reveal` scroll animation were removed on
+purpose: a tracked caps label above every heading, and a fade-and-rise on every section, are
+the commonest tells of a generated page. A section is a display heading and at most one plain
+sentence. Small caps appear only as the column head of a ruled data row and on a button.
 
 `StatusBadge` only pulses when `live` is true. A pulsing dot asserts that something is running
 right now, so it must never decorate a static label.

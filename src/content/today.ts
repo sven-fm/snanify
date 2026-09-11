@@ -8,26 +8,24 @@ import type { FullLang as Lang } from "@/lib/locales";
 
    Almost nothing is said out loud here. The screen does the pacing and the
    instructions are one line each, because a person reading a paragraph is a
-   person not breathing. Five labels, five instructions, and the words that
-   appear on the breath.
+   person not breathing. Five names for the five parts, one instruction each,
+   and the two words that appear on the breath.
 
    NOTHING COUNTS DOWN IN NUMBERS. There is no timer, no progress percentage
-   and no "2 of 5". A practice that shows you how much is left is a practice
-   you are waiting out. The only visible progress is the ink filling under
-   your thumb, and that one is a gesture rather than a clock.
+   and no "2 of 5". The only visible progress is the ink filling under your
+   thumb, and that one is a gesture rather than a clock.
    --------------------------------------------------------------------------- */
 
 const en = {
   meta: {
-    title: "This morning · Snanify",
+    title: "This morning | Snanify",
     description: "Three minutes with your river.",
   },
 
   begin: {
-    eyebrow: "This morning",
     ready: "Begin when you are ready.",
     cta: "Begin",
-    quiet: "Sound off, phone up, three minutes.",
+    quiet: "Put the phone on silent. It takes three minutes.",
   },
 
   reading: {
@@ -36,8 +34,6 @@ const en = {
     rankLabel: "Ranked",
     modelledLabel: "Modelled for",
     normalLabel: "Seasonal median",
-    distanceLabel: "You are",
-    from: "from this water",
   },
 
   breath: {
@@ -50,8 +46,7 @@ const en = {
     label: "Your sankalp",
     hold: "Hold your thumb on your words.",
     holding: "Keep holding.",
-    released: "Hold it a little longer.",
-    done: "Kept.",
+    done: "Held.",
   },
 
   stillness: {
@@ -61,35 +56,36 @@ const en = {
 
   mark: {
     label: "The mark",
-    writing: "Your morning is being written.",
-    done: "Kept.",
-    open: "Your Sankalp Patra",
+    writing: "Your morning is being written into your register.",
+    done: "Your morning is kept.",
   },
 
   already: {
-    title: "You kept this morning.",
-    body: "One morning a day, and yours is done. The river will be here tomorrow.",
-    cta: "See this morning's Patra",
+    title: "This morning is kept",
+    body: "One morning a day. The next one is tomorrow.",
+    cta: "Open this morning's sheet",
   },
 
   failed: {
-    title: "That did not save.",
-    body: "Your morning was not charged. Try once more.",
+    title: "Your morning did not save",
+    body: "Your account still has the same number of mornings. Try again.",
     cta: "Try again",
   },
+
+  left: "{n} mornings left",
+  leftOne: "One morning left",
 };
 
 const hi = {
   meta: {
-    title: "आज सुबह · Snanify",
+    title: "आज सुबह | Snanify",
     description: "अपनी नदी के साथ तीन मिनट।",
   },
 
   begin: {
-    eyebrow: "आज सुबह",
     ready: "जब तैयार हों, आरंभ कीजिए।",
     cta: "आरंभ",
-    quiet: "ध्वनि बंद, फ़ोन सामने, तीन मिनट।",
+    quiet: "फ़ोन को मौन पर रखिए। इसमें तीन मिनट लगते हैं।",
   },
 
   reading: {
@@ -98,8 +94,6 @@ const hi = {
     rankLabel: "स्थान",
     modelledLabel: "मॉडल दिनांक",
     normalLabel: "ऋतु-मध्यक",
-    distanceLabel: "आप हैं",
-    from: "इस जल से दूर",
   },
 
   breath: {
@@ -112,8 +106,7 @@ const hi = {
     label: "आपका संकल्प",
     hold: "अपने शब्दों पर अंगूठा रखिए।",
     holding: "थामे रहिए।",
-    released: "थोड़ा और थामिए।",
-    done: "रख लिया।",
+    done: "थाम लिया।",
   },
 
   stillness: {
@@ -123,22 +116,24 @@ const hi = {
 
   mark: {
     label: "चिह्न",
-    writing: "आपकी सुबह लिखी जा रही है।",
-    done: "रख लिया।",
-    open: "आपका संकल्प पत्र",
+    writing: "आपकी सुबह आपकी पंजिका में लिखी जा रही है।",
+    done: "आपकी सुबह रख ली गई।",
   },
 
   already: {
-    title: "यह सुबह आपने रख ली।",
-    body: "दिन में एक सुबह, और आपकी हो चुकी। नदी कल भी यहीं होगी।",
-    cta: "आज का पत्र देखिए",
+    title: "यह सुबह रख ली गई",
+    body: "दिन में एक सुबह। अगली कल है।",
+    cta: "आज का पत्र खोलिए",
   },
 
   failed: {
-    title: "वह सहेजा नहीं गया।",
-    body: "आपकी सुबह का शुल्क नहीं लिया गया। एक बार और कीजिए।",
-    cta: "फिर कीजिए",
+    title: "आपकी सुबह सहेजी नहीं गई",
+    body: "आपके खाते में सुबहें उतनी ही हैं जितनी पहले थीं। फिर कोशिश कीजिए।",
+    cta: "फिर कोशिश कीजिए",
   },
+
+  left: "{n} सुबहें शेष",
+  leftOne: "एक सुबह शेष",
 };
 
 export const todayContent = { en, hi } satisfies Record<Lang, typeof en>;

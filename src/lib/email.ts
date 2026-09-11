@@ -3,6 +3,7 @@ import { emailContent } from "@/content/email";
 import type { Currency } from "@/lib/currency";
 import type { FullLang as Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
+import type { FlowBand } from "@/lib/riverdata";
 
 /* ---------------------------------------------------------------------------
    The two emails this product sends: a receipt, and the morning reminder.
@@ -126,14 +127,14 @@ export type ReminderInput = {
   to: string;
   lang: Lang;
   water: string;
-  band: string;
+  band: FlowBand;
 };
 
 /** Sent by the hourly cron, at most once a day per person. */
 export async function sendReminder(input: ReminderInput): Promise<Sent> {
   const t = emailContent[input.lang].reminder;
   const subject = t.subject.replace("{water}", input.water);
-  const line = t.line.replace("{water}", input.water).replace("{band}", input.band);
+  const line = t.lines[input.band].replace("{water}", input.water);
 
   const text = [line, "", `${t.link} ${siteUrl(input.lang, "/today")}`, "", t.footer].join("\n");
 

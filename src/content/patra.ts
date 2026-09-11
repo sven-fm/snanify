@@ -4,37 +4,29 @@
 import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
-   जल चिह्न · Jal Chihna, the Watermark: copy, document labels, and the
-   specimen record.
+   The Sankalp Patra: the document labels, the record type, and the specimen.
 
-   This file used to carry the Sankalp Patra, a certificate of a rite that a
-   person performed at a ghat. No rite is performed and none ever will be, so
-   the name went with the product: a certificate of performance cannot be
-   honestly reused for a record of a river. What is recorded now is the water's
-   own condition at the moment a name was kept, taken from public data, plus
-   the name and the words the person gave.
-
-   The word "sankalp" survives, because it is the user's own written line and
-   that is what the word means. The sheet never says a snan was performed on
-   anybody's behalf. It says "taken in the name of", which is exactly true.
+   This file once carried a certificate of a rite performed at a ghat. The
+   sheet now records the water's own condition at the moment a name was kept,
+   taken from public data, plus the names and the words the person gave.
+   "Kept in the name of" is the strongest line on it, and it is true.
 
    Two things live here:
 
-   1. `patraContent`, every user-facing string on /patra and /patra/sample,
-      keyed by locale. `hi` is checked against the shape of `en`, so a missing
-      translation is a compile error rather than an English word on a Hindi
-      page.
-   2. `specimenPatra()`, the composed record rendered on /patra/sample. Every
-      value in it is a specimen. The names are the placeholder names of the
-      Sanskrit grammarians (Devadatta, Yajnadatta, the equivalents of "John
-      Doe"); nothing has been issued against the identifier; the tithi was not
-      computed from any panchang. The sample page states all of this in the UI
-      and the sheet itself is watermarked.
+   1. `patraContent`, the labels printed on the sheet, keyed by locale. `hi`
+      is checked against the shape of `en`, so a missing translation is a
+      compile error rather than an English word on a Hindi sheet. The labels
+      are plain, short and dignified: this is a document, not a page.
+   2. `specimenPatra()`, a composed record for illustration. Every value in
+      it is an example. The names are the placeholder names of the Sanskrit
+      grammarians (Devadatta, Yajnadatta, the equivalents of "John Doe");
+      nothing has been issued against the identifier; the tithi was not
+      computed from any panchang. The sheet itself is watermarked.
 
       One value on the specimen is NOT invented, and deliberately so: the seed.
-      It is the real SHA-256 of the canonical line printed beside it on /patra,
-      so a reader who runs the hash themselves gets the number on the sheet.
-      See `SPECIMEN_CANONICAL`.
+      It is the real SHA-256 of the canonical line printed beside it, so a
+      reader who runs the hash themselves gets the number on the sheet. See
+      `SPECIMEN_CANONICAL`.
    --------------------------------------------------------------------------- */
 
 /* ---------------------------------- data ---------------------------------- */
@@ -62,11 +54,11 @@ export type PatraFigure = {
 };
 
 export type PatraRecord = {
-  /** 22-character base58. Unguessable, so a chihna is link-shareable. */
+  /** 22-character base58. Unguessable, so a sheet is link-shareable. */
   patraId: string;
   /** The folio, printed at the masthead. Digits only, already localised. */
   folioNo?: string;
-  /** "the 1,412th chihna kept at Har Ki Pauri", already localised. */
+  /** "the 1,412th sheet kept at Har Ki Pauri", already localised. */
   sequenceLine?: string;
 
   names: PatraNameEntry[];
@@ -131,61 +123,45 @@ export type PatraRecord = {
 /* --------------------------------- copy ----------------------------------- */
 
 const en = {
-  meta: {
-    title: "Jal Chihna, the mark the water left",
-    description:
-      "Every snan is kept at a moment when the river was in one particular state, and that state is on the public record. The Jal Chihna prints it: the water, the hour, the flow, the tithi, the distance, and a seed anyone can recompute.",
-  },
-
-
-
-
-
-
-
-
-
-
-
-  /* The document itself. Kept beside the page copy so the sheet and the page
-     that explains it can never drift apart. */
+  /* The document itself. Every label is read off paper, so each one names
+     the thing in the cell under it and nothing more. */
   sheet: {
     aria: "Sankalp Patra",
-    ariaSpecimen: "Sankalp Patra, specimen, not a record of anything issued",
+    ariaSpecimen: "Sankalp Patra, specimen, with example names and figures",
     titleLatin: "Sankalp Patra",
-    subtitle: "The river's own condition, at the moment you kept.",
+    subtitle: "The river at the moment this sankalp was kept.",
     folioLabel: "Patra",
-    namesLabel: "Taken in the name of",
-    remembranceLabel: "Taken in remembrance of",
+    namesLabel: "Kept in the name of",
+    remembranceLabel: "Kept in remembrance of",
     givenByLabel: "Given by",
     gotraLabel: "Gotra",
     gotraUnstated: "Not stated",
-    sankalpLabel: "The sankalp, as it was written",
+    sankalpLabel: "The sankalp",
 
     waterLabel: "Water and ghat",
-    keptLabel: "Kept at",
-    localLabel: "In your own time",
+    keptLabel: "Kept on",
+    localLabel: "Your local time",
     tithiLabel: "Tithi",
     windowLabel: "Window",
     flowLabel: "Flow, modelled",
     levelLabel: "Level",
-    readingLabel: "Reading taken",
+    readingLabel: "Published",
     distanceLabel: "Distance to the water",
     seedLabel: "Seed",
-    stateLabel: "The state of the water",
+    stateLabel: "The water that morning",
 
-    verifyLabel: "Anyone may check this chihna at",
+    verifyLabel: "Anyone can check this sheet at",
     attestation:
-      "The numbers on this sheet are the river's, not ours. They were published by the body named above and they can be checked against it.",
+      "The figures on this sheet were published by the body named above, and anyone can check them there.",
     footerLine:
-      "No rite was performed at the ghat. This is a record of the river's own condition at the moment you kept, taken from the public source named above, together with the name and the words you gave. It is a record of what the water was doing. It is not a promise of what will follow.",
+      "This sheet records the river's condition at the moment the sankalp was kept, from the public source named above, together with the names and the words given.",
 
     specimenChip: "Specimen",
     specimenBanner:
-      "Specimen. Nothing on this sheet records anything issued, and the identifier resolves to nothing.",
+      "Specimen. The names and figures are examples, and the identifier opens nothing.",
 
     viewFull: "Open the sheet full size",
-    viewerAria: "The chihna sheet, full size",
+    viewerAria: "The sheet, full size",
     viewFit: "Whole sheet",
     viewRead: "Reading size",
     viewClose: "Close",
@@ -193,59 +169,43 @@ const en = {
 };
 
 const hi: typeof en = {
-  meta: {
-    title: "जल चिह्न, जो चिह्न जल छोड़ गया",
-    description:
-      "हर स्नान उस क्षण होता है जब नदी किसी एक विशेष स्थिति में थी, और वह स्थिति सार्वजनिक अभिलेख में है। जल चिह्न उसी को अंकित करता है: जल, बेला, प्रवाह, तिथि, दूरी, और वह बीज जिसकी गणना कोई भी दोहरा सकता है।",
-  },
-
-
-
-
-
-
-
-
-
-
-
   sheet: {
     aria: "संकल्प पत्र",
-    ariaSpecimen: "संकल्प पत्र, नमूना, किसी जारी की गई वस्तु का अभिलेख नहीं",
+    ariaSpecimen: "संकल्प पत्र, नमूना, उदाहरण के नामों और अंकों के साथ",
     titleLatin: "Sankalp Patra",
-    subtitle: "उस क्षण नदी की अपनी स्थिति, जो क्षण आपने रखा।",
+    subtitle: "जिस क्षण यह संकल्प रखा गया, उस क्षण की नदी।",
     folioLabel: "पत्र",
-    namesLabel: "जिनके नाम से लिया गया",
-    remembranceLabel: "जिनके स्मरण में लिया गया",
+    namesLabel: "जिनके नाम से रखा गया",
+    remembranceLabel: "जिनके स्मरण में रखा गया",
     givenByLabel: "भेंटकर्ता",
     gotraLabel: "गोत्र",
     gotraUnstated: "अनुल्लिखित",
-    sankalpLabel: "संकल्प, जैसा लिखा गया",
+    sankalpLabel: "संकल्प",
 
     waterLabel: "जल और घाट",
-    keptLabel: "जो क्षण रखा गया",
-    localLabel: "आपके अपने समय में",
+    keptLabel: "दिनांक",
+    localLabel: "आपका स्थानीय समय",
     tithiLabel: "तिथि",
     windowLabel: "बेला",
-    flowLabel: "प्रवाह, प्रतिरूपित",
+    flowLabel: "प्रवाह, मॉडल-मान",
     levelLabel: "जलस्तर",
-    readingLabel: "पाठ लिया गया",
+    readingLabel: "प्रकाशित",
     distanceLabel: "जल तक की दूरी",
     seedLabel: "बीज",
-    stateLabel: "जल की स्थिति",
+    stateLabel: "उस सुबह का जल",
 
-    verifyLabel: "इस चिह्न की जाँच कोई भी यहाँ कर सकता है",
+    verifyLabel: "इस पत्र की जाँच कोई भी यहाँ कर सकता है",
     attestation:
-      "इस पत्र पर अंकित संख्याएँ नदी की हैं, हमारी नहीं। वे ऊपर अंकित संस्था द्वारा प्रकाशित हुईं और उन्हीं से मिलाई जा सकती हैं।",
+      "इस पत्र के अंक ऊपर अंकित संस्था ने प्रकाशित किए हैं, और कोई भी उन्हें वहाँ मिलाकर देख सकता है।",
     footerLine:
-      "घाट पर कोई अनुष्ठान नहीं किया गया। यह उस क्षण नदी की अपनी स्थिति का अभिलेख है जो क्षण आपने रखा, जो ऊपर अंकित सार्वजनिक स्रोत से लिया गया, और उसके साथ वह नाम तथा वे शब्द जो आपने दिए। यह इस बात का अभिलेख है कि जल क्या कर रहा था। आगे क्या होगा, इसका वचन नहीं।",
+      "यह पत्र उस क्षण की नदी की स्थिति दर्ज करता है जब संकल्प रखा गया, ऊपर अंकित सार्वजनिक स्रोत से, और साथ में वे नाम और वे शब्द जो दिए गए।",
 
     specimenChip: "नमूना",
     specimenBanner:
-      "नमूना। इस पत्र पर जारी की गई किसी वस्तु का अभिलेख नहीं, और यह पहचान कुछ भी नहीं खोलती।",
+      "नमूना। नाम और अंक उदाहरण हैं, और यह पहचान कुछ भी नहीं खोलती।",
 
     viewFull: "पत्र पूरे आकार में खोलिए",
-    viewerAria: "चिह्न-पत्र, पूरे आकार में",
+    viewerAria: "पत्र, पूरे आकार में",
     viewFit: "पूरा पत्र",
     viewRead: "पढ़ने का आकार",
     viewClose: "बंद कीजिए",
@@ -257,7 +217,7 @@ export const patraContent = { en, hi } satisfies Record<Lang, typeof en>;
 /* ------------------------------- the specimen ------------------------------ */
 
 /** The bilingual watermark word tiled across a specimen sheet. */
-export const SPECIMEN_WATERMARK_TEXT = "SPECIMEN · नमूना";
+export const SPECIMEN_WATERMARK_TEXT = "SPECIMEN  नमूना";
 
 /**
  * The canonical line the specimen's seed is taken over, in the exact field
@@ -302,8 +262,8 @@ export function specimenPatra(lang: Lang): PatraRecord {
     patraId: "pT4mKq9RxB2vLh6nYeW3dU",
     folioNo: hi ? "००४ २१७" : "004 217",
     sequenceLine: hi
-      ? "हर की पौड़ी पर रखा गया १,४१२वाँ चिह्न"
-      : "the 1,412th chihna kept at Har Ki Pauri",
+      ? "हर की पौड़ी पर रखा गया १,४१२वाँ पत्र"
+      : "the 1,412th sheet kept at Har Ki Pauri",
 
     names: [
       { latin: "Devadatta Sharma", devanagari: "देवदत्त शर्मा" },
@@ -324,7 +284,7 @@ export function specimenPatra(lang: Lang): PatraRecord {
 
     keptOn: hi ? "14 मई 2026" : "14 May 2026",
     keptIst: "04:52 IST",
-    keptLocal: hi ? "14 मई 2026 · 01:22 CEST" : "14 May 2026 · 01:22 CEST",
+    keptLocal: hi ? "14 मई 2026, 01:22 CEST" : "14 May 2026, 01:22 CEST",
 
     tithi: {
       label: hi ? "वैशाख, शुक्ल अष्टमी" : "Vaishakha, Shukla Ashtami",
@@ -361,7 +321,7 @@ export function specimenPatra(lang: Lang): PatraRecord {
 
     stateLine: hi
       ? "गंगा वर्ष के इस मोड़ पर अपने सामान्य बहाव में बह रही थीं।"
-      : "The Ganga was running as she usually runs at this turn of the year.",
+      : "The Ganga was running at its usual level for this time of year.",
 
     seed: SPECIMEN_SEED,
     verifyUrl: "snanify.com/c/pT4mKq9RxB2vLh6nYeW3dU",

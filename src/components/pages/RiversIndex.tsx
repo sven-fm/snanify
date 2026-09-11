@@ -3,19 +3,23 @@ import { localePath } from "@/lib/i18n";
 import { deepLang, pickDeep, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { Colophon, Mark } from "@/components/Logo";
-import { Reveal } from "@/components/Reveal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Eyebrow, Section, SectionHeader, StatusBadge } from "@/components/ui";
+import { CTA, Section } from "@/components/ui";
 import { RIVERS } from "@/content/rivers";
 import { riversIndexContent } from "@/content/rivers-index";
 
-/** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
-const DEVA = "०१२३४५६७८९";
-function numeral(n: number, lang: Lang): string {
-  const s = String(n).padStart(2, "0");
-  return lang === "hi" ? [...s].map((d) => DEVA[Number(d)]).join("") : s;
-}
+/* ---------------------------------------------------------------------------
+   /rivers. A register of six places and a page of advice on choosing one.
+
+   WHAT WAS TAKEN OFF THIS PAGE, and must stay off: the caps label with a red
+   dash above every heading, the fade-and-rise on every section, the numbered
+   markers on a list that is a choice rather than a sequence, the boxed badge
+   at the top, the middle dots between ghat and city, the red notice about
+   "what Snanify does at these six places" and the two-column "this is / this
+   is not" block. Each was a default, and together they made the page read as
+   a template. The small caps voice appears only on a button.
+   --------------------------------------------------------------------------- */
 
 /* Six strands of water, cut as an engraving: solid ink, no fade, the front
    strand pulled heaviest the way a block cutter deepens the nearest line.
@@ -50,27 +54,15 @@ function Waterlines({ className = "" }: { className?: string }) {
   );
 }
 
-/** A single strand, the register's row flourish. One solid stroke, nothing else. */
-function Strand({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 400 20"
-      preserveAspectRatio="none"
-      fill="none"
-      aria-hidden="true"
-      focusable={false}
-    >
-      <path d="M0 10 Q 100 2 200 10 T 400 10" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
 export function RiversIndex({ lang }: { lang: Lang }) {
   const t = riversIndexContent[lang];
 
   const first = RIVERS[0];
   const rest = RIVERS.slice(1);
+
+  /* "Har Ki Pauri, Haridwar, Uttarakhand" */
+  const place = (r: (typeof RIVERS)[number]) =>
+    `${waterName(r, "ghat", lang)}, ${waterName(r, "city", lang)}, ${waterName(r, "state", lang)}`;
 
   return (
     <>
@@ -82,14 +74,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
         {/* ------------------------------------------------ front page --- */}
         <section className="border-b-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20">
-            <div className="ink-in">
-              <StatusBadge>{t.badge}</StatusBadge>
-            </div>
-
-            <h1
-              className="ink-in display mt-7 max-w-4xl text-[2.7rem] sm:text-6xl lg:text-[4.6rem]"
-              style={{ animationDelay: "80ms" }}
-            >
+            <h1 className="ink-in display max-w-4xl text-[2.7rem] sm:text-6xl lg:text-[4.6rem]">
               {t.title}
             </h1>
 
@@ -97,7 +82,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
 
             <p
               className="ink-in mt-6 max-w-2xl text-[1.05rem] leading-[1.75] text-ink2"
-              style={{ animationDelay: "160ms" }}
+              style={{ animationDelay: "120ms" }}
             >
               {t.lede}
             </p>
@@ -106,223 +91,146 @@ export function RiversIndex({ lang }: { lang: Lang }) {
             <div className="mt-12 border-y-2 border-rulestrong py-5">
               <Waterlines className="h-20 w-full text-ink sm:h-24" />
             </div>
-
-            {/* Said once, above the fold, as a printed notice in the spot
-                colour rather than a whisper at the bottom of the page. */}
-            <div
-              className="ink-in mt-12 max-w-3xl border-2 border-spot"
-              style={{ animationDelay: "240ms" }}
-            >
-              <h2 className="label bg-spot px-4 py-2.5 text-paper sm:px-6">
-                {t.presence.label}
-              </h2>
-              <p className="px-4 py-5 text-sm leading-[1.75] text-ink sm:px-6 sm:py-6">
-                {t.presence.body}
-              </p>
-            </div>
           </div>
         </section>
 
         {/* ------------------------------------------- the lead water --- */}
         <section className="tint border-b-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-            <Reveal>
-              <div className="grid items-start gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16">
-                <div>
-                  <Eyebrow>{t.lead.label}</Eyebrow>
-
-                  <div className="mt-8 grid grid-cols-[3rem_1fr] items-baseline gap-x-5 border-t-2 border-rulestrong pt-6 sm:grid-cols-[4.5rem_1fr] sm:gap-x-8">
-                    <span className="display text-3xl text-spot sm:text-5xl">
-                      {numeral(1, lang)}
-                    </span>
-                    <div>
-                      <h2 className="display text-4xl sm:text-5xl lg:text-6xl">
-                        {waterName(first, "river", lang)}
-                      </h2>
-                      <p className="label mt-4 text-ink2">
-                        {waterName(first, "ghat", lang)} · {waterName(first, "city", lang)},{" "}
-                        {waterName(first, "state", lang)}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* the epithet, marked with a spot rule rather than a
-                      synthesised italic: Eczar has no italic cut. */}
-                  <div className="mt-8 max-w-xl">
-                    <span className="block h-[3px] w-10 bg-spot" aria-hidden="true" />
-                    {/* The six river descriptions are English and Hindi only:
-                        see the tier note in src/lib/locales.ts. The name above
-                        is localised, this prose is not, and the `lang` says so
-                        rather than letting a screen reader read English with a
-                        Tamil voice. */}
-                    <p
-                      className="display mt-5 text-xl leading-[1.45] text-ink sm:text-2xl"
-                      lang={deepLang(lang)}
-                    >
-                      {pickDeep(first.epithet, lang)}
-                    </p>
-                  </div>
-
-                  <div className="rule-thin mt-8 max-w-xl" />
-
-                  <p className="mt-6 max-w-xl leading-[1.75] text-ink2" lang={deepLang(lang)}>
-                    {pickDeep(first.standfirst, lang)}
-                  </p>
-
-                  <p
-                    className="mt-5 max-w-xl text-sm leading-[1.75] text-ink2"
-                    lang={deepLang(lang)}
-                  >
-                    {pickDeep(first.sacred, lang)[0]}
-                  </p>
-
-                  <div className="mt-9 flex flex-wrap items-center gap-5">
-                    <Link href={localePath(lang, `/rivers/${first.slug}`)}>
-                      <CTA>{t.lead.read}</CTA>
-                    </Link>
-                    <span className="label text-ink2">{t.formLabels[first.form]}</span>
-                  </div>
+            <div className="grid items-start gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16">
+              <div>
+                <div className="border-t-2 border-rulestrong pt-6">
+                  <h2 className="display text-4xl sm:text-5xl lg:text-6xl">
+                    {waterName(first, "river", lang)}
+                  </h2>
+                  <p className="mt-3 text-sm text-ink2">{place(first)}</p>
                 </div>
 
-                <div className="mx-auto w-full max-w-xs lg:max-w-none">
-                  <Colophon className="mx-auto w-full max-w-[18rem] text-ink" />
+                {/* The six river descriptions are English and Hindi only: see
+                    the tier note in src/lib/locales.ts. The name above is
+                    localised, this prose is not, and the `lang` says so rather
+                    than letting a screen reader read English with a Tamil
+                    voice. */}
+                <p
+                  className="display mt-8 max-w-xl text-xl leading-[1.45] text-ink sm:text-2xl"
+                  lang={deepLang(lang)}
+                >
+                  {pickDeep(first.epithet, lang)}
+                </p>
+
+                <p className="mt-5 max-w-xl leading-[1.75] text-ink2" lang={deepLang(lang)}>
+                  {pickDeep(first.standfirst, lang)}
+                </p>
+
+                <p
+                  className="mt-4 max-w-xl text-sm leading-[1.75] text-ink2"
+                  lang={deepLang(lang)}
+                >
+                  {pickDeep(first.sacred, lang)[0]}
+                </p>
+
+                <div className="mt-9 flex flex-wrap items-center gap-5">
+                  <Link href={localePath(lang, `/rivers/${first.slug}`)}>
+                    <CTA>{t.lead.read}</CTA>
+                  </Link>
+                  <span className="text-sm text-ink2">{t.formLabels[first.form]}</span>
                 </div>
               </div>
-            </Reveal>
+
+              <div className="mx-auto w-full max-w-xs lg:max-w-none">
+                <Colophon className="mx-auto w-full max-w-[18rem] text-ink" />
+              </div>
+            </div>
           </div>
         </section>
 
         {/* -------------------------------------------- the other five -- */}
         <Section id="index">
-          <Reveal>
-            <SectionHeader eyebrow={t.index.label} title={t.index.title} lede={t.index.lede} />
+          <div className="max-w-3xl">
+            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.index.title}</h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.index.lede}</p>
+          </div>
 
-            <ul className="mt-12 border-t-2 border-rulestrong">
-              {rest.map((r, i) => (
-                <li key={r.slug}>
-                  <Link
-                    href={localePath(lang, `/rivers/${r.slug}`)}
-                    className="group grid grid-cols-[3rem_1fr] items-start gap-x-5 gap-y-4 border-b border-rule py-8 transition-colors hover:bg-paper3 md:grid-cols-[4.5rem_1fr_13rem] md:gap-x-8 md:py-10"
-                  >
-                    <span className="display text-2xl text-spot sm:text-3xl">
-                      {numeral(i + 2, lang)}
+          {/* A register, unnumbered: five waters are a choice, not a sequence. */}
+          <ul className="mt-10 border-t-2 border-rulestrong">
+            {rest.map((r) => (
+              <li key={r.slug}>
+                <Link
+                  href={localePath(lang, `/rivers/${r.slug}`)}
+                  className="grid gap-y-4 border-b border-rule py-8 transition-colors hover:bg-paper3 md:grid-cols-[1fr_14rem] md:gap-x-8 md:py-10"
+                >
+                  <div>
+                    <h3 className="display text-3xl text-ink sm:text-4xl">
+                      {waterName(r, "river", lang)}
+                    </h3>
+                    <p className="mt-2 text-sm text-ink2">{place(r)}</p>
+                    <p
+                      className="display mt-5 max-w-xl text-lg leading-[1.45] text-ink"
+                      lang={deepLang(lang)}
+                    >
+                      {pickDeep(r.epithet, lang)}
+                    </p>
+                    <p
+                      className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2"
+                      lang={deepLang(lang)}
+                    >
+                      {pickDeep(r.standfirst, lang)}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-start gap-3 md:items-end md:text-right">
+                    <span className="text-sm text-ink2 md:max-w-[12rem]">{t.formLabels[r.form]}</span>
+                    <span className="text-sm text-ink underline decoration-spot decoration-2 underline-offset-4">
+                      {t.index.read}
                     </span>
-
-                    <div>
-                      <h3 className="display text-3xl text-ink sm:text-4xl">{waterName(r, "river", lang)}</h3>
-                      <p className="label mt-3 text-ink2">
-                        {waterName(r, "ghat", lang)} · {waterName(r, "city", lang)}, {waterName(r, "state", lang)}
-                      </p>
-                      <p
-                        className="display mt-5 max-w-xl text-lg leading-[1.45] text-ink"
-                        lang={deepLang(lang)}
-                      >
-                        {pickDeep(r.epithet, lang)}
-                      </p>
-                      <p
-                        className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2"
-                        lang={deepLang(lang)}
-                      >
-                        {pickDeep(r.standfirst, lang)}
-                      </p>
-                      <Strand className="mt-6 h-3 w-32 text-rule transition-colors group-hover:text-spot" />
-                    </div>
-
-                    <div className="col-start-2 flex flex-col items-start gap-3 md:col-start-3 md:items-end md:text-right">
-                      {r.form === "temple-tank" && (
-                        <span className="label border border-spot px-2.5 py-1.5 text-spot">
-                          {t.notAGhat}
-                        </span>
-                      )}
-                      <span className="label max-w-[11rem] text-ink2">
-                        {t.formLabels[r.form]}
-                      </span>
-                      <span className="label text-ink underline decoration-spot decoration-2 md:mt-1">
-                        {t.index.read}
-                      </span>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Section>
 
         {/* ------------------------------------------------- offer ------
-            What is actually on offer at every one of the six. A numbered
-            register: at 390px the number and the name share the first line
-            and the body runs full width underneath, so nothing is ever set
-            in a column narrower than the text needs.                     */}
+            The four things at every one of the six, as ruled rows: at 390px
+            the name sits on its own line and the body runs full width under
+            it, so nothing is set in a column narrower than the text needs. */}
         <Section id="offer" tinted>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.offer.eyebrow}
-              title={t.offer.title}
-              lede={t.offer.lede}
-            />
+          <div className="max-w-3xl">
+            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.offer.title}</h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.offer.lede}</p>
+          </div>
 
-            <ol className="mt-12 border-t-2 border-rulestrong">
-              {t.offer.items.map((item, i) => (
-                <li
-                  key={item.key}
-                  className="grid grid-cols-[2.75rem_1fr] items-baseline gap-x-5 gap-y-3 border-b border-rule py-7 md:grid-cols-[3.5rem_15rem_1fr] md:gap-x-8 md:py-8"
-                >
-                  <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
-                  <span className="display text-xl text-ink sm:text-2xl">{item.name}</span>
-                  <span className="col-start-2 max-w-2xl text-sm leading-[1.75] text-ink2 md:col-start-auto">
-                    {item.body}
-                  </span>
-                </li>
-              ))}
-            </ol>
-
-            <p className="mt-8 max-w-2xl border-t-2 border-spot pt-5 text-sm leading-[1.75] text-ink2">
-              {t.offer.note}
-            </p>
-          </Reveal>
+          <ul className="mt-10 border-t-2 border-rulestrong">
+            {t.offer.items.map((item) => (
+              <li
+                key={item.key}
+                className="grid gap-y-2 border-b border-rule py-6 md:grid-cols-[15rem_1fr] md:gap-x-8 md:py-7"
+              >
+                <span className="display text-xl text-ink sm:text-2xl">{item.name}</span>
+                <span className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.body}</span>
+              </li>
+            ))}
+          </ul>
         </Section>
 
         {/* ----------------------------------------------- choosing ----- */}
         <Section>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.choosing.eyebrow}
-              title={t.choosing.title}
-              lede={t.choosing.lede}
-            />
+          <div className="max-w-3xl">
+            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.choosing.title}</h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.choosing.lede}</p>
+          </div>
 
-            <dl className="mt-12 border-t-2 border-rulestrong">
-              {t.choosing.rows.map((row) => (
-                <div
-                  key={row.key}
-                  className="grid gap-3 border-b border-rule py-7 md:grid-cols-[15rem_1fr] md:gap-10 md:py-9"
-                >
-                  <dt className="label pt-1 text-spot">{row.label}</dt>
-                  <dd className="max-w-2xl leading-[1.75] text-ink2">{row.body}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </Section>
-
-        {/* ------------------------------------------------ honesty ----- */}
-        <Section tinted>
-          <Reveal>
-            <SectionHeader eyebrow={t.honesty.eyebrow} title={t.honesty.title} />
-
-            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
-              <div className="bg-paper p-7 sm:p-9">
-                <h3 className="label text-ink">{t.honesty.isLabel}</h3>
-                <div className="rule-thin mt-4" />
-                <p className="mt-5 leading-[1.75] text-ink2">{t.honesty.isBody}</p>
+          <dl className="mt-10 border-t-2 border-rulestrong">
+            {t.choosing.rows.map((row) => (
+              <div
+                key={row.key}
+                className="grid gap-3 border-b border-rule py-7 md:grid-cols-[15rem_1fr] md:gap-10 md:py-9"
+              >
+                <dt className="display text-xl text-ink">{row.label}</dt>
+                <dd className="max-w-2xl leading-[1.75] text-ink2">{row.body}</dd>
               </div>
-              <div className="bg-paper3 p-7 sm:p-9">
-                <h3 className="label text-spot">{t.honesty.isNotLabel}</h3>
-                <div className="rule-thin mt-4" />
-                <p className="mt-5 leading-[1.75] text-ink2">{t.honesty.isNotBody}</p>
-              </div>
-            </div>
-          </Reveal>
+            ))}
+          </dl>
         </Section>
 
         {/* ------------------------------------------------ closing ----- */}
@@ -334,9 +242,9 @@ export function RiversIndex({ lang }: { lang: Lang }) {
               {t.closing.title}
             </h2>
             <p className="mx-auto mt-5 max-w-xl leading-[1.75] text-ink2">{t.closing.lede}</p>
-            <a href={localePath(lang, "/begin")} className="mt-9 inline-block">
+            <Link href={localePath(lang, "/begin")} className="mt-9 inline-block">
               <CTA className="!px-10 !py-4">{t.closing.cta}</CTA>
-            </a>
+            </Link>
           </div>
         </section>
       </main>

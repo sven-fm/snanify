@@ -10,7 +10,7 @@ import { DEFAULT_TIER, PACKS } from "@/lib/packs";
 import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Eyebrow, Price } from "@/components/ui";
+import { CTA, Price } from "@/components/ui";
 import { startCheckout } from "@/app/[lang]/(app)/begin/actions";
 import { TrackView } from "@/components/site/TrackView";
 import { TrackedSubmit } from "@/components/site/TrackedSubmit";
@@ -56,13 +56,13 @@ function TierCard({
         }`}
       >
         <p className="display text-[1.6rem] leading-none text-ink">{labels.name}</p>
-        <p className="label mt-2 text-ink2">{labels.sub}</p>
+        <p className="mt-2 text-sm text-ink2">{labels.sub}</p>
 
         <p className="display mt-5 text-[2.6rem] leading-none text-ink">
           <Price prices={PRICE[tier]} />
         </p>
         <p className="mt-2 text-sm text-ink2">
-          <Price prices={PER_SNAN[tier]} /> · {t.perLabel}
+          <Price prices={PER_SNAN[tier]} /> {t.perLabel}
         </p>
 
         <p className="mt-5 flex-1 text-[0.98rem] leading-[1.7] text-ink2">{labels.body}</p>
@@ -80,7 +80,10 @@ function TierCard({
           event="checkout_start"
           props={{ pack: tier, lang }}
         >
-          {t.cta}
+          {/* The button names the charge: "Pay $11", in the reader's currency. */}
+          {t.cta.split("{price}")[0]}
+          <Price prices={PRICE[tier]} />
+          {t.cta.split("{price}")[1]}
         </TrackedSubmit>
       </div>
     </form>
@@ -117,8 +120,7 @@ export async function Begin({
       <Header lang={lang} currentPath="/begin" />
 
       <main className="mx-auto max-w-5xl px-5 py-10 pb-16 sm:px-8 sm:py-16">
-        <Eyebrow>{t.eyebrow}</Eyebrow>
-        <h1 className="display mt-4 text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
+        <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6 max-w-xl" />
         <p className="mt-5 max-w-xl text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
 
@@ -131,7 +133,7 @@ export async function Begin({
         {credits > 0 && (
           <div className="mt-8 flex flex-col gap-4 border-2 border-rulestrong p-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[1.02rem] text-ink">
-              {t.haveCredits.replace("{credits}", String(credits))}
+              {credits === 1 ? t.haveOne : t.haveCredits.replace("{credits}", String(credits))}
             </p>
             <Link href={localePath(lang, setUp ? "/today" : "/setup")} className="shrink-0">
               <CTA className="w-full sm:w-auto">{t.toToday}</CTA>

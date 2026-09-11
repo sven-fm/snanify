@@ -14,7 +14,7 @@ import {
 import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
-   संकल्प पत्र · Sankalp Patra, the printable A4 form.
+   The Sankalp Patra, the printable A4 form.
 
    This began as a certificate of a rite performed by a person at a ghat. No
    rite is performed, so that document does not exist any more. The furniture
@@ -253,7 +253,7 @@ export function ChihnaSheet({
                 </span>
                 {data.folioNo && (
                   <>
-                    <span style={{ paddingLeft: u(7), paddingRight: u(7) }}>·</span>
+                    <span style={{ paddingLeft: u(7) }} />
                     <span className="tabular text-ink" style={{ letterSpacing: "0.08em" }}>
                       {data.folioNo}
                     </span>
@@ -358,7 +358,7 @@ export function ChihnaSheet({
                           n.relation,
                         ]
                           .filter(Boolean)
-                          .join(" · ")}
+                          .join(", ")}
                       </p>
                     )}
                   </li>
@@ -369,7 +369,7 @@ export function ChihnaSheet({
                 <span className="label text-ink2" style={{ fontSize: u(10) }}>
                   {t.gotraLabel}
                 </span>
-                <span style={{ paddingLeft: u(10), paddingRight: u(10) }}>·</span>
+                <span style={{ paddingLeft: u(8) }} />
                 <span className="text-ink">{data.gotra ?? t.gotraUnstated}</span>
               </p>
 
@@ -379,7 +379,7 @@ export function ChihnaSheet({
                   <span className="label text-ink2" style={{ fontSize: u(10) }}>
                     {t.givenByLabel}
                   </span>
-                  <span style={{ paddingLeft: u(10), paddingRight: u(10) }}>·</span>
+                  <span style={{ paddingLeft: u(8) }} />
                   <span className="text-ink">{data.givenBy}</span>
                 </p>
               )}
@@ -650,7 +650,6 @@ export function PatraSheetViewer({
         className="label mt-5 flex min-h-[52px] w-full items-center justify-center gap-3 border border-rulestrong px-6 text-ink transition-colors hover:bg-ink hover:text-paper sm:w-auto"
       >
         {t.viewFull}
-        <span aria-hidden="true">↗</span>
       </button>
 
       {/* Portalled to the document body. Several of the places this sits

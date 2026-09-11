@@ -8,100 +8,98 @@ import type { FullLang as Lang } from "@/lib/locales";
 
    Two readers, one page. The person who kept the morning, arriving straight
    from it, and whoever they send it to, arriving cold in a family group. The
-   copy is written for the second: nothing assumes you know what this is, and
-   nothing explains at length either. A sheet, a name, a river, a date.
+   copy is written for the second: a sheet, a name, a river, a date.
 
-   `shareText` is what lands in WhatsApp above the link. It is the strongest
-   claim on the whole product and it is exactly true: somebody kept a sankalp
-   with a named river on a named morning.
+   `shareText` is what lands in WhatsApp above the link. It says one true
+   thing: somebody kept a sankalp with a named river on a named morning.
    --------------------------------------------------------------------------- */
 
 const en = {
-  eyebrow: "Sankalp Patra",
   keptBy: "Kept in the name of",
-  share: "Send this",
+  share: "Send to family",
   shareCopied: "Link copied",
-  download: "Save the sheet",
-  print: "Print it",
-  yours: "Your own words",
-  privateNote: "Your sankalp is on your copy alone.",
+  yours: "Your sankalp",
+  privateNote: "Only you see your sankalp. The sheet you send carries the names and the river.",
 
-  registerHeading: "What this sheet records",
+  registerHeading: "On this sheet",
   flow: "Flow",
   ranked: "Ranked",
   kept: "Kept at",
   tithi: "Tithi",
   nakshatra: "Nakshatra",
+  moon: "Moon",
   source: "Source",
+  modelledFor: "modelled for {day}",
+  median: "seasonal median, 1997 to 2025",
+  percentile: "{n}th percentile since 1997",
 
   seedHeading: "Check it yourself",
   seedBody:
-    "The engraving is drawn from this seed, and the seed is the SHA-256 of the line below. Fetch that day's figure from the flood model, hash the line, redraw it, and you get this same image.",
+    "The engraving is drawn from a seed, and the seed is the SHA-256 hash of the line below. Anyone can fetch that day's figure from the flood model, hash the line and redraw the same image.",
   seedLabel: "Seed",
 
-  visitTitle: "The river you are from, tomorrow morning.",
-  visitBody: "Three minutes with a real river, wherever you are.",
+  visitTitle: "Sit with your own river tomorrow morning",
+  visitBody: "Three minutes at the hour the panchang names, wherever you are.",
   visitCta: "Begin",
 
   shareText: "{name} kept a sankalp with the {water} on {date}.",
-  metaTitle: "{name} · {water} · {date}",
+  metaTitle: "{name}, {water}, {date}",
   metaDescription: "A Sankalp Patra kept with the {water} at {ghat}, {city}, on {date}.",
 
-  privateTitle: "This sheet is private.",
-  privateBody: "Whoever kept it has not made it public.",
+  privateTitle: "This sheet is private",
+  privateBody: "The person who kept it has made it private.",
 
-  ownerHeading: "Yours to do as you like with",
-  makePrivate: "Make this private",
-  makePublic: "Make this shareable again",
-  privateNow: "Private. The link answers nothing, for anybody.",
-  privateWarning: "Anybody you already sent the image to still has it. What stops is the link.",
-  printCta: "Print it",
-  printHeading: "The printed sheet",
-  printNote: "A4. Your sankalp is on this one, and on no other copy.",
+  ownerHeading: "Sharing",
+  makePrivate: "Make it private",
+  makePublic: "Make it shareable",
+  privateNow: "Only you can open this link now.",
+  privateWarning: "People you have already sent the image to keep it. Making it private stops the link.",
+  printHeading: "Print version",
+  printNote: "A4, with your sankalp on it. This copy is for you.",
 };
 
 const hi = {
-  eyebrow: "संकल्प पत्र",
   keptBy: "जिनके नाम से",
-  share: "यह भेजिए",
+  share: "परिवार को भेजिए",
   shareCopied: "कड़ी प्रतिलिपि हो गई",
-  download: "पत्र सहेजिए",
-  print: "छापिए",
-  yours: "आपके अपने शब्द",
-  privateNote: "आपका संकल्प केवल आपकी प्रति पर है।",
+  yours: "आपका संकल्प",
+  privateNote: "आपका संकल्प केवल आप देखते हैं। जो पत्र आप भेजते हैं, उस पर नाम और नदी होते हैं।",
 
-  registerHeading: "यह पत्र क्या दर्ज करता है",
+  registerHeading: "इस पत्र पर",
   flow: "प्रवाह",
   ranked: "स्थान",
   kept: "समय",
   tithi: "तिथि",
   nakshatra: "नक्षत्र",
+  moon: "चंद्रमा",
   source: "स्रोत",
+  modelledFor: "{day} का मॉडल-मान",
+  median: "ऋतु-मध्यक, 1997 से 2025",
+  percentile: "1997 से {n}वाँ प्रतिशतक",
 
   seedHeading: "स्वयं जाँच लीजिए",
   seedBody:
-    "उत्कीर्णन इस बीज से बना है, और बीज नीचे दी गई पंक्ति का SHA-256 है। उस दिन का अंक बाढ़-मॉडल से लीजिए, पंक्ति का हैश बनाइए, फिर से बनाइए, और यही चित्र मिलेगा।",
+    "उत्कीर्णन एक बीज से बनता है, और बीज नीचे दी गई पंक्ति का SHA-256 हैश है। कोई भी उस दिन का अंक बाढ़-मॉडल से लेकर, पंक्ति का हैश बनाकर, यही चित्र फिर से बना सकता है।",
   seedLabel: "बीज",
 
-  visitTitle: "जिस नदी से आप हैं, कल सुबह।",
-  visitBody: "एक सच्ची नदी के साथ तीन मिनट, आप जहाँ भी हों।",
+  visitTitle: "कल सुबह अपनी नदी के साथ बैठिए",
+  visitBody: "पंचांग की बताई घड़ी पर तीन मिनट, आप जहाँ भी हों।",
   visitCta: "आरंभ करें",
 
   shareText: "{name} ने {date} को {water} के साथ संकल्प रखा।",
-  metaTitle: "{name} · {water} · {date}",
+  metaTitle: "{name}, {water}, {date}",
   metaDescription: "{date} को {ghat}, {city} पर {water} के साथ रखा गया एक संकल्प पत्र।",
 
-  privateTitle: "यह पत्र निजी है।",
-  privateBody: "जिन्होंने इसे रखा, उन्होंने इसे सार्वजनिक नहीं किया।",
+  privateTitle: "यह पत्र निजी है",
+  privateBody: "जिन्होंने इसे रखा, उन्होंने इसे निजी कर दिया है।",
 
-  ownerHeading: "यह आपका है, जो चाहें कीजिए",
-  makePrivate: "इसे निजी कर दीजिए",
-  makePublic: "इसे फिर साझा योग्य कीजिए",
-  privateNow: "निजी। यह कड़ी अब किसी को कुछ नहीं दिखाती।",
-  privateWarning: "जिन्हें आपने चित्र भेज दिया है, उनके पास वह रहेगा। रुकती केवल कड़ी है।",
-  printCta: "छापिए",
-  printHeading: "छपा हुआ पत्र",
-  printNote: "ए-४। आपका संकल्प केवल इसी प्रति पर है, और किसी पर नहीं।",
+  ownerHeading: "साझा करना",
+  makePrivate: "इसे निजी कीजिए",
+  makePublic: "इसे साझा योग्य कीजिए",
+  privateNow: "अब यह कड़ी केवल आप खोल सकते हैं।",
+  privateWarning: "जिन्हें आपने चित्र भेज दिया है, उनके पास वह रहता है। निजी करने से कड़ी बंद होती है।",
+  printHeading: "छपाई के लिए",
+  printNote: "ए-४, आपके संकल्प के साथ। यह प्रति आपके लिए है।",
 };
 
 export const patraPageContent = { en, hi } satisfies Record<Lang, typeof en>;

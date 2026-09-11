@@ -7,8 +7,7 @@ import type { FullLang as Lang } from "@/lib/locales";
 import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow, PriceText } from "@/components/ui";
-import { Reveal } from "@/components/Reveal";
+import { PriceText } from "@/components/ui";
 import { ETHICS_MAIL, faqContent } from "@/content/trust";
 
 /**
@@ -17,20 +16,13 @@ import { ETHICS_MAIL, faqContent } from "@/content/trust";
  * making the group exclusive would close an answer the reader is comparing
  * against another one.
  *
- * Set as a ruled register: numbered hairline rows that open in place, the way
- * an almanac lists its entries.
+ * Set as a ruled register: hairline rows that open in place, the way an
+ * almanac lists its entries. Unnumbered, because questions are not a sequence.
  *
  * MOBILE FIRST. One column at 390px, 56px summary rows, 16px answer type, and
  * the primary action on a thumb rail at the bottom of the viewport rather than
  * a button the reader has to scroll back up to find.
  */
-
-/** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
-const DEVA = "०१२३४५६७८९";
-function numeral(n: number, lang: Lang): string {
-  const s = String(n).padStart(2, "0");
-  return lang === "hi" ? [...s].map((d) => DEVA[Number(d)]).join("") : s;
-}
 
 /**
  * Questions whose long answer lives on another page. The fragment matters: a
@@ -41,7 +33,6 @@ function numeral(n: number, lang: Lang): string {
 const DEEP_LINKS: Record<string, string> = {
   "what-happens": "/snan#form",
   "black-screen": "/snan#form",
-  sound: "/snan#form",
   shipping: "/snan#form",
   mark: "/snan#patra",
   data: "/ethics#river",
@@ -74,8 +65,7 @@ export function Faq({ lang }: { lang: Lang }) {
         <header className="border-b-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 pt-10 pb-10 sm:px-8 sm:pt-24 sm:pb-20">
             <div className="ink-in max-w-3xl">
-              <Eyebrow>{t.eyebrow}</Eyebrow>
-              <h1 className="display mt-5 text-[2.3rem] leading-[1.12] sm:mt-6 sm:text-6xl">
+              <h1 className="display text-[2.3rem] leading-[1.12] sm:text-6xl">
                 {t.title}
               </h1>
               <div className="rule-double mt-7 max-w-xl" />
@@ -91,22 +81,19 @@ export function Faq({ lang }: { lang: Lang }) {
             {/* ---------------- group index ---------------- */}
             <nav aria-label={t.indexLabel} className="hidden lg:block">
               <div className="sticky top-24 py-20">
-                <p className="label text-spot">{t.indexLabel}</p>
-                <ol className="mt-5 border-t-2 border-rulestrong">
-                  {t.groups.map((g, gi) => (
+                <p className="text-sm text-ink2">{t.indexLabel}</p>
+                <ul className="mt-4 border-t-2 border-rulestrong">
+                  {t.groups.map((g) => (
                     <li key={g.id} className="border-b border-rule">
                       <a
                         href={`#${g.id}`}
-                        className="flex gap-3 py-2.5 text-[0.82rem] leading-snug text-ink2 transition-colors hover:text-spot"
+                        className="block py-2.5 text-[0.9rem] leading-snug text-ink transition-colors hover:text-spot"
                       >
-                        <span className="shrink-0 tabular-nums text-spot">
-                          {numeral(gi + 1, lang)}
-                        </span>
-                        <span>{g.title}</span>
+                        {g.title}
                       </a>
                     </li>
                   ))}
-                </ol>
+                </ul>
               </div>
             </nav>
 
@@ -115,38 +102,32 @@ export function Faq({ lang }: { lang: Lang }) {
               {/* On a phone the sticky index is gone, so the six groups are
                   offered as a ruled jump list before the first question. */}
               <nav aria-label={t.indexLabel} className="mb-12 lg:hidden">
-                <p className="label text-spot">{t.indexLabel}</p>
-                <ol className="mt-4 border-t-2 border-rulestrong">
-                  {t.groups.map((g, gi) => (
+                <p className="text-sm text-ink2">{t.indexLabel}</p>
+                <ul className="mt-3 border-t-2 border-rulestrong">
+                  {t.groups.map((g) => (
                     <li key={g.id} className="border-b border-rule">
                       <a
                         href={`#${g.id}`}
-                        className="flex min-h-[44px] items-center gap-3 py-2 text-[0.92rem] leading-snug text-ink2"
+                        className="flex min-h-[44px] items-center py-2 text-[0.98rem] leading-snug text-ink"
                       >
-                        <span className="shrink-0 tabular-nums text-spot">
-                          {numeral(gi + 1, lang)}
-                        </span>
-                        <span>{g.title}</span>
+                        {g.title}
                       </a>
                     </li>
                   ))}
-                </ol>
+                </ul>
               </nav>
 
               {t.groups.map((group, gi) => (
                 <section key={group.id} className={gi === 0 ? "" : "mt-16 sm:mt-20"}>
-                  <Reveal>
-                    <div className="flex items-center gap-4 border-t-2 border-rulestrong pt-4 sm:gap-5">
-                      <span className="display text-[1.2rem] leading-none text-spot tabular-nums">
-                        {numeral(gi + 1, lang)}
-                      </span>
-                      <h2 id={group.id} className="label scroll-mt-20 text-ink">
-                        {group.title}
-                      </h2>
-                    </div>
+                    <h2
+                      id={group.id}
+                      className="display scroll-mt-20 border-t-2 border-rulestrong pt-4 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]"
+                    >
+                      {group.title}
+                    </h2>
 
-                    <div className="mt-6 border-t border-rule">
-                      {group.items.map((item, i) => {
+                    <div className="mt-5 border-t border-rule">
+                      {group.items.map((item) => {
                         const to = DEEP_LINKS[item.id];
                         return (
                           <details
@@ -154,10 +135,7 @@ export function Faq({ lang }: { lang: Lang }) {
                             id={item.id}
                             className="group scroll-mt-20 border-b border-rule"
                           >
-                            <summary className="grid min-h-[56px] cursor-pointer list-none grid-cols-[2.25rem_minmax(0,1fr)_0.75rem] items-start gap-x-3 py-4 transition-colors hover:text-spot sm:gap-x-4 [&::-webkit-details-marker]:hidden">
-                              <span className="display pt-[0.2rem] text-[1rem] leading-none text-spot tabular-nums">
-                                {numeral(i + 1, lang)}
-                              </span>
+                            <summary className="grid min-h-[56px] cursor-pointer list-none grid-cols-[minmax(0,1fr)_0.75rem] items-start gap-x-4 py-4 transition-colors hover:text-spot [&::-webkit-details-marker]:hidden">
                               <h3 className="display text-[1.1rem] leading-snug text-ink transition-colors group-hover:text-spot sm:text-[1.25rem]">
                                 {item.q}
                               </h3>
@@ -170,7 +148,7 @@ export function Faq({ lang }: { lang: Lang }) {
                               </span>
                             </summary>
 
-                            <div className="pb-7 pl-0 sm:pl-[2.25rem]">
+                            <div className="pb-7">
                               {item.a.map((p) => (
                                 <p
                                   key={p}
@@ -183,7 +161,7 @@ export function Faq({ lang }: { lang: Lang }) {
                                 <p className="mt-5">
                                   <Link
                                     href={localePath(lang, to)}
-                                    className="label inline-flex min-h-[44px] items-center border-b-2 border-spot pb-0.5 text-spot transition-colors hover:border-rulestrong hover:text-ink"
+                                    className="inline-flex min-h-[44px] items-center text-[0.98rem] text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
                                   >
                                     {t.moreLabel}
                                   </Link>
@@ -194,7 +172,6 @@ export function Faq({ lang }: { lang: Lang }) {
                         );
                       })}
                     </div>
-                  </Reveal>
                 </section>
               ))}
 

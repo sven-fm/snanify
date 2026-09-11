@@ -28,13 +28,12 @@ import type { FullLang as Lang } from "@/lib/locales";
 const en = {
   privacy: {
     meta: {
-      title: "Privacy · Snanify",
+      title: "Privacy | Snanify",
       description:
         "What Snanify holds, who processes it, how long it stays, and how to have all of it deleted.",
     },
-    eyebrow: "Privacy",
-    title: "What we hold.",
-    lede: "Short version: your email, what you chose to put on your sheet, and a line for each morning you kept. One button deletes all of it.",
+    title: "What we hold",
+    lede: "In short: your email address, what you chose to put on your sheet, and one line for each morning you kept. One button deletes all of it.",
     updated: "Version 1, September 2026.",
 
     sections: [
@@ -64,7 +63,7 @@ const en = {
         h: "Your sankalp",
         body: [
           "Your own words are shown to you and to nobody else. They are not on the sheet anyone else can open, not in the link preview, and not returned by any lookup.",
-          "Reading one inside Snanify takes two approvals and a written reason, is logged permanently, and you are emailed within a day telling you it was read, by whom and why.",
+          "We do not open it.",
         ],
       },
       {
@@ -103,12 +102,11 @@ const en = {
 
   terms: {
     meta: {
-      title: "Terms · Snanify",
+      title: "Terms | Snanify",
       description: "What you are buying, what it costs, and how a refund works.",
     },
-    eyebrow: "Terms",
-    title: "What you are buying.",
-    lede: "A pack of mornings. Each one is three minutes with a real river's published reading, and the Sankalp Patra it leaves you.",
+    title: "What you are buying",
+    lede: "A pack of mornings. Each one is three minutes with a river's published figure for the day, and the Sankalp Patra it leaves you.",
     updated: "Version 1, September 2026.",
 
     sections: [
@@ -116,7 +114,7 @@ const en = {
         h: "What a morning is",
         body: [
           "You choose a water, write your own sankalp, and sit for about three minutes. At the end, a Sankalp Patra is made: a sheet carrying the names you added, the river's published figure for that day, the panchang for that instant, and a seed anyone can recompute.",
-          "The practice is yours from end to end. No rite is performed by anybody, at any ghat, on your behalf, and nothing is claimed about what a morning does beyond what is printed on the sheet.",
+          "The practice is yours from start to finish. No rite is performed by anybody, at any ghat, on your behalf, and we claim nothing about what a morning does beyond what is printed on the sheet.",
         ],
       },
       {
@@ -130,7 +128,7 @@ const en = {
         h: "Refunds",
         body: [
           "Any mornings you have not used are refunded in full, on request, without being asked why. Write to hello@snanify.com.",
-          "A morning you have already sat is not refundable. Nothing was consumed except three minutes of your own attention, and we cannot give those back either.",
+          "A morning you have already sat is used and is not refundable.",
         ],
       },
       {
@@ -156,7 +154,7 @@ const en = {
         ],
       },
       {
-        h: "Changes, and where the law sits",
+        h: "Changes",
         body: [
           "If these terms change, the version and date at the top change with them, and the mornings you have already bought keep the terms they were bought under.",
           "Write to hello@snanify.com about anything here.",
@@ -169,12 +167,11 @@ const en = {
 const hi = {
   privacy: {
     meta: {
-      title: "गोपनीयता · Snanify",
+      title: "गोपनीयता | Snanify",
       description:
         "स्नानिफ़ाई क्या रखती है, कौन उसे संभालता है, कितने समय तक, और सब कुछ कैसे मिटाया जाए।",
     },
-    eyebrow: "गोपनीयता",
-    title: "हम क्या रखते हैं।",
+    title: "हम क्या रखते हैं",
     lede: "संक्षेप में: आपका ईमेल, जो आपने अपने पत्र पर रखना चुना, और हर निभाई हुई सुबह के लिए एक पंक्ति। एक बटन यह सब मिटा देता है।",
     updated: "संस्करण १, सितंबर २०२६।",
 
@@ -205,7 +202,7 @@ const hi = {
         h: "आपका संकल्प",
         body: [
           "आपके अपने शब्द केवल आपको दिखते हैं। वे उस पत्र पर नहीं जो कोई और खोल सकता है, न कड़ी की झलक में, और न किसी खोज के उत्तर में।",
-          "स्नानिफ़ाई के भीतर उसे पढ़ने के लिए दो अनुमतियाँ और लिखित कारण चाहिए, वह स्थायी रूप से दर्ज होता है, और एक दिन के भीतर आपको बताया जाता है कि पढ़ा गया, किसने और क्यों।",
+          "हम उसे खोलते नहीं।",
         ],
       },
       {
@@ -244,12 +241,11 @@ const hi = {
 
   terms: {
     meta: {
-      title: "शर्तें · Snanify",
+      title: "शर्तें | Snanify",
       description: "आप क्या खरीद रहे हैं, उसका मूल्य क्या है, और वापसी कैसे होती है।",
     },
-    eyebrow: "शर्तें",
-    title: "आप क्या खरीद रहे हैं।",
-    lede: "सुबहों का एक पैक। हर सुबह एक सच्ची नदी के प्रकाशित पाठ के साथ तीन मिनट, और जो संकल्प पत्र वह छोड़ जाती है।",
+    title: "आप क्या खरीद रहे हैं",
+    lede: "सुबहों का एक पैक। हर सुबह उस दिन नदी के प्रकाशित अंक के साथ तीन मिनट, और जो संकल्प पत्र वह छोड़ जाती है।",
     updated: "संस्करण १, सितंबर २०२६।",
 
     sections: [
@@ -271,7 +267,7 @@ const hi = {
         h: "वापसी",
         body: [
           "जो सुबहें आपने ली नहीं, वे कहने भर से पूरी लौटा दी जाती हैं, बिना कारण पूछे। hello@snanify.com पर लिखिए।",
-          "जो सुबह आप बैठ चुके, वह वापसी योग्य नहीं। उसमें आपके अपने ध्यान के तीन मिनट के अतिरिक्त कुछ खर्च नहीं हुआ, और वे भी हम लौटा नहीं सकते।",
+          "जो सुबह आप बैठ चुके, वह ली जा चुकी है और लौटाई नहीं जाती।",
         ],
       },
       {
@@ -297,7 +293,7 @@ const hi = {
         ],
       },
       {
-        h: "परिवर्तन, और कानून कहाँ बैठता है",
+        h: "परिवर्तन",
         body: [
           "ये शर्तें बदलें तो ऊपर का संस्करण और तिथि भी बदलते हैं, और जो सुबहें आप पहले खरीद चुके हैं, वे उन्हीं शर्तों पर रहती हैं जिन पर खरीदी गईं।",
           "इनमें से किसी बात पर hello@snanify.com पर लिखिए।",

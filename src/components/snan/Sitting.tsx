@@ -12,7 +12,7 @@ import type { FullLang as Lang } from "@/lib/locales";
    The sitting: five parts, three minutes, once a morning.
 
    THE CLOCK IS A FRAME LOOP, NOT AN INTERVAL. `setInterval` drifts, and a
-   browser throttles it hard in a background tab, which for a ninety second
+   browser throttles it hard in a background tab, which for a sixty second
    stillness means the screen comes back minutes late. This accumulates real
    elapsed time from `performance.now()` deltas, so it is accurate to the frame
    and immune to throttling.
@@ -221,8 +221,7 @@ export function Sitting({
   if (phase === "ready") {
     return (
       <div className="mx-auto max-w-md px-5 py-16 text-center" data-sitting data-speed={speed} data-phase={phase}>
-        <p className="label text-spot">{t.begin.eyebrow}</p>
-        <p className="display mt-4 text-[2rem] leading-[1.2]">{reading.water}</p>
+        <p className="display text-[2rem] leading-[1.2]">{reading.water}</p>
         <p className="mt-2 text-ink2">
           {reading.ghat}, {reading.city}
         </p>
@@ -263,7 +262,9 @@ export function Sitting({
 
   return (
     <div className="mx-auto max-w-md px-5 py-10" data-sitting data-speed={speed} data-phase={phase}>
-      <p className="label text-spot">{labelFor(t, phase)}</p>
+      {/* The name of the part, in the small voice: five parts in sequence,
+          and this is the one the screen is on. */}
+      <p className="text-sm text-ink2">{labelFor(t, phase)}</p>
 
       {phase === "reading" && (
         <div className="mt-6">
@@ -338,9 +339,8 @@ function labelFor(t: Copy, phase: Phase): string {
       return t.stillness.label;
     case "mark":
     case "done":
-      return t.mark.label;
     default:
-      return t.begin.eyebrow;
+      return t.mark.label;
   }
 }
 
@@ -424,7 +424,7 @@ function VowScreen({
       onPointerCancel={() => onHold(false)}
       onPointerLeave={() => onHold(false)}
     >
-      <p className="text-sm text-ink2">{names.join(" · ")}</p>
+      <p className="text-sm text-ink2">{names.join(", ")}</p>
 
       <div className="relative mt-5 border-y-2 border-rulestrong py-6">
         <div

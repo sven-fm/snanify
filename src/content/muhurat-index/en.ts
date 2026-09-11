@@ -1,120 +1,108 @@
 /* ---------------------------------------------------------------------------
-   The muhurat calendar, /muhurat, in twelve locales.
+   The muhurat calendar, /muhurat.
 
    English is the source edition and defines `MuhuratIndexCopy`; every other
    file in this directory closes with `satisfies MuhuratIndexCopy`, so a key
-   added here without its eleven translations is a compile error in eleven
-   places.
+   added here without its translation is a compile error.
 
    WHAT LIVES HERE AND WHAT DOES NOT. These are the keys the index page uses,
    plus the few the detail page shares with it (meta, nav, cta, provenance,
-   tiers, windows, anchors). The detail-only copy stayed in muhurat.ts, in
-   English and Hindi, because /muhurat/<occasion> is a full-depth route. A
-   `Record<Lang, ...>` indexes perfectly well with a `FullLang`, so the detail
-   page reads the shared keys from here and nothing is written twice.
+   tiers, windows, anchors). The detail-only copy stayed in muhurat.ts. The
+   occasion prose itself is in src/content/data/muhurat.json.
 
-   THE PROVENANCE COPY IS LOAD BEARING. Every locale says, in its own words,
-   that the timings are provisional until a panchang is named. /ethics commits
-   to that publicly, so no edition is allowed to sound more certain than the
-   English one. The August 2026 cut halved this page's prose and left that
-   disclosure standing: `provenance.line` is shorter and no longer opens on "No
-   panchang provider is wired yet", but it still says provisional, still says
-   labelled wherever it appears, and still names the condition under which the
-   labels change.
+   HOW IT IS WRITTEN. Plain sentences, one idea each, in both editions. Titles
+   are a noun phrase or one plain sentence. The page used to open every block
+   with a caps label, number things that were not a sequence, and close on an
+   aphorism; it also carried two sections that existed to answer a critic
+   ("what we will not print", "asked for, and refused"). The facts from those
+   are stated plainly under "Kumbh, Simhastha and the solar calendars"; the
+   arguing is gone.
+
+   THE PROVENANCE COPY IS LOAD BEARING. Every edition says that the timings
+   are provisional until a panchang source is named and checked. /ethics
+   commits to that publicly, so no edition may sound more certain than this
+   one. `provenance.line` and `provenance.badge` are also read by the panchang
+   page and by the occasion pages' structured data.
    --------------------------------------------------------------------------- */
 
 export const en = {
   meta: {
     indexTitle: "Muhurat calendar, Snanify",
     indexDescription:
-      "The occasions Snanify keeps, the daily windows they are held in, and how precisely we know when each one falls.",
-    detailSuffix: "Muhurat calendar · Snanify",
+      "The occasions of the twelve months ahead, the windows of the day they are kept in, and how much is known about when each one falls.",
+    detailSuffix: "Muhurat calendar, Snanify",
   },
   nav: { back: "All occasions" },
   hero: {
-    eyebrow: "The calendar",
-    title: "When the water is kept.",
-    lede: "Twelve months of occasions, the daily windows they are held in, and how much we know about when each one falls.",
-    asOf: "Looking forward from 10 August 2026",
+    title: "The muhurat calendar",
+    lede: "The occasions of the twelve months ahead, the windows of the day they are kept in, and how much is known about when each one falls.",
+    asOf: "Twelve months from 10 August 2026",
   },
   provenance: {
-    badge: "Provisional · to be confirmed against the panchang",
+    badge: "Provisional, to be confirmed against a panchang",
     badgeShort: "Provisional",
-    heading: "Where these timings come from",
-    line: "Every date and every window on this page is provisional, and is labelled so wherever it appears. When a provider is named and a sample of days is checked here against a reference almanac, the labels change and this sentence changes with them.",
-    sourceLabel: "Provider",
+    line: "Every date and window on this page is provisional, and is labelled so wherever it appears. When a panchang source is named and a sample of days has been checked against a reference almanac, the labels change and this sentence changes with them.",
+    sourceLabel: "Source",
     ayanamsaLabel: "Ayanamsa",
     coordinatesLabel: "Ghat coordinates",
-    coordinatesPending: "Pending on-site survey",
-    notSet: "Not yet fixed",
+    coordinatesPending: "Survey pending",
+    notSet: "To be fixed",
   },
   reading: {
-    eyebrow: "How to read this",
-    title: "Three things we do differently.",
+    title: "How to read this calendar",
     items: [
       {
-        n: "01",
-        t: "Months, not dates",
-        d: "Where an exact date is undefendable we print the month and the tithi rule instead. The rule is a definition, and therefore a fact. A confident wrong date is worse than an honest imprecise one.",
+        t: "Months rather than dates",
+        d: "Where an exact date cannot yet be defended, the month and the tithi rule are printed instead. The rule is a definition, so it is a fact.",
       },
       {
-        n: "02",
-        t: "Both clocks, always",
-        d: "Times are given at the ghat first, and beside them in your own zone with the date shift written out. Every conversion prints rather than being left to you.",
+        t: "Both clocks",
+        d: "Times are given at the ghat first, and beside them in your own zone, with any date shift written out.",
       },
       {
-        n: "03",
         t: "Sunrise to sunrise",
-        d: "The Hindu day turns at sunrise. A window at 4:24 in the morning belongs to the panchang day that opened the previous dawn, which is the common case for our earliest window.",
+        d: "The Hindu day turns at sunrise. A window at 4:24 in the morning belongs to the panchang day that opened at the previous dawn.",
       },
     ],
   },
   rhythm: {
-    eyebrow: "Every month",
-    title: "The rhythm underneath.",
-    lede: "Four occasions recur on their own schedule and run through every month below, named or not.",
+    title: "Every month",
+    lede: "Four occasions come round on their own schedule and run through every month below.",
   },
   spine: {
-    eyebrow: "The twelve months ahead",
-    title: "Occasion by month.",
-    empty: "No dated occasion. The monthly rhythm runs as it always does.",
+    title: "The twelve months ahead",
+    empty: "The monthly occasions only.",
     observedAt: "Kept at",
-    waters: (n: number) => (n === 1 ? "1 water" : `${n} waters`),
+    waters: (n: number) => (n === 1 ? "one water" : `${n} waters`),
+    columns: { month: "Month", occasion: "Occasion", rule: "Tithi rule", window: "When" },
   },
   windows: {
-    eyebrow: "The daily windows",
-    title: "Four hours of the day.",
-    lede: "These are rules rather than clock times. Each is defined by its distance from sunrise, from the sun's transit, or from sunset, so it holds on every day of the year and at every latitude.",
+    title: "The four windows of the day",
+    lede: "Each window is a rule rather than a clock time. It is defined by its distance from sunrise, from the sun's transit or from sunset, so it holds on every day of the year and at every latitude.",
     formulaLabel: "Definition",
     lengthLabel: "Length",
     basisLabel: "Why this hour",
     minutes: (n: number) => `${n} minutes`,
     diagramLabel: "A day, with the four windows marked in their order",
     diagram: { sunrise: "Sunrise", noon: "Solar transit", sunset: "Sunset" },
+    alsoTitle: "Also shown on the day",
   },
   clock: {
-    eyebrow: "Reading the clock",
-    title: "One instant, six cities.",
-    lede: "A window at the ghat is a single moment in time. What it is called on your wall calendar depends on where you are standing, and for half the diaspora it is the previous evening.",
+    title: "Reading the clock",
+    lede: "A window at the ghat is one moment in time. The date it carries on your own calendar depends on where you are, and for much of the diaspora it is the previous evening.",
     atTheGhat: "At the ghat",
-    elsewhere: "Elsewhere",
+    elsewhere: "The same moment elsewhere",
     illustration:
-      "Illustration only, worked from an assumed sunrise of 06:00 IST on a notional day. This is not a panchang date and no occasion falls on it.",
+      "An illustration, worked from an assumed sunrise of 06:00 IST on a notional day. It is not a panchang date, and no occasion falls on it.",
     assumed: "Assumed sunrise",
     window: "Window",
   },
-  notPublished: {
-    eyebrow: "What is not here",
-    title: "Four things we will not print.",
-    lede: "A calendar is as much what it declines to say as what it says.",
-  },
-  refusals: {
-    eyebrow: "What we do not do",
-    title: "Asked for, and refused.",
+  elsewhere: {
+    title: "Kumbh, Simhastha and the solar calendars",
   },
   cta: {
-    title: "Choose the water first.",
-    lede: "The occasion matters less than the river you have a relationship with.",
+    title: "Choose your river",
+    lede: "Every occasion here is kept at one of the six waters. Start with the one you grew up near.",
     primary: "The six waters",
     secondary: "The occasion list",
   },
@@ -125,9 +113,9 @@ export const en = {
     mahaparva: "One of the year's great days",
   },
   anchors: {
-    sunrise: "Anchored to sunrise",
-    "solar-noon": "Anchored to the sun's transit",
-    sunset: "Anchored to sunset",
+    sunrise: "From sunrise",
+    "solar-noon": "From the sun's transit",
+    sunset: "From sunset",
   },
 };
 

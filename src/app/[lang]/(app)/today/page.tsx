@@ -14,7 +14,7 @@ import { eq } from "drizzle-orm";
 import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow, LinkButton } from "@/components/ui";
+import { LinkButton } from "@/components/ui";
 import { Sitting } from "@/components/snan/Sitting";
 import { TrackView } from "@/components/site/TrackView";
 
@@ -86,8 +86,7 @@ export default async function Page({
         <div className="grain" aria-hidden="true" />
         <Header lang={lang} currentPath={ROUTE} personalised />
         <main className="mx-auto max-w-md px-5 py-16 text-center sm:py-24">
-          <Eyebrow>{t.begin.eyebrow}</Eyebrow>
-          <h1 className="display mt-4 text-[2rem] leading-[1.2]">{t.already.title}</h1>
+          <h1 className="display text-[2rem] leading-[1.2]">{t.already.title}</h1>
           <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.already.body}</p>
           <div className="mt-9">
             <LinkButton href={localePath(lang, `/p/${kept.id}`)}>{t.already.cta}</LinkButton>
@@ -144,9 +143,9 @@ export default async function Page({
       <div className="mx-auto max-w-md px-5 pb-10 text-center">
         <Link
           href={localePath(lang, "/account")}
-          className="label text-ink2 underline decoration-rule underline-offset-4"
+          className="text-sm text-ink2 underline decoration-rule underline-offset-4"
         >
-          {credits}
+          {credits === 1 ? t.leftOne : t.left.replace("{n}", String(credits))}
         </Link>
       </div>
 

@@ -117,8 +117,6 @@ export interface Ghat {
    */
   readonly rahuKaalPolicy: "warn" | "veto";
   readonly windows: readonly MuhuratWindowId[];
-  /** Something we are asked for at this ghat and will not do. */
-  readonly refusal?: Bilingual;
 }
 
 /* --- daily windows ------------------------------------------------------- */
@@ -194,14 +192,11 @@ export interface Occasion {
   readonly name: Bilingual;
   readonly line: Bilingual;
   readonly about: Bilingual;
-  readonly why: Bilingual;
   readonly rule: OccasionRule;
   readonly occurrence: Occurrence;
   readonly windows: readonly MuhuratWindowId[];
   readonly ghats: readonly OccasionGhat[];
   readonly ghatsNote: Bilingual;
-  /** What we are explicitly NOT claiming to do on this occasion. */
-  readonly notClaimed?: Bilingual;
   readonly textualBasis: Bilingual;
   readonly panchang: PanchangProvenance;
 }
@@ -336,9 +331,9 @@ export function occasionBySlug(slug: string): Occasion | undefined {
 
 export const OCCASION_SLUGS: readonly string[] = OCCASIONS.map((o) => o.slug);
 
-/** Ghat label as one line: "Ganga · Har Ki Pauri, Haridwar". */
+/** Ghat label as one line: "Ganga, Har Ki Pauri, Haridwar". */
 export function ghatLabel(g: Ghat, lang: Lang): string {
-  return `${g.river[lang]} · ${g.ghat[lang]}, ${g.city[lang]}`;
+  return `${g.river[lang]}, ${g.ghat[lang]}, ${g.city[lang]}`;
 }
 
 /* --- the almanac spine --------------------------------------------------- */
@@ -535,28 +530,34 @@ export function formatDualClock(args: {
 /**
  * Detail-page copy for /muhurat/<occasion>, in English and Hindi.
  *
- * The index copy, and everything the two pages share, moved to
- * src/content/muhurat-index/ when /muhurat went to twelve locales. What is left
- * here is only what the detail route uses and the index does not.
+ * The index copy, and everything the two pages share, lives in
+ * src/content/muhurat-index/. What is left here is only what the detail route
+ * uses and the index does not. Plain sentences and noun-phrase titles; the
+ * page used to carry a "what this is not" block per occasion, which is gone
+ * with the field it read.
  */
 export const muhuratContent = {
   en: {
     detail: {
       aboutTitle: "What it is",
-      whyTitle: "Why this occasion",
       whenTitle: "When it falls",
       rulePrefix: "The rule",
-      resolutionPrefix: "Which day it lands on",
-      watersTitle: "Which waters keep it",
-      windowsTitle: "The windows offered",
-      notClaimedTitle: "What this is not",
+      resolutionPrefix: "Which day",
+      watersTitle: "Where it is kept",
+      windowsTitle: "The windows",
       basisTitle: "Textual basis",
-      provenanceTitle: "Provenance",
+      provenanceTitle: "Where the timing comes from",
       tierLabel: "Weight",
       cadenceLabel: "Returns",
+      clockNote: "Every time is given at the ghat first, and in your own zone beside it.",
+      clockLink: "How the clock is read",
       prev: "Previous",
       next: "Next",
-      backToCalendar: "The whole calendar",
+      backToCalendar: "Back to the calendar",
+    },
+    schemes: {
+      amanta: "Amanta reckoning",
+      purnimanta: "Purnimanta reckoning",
     },
     cadences: {
       monthly: "Every lunar month",
@@ -576,23 +577,27 @@ export const muhuratContent = {
   hi: {
     detail: {
       aboutTitle: "यह क्या है",
-      whyTitle: "यह पर्व क्यों",
       whenTitle: "कब पड़ता है",
       rulePrefix: "नियम",
-      resolutionPrefix: "दिन कैसे निश्चित होता है",
-      watersTitle: "कौन-से जल इसे मानते हैं",
-      windowsTitle: "प्रस्तुत बेलाएँ",
-      notClaimedTitle: "यह क्या नहीं है",
+      resolutionPrefix: "कौन-सा दिन",
+      watersTitle: "कहाँ रखा जाता है",
+      windowsTitle: "बेलाएँ",
       basisTitle: "शास्त्रीय आधार",
-      provenanceTitle: "स्रोत",
+      provenanceTitle: "समय कहाँ से आता है",
       tierLabel: "महत्व",
       cadenceLabel: "आवृत्ति",
+      clockNote: "हर समय पहले घाट का दिया जाता है, और उसके साथ आपके समयक्षेत्र का।",
+      clockLink: "घड़ी कैसे पढ़ी जाती है",
       prev: "पिछला",
       next: "अगला",
-      backToCalendar: "संपूर्ण पंचांग",
+      backToCalendar: "पंचांग पर लौटें",
+    },
+    schemes: {
+      amanta: "अमांत गणना",
+      purnimanta: "पूर्णिमांत गणना",
     },
     cadences: {
-      monthly: "प्रत्येक चांद्र मास",
+      monthly: "हर चांद्र मास",
       annual: "वर्ष में एक बार",
       season: "कई दिनों की ऋतु",
     },
@@ -601,7 +606,7 @@ export const muhuratContent = {
       madhyahna: "मध्याह्न",
       aparahna: "दिनमान का चौथा भाग (अपराह्न)",
       pradosha: "सूर्यास्त के बाद की बेला (प्रदोष)",
-      nishita: "वास्तविक मध्यरात्रि (निशीथ काल)",
+      nishita: "ठीक मध्यरात्रि (निशीथ काल)",
       instant: "राशि-प्रवेश का क्षण",
     },
   },

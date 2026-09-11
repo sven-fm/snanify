@@ -5,7 +5,6 @@ import type { FullLang as Lang } from "@/lib/locales";
 import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow } from "@/components/ui";
 import { ETHICS_MAIL, ethicsContent } from "@/content/trust";
 
 /**
@@ -40,22 +39,19 @@ function P({ children }: { children: React.ReactNode }) {
 function RegisterRow({ k, v }: { k: string; v: string }) {
   return (
     <div className="grid gap-1.5 border-b border-rule py-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6">
-      <dt className="label pt-1 text-spot">{k}</dt>
+      <dt className="label pt-1 text-ink2">{k}</dt>
       <dd className="text-[0.98rem] leading-[1.75] text-ink2">{v}</dd>
     </div>
   );
 }
 
-function SectionHead({ n, id, h, lede }: { n: string; id: string; h: string; lede?: string }) {
+/* Unnumbered: five sections a reader dips into are a list, not a sequence. */
+function SectionHead({ id, h, lede }: { id: string; h: string; lede?: string }) {
   return (
     <>
-      <div className="flex items-center gap-4 border-t-2 border-rulestrong pt-4 sm:gap-5 sm:pt-5">
-        <span className="display text-[1.4rem] leading-none text-spot sm:text-[1.5rem]">{n}</span>
-        <span className="hidden h-px flex-1 bg-rule sm:block" aria-hidden="true" />
-      </div>
       <h2
         id={id}
-        className="display mt-4 scroll-mt-20 text-[1.9rem] leading-[1.15] sm:text-[2.6rem]"
+        className="display scroll-mt-20 border-t-2 border-rulestrong pt-5 text-[1.9rem] leading-[1.15] sm:pt-6 sm:text-[2.6rem]"
       >
         {h}
       </h2>
@@ -69,7 +65,7 @@ export function Ethics({ lang }: { lang: Lang }) {
   const cta = ctaHref(lang);
 
   const prose = [t.s1, t.s2, t.s3, t.s4];
-  const toc = [...prose, t.s5].map((s) => ({ id: s.id, n: s.n, h: s.h }));
+  const toc = [...prose, t.s5].map((s) => ({ id: s.id, h: s.h }));
 
   return (
     <>
@@ -83,8 +79,7 @@ export function Ethics({ lang }: { lang: Lang }) {
         <header className="border-b-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 pt-10 pb-10 sm:px-8 sm:pt-24 sm:pb-20">
             <div className="ink-in max-w-[46rem]">
-              <Eyebrow>{t.eyebrow}</Eyebrow>
-              <h1 className="display mt-5 text-[2.3rem] leading-[1.12] sm:mt-6 sm:text-6xl">
+              <h1 className="display text-[2.3rem] leading-[1.12] sm:text-6xl">
                 {t.title}
               </h1>
               <div className="rule-double mt-7 max-w-xl" />
@@ -103,20 +98,19 @@ export function Ethics({ lang }: { lang: Lang }) {
             {/* ---------------- contents ---------------- */}
             <nav aria-label={t.tocLabel} className="hidden lg:block">
               <div className="sticky top-24 py-20">
-                <p className="label text-spot">{t.tocLabel}</p>
-                <ol className="mt-5 border-t-2 border-rulestrong">
+                <p className="text-sm text-ink2">{t.tocLabel}</p>
+                <ul className="mt-4 border-t-2 border-rulestrong">
                   {toc.map((s) => (
                     <li key={s.id} className="border-b border-rule">
                       <a
                         href={`#${s.id}`}
-                        className="flex gap-3 py-2.5 text-[0.82rem] leading-snug text-ink2 transition-colors hover:text-spot"
+                        className="block py-2.5 text-[0.9rem] leading-snug text-ink transition-colors hover:text-spot"
                       >
-                        <span className="shrink-0 tabular-nums text-spot">{s.n}</span>
-                        <span>{s.h}</span>
+                        {s.h}
                       </a>
                     </li>
                   ))}
-                </ol>
+                </ul>
               </div>
             </nav>
 
@@ -124,16 +118,16 @@ export function Ethics({ lang }: { lang: Lang }) {
             <article className="max-w-[42rem] py-12 sm:py-20">
               {prose.map((s, i) => (
                 <section key={s.id} className={i === 0 ? undefined : "mt-20 sm:mt-24"}>
-                  <SectionHead n={s.n} id={s.id} h={s.h} />
+                  <SectionHead id={s.id} h={s.h} />
                   {s.body.map((p) => (
                     <P key={p}>{p}</P>
                   ))}
                 </section>
               ))}
 
-              {/* 05, the hands the product passes through */}
+              {/* the hands the product passes through */}
               <section className="mt-20 sm:mt-24">
-                <SectionHead n={t.s5.n} id={t.s5.id} h={t.s5.h} lede={t.s5.lede} />
+                <SectionHead id={t.s5.id} h={t.s5.h} lede={t.s5.lede} />
                 <dl className="mt-8 border-t-2 border-rulestrong">
                   {t.s5.rows.map((r) => (
                     <RegisterRow key={r.k} k={r.k} v={r.v} />
@@ -149,7 +143,7 @@ export function Ethics({ lang }: { lang: Lang }) {
                     href={`mailto:${ETHICS_MAIL}`}
                     className="inline-flex min-h-[44px] flex-wrap items-center gap-x-3 gap-y-1 border-b-2 border-spot pb-1 text-[1.02rem] text-spot transition-colors hover:border-rulestrong hover:text-ink"
                   >
-                    <span>{t.s5.mailLabel}</span>
+                    <span>{t.s5.mailLabel}:</span>
                     <span className="break-all text-ink2">{ETHICS_MAIL}</span>
                   </a>
                 </p>

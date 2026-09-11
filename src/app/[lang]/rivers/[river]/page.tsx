@@ -45,7 +45,7 @@ export async function generateMetadata({
      with a grammatically wrong interpolation. */
   const title =
     lang === "hi"
-      ? `${ghat.river.hi} · ${ghat.ghat.hi}, ${ghat.city.hi} | स्नानिफ़ाई`
+      ? `${ghat.river.hi}, ${ghat.ghat.hi}, ${ghat.city.hi} | स्नानिफ़ाई`
       : `${ghat.river.en} at ${ghat.ghat.en}, ${ghat.city.en} | Snanify`;
 
   const description = `${ghat.epithet[lang]}, ${ghat.standfirst[lang]}`;

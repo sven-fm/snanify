@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { SignIn } from "@clerk/nextjs";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow } from "@/components/ui";
 import { accountContent } from "@/content/account";
 import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
@@ -48,8 +47,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
 
       <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-md">
-          <Eyebrow>{t.eyebrow}</Eyebrow>
-          <h1 className="display mt-4 text-[2rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
+          <h1 className="display text-[2rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
           <div className="rule-double mt-6" />
           <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
 

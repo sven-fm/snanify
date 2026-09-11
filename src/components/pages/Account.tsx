@@ -10,7 +10,7 @@ import { requireUser } from "@/lib/auth";
 import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Eyebrow, LinkButton, SubmitButton } from "@/components/ui";
+import { CTA, LinkButton, SubmitButton } from "@/components/ui";
 import { deleteAccount, setReminder } from "@/app/[lang]/(app)/account/actions";
 
 /* ---------------------------------------------------------------------------
@@ -64,22 +64,23 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
       <Header lang={lang} currentPath="/account" />
 
       <main className="mx-auto max-w-3xl px-5 py-10 pb-24 sm:px-8 sm:py-16 sm:pb-16">
-        <Eyebrow>{t.eyebrow}</Eyebrow>
-        <h1 className="display mt-4 text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
+        <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6" />
 
         {/* ---------------- what is in hand ---------------- */}
         <section className="mt-9 border-2 border-rulestrong p-5 sm:p-6">
-          <p className="label text-spot">{t.creditsLabel}</p>
-          <p className="display mt-2 text-[2.4rem] leading-none text-ink tabular-nums">
-            {credits > 0 ? credits : t.creditsNone}
+          <p className="display text-[1.4rem] leading-[1.3] text-ink">
+            {credits === 0
+              ? t.creditsZero
+              : credits === 1
+                ? t.creditsOne
+                : t.creditsLine.replace("{n}", String(credits))}
           </p>
-          {credits === 1 && <p className="mt-2 text-sm text-spot">{t.lowCredits}</p>}
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             {credits > 0 && (
               <Link href={localePath(lang, setUp ? "/today" : "/setup")} className="block">
-                <CTA className="w-full sm:w-auto">{t.todayCta}</CTA>
+                <CTA className="w-full sm:w-auto">{setUp ? t.todayCta : t.setupCta}</CTA>
               </Link>
             )}
             <LinkButton href={localePath(lang, "/begin")} variant="ghost">
@@ -90,7 +91,7 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
 
         {/* ---------------- the register ---------------- */}
         <section className="mt-14">
-          <h2 className="label border-b-2 border-rulestrong pb-3 text-ink">
+          <h2 className="display border-b-2 border-rulestrong pb-3 text-xl text-ink">
             {t.registerHeading}
           </h2>
 
@@ -123,22 +124,22 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
         {/* ---------------- the sheet, and the hour ---------------- */}
         <section className="mt-14 grid gap-10 sm:grid-cols-2">
           <div>
-            <h2 className="label border-b border-rule pb-3 text-ink">{t.profileHeading}</h2>
+            <h2 className="display border-b border-rule pb-3 text-xl text-ink">{t.profileHeading}</h2>
             <p className="mt-4 text-[0.98rem] leading-[1.7] text-ink2">
               {setUp && profile[0]
-                ? (profile[0].names as { name: string }[]).map((n) => n.name).join(" · ")
-                : t.registerEmpty}
+                ? (profile[0].names as { name: string }[]).map((n) => n.name).join(", ")
+                : t.profileEmpty}
             </p>
             <Link
               href={localePath(lang, "/setup")}
-              className="label mt-4 inline-flex min-h-[44px] items-center text-spot underline decoration-rule underline-offset-4"
+              className="mt-4 inline-flex min-h-[44px] items-center text-ink underline decoration-rule underline-offset-4 hover:decoration-spot"
             >
               {t.profileCta}
             </Link>
           </div>
 
           <div>
-            <h2 className="label border-b border-rule pb-3 text-ink">{t.reminderHeading}</h2>
+            <h2 className="display border-b border-rule pb-3 text-xl text-ink">{t.reminderHeading}</h2>
 
             <form action={setReminder.bind(null, lang)} className="mt-4">
               <select
@@ -162,7 +163,7 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
                   defaultChecked={user.reminderOn}
                   className="h-5 w-5 accent-[var(--color-spot,#b32620)]"
                 />
-                {user.reminderOn ? t.reminderOn : t.reminderOff2}
+                {t.reminderToggle}
               </label>
 
               <SubmitButton variant="ghost" className="mt-4 w-full">
@@ -174,7 +175,7 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
 
         {/* ---------------- deleting everything ---------------- */}
         <section className="mt-16 border-t-2 border-rulestrong pt-6">
-          <h2 className="label text-spot">{t.deleteHeading}</h2>
+          <h2 className="display text-xl text-ink">{t.deleteHeading}</h2>
           <p className="mt-4 max-w-lg text-[0.98rem] leading-[1.7] text-ink2">{t.deleteBody}</p>
 
           <form action={deleteAccount.bind(null, lang)} className="mt-5 max-w-sm">
@@ -200,7 +201,7 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
           <SignOutButton redirectUrl={localePath(lang, "/")}>
             <button
               type="button"
-              className="label min-h-[44px] text-ink2 underline decoration-rule underline-offset-4 transition-colors hover:text-spot"
+              className="min-h-[44px] text-ink2 underline decoration-rule underline-offset-4 transition-colors hover:text-spot"
             >
               {t.signOut}
             </button>

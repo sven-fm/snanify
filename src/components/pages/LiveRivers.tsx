@@ -6,7 +6,7 @@ import { waterName, windowName } from "@/content/names";
 import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow, StatusBadge } from "@/components/ui";
+import { StatusBadge } from "@/components/ui";
 import { getGhat } from "@/content/rivers";
 import { WINDOW_BY_ID } from "@/content/muhurat";
 import { fill, liveContent } from "@/content/live";
@@ -46,13 +46,13 @@ import {
    And the rule that outranks all of the above: a number appears here only with
    its provenance and its date beside it. The `Discharge` union is what makes
    that structural rather than a matter of care, see `riverdata.ts`.
-   --------------------------------------------------------------------------- */
 
-/** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
-const DEVA = "०१२३४५६७८९";
-function numeral(value: string, lang: Lang): string {
-  return lang === "hi" ? [...value].map((d) => DEVA[Number(d)] ?? d).join("") : value;
-}
+   WHAT WAS TAKEN OFF THIS PAGE, and must stay off: the caps eyebrow with a
+   red dash above every section, the 01 to 06 numerals on six waters that are
+   a choice and not a sequence, meta lines joining facts with middle dots, the
+   red-boxed "not a reading" warning, and the arrow after every link. Small
+   caps stay where they head a column of figures and on the button.
+   --------------------------------------------------------------------------- */
 
 const locale = (lang: Lang) => (lang === "hi" ? "hi-IN" : "en-IN");
 
@@ -211,23 +211,27 @@ function FlowPanel({
 
   return (
     <div className="mt-8">
+      {/* A quiet feed is stated in a ruled box, in the same voice as the
+          rest of the page, rather than shouted from a red one. */}
       {discharge.kind === "normal" && (
-        <div className="mb-6 border-2 border-spot">
-          <h3 className="label bg-spot px-4 py-2.5 text-paper">{t.feed.normalHeading}</h3>
-          <p className="px-4 py-4 text-[0.95rem] leading-[1.7] text-ink">{t.feed.normalNote}</p>
+        <div className="boxed tint mb-6 p-4">
+          <h3 className="display text-lg leading-tight">{t.feed.normalHeading}</h3>
+          <p className="mt-2 text-[0.95rem] leading-[1.7] text-ink">{t.feed.normalNote}</p>
         </div>
       )}
 
       <div className="border-y-2 border-rulestrong py-6">
-        <p className="label text-ink2">
+        <p className="text-sm text-ink2">
           {discharge.kind === "modelled" ? t.flow.label : t.feed.normalHeading}
         </p>
 
+        {/* The unit is set in body type: the caps utility would print it as
+            M³/S, which is a unit nobody writes. */}
         <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="display tabular text-[3rem] leading-[0.95] sm:text-[4.5rem]">
             {cumecs(discharge.cumecs, lang)}
           </span>
-          <span className="label text-ink2">{t.flow.unit}</span>
+          <span className="text-sm text-ink2">{t.flow.unit}</span>
         </p>
 
         <p className="mt-4 text-[0.95rem] leading-snug text-ink2">
@@ -239,12 +243,12 @@ function FlowPanel({
 
       {discharge.kind === "modelled" && (
         <div className="mt-7">
-          <p className="label text-ink2">{t.flow.rankLabel}</p>
+          <p className="text-sm text-ink2">{t.flow.rankLabel}</p>
           <p className="mt-2 flex items-baseline gap-2">
             <span className="display tabular text-[2.2rem] leading-none sm:text-[2.8rem]">
               {whole(discharge.percentile.value, lang)}
             </span>
-            <span className="label text-ink2">/ 100</span>
+            <span className="text-sm text-ink2">/ 100</span>
           </p>
           <p className="mt-2 text-[0.95rem] leading-snug text-ink2">
             {discharge.percentile.capped === "below"
@@ -254,15 +258,15 @@ function FlowPanel({
                 : t.flow.rankSuffix}
           </p>
           <Scale value={discharge.percentile.value} label={t.flow.scaleLabel} />
-          <p className="label mt-2 flex justify-between text-ink2">
-            <span>{numeral("0", lang)}</span>
-            <span>{numeral("100", lang)}</span>
+          <p className="tabular mt-2 flex justify-between text-xs text-ink2">
+            <span>0</span>
+            <span>100</span>
           </p>
         </div>
       )}
 
       <div className="mt-7 tint boxed p-5">
-        <p className="label text-ink2">{t.flow.normalLabel}</p>
+        <p className="text-sm text-ink2">{t.flow.normalLabel}</p>
         <p className="mt-2 text-[0.95rem] leading-[1.7] text-ink">
           {fill(t.flow.normalBody, {
             p10: cumecs(normal.p10, lang),
@@ -275,7 +279,7 @@ function FlowPanel({
 
       {discharge.kind === "modelled" && discharge.series.length > 1 && (
         <div className="mt-7">
-          <p className="label text-ink2">{t.flow.seriesLabel}</p>
+          <p className="text-sm text-ink2">{t.flow.seriesLabel}</p>
           <ElevenDays series={discharge.series} />
           <p className="mt-2 flex justify-between gap-4 text-xs text-ink2">
             <span>{longDate(discharge.series[0].date, lang)}</span>
@@ -295,7 +299,7 @@ function SkyPanel({ sky, lang }: { sky: Sky; lang: Lang }) {
 
   return (
     <div className="mt-8">
-      <p className="label text-ink2">{t.sky.label}</p>
+      <p className="text-sm text-ink2">{t.sky.label}</p>
 
       {/* Two cells, never four. A four-up grid reflows into two rows on a phone
           and the row-two cells lose their alignment with the page edge; two
@@ -314,7 +318,7 @@ function SkyPanel({ sky, lang }: { sky: Sky; lang: Lang }) {
 
       <p className="mt-3 text-[0.9rem] leading-snug text-ink2">
         {sky.kind === "observed"
-          ? `${fill(t.sky.readAt, { time: clock(sky.readAt) })} · ${sky.isDay ? t.sky.day : t.sky.night}`
+          ? `${fill(t.sky.readAt, { time: clock(sky.readAt) })} ${sky.isDay ? t.sky.day : t.sky.night}`
           : t.sky.computed}
       </p>
     </div>
@@ -353,19 +357,14 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
     <section id={water.slug} className="scroll-mt-20 border-t-2 border-rulestrong">
       <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         {/* ------------------------------------------------------- head --- */}
-        <div className="flex items-baseline gap-4 sm:gap-6">
-          <span className="display text-[2rem] leading-none text-spot sm:text-[3.4rem]">
-            {numeral(ghat.numeral, lang)}
-          </span>
-          <div className="min-w-0">
-            <h2 className="display text-[1.7rem] leading-tight sm:text-[2.6rem]">
-              {waterName(ghat, "river", lang)}
-            </h2>
-            <p className="label mt-1.5 text-ink2">
-              {waterName(ghat, "ghat", lang)} · {waterName(ghat, "city", lang)},{" "}
-              {waterName(ghat, "state", lang)}
-            </p>
-          </div>
+        <div className="min-w-0">
+          <h2 className="display text-[1.7rem] leading-tight sm:text-[2.6rem]">
+            {waterName(ghat, "river", lang)}
+          </h2>
+          <p className="mt-1.5 text-sm text-ink2">
+            {waterName(ghat, "ghat", lang)}, {waterName(ghat, "city", lang)},{" "}
+            {waterName(ghat, "state", lang)}
+          </p>
         </div>
 
         <div className="rule-thin mt-6" />
@@ -378,8 +377,8 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
         )}
 
         {read && (
-          <p className="label mt-4 flex items-center gap-2.5 text-ink2">
-            <span aria-hidden="true" className="text-[0.9rem] leading-none text-spot">
+          <p className="mt-4 flex items-center gap-2.5 text-sm text-ink2">
+            <span aria-hidden="true" className="text-[0.8rem] leading-none text-spot">
               {CARET[read.trend]}
             </span>
             {read.deltaPct === null
@@ -396,10 +395,7 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
         </p>
 
         {water.slug === "kaveri-talakaveri" && (
-          <div className="mt-6 max-w-2xl border-l-2 border-spot pl-4">
-            <p className="label text-spot">{t.talakaveri.label}</p>
-            <p className="mt-2 text-[0.95rem] leading-[1.7] text-ink2">{t.talakaveri.body}</p>
-          </div>
+          <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.7] text-ink2">{t.talakaveri}</p>
         )}
 
         <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-14">
@@ -525,15 +521,8 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
               {t.standfirst}
             </p>
 
-            <p
-              className="ink-in mt-6 max-w-2xl border-l-2 border-spot pl-4 text-[0.95rem] leading-[1.75] text-ink"
-              style={{ animationDelay: "240ms" }}
-            >
-              {t.subline}
-            </p>
-
-            <p className="label mt-8 text-ink2">
-              {fill(t.assembled, { time: assembledAt })} · {t.modelledEvery}
+            <p className="mt-8 max-w-2xl text-sm leading-[1.7] text-ink2">
+              {fill(t.assembled, { time: assembledAt })} {t.modelledEvery}
             </p>
           </div>
         </section>
@@ -541,7 +530,9 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         {/* ------------------------------------------------- the index --- */}
         <section className="tint border-b-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
-            <Eyebrow>{t.index.label}</Eyebrow>
+            <h2 className="display text-[1.7rem] leading-tight sm:text-[2.2rem]">
+              {t.index.title}
+            </h2>
 
             <ul className="mt-6 border-t-2 border-rulestrong">
               {snapshot.waters.map((water) => {
@@ -560,17 +551,14 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                       href={`#${water.slug}`}
                       className="flex min-h-[56px] items-center gap-4 py-3 transition-colors hover:text-spot"
                     >
-                      <span className="display w-8 shrink-0 text-[1.15rem] text-spot">
-                        {numeral(ghat.numeral, lang)}
-                      </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[1rem] leading-tight text-ink">
+                        <span className="display block truncate text-[1.15rem] leading-tight text-ink">
                           {waterName(ghat, "river", lang)}
                         </span>
-                        <span className="label block text-ink2">{waterName(ghat, "city", lang)}</span>
+                        <span className="block text-sm text-ink2">{waterName(ghat, "city", lang)}</span>
                       </span>
                       <span className="flex shrink-0 items-center gap-2 text-right">
-                        <span className="label text-ink">
+                        <span className="text-sm text-ink">
                           {band ? t.bandWords[band] : t.feed.normalLabel}
                         </span>
                         {trend && (
@@ -597,9 +585,9 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         {/* -------------------------------------------- how we know it --- */}
         <section className="tint border-t-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
-            <Eyebrow>{t.provenance.heading}</Eyebrow>
-
-            <div className="rule-heavy mt-6" />
+            <h2 className="display text-[1.9rem] leading-tight sm:text-[2.7rem]">
+              {t.provenance.heading}
+            </h2>
 
             <div className="mt-7 max-w-3xl space-y-5">
               {t.provenance.paras.map((para) => (
@@ -615,7 +603,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
 
             <div className="rule-thin mt-9 max-w-3xl" />
 
-            <p className="label mt-6 text-spot">{t.provenance.attributionLabel}</p>
+            <h3 className="display mt-6 text-lg">{t.provenance.attributionLabel}</h3>
             <ul className="mt-3 max-w-3xl space-y-2">
               {t.provenance.attribution.map((line) => (
                 <li key={line.slice(0, 24)} className="text-[0.9rem] leading-[1.7] text-ink2">
@@ -629,7 +617,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <a
                   href={SOURCES.discharge.modelHref}
                   rel="noopener noreferrer external"
-                  className="label inline-flex min-h-[44px] items-center text-ink underline decoration-spot decoration-2 hover:text-spot"
+                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
                 >
                   Copernicus EMS
                 </a>
@@ -638,7 +626,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <a
                   href={SOURCES.discharge.href}
                   rel="noopener noreferrer external"
-                  className="label inline-flex min-h-[44px] items-center text-ink underline decoration-spot decoration-2 hover:text-spot"
+                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
                 >
                   Open-Meteo
                 </a>
@@ -647,14 +635,14 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <a
                   href={SOURCES.registry.href}
                   rel="noopener noreferrer external"
-                  className="label inline-flex min-h-[44px] items-center text-ink underline decoration-spot decoration-2 hover:text-spot"
+                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
                 >
                   {SOURCES.registry.shortName}
                 </a>
               </li>
             </ul>
 
-            <p className="label mt-8 text-ink2">
+            <p className="mt-8 max-w-3xl text-sm leading-[1.7] text-ink2">
               {fill(t.flow.archiveLine, {
                 samples: whole(ARCHIVE.samplesPerWeek, lang),
                 from: ARCHIVE.firstYear,
@@ -667,11 +655,8 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         {/* ---------------------------------------------------- close --- */}
         <section className="border-t-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
-            <Eyebrow>{t.close.eyebrow}</Eyebrow>
-            <h2 className="display mt-5 max-w-3xl text-[1.9rem] sm:text-[2.7rem]">
-              {t.close.title}
-            </h2>
-            <p className="mt-6 max-w-2xl text-[1rem] leading-[1.75] text-ink2">{t.close.body}</p>
+            <h2 className="display max-w-3xl text-[1.9rem] sm:text-[2.7rem]">{t.close.title}</h2>
+            <p className="mt-5 max-w-2xl text-[1rem] leading-[1.75] text-ink2">{t.close.body}</p>
 
             <ul className="mt-9 border-t-2 border-rulestrong">
               {(
@@ -684,12 +669,9 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <li key={path} className="border-b border-rule">
                   <Link
                     href={localePath(lang, path)}
-                    className="label flex min-h-[56px] items-center justify-between gap-4 py-3 text-ink transition-colors hover:text-spot"
+                    className="display flex min-h-[56px] items-center py-3 text-xl text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
                   >
                     {label}
-                    <span aria-hidden="true" className="text-spot">
-                      →
-                    </span>
                   </Link>
                 </li>
               ))}

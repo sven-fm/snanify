@@ -2,7 +2,6 @@ import type { FullLang as Lang } from "@/lib/locales";
 import { legalContent } from "@/content/legal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow } from "@/components/ui";
 
 /* ---------------------------------------------------------------------------
    /privacy and /terms, set as one page with two sets of copy.
@@ -32,8 +31,7 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
       <Header lang={lang} currentPath={`/${which}`} />
 
       <main className="mx-auto max-w-2xl px-5 py-10 pb-20 sm:px-8 sm:py-16">
-        <Eyebrow>{t.eyebrow}</Eyebrow>
-        <h1 className="display mt-4 text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
+        <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6" />
         <p className="mt-6 text-[1.05rem] leading-[1.8] text-ink2">{t.lede}</p>
         <p className="mt-6 border-t border-rule pt-4 text-sm text-ink2">{t.updated}</p>
@@ -62,7 +60,7 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
                     key={r.k}
                     className="grid gap-1.5 border-b border-rule py-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-6"
                   >
-                    <dt className="label pt-1 text-spot">{r.k}</dt>
+                    <dt className="label pt-1 text-ink2">{r.k}</dt>
                     <dd className="text-[0.98rem] leading-[1.75] text-ink2">{r.v}</dd>
                   </div>
                 ))}

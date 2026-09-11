@@ -7,26 +7,25 @@ import type { FullLang as Lang } from "@/lib/locales";
    /setup, done once.
 
    Six fields, in the order somebody would fill them if you were sitting next
-   to them: which water, a photograph, whose names, which words, your own vow,
-   and when to be reminded. Everything except the vow can be changed later.
+   to them: which water, a photograph, whose names, which prayer, your own
+   sankalp, and when to be reminded. Everything can be changed later.
 
-   THE LABELS DO THE TEACHING. There is no help text, no tooltip and no
-   paragraph explaining what a sankalp is: somebody here has already paid and
-   read /snan. A label and one short hint is the whole instruction for a field.
+   THE LABELS DO THE TEACHING. A label and one short hint is the whole
+   instruction for a field: somebody here has already paid and read /snan.
 
    `errors` holds one line per failure key returned by src/lib/profile-input.ts.
    Those keys are the contract between the validator and this file: the
-   validator never holds English, and this file never holds logic.
+   validator never holds English, and this file never holds logic. An error
+   says what went wrong and what to do about it.
    --------------------------------------------------------------------------- */
 
 const en = {
   meta: {
-    title: "Set up your sheet · Snanify",
+    title: "Set up your sheet | Snanify",
     description: "Choose your water, add your family's names, and write your sankalp once.",
   },
-  eyebrow: "Once, at the start",
-  title: "What goes on your sheet.",
-  lede: "Two minutes, once. Every morning after this takes three.",
+  title: "Set up your sheet",
+  lede: "You do this once. Every morning after it takes three minutes.",
 
   water: {
     label: "Your water",
@@ -34,67 +33,64 @@ const en = {
   },
   portrait: {
     label: "A photograph",
-    hint: "Optional. It is set in grey on the sheet, the way a printed almanac sets a portrait.",
+    hint: "Optional. It prints in grey on the sheet.",
     choose: "Choose a photograph",
     change: "Choose another",
-    remove: "Take it off",
-    pending: "Pressing the photograph",
+    remove: "Remove it",
   },
   names: {
-    label: "Kept in the name of",
-    hint: "Up to five. Your own name first, then whoever else the morning is for.",
-    placeholder: "A name",
-    add: "Add another name",
+    label: "Names on the sheet",
+    hint: "Up to five. Your own name first, then your family.",
+    placeholder: "Name",
+    add: "Add a name",
   },
   prayer: {
-    label: "A prayer for the sheet",
+    label: "A prayer",
     hint: "Optional. It is printed under the names, in Devanagari.",
-    none: "None",
+    none: "Without a prayer",
   },
   sankalp: {
     label: "Your sankalp",
-    hint: "Your own words, in any language. You will read them back every morning.",
-    placeholder: "What you came to say.",
-    remaining: "{n} left",
+    hint: "Your own words, in any language. You read them back every morning.",
+    placeholder: "Your sankalp, in your own words",
+    remaining: "{n} characters left",
   },
   reminder: {
-    label: "Bring me the river at",
-    hint: "In your own time, wherever you are. Change it or stop it whenever you like.",
-    zone: "Your time zone",
+    label: "Reminder hour",
+    hint: "In your local time. You can change it or stop it on your account page.",
   },
 
-  save: "Save, and begin",
+  save: "Save and continue",
   saving: "Saving",
 
   errors: {
     water: "Choose one of the six waters.",
-    namesEmpty: "At least one name.",
-    namesMany: "Five names at most.",
-    nameLong: "That name is too long for the sheet.",
-    nameShape: "A name goes on one line.",
-    prayer: "That prayer is not offered for this water.",
+    namesEmpty: "Add at least one name.",
+    namesMany: "The sheet holds five names. Remove one.",
+    nameLong: "That name is too long for the sheet. Shorten it.",
+    nameShape: "Write the name on one line.",
+    prayer: "That prayer belongs to another water. Choose one from the list.",
     sankalpEmpty: "Write your sankalp.",
-    sankalpLong: "A little shorter, so it fits the sheet.",
+    sankalpLong: "Shorten your sankalp a little so it fits the sheet.",
     hour: "Choose an hour.",
-    zone: "We could not read your time zone. Choose one.",
+    zone: "Your browser did not send a time zone. Reload the page and save again.",
     portrait: {
-      tooLarge: "That photograph is too large. Anything from a phone camera is fine.",
-      notAnImage: "That file is not a photograph. JPEG, PNG or HEIC.",
-      tooManyPixels: "That photograph is too large. Anything from a phone camera is fine.",
-      badCrop: "Something went wrong with the crop. Try again.",
+      tooLarge: "That photograph is too large. One straight from a phone camera works.",
+      notAnImage: "Choose a JPEG, PNG or HEIC photograph.",
+      tooManyPixels: "That photograph is too large. One straight from a phone camera works.",
+      badCrop: "The photograph could not be read. Choose it again.",
     },
-    unknown: "Something went wrong. Try once more.",
+    unknown: "The form did not save. Try once more.",
   },
 };
 
 const hi = {
   meta: {
-    title: "अपना पत्र तय कीजिए · Snanify",
+    title: "अपना पत्र तय कीजिए | Snanify",
     description: "अपना जल चुनिए, परिवार के नाम जोड़िए, और अपना संकल्प एक बार लिखिए।",
   },
-  eyebrow: "आरंभ में, एक बार",
-  title: "आपके पत्र पर क्या जाएगा।",
-  lede: "दो मिनट, एक बार। उसके बाद हर सुबह तीन मिनट की है।",
+  title: "अपना पत्र तय कीजिए",
+  lede: "यह एक बार करना है। उसके बाद हर सुबह तीन मिनट की है।",
 
   water: {
     label: "आपका जल",
@@ -102,56 +98,54 @@ const hi = {
   },
   portrait: {
     label: "एक चित्र",
-    hint: "ऐच्छिक। पत्र पर वह श्वेत-श्याम में बैठता है, जैसे छपे पंचांग में चित्र बैठता है।",
+    hint: "ऐच्छिक। पत्र पर यह श्वेत-श्याम में छपता है।",
     choose: "चित्र चुनिए",
     change: "दूसरा चुनिए",
-    remove: "हटा दीजिए",
-    pending: "चित्र तैयार हो रहा है",
+    remove: "हटाइए",
   },
   names: {
-    label: "जिनके नाम से",
-    hint: "अधिकतम पाँच। पहले अपना नाम, फिर वे जिनके लिए यह सुबह है।",
-    placeholder: "एक नाम",
-    add: "एक और नाम जोड़िए",
+    label: "पत्र पर नाम",
+    hint: "अधिकतम पाँच। पहले अपना नाम, फिर अपने परिवार के।",
+    placeholder: "नाम",
+    add: "एक नाम जोड़िए",
   },
   prayer: {
-    label: "पत्र के लिए एक प्रार्थना",
-    hint: "ऐच्छिक। वह नामों के नीचे, देवनागरी में छपती है।",
-    none: "कोई नहीं",
+    label: "एक प्रार्थना",
+    hint: "ऐच्छिक। यह नामों के नीचे, देवनागरी में छपती है।",
+    none: "बिना प्रार्थना के",
   },
   sankalp: {
     label: "आपका संकल्प",
-    hint: "आपके अपने शब्द, किसी भी भाषा में। हर सुबह आप इन्हें पढ़ेंगे।",
-    placeholder: "जो कहने आए हैं।",
-    remaining: "{n} शेष",
+    hint: "आपके अपने शब्द, किसी भी भाषा में। हर सुबह आप इन्हें पढ़ते हैं।",
+    placeholder: "आपका संकल्प, आपके अपने शब्दों में",
+    remaining: "{n} अक्षर शेष",
   },
   reminder: {
-    label: "नदी मेरे पास लाइए",
-    hint: "आपके अपने समय पर। जब चाहें बदल दीजिए या रोक दीजिए।",
-    zone: "आपका समय-क्षेत्र",
+    label: "सूचना की घड़ी",
+    hint: "आपके स्थानीय समय में। खाते के पृष्ठ पर इसे बदल या रोक सकते हैं।",
   },
 
-  save: "सहेजिए, और आरंभ कीजिए",
+  save: "सहेजिए और आगे बढ़िए",
   saving: "सहेजा जा रहा है",
 
   errors: {
     water: "छह जलों में से एक चुनिए।",
-    namesEmpty: "कम से कम एक नाम।",
-    namesMany: "अधिकतम पाँच नाम।",
-    nameLong: "यह नाम पत्र के लिए बहुत लंबा है।",
-    nameShape: "नाम एक ही पंक्ति में आता है।",
-    prayer: "यह प्रार्थना इस जल के लिए नहीं है।",
+    namesEmpty: "कम से कम एक नाम जोड़िए।",
+    namesMany: "पत्र पर पाँच नाम आते हैं। एक हटाइए।",
+    nameLong: "यह नाम पत्र के लिए बहुत लंबा है। इसे छोटा कीजिए।",
+    nameShape: "नाम एक ही पंक्ति में लिखिए।",
+    prayer: "यह प्रार्थना दूसरे जल की है। सूची में से एक चुनिए।",
     sankalpEmpty: "अपना संकल्प लिखिए।",
-    sankalpLong: "थोड़ा छोटा कीजिए, ताकि पत्र पर बैठ जाए।",
+    sankalpLong: "संकल्प थोड़ा छोटा कीजिए, ताकि पत्र पर आ जाए।",
     hour: "एक घड़ी चुनिए।",
-    zone: "आपका समय-क्षेत्र पढ़ा नहीं जा सका। एक चुन लीजिए।",
+    zone: "आपके ब्राउज़र ने समय-क्षेत्र नहीं भेजा। पृष्ठ फिर से खोलकर सहेजिए।",
     portrait: {
-      tooLarge: "यह चित्र बहुत बड़ा है। फ़ोन के कैमरे का कोई भी चित्र चल जाएगा।",
-      notAnImage: "यह फ़ाइल चित्र नहीं है। JPEG, PNG या HEIC।",
-      tooManyPixels: "यह चित्र बहुत बड़ा है। फ़ोन के कैमरे का कोई भी चित्र चल जाएगा।",
-      badCrop: "काट-छाँट में कुछ गड़बड़ हुई। फिर कोशिश कीजिए।",
+      tooLarge: "यह चित्र बहुत बड़ा है। फ़ोन के कैमरे का चित्र चल जाता है।",
+      notAnImage: "JPEG, PNG या HEIC चित्र चुनिए।",
+      tooManyPixels: "यह चित्र बहुत बड़ा है। फ़ोन के कैमरे का चित्र चल जाता है।",
+      badCrop: "चित्र पढ़ा नहीं जा सका। इसे फिर से चुनिए।",
     },
-    unknown: "कुछ गड़बड़ हुई। एक बार और कोशिश कीजिए।",
+    unknown: "फ़ॉर्म सहेजा नहीं गया। एक बार और कोशिश कीजिए।",
   },
 };
 

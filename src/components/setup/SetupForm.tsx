@@ -80,8 +80,8 @@ function FieldError({ children }: { children?: string }) {
 function Label({ label, hint }: { label: string; hint: string }) {
   return (
     <>
-      <span className="label text-spot">{label}</span>
-      <span className="mt-2 block text-sm leading-relaxed text-ink2">{hint}</span>
+      <span className="display block text-[1.15rem] text-ink">{label}</span>
+      <span className="mt-1 block text-sm leading-relaxed text-ink2">{hint}</span>
     </>
   );
 }
@@ -275,7 +275,7 @@ export function SetupForm({
           <button
             type="button"
             onClick={() => setNames([...names, ""])}
-            className="label mt-3 min-h-[44px] text-spot underline decoration-rule underline-offset-4"
+            className="mt-3 min-h-[44px] text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-spot"
           >
             {t.names.add}
           </button>

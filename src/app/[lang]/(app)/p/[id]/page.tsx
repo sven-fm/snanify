@@ -12,7 +12,7 @@ import { localePath, SITE_ORIGIN, type FullLang as Lang } from "@/lib/locales";
 import { headers } from "next/headers";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow, LinkButton } from "@/components/ui";
+import { LinkButton } from "@/components/ui";
 import { ShareButton } from "@/components/patra/ShareButton";
 import { PatraSheetViewer } from "@/components/SankalpPatra";
 import { setPatraPublic } from "@/app/[lang]/(app)/p/[id]/actions";
@@ -129,16 +129,14 @@ export default async function Page({
       <Header lang={lang} currentPath="/" personalised />
 
       <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
-        <Eyebrow>{t.eyebrow}</Eyebrow>
-
         {/* The sheet itself, at the ratio it is sent in. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={localePath(lang, `/p/${view.id}/image`)}
-          alt={`${view.names.join(", ")} · ${view.water} · ${view.keptDate}`}
+          alt={`${view.names.join(", ")}, ${view.water}, ${view.keptDate}`}
           width={1080}
           height={1350}
-          className="mt-5 w-full border-2 border-rulestrong"
+          className="w-full border-2 border-rulestrong"
         />
 
         <div className="mt-6">
@@ -160,7 +158,7 @@ export default async function Page({
 
         {isOwner && sitting.sankalpText && (
           <section className="mt-12 border-t-2 border-rulestrong pt-6">
-            <h2 className="label text-spot">{t.yours}</h2>
+            <h2 className="display text-xl text-ink">{t.yours}</h2>
             <p className="display mt-4 text-[1.5rem] leading-[1.45]">{sitting.sankalpText}</p>
             <p className="mt-4 text-sm text-ink2">{t.privateNote}</p>
           </section>
@@ -169,7 +167,7 @@ export default async function Page({
         {/* ---------------- the owner's own controls ---------------- */}
         {isOwner && (
           <section className="mt-12 border-t-2 border-rulestrong pt-6">
-            <h2 className="label text-spot">{t.ownerHeading}</h2>
+            <h2 className="display text-xl text-ink">{t.ownerHeading}</h2>
 
             {!sitting.isPublic && <p className="mt-4 text-[0.98rem] text-ink">{t.privateNow}</p>}
 
@@ -192,7 +190,7 @@ export default async function Page({
                 Its own viewer handles the phone case, where a fixed-ratio
                 document rendered into 366 pixels would set body type at about
                 six. */}
-            <h3 className="label mt-10 border-t border-rule pt-5 text-ink">{t.printHeading}</h3>
+            <h3 className="display mt-10 border-t border-rule pt-5 text-xl text-ink">{t.printHeading}</h3>
             <p className="mt-3 text-sm leading-relaxed text-ink2">{t.printNote}</p>
             <div className="mt-5">
               <PatraSheetViewer lang={lang} data={printableRecord(sitting)} />
@@ -202,28 +200,29 @@ export default async function Page({
 
         {/* The register, as text, so it can be read, searched and copied. */}
         <section className="mt-12">
-          <h2 className="label border-b-2 border-rulestrong pb-3 text-ink">
+          <h2 className="display border-b-2 border-rulestrong pb-3 text-xl text-ink">
             {t.registerHeading}
           </h2>
           <dl className="mt-1">
-            <Row k={t.kept} v={`${view.keptTime} ${view.keptZone} · ${view.keptIst} IST`} />
+            <Row k={t.kept} v={`${view.keptTime} ${view.keptZone}, ${view.keptIst} IST`} />
             <Row k={t.flow} v={view.flow} />
-            {view.rank && <Row k={t.ranked} v={`${view.rank}th percentile since 1997`} />}
+            {view.rank && <Row k={t.ranked} v={t.percentile.replace("{n}", view.rank)} />}
             <Row k={t.tithi} v={view.tithi} />
-            <Row k={t.nakshatra} v={`${view.nakshatra} · ${view.moon}`} />
+            <Row k={t.nakshatra} v={view.nakshatra} />
+            <Row k={t.moon} v={view.moon} />
             <Row
               k={t.source}
               v={
                 view.figureKind === "modelled"
-                  ? `${view.source}, modelled for ${view.modelledFor}`
-                  : `${view.source}, seasonal median 1997 to 2025`
+                  ? `${view.source}, ${t.modelledFor.replace("{day}", view.modelledFor ?? "")}`
+                  : `${view.source}, ${t.median}`
               }
             />
           </dl>
         </section>
 
         <section className="mt-12 border-t border-rule pt-6">
-          <h2 className="label text-spot">{t.seedHeading}</h2>
+          <h2 className="display text-xl text-ink">{t.seedHeading}</h2>
           <p className="mt-4 text-[0.98rem] leading-[1.7] text-ink2">{t.seedBody}</p>
           <pre className="mt-4 overflow-x-auto border border-rule bg-tint p-4 text-[0.8rem] text-ink">
             {line}

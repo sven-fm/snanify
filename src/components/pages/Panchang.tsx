@@ -8,8 +8,7 @@ import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Mark } from "@/components/Logo";
-import { Reveal } from "@/components/Reveal";
-import { CTA, Eyebrow, Section, SectionHeader } from "@/components/ui";
+import { Section } from "@/components/ui";
 import { ProvisionalBadge } from "@/components/pages/MuhuratIndex";
 import {
   DATED_OCCASIONS,
@@ -137,7 +136,7 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
       <td className="py-5 pr-4 text-sm text-ink2">
         {occasion.windows.map((w) => WINDOW_BY_ID[w]?.name[lang]).filter(Boolean).join(", ")}
       </td>
-      <td className="label py-5 text-right text-spot">{occasion.occurrence.label[lang]}</td>
+      <td className="py-5 text-right text-sm text-ink">{occasion.occurrence.label[lang]}</td>
     </tr>
   );
 }
@@ -180,8 +179,6 @@ export function Panchang({ lang }: { lang: Lang }) {
   /* Shared keys from content/muhurat-index (twelve locales), detail-only keys
      from muhurat.ts (English and Hindi). See the note in MuhuratDetail. */
   const m = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
-  const hi = lang === "hi";
-
   /* The offsets are read on the reference instant, because four of the seven
      places below observe daylight saving and India does not. A standing
      "IST minus nine and a half" would be wrong for five months of the year. */
@@ -202,12 +199,8 @@ export function Panchang({ lang }: { lang: Lang }) {
         {/* ---------------- masthead ---------------- */}
         <section className="border-b-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-20 sm:pb-24">
-            <div className="ink-in">
-              <Eyebrow>{t.hero.eyebrow}</Eyebrow>
-            </div>
-
             <h1
-              className="ink-in display mt-6 max-w-3xl text-[2.6rem] leading-[1] sm:text-6xl lg:text-7xl"
+              className="ink-in display max-w-3xl text-[2.6rem] leading-[1] sm:text-6xl lg:text-7xl"
               style={{ animationDelay: "80ms" }}
             >
               {t.hero.title}
@@ -222,19 +215,11 @@ export function Panchang({ lang }: { lang: Lang }) {
               {t.hero.lede}
             </p>
 
-            <p
-              className="ink-in mt-5 max-w-xl border-l-2 border-spot pl-5 text-sm leading-[1.75] text-ink2"
-              style={{ animationDelay: "200ms" }}
-            >
-              {t.hero.free}
-            </p>
-
             {/* The provenance block is the same words the calendar carries, not
                 a softened restatement of them. */}
             <div className="ink-in boxed mt-12 max-w-3xl bg-paper p-6 sm:p-8">
-              <h2 className="label text-spot">{t.provenance.heading}</h2>
-              <div className="rule-thin mt-4" />
-              <p className="mt-5 max-w-2xl text-sm leading-[1.75] text-ink2">
+              <h2 className="display text-2xl">{t.provenance.heading}</h2>
+              <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-ink2">
                 {m.provenance.line}
               </p>
               <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-ink2">
@@ -267,32 +252,29 @@ export function Panchang({ lang }: { lang: Lang }) {
 
         {/* ---------------- why the date moves ---------------- */}
         <Section>
-          <Reveal>
-            <SectionHeader eyebrow={t.drift.eyebrow} title={t.drift.title} lede={t.drift.lede} />
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.drift.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.drift.lede}</p>
+            </div>
 
-            <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
+            <ul className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
               {t.drift.points.map((p) => (
-                <li key={p.n} className="bg-paper p-7">
-                  <span className="display block text-4xl text-spot">{p.n}</span>
-                  <div className="rule-thin mt-4" />
-                  <h3 className="display mt-4 text-2xl">{p.t}</h3>
+                <li key={p.t} className="bg-paper p-7">
+                  <h3 className="display text-2xl">{p.t}</h3>
                   <p className="mt-3 text-sm leading-[1.75] text-ink2">{p.d}</p>
                 </li>
               ))}
-            </ol>
-          </Reveal>
+            </ul>
         </Section>
 
         {/* ---------------- amanta and purnimanta ----------------
             The reason this page exists. Two panels, one worked table, and the
             six ghats labelled with the reckoning that names their month. */}
         <Section id="reckoning" tinted>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.reckoning.eyebrow}
-              title={t.reckoning.title}
-              lede={t.reckoning.lede}
-            />
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.reckoning.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.reckoning.lede}</p>
+            </div>
 
             <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
               {(
@@ -312,13 +294,11 @@ export function Panchang({ lang }: { lang: Lang }) {
 
             <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
               <div>
-                <h3 className="label text-ink">{t.reckoning.agreeHeading}</h3>
-                <div className="rule-thin mt-3" />
+                <h3 className="display text-xl">{t.reckoning.agreeHeading}</h3>
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.reckoning.agree}</p>
               </div>
               <div>
-                <h3 className="label text-spot">{t.reckoning.differHeading}</h3>
-                <div className="rule-thin mt-3" />
+                <h3 className="display text-xl">{t.reckoning.differHeading}</h3>
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.reckoning.differ}</p>
               </div>
             </div>
@@ -365,48 +345,44 @@ export function Panchang({ lang }: { lang: Lang }) {
                   className="grid gap-x-8 gap-y-1 border-b border-rule py-4 sm:grid-cols-[1fr_12rem] sm:items-baseline"
                 >
                   <span className="text-sm text-ink">{ghatLabel(g, lang)}</span>
-                  <span className="label text-spot sm:text-right">
+                  <span className="text-sm text-ink2 sm:text-right">
                     {t.reckoning.schemes[g.masaScheme]}
                   </span>
                 </li>
               ))}
             </ul>
-          </Reveal>
         </Section>
 
         {/* ---------------- four reasons households differ ---------------- */}
         <Section>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.divergence.eyebrow}
-              title={t.divergence.title}
-              lede={t.divergence.lede}
-            />
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.divergence.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.divergence.lede}</p>
+            </div>
 
             <ul className="mt-12 border-t-2 border-rulestrong">
               {t.divergence.items.map((item) => (
                 <li
-                  key={item.n}
-                  className="grid gap-x-8 gap-y-2 border-b border-rule py-7 sm:grid-cols-[3rem_16rem_1fr]"
+                  key={item.t}
+                  className="grid gap-x-8 gap-y-2 border-b border-rule py-7 sm:grid-cols-[16rem_1fr]"
                 >
-                  <span className="display text-2xl leading-none text-spot">{item.n}</span>
                   <h3 className="display text-xl text-ink">{item.t}</h3>
                   <p className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.d}</p>
                 </li>
               ))}
             </ul>
-          </Reveal>
         </Section>
 
         {/* ---------------- Pitru Paksha, as a ladder of tithis ---------------- */}
         <Section id="pitru-paksha" tinted>
-          <Reveal>
-            <SectionHeader eyebrow={t.pitru.eyebrow} title={t.pitru.title} lede={t.pitru.lede} />
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.pitru.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.pitru.lede}</p>
+            </div>
 
             <div className="boxed mt-10 max-w-3xl bg-paper p-6 sm:p-7">
-              <h3 className="label text-spot">{t.pitru.datesHeading}</h3>
-              <div className="rule-thin mt-4" />
-              <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.pitru.dates}</p>
+              <h3 className="display text-xl">{t.pitru.datesHeading}</h3>
+              <p className="mt-3 text-sm leading-[1.75] text-ink2">{t.pitru.dates}</p>
               <div className="mt-6">
                 <ProvisionalBadge lang={lang} short />
               </div>
@@ -430,7 +406,7 @@ export function Panchang({ lang }: { lang: Lang }) {
                       <th scope="row" className="py-5 pr-4 text-left font-normal">
                         <span className="display block text-xl text-ink">{d.tithi[lang]}</span>
                         {d.alsoCalled && (
-                          <span className="label mt-2 block text-ink2">
+                          <span className="mt-1.5 block text-xs text-ink2">
                             {d.alsoCalled[lang]}
                           </span>
                         )}
@@ -446,53 +422,42 @@ export function Panchang({ lang }: { lang: Lang }) {
 
             <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
               <div>
-                <h3 className="label text-ink">{t.pitru.conventionHeading}</h3>
-                <div className="rule-thin mt-3" />
+                <h3 className="display text-xl">{t.pitru.conventionHeading}</h3>
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.pitru.convention}</p>
               </div>
               <div>
-                <h3 className="label text-spot">{t.pitru.unknownHeading}</h3>
-                <div className="rule-thin mt-3" />
+                <h3 className="display text-xl">{t.pitru.unknownHeading}</h3>
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.pitru.unknown}</p>
               </div>
             </div>
-          </Reveal>
         </Section>
 
         {/* ---------------- working out a tithi from a date ---------------- */}
         <Section>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.finding.eyebrow}
-              title={t.finding.title}
-              lede={t.finding.lede}
-            />
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.finding.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.finding.lede}</p>
+            </div>
 
             <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
               {t.finding.steps.map((s) => (
                 <li key={s.n} className="bg-paper p-7">
-                  <span className="display block text-4xl text-spot">{s.n}</span>
-                  <div className="rule-thin mt-4" />
-                  <h3 className="display mt-4 text-2xl">{s.t}</h3>
+                  <span className="display block text-2xl text-spot">{s.n}</span>
+                  <h3 className="display mt-3 text-2xl">{s.t}</h3>
                   <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
                 </li>
               ))}
             </ol>
 
-            <p className="mt-8 max-w-2xl border-l-2 border-spot pl-5 text-sm leading-[1.75] text-ink2">
-              {t.finding.closing}
-            </p>
-          </Reveal>
+            <p className="mt-8 max-w-2xl text-sm leading-[1.75] text-ink2">{t.finding.closing}</p>
         </Section>
 
         {/* ---------------- the occasion register ---------------- */}
         <Section id="occasions" tinted>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.occasions.eyebrow}
-              title={t.occasions.title}
-              lede={t.occasions.lede}
-            />
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.occasions.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.occasions.lede}</p>
+            </div>
 
             <h3 className="display mt-12 text-2xl">{t.occasions.datedHeading}</h3>
             <OccasionTable occasions={DATED_OCCASIONS} lang={lang} />
@@ -506,13 +471,14 @@ export function Panchang({ lang }: { lang: Lang }) {
             <div className="mt-8">
               <ProvisionalBadge lang={lang} />
             </div>
-          </Reveal>
         </Section>
 
         {/* ---------------- one hour, eight clocks ---------------- */}
         <Section id="clocks">
-          <Reveal>
-            <SectionHeader eyebrow={t.clock.eyebrow} title={t.clock.title} lede={t.clock.lede} />
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.clock.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.clock.lede}</p>
+            </div>
 
             {/* the four windows as rules, before any clock is put on them */}
             <div className="mt-12 overflow-x-auto">
@@ -544,9 +510,8 @@ export function Panchang({ lang }: { lang: Lang }) {
 
             {/* what the table assumes, stated before the table, not under it */}
             <div className="boxed mt-12 max-w-3xl bg-paper p-6 sm:p-7">
-              <h3 className="label text-spot">{t.clock.assumptionHeading}</h3>
-              <div className="rule-thin mt-4" />
-              <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.clock.assumption}</p>
+              <h3 className="display text-xl">{t.clock.assumptionHeading}</h3>
+              <p className="mt-3 text-sm leading-[1.75] text-ink2">{t.clock.assumption}</p>
             </div>
 
             <div className="mt-10 overflow-x-auto">
@@ -568,7 +533,7 @@ export function Panchang({ lang }: { lang: Lang }) {
                   <tr className="border-b-2 border-rulestrong align-top">
                     <th scope="row" className="tint py-4 pr-4 text-left font-normal">
                       <span className="display block text-lg text-ink">{t.clock.atTheGhat}</span>
-                      <span className="label mt-1.5 block text-ink2">{t.clock.ghatZone}</span>
+                      <span className="mt-1.5 block text-xs text-ink2">{t.clock.ghatZone}</span>
                     </th>
                     {WINDOW_SPANS.map((w) => (
                       <WindowCell
@@ -586,7 +551,7 @@ export function Panchang({ lang }: { lang: Lang }) {
                     <tr key={z.zone} className="border-b border-rule align-top">
                       <th scope="row" className="py-4 pr-4 text-left font-normal">
                         <span className="display block text-lg text-ink">{z.city[lang]}</span>
-                        <span className="label mt-1.5 block text-ink2">{z.region[lang]}</span>
+                        <span className="mt-1.5 block text-xs text-ink2">{z.region[lang]}</span>
                         <span className="mt-1.5 block text-xs text-ink2">
                           {t.clock.offsetCol}: {z.offset}
                         </span>
@@ -614,13 +579,11 @@ export function Panchang({ lang }: { lang: Lang }) {
             <div className="mt-8">
               <ProvisionalBadge lang={lang} short />
             </div>
-          </Reveal>
         </Section>
 
-        {/* ---------------- the quiet door ----------------
-            Four ruled lines and a sentence. No offer, no price, no urgency:
-            the page is worth building even for the reader who never opens
-            any of them. */}
+        {/* ---------------- onward ----------------
+            Four ruled lines and a sentence. The page is worth building even
+            for the reader who opens none of them. */}
         <section className="border-t-2 border-rulestrong">
           <div className="mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-24">
             <div className="text-center">
@@ -649,12 +612,6 @@ export function Panchang({ lang }: { lang: Lang }) {
             </ul>
 
             <p className="mt-10 text-center text-xs leading-[1.75] text-ink2">{t.close.note}</p>
-
-            <div className="mt-10 flex justify-center">
-              <Link href={localePath(lang, "/muhurat")}>
-                <CTA variant="ghost">{hi ? "मुहूर्त पंचांग" : "The muhurat calendar"}</CTA>
-              </Link>
-            </div>
 
             <p className="mx-auto mt-14 max-w-2xl border-t border-rule pt-8 text-center text-xs leading-[1.75] text-ink2">
               {MUHURAT.provider.note[lang]}

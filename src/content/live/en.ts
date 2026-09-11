@@ -5,21 +5,24 @@ import type { FlowBand, Trend, WaterSlug, WeatherId } from "@/lib/riverdata";
 
    Rules this file is written under:
 
-   1. NOTHING IS PERFORMED, and this page does not say so. No priest stands
-      anywhere and no rite is held, so no sentence here may imply that one does.
-      Stating the denial is a different thing, and it belongs on /ethics: this
-      page reports a river, and reporting it is the whole of the job.
-   2. NOTHING IS PROMISED. No outcome, spiritual or otherwise, is attached to
-      reading this page or to anything sold elsewhere on the site.
-   3. EVERY NUMBER SAYS WHERE IT CAME FROM. The word "modelled" appears beside
-      the flow every time the flow appears, because it is a model output and not
-      an instrument reading, and the difference is the difference between a
-      publication and a liability. Cutting this page's length never cuts a
-      provenance label: the sourcing survives every edit, the apology does not.
-   4. THE ARCHIVE STARTS IN 1997. The Copernicus reanalysis returns nulls before
-      that, so 1997 is the honest floor and no string here says 1991.
-   5. HINDI IS WRITTEN, NOT CONVERTED. Rivers take the respectful plural, as
-      they do in speech.
+   1. NOTHING IS PERFORMED, and this page does not say so. It reports a river,
+      and reporting it is the whole of the job. The commitment in the negative
+      lives on /ethics.
+   2. NOTHING IS PROMISED. No outcome is attached to reading this page or to
+      anything sold elsewhere on the site.
+   3. EVERY NUMBER SAYS WHERE IT CAME FROM. "Modelled" stands beside the flow
+      every time the flow appears, because it is a model output and not a
+      gauge reading. Cutting the page never cuts a provenance label.
+   4. THE ARCHIVE STARTS IN 1997. The Copernicus reanalysis returns nulls
+      before that, so 1997 is the floor and no string here says 1991.
+   5. PLAIN SENTENCES. A noun, a verb, a full stop. The page once opened with
+      "The river, reported. Free to read, and it stays free." and closed on
+      "The reading is free. You pay for the morning.", and the rivers were
+      "she" throughout. Fragments used as beats, two-fragment headlines and a
+      river personified in a data report are the rhythm generated copy falls
+      into, and every one was rewritten as something a person would say.
+   6. HINDI IS WRITTEN, NOT CONVERTED. Rivers take the respectful plural
+      there, as they do in speech.
    --------------------------------------------------------------------------- */
 
 /**
@@ -34,51 +37,44 @@ export function fill(template: string, values: Record<string, string | number>):
 }
 
 /* ---------------------------------------------------------------------------
-   The live river page, /live, in twelve locales.
-
    English is the source edition and defines `LiveCopy`; every other file in
    this directory closes with `satisfies LiveCopy`, so a key added here without
-   its eleven translations is a compile error in eleven places.
+   its translation is a compile error.
 
    This is the daily-return surface and the most numerate page on the site.
-   Three things follow from that and hold in every locale:
+   Two things follow from that and hold in every locale:
 
    1. EVERY NUMBER STAYS CHECKABLE. Units, years and the {braces} that `fill`
-      substitutes are identical across all twelve. A translated placeholder is a
+      substitutes are identical across locales. A translated placeholder is a
       runtime hole, and a translated unit is a number nobody can verify.
    2. "MODELLED" IS SAID EVERY TIME. The flow is a model output and not a gauge
       reading, and no locale is allowed to quietly upgrade it to a measurement.
-   3. SHORT, AND WITHOUT THE APOLOGY. Every prose field here was cut by about
-      half in August 2026. The provenance block went from six paragraphs to
-      five and dropped the one that only denied things; the standfirst dropped
-      "nothing on this page is performed by anyone", which is an /ethics
-      sentence, not a river report.
    --------------------------------------------------------------------------- */
 
 export const en = {
   meta: {
-    title: "The river, now, six waters live | Snanify",
+    title: "Six sacred waters, live | Snanify",
     description:
-      "Modelled discharge, sun, weather and the day's muhurat windows at six sacred waters, from the Ganga at Haridwar to the Kaveri at her source. Ranked against 1997 to 2025, free to read.",
+      "Modelled flow, sunrise, weather and today's muhurat windows at six sacred waters, from the Ganga at Haridwar to the Kaveri at Talakaveri. Ranked against 1997 to 2025. Free to read.",
   },
 
   badges: {
     live: "Live from six waters",
-    cached: "Six waters, the most recent readings",
+    cached: "Six waters, the latest readings",
     normal: "Six waters, seasonal normals",
   },
-  eyebrow: "The river, now",
-  title: "Six waters, as they are running.",
+  /* The breadcrumb name, read by src/app/[lang]/live/page.tsx. */
+  crumb: "The rivers, live",
+  title: "How the rivers are running today.",
   standfirst:
-    "The Ganga at Haridwar, the Sangam at Prayagraj, the Yamuna at Mathura, the Godavari at Nashik, the Shipra at Ujjain, and the Kaveri where she rises. Flow, light, weather and the day's windows, each with the date it carries.",
-  subline: "The river, reported. Free to read, and it stays free.",
+    "The Ganga at Haridwar, the Sangam at Prayagraj, the Yamuna at Mathura, the Godavari at Nashik, the Shipra at Ujjain and the Kaveri at Talakaveri. For each, the modelled flow, sunrise and sunset, the weather and today's muhurat windows, with the date each figure carries. All of it is free to read.",
 
-  assembled: "This edition assembled {time} IST",
-  modelledEvery: "The flood model publishes one value per cell per day",
+  assembled: "This page was assembled at {time} IST.",
+  modelledEvery: "The flood model publishes one value per cell per day.",
 
   index: {
-    label: "The six, at a glance",
-    note: "Each water reads against its own record.",
+    title: "The six at a glance",
+    note: "Each water is ranked against its own record.",
   },
 
   section: {
@@ -88,21 +84,21 @@ export const en = {
   },
 
   flow: {
-    label: "Flow, modelled",
+    label: "Modelled flow",
     unit: "m³/s",
     modelledFor: "Modelled for {date}",
-    rankLabel: "Where that sits",
-    rankSuffix: "against this same week of the year, 1997 to 2025",
-    cappedBelow: "at or under the lowest 5 per cent of the record",
-    cappedAbove: "at or over the highest 5 per cent of the record",
+    rankLabel: "Rank",
+    rankSuffix: "against the same week of the year, 1997 to 2025",
+    cappedBelow: "in the lowest 5 per cent of the record",
+    cappedAbove: "in the highest 5 per cent of the record",
     normalLabel: "Usual for this week",
     normalBody:
-      "Eight of every ten daily values recorded here in this week since 1997 fall between {p10} and {p90} {unit}. The median is {median} {unit}.",
-    scaleLabel: "Slack, low, usual, full, spate",
+      "Since 1997, eight of every ten daily values for this week fell between {p10} and {p90} {unit}. The median is {median} {unit}.",
+    scaleLabel: "Thin, low, usual, full, in spate",
     seriesLabel: "The last eleven model days",
-    seriesNote: "One rule per day, oldest at the left.",
-    trendSince: "against seven days back",
-    archiveLine: "{samples} daily values behind every week of the year, {from} to {to}",
+    seriesNote: "One bar per day, oldest on the left.",
+    trendSince: "over seven days",
+    archiveLine: "Every week of the year has {samples} daily values behind it, {from} to {to}.",
   },
 
   units: {
@@ -112,13 +108,11 @@ export const en = {
   },
 
   bands: {
-    slack:
-      "{river} is running thin, lower than she runs on nine days out of ten at this turn of the year.",
-    low: "{river} is running low, below what this week usually brings her.",
-    usual: "{river} is running as she usually runs at this turn of the year.",
-    full: "{river} is running full, above what this week usually brings her.",
-    spate:
-      "{river} is in spate, higher than she runs on nine days out of ten at this turn of the year.",
+    slack: "{river} is running thin, lower than on nine days in ten at this time of year.",
+    low: "{river} is running low for this week of the year.",
+    usual: "{river} is running as it usually does at this time of year.",
+    full: "{river} is running full for this week of the year.",
+    spate: "{river} is in spate, higher than on nine days in ten at this time of year.",
   } satisfies Record<FlowBand, string>,
 
   bandWords: {
@@ -130,9 +124,9 @@ export const en = {
   } satisfies Record<FlowBand, string>,
 
   trends: {
-    rising: "Rising {pct} per cent {since}",
+    rising: "Up {pct} per cent {since}",
     steady: "Steady {since}",
-    falling: "Falling {pct} per cent {since}",
+    falling: "Down {pct} per cent {since}",
   } satisfies Record<Trend, string>,
 
   trendPlain: {
@@ -143,24 +137,24 @@ export const en = {
 
   feed: {
     liveLabel: "Read today",
-    staleLabel: "{days} days behind",
-    normalLabel: "Not read today",
-    liveNote: "Published today by the flood model at this cell. The model runs once a day.",
+    staleLabel: "{days} days old",
+    normalLabel: "Seasonal normal",
+    liveNote: "The flood model published this value today. It runs once a day.",
     staleNote:
-      "The newest value for this cell is {days} days old. River discharge moves on a scale of days, so it holds, and the date above is the real one.",
+      "The newest value for this cell is {days} days old. River flow changes slowly, so the figure still stands. The date above is the day it was published for.",
     normalNote:
-      "The flood model did not answer. The figure beside this water is what it usually does in this week of the year, taken from 1997 to 2025. A seasonal normal, labelled as one.",
-    normalHeading: "Seasonal normal, not a reading",
+      "The flood model published nothing for this cell today. The figure shown is the usual flow for this week of the year, taken from 1997 to 2025.",
+    normalHeading: "Seasonal normal",
   },
 
   sky: {
     label: "At the ghat",
     sunrise: "Sunrise",
     sunset: "Sunset",
-    readAt: "Read {time} IST at the ghat",
-    computed: "Computed here from solar geometry.",
-    day: "It is day at the ghat",
-    night: "It is night at the ghat",
+    readAt: "Read at {time} IST.",
+    computed: "Computed from the sun's position.",
+    day: "Daylight at the ghat.",
+    night: "Night at the ghat.",
     air: "Air",
     humidity: "Humidity",
     rainHour: "Rain, this hour",
@@ -168,7 +162,7 @@ export const en = {
     cloud: "Cloud",
     wind: "Wind",
     condition: "Sky",
-    noWater: "Water temperature goes unpublished at all six places.",
+    noWater: "Open-Meteo gives no water temperature for these places.",
   },
 
   windows: {
@@ -176,7 +170,7 @@ export const en = {
     openNow: "Open now",
     until: "until {time}",
     tomorrow: "tomorrow",
-    basis: "Resolved against this ghat's own sunrise, so it differs from the others.",
+    basis: "Worked out from this ghat's own sunrise, so it differs from the other five.",
   },
 
   weather: {
@@ -205,29 +199,26 @@ export const en = {
   } satisfies Record<WaterSlug, string>,
 
   reaches: {
-    "ganga-haridwar":
-      "The Ganga main stem below Har Ki Pauri, where she has finished her descent from the hills.",
+    "ganga-haridwar": "The Ganga's main stem below Har Ki Pauri, where it leaves the hills.",
     "triveni-prayagraj":
-      "The Ganga main stem below the confluence, so this figure carries the Ganga and the Yamuna together.",
-    "yamuna-mathura": "The Yamuna main stem below Vishram Ghat.",
-    "godavari-nashik": "The Godavari main stem below Ram Kund.",
-    "shipra-ujjain": "The Shipra main stem near Ram Ghat.",
-    "kaveri-talakaveri": "The Kaveri in her first kilometres below the spring at Talakaveri.",
+      "The Ganga's main stem below the confluence, so this figure carries the Ganga and the Yamuna together.",
+    "yamuna-mathura": "The Yamuna's main stem below Vishram Ghat.",
+    "godavari-nashik": "The Godavari's main stem below Ram Kund.",
+    "shipra-ujjain": "The Shipra's main stem near Ram Ghat.",
+    "kaveri-talakaveri": "The Kaveri in its first kilometres below the spring at Talakaveri.",
   } satisfies Record<WaterSlug, string>,
 
-  talakaveri: {
-    label: "Read this one differently",
-    body: "At Talakaveri the Kaveri is a spring in a temple tank, so her figure sits three orders of magnitude under the others. That is the truth of the place, and she is compared here only with herself.",
-  },
+  talakaveri:
+    "At Talakaveri the Kaveri is a spring in a temple tank, so its flow is about a thousandth of the others. It is compared only with its own record.",
 
   provenance: {
-    heading: "How this page knows",
+    heading: "Where the numbers come from",
     paras: [
-      "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, read at the grid cell covering each reach and published once a day. It is a model rather than a gauge reading, and this page says modelled every time it prints a number.",
-      "The grid cell is not the ghat. Each cell here was found by scanning the lattice around the ghat for the trunk river and is then fixed, and every cell prints above with its distance from the ghat.",
-      "We rank each value against every daily value that same cell has produced in this same week of the year from 1997 to 2025, six hundred and nine values behind each week. That is one water compared with itself, which is the only honest comparison.",
-      "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates rather than at the grid cell. The muhurat windows are the panchang's rules resolved against that ghat's true sunrise, which is why Haridwar's and Nashik's differ.",
-      "The Central Water Commission's National Water Data Portal is the register of India's own gauges. A current gauge reading for these six reaches stayed out of reach there, so nothing on this page is a CWC measurement.",
+      "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, GloFAS. It is read at the grid cell covering each reach and published once a day. It is a model output, and this page says modelled beside every figure.",
+      "The grid cell sits near the ghat, and each one is printed above with its distance from it. Each cell was chosen by finding the trunk river in the lattice around the ghat, and it stays fixed.",
+      "Each value is ranked against every daily value the same cell produced in the same week of the year, 1997 to 2025. That is 609 values behind each week, and each water is compared only with itself.",
+      "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates. The muhurat windows are the panchang's rules applied to that ghat's sunrise, which is why Haridwar and Nashik differ.",
+      "The Central Water Commission's National Water Data Portal lists India's own gauges. It publishes no current reading for these six reaches, so every figure here comes from the flood model.",
     ],
     attributionLabel: "Attribution",
     attribution: [
@@ -238,9 +229,8 @@ export const en = {
   },
 
   close: {
-    eyebrow: "What is free, and what you buy",
-    title: "The reading is free. You pay for the morning.",
-    body: "This page, the panchang, the muhurat calendar and all six waters cost nothing to read, always. The three minute snan against this same river data is the part you buy.",
+    title: "Free to read",
+    body: "This page, the panchang, the muhurat calendar and the six water pages cost nothing to read. The three minute snan, sat with this same river data, is what you pay for.",
     links: {
       rivers: "The six waters",
       muhurat: "The muhurat calendar",

@@ -98,7 +98,7 @@ export async function patraSvg(view: PatraView): Promise<string> {
 
   parts.push(
     (
-      await typeset(`${view.water} · ${view.ghat}, ${view.city}`, {
+      await typeset(`${view.water}, ${view.ghat}, ${view.city}`, {
         size: 29,
         x: M,
         y: y + 12,
@@ -133,7 +133,7 @@ export async function patraSvg(view: PatraView): Promise<string> {
       }
     }
 
-    const roman = view.prayer.roman.join(" · ");
+    const roman = view.prayer.roman.join(" / ");
     for (const piece of await wrap(roman, { size: 20, maxWidth: INNER })) {
       parts.push((await typeset(piece, { size: 20, x: M, y: after + 6, fill: INK_2 })).svg);
       after += 30;
@@ -144,9 +144,9 @@ export async function patraSvg(view: PatraView): Promise<string> {
   const rows: [string, string][] = [
     ["Flow", view.flow],
     ...(view.rank ? ([["Ranked", `${view.rank}th percentile since 1997`]] as [string, string][]) : []),
-    ["Kept", `${view.keptTime} ${view.keptZone} · ${view.keptIst} IST`],
+    ["Kept", `${view.keptTime} ${view.keptZone}, ${view.keptIst} IST`],
     ["Tithi", view.tithi],
-    ["Nakshatra", `${view.nakshatra} · moon ${view.moon}`],
+    ["Nakshatra", `${view.nakshatra}, moon ${view.moon}`],
   ];
 
   const rowHeight = 52;
@@ -231,7 +231,7 @@ export async function patraCardSvg(view: PatraView): Promise<string> {
 
   parts.push(
     (
-      await typeset(`${view.water} · ${view.ghat}, ${view.city}`, {
+      await typeset(`${view.water}, ${view.ghat}, ${view.city}`, {
         size: 30,
         x: m,
         y: y + 16,
@@ -242,7 +242,7 @@ export async function patraCardSvg(view: PatraView): Promise<string> {
 
   parts.push(
     (
-      await typeset(`${view.flow}${view.rank ? ` · ${view.rank}th percentile since 1997` : ""}`, {
+      await typeset(`${view.flow}${view.rank ? `, ${view.rank}th percentile since 1997` : ""}`, {
         size: 26,
         x: m,
         y: y + 62,

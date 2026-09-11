@@ -149,9 +149,9 @@ export const en = {
   },
   notFound: {
     code: "404",
-    title: "This path runs dry.",
-    lede: "The river sits where it always has. Go back to the water.",
-    cta: "Return home",
+    title: "Page not found",
+    lede: "The address may have changed. Start again from the front page.",
+    cta: "Go to the front page",
   },
   closing: {
     title: "Begin tomorrow morning.",
@@ -166,7 +166,7 @@ export const en = {
     tagline: "A digital snan for Indians everywhere.",
     cols: [
       { h: "Service", links: ["Begin", "The snan", "The river now", "Sacred waters", "Muhurat calendar"] },
-      { h: "Company", links: ["How it is made", "Panchang", "Questions", "Contact"] },
+      { h: "Company", links: ["Panchang", "Questions", "How it is made"] },
       { h: "Legal", links: ["Privacy", "Terms", "Refunds"] },
     ],
     made: "Prayagraj and Berlin",

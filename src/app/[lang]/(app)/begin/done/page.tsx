@@ -8,7 +8,7 @@ import { getSession } from "@/lib/stripe";
 import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow, LinkButton } from "@/components/ui";
+import { LinkButton } from "@/components/ui";
 
 /* ---------------------------------------------------------------------------
    Where Stripe sends somebody back to.
@@ -114,8 +114,7 @@ export default async function Page({
       <Header lang={lang} currentPath={ROUTE} personalised />
 
       <main className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
-        <Eyebrow>{beginContent[lang].eyebrow}</Eyebrow>
-        <h1 className="display mt-4 text-[2.1rem] leading-[1.15] sm:text-4xl">
+        <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">
           {again ? t.waiting : t.title}
         </h1>
         <div className="rule-double mt-6" />

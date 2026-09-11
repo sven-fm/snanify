@@ -6,10 +6,8 @@ import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Mark } from "@/components/Logo";
-import { Reveal } from "@/components/Reveal";
-import { CTA, Section, SectionHeader, Eyebrow } from "@/components/ui";
+import { CTA, Section } from "@/components/ui";
 import {
-  GHATS,
   MUHURAT,
   RECURRING_OCCASIONS,
   WINDOWS,
@@ -17,7 +15,6 @@ import {
   asInstant,
   asZone,
   formatDualClock,
-  ghatLabel,
   monthLabel,
   type MuhuratWindow,
   type Occasion,
@@ -47,17 +44,13 @@ function deva(value: string, lang: Lang): string {
   return [...value].map((ch) => (ch >= "0" && ch <= "9" ? DEVA[Number(ch)] : ch)).join("");
 }
 
-function numeral(n: number, lang: Lang): string {
-  return deva(String(n).padStart(2, "0"), lang);
-}
-
 /**
  * The label that has to appear beside every date and every time on the site.
  * It is a component rather than a string so that adding a timing surface
  * without its provenance is a conspicuous omission rather than a silent one.
  *
  * The square is hollow, matching StatusBadge: it only ever fills when a thing
- * is genuinely settled, and nothing on this calendar is settled yet.
+ * is settled, and nothing on this calendar is settled yet.
  */
 export function ProvisionalBadge({ lang, short = false }: { lang: Lang; short?: boolean }) {
   const c = muhuratIndexContent[lang].provenance;
@@ -66,6 +59,16 @@ export function ProvisionalBadge({ lang, short = false }: { lang: Lang; short?: 
       <span className="h-1.5 w-1.5 shrink-0 border border-spot" aria-hidden="true" />
       {short ? c.badgeShort : c.badge}
     </span>
+  );
+}
+
+/** A section heading: the title and, at most, one plain sentence under it. */
+function Heading({ title, lede }: { title: string; lede?: string }) {
+  return (
+    <div className="max-w-3xl">
+      <h2 className="display text-[2.1rem] leading-tight sm:text-[2.9rem]">{title}</h2>
+      {lede && <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{lede}</p>}
+    </div>
   );
 }
 
@@ -95,7 +98,7 @@ function DayDiagram({ lang }: { lang: Lang }) {
   const byId = Object.fromEntries(WINDOWS.map((w) => [w.id, w])) as Record<string, MuhuratWindow>;
 
   return (
-    <figure className="mt-14 hidden border-t-2 border-rulestrong pt-8 sm:block">
+    <figure className="mt-12 hidden border-t-2 border-rulestrong pt-8 sm:block">
       <svg
         viewBox="0 0 1000 236"
         className="w-full text-ink2"
@@ -194,8 +197,8 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
             {occasionName(occasion, lang)}
           </h4>
           <p className="mt-1.5 text-sm leading-[1.7] text-ink2">{pickDeep(occasion.line, lang)}</p>
-          <p className="label mt-3 text-ink2">
-            {t.spine.observedAt} {t.spine.waters(waters)} · {t.tiers[occasion.tier]}
+          <p className="mt-2 text-sm text-ink2">
+            {t.spine.observedAt} {t.spine.waters(waters)}. {t.tiers[occasion.tier]}.
           </p>
         </div>
 
@@ -206,7 +209,7 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
 
         {/* the window, and its provenance, inseparably */}
         <div className="mt-3 sm:mt-0 sm:text-right">
-          <p className="label text-spot">{pickDeep(occasion.occurrence.label, lang)}</p>
+          <p className="text-sm text-ink">{pickDeep(occasion.occurrence.label, lang)}</p>
           <span className="mt-3 inline-block">
             <ProvisionalBadge lang={lang} short />
           </span>
@@ -220,12 +223,10 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
 
 export function MuhuratIndex({ lang }: { lang: Lang }) {
   const t = muhuratIndexContent[lang];
-  const hi = lang === "hi";
   const months = almanacMonths();
   const example = MUHURAT.workedExample;
   const exampleWindow = WINDOWS.find((w) => w.id === example.windowId);
   const exampleInstant = asInstant(example.instantUtc);
-  const refusals = GHATS.filter((g) => g.refusal);
 
   const ghatReading = formatDualClock({
     instant: exampleInstant,
@@ -242,17 +243,13 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
       <Header lang={lang} currentPath="/muhurat" />
 
       <main>
-        {/* ---------------- masthead ---------------- */}
+        {/* ---------------- masthead ----------------
+            Title, one sentence, and the provenance sentence with its badge.
+            The provenance is part of the masthead rather than a footnote,
+            because /ethics promises that every timing carries it. */}
         <section className="border-b-2 border-rulestrong">
-          <div className="mx-auto max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-20 sm:pb-24">
-            <div className="ink-in">
-              <Eyebrow>{t.hero.eyebrow}</Eyebrow>
-            </div>
-
-            <h1
-              className="ink-in display mt-6 max-w-3xl text-[2.9rem] leading-[0.98] sm:text-6xl lg:text-7xl"
-              style={{ animationDelay: "80ms" }}
-            >
+          <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20">
+            <h1 className="ink-in display max-w-3xl text-[2.9rem] leading-[0.98] sm:text-6xl lg:text-7xl">
               {t.hero.title}
             </h1>
 
@@ -260,335 +257,261 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
 
             <p
               className="ink-in mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2"
-              style={{ animationDelay: "160ms" }}
+              style={{ animationDelay: "120ms" }}
             >
               {t.hero.lede}
             </p>
 
-            {/* The provenance line is part of the masthead, not a footnote. */}
-            <div className="ink-in boxed mt-12 max-w-3xl bg-paper p-6 sm:p-8">
-              <h2 className="label text-spot">{t.provenance.heading}</h2>
-              <div className="rule-thin mt-4" />
-              <p className="mt-5 max-w-2xl text-sm leading-[1.75] text-ink2">
-                {t.provenance.line}
-              </p>
-
-              <dl className="mt-7 border-t-2 border-rulestrong sm:grid sm:grid-cols-3">
-                <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:pr-5">
-                  <dt className="label text-ink2">{t.provenance.sourceLabel}</dt>
-                  <dd className="mt-2 text-sm text-ink">
-                    {pickDeep(MUHURAT.provider.displayName, lang)}
-                  </dd>
-                </div>
-                <div className="border-b border-rule py-3 sm:border-b-0 sm:border-r sm:px-5">
-                  <dt className="label text-ink2">{t.provenance.ayanamsaLabel}</dt>
-                  <dd className="mt-2 text-sm text-ink">
-                    {MUHURAT.provider.ayanamsa ?? t.provenance.notSet}
-                  </dd>
-                </div>
-                <div className="py-3 sm:pl-5">
-                  <dt className="label text-ink2">{t.provenance.coordinatesLabel}</dt>
-                  <dd className="mt-2 text-sm text-ink">{t.provenance.coordinatesPending}</dd>
-                </div>
-              </dl>
-
-              <div className="mt-7">
+            <div
+              className="ink-in mt-10 max-w-2xl border-t border-rule pt-6"
+              style={{ animationDelay: "200ms" }}
+            >
+              <p className="text-sm leading-[1.75] text-ink2">{t.provenance.line}</p>
+              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <ProvisionalBadge lang={lang} />
+                <p className="text-sm text-ink2">{deva(t.hero.asOf, lang)}</p>
               </div>
             </div>
-
-            <p className="label mt-6 text-ink2">{deva(t.hero.asOf, lang)}</p>
           </div>
         </section>
 
         {/* ---------------- how to read this ---------------- */}
         <Section>
-          <Reveal>
-            <SectionHeader eyebrow={t.reading.eyebrow} title={t.reading.title} />
+          <Heading title={t.reading.title} />
 
-            <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
-              {t.reading.items.map((item) => (
-                <li key={item.n} className="bg-paper p-7">
-                  <span className="display block text-4xl text-spot">{item.n}</span>
-                  <div className="rule-thin mt-4" />
-                  <h3 className="display mt-4 text-2xl">{item.t}</h3>
-                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{item.d}</p>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
+          <dl className="mt-10 border-t-2 border-rulestrong">
+            {t.reading.items.map((item) => (
+              <div
+                key={item.t}
+                className="grid gap-2 border-b border-rule py-5 sm:grid-cols-[15rem_1fr] sm:gap-8"
+              >
+                <dt className="display text-xl text-ink">{item.t}</dt>
+                <dd className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.d}</dd>
+              </div>
+            ))}
+          </dl>
         </Section>
 
         {/* ---------------- the monthly rhythm ---------------- */}
         <Section tinted>
-          <Reveal>
-            <SectionHeader eyebrow={t.rhythm.eyebrow} title={t.rhythm.title} lede={t.rhythm.lede} />
+          <Heading title={t.rhythm.title} lede={t.rhythm.lede} />
 
-            <ul className="mt-12 border-t-2 border-rulestrong">
-              {RECURRING_OCCASIONS.map((o, i) => (
-                <li key={o.slug}>
-                  <Link
-                    href={localePath(lang, `/muhurat/${o.slug}`)}
-                    className="group grid grid-cols-[2.75rem_1fr] items-baseline gap-x-4 gap-y-1.5 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[3.5rem_14rem_1fr_11rem] sm:gap-x-8"
-                  >
-                    <span className="display text-xl text-spot">{numeral(i + 1, lang)}</span>
-                    <h3 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
-                      {occasionName(o, lang)}
-                    </h3>
-                    <span className="col-start-2 text-sm leading-[1.7] text-ink2 sm:col-start-auto">
-                      {pickDeep(o.line, lang)}
-                    </span>
-                    <span className="label col-start-2 text-spot sm:col-start-auto sm:text-right">
-                      {pickDeep(o.occurrence.label, lang)}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+          <ul className="mt-10 border-t-2 border-rulestrong">
+            {RECURRING_OCCASIONS.map((o) => (
+              <li key={o.slug}>
+                <Link
+                  href={localePath(lang, `/muhurat/${o.slug}`)}
+                  className="group grid gap-y-1.5 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[14rem_1fr_11rem] sm:items-baseline sm:gap-x-8"
+                >
+                  <h3 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
+                    {occasionName(o, lang)}
+                  </h3>
+                  <span className="text-sm leading-[1.7] text-ink2">{pickDeep(o.line, lang)}</span>
+                  <span className="text-sm text-ink sm:text-right">
+                    {pickDeep(o.occurrence.label, lang)}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Section>
 
         {/* ---------------- the almanac spine ----------------
-            Deliberately not a card grid: an almanac reads down a column, month
-            by month, and shows the empty months too. Nothing is featured at the
-            top, the nearest occasion here is Pitru Paksha, and putting a
-            bereavement season in a hero slot is the exact pressure this
-            product refuses to apply. */}
+            An almanac reads down a column, month by month, and shows the
+            months with nothing dated too. Nothing is featured at the top: the
+            nearest occasion here is Pitru Paksha, and a bereavement season
+            does not go in a hero slot. */}
         <Section id="spine">
-          <Reveal>
-            <SectionHeader eyebrow={t.spine.eyebrow} title={t.spine.title} />
+          <Heading title={t.spine.title} />
 
-            <div className="mt-12">
-              {/* column heads, as a printed register sets them */}
-              <div className="hidden border-y-2 border-rulestrong sm:grid sm:grid-cols-[8rem_1fr] sm:gap-x-8">
-                <p className="label py-3 text-ink2">{hi ? "मास" : "Month"}</p>
-                <div className={SPINE_COLS}>
-                  <p className="label py-3 text-ink2">{hi ? "पर्व" : "Occasion"}</p>
-                  <p className="label py-3 text-ink2">{hi ? "तिथि नियम" : "Tithi reckoning"}</p>
-                  <p className="label py-3 text-right text-ink2">{hi ? "काल" : "Window"}</p>
-                </div>
-              </div>
-
-              <div className="border-t-2 border-rulestrong sm:border-t-0">
-                {months.map((m) => {
-                  const { name, year } = monthLabel(m.month, lang);
-                  return (
-                    <div
-                      key={m.month}
-                      className="grid gap-3 border-b border-rule py-7 sm:grid-cols-[8rem_1fr] sm:gap-x-8 sm:py-0"
-                    >
-                      <div className="sm:sticky sm:top-24 sm:self-start sm:py-7">
-                        {/* A real heading: the month is how this list is navigated. */}
-                        <h3 className="display text-2xl text-ink">{name}</h3>
-                        <p className="label mt-1.5 text-spot">{deva(year, lang)}</p>
-                      </div>
-
-                      {m.occasions.length === 0 ? (
-                        <p className="self-center text-sm text-ink2 italic sm:py-7">
-                          {t.spine.empty}
-                        </p>
-                      ) : (
-                        <ul className="divide-y divide-rule sm:py-1">
-                          {m.occasions.map((o) => (
-                            <OccasionRow key={o.slug} occasion={o} lang={lang} />
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  );
-                })}
+          <div className="mt-10">
+            {/* column heads, as a printed register sets them */}
+            <div className="hidden border-y-2 border-rulestrong sm:grid sm:grid-cols-[8rem_1fr] sm:gap-x-8">
+              <p className="label py-3 text-ink2">{t.spine.columns.month}</p>
+              <div className={SPINE_COLS}>
+                <p className="label py-3 text-ink2">{t.spine.columns.occasion}</p>
+                <p className="label py-3 text-ink2">{t.spine.columns.rule}</p>
+                <p className="label py-3 text-right text-ink2">{t.spine.columns.window}</p>
               </div>
             </div>
-          </Reveal>
+
+            <div className="border-t-2 border-rulestrong sm:border-t-0">
+              {months.map((m) => {
+                const { name, year } = monthLabel(m.month, lang);
+                return (
+                  <div
+                    key={m.month}
+                    className="grid gap-3 border-b border-rule py-7 sm:grid-cols-[8rem_1fr] sm:gap-x-8 sm:py-0"
+                  >
+                    <div className="sm:sticky sm:top-24 sm:self-start sm:py-7">
+                      {/* A real heading: the month is how this list is navigated. */}
+                      <h3 className="display text-2xl text-ink">{name}</h3>
+                      <p className="mt-1 text-sm text-ink2">{deva(year, lang)}</p>
+                    </div>
+
+                    {m.occasions.length === 0 ? (
+                      <p className="self-center text-sm text-ink2 sm:py-7">{t.spine.empty}</p>
+                    ) : (
+                      <ul className="divide-y divide-rule sm:py-1">
+                        {m.occasions.map((o) => (
+                          <OccasionRow key={o.slug} occasion={o} lang={lang} />
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Dates that come from elsewhere, and the calendars this one does
+              not follow, stated as facts under the register they qualify. */}
+          <div className="mt-16 max-w-3xl">
+            <h3 className="display text-2xl text-ink">{t.elsewhere.title}</h3>
+            <dl className="mt-6 border-t-2 border-rulestrong">
+              {MUHURAT.notPublished.map((n) => (
+                <div key={n.id} className="border-b border-rule py-5">
+                  <dt className="display text-lg text-ink">{pickDeep(n.name, lang)}</dt>
+                  <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
+                    {pickDeep(n.text, lang)}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </Section>
 
         {/* ---------------- daily windows ---------------- */}
         <Section tinted>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.windows.eyebrow}
-              title={t.windows.title}
-              lede={t.windows.lede}
-            />
+          <Heading title={t.windows.title} lede={t.windows.lede} />
 
-            <DayDiagram lang={lang} />
+          <DayDiagram lang={lang} />
 
-            {/* the day's schedule, ruled */}
-            <ul className="mt-14 border-t-2 border-rulestrong">
-              {WINDOWS.map((w, i) => (
-                <li
-                  key={w.id}
-                  className="grid gap-x-8 gap-y-4 border-b border-rule py-8 sm:grid-cols-[3rem_15rem_1fr] sm:py-10"
-                >
-                  <span className="display text-3xl leading-none text-spot">
-                    {numeral(i + 1, lang)}
-                  </span>
+          {/* the day's schedule, ruled, in the order the day runs */}
+          <ul className="mt-12 border-t-2 border-rulestrong">
+            {WINDOWS.map((w) => (
+              <li
+                key={w.id}
+                className="grid gap-x-8 gap-y-4 border-b border-rule py-8 sm:grid-cols-[15rem_1fr] sm:py-10"
+              >
+                <div>
+                  <h3 className="display text-2xl">{windowName(w.id, w.name, lang)}</h3>
+                  <p className="mt-2 text-sm text-ink">{t.windows.minutes(w.durationMin)}</p>
+                  <p className="mt-1 text-sm text-ink2">{t.anchors[w.anchor]}</p>
+                </div>
 
-                  <div>
-                    <h3 className="display text-2xl">{windowName(w.id, w.name, lang)}</h3>
-                    <p className="label mt-3 text-ink">{t.windows.minutes(w.durationMin)}</p>
-                    <p className="label mt-1.5 text-ink2">{t.anchors[w.anchor]}</p>
-                  </div>
-
-                  <div className="max-w-2xl">
-                    <dl>
-                      <div className="border-t border-rule pt-3">
-                        <dt className="label text-ink2">{t.windows.formulaLabel}</dt>
-                        <dd className="mt-1.5 text-sm text-ink">{pickDeep(w.formula, lang)}</dd>
-                      </div>
-                      <div className="mt-5 border-t border-rule pt-3">
-                        <dt className="label text-ink2">{t.windows.basisLabel}</dt>
-                        <dd className="mt-1.5 text-sm leading-[1.75] text-ink2">
-                          {pickDeep(w.basis, lang)}
-                        </dd>
-                      </div>
-                    </dl>
-                    <p className="mt-5 border-t border-rule pt-3 text-sm leading-[1.75] text-ink2">
-                      {pickDeep(w.note, lang)}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-6">
-              <ProvisionalBadge lang={lang} />
-            </div>
-
-            <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
-              {MUHURAT.displayedNotActedOn.map((n) => (
-                <div key={n.id}>
-                  <h3 className="label text-ink">{pickDeep(n.name, lang)}</h3>
-                  <div className="rule-thin mt-3" />
-                  <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-ink2">
-                    {pickDeep(n.text, lang)}
+                <div className="max-w-2xl">
+                  <dl>
+                    <div className="border-t border-rule pt-3">
+                      <dt className="label text-ink2">{t.windows.formulaLabel}</dt>
+                      <dd className="mt-1.5 text-sm text-ink">{pickDeep(w.formula, lang)}</dd>
+                    </div>
+                    <div className="mt-5 border-t border-rule pt-3">
+                      <dt className="label text-ink2">{t.windows.basisLabel}</dt>
+                      <dd className="mt-1.5 text-sm leading-[1.75] text-ink2">
+                        {pickDeep(w.basis, lang)}
+                      </dd>
+                    </div>
+                  </dl>
+                  <p className="mt-5 border-t border-rule pt-3 text-sm leading-[1.75] text-ink2">
+                    {pickDeep(w.note, lang)}
                   </p>
                 </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6">
+            <ProvisionalBadge lang={lang} />
+          </div>
+
+          <div className="mt-14 max-w-3xl">
+            <h3 className="display text-2xl text-ink">{t.windows.alsoTitle}</h3>
+            <dl className="mt-6 border-t-2 border-rulestrong">
+              {MUHURAT.displayedNotActedOn.map((n) => (
+                <div key={n.id} className="border-b border-rule py-5">
+                  <dt className="display text-lg text-ink">{pickDeep(n.name, lang)}</dt>
+                  <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
+                    {pickDeep(n.text, lang)}
+                  </dd>
+                </div>
               ))}
-            </div>
-          </Reveal>
+            </dl>
+          </div>
         </Section>
 
         {/* ---------------- reading the clock ---------------- */}
         <Section id="clock">
-          <Reveal>
-            <SectionHeader eyebrow={t.clock.eyebrow} title={t.clock.title} lede={t.clock.lede} />
+          <Heading title={t.clock.title} lede={t.clock.lede} />
 
-            <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-14">
-              {/* the ghat clock, primary, never a parenthetical */}
-              <div className="boxed misregister self-start border-2 bg-paper p-7">
-                <h3 className="label text-spot">{t.clock.atTheGhat}</h3>
-                <div className="rule-thin mt-4" />
-                <p className="display mt-5 text-3xl text-ink">
-                  {ghatReading.ghat.weekday} · {ghatReading.ghat.date}
-                </p>
-                <p className="display mt-1 text-4xl text-spot">{ghatReading.ghat.time}</p>
-                <p className="label mt-3 text-ink2">Asia/Kolkata · IST</p>
+          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-14">
+            {/* the ghat clock, primary, never a parenthetical */}
+            <div className="boxed self-start border-2 bg-paper p-7">
+              <h3 className="display text-xl text-ink">{t.clock.atTheGhat}</h3>
+              <div className="rule-thin mt-4" />
+              <p className="display mt-5 text-2xl text-ink">
+                {ghatReading.ghat.weekday} {ghatReading.ghat.date}
+              </p>
+              <p className="display mt-1 text-4xl text-spot">{ghatReading.ghat.time}</p>
+              <p className="mt-2 text-sm text-ink2">IST, Asia/Kolkata</p>
 
-                <dl className="mt-7 border-t-2 border-rulestrong text-sm">
-                  <div className="flex justify-between gap-4 border-b border-rule py-3">
-                    <dt className="label text-ink2">{t.clock.window}</dt>
-                    <dd className="text-right text-ink">{exampleWindow ? windowName(exampleWindow.id, exampleWindow.name, lang) : null}</dd>
-                  </div>
-                  <div className="flex justify-between gap-4 py-3">
-                    <dt className="label text-ink2">{t.clock.assumed}</dt>
-                    <dd className="text-right text-ink">{example.assumedSunriseIst} IST</dd>
-                  </div>
-                </dl>
-
-                <div className="mt-6">
-                  <ProvisionalBadge lang={lang} short />
+              <dl className="mt-7 border-t-2 border-rulestrong text-sm">
+                <div className="flex justify-between gap-4 border-b border-rule py-3">
+                  <dt className="label text-ink2">{t.clock.window}</dt>
+                  <dd className="text-right text-ink">{exampleWindow ? windowName(exampleWindow.id, exampleWindow.name, lang) : null}</dd>
                 </div>
-              </div>
+                <div className="flex justify-between gap-4 py-3">
+                  <dt className="label text-ink2">{t.clock.assumed}</dt>
+                  <dd className="text-right text-ink">{example.assumedSunriseIst} IST</dd>
+                </div>
+              </dl>
 
-              {/* the same instant, elsewhere */}
-              <div>
-                <h3 className="label text-ink2">{t.clock.elsewhere}</h3>
-                <ul className="mt-5 border-t-2 border-rulestrong">
-                  {example.zones.map((z) => {
-                    const clock = formatDualClock({
-                      instant: exampleInstant,
-                      viewerZone: z.zone,
-                      viewerLabel: pickDeep(z.label, lang),
-                      ghatLabel: "IST",
-                      lang: deepLang(lang),
-                    });
-                    return (
-                      <li
-                        key={z.zone}
-                        className="grid gap-1 border-b border-rule py-4 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-6"
-                      >
-                        <p className="label text-ink2">{pickDeep(z.label, lang)}</p>
-                        <div>
-                          <p className="text-sm text-ink2">
-                            <span className="text-ink">{clock.viewer.time}</span> ·{" "}
-                            {clock.viewer.weekday} {clock.viewer.date}
-                          </p>
-                          <p
-                            className={`mt-1 text-xs ${
-                              clock.dateShift === 0 ? "text-ink2" : "text-spot"
-                            }`}
-                          >
-                            {clock.shiftNote}
-                          </p>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-
-                <p className="mt-6 max-w-2xl text-xs leading-[1.75] text-ink2 italic">
-                  {t.clock.illustration}
-                </p>
+              <div className="mt-6">
+                <ProvisionalBadge lang={lang} short />
               </div>
             </div>
-          </Reveal>
-        </Section>
 
-        {/* ---------------- what is not here ---------------- */}
-        <Section tinted>
-          <Reveal>
-            <SectionHeader
-              eyebrow={t.notPublished.eyebrow}
-              title={t.notPublished.title}
-              lede={t.notPublished.lede}
-            />
-
-            <ul className="mt-12 border-t-2 border-rulestrong">
-              {MUHURAT.notPublished.map((n, i) => (
-                <li
-                  key={n.id}
-                  className="grid gap-x-8 gap-y-2 border-b border-rule py-7 sm:grid-cols-[3rem_15rem_1fr]"
-                >
-                  <span className="display text-2xl leading-none text-spot">
-                    {numeral(i + 1, lang)}
-                  </span>
-                  <h3 className="display text-xl text-ink">{pickDeep(n.name, lang)}</h3>
-                  <p className="max-w-2xl text-sm leading-[1.75] text-ink2">{pickDeep(n.text, lang)}</p>
-                </li>
-              ))}
-            </ul>
-
-            {refusals.length > 0 && (
-              <div className="mt-16">
-                <Eyebrow>{t.refusals.eyebrow}</Eyebrow>
-                <h3 className="display mt-5 text-3xl">{t.refusals.title}</h3>
-                <ul className="mt-8 border-t-2 border-rulestrong">
-                  {refusals.map((g) => (
+            {/* the same instant, elsewhere */}
+            <div>
+              <h3 className="display text-xl text-ink">{t.clock.elsewhere}</h3>
+              <ul className="mt-5 border-t-2 border-rulestrong">
+                {example.zones.map((z) => {
+                  const clock = formatDualClock({
+                    instant: exampleInstant,
+                    viewerZone: z.zone,
+                    viewerLabel: pickDeep(z.label, lang),
+                    ghatLabel: "IST",
+                    lang: deepLang(lang),
+                  });
+                  return (
                     <li
-                      key={g.id}
-                      className="grid gap-x-8 gap-y-2 border-b border-rule py-6 sm:grid-cols-[18rem_1fr]"
+                      key={z.zone}
+                      className="grid gap-1 border-b border-rule py-4 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-6"
                     >
-                      <p className="label text-ink">{ghatLabel(g, deepLang(lang))}</p>
-                      <p className="max-w-2xl border-l-2 border-spot pl-5 text-sm leading-[1.75] text-ink2">
-                        {g.refusal ? pickDeep(g.refusal, lang) : null}
-                      </p>
+                      <p className="text-sm text-ink">{pickDeep(z.label, lang)}</p>
+                      <div>
+                        <p className="text-sm text-ink2">
+                          <span className="text-ink">{clock.viewer.time}</span>, {clock.viewer.weekday}{" "}
+                          {clock.viewer.date}
+                        </p>
+                        <p
+                          className={`mt-1 text-xs ${
+                            clock.dateShift === 0 ? "text-ink2" : "text-spot"
+                          }`}
+                        >
+                          {clock.shiftNote}
+                        </p>
+                      </div>
                     </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </Reveal>
+                  );
+                })}
+              </ul>
+
+              <p className="mt-6 max-w-2xl text-xs leading-[1.75] text-ink2">
+                {t.clock.illustration}
+              </p>
+            </div>
+          </div>
         </Section>
 
         {/* ---------------- closing ---------------- */}

@@ -207,8 +207,8 @@ export const MASA_PAIRS: readonly MasaPair[] = [
     purnimanta: { en: "Ashwin Krishna paksha", hi: "आश्विन कृष्ण पक्ष" },
     amanta: { en: "Bhadrapada Krishna paksha", hi: "भाद्रपद कृष्ण पक्ष" },
     note: {
-      en: "The same sixteen days, and the same moon, under two month-names. A family that remembers its shraddha tithi as a month plus a tithi, and reads it against the other reckoning, lands a full lunation away.",
-      hi: "एक ही सोलह दिन, एक ही चंद्र, पर दो मास-नामों से। जो परिवार अपनी श्राद्ध तिथि को मास और तिथि के रूप में स्मरण रखता है और उसे दूसरी गणना से पढ़ लेता है, वह पूरे एक चांद्र मास दूर जा पड़ता है।",
+      en: "The same sixteen days under two month names. A family that remembers its shraddha tithi as a month plus a tithi, and reads it in the other reckoning, lands a whole month out.",
+      hi: "एक ही सोलह दिन, दो मास-नामों से। जो परिवार अपनी श्राद्ध तिथि को मास और तिथि के रूप में याद रखता है और उसे दूसरी गणना में पढ़ता है, वह पूरा एक मास दूर जा पड़ता है।",
     },
   },
   {
@@ -217,8 +217,8 @@ export const MASA_PAIRS: readonly MasaPair[] = [
     purnimanta: { en: "Bhadrapada Krishna Ashtami", hi: "भाद्रपद कृष्ण अष्टमी" },
     amanta: { en: "Shravana Krishna Ashtami", hi: "श्रावण कृष्ण अष्टमी" },
     note: {
-      en: "The most familiar example, and the easiest to check against your own household: north and west name the same night differently every single year.",
-      hi: "सबसे परिचित उदाहरण, और अपने ही घर में जाँच लेने योग्य: उत्तर और पश्चिम भारत हर वर्ष उसी रात्रि को भिन्न नाम देते हैं।",
+      en: "The easiest one to check at home. North and west India name the same night differently every year.",
+      hi: "घर में जाँचने के लिए सबसे सरल उदाहरण। उत्तर और पश्चिम भारत हर वर्ष उसी रात को अलग नाम देते हैं।",
     },
   },
   {
@@ -227,8 +227,8 @@ export const MASA_PAIRS: readonly MasaPair[] = [
     purnimanta: { en: "Phalguna Krishna Chaturdashi", hi: "फाल्गुन कृष्ण चतुर्दशी" },
     amanta: { en: "Magha Krishna Chaturdashi", hi: "माघ कृष्ण चतुर्दशी" },
     note: {
-      en: "One instant of one night, named for two different months. Nobody observes it on two different days; only the name moves.",
-      hi: "एक ही रात्रि का एक ही क्षण, दो भिन्न मासों के नाम से। कोई इसे दो भिन्न दिनों में नहीं मनाता; केवल नाम बदलता है।",
+      en: "One night, named for two different months. Everyone keeps it on the same night, and only the month name differs.",
+      hi: "एक ही रात, दो अलग मासों के नाम से। सब इसे उसी रात मनाते हैं, केवल मास का नाम अलग है।",
     },
   },
 ];
@@ -280,8 +280,8 @@ export const SHRADDHA_LADDER: readonly ShraddhaDay[] = [
     tithi: { en: "Navami", hi: "नवमी" },
     alsoCalled: { en: "Matru Navami, Avidhava Navami", hi: "मातृ नवमी, अविधवा नवमी" },
     kept: {
-      en: "Kept for the mothers of the line, and in many households specifically for a married woman who died before her husband. It is the one day of the sixteen that most families abroad have heard of and cannot place.",
-      hi: "वंश की माताओं के लिए, और अनेक घरों में विशेष रूप से उस सुहागिन के लिए जिनका देहावसान पति से पूर्व हुआ। सोलह में यही वह दिन है जिसका नाम विदेश में बसे अधिकांश परिवारों ने सुना है पर स्थान नहीं जानते।",
+      en: "Kept for the mothers of the line, and in many households specifically for a married woman who died before her husband.",
+      hi: "वंश की माताओं के लिए, और अनेक घरों में विशेष रूप से उस सुहागिन के लिए जिनका देहावसान पति से पूर्व हुआ।",
     },
   },
   { n: 11, tithi: { en: "Dashami", hi: "दशमी" } },
@@ -301,7 +301,7 @@ export const SHRADDHA_LADDER: readonly ShraddhaDay[] = [
     tithi: { en: "Chaturdashi", hi: "चतुर्दशी" },
     alsoCalled: { en: "Ghayala Chaturdashi", hi: "घायल चतुर्दशी" },
     kept: {
-      en: "Kept for those who died by accident, by weapon or by violence. Many traditions hold that an ordinary death belongs elsewhere in the fortnight, which is why a family is sometimes told its remembered tithi does not apply here.",
+      en: "Kept for those who died by accident, by weapon or by violence. Many traditions hold that an ordinary death belongs elsewhere in the fortnight, so a family is sometimes told that its remembered tithi does not apply here.",
       hi: "उनके लिए जिनका देहावसान दुर्घटना, शस्त्र अथवा हिंसा से हुआ। अनेक परंपराएँ मानती हैं कि सामान्य मृत्यु का श्राद्ध पक्ष के किसी अन्य दिन का है; इसी कारण कुछ परिवारों से कहा जाता है कि उनकी स्मरण की हुई तिथि यहाँ लागू नहीं होती।",
     },
   },
@@ -310,8 +310,8 @@ export const SHRADDHA_LADDER: readonly ShraddhaDay[] = [
     tithi: { en: "Amavasya", hi: "अमावस्या" },
     alsoCalled: { en: "Sarva Pitru Amavasya, Mahalaya Amavasya", hi: "सर्व पितृ अमावस्या, महालया अमावस्या" },
     kept: {
-      en: "The day the fortnight closes, kept for all the departed of a line together, and for anyone whose tithi went unrecorded. For a great many families abroad that last clause is simply the situation.",
-      hi: "पक्ष के समापन का दिन, जो वंश के समस्त दिवंगतों के लिए है, और उनके लिए भी जिनकी तिथि अभिलेख में नहीं रही। विदेश में बसे बहुत से परिवारों के लिए यही वास्तविक स्थिति है।",
+      en: "The day the fortnight closes, kept for all the departed of a line together, and for anyone whose tithi went unrecorded.",
+      hi: "पक्ष के समापन का दिन, जो वंश के समस्त दिवंगतों के लिए है, और उनके लिए भी जिनकी तिथि अभिलेख में नहीं रही।",
     },
   },
 ];
@@ -352,147 +352,130 @@ export const panchangContent = {
     meta: {
       title: "Panchang: tithi, Pitru Paksha and the shraddha days, in your timezone",
       description:
-        "A free reference for families outside India. The sixteen shraddha tithis of Pitru Paksha, the daily windows, why amanta and purnimanta reckoning put the same rite on two different days, and every timing given in IST and converted to New York, Toronto, San Francisco, London, Dubai, Singapore and Sydney.",
+        "A free reference for families outside India. The sixteen shraddha tithis of Pitru Paksha, the daily windows, why amanta and purnimanta reckoning name the same day differently, and every timing in IST and in seven cities abroad.",
     },
     hero: {
-      eyebrow: "A free reference",
-      title: "The tithi moves. The calendar on your wall does not.",
-      lede: "Every year the day drifts, and every year a family abroad asks the same question a fortnight too late. This page sets out what the rules actually say: which tithi, how the day is reckoned, what hour it falls in, and what that hour reads as on your own clock.",
-      free: "Open to read, start to finish. Come back only if it turns out useful.",
+      title: "A panchang reference for families abroad",
+      lede: "The shraddha day moves every year, and the question usually comes up a fortnight too late. This page sets out the rules: which tithi, how the day is decided, which hour it falls in, and what that hour is on your own clock.",
     },
     provenance: {
-      heading: "Read this first",
+      heading: "Where the timings come from",
       extra:
-        "Below are rules, definitions and arithmetic, all of which we can defend today. A Gregorian date for a tithi needs an almanac we have yet to contract, and on a shraddha page a confident wrong date is the worst thing this site could print.",
+        "Everything below is a rule, a definition or arithmetic. A calendar date for a tithi needs a panchang provider, and one has not been named yet. Until it is, this page gives the rule and leaves the date to your family's panchang.",
     },
     drift: {
-      eyebrow: "Why the date moves",
-      title: "Eleven days a year, and then a month back.",
-      lede: "A tithi is not a date. It is one thirtieth of a lunation, the time the moon takes to gain twelve degrees on the sun, and it runs anywhere from about nineteen to about twenty six hours. Twelve lunar months come to roughly 354 days against the Gregorian year's 365.",
+      title: "Why the date moves",
+      lede: "A tithi is one thirtieth of a lunar month, the time the moon takes to gain twelve degrees on the sun. It lasts anywhere from about nineteen to about twenty-six hours. Twelve lunar months come to about 354 days, against 365 in the calendar year.",
       points: [
         {
-          n: "01",
-          t: "The eleven day slip",
-          d: "Because the lunar year is about eleven days short, a tithi that fell in late September this year falls in mid September next year, and over three years the drift is a month. That is why a father's shraddha and the date on his passport are two different things.",
+          t: "The eleven-day slip",
+          d: "The lunar year is about eleven days short. A tithi that fell in late September this year falls in mid September next year, and over three years the drift is a month. That is why a father's shraddha and the date on his death certificate are two different things.",
         },
         {
-          n: "02",
-          t: "The month that is inserted",
-          d: "Roughly every thirty two and a half months an extra lunar month, adhika masa, is inserted to pull the calendar back against the sun. That year the occasion jumps forward about nineteen days instead of back eleven, so a family that subtracts eleven by habit is wrong in the year it matters.",
+          t: "The inserted month",
+          d: "About every thirty-two and a half months an extra lunar month, the adhika masa, is added to bring the calendar back in line with the sun. In that year the occasion moves about nineteen days later instead of eleven days earlier. A family that subtracts eleven days by habit is wrong in the one year it matters.",
         },
         {
-          n: "03",
-          t: "A tithi does not begin at midnight",
-          d: "A tithi begins and ends at whatever hour the moon reaches its mark, and the Hindu day turns at sunrise rather than at midnight. So a tithi can begin on Tuesday afternoon and end on Wednesday evening, and which of those two days carries the observance is a question of rule, not of preference.",
+          t: "A tithi has its own start and end",
+          d: "A tithi begins and ends at the hour the moon reaches its mark, and the Hindu day turns at sunrise. So a tithi can begin on Tuesday afternoon and end on Wednesday evening. Which of the two days carries the observance is settled by a rule, given below.",
         },
       ],
     },
     reckoning: {
-      eyebrow: "The linkable part",
-      title: "Two calendars, one moon.",
-      lede: "This is the single most common reason two branches of one family, both perfectly correct, observe the same shraddha on days a month apart. It is not a disagreement about religion. It is a disagreement about where the month is cut.",
+      title: "Amanta and purnimanta",
+      lede: "Two branches of one family often keep the same shraddha a month apart, and both are right. The two reckonings cut the month at different points, and the name of the dark fortnight moves with the cut. This is the most common cause.",
       amanta: {
         name: "Amanta",
-        cut: "The month ends at the new moon. Amavasya is the last day; the month opens on the first day of the bright fortnight.",
+        cut: "The month ends at the new moon. Amavasya is the last day, and the month opens on the first day of the bright fortnight.",
         where:
           "Followed in Gujarat, Maharashtra, Goa, Karnataka, Andhra Pradesh and Telangana, and in the lunar reckoning used alongside the solar calendars of Tamil Nadu and Kerala.",
       },
       purnimanta: {
         name: "Purnimanta",
-        cut: "The month ends at the full moon. Purnima is the last day; the month opens on the first day of the dark fortnight.",
+        cut: "The month ends at the full moon. Purnima is the last day, and the month opens on the first day of the dark fortnight.",
         where:
           "Followed across the north: Uttar Pradesh, Bihar, Madhya Pradesh, Rajasthan, Punjab, Haryana, Uttarakhand, Himachal Pradesh and Nepal.",
       },
       agreeHeading: "Where they agree",
       agree:
-        "On every bright fortnight. A day in the shukla paksha carries the same month-name in both reckonings, which is why Ram Navami, Ganesh Chaturthi and every Purnima are named identically everywhere.",
+        "On every bright fortnight. A day in the shukla paksha carries the same month name in both reckonings, which is why Ram Navami, Ganesh Chaturthi and every Purnima are named the same everywhere.",
       differHeading: "Where they differ",
       differ:
-        "On every dark fortnight, and only on the name. A day in the krishna paksha is given the following month's name by Purnimanta and the current month's name by Amanta, so the Purnimanta name runs one month ahead. The days themselves do not move by so much as an hour.",
-      pairsHeading: "The same fortnight, twice named",
+        "On every dark fortnight, and only in the name. Purnimanta gives a day in the krishna paksha the following month's name, and amanta gives it the current month's, so the purnimanta name runs one month ahead. The days themselves do not move by an hour.",
+      pairsHeading: "Three examples",
       pairsCols: { occasion: "Occasion", purnimanta: "Purnimanta name", amanta: "Amanta name" },
-      ghatsHeading: "Which reckoning names the month at each ghat",
+      ghatsHeading: "The reckoning at each ghat",
       ghatsLede:
-        "Four of our six waters sit in Purnimanta country and two in Amanta country. Nothing about the rite changes with it; the month printed beside the tithi does.",
+        "Four of the six waters are in purnimanta regions and two in amanta regions. The month name printed beside a tithi follows the region.",
       schemes: { amanta: "Amanta", purnimanta: "Purnimanta" },
     },
     divergence: {
-      eyebrow: "Four reasons two households differ",
-      title: "And none of them is that one of you is wrong.",
-      lede: "If your uncle in Pune and your mother in Lucknow have never once agreed on the day, here is the whole of it. Two of these are naming, two are reckoning.",
+      title: "Four reasons two households differ",
+      lede: "If your uncle in Pune and your mother in Lucknow have never agreed on the day, one of these four is the reason. Both of them are usually right.",
       items: [
         {
-          n: "01",
-          t: "The month-name",
-          d: "Amanta and Purnimanta name the same dark fortnight differently, one month apart. A tithi remembered as a month plus a tithi, and read against the other reckoning, is a lunation out. This is the big one, and it is almost always this one.",
+          t: "The month name",
+          d: "Amanta and purnimanta give the same dark fortnight different month names, one month apart. A tithi remembered as a month plus a tithi, and read in the other reckoning, is a month out. This is the usual cause.",
         },
         {
-          n: "02",
           t: "Where the day is cut",
-          d: "The Hindu day runs sunrise to sunrise. A death at two in the morning belongs to the panchang day that opened at the previous dawn, not to the date the hospital wrote down. Families who take the certificate date and convert it are frequently one day out from the start.",
+          d: "The Hindu day runs from sunrise to sunrise. A death at two in the morning belongs to the panchang day that began at the previous dawn, not to the date on the hospital certificate. A family that converts the certificate date is often one day out from the start.",
         },
         {
-          n: "03",
           t: "Which part of the day decides",
-          d: "A tithi that spans two mornings has to be assigned to one of them. Ordinary observances take the tithi in force at sunrise, udaya vyapini. Shraddha is decided at aparahna, the fourth of five equal parts of the daylight. Two almanacs applying the two rules will name two different days, and both are following a rule.",
+          d: "A tithi that spans two mornings has to be given to one of them. Ordinary observances take the tithi in force at sunrise, udaya vyapini. Shraddha takes the tithi in force at aparahna, the fourth of five equal parts of the daylight. Two panchangs applying the two rules name two different days, and both follow a rule.",
         },
         {
-          n: "04",
-          t: "Where the sunrise is taken, and how it is computed",
-          d: "A tithi ends at one instant everywhere on earth, but sunrise does not, so the civil day it lands on depends on the place the panchang is computed for. Drik siddhanta almanacs also use observed positions and vakya almanacs older tabulated ones, and the two can differ by a day at the edges. Ask which place and which system your family's panchang uses.",
+          t: "Where sunrise is taken, and how it is computed",
+          d: "A tithi ends at one instant everywhere on earth, but sunrise does not, so the day it lands on depends on the place the panchang is computed for. Drik siddhanta panchangs use observed positions and vakya panchangs use older tables, and at the edges the two can differ by a day. Ask which place and which system your family's panchang uses.",
         },
       ],
     },
     pitru: {
-      eyebrow: "Pitru Paksha 2026",
-      title: "Sixteen tithis, in order.",
-      lede: "The fortnight runs from the full moon of Bhadrapada to the following new moon. Each of its days corresponds to a tithi, and a household customarily keeps the day matching the tithi on which their person died, not the Gregorian anniversary.",
-      datesHeading: "Why there are no dates in this table",
+      title: "Pitru Paksha, the sixteen shraddha days",
+      lede: "The fortnight runs from the full moon of Bhadrapada to the next new moon. Each day has its tithi, and a household keeps the day whose tithi matches the one their person died on, not the calendar anniversary.",
+      datesHeading: "About the dates",
       dates:
-        "The ladder below is the rule, and the rule is a definition: it held in 1926 and it holds next year. The Gregorian dates it lands on come out of an almanac, and until one is contracted we would rather send you to a panchang that has them than print sixteen numbers we cannot stand behind. When a provider is named and a sample of days is checked here, the dates appear and the label at the top changes.",
+        "The ladder below is a rule, so it holds in every year. The calendar dates it falls on come from a panchang, and this site has not named its provider yet. Until it does, take the dates from your family's panchang. When the provider is named and checked, the dates appear here.",
       cols: { n: "Day", tithi: "Tithi", kept: "How it is kept" },
-      defaultKept:
-        "Kept by the households whose person died on this tithi. No further convention attaches to it.",
-      conventionHeading: "On the named days",
+      defaultKept: "Kept by the households whose person died on this tithi.",
+      conventionHeading: "The named days",
       convention:
-        "The attributions above are regional conventions rather than settled law. They differ between communities, sometimes between two families in one street. We print the common ones so you recognise the name when someone uses it, and ask your own family's purohit.",
+        "The names above are regional conventions and differ between communities, sometimes between two families on one street. They are printed so you recognise a name when someone uses it. Your own family's purohit has the final word.",
       unknownHeading: "If the tithi is not known",
       unknown:
-        "Then the fortnight has already answered the question: Sarva Pitru Amavasya, the last of the sixteen, is kept for all the departed of a line together and for those whose day went unrecorded. For families two or three generations out of India it is very often the honest answer, and the tradition wrote it down for exactly this case.",
+        "Sarva Pitru Amavasya, the last of the sixteen, is kept for all the departed of a line together and for anyone whose tithi went unrecorded. For families two or three generations out of India this is often the day, and the tradition provides it for this case.",
     },
     finding: {
-      eyebrow: "Working it out",
-      title: "If all you have is a date on a certificate.",
-      lede: "This is the sequence, and it needs a panchang for the year of the death rather than a converter for this one. It takes about ten minutes and does not need us.",
+      title: "Finding the tithi from a date",
+      lede: "You need a panchang for the year and place of the death, not a converter for this year. It takes about ten minutes.",
       steps: [
         {
           n: "01",
-          t: "Fix the moment, not the date",
+          t: "Write down the moment",
           d: "Write down the date, the time of day and the place of death. All three matter. If the death fell between midnight and sunrise, the panchang day is the previous calendar day.",
         },
         {
           n: "02",
           t: "Read the tithi for that moment",
-          d: "Look up a panchang for that place and that year, and read off the tithi and paksha in force at that moment: for example krishna paksha, navami. That pair, and not the Gregorian date, is what the family keeps.",
+          d: "Look up a panchang for that place and year and read the tithi and paksha in force at that moment, for example krishna paksha, navami. That pair is what the family keeps, not the calendar date.",
         },
         {
           n: "03",
-          t: "Note which reckoning the panchang used",
-          d: "If it gives a month-name with the tithi, ask whether that panchang is amanta or purnimanta, and record both names if you can. A tithi written down without its reckoning is the commonest way a shraddha date is lost between two generations.",
+          t: "Note which reckoning the panchang uses",
+          d: "If the panchang gives a month name with the tithi, find out whether it is amanta or purnimanta, and write down both names if you can. A tithi recorded without its reckoning is the commonest way a shraddha day is lost between generations.",
         },
         {
           n: "04",
-          t: "Find that tithi inside the fortnight",
-          d: "In any later year, the day of Pitru Paksha bearing that tithi is the day. That is the whole of the rule, and it is why the Gregorian date moves and the observance does not. Where the tithi falls outside the fortnight, or the death was by accident or violence, the named days above apply.",
+          t: "Find that tithi in the fortnight",
+          d: "In any later year, the day of Pitru Paksha that carries that tithi is the day. That is the whole rule, and it is why the calendar date moves and the observance does not. If the tithi falls outside the fortnight, or the death was by accident or violence, the named days above apply.",
         },
       ],
-      closing:
-        "If your family already keeps a day, keep it. This page is here for the households that lost the thread, not to relitigate a practice that has been observed for forty years.",
+      closing: "If your family already keeps a day, keep it. This page is for households that lost the thread.",
     },
     occasions: {
-      eyebrow: "The occasions we keep",
-      title: "Tithi, reckoning, window.",
-      lede: "Every occasion in the Snanify calendar, with the rule that decides its tithi, the part of the day the rule is applied at, and the windows the rite is held in. The month, where we can state one, is a range rather than a date, for the reason given above.",
+      title: "The occasions in the calendar",
+      lede: "Every occasion in the Snanify calendar, with the rule that sets its tithi, the part of the day it is decided at, and the windows it is kept in. The month is given as a range, for the reason above.",
       cols: {
         occasion: "Occasion",
         tithi: "Tithi rule",
@@ -500,17 +483,17 @@ export const panchangContent = {
         windows: "Windows",
         when: "Falls in",
       },
-      datedHeading: "Dated occasions, twelve months ahead",
-      recurringHeading: "The monthly rhythm",
+      datedHeading: "The next twelve months",
+      recurringHeading: "Every month",
       recurringLede:
-        "Four occasions return on their own schedule regardless of what else the year is doing, and they are the ones a family abroad can actually plan around, because there is another one along in a month.",
+        "Four occasions come round every month. They are the easiest to plan around from abroad, because the next one is always a few weeks away.",
     },
     tithiKinds: {
       tithi: (paksha: string, n: number) => `${paksha}, tithi ${n}`,
       range: (paksha: string) => `Every tithi of the ${paksha} in turn`,
       month: "A whole lunar month, every day of it",
-      ingress: "Not a tithi: the sun's entry into a sign",
-      manual: "Set by hand; no published rule yet",
+      ingress: "The sun's entry into a sign, not a tithi",
+      manual: "Set by hand, rule to be published",
     },
     paksha: {
       shukla: "Shukla paksha, the bright fortnight",
@@ -518,50 +501,49 @@ export const panchangContent = {
       both: "Both fortnights",
     },
     clock: {
-      eyebrow: "The same hour, eight clocks",
-      title: "What a ghat window reads as where you are.",
-      lede: "A window at the ghat is one moment in time. What your wall calendar calls it depends on where you are standing, and for the western diaspora the most important window of the day falls on the previous evening. Both clocks print, every time.",
-      assumptionHeading: "What this table assumes",
+      title: "The ghat's hour on your clock",
+      lede: "A window at the ghat is one moment. Its date and hour on your clock depend on where you live, and in the Americas the morning window falls on the previous evening. Both clocks are printed every time.",
+      assumptionHeading: "How this table is drawn",
       assumption:
-        "Illustration only. The four windows are rules measured from sunrise, the sun's transit and sunset, so showing them as clock times means assuming those three moments: here 06:00, 12:00 and 18:00 IST on 15 September 2026. This is not a panchang date and no occasion falls on it. The offsets in the left column are exact for that date.",
+        "The four windows are measured from sunrise, noon and sunset. To show them as clock times the table assumes those three moments: 06:00, 12:00 and 18:00 IST on 15 September 2026. It is an illustration, and the date carries no occasion. The gaps in the left column are exact for that date.",
       atTheGhat: "At the ghat",
       ghatZone: "Asia/Kolkata, IST",
       place: "Where you are",
       offsetCol: "Gap from IST",
       legend:
-        "A time set in the spot colour falls on a different calendar date from the ghat's. The date is printed under every time so that you never have to work that out.",
+        "A time in red falls on a different calendar date from the ghat's. The date is printed under every time.",
       dstNote:
-        "The United States, Canada, the United Kingdom and Australia all move their clocks; India does not. The gap in the left column therefore changes twice a year, and is stated for the reference date. Check again around the changeover weeks.",
+        "The United States, Canada, the United Kingdom and Australia change their clocks twice a year, and India does not. The gap in the left column is given for the reference date. Check it again in the changeover weeks.",
       windowCols: { window: "Window", length: "Length", rule: "Definition" },
       previousDay: "previous day",
       nextDay: "next day",
     },
     close: {
-      title: "That is the whole of the reference.",
-      lede: "If it answered your question, it has done its job and you owe us nothing. The three minute snan is the other half of this site, and the sankalp in it is one you make yourself.",
+      title: "More on this site",
+      lede: "The muhurat calendar carries the same occasions at length. The snan is what you pay for, at the hour this calendar names.",
       links: [
         {
           href: "/muhurat",
           label: "The muhurat calendar",
-          note: "The same occasions, at length, with the windows and the provenance of every timing.",
+          note: "The same occasions at length, with every window and where each timing comes from.",
         },
         {
           href: "/rivers",
           label: "The six waters",
-          note: "What each of the six places is, and what it is kept for.",
+          note: "The six places, and what each is known for.",
         },
         {
           href: "/snan",
           label: "How it works",
-          note: "The three minutes, limb by limb, and the mark you keep.",
+          note: "The three minutes, part by part, and the Sankalp Patra.",
         },
         {
           href: "/ethics",
-          label: "What we will not sell",
-          note: "The commitments this page is written under.",
+          label: "Our commitments",
+          note: "The rules this site is written under.",
         },
       ],
-      note: "Bookmark it if you want the dates again next year.",
+      note: "Bookmark this page for next year.",
     },
   },
 
@@ -569,147 +551,130 @@ export const panchangContent = {
     meta: {
       title: "पंचांग: तिथि, पितृ पक्ष और श्राद्ध के दिन, आपके समयक्षेत्र में",
       description:
-        "विदेश में बसे परिवारों के लिए निःशुल्क संदर्भ। पितृ पक्ष की सोलह श्राद्ध तिथियाँ, दैनिक बेलाएँ, अमांत और पूर्णिमांत गणना एक ही कर्म को दो भिन्न दिनों पर क्यों ले जाती है, और प्रत्येक समय IST में तथा न्यूयॉर्क, टोरंटो, सैन फ़्रांसिस्को, लंदन, दुबई, सिंगापुर और सिडनी में।",
+        "विदेश में बसे परिवारों के लिए निःशुल्क संदर्भ। पितृ पक्ष की सोलह श्राद्ध तिथियाँ, दैनिक बेलाएँ, अमांत और पूर्णिमांत गणना एक ही दिन को अलग नाम क्यों देती हैं, और हर समय IST में तथा विदेश के सात नगरों की घड़ी पर।",
     },
     hero: {
-      eyebrow: "निःशुल्क संदर्भ",
-      title: "तिथि खिसकती है। दीवार का कैलेंडर नहीं।",
-      lede: "हर वर्ष दिन सरकता है, और हर वर्ष विदेश में बसा कोई परिवार वही प्रश्न पूछता है, एक पक्ष देर से। यह पृष्ठ वही रखता है जो नियम वास्तव में कहते हैं: कौन-सी तिथि, दिन किस आधार पर निश्चित होता है, वह किस बेला में पड़ती है, और आपकी अपनी घड़ी पर वह बेला क्या पढ़ी जाएगी।",
-      free: "पूरा पढ़ने के लिए खुला। काम आए तो लौट आइए।",
+      title: "विदेश में बसे परिवारों के लिए पंचांग संदर्भ",
+      lede: "श्राद्ध का दिन हर वर्ष बदलता है, और प्रश्न प्रायः एक पक्ष देर से उठता है। यह पृष्ठ नियम रखता है: कौन-सी तिथि, दिन कैसे तय होता है, वह किस बेला में पड़ती है, और आपकी अपनी घड़ी पर वह बेला क्या है।",
     },
     provenance: {
-      heading: "पहले यह पढ़िए",
+      heading: "समय कहाँ से आते हैं",
       extra:
-        "नीचे नियम, परिभाषाएँ और गणित हैं, जिन सबका औचित्य हम आज दे सकते हैं। किसी तिथि की अंग्रेज़ी तारीख़ के लिए वह पंचांग चाहिए जो अभी नियुक्त नहीं हुआ, और श्राद्ध के पृष्ठ पर आत्मविश्वास से छपी ग़लत तारीख़ इस साइट की सबसे बड़ी भूल होगी।",
+        "नीचे जो कुछ है वह नियम है, परिभाषा है या गणित है। किसी तिथि की अंग्रेज़ी तारीख़ के लिए पंचांग का स्रोत चाहिए, और वह अभी नियुक्त नहीं हुआ है। तब तक यह पृष्ठ नियम बताता है और तारीख़ आपके परिवार के पंचांग पर छोड़ता है।",
     },
     drift: {
-      eyebrow: "तारीख़ क्यों बदलती है",
-      title: "वर्ष में ग्यारह दिन, और फिर एक मास पीछे।",
-      lede: "तिथि तारीख़ नहीं है। वह एक चांद्र मास का तीसवाँ भाग है, वह समय जिसमें चंद्र सूर्य से बारह अंश आगे बढ़ता है, और उसकी अवधि लगभग उन्नीस से छब्बीस घंटों तक होती है। बारह चांद्र मास लगभग 354 दिन के होते हैं, जबकि अंग्रेज़ी वर्ष 365 का।",
+      title: "तारीख़ क्यों बदलती है",
+      lede: "तिथि चांद्र मास का तीसवाँ भाग है, वह समय जिसमें चंद्र सूर्य से बारह अंश आगे बढ़ता है। उसकी अवधि लगभग उन्नीस से छब्बीस घंटे तक होती है। बारह चांद्र मास लगभग 354 दिन के होते हैं, जबकि अंग्रेज़ी वर्ष 365 दिन का।",
       points: [
         {
-          n: "०१",
           t: "ग्यारह दिन का सरकाव",
-          d: "चांद्र वर्ष लगभग ग्यारह दिन छोटा है, इसलिए जो तिथि इस वर्ष सितंबर के अंत में पड़ी वह अगले वर्ष सितंबर के मध्य में पड़ेगी, और तीन वर्षों में यह अंतर एक मास हो जाता है। इसी कारण पिता का श्राद्ध और पासपोर्ट पर लिखी तारीख़ दो भिन्न वस्तुएँ हैं।",
+          d: "चांद्र वर्ष लगभग ग्यारह दिन छोटा है। जो तिथि इस वर्ष सितंबर के अंत में पड़ी, वह अगले वर्ष सितंबर के मध्य में पड़ेगी, और तीन वर्षों में यह अंतर एक मास हो जाता है। इसी कारण पिता का श्राद्ध और मृत्यु प्रमाणपत्र की तारीख़ दो अलग बातें हैं।",
         },
         {
-          n: "०२",
-          t: "बीच में जोड़ा गया मास",
-          d: "लगभग हर साढ़े बत्तीस मास पर एक अतिरिक्त चांद्र मास, अधिक मास, जोड़ा जाता है ताकि पंचांग सूर्य के साथ लौट आए। उस वर्ष पर्व ग्यारह दिन पीछे नहीं, लगभग उन्नीस दिन आगे चला जाता है, अतः आदतन ग्यारह दिन घटाने वाला परिवार ठीक उसी वर्ष चूकता है।",
+          t: "बीच में जुड़ा मास",
+          d: "लगभग हर साढ़े बत्तीस मास पर एक अतिरिक्त चांद्र मास, अधिक मास, जोड़ा जाता है ताकि पंचांग सूर्य के साथ लौट आए। उस वर्ष पर्व ग्यारह दिन पीछे नहीं, लगभग उन्नीस दिन आगे जाता है। जो परिवार आदत से ग्यारह दिन घटाता है, वह ठीक उसी वर्ष चूकता है।",
         },
         {
-          n: "०३",
-          t: "तिथि मध्यरात्रि से आरंभ नहीं होती",
-          d: "तिथि उसी क्षण आरंभ और समाप्त होती है जिस क्षण चंद्र अपने अंश तक पहुँचता है, और हिंदू दिवस मध्यरात्रि नहीं, सूर्योदय पर बदलता है। अतः कोई तिथि मंगलवार दोपहर आरंभ होकर बुधवार संध्या समाप्त हो सकती है, और इन दो दिनों में से कौन-सा दिन कर्म धारण करेगा, यह नियम का प्रश्न है, रुचि का नहीं।",
+          t: "तिथि का अपना आरंभ और अंत है",
+          d: "तिथि उसी घड़ी आरंभ और समाप्त होती है जब चंद्र अपने अंश तक पहुँचता है, और हिंदू दिवस सूर्योदय पर बदलता है। इसलिए कोई तिथि मंगलवार दोपहर आरंभ होकर बुधवार संध्या समाप्त हो सकती है। दोनों में से कौन-सा दिन कर्म का है, यह नियम तय करता है, जो नीचे दिया है।",
         },
       ],
     },
     reckoning: {
-      eyebrow: "यही वह भाग है जिसे लोग साझा करते हैं",
-      title: "दो पंचांग, एक ही चंद्र।",
-      lede: "एक ही परिवार की दो शाखाएँ, दोनों पूर्णतः सही, एक ही श्राद्ध को मास भर के अंतर से क्यों मानती हैं, इसका सबसे बड़ा कारण यही है। यह धर्म का मतभेद नहीं है। यह इस बात का मतभेद है कि मास कहाँ काटा जाए।",
+      title: "अमांत और पूर्णिमांत",
+      lede: "एक ही परिवार की दो शाखाएँ प्रायः एक ही श्राद्ध को एक मास के अंतर से करती हैं, और दोनों सही होती हैं। दोनों गणनाएँ मास को अलग जगह काटती हैं, और कृष्ण पक्ष का नाम उसी के साथ बदल जाता है। यही सबसे आम कारण है।",
       amanta: {
         name: "अमांत",
-        cut: "मास अमावस्या पर समाप्त होता है। अमावस्या अंतिम दिन है; मास शुक्ल पक्ष की प्रतिपदा से आरंभ होता है।",
+        cut: "मास अमावस्या पर समाप्त होता है। अमावस्या अंतिम दिन है, और मास शुक्ल पक्ष की प्रतिपदा से आरंभ होता है।",
         where:
           "गुजरात, महाराष्ट्र, गोवा, कर्नाटक, आंध्र प्रदेश और तेलंगाना में प्रचलित, तथा तमिलनाडु और केरल के सौर पंचांगों के साथ चलने वाली चांद्र गणना में भी।",
       },
       purnimanta: {
         name: "पूर्णिमांत",
-        cut: "मास पूर्णिमा पर समाप्त होता है। पूर्णिमा अंतिम दिन है; मास कृष्ण पक्ष की प्रतिपदा से आरंभ होता है।",
+        cut: "मास पूर्णिमा पर समाप्त होता है। पूर्णिमा अंतिम दिन है, और मास कृष्ण पक्ष की प्रतिपदा से आरंभ होता है।",
         where:
           "समूचे उत्तर भारत में प्रचलित: उत्तर प्रदेश, बिहार, मध्य प्रदेश, राजस्थान, पंजाब, हरियाणा, उत्तराखंड, हिमाचल प्रदेश और नेपाल।",
       },
       agreeHeading: "जहाँ दोनों सहमत हैं",
       agree:
-        "प्रत्येक शुक्ल पक्ष पर। शुक्ल पक्ष के किसी भी दिन का मास-नाम दोनों गणनाओं में एक ही रहता है, इसीलिए राम नवमी, गणेश चतुर्थी और प्रत्येक पूर्णिमा का नाम सर्वत्र समान है।",
-      differHeading: "जहाँ दोनों भिन्न हैं",
+        "हर शुक्ल पक्ष पर। शुक्ल पक्ष के किसी भी दिन का मास-नाम दोनों गणनाओं में एक ही रहता है, इसीलिए राम नवमी, गणेश चतुर्थी और हर पूर्णिमा का नाम सब जगह एक है।",
+      differHeading: "जहाँ दोनों अलग हैं",
       differ:
-        "प्रत्येक कृष्ण पक्ष पर, और केवल नाम में। कृष्ण पक्ष के दिन को पूर्णिमांत आगामी मास का नाम देता है और अमांत वर्तमान मास का, अतः पूर्णिमांत नाम एक मास आगे चलता है। दिन स्वयं एक घंटा भी नहीं हिलते।",
-      pairsHeading: "एक ही पक्ष, दो नाम",
+        "हर कृष्ण पक्ष पर, और केवल नाम में। कृष्ण पक्ष के दिन को पूर्णिमांत अगले मास का नाम देता है और अमांत चालू मास का, इसलिए पूर्णिमांत नाम एक मास आगे चलता है। दिन स्वयं एक घंटा भी नहीं हिलते।",
+      pairsHeading: "तीन उदाहरण",
       pairsCols: { occasion: "पर्व", purnimanta: "पूर्णिमांत नाम", amanta: "अमांत नाम" },
-      ghatsHeading: "किस घाट पर मास का नाम कौन-सी गणना देती है",
+      ghatsHeading: "हर घाट पर कौन-सी गणना",
       ghatsLede:
-        "हमारे छह जलों में से चार पूर्णिमांत क्षेत्र में हैं और दो अमांत में। इससे कर्म में कुछ नहीं बदलता; तिथि के साथ छपने वाला मास बदलता है।",
+        "छह जलों में से चार पूर्णिमांत क्षेत्र में हैं और दो अमांत क्षेत्र में। तिथि के साथ छपा मास-नाम क्षेत्र के अनुसार होता है।",
       schemes: { amanta: "अमांत", purnimanta: "पूर्णिमांत" },
     },
     divergence: {
-      eyebrow: "दो घरों में अंतर के चार कारण",
-      title: "और इनमें से कोई भी यह नहीं कि कोई एक ग़लत है।",
-      lede: "यदि पुणे वाले चाचा और लखनऊ वाली माताजी कभी एक दिन पर सहमत नहीं हुए, तो पूरी बात यही है। इनमें दो नाम के हैं और दो गणना के।",
+      title: "दो घरों में अंतर के चार कारण",
+      lede: "यदि पुणे वाले चाचा और लखनऊ वाली माताजी कभी एक दिन पर सहमत नहीं हुए, तो कारण इन चार में से एक है। प्रायः दोनों सही होते हैं।",
       items: [
         {
-          n: "०१",
           t: "मास का नाम",
-          d: "अमांत और पूर्णिमांत एक ही कृष्ण पक्ष को एक मास के अंतर से भिन्न नाम देते हैं। जो तिथि मास और तिथि के रूप में स्मरण रखी गई हो और दूसरी गणना से पढ़ी जाए, वह पूरे एक चांद्र मास दूर जा पड़ती है। सबसे बड़ा कारण यही है, और प्रायः यही होता है।",
+          d: "अमांत और पूर्णिमांत एक ही कृष्ण पक्ष को एक मास के अंतर से अलग नाम देते हैं। जो तिथि मास और तिथि के रूप में याद रखी गई हो और दूसरी गणना में पढ़ी जाए, वह एक मास दूर जा पड़ती है। कारण प्रायः यही होता है।",
         },
         {
-          n: "०२",
           t: "दिन कहाँ कटता है",
-          d: "हिंदू दिवस सूर्योदय से सूर्योदय तक चलता है। रात्रि दो बजे हुआ देहावसान उस पंचांग दिवस का है जो पिछली भोर आरंभ हुआ था, न कि उस तारीख़ का जो अस्पताल ने लिखी। जो परिवार प्रमाणपत्र की तारीख़ लेकर गणना आरंभ करते हैं, वे प्रायः आरंभ में ही एक दिन चूक जाते हैं।",
+          d: "हिंदू दिवस सूर्योदय से सूर्योदय तक चलता है। रात दो बजे हुआ देहावसान उस पंचांग दिवस का है जो पिछली भोर आरंभ हुआ था, अस्पताल के प्रमाणपत्र की तारीख़ का नहीं। जो परिवार प्रमाणपत्र की तारीख़ बदलकर गिनता है, वह प्रायः आरंभ में ही एक दिन चूक जाता है।",
         },
         {
-          n: "०३",
-          t: "दिन का कौन-सा भाग निर्णय करता है",
-          d: "जो तिथि दो प्रातःकालों में फैली हो, उसे किसी एक को सौंपना पड़ता है। सामान्य कर्म सूर्योदय पर विद्यमान तिथि लेते हैं, उदयव्यापिनी। श्राद्ध अपराह्न से निश्चित होता है, दिनमान के पाँच समान भागों में चौथा। दो नियम लगाने वाले दो पंचांग दो भिन्न दिन बताएँगे, और दोनों नियम का ही पालन कर रहे होंगे।",
+          t: "दिन का कौन-सा भाग तय करता है",
+          d: "जो तिथि दो प्रातःकालों में फैली हो, उसे किसी एक दिन को देना पड़ता है। सामान्य कर्म सूर्योदय पर चल रही तिथि लेते हैं, उदयव्यापिनी। श्राद्ध अपराह्न की तिथि लेता है, दिनमान के पाँच बराबर भागों में चौथा। दो नियम लगाने वाले दो पंचांग दो अलग दिन बताते हैं, और दोनों नियम का पालन कर रहे होते हैं।",
         },
         {
-          n: "०४",
           t: "सूर्योदय कहाँ का लिया गया, और गणना किस पद्धति से",
-          d: "तिथि पृथ्वी भर में एक ही क्षण समाप्त होती है, पर सूर्योदय नहीं, इसलिए वह किस नागरिक दिवस पर पड़ेगी यह उस स्थान पर निर्भर है जिसके लिए पंचांग बना है। दृक् सिद्धांत पंचांग वेधसिद्ध ग्रह-स्थितियाँ लेते हैं और वाक्य पंचांग पुरानी सारणियाँ, और सीमा पर दोनों में एक दिन का अंतर आ सकता है। पूछ लीजिए कि आपके परिवार का पंचांग किस स्थान का है और किस पद्धति का।",
+          d: "तिथि पूरी पृथ्वी पर एक ही क्षण समाप्त होती है, पर सूर्योदय नहीं, इसलिए वह किस दिन पड़ेगी यह उस स्थान पर निर्भर है जिसके लिए पंचांग बना है। दृक् सिद्धांत पंचांग वेध से मिली ग्रह-स्थितियाँ लेते हैं और वाक्य पंचांग पुरानी सारणियाँ, और सीमा पर दोनों में एक दिन का अंतर आ सकता है। पूछ लीजिए कि आपके परिवार का पंचांग किस स्थान का है और किस पद्धति का।",
         },
       ],
     },
     pitru: {
-      eyebrow: "पितृ पक्ष 2026",
-      title: "सोलह तिथियाँ, क्रम से।",
-      lede: "यह पक्ष भाद्रपद की पूर्णिमा से अगली अमावस्या तक चलता है। इसका प्रत्येक दिन एक तिथि से जुड़ा है, और परिवार प्रायः उसी तिथि को श्राद्ध करते हैं जिस तिथि को उनके स्वजन का देहावसान हुआ था, अंग्रेज़ी पुण्यतिथि को नहीं।",
-      datesHeading: "इस सूची में तारीख़ें क्यों नहीं हैं",
+      title: "पितृ पक्ष, सोलह श्राद्ध दिन",
+      lede: "यह पक्ष भाद्रपद की पूर्णिमा से अगली अमावस्या तक चलता है। हर दिन की अपनी तिथि है, और परिवार उस दिन श्राद्ध करता है जिसकी तिथि उनके स्वजन के देहावसान की तिथि से मिलती है, अंग्रेज़ी पुण्यतिथि से नहीं।",
+      datesHeading: "तारीख़ों के बारे में",
       dates:
-        "नीचे दी गई सीढ़ी नियम है, और नियम परिभाषा है: वह 1926 में भी सत्य था और अगले वर्ष भी रहेगा। वह किन अंग्रेज़ी तारीख़ों पर पड़ेगी, यह पंचांग से निकलता है, और जब तक कोई नियुक्त नहीं होता, सोलह ऐसी संख्याएँ छापने से बेहतर है कि हम आपको उस पंचांग तक भेजें जिसने यह काम किया है। स्रोत नियुक्त होने और यहाँ कुछ दिनों का मिलान हो जाने पर तारीख़ें आ जाएँगी और ऊपर का अंकन बदल जाएगा।",
+        "नीचे की सूची नियम है, इसलिए हर वर्ष लागू होती है। वह किन अंग्रेज़ी तारीख़ों पर पड़ेगी, यह पंचांग से निकलता है, और इस साइट ने अभी अपना स्रोत नियुक्त नहीं किया है। तब तक तारीख़ें अपने परिवार के पंचांग से लीजिए। स्रोत नियुक्त और जाँचा जाने पर तारीख़ें यहाँ आ जाएँगी।",
       cols: { n: "दिन", tithi: "तिथि", kept: "किसके लिए" },
-      defaultKept:
-        "वे घर जिनके स्वजन का देहावसान इसी तिथि को हुआ था। इससे आगे इस दिन से कोई विशेष परंपरा नहीं जुड़ी।",
-      conventionHeading: "नाम वाले दिनों पर",
+      defaultKept: "वे घर जिनके स्वजन का देहावसान इसी तिथि को हुआ था।",
+      conventionHeading: "नाम वाले दिन",
       convention:
-        "ऊपर दी गई परंपराएँ क्षेत्रीय प्रथाएँ हैं, कोई निश्चित विधान नहीं। ये समुदायों में भिन्न हैं, कभी एक ही गली के दो घरों में भी। हम प्रचलित प्रथाएँ इसलिए छापते हैं कि जब कोई यह नाम ले तो आप उसे पहचान सकें, और अपने परिवार के पुरोहित से पूछ सकें।",
+        "ऊपर के नाम क्षेत्रीय प्रथाएँ हैं और समुदायों में अलग हैं, कभी एक ही गली के दो घरों में भी। ये इसलिए छपे हैं कि जब कोई यह नाम ले तो आप उसे पहचान सकें। अंतिम बात आपके परिवार के पुरोहित की है।",
       unknownHeading: "यदि तिथि ज्ञात न हो",
       unknown:
-        "तो पक्ष ने यह प्रश्न पहले ही हल कर रखा है: सोलह में अंतिम, सर्व पितृ अमावस्या, वंश के समस्त दिवंगतों के लिए है और उनके लिए भी जिनका दिन अभिलेख में नहीं रहा। भारत से दो-तीन पीढ़ी दूर बसे परिवारों के लिए प्रायः यही सच्चा उत्तर है, और परंपरा ने इसे ठीक इसी स्थिति के लिए लिखा था।",
+        "सोलह में अंतिम, सर्व पितृ अमावस्या, वंश के सभी दिवंगतों के लिए है और उनके लिए भी जिनकी तिथि लिखी नहीं रही। भारत से दो-तीन पीढ़ी दूर बसे परिवारों के लिए प्रायः यही दिन है, और परंपरा ने इसे इसी स्थिति के लिए रखा है।",
     },
     finding: {
-      eyebrow: "स्वयं निकालिए",
-      title: "यदि आपके पास केवल प्रमाणपत्र की तारीख़ है।",
-      lede: "क्रम यही है, और इसके लिए इस वर्ष का परिवर्तक नहीं, देहावसान के वर्ष का पंचांग चाहिए। इसमें लगभग दस मिनट लगते हैं और हमारी आवश्यकता नहीं।",
+      title: "तारीख़ से तिथि निकालना",
+      lede: "इसके लिए देहावसान के वर्ष और स्थान का पंचांग चाहिए, इस वर्ष का परिवर्तक नहीं। लगभग दस मिनट लगते हैं।",
       steps: [
         {
           n: "०१",
-          t: "तारीख़ नहीं, क्षण निश्चित कीजिए",
-          d: "देहावसान की तारीख़, दिन का समय और स्थान, तीनों लिखिए। तीनों आवश्यक हैं। यदि देहावसान मध्यरात्रि और सूर्योदय के बीच हुआ हो तो पंचांग दिवस पिछला दिन है।",
+          t: "क्षण लिख लीजिए",
+          d: "देहावसान की तारीख़, दिन का समय और स्थान लिखिए। तीनों आवश्यक हैं। यदि देहावसान मध्यरात्रि और सूर्योदय के बीच हुआ हो, तो पंचांग दिवस पिछला दिन है।",
         },
         {
           n: "०२",
           t: "उस क्षण की तिथि पढ़िए",
-          d: "उस स्थान और उस वर्ष का पंचांग देखिए और उस क्षण विद्यमान तिथि तथा पक्ष लिख लीजिए: जैसे कृष्ण पक्ष, नवमी। परिवार यही जोड़ा मानता है, अंग्रेज़ी तारीख़ नहीं।",
+          d: "उस स्थान और उस वर्ष का पंचांग देखिए और उस क्षण चल रही तिथि और पक्ष पढ़िए, जैसे कृष्ण पक्ष, नवमी। परिवार यही जोड़ा रखता है, अंग्रेज़ी तारीख़ नहीं।",
         },
         {
           n: "०३",
-          t: "यह भी लिखिए कि पंचांग किस गणना का था",
-          d: "यदि वह तिथि के साथ मास का नाम भी दे तो पूछिए कि वह पंचांग अमांत है या पूर्णिमांत, और हो सके तो दोनों नाम लिख लीजिए। गणना बताए बिना लिखी गई तिथि ही वह सबसे सामान्य कारण है जिससे श्राद्ध का दिन दो पीढ़ियों के बीच खो जाता है।",
+          t: "लिखिए कि पंचांग किस गणना का है",
+          d: "यदि पंचांग तिथि के साथ मास का नाम देता है, तो पता कीजिए कि वह अमांत है या पूर्णिमांत, और हो सके तो दोनों नाम लिख लीजिए। गणना बताए बिना लिखी तिथि ही वह सबसे आम कारण है जिससे श्राद्ध का दिन दो पीढ़ियों के बीच खो जाता है।",
         },
         {
           n: "०४",
-          t: "उस तिथि को पक्ष के भीतर खोजिए",
-          d: "आगे किसी भी वर्ष में, पितृ पक्ष का जो दिन उस तिथि को धारण करता है, वही दिन है। पूरा नियम इतना ही है, और इसीलिए अंग्रेज़ी तारीख़ बदलती है और कर्म नहीं। जहाँ तिथि पक्ष से बाहर पड़े, अथवा देहावसान दुर्घटना या हिंसा से हुआ हो, वहाँ ऊपर दिए नाम वाले दिन लागू होते हैं।",
+          t: "उस तिथि को पक्ष में खोजिए",
+          d: "आगे किसी भी वर्ष में पितृ पक्ष का जो दिन उस तिथि का है, वही दिन है। पूरा नियम इतना है, और इसीलिए अंग्रेज़ी तारीख़ बदलती है और कर्म नहीं। यदि तिथि पक्ष से बाहर पड़े, या देहावसान दुर्घटना या हिंसा से हुआ हो, तो ऊपर के नाम वाले दिन लागू होते हैं।",
         },
       ],
-      closing:
-        "यदि आपका परिवार पहले से कोई दिन मानता आ रहा है, तो वही मानिए। यह पृष्ठ उन घरों के लिए है जिनसे यह सूत्र छूट गया, चालीस वर्ष से चली आ रही प्रथा पर पुनर्विचार कराने के लिए नहीं।",
+      closing: "यदि आपका परिवार पहले से कोई दिन मानता है, तो वही मानिए। यह पृष्ठ उन घरों के लिए है जिनसे यह सूत्र छूट गया।",
     },
     occasions: {
-      eyebrow: "जिन पर्वों को हम मानते हैं",
-      title: "तिथि, निर्णय, बेला।",
-      lede: "स्नानिफ़ाई के पंचांग का प्रत्येक पर्व, उस नियम के साथ जो उसकी तिथि निश्चित करता है, दिन के उस भाग के साथ जिस पर नियम लगाया जाता है, और उन बेलाओं के साथ जिनमें कर्म होता है। जहाँ मास बता सकते हैं वहाँ मास की अवधि दी है, तारीख़ नहीं, कारण ऊपर लिखा है।",
+      title: "पंचांग के पर्व",
+      lede: "स्नानिफ़ाई के पंचांग का हर पर्व, उस नियम के साथ जो उसकी तिथि तय करता है, दिन के उस भाग के साथ जिस पर निर्णय होता है, और उन बेलाओं के साथ जिनमें वह मनाया जाता है। मास अवधि के रूप में दिया है, कारण ऊपर है।",
       cols: {
         occasion: "पर्व",
         tithi: "तिथि नियम",
@@ -717,17 +682,17 @@ export const panchangContent = {
         windows: "बेलाएँ",
         when: "कब",
       },
-      datedHeading: "आगामी बारह मास के तिथि-बद्ध पर्व",
-      recurringHeading: "मासिक लय",
+      datedHeading: "अगले बारह मास",
+      recurringHeading: "हर मास",
       recurringLede:
-        "चार पर्व अपने क्रम से लौटते रहते हैं, वर्ष में और चाहे जो हो, और विदेश में बसा परिवार वास्तव में इन्हीं की योजना बना सकता है, क्योंकि अगला एक मास में फिर आ जाता है।",
+        "चार पर्व हर मास लौटते हैं। विदेश से इन्हीं की योजना सबसे सरल है, क्योंकि अगला सदा कुछ सप्ताह दूर होता है।",
     },
     tithiKinds: {
       tithi: (paksha: string, n: number) => `${paksha}, तिथि ${n}`,
       range: (paksha: string) => `${paksha} की प्रत्येक तिथि, क्रम से`,
       month: "पूरा चांद्र मास, उसका हर दिन",
-      ingress: "तिथि नहीं: सूर्य का राशि-प्रवेश",
-      manual: "हाथ से नियत; अभी कोई प्रकाशित नियम नहीं",
+      ingress: "सूर्य का राशि-प्रवेश, तिथि नहीं",
+      manual: "हाथ से नियत, नियम प्रकाशित होना शेष",
     },
     paksha: {
       shukla: "शुक्ल पक्ष",
@@ -735,50 +700,49 @@ export const panchangContent = {
       both: "दोनों पक्ष",
     },
     clock: {
-      eyebrow: "एक ही बेला, आठ घड़ियाँ",
-      title: "घाट की बेला आपके यहाँ क्या पढ़ी जाएगी।",
-      lede: "घाट की एक बेला समय का एक ही क्षण है। आपका दीवार-कैलेंडर उसे क्या कहेगा, यह इस पर निर्भर है कि आप कहाँ खड़े हैं, और पश्चिम में बसे परिवारों के लिए दिन की सबसे महत्वपूर्ण बेला पिछली संध्या को पड़ती है। दोनों घड़ियाँ हर बार छपती हैं।",
-      assumptionHeading: "यह सारणी क्या मान लेती है",
+      title: "घाट की बेला आपकी घड़ी पर",
+      lede: "घाट की बेला एक ही क्षण है। आपकी घड़ी पर उसकी तारीख़ और समय इस पर निर्भर है कि आप कहाँ रहते हैं, और अमेरिका में सुबह की बेला पिछली शाम पड़ती है। दोनों घड़ियाँ हर बार छपी हैं।",
+      assumptionHeading: "यह सारणी कैसे बनी है",
       assumption:
-        "केवल उदाहरण। चारों बेलाएँ सूर्योदय, सूर्य के मध्याह्न और सूर्यास्त से नापे गए नियम हैं, अतः उन्हें घड़ी के समय में दिखाने के लिए इन तीन क्षणों को मानना पड़ता है: यहाँ 15 सितंबर 2026 को 06:00, 12:00 और 18:00 IST। यह कोई पंचांग तिथि नहीं है और उस दिन कोई पर्व नहीं पड़ता। बाईं ओर दिए अंतर उस तारीख़ के लिए यथार्थ हैं।",
+        "चारों बेलाएँ सूर्योदय, मध्याह्न और सूर्यास्त से नापी जाती हैं। उन्हें घड़ी के समय में दिखाने के लिए सारणी ये तीन क्षण मान लेती है: 15 सितंबर 2026 को 06:00, 12:00 और 18:00 IST। यह उदाहरण है, और उस दिन कोई पर्व नहीं है। बाईं ओर दिए अंतर उस तारीख़ के लिए सही हैं।",
       atTheGhat: "घाट पर",
       ghatZone: "एशिया/कोलकाता, IST",
       place: "आप कहाँ हैं",
       offsetCol: "IST से अंतर",
       legend:
-        "जो समय स्पॉट रंग में है वह घाट से भिन्न नागरिक तारीख़ पर पड़ता है। हर समय के नीचे तारीख़ छपी है, ताकि यह गणना आपको कभी न करनी पड़े।",
+        "लाल रंग का समय घाट से अलग तारीख़ पर पड़ता है। हर समय के नीचे तारीख़ छपी है।",
       dstNote:
-        "अमेरिका, कनाडा, यूनाइटेड किंगडम और ऑस्ट्रेलिया, चारों अपनी घड़ियाँ आगे-पीछे करते हैं; भारत नहीं करता। इसलिए बाईं ओर का अंतर वर्ष में दो बार बदलता है, और वह संदर्भ तारीख़ के लिए दिया गया है। घड़ी बदलने वाले सप्ताहों के आसपास पुनः देख लीजिए।",
+        "अमेरिका, कनाडा, यूनाइटेड किंगडम और ऑस्ट्रेलिया वर्ष में दो बार घड़ी बदलते हैं, भारत नहीं बदलता। बाईं ओर का अंतर संदर्भ तारीख़ के लिए है। घड़ी बदलने वाले सप्ताहों में फिर देख लीजिए।",
       windowCols: { window: "बेला", length: "अवधि", rule: "परिभाषा" },
       previousDay: "पिछला दिन",
       nextDay: "अगला दिन",
     },
     close: {
-      title: "संदर्भ इतना ही है।",
-      lede: "यदि इससे आपका प्रश्न हल हुआ तो इसका काम पूरा हुआ और आप पर कुछ शेष नहीं। तीन मिनट का स्नान इस साइट का दूसरा भाग है, और उसमें संकल्प आप स्वयं करते हैं।",
+      title: "इस साइट पर और",
+      lede: "मुहूर्त पंचांग में यही पर्व विस्तार से हैं। स्नान वह है जिसका आप मूल्य देते हैं, उसी घड़ी पर जो यह पंचांग बताता है।",
       links: [
         {
           href: "/muhurat",
           label: "मुहूर्त पंचांग",
-          note: "वही पर्व, विस्तार से, बेलाओं और प्रत्येक समय के स्रोत सहित।",
+          note: "यही पर्व विस्तार से, हर बेला के साथ और यह कि हर समय कहाँ से आया।",
         },
         {
           href: "/rivers",
           label: "छह पवित्र जल",
-          note: "छहों स्थान क्या हैं, और प्रत्येक किसके लिए माना जाता है।",
+          note: "छहों स्थान, और हर एक किस लिए जाना जाता है।",
         },
         {
           href: "/snan",
           label: "कैसे काम करता है",
-          note: "तीन मिनट, अंग दर अंग, और वह चिह्न जो आपके पास रहता है।",
+          note: "तीन मिनट, अंग दर अंग, और संकल्प पत्र।",
         },
         {
           href: "/ethics",
-          label: "जो हम नहीं बेचते",
-          note: "वे वचन जिनके अधीन यह पृष्ठ लिखा गया है।",
+          label: "हमारे वचन",
+          note: "वे नियम जिनके अधीन यह साइट लिखी गई है।",
         },
       ],
-      note: "अगले वर्ष फिर तिथियाँ चाहिए हों तो इसे सहेज लीजिए।",
+      note: "अगले वर्ष के लिए यह पृष्ठ सहेज लीजिए।",
     },
   },
 } satisfies Record<Lang, unknown>;

@@ -3,9 +3,10 @@
    site serves; see the tier note at the top of src/lib/locales.ts. */
 import type { FullLang as Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
+import type { Limb as LimbId } from "@/lib/sitting-plan";
 
 /**
- * Copy for /snan, the page that sells and explains the digital snan itself.
+ * Copy for /snan, the page that sells and explains the snan itself.
  *
  * Two rules govern every string in this file, and they are not stylistic:
  *
@@ -14,69 +15,45 @@ import type { TierKey } from "@/content/prices";
  *  2. NO OUTCOME IS EVER PROMISED. There is not one guaranteed result anywhere
  *     in the tariff or above it.
  *
- * Those forbid the CLAIM, not the silence, and this page states neither the
+ * Those forbid the claim, not the silence, and this page states neither the
  * claim nor its denial. It says what happens. The commitment stated at length
- * and in the negative lives on /ethics, which every page links.
+ * lives on /ethics, which every page links.
  *
- * SO: NO NEGATIVE CONSTRUCTIONS HERE EITHER. /snan carries the same hard rule
- * as the landing page. A sentence built on "no", "nobody", "nothing" or "there
- * is no" gets rewritten until it is built on a noun and a verb. This file used
- * to open its Hindi tariff with "कोई निःशुल्क स्नान नहीं है" and its pull quote
- * with "Not recorded. Not offered. Not accepted."; both were the page arguing
- * with a critic who was not in the room, and both are gone.
+ * NO NEGATIVE CONSTRUCTIONS. /snan carries the same hard rule as the landing
+ * page. A sentence built on "no", "nobody", "nothing" or "there is no" gets
+ * rewritten until it is built on a noun and a verb.
  *
- * ACTIVE VOICE, HALF THE WORDS. Every field here was cut by about half in
- * August 2026 and the verbs moved to the front: "Breathe at her rhythm", "Hold
- * your vow", "Put the phone down". A limb is two or three short paragraphs, an
- * answer is two sentences, a tariff row is one. The reader is on a phone at six
- * in the morning, and for many of them English is a third language.
+ * PLAIN SENTENCES. This page once described a different product: gauge
+ * readings in metres, a danger line, a register called the Jal Panjika, five
+ * limbs with coined names, a seed built from the Government of India's gauge
+ * record. It also wrote in the rhythm generated copy falls into: three
+ * parallel clauses to a line, a koan for a title, a labelled box insisting on
+ * "what is actually true". Every sentence here now says what the thing is,
+ * what the reader does, or what they get, in words a person would use to a
+ * friend, and every claim matches the product in src/lib and src/components.
  *
- * What is claimed, and what is true: the river's flow for today, modelled by
- * Copernicus GloFAS and published through Open-Meteo, arrives at the reader
- * with its model day printed beside it. The word is "modelled", every time.
+ * WHAT IS TRUE, and therefore what this page says: the river's flow for the
+ * day is the Copernicus GloFAS model's published figure, read through
+ * Open-Meteo, and the word is "modelled", every time. The durations come from
+ * src/lib/sitting-plan.ts and the component prints them; they are never
+ * written out here. The Sankalp Patra's seed is a SHA-256 of the line
+ * src/lib/seed.ts builds, and the fields named here are that line's fields.
  *
- * Every figure in a specimen block is labelled a specimen where it appears. The
- * live readings live on the free water pages, and this page never prints an
- * hour and passes it off as this hour.
+ * NO PRICE IS EVER WRITTEN OUT IN THIS FILE. `{price}` is filled at render
+ * from src/content/prices.ts, in the reader's own currency.
  *
- * NO PRICE IS EVER WRITTEN OUT IN THIS FILE. `{price}` is filled at render from
- * src/content/prices.ts, in the reader's own currency. `closing.cta` used to
- * read "Take eleven snans, $11", which shipped a dollar figure to a reader in
- * Chennai and defeated the whole one-price mechanism; the price is gone from
- * every CTA that the component does not tokenise.
- *
- * The whole shape is declared as `Copy`, so a key missing from either locale is
- * a compile error rather than a page that silently renders English to a Hindi
- * reader. Hindi is written, not translated, and the Hindi edition sets its
- * numerals in Devanagari as a printed panchang does.
+ * The whole shape is declared as `Copy`, so a key missing from either locale
+ * is a compile error rather than a page that silently renders English to a
+ * Hindi reader. Hindi is written, not translated.
  */
 
 /* --- types --------------------------------------------------------------- */
 
 export type Limb = {
-  /** Stable anchor id, used for the deep link into a single limb. */
-  readonly id: string;
-  /** Clock position within the 270 seconds, e.g. "0:04". */
-  readonly clock: string;
-  /** How long the limb runs. */
-  readonly length: string;
-  /** The limb's name in Devanagari, set in both editions. */
-  readonly deva: string;
-  /** The Latin transliteration, set in both editions. */
-  readonly name: string;
-  /** What the limb is, in the reader's language. */
-  readonly gloss: string;
+  /** The limb's key in src/lib/sitting-plan.ts, which gives it its clock and length. */
+  readonly id: LimbId;
+  readonly title: string;
   readonly body: readonly string[];
-  /** An almanac block set exactly as it prints on the phone. */
-  readonly specimen?: {
-    readonly note: string;
-    readonly lines: readonly string[];
-  };
-  /** The ruled waterline diagram, which only the reading limb carries. */
-  readonly diagram?: {
-    readonly label: string;
-    readonly caption: string;
-  };
 };
 
 export type Pair = { readonly k: string; readonly v: string };
@@ -101,8 +78,7 @@ type Copy = {
   readonly crumbs: { readonly home: string; readonly here: string };
 
   readonly hero: {
-    readonly titleA: string;
-    readonly titleB: string;
+    readonly title: string;
     readonly lede: string;
     readonly offer: string;
     readonly ctaPrimary: string;
@@ -114,72 +90,41 @@ type Copy = {
     readonly cta: string;
   };
 
-  readonly truth: {
-    readonly label: string;
-    readonly title: string;
-    readonly body: readonly string[];
-  };
-
   readonly form: {
-    readonly eyebrow: string;
     readonly title: string;
     readonly lede: string;
     readonly clockHead: string;
     readonly lengthHead: string;
+    /** "{n} seconds", filled from the sitting plan. */
+    readonly seconds: string;
     readonly limbs: readonly Limb[];
-    readonly restraint: { readonly label: string; readonly body: string };
-  };
-
-  readonly hold: {
-    readonly label: string;
-    readonly title: string;
-    readonly body: readonly string[];
-    readonly pull: string;
-    readonly pullNote: string;
   };
 
   readonly still: {
-    readonly label: string;
     readonly title: string;
     readonly body: string;
-    readonly lines: readonly string[];
+    readonly instruction: string;
     readonly note: string;
   };
 
-  readonly mark: {
-    readonly label: string;
-    readonly title: string;
-    readonly body: readonly string[];
-    readonly lineLabel: string;
-    readonly line: string;
-    readonly count: readonly string[];
-    readonly note: string;
-    readonly close: string;
-  };
-
-  readonly chihna: {
-    readonly eyebrow: string;
+  readonly patra: {
     readonly title: string;
     readonly lede: string;
-    readonly drawLabel: string;
-    readonly draws: readonly Pair[];
-    readonly forgeLabel: string;
-    readonly forgeTitle: string;
-    readonly forgeBody: readonly string[];
-    readonly seedLabel: string;
+    readonly carries: readonly Pair[];
+    readonly engravingTitle: string;
+    readonly engravingBody: readonly string[];
+    readonly checkTitle: string;
+    readonly checkBody: string;
     readonly seedLine: string;
     readonly seedNote: string;
-    readonly flood: string;
   };
 
   readonly before: {
-    readonly eyebrow: string;
     readonly title: string;
     readonly items: readonly Question[];
   };
 
   readonly tariff: {
-    readonly eyebrow: string;
     readonly title: string;
     readonly lede: string;
     readonly heads: {
@@ -187,13 +132,8 @@ type Copy = {
       readonly per: string;
     };
     readonly rows: readonly TariffRow[];
-    readonly heroLabel: string;
-    readonly heroWhyLabel: string;
-    readonly heroBody: readonly string[];
-    readonly freeLabel: string;
-    readonly freeBody: string;
+    readonly note: string;
     readonly cta: string;
-    readonly ctaNote: string;
   };
 
   readonly closing: {
@@ -207,269 +147,168 @@ type Copy = {
 
 const en: Copy = {
   meta: {
-    title: "The snan, three minutes with a real river",
+    title: "The snan, three minutes with your river",
     description:
-      "A digital snan. Three minutes with a river's flow today, modelled by Copernicus and checkable by anyone, a vow held eleven seconds, sixty seconds of black screen, and one mark drawn from the public record.",
+      "A digital snan. Three minutes with the river you grew up near, at the hour the panchang names, and a Sankalp Patra with your family's names on it. Eleven mornings for eleven.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
 
   hero: {
-    titleA: "Three minutes.",
-    titleB: "The river comes to you.",
-    lede: "Three minutes with a river at the flow she carries today, modelled by Copernicus and published for anyone to check. Breathe at her rhythm. Hold your vow for eleven seconds. Put the phone down for a minute.",
-    offer:
-      "Eleven mornings for {price}, one for each morning. Everything you can read stays free.",
-    ctaPrimary: "Take eleven mornings, {price}",
-    ctaSecondary: "See the five limbs",
+    title: "Three minutes with your river.",
+    lede: "Today's flow of the river you choose, from the Copernicus flood model, published for anyone to check. You sit with it for three minutes. At the end you have a Sankalp Patra with your family's names on it.",
+    offer: "Eleven mornings for {price}. Take them whenever you like.",
+    ctaPrimary: "Begin your snan",
+    ctaSecondary: "See the five parts",
   },
 
   sticky: {
-    name: "Gyarah, eleven mornings",
-    cta: "Choose your water",
-  },
-
-  truth: {
-    label: "What is actually true",
-    title: "Everything here is real, and it is yours.",
-    body: [
-      "A river at the flow she carries today, modelled by Copernicus and published for anyone to check. The panchang, computed. Your own words, read back every morning.",
-      "The practice is yours. You say it, you keep it, and the mark carries a number a stranger can check.",
-      "Our servers sit downstream, in the river.",
-    ],
+    name: "Eleven mornings",
+    cta: "Begin",
   },
 
   form: {
-    eyebrow: "The form",
-    title: "Five parts, three minutes, the same every day.",
-    lede: "The same five parts, the same order, the same lengths. Only the river changes, and she changes on her own.",
-    clockHead: "Clock",
+    title: "The five parts",
+    lede: "The same five parts in the same order every morning. Only the river changes.",
+    clockHead: "Starts at",
     lengthHead: "Length",
+    seconds: "{n} seconds",
     limbs: [
       {
         id: "reading",
-        clock: "0:00",
-        length: "15 seconds",
-        deva: "जल-पाठ",
-        name: "Jal Path",
-        gloss: "The reading",
+        title: "The reading",
         body: [
-          "Five lines set themselves, one every four seconds, the way an almanac prints an entry: the river and the ghat, the level in metres, the flow in cumecs, the hour the gauge was read, and your distance from that water.",
-          "That last line is the one people repeat back. Six thousand seven hundred kilometres from Leicester, two hundred and four from Delhi.",
+          "The river and the ghat, today's flow, where that flow ranks against every day since 1997, and how far you are from the water.",
+          "The flow is the flood model's published figure for the day, so you can look it up yourself.",
         ],
-        specimen: {
-          note: "Set as it prints. These figures are a specimen. The live readings sit on the six water pages, free.",
-          lines: [
-            "GANGA · HAR KI PAURI · HARIDWAR",
-            "FLOW 1,444 m3/s · HER USUAL RUN",
-            "41st PERCENTILE SINCE 1997",
-            "MODELLED FOR 11 AUG · COPERNICUS GloFAS",
-            "YOU ARE 6,714 km FROM THIS WATER",
-          ],
-        },
-        diagram: {
-          label: "The waterline",
-          caption:
-            "One hairline at the true reading, between the station's low water datum and the danger level the agency publishes. That is the entire indicator.",
-        },
       },
       {
         id: "breath",
-        clock: "0:15",
-        length: "45 seconds",
-        deva: "श्वास",
-        name: "Shwas",
-        gloss: "The breath",
+        title: "The breath",
         body: [
-          "The waterline rises for four seconds and falls for six, six times over. Six breaths a minute with a long exhale, the rate a body settles at.",
-          "How far the line travels is scaled by today's flow, so a river in flood breathes bigger.",
+          "The waterline rises and falls. Four seconds in, six seconds out.",
+          "How far it travels depends on today's flow. A river in flood breathes bigger.",
         ],
       },
       {
-        id: "sankalp",
-        clock: "1:00",
-        length: "11 seconds, held",
-        deva: "संकल्प",
-        name: "Sankalp",
-        gloss: "The vow",
+        id: "hold",
+        title: "The sankalp",
         body: [
-          "The water goes still and the sankalp is already set: your name, your gotra, your city, the water you chose, and today's masa, paksha and tithi. Your own words sit in the last line.",
-          "You write those words once, on the first morning. Reading your own forty words back at six in the morning is the thing. Then press and hold, anywhere on the screen.",
+          "Your own words, written once when you set up. The water goes still and they sit on the screen.",
+          "Put your thumb on them and hold. Ink fills the line over eleven seconds. Let go early and it drains, and you start the hold again.",
         ],
       },
       {
         id: "stillness",
-        clock: "1:11",
-        length: "60 seconds",
-        deva: "मौन",
-        name: "Maun",
-        gloss: "The stillness",
+        title: "The stillness",
         body: [
-          "Put the phone down, face down if you like. The screen goes fully black, the brightness drops, the wake lock holds, and the river keeps running.",
-          "Pick the phone up in the middle and the river runs on regardless. A ritual keeps its own counsel.",
-          "One bell at sixty seconds, and the screen returns at a fifth of its brightness.",
+          "Put the phone down. The screen goes black for a minute and the river keeps running.",
+          "Pick it up early and the minute still runs to the end.",
         ],
       },
       {
         id: "mark",
-        clock: "2:11",
-        length: "20 seconds",
-        deva: "चिह्न",
-        name: "Chihn",
-        gloss: "The mark",
+        title: "The mark",
         body: [
-          "The morning writes itself into your register as one ruled line: the date, the tithi, the water and her level, the hour the gauge was read, and the sixty seconds.",
-          "Beneath it, the count. Then the mark is drawn from the reading, and the river fades over eight seconds.",
+          "Your morning is written, and your Sankalp Patra is drawn from it.",
+          "One morning a day. Every morning you keep is listed on your account page.",
         ],
       },
     ],
-    restraint: {
-      label: "One restraint",
-      body: "The waterline is the only sign of time passing, and it is busy doing something else.",
-    },
-  },
-
-  hold: {
-    label: "Eleven seconds",
-    title: "Held under your thumb, and it keeps its own pace.",
-    body: [
-      "While you hold, your vow fills with vermillion from left to right, the way ink soaks into paper, over eleven seconds exactly.",
-      "Eleven seconds of holding a thumb still while you read your own words is a long time. Let go early and the ink drains back, and you begin again.",
-      "It is the closest a screen gets to standing still in cold water.",
-    ],
-    pull: "Spoken.",
-    pullNote: "You said it. That is the whole of what happened, and it is the part that counts.",
   },
 
   still: {
-    label: "Sixty seconds",
-    title: "The best minute of this is the minute your screen is off.",
-    body: "Most of what is on your phone is built to keep you looking at it. This one turns itself off in the middle and asks you to put it down. That is the spine of the thing.",
-    lines: ["Put the phone down. Face down, if you like.", "The river runs for sixty seconds."],
-    note: "Full black, brightness dropped, wake lock held, the water still running. Sixty seconds, today and every day.",
+    title: "The screen goes black for a minute.",
+    body: "Halfway through, the screen goes black and asks you to put the phone down. The river keeps running while you sit.",
+    instruction: "Put the phone down.",
+    note: "The minute runs its full length, today and every day.",
   },
 
-  mark: {
-    label: "The register",
-    title: "One line a morning, kept for life.",
-    body: [
-      "Your register is the Jal Panjika, set as a page of an almanac: one ruled line per morning, in the order the mornings happened, with the river's own condition on each of them.",
+  patra: {
+    title: "The Sankalp Patra",
+    lede: "Every snan ends in one sheet. It is yours to keep and to send.",
+    carries: [
+      { k: "Names", v: "Your name and up to five more from your household." },
+      { k: "Portrait", v: "Your photograph, if you add one." },
+      { k: "Prayer", v: "One prayer you choose when you set up." },
+      {
+        k: "The river",
+        v: "The water and the ghat, the flow that morning, its rank since 1997, and the day the model published for.",
+      },
+      { k: "The sky", v: "The tithi, the nakshatra and the moon that morning." },
+      { k: "The moment", v: "When you kept it, in your own time and in India's." },
+      { k: "The seed", v: "Sixteen characters that tie the sheet to the public record." },
     ],
-    lineLabel: "The line, as it writes itself",
-    line: "11 Aug · Shravan Shu. Ekadashi · Ganga 293.11 m · 04:38 · stillness 90 s",
-    count: ["Forty-first consecutive morning.", "The Ganga has risen 1.4 m since your first."],
-    note: "That second sentence is why people come back. You watch a river change while you keep turning up, and your practice is measured against the river's own year.",
-    close: "Tomorrow, 04:41.",
-  },
-
-  chihna: {
-    eyebrow: "Sankalp Patra",
-    title: "The mark the water left.",
-    lede: "Every snan ends in one engraving, drawn from the river's published reading at the minute you kept. It carries a number, and it is yours.",
-    drawLabel: "What draws it",
-    draws: [
-      {
-        k: "Level",
-        v: "Higher water, higher horizon, more of the sheet in ink. A monsoon peak is a dark, crowded plate.",
-      },
-      {
-        k: "Flow",
-        v: "More flow, more ripples, and rougher ones. Rivers are read on a log scale.",
-      },
-      {
-        k: "Hour",
-        v: "The disc is the sun by day and the moon at night, cut to the phase it held that minute.",
-      },
-      { k: "Water", v: "Six waters, six foregrounds. Har Ki Pauri has its step run." },
-      {
-        k: "You",
-        v: "Your name, your gotra and the second you kept bend the channel. Two people at one water take away different sheets.",
-      },
+    engravingTitle: "The engraving",
+    engravingBody: [
+      "The band of water on the sheet is drawn from a seed. The seed is a SHA-256 hash of four facts printed on the sheet: the sitting's id, the water, the model day and the flow.",
+      "A river in spate draws dense and high. A slack one draws thin and low. Two mornings at the same water draw differently, because the flow was different.",
     ],
-    forgeLabel: "Where the seed comes from",
-    forgeTitle: "The seed contains the government's own number.",
-    forgeBody: [
-      "The picture is drawn from a seed, and the seed is a sha256 hash of a single line of text.",
-      "To mint a chihna showing a monsoon peak you would have to forge the Government of India's gauge record, because the peak sits inside the string that produced the hash. Run sha256 over the line yourself and you get the seed printed on your sheet.",
-    ],
-    seedLabel: "The line the picture is drawn from",
-    seedLine:
-      "snanify.chihna|1|ganga-haridwar|{station}|{observed}|293.110|1240.000|{kept}|{name}|{gotra}",
-    seedNote:
-      "The shape of it. Your own line carries your station, your instants and your name, printed in full for any stranger to hash.",
-    flood:
-      "When the water stands above the agency's published danger line, the sheet prints that, plainly. That is a flood, and people downstream are being moved.",
+    checkTitle: "Anyone can check it",
+    checkBody:
+      "Fetch that day's figure from the flood model, build the line below, hash it, and you get the same seed and the same engraving. Changing the sheet means changing the public record first.",
+    seedLine: "<sitting id> | <water> | <model day> | <flow>",
+    seedNote: "Your sheet prints its own line in full, with the real values.",
   },
 
   before: {
-    eyebrow: "Before you pay",
-    title: "The four things people ask.",
+    title: "Before you pay",
     items: [
       {
-        q: "Do I have to be awake at four?",
-        a: "The panchang names an hour, and the notification arrives when you told us you wake. The form is short enough that a person running late does it anyway, which is what builds a habit.",
+        q: "Do I have to be up before sunrise?",
+        a: "The panchang names the muhurat, and a reminder comes at the hour you choose, in your own time zone. Sit when you wake. One morning a day.",
       },
       {
-        q: "What happens when the gauge goes quiet?",
-        a: "The screen prints the last real reading with its true hour and its true age: read 01:38 IST, three hours and twelve minutes ago. A stale honest reading is completely fine.",
+        q: "What if the model has no figure for today?",
+        a: "The sheet stands on the seasonal median for that week and says so. Every figure is labelled where it appears.",
       },
       {
-        q: "Can I shorten it?",
-        a: "The form runs its full length every morning, the sixty seconds included. A practice you can hurry is a preference.",
+        q: "Can I make it shorter?",
+        a: "The form runs its full three minutes every morning, the minute of stillness included.",
       },
       {
         q: "Who sees my sankalp?",
-        a: "Your words stay yours. The verification page returns the river, the station, the level and the minute, which is the part that is theirs to check.",
+        a: "You. It stays on your own account. The sheet carries the names, the water and the figures, and that is what you send.",
       },
     ],
   },
 
   tariff: {
-    eyebrow: "The tariff",
-    title: "Paid, and priced like a morning.",
-    lede: "The live water, the panchang, every muhurat and all six river pages stay free forever, to anybody. The three minutes are the part you buy.",
-    heads: { price: "Price", per: "Per snan" },
+    title: "Prices",
+    lede: "The rivers, the panchang and the muhurat calendar are free to read. You pay for the snan and the sheet it leaves behind. One price, in your own currency.",
+    heads: { price: "Price", per: "Per morning" },
     rows: [
       {
         key: "one",
         name: "Ek Dhara",
         deva: "एक धारा",
-        what: "One snan",
-        body: "One morning, taken once. Enough to find out what three minutes with a real river is like.",
+        what: "One morning",
+        body: "One morning, to see what it is like.",
       },
       {
         key: "eleven",
         name: "Gyarah",
         deva: "ग्यारह",
-        what: "Eleven snans",
-        body: "Eleven mornings, long enough to know whether you will keep it, and eleven is the count this tradition gives things in. One charge, taken whenever you take them, and they wait.",
+        what: "Eleven mornings",
+        body: "Eleven mornings, paid once. Take them on eleven days in a row or spread them through the year.",
         hero: true,
       },
       {
         key: "sixty",
         name: "Varsh Kosh",
         deva: "वर्ष कोष",
-        what: "Sixty snans",
-        body: "Two unbroken months, or a year of the mornings that matter, at the lowest rate we set.",
+        what: "Sixty mornings",
+        body: "Sixty mornings, five a month for a year, at the lowest price per morning.",
       },
     ],
-    heroLabel: "The one to take",
-    heroWhyLabel: "Why eleven",
-    heroBody: [
-      "Gyarah is the one to take, and the reason is arithmetic rather than persuasion.",
-      "A single charge of one hands about a third of itself to the card networks. Eleven in one charge keeps that third in the price, which is how a morning stays where it is.",
-    ],
-    freeLabel: "Free forever, open to anyone",
-    freeBody:
-      "The live state of all six waters, the panchang, every muhurat and its occasions, and each river's own page. The reading half of this site is free, and it stays free.",
-    cta: "Choose your water",
-    ctaNote: "Six waters. The one your family is from, or the one you have always meant to see.",
+    note: "Prices show before local tax. Mornings keep until you use them.",
+    cta: "Begin your snan",
   },
 
   closing: {
-    title: "The Ganga stands at her own level this hour.",
-    body: "Be one of the people watching, for three minutes, before the day starts.",
-    cta: "Take eleven mornings",
+    title: "Begin tomorrow morning.",
+    body: "Set it up tonight. Choose your river, add the names, and sit with it before the day starts.",
+    cta: "Begin your snan",
   },
 };
 
@@ -477,268 +316,168 @@ const en: Copy = {
 
 const hi: Copy = {
   meta: {
-    title: "स्नान, तीन मिनट एक सच्ची नदी के साथ",
+    title: "स्नान, अपनी नदी के साथ तीन मिनट",
     description:
-      "एक डिजिटल स्नान। तीन मिनट, नदी के आज के प्रवाह के साथ, जिसे कोपरनिकस ने मॉडल किया है और कोई भी जाँच सकता है; ग्यारह सेकंड थमा हुआ संकल्प; साठ सेकंड की काली स्क्रीन; और एक चिह्न, जो सार्वजनिक अभिलेख से खिंचता है।",
+      "एक डिजिटल स्नान। पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट जिसके पास आप बड़े हुए, और एक संकल्प पत्र जिस पर आपके परिवार के नाम हैं। ग्यारह सुबहें, ग्यारह में।",
   },
 
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
 
   hero: {
-    titleA: "तीन मिनट।",
-    titleB: "नदी आप तक आती है।",
-    lede: "तीन मिनट, उस नदी के साथ जो आज जिस प्रवाह पर बह रही है, कोपरनिकस द्वारा मॉडल की हुई और सबके लिए प्रकाशित। उसकी लय पर साँस लीजिए। संकल्प ग्यारह सेकंड थामे रखिए। साठ सेकंड के लिए फ़ोन नीचे रख दीजिए।",
-    offer: "ग्यारह सुबहें {price} में, हर सुबह के लिए एक। जो पढ़ने का है, वह सदा निःशुल्क।",
-    ctaPrimary: "ग्यारह सुबहें लीजिए, {price}",
+    title: "अपनी नदी के साथ तीन मिनट।",
+    lede: "आपकी चुनी नदी का आज का प्रवाह, कोपरनिकस बाढ़-मॉडल से, जिसे कोई भी जाँच सकता है। आप उसके साथ तीन मिनट बैठते हैं। अंत में आपके पास एक संकल्प पत्र होता है जिस पर आपके परिवार के नाम हैं।",
+    offer: "ग्यारह सुबहें {price} में। जब चाहें, तब लीजिए।",
+    ctaPrimary: "अपना स्नान आरंभ करें",
     ctaSecondary: "पाँच अंग देखिए",
   },
 
   sticky: {
-    name: "ग्यारह, ११ सुबहें",
-    cta: "जल चुनिए",
-  },
-
-  truth: {
-    label: "जो वास्तव में सत्य है",
-    title: "यहाँ सब कुछ वास्तविक है, और वह आपका है।",
-    body: [
-      "एक नदी, आज जिस प्रवाह पर वह बह रही है, कोपरनिकस द्वारा मॉडल की हुई और सबके लिए प्रकाशित। पंचांग, गणना किया हुआ। और आपके अपने शब्द, हर सुबह लौटाकर पढ़ाए जाते।",
-      "साधना आपकी है। आप उसे कहते हैं, आप उसे निभाते हैं, और चिह्न पर वह अंक होता है जिसे कोई अजनबी जाकर जाँच सकता है।",
-      "हमारे सर्वर नदी के नीचे, नदी में ही बैठे हैं।",
-    ],
+    name: "ग्यारह सुबहें",
+    cta: "आरंभ",
   },
 
   form: {
-    eyebrow: "स्वरूप",
-    title: "पाँच अंग, तीन मिनट, हर दिन वही।",
-    lede: "वही पाँच अंग, वही क्रम, वही अवधि। केवल नदी बदलती है, और वह अपने आप बदलती है।",
-    clockHead: "घड़ी",
+    title: "पाँच अंग",
+    lede: "हर सुबह वही पाँच अंग, उसी क्रम में। केवल नदी बदलती है।",
+    clockHead: "आरंभ",
     lengthHead: "अवधि",
+    seconds: "{n} सेकंड",
     limbs: [
       {
         id: "reading",
-        clock: "०:००",
-        length: "१५ सेकंड",
-        deva: "जल-पाठ",
-        name: "Jal Path",
-        gloss: "पाठ",
+        title: "पाठ",
         body: [
-          "पाँच पंक्तियाँ एक-एक कर बैठती हैं, हर चार सेकंड में एक, जैसे पंचांग कोई प्रविष्टि छापता है: नदी और घाट, मीटर में जलस्तर, क्यूमेक में प्रवाह, पाठ का घंटा, और उस जल से आपकी दूरी।",
-          "यही अंतिम पंक्ति लोग दोहराकर बताते हैं। लेस्टर से छह हज़ार सात सौ किलोमीटर, दिल्ली से दो सौ चार।",
+          "नदी और घाट, आज का प्रवाह, 1997 से अब तक के हर दिन के सामने उसका स्थान, और उस जल से आपकी दूरी।",
+          "प्रवाह बाढ़-मॉडल का उस दिन का प्रकाशित आँकड़ा है, इसलिए आप उसे स्वयं देख सकते हैं।",
         ],
-        specimen: {
-          note: "जैसा छपता है, वैसा ही। ये अंक नमूना हैं। सजीव पाठ छहों जल-पृष्ठों पर हैं, निःशुल्क।",
-          lines: [
-            "गंगा · हर की पौड़ी · हरिद्वार",
-            "प्रवाह १,४४४ घन मी/से · सामान्य बहाव",
-            "१९९७ से ४१वाँ प्रतिशतक",
-            "११ अगस्त के लिए मॉडल · कोपरनिकस GloFAS",
-            "आप इस जल से ६,७१४ किमी दूर हैं",
-          ],
-        },
-        diagram: {
-          label: "जलरेखा",
-          caption:
-            "सच्चे पाठ पर एक बाल-बराबर रेखा, स्टेशन के न्यूनतम जल-मान और एजेंसी के अपने प्रकाशित संकट स्तर के बीच मापी हुई। सूचक बस यही है।",
-        },
       },
       {
         id: "breath",
-        clock: "०:१५",
-        length: "४५ सेकंड",
-        deva: "श्वास",
-        name: "Shwas",
-        gloss: "साँस",
+        title: "श्वास",
         body: [
-          "जलरेखा चार सेकंड चढ़ती है और छह सेकंड उतरती है, छह बार। मिनट में छह साँसें, लंबे निःश्वास के साथ, वही गति जिस पर शरीर स्वयं ठहरता है।",
-          "रेखा कितनी दूर तक जाएगी, यह आज के प्रवाह से तय होता है, इसलिए उफान पर नदी बड़ी साँस लेती है।",
+          "जलरेखा उठती और उतरती है। चार सेकंड साँस भीतर, छह सेकंड बाहर।",
+          "वह कितनी दूर तक जाती है, यह आज के प्रवाह पर निर्भर है। उफान पर नदी बड़ी साँस लेती है।",
         ],
       },
       {
-        id: "sankalp",
-        clock: "१:००",
-        length: "११ सेकंड, थामे",
-        deva: "संकल्प",
-        name: "Sankalp",
-        gloss: "संकल्प",
+        id: "hold",
+        title: "संकल्प",
         body: [
-          "जल स्थिर हो जाता है और संकल्प पहले से भरा हुआ रहता है: आपका नाम, गोत्र, आपका नगर, चुना हुआ जल, और आज का मास, पक्ष तथा तिथि। अंतिम पंक्ति में आपके अपने शब्द बैठे रहते हैं।",
-          "वे शब्द आप पहली सुबह एक बार लिखते हैं। भोर में अपने ही चालीस शब्द पढ़ना, वस्तु वही है। फिर स्क्रीन पर कहीं भी दबाकर थामे रहिए।",
+          "आपके अपने शब्द, जो आपने सेटअप के समय एक बार लिखे। जल थम जाता है और वे स्क्रीन पर आ जाते हैं।",
+          "उन पर अंगूठा रखिए और थामे रहिए। ग्यारह सेकंड में स्याही पंक्ति को भर देती है। पहले छोड़ दिया तो स्याही लौट जाती है, और आप फिर से थामते हैं।",
         ],
       },
       {
         id: "stillness",
-        clock: "१:११",
-        length: "६० सेकंड",
-        deva: "मौन",
-        name: "Maun",
-        gloss: "मौन",
+        title: "मौन",
         body: [
-          "फ़ोन नीचे रख दीजिए, चाहें तो उल्टा। स्क्रीन पूरी तरह काली हो जाती है, चमक गिर जाती है, जागरण-ताला लगा रहता है, और नदी बहती रहती है।",
-          "बीच में फ़ोन उठा लें तो नदी वैसे ही बहती रहती है। साधना पहरा नहीं देती।",
-          "साठ सेकंड पर एक घंटी, और स्क्रीन पाँचवें हिस्से की चमक पर लौट आती है।",
+          "फ़ोन नीचे रख दीजिए। स्क्रीन एक मिनट के लिए काली हो जाती है और नदी बहती रहती है।",
+          "पहले उठा लें तो भी मिनट पूरा चलता है।",
         ],
       },
       {
         id: "mark",
-        clock: "२:११",
-        length: "२० सेकंड",
-        deva: "चिह्न",
-        name: "Chihn",
-        gloss: "चिह्न",
+        title: "चिह्न",
         body: [
-          "वह सुबह आपकी पंजिका में एक ही पंक्ति में स्वयं लिख जाती है: दिनांक, तिथि, जल और उसका स्तर, पाठ का घंटा, और वे साठ सेकंड।",
-          "उसके नीचे गणना। फिर उसी पाठ से चिह्न खिंचता है, और नदी आठ सेकंड में धीरे-धीरे शांत हो जाती है।",
+          "आपकी सुबह लिखी जाती है, और उसी से आपका संकल्प पत्र बनता है।",
+          "दिन में एक सुबह। आपकी हर रखी हुई सुबह आपके खाते के पृष्ठ पर सूचीबद्ध रहती है।",
         ],
       },
     ],
-    restraint: {
-      label: "एक संयम",
-      body: "समय बीतने का एकमात्र चिह्न जलरेखा है, और वह अपने आप में दूसरा काम कर रही है।",
-    },
-  },
-
-  hold: {
-    label: "ग्यारह सेकंड",
-    title: "अंगूठे के नीचे थमा हुआ, और अपनी ही गति से चलता हुआ।",
-    body: [
-      "जब तक आप थामे रहते हैं, आपका अपना संकल्प बाईं ओर से दाईं ओर सिंदूरी रंग से भरता जाता है, जैसे स्याही कागज़ में उतरती है। पूरे ग्यारह सेकंड।",
-      "अपने ही शब्द पढ़ते हुए ग्यारह सेकंड अंगूठा स्थिर रखना सचमुच लंबा समय है। पहले छोड़ दिया तो स्याही लौट जाती है, और आप फिर से आरंभ करते हैं।",
-      "ठंडे जल में स्थिर खड़े रहने के सबसे निकट कोई स्क्रीन इतना ही पहुँच सकती है।",
-    ],
-    pull: "उच्चारित।",
-    pullNote: "आपने उसे कहा। हुआ इतना ही है, और गिनने की बात भी यही है।",
   },
 
   still: {
-    label: "साठ सेकंड",
-    title: "इसका सबसे अच्छा मिनट वह है जब आपकी स्क्रीन बंद रहती है।",
-    body: "आपके फ़ोन में जो कुछ है, उसका अधिकांश इसी के लिए बना है कि आप देखते रहें। यह बीच में स्वयं को बुझा देता है और कहता है कि फ़ोन नीचे रख दीजिए। यही इसकी रीढ़ है।",
-    lines: ["फ़ोन नीचे रख दीजिए। चाहें तो उल्टा।", "साठ सेकंड नदी बहती रहेगी।"],
-    note: "पूरी तरह काली स्क्रीन, घटी हुई चमक, लगा हुआ जागरण-ताला, और बहता हुआ जल। साठ सेकंड, आज और हर दिन।",
+    title: "स्क्रीन एक मिनट के लिए काली हो जाती है।",
+    body: "बीच में फ़ोन स्वयं बुझ जाता है और कहता है कि उसे नीचे रख दीजिए। आप बैठे रहते हैं और नदी बहती रहती है।",
+    instruction: "फ़ोन नीचे रख दीजिए।",
+    note: "मिनट पूरा चलता है, आज भी और हर दिन।",
   },
 
-  mark: {
-    label: "पंजिका",
-    title: "हर सुबह एक पंक्ति, जीवन भर के लिए रखी हुई।",
-    body: [
-      "आपकी पंजिका जल पंजिका है, और वह पंचांग के पन्ने की तरह छपती है: हर सुबह एक पंक्ति, उसी क्रम में जिस क्रम में सुबहें बीतीं, और हर एक के साथ उस दिन नदी की अपनी स्थिति।",
+  patra: {
+    title: "संकल्प पत्र",
+    lede: "हर स्नान के अंत में एक पत्र बनता है। वह आपका है, रखने के लिए और भेजने के लिए।",
+    carries: [
+      { k: "नाम", v: "आपका नाम और आपके घर के पाँच और नाम।" },
+      { k: "चित्र", v: "आपकी तस्वीर, यदि आप जोड़ें।" },
+      { k: "प्रार्थना", v: "एक प्रार्थना, जो आप सेटअप के समय चुनते हैं।" },
+      {
+        k: "नदी",
+        v: "जल और घाट, उस सुबह का प्रवाह, 1997 से उसका स्थान, और वह दिन जिसके लिए मॉडल ने आँकड़ा दिया।",
+      },
+      { k: "आकाश", v: "उस सुबह की तिथि, नक्षत्र और चंद्रमा।" },
+      { k: "क्षण", v: "आपने कब रखा, आपके अपने समय में और भारत के समय में।" },
+      { k: "बीज", v: "सोलह अक्षर, जो पत्र को सार्वजनिक अभिलेख से जोड़ते हैं।" },
     ],
-    lineLabel: "पंक्ति, जैसी स्वयं लिखती है",
-    line: "११ अग. · श्रावण शु. एकादशी · गंगा २९३·११ मी · ०४:३८ · मौन ९० से.",
-    count: ["इकतालीसवीं लगातार सुबह।", "आपकी पहली सुबह से गंगा १·४ मी चढ़ चुकी हैं।"],
-    note: "दूसरी पंक्ति ही वह कारण है जिससे लोग लौटते हैं। आप एक नदी को बदलते हुए देखते हैं और साथ-साथ स्वयं आते रहते हैं, और आपकी साधना नदी के अपने वर्ष के मुक़ाबले नापी जाती है।",
-    close: "कल, ०४:४१।",
-  },
-
-  chihna: {
-    eyebrow: "संकल्प पत्र",
-    title: "जो चिह्न जल छोड़ गया।",
-    lede: "हर स्नान के अंत में एक उत्कीर्ण चित्र बनता है, जो उसी मिनट के नदी के प्रकाशित पाठ से खिंचता है। उस पर एक क्रमांक होता है, और वह आपका है।",
-    drawLabel: "इसे क्या बनाता है",
-    draws: [
-      {
-        k: "जलस्तर",
-        v: "जल जितना ऊँचा, क्षितिज उतना ऊँचा, स्याही उतनी अधिक। वर्षा के शिखर का पत्र गहरा और भरा हुआ होता है।",
-      },
-      {
-        k: "प्रवाह",
-        v: "प्रवाह जितना तेज़, तरंगें उतनी अधिक और खुरदरी। नदियाँ लघुगणक पर पढ़ी जाती हैं।",
-      },
-      {
-        k: "बेला",
-        v: "बिंब दिन में सूर्य है और रात्रि में चंद्र, उसी मिनट की अपनी कला में कटा हुआ।",
-      },
-      { k: "जल", v: "छह जल, छह अग्रभूमियाँ। हर की पौड़ी में उसकी सीढ़ियाँ हैं।" },
-      {
-        k: "आप",
-        v: "आपका नाम, आपका गोत्र और वह क्षण जो आपने रखा, धारा का मोड़ तय करते हैं। एक ही जल पर दो लोग भी अलग पत्र लेकर उठते हैं।",
-      },
+    engravingTitle: "उत्कीर्ण चित्र",
+    engravingBody: [
+      "पत्र पर जल की पट्टी एक बीज से बनती है। बीज पत्र पर छपे चार तथ्यों का SHA-256 हैश है: बैठक का क्रमांक, जल, मॉडल का दिन और प्रवाह।",
+      "उफान पर नदी घनी और ऊँची बनती है। मंद नदी पतली और नीची। एक ही जल की दो सुबहें मिलती-जुलती और अलग दिखती हैं, क्योंकि नदी वैसी ही थी।",
     ],
-    forgeLabel: "बीज कहाँ से आता है",
-    forgeTitle: "बीज के भीतर सरकार की अपनी संख्या बैठी है।",
-    forgeBody: [
-      "चित्र एक बीज से बनता है, और बीज पाठ की एक ही पंक्ति का sha256 है।",
-      "बाढ़ के शिखर वाला चिह्न गढ़ने के लिए आपको भारत सरकार का गेज अभिलेख गढ़ना पड़ेगा, क्योंकि वह शिखर उसी पंक्ति के भीतर है जिससे हैश बना। उस पर स्वयं sha256 चलाइए, वही बीज मिलेगा जो आपके पत्र पर छपा है।",
-    ],
-    seedLabel: "जिस पंक्ति से चित्र बनता है",
-    seedLine:
-      "snanify.chihna|1|ganga-haridwar|{station}|{observed}|293.110|1240.000|{kept}|{name}|{gotra}",
-    seedNote:
-      "यह उसका ढाँचा है। आपकी पंक्ति में आपका स्टेशन, आपके क्षण और आपका नाम होते हैं, और वह पूरी वहाँ छपी रहती है जहाँ कोई भी उस पर हैश चला सके।",
-    flood:
-      "जब जल एजेंसी के प्रकाशित संकट स्तर से ऊपर हो, पत्र वही छापता है, सीधे शब्दों में। वह बाढ़ है, और नीचे के गाँव खाली कराए जा रहे हैं।",
+    checkTitle: "कोई भी जाँच सकता है",
+    checkBody:
+      "उस दिन का आँकड़ा बाढ़-मॉडल से लीजिए, नीचे दी पंक्ति बनाइए, उसका हैश निकालिए, और आपको वही बीज और वही चित्र मिलेगा। पत्र बदलने के लिए पहले सार्वजनिक अभिलेख बदलना पड़ेगा।",
+    seedLine: "<बैठक क्रमांक> | <जल> | <मॉडल का दिन> | <प्रवाह>",
+    seedNote: "आपका पत्र अपनी पंक्ति पूरी छापता है, असली मानों के साथ।",
   },
 
   before: {
-    eyebrow: "देने से पहले",
-    title: "चार बातें, जो लोग पूछते हैं।",
+    title: "देने से पहले",
     items: [
       {
-        q: "क्या चार बजे जागना अनिवार्य है?",
-        a: "पंचांग एक घड़ी का नाम लेता है, और सूचना उसी समय आती है जो आपने जागने का बताया है। स्वरूप इतना छोटा है कि देर से उठा व्यक्ति भी उसे कर ही लेता है, और आदत इसी गुण से बनती है।",
+        q: "क्या सूर्योदय से पहले उठना ज़रूरी है?",
+        a: "पंचांग मुहूर्त बताता है, और स्मरण उस घड़ी पर आता है जो आप चुनते हैं, आपके अपने समय-क्षेत्र में। जब जागें, तब बैठिए। दिन में एक सुबह।",
       },
       {
-        q: "गेज चुप हो जाए तो?",
-        a: "स्क्रीन अंतिम सच्चा पाठ छापती है, उसके सच्चे घंटे और सच्ची आयु के साथ: पाठ ०१:३८ भा.मा.स., तीन घंटे बारह मिनट पहले। पुराना पर सच्चा पाठ पूरी तरह ठीक है।",
+        q: "अगर आज के लिए मॉडल का आँकड़ा न हो तो?",
+        a: "तब पत्र उस सप्ताह के ऋतु-मध्यक पर खड़ा होता है और यह बात लिखता है। हर आँकड़ा वहीं लेबल किया जाता है जहाँ वह छपता है।",
       },
       {
         q: "क्या इसे छोटा किया जा सकता है?",
-        a: "स्वरूप हर सुबह अपनी पूरी अवधि चलता है, वे साठ सेकंड भी। जिस विधि को जल्दी निपटाया जा सके, वह सुविधा है।",
+        a: "स्वरूप हर सुबह अपने पूरे तीन मिनट चलता है, मौन का मिनट भी।",
       },
       {
         q: "मेरा संकल्प कौन देखता है?",
-        a: "आपके अपने शब्द आपके रहते हैं। सत्यापन पृष्ठ अजनबी को नदी, स्टेशन, जलस्तर और वह मिनट लौटाता है, और जाँचने का अधिकार उसे इतने पर है।",
+        a: "आप। वह आपके अपने खाते में रहता है। पत्र पर नाम, जल और आँकड़े होते हैं, और आप वही भेजते हैं।",
       },
     ],
   },
 
   tariff: {
-    eyebrow: "शुल्क",
-    title: "सशुल्क, और एक सुबह के भाव पर।",
-    lede: "सजीव जल, पंचांग, हर मुहूर्त और छहों नदियों के अपने पृष्ठ सदा निःशुल्क हैं, किसी के लिए भी। शुल्क उन तीन मिनटों का है।",
-    heads: { price: "मूल्य", per: "प्रति स्नान" },
+    title: "मूल्य",
+    lede: "नदियाँ, पंचांग और मुहूर्त पढ़ना निःशुल्क है। आप स्नान और उससे बने पत्र का मूल्य देते हैं। एक मूल्य, आपकी अपनी मुद्रा में।",
+    heads: { price: "मूल्य", per: "प्रति सुबह" },
     rows: [
       {
         key: "one",
         name: "Ek Dhara",
         deva: "एक धारा",
-        what: "एक स्नान",
-        body: "एक सुबह, एक बार। इतना जान लेने के लिए कि एक सच्ची नदी के साथ तीन मिनट कैसे बीतते हैं।",
+        what: "एक सुबह",
+        body: "एक सुबह, यह देखने के लिए कि यह कैसा है।",
       },
       {
         key: "eleven",
         name: "Gyarah",
         deva: "ग्यारह",
-        what: "ग्यारह स्नान",
-        body: "ग्यारह सुबहें, जितनी यह जान लेने के लिए पर्याप्त हैं कि आप इसे निभाएँगे, और ग्यारह वही गिनती है जिसमें यह परंपरा वस्तुएँ देती आई है। एक भुगतान, जब चाहें तब लिए हुए, और वे प्रतीक्षा करती हैं।",
+        what: "ग्यारह सुबहें",
+        body: "ग्यारह सुबहें, एक बार का भुगतान। लगातार ग्यारह दिन लीजिए, या पूरे वर्ष में फैला लीजिए।",
         hero: true,
       },
       {
         key: "sixty",
         name: "Varsh Kosh",
         deva: "वर्ष कोष",
-        what: "साठ स्नान",
-        body: "दो महीने लगातार, या वर्ष भर की वे सुबहें जो मायने रखती हैं, और वह भी हमारी सबसे कम दर पर।",
+        what: "साठ सुबहें",
+        body: "साठ सुबहें, महीने में पाँच, पूरे वर्ष, प्रति सुबह सबसे कम मूल्य पर।",
       },
     ],
-    heroLabel: "लेने योग्य यही है",
-    heroWhyLabel: "ग्यारह ही क्यों",
-    heroBody: [
-      "ग्यारह ही लेने योग्य है, और कारण मनुहार नहीं, गणित है।",
-      "अकेले एक का भुगतान अपना लगभग तीसरा हिस्सा कार्ड नेटवर्क को दे बैठता है। ग्यारह एक साथ लेने पर वह हिस्सा भाव में ही रह जाता है, और इसीलिए एक सुबह अपने भाव पर टिकी रहती है।",
-    ],
-    freeLabel: "सदा निःशुल्क, सबके लिए",
-    freeBody:
-      "छहों जल की सजीव स्थिति, पंचांग, हर मुहूर्त और उसके पर्व, और हर नदी का अपना पृष्ठ। इस स्थल का जो भाग पढ़ने का है वह निःशुल्क है और निःशुल्क ही रहेगा।",
-    cta: "जल चुनिए",
-    ctaNote: "छह जल। वह जिससे आपका परिवार है, या वह जिसे आप सदा देखना चाहते रहे।",
+    note: "मूल्य स्थानीय कर से पहले के हैं। सुबहें तब तक रखी रहती हैं जब तक आप उन्हें लें।",
+    cta: "अपना स्नान आरंभ करें",
   },
 
   closing: {
-    title: "गंगा इस घंटे अपने ही स्तर पर हैं।",
-    body: "दिन आरंभ होने से पहले, तीन मिनट के लिए, आप उन लोगों में हो सकते हैं जो देख रहे हैं।",
-    cta: "ग्यारह सुबहें लीजिए",
+    title: "कल सुबह आरंभ कीजिए।",
+    body: "आज रात सेटअप कर लीजिए। नदी चुनिए, नाम जोड़िए, और दिन शुरू होने से पहले उसके साथ बैठिए।",
+    cta: "अपना स्नान आरंभ करें",
   },
 };
 

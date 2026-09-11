@@ -6,36 +6,6 @@ import { PRICE } from "@/content/prices";
 /* Shared primitives, cut for the printed panchang. Everything here is flat:
    solid fills, hard rules, one spot colour. No radius, no soft shadow. */
 
-/** A section label, set as a ruled column heading. */
-export function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="label flex items-center gap-3 text-spot">
-      <span className="h-[2px] w-6 bg-spot" />
-      {children}
-    </p>
-  );
-}
-
-export function SectionHeader({
-  eyebrow,
-  title,
-  lede,
-  className = "",
-}: {
-  eyebrow?: string;
-  title: string;
-  lede?: string;
-  className?: string;
-}) {
-  return (
-    <div className={`max-w-3xl ${className}`}>
-      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h2 className="display mt-4 text-[2.1rem] sm:text-[2.9rem]">{title}</h2>
-      {lede && <p className="mt-5 max-w-2xl leading-relaxed text-ink2">{lede}</p>}
-    </div>
-  );
-}
-
 export function Section({
   id,
   tinted = false,

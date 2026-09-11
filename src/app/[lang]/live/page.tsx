@@ -141,7 +141,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       mainEntity: dataset,
       breadcrumb: breadcrumbList(lang, [
         { name: "Snanify", path: "/" },
-        { name: t.eyebrow, path: ROUTE },
+        { name: t.crumb, path: ROUTE },
       ]),
     }),
   ];

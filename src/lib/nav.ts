@@ -20,8 +20,8 @@ const LABELS = {
     hi: "मुहूर्त",
   },
   ethics: {
-    en: "Ethics & rites",
-    hi: "नीति एवं विधि",
+    en: "How it is made",
+    hi: "यह कैसे बनी है",
   },
   faq: {
     en: "Questions",

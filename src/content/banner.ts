@@ -20,13 +20,13 @@ import type { FullLang as Lang } from "@/lib/locales";
 export const SHOW_BANNER = true;
 
 const en = {
-  text: "The rivers, the panchang and the calendar are live and free to read. The snan itself opens shortly.",
-  short: "Live and free to read. The snan opens shortly.",
+  text: "The rivers, the panchang and the muhurat calendar are free to read now. The snan opens soon.",
+  short: "Free to read now. The snan opens soon.",
 };
 
 const hi = {
-  text: "नदियाँ, पंचांग और मुहूर्त अभी सजीव हैं और पढ़ने के लिए निःशुल्क। स्नान शीघ्र ही आरंभ होगा।",
-  short: "सजीव और निःशुल्क। स्नान शीघ्र ही।",
+  text: "नदियाँ, पंचांग और मुहूर्त-पंचांग अभी निःशुल्क पढ़े जा सकते हैं। स्नान शीघ्र आरंभ होगा।",
+  short: "अभी निःशुल्क पढ़िए। स्नान शीघ्र।",
 };
 
 export const bannerContent = { en, hi } satisfies Record<Lang, typeof en>;
