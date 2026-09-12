@@ -44,7 +44,7 @@ export function Header({
      src/components/site/HeaderCta.tsx. */
 
   return (
-    <header className="sticky top-0 z-50 bg-paper">
+    <header className="sticky top-0 z-50 bg-paper lg:relative">
       {/* Above the masthead and inside the sticky header, so it travels with
           it rather than scrolling away and leaving the page unexplained. */}
       <Banner lang={lang} />
@@ -64,6 +64,51 @@ export function Header({
             <LangSwitch lang={lang} currentPath={currentPath} label={t.langLabel} />
 
             <ThemeToggle label={t.themeLabel} />
+
+            {/* The menu, phones and tablets. A <details> so it needs no
+                script and closes itself when the page changes. The panel is
+                a ruled register of the same section links the wide masthead
+                shows in its row, with the one action underneath. */}
+            {navLinks.length > 0 && (
+              <details className="group lg:hidden">
+                <summary className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong px-3 text-ink transition-colors hover:bg-ink hover:text-paper [&::-webkit-details-marker]:hidden">
+                  <span aria-hidden="true" className="flex flex-col gap-[5px] group-open:hidden">
+                    <span className="block h-[2px] w-5 bg-current" />
+                    <span className="block h-[2px] w-5 bg-current" />
+                    <span className="block h-[2px] w-5 bg-current" />
+                  </span>
+                  <svg aria-hidden="true" viewBox="0 0 20 20" className="hidden h-5 w-5 group-open:block">
+                    <path d="M3 3 L17 17 M17 3 L3 17" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                  <span className="sr-only">{t.nav.menu}</span>
+                </summary>
+                {/* Positioned against the sticky header, so it spans the
+                    page and hangs under the masthead rule. */}
+                <div className="absolute inset-x-0 top-full z-50 max-h-[80svh] overflow-y-auto border-b-2 border-rulestrong bg-paper">
+                  <ul className="mx-auto max-w-6xl px-5 sm:px-8">
+                    {navLinks.map((l) => (
+                      <li key={l.href} className="border-b border-rule">
+                        <a
+                          href={l.href}
+                          className="display flex min-h-[56px] items-center text-[1.25rem] text-ink"
+                        >
+                          {l.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
+                    <a
+                      href={ctaTo ?? ctaHref(lang)}
+                      className="label flex min-h-[48px] items-center justify-center bg-spot text-paper transition-colors hover:bg-ink"
+                    >
+                      {t.nav.cta}
+                    </a>
+                    <p className="label mt-4 text-ink2">{t.edition}</p>
+                  </div>
+                </div>
+              </details>
+            )}
 
             {cta && !ctaTo ? (
               cta
