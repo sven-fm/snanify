@@ -36,19 +36,14 @@ the second screen on.
 still the default path for somebody who presses nothing. Hydration: the bar's
 widths are numbers, never raw trigonometry.
 
-## 2. The morning that ended on /begin
+## 2. The morning that ended on /begin. Done 15 September.
 
-**What is wrong.** After the first production sitting the page landed on
-`/begin` instead of the Sankalp Patra. `/today` sends to `/begin` when the
-balance is zero and no sitting is found for today, so either the morning was
-never written, or it was written and the return trip re-requested `/today`.
-
-**Done looks like.** The cause is known from the owner's two answers (is the
-sitting listed on `/account`; did the phone lock during the stillness) and the
-production log, and the sitting either survives a locked phone or says plainly
-what happened. If the mark's request fails, the screen already says "Your
-morning did not save" with a retry; a page reload mid-sitting must not lose a
-morning that was already paid for.
+The sitting was saved; the return trip broke. `/today` judged the balance
+before it looked for a morning already kept today, so once the last credit
+was spent, a re-request of the page during the mark went to the pack picker.
+The kept morning is now answered first, and the end of the sitting also
+offers a button to the sheet. What re-requested the page is still unknown; a
+locked phone waking is the likely cause, and the fix holds either way.
 
 ## 3. The Sankalp Patra page, for the person who kept it
 
