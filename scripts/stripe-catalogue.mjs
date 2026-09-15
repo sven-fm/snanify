@@ -56,6 +56,15 @@ export const CATALOGUE = [
 const BASE = "usd";
 
 /**
+ * Stripe product tax code. Stripe's own registry: "Software as a service (SaaS),
+ * personal use", which is what a web-delivered, fully automated sitting is.
+ * Managed Payments refuses a Checkout line whose product carries no code, and
+ * Stripe Tax uses the same code to pick a rate, so it belongs on the product
+ * in either mode.
+ */
+const TAX_CODE = "txcd_10103000";
+
+/**
  * Find the product for a pack.
  *
  * NOT `products.search`: Stripe's search index is eventually consistent and
@@ -90,12 +99,14 @@ async function run() {
       await stripe.products.update(product.id, {
         name: item.name,
         description: item.description,
+        tax_code: TAX_CODE,
       });
       console.log(`product ${item.lookupKey}: kept ${product.id}`);
     } else {
       product = await stripe.products.create({
         name: item.name,
         description: item.description,
+        tax_code: TAX_CODE,
         metadata: { snanify_pack: item.lookupKey, credits: String(item.credits) },
       });
       console.log(`product ${item.lookupKey}: created ${product.id}`);

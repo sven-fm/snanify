@@ -252,7 +252,7 @@ Tracked here so a phase never blocks silently on them.
 
 - [ ] **Stripe account** activated for the non-Indian entity, with INR, EUR, CAD, USD presentment enabled. Check in the Stripe dashboard that INR is presentable from this account's country; if it is not, India is shown USD until it is.
 - [ ] **Indian cards.** Many Indian debit cards have international transactions switched off by default. The `/faq` gets one entry telling Indian buyers how to switch it on in their bank app. This is friction, not a blocker, and it is the reason a Razorpay phase exists later.
-- [ ] **GST on digital services to Indian consumers (OIDAR).** A non-Indian entity selling to Indian consumers is expected to register. Legal item, not a build item. Decide before India marketing starts.
+- [x] **GST on digital services to Indian consumers (OIDAR).** Closed on 15 September 2026 by keeping Stripe Managed Payments on: Stripe is the merchant of record, charges and remits GST and VAT itself, and every product carries the SaaS tax code `txcd_10103000` (set in `scripts/stripe-catalogue.mjs`). The trade: statements read `LINK.COM*` before the name, receipts come from Link, and Stripe may refund within 60 days.
 - [ ] **Privacy policy and terms.** Portraits and names of family members are personal data under GDPR and India's DPDP Act. A page each, plain language. Needed before Phase 4 ships to production.
 - [ ] **Resend API key.** The domain is already verified in Sven's own Resend
   account, so Snanify needs a key from it rather than a marketplace install:
@@ -260,17 +260,17 @@ Tracked here so a phase never blocks silently on them.
   the message and reports it unsent, and nothing else breaks.
 - [ ] **Prayer list** reviewed by the owner or someone the owner trusts for text accuracy. Draft is written in Phase 4.
 - [ ] **Real hero figures** to replace the placeholders at launch.
-- [ ] **Clerk dashboard, three settings.** Rename the application from
+- [x] **Clerk dashboard, three settings.** Done 15 September 2026 on the production instance. Rename the application from
   `clerk-bronze-sail` to Snanify, so the magic-link email and the device
   verification screen say it (the sign-in card itself is already overridden in
   `src/lib/clerk-look.ts`). Turn off password sign-in and turn on email link, so
   the offer matches what /snan promises. Add Google OAuth credentials for the
   production instance.
-- [ ] **Claim the Stripe sandbox.** It provisioned as `stripe-violet-kite`, an
+- [x] **Claim the Stripe sandbox.** Done 15 September 2026; the sandbox stays on Preview and Development, and a second resource `stripe-live-snanify` serves Production. It provisioned as `stripe-violet-kite`, an
   unclaimed sandbox in test mode, and Checkout says so on the payment page.
   Claiming it and naming the business Snanify is what turns test payments into
   real ones.
-- [ ] **Clerk dashboard**: Google OAuth credentials, production instance, custom domain `clerk.snanify.com` or the Clerk default.
+- [x] **Clerk dashboard**: Google OAuth credentials, production instance, custom domain `clerk.snanify.com`. Done 15 September 2026.
 
 ---
 
@@ -472,7 +472,7 @@ endpoint registered against the deployed URL. Nothing is merged to `main` yet.
 - [ ] **8.1 Real figures.** Replace the hero placeholders with real counts (sittings, countries from `users.tz`) or with a true statement that needs no number. Owner's call, recorded in `CLAUDE.md`.
 - [x] **8.2 Analytics events** via `@vercel/analytics` `track()`: `begin_view`, `checkout_start`, `purchase`, `setup_done`, `sitting_start`, `sitting_done`, `share_open`, `share_done`. No personal data in properties.
 - [ ] **8.3 Legal.** Privacy, terms, the Indian-card FAQ entry, OIDAR decision recorded in section 4 above. `/ethics` names every processor.
-- [ ] **8.4 Stripe live.** Live keys in Vercel production env, webhook endpoint registered for production, one real purchase of `one` by the owner, refunded.
+- [x] **8.4 Stripe live.** Done 15 September 2026: live keys in Vercel Production via the marketplace resource, webhook registered, one real purchase of `one` by the owner booked a credit of 1. Refund by the owner.
 - [ ] **8.5 Search Console.** Follow `docs/seo/search-console.md`: resubmit the sitemap, confirm the ten surface-locale URLs report as redirected, confirm the four deleted routes redirect.
 - [ ] **8.6 Performance.** Lighthouse on a throttled mid-range Android profile for `/`, `/today`, `/p/[id]`: LCP under 2.5s on 4G, the sitting's JS under 120 KB gzipped. `RiverFlow` stays cheap.
 - [ ] **8.7 Rollout.** Merge `feat/product` to `main`. Watch the Vercel runtime logs and the Stripe dashboard for the first day.
