@@ -5,7 +5,6 @@ import { ctaHref, primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
-import { Banner } from "@/components/site/Banner";
 import { AccountMenuRow, HeaderCta } from "@/components/site/HeaderCta";
 
 export type NavLink = { href: string; label: string };
@@ -39,10 +38,6 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-50 bg-paper lg:relative">
-      {/* Above the masthead and inside the sticky header, so it travels with
-          it rather than scrolling away and leaving the page unexplained. */}
-      <Banner lang={lang} />
-
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* masthead row */}
         <div className="flex h-14 items-center justify-between gap-4">

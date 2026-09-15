@@ -25,7 +25,6 @@ const PARKED = /\/(bn|mr|te|ta|gu|kn|ml|or|pa|as)\.ts$/;
 /** Every content module that ships, plus the two lib files that carry copy. */
 const MODULES = [
   "@/content/account",
-  "@/content/banner",
   "@/content/begin",
   "@/content/email",
   "@/content/kumbh",
