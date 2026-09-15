@@ -86,8 +86,11 @@ export default async function Page({
 
   const profile = profileRows[0];
   if (!profile?.completedAt) redirect(localePath(lang, "/setup"));
-  if (credits < 1) redirect(localePath(lang, "/begin"));
 
+  /* A morning already kept today is answered before the balance is looked
+     at. The first production sitting spent its owner's last credit, the page
+     was re-requested during the mark, and the balance gate sent them to the
+     pack picker instead of to the sheet they had just made. */
   const kept = await sittingToday(user.id, profile.waterSlug, user.tz);
 
   if (kept) {
@@ -106,6 +109,8 @@ export default async function Page({
       </>
     );
   }
+
+  if (credits < 1) redirect(localePath(lang, "/begin"));
 
   const snapshot = await getLiveSnapshot();
   const water = snapshot.waters.find((w) => w.slug === profile.waterSlug);
