@@ -60,6 +60,7 @@ export const en = {
     pricing: "Prices",
     cta: "Begin",
     menu: "Menu",
+    account: "Your mornings",
   },
   edition: "Samvat 2083",
   hero: {

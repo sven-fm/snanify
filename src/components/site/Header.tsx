@@ -6,6 +6,7 @@ import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
 import { Banner } from "@/components/site/Banner";
+import { AccountMenuRow, HeaderCta } from "@/components/site/HeaderCta";
 
 export type NavLink = { href: string; label: string };
 
@@ -21,27 +22,20 @@ export function Header({
   links,
   currentPath = "/",
   ctaTo,
-  cta,
 }: {
   lang: Lang;
   links?: NavLink[];
   currentPath?: string;
+  /** An in-page anchor for the action instead of the pack picker. */
   ctaTo?: string;
-  /**
-   * The masthead action for a signed-in page, rendered by the caller so that
-   * Clerk's client bundle rides only on the pages that need it; see
-   * src/components/site/AppHeaderCta.tsx. Marketing pages leave it unset and
-   * get the plain "Begin" link.
-   */
-  cta?: React.ReactNode;
 }) {
   const t = content[lang];
   const navLinks = links ?? primaryNav(lang);
+  const accountHref = localePath(lang, "/account");
 
-  /* Somebody signed in has already bought; sending them to the pack picker
-     again is the site forgetting who they are. Which of the two they see is
-     decided in the browser, so this page can stay prerendered: see
-     src/components/site/HeaderCta.tsx. */
+  /* Somebody signed in sees "Your mornings" in place of "Begin", and a row
+     for it in the phone menu. Which of the two they see is decided in the
+     browser, so this page can stay prerendered: see HeaderCta.tsx. */
 
   return (
     <header className="sticky top-0 z-50 bg-paper lg:relative">
@@ -96,6 +90,7 @@ export function Header({
                         </a>
                       </li>
                     ))}
+                    <AccountMenuRow href={accountHref} label={t.nav.account} />
                   </ul>
                   <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
                     <a
@@ -110,15 +105,21 @@ export function Header({
               </details>
             )}
 
-            {cta && !ctaTo ? (
-              cta
-            ) : (
+            {ctaTo ? (
               <a
-                href={ctaTo ?? ctaHref(lang)}
+                href={ctaTo}
                 className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
               >
                 {t.nav.cta}
               </a>
+            ) : (
+              <HeaderCta
+                begin={ctaHref(lang)}
+                account={accountHref}
+                beginLabel={t.nav.cta}
+                accountLabel={t.nav.account}
+                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+              />
             )}
           </div>
         </div>

@@ -11,7 +11,6 @@ import type { RiverSlice } from "@/lib/patra-record";
 import { localePath, SITE_ORIGIN, type FullLang as Lang } from "@/lib/locales";
 import { headers } from "next/headers";
 import { Header } from "@/components/site/Header";
-import { AppHeaderCta } from "@/components/site/AppHeaderCta";
 import { Footer } from "@/components/site/Footer";
 import { LinkButton } from "@/components/ui";
 import { ShareButton } from "@/components/patra/ShareButton";
@@ -104,7 +103,7 @@ export default async function Page({
     return (
       <>
         <div className="grain" aria-hidden="true" />
-        <Header lang={lang} currentPath="/" cta={<AppHeaderCta lang={lang} />} />
+        <Header lang={lang} currentPath="/" />
         <main className="mx-auto max-w-md px-5 py-24 text-center">
           <h1 className="display text-[2rem]">{t.privateTitle}</h1>
           <p className="mt-5 text-ink2">{t.privateBody}</p>
@@ -138,7 +137,7 @@ export default async function Page({
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} currentPath="/" cta={<AppHeaderCta lang={lang} />} />
+      <Header lang={lang} currentPath="/" />
 
       <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
         {/* The sheet itself, at the ratio it is sent in. */}

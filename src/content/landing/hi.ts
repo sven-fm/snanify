@@ -22,6 +22,7 @@ export const hi = {
     pricing: "मूल्य",
     cta: "आरंभ कीजिए",
     menu: "मेन्यू",
+    account: "आपकी सुबहें",
   },
   edition: "संवत् २०८३",
   hero: {

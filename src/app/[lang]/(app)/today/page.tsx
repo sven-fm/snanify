@@ -13,7 +13,6 @@ import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
-import { AppHeaderCta } from "@/components/site/AppHeaderCta";
 import { Footer } from "@/components/site/Footer";
 import { LinkButton } from "@/components/ui";
 import { Sitting } from "@/components/snan/Sitting";
@@ -95,7 +94,7 @@ export default async function Page({
     return (
       <>
         <div className="grain" aria-hidden="true" />
-        <Header lang={lang} currentPath={ROUTE} cta={<AppHeaderCta lang={lang} />} />
+        <Header lang={lang} currentPath={ROUTE} />
         <main className="mx-auto max-w-md px-5 py-16 text-center sm:py-24">
           <h1 className="display text-[2rem] leading-[1.2]">{t.already.title}</h1>
           <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.already.body}</p>
@@ -135,7 +134,7 @@ export default async function Page({
     <>
       <div className="grain" aria-hidden="true" />
       {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
-      <Header lang={lang} currentPath={ROUTE} cta={<AppHeaderCta lang={lang} />} />
+      <Header lang={lang} currentPath={ROUTE} />
 
       <main className="pb-16">
         <Sitting

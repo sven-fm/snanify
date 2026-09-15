@@ -10,8 +10,8 @@ import type { FullLang as Lang } from "@/lib/locales";
    decided; the writing confirms what they have and what happens next, and
    stops. Short lines, and every button says what it does.
 
-   `account.eyebrow` is read by src/components/site/Header.tsx as the label
-   of the signed-in link in the masthead. It is a name, not a heading.
+   The masthead's signed-in label lives in the landing copy as `nav.account`,
+   because the header exists in every locale and this file does not.
    --------------------------------------------------------------------------- */
 
 const en = {
