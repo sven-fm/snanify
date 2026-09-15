@@ -1,8 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LIMB_ORDER, SITTING, type Limb } from "@/lib/sitting-plan";
+import { LIMB_ORDER, SITTING } from "@/lib/sitting-plan";
+import {
+  INITIAL,
+  STILLNESS_NOTE_SECONDS,
+  partNumber,
+  progress,
+  step,
+  type Phase,
+} from "@/lib/sitting-machine";
 import type { todayContent } from "@/content/today";
 import { keepThisMorning } from "@/app/[lang]/(app)/today/actions";
 import { track } from "@/lib/track";
@@ -22,9 +31,20 @@ import type { FullLang as Lang } from "@/lib/locales";
    during the stillness, which is the instruction, must not come back to find
    the morning abandoned.
 
+   THE MACHINE LIVES IN src/lib/sitting-machine.ts, with no React in it, so
+   the rules can be tested to the second: "next" leaves the reading and the
+   breath early, the vow ends when the thumb has held for its whole length,
+   and the stillness ends on its own clock and on nothing else.
+
    THE STILLNESS CANNOT BE SKIPPED. There is no tap target on that screen and
    no visible timer. That is the product decision from build-plan.md, and it is
-   the reason the black screen is worth anything at all.
+   the reason the black screen is worth anything at all. It announces itself:
+   the one instruction shows for three seconds in dim ink, then the screen is
+   fully black.
+
+   THE BAR ACROSS THE TOP is five segments for the five parts, each filling
+   with its own time, so a first morning is never a screen with no way to
+   know what it is or how long it lasts.
 
    THE MORNING IS MINTED AT THE START OF THE MARK, not at the end. The row and
    the credit are written the moment the mark begins, so closing the tab while
@@ -37,8 +57,6 @@ import type { FullLang as Lang } from "@/lib/locales";
 
 type Copy = (typeof todayContent)["en"];
 
-type Phase = "ready" | Limb | "done";
-
 type Reading = {
   water: string;
   ghat: string;
@@ -49,24 +67,6 @@ type Reading = {
   normal: string;
   source: string;
 };
-
-/** Where each limb ends, in seconds from the start of the sitting. */
-const ENDS: Record<Limb, number> = (() => {
-  let at = 0;
-  const out = {} as Record<Limb, number>;
-  for (const limb of LIMB_ORDER) {
-    at += SITTING[limb];
-    out[limb] = at;
-  }
-  return out;
-})();
-
-function limbAt(elapsed: number): Limb | "done" {
-  for (const limb of LIMB_ORDER) {
-    if (elapsed < ENDS[limb]) return limb;
-  }
-  return "done";
-}
 
 /** Six breaths a minute: four seconds in, six out, which is where a body settles. */
 const BREATH_IN = 4;
@@ -100,19 +100,22 @@ export function Sitting({
 }) {
   const router = useRouter();
 
-  /* Elapsed time is the only clock state; the limb is derived from it. An
-     earlier version stored the phase as well and moved it from inside the
-     `setElapsed` updater, which is a side effect during a render and silently
-     did nothing: the reading screen sat there while the clock ran. One source
-     of truth cannot disagree with itself. */
-  const [started, setStarted] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
-  const [held, setHeld] = useState(0);
-  const [patraId, setPatraId] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
-
-  const phase: Phase = started ? limbAt(elapsed) : "ready";
-  const running = started && phase !== "done";
+  /* One reducer holds the phase, the seconds into it and the held seconds,
+     and every change to them goes through `step`. An earlier version derived
+     the phase from one elapsed number and moved it from inside a state
+     updater, which is a side effect during a render and silently did
+     nothing; a reducer is the one place that cannot happen. */
+  const [state, dispatch] = useReducer(step, INITIAL);
+  const [outcome, setOutcome] = useReducer(
+    (was: { patraId: string | null; failed: boolean }, next: Partial<{ patraId: string | null; failed: boolean }>) => ({
+      ...was,
+      ...next,
+    }),
+    { patraId: null, failed: false },
+  );
+  const { phase, into, held } = state;
+  const { patraId, failed } = outcome;
+  const running = phase !== "ready" && phase !== "done";
   const holding = useRef(false);
   const minted = useRef(false);
   const wakeLock = useRef<WakeLockSentinel | null>(null);
@@ -135,11 +138,7 @@ export function Sitting({
       const delta = ((now - last) / 1000) * speed;
       last = now;
 
-      setElapsed((was) => was + delta);
-
-      /* The hold is counted only while a thumb is down, and it resets on
-         release, so eleven seconds means eleven unbroken seconds. */
-      setHeld((was) => (holding.current ? was + delta : 0));
+      dispatch({ type: "tick", delta, holding: holding.current });
 
       frame = requestAnimationFrame(tick);
     };
@@ -199,23 +198,29 @@ export function Sitting({
     keepThisMorning(lang)
       .then((result) => {
         if (result.id) {
-          setPatraId(result.id);
+          setOutcome({ patraId: result.id });
           track("sitting_done", { water: waterSlug, lang });
-        } else setFailed(true);
+        } else setOutcome({ failed: true });
       })
-      .catch(() => setFailed(true));
+      .catch(() => setOutcome({ failed: true }));
   }, [phase, lang, waterSlug]);
 
   /* --- and the page moves on once both are finished --------------------- */
+  const patraHref = patraId ? `${lang === "en" ? "" : `/${lang}`}/p/${patraId}?new=1` : null;
+
   useEffect(() => {
-    if (phase !== "done" || !patraId) return;
-    router.push(`${lang === "en" ? "" : `/${lang}`}/p/${patraId}?new=1`);
-  }, [phase, patraId, lang, router]);
+    if (phase !== "done" || !patraHref) return;
+    router.push(patraHref);
+  }, [phase, patraHref, router]);
 
   const hold = useCallback((down: boolean) => {
     holding.current = down;
-    if (!down) setHeld(0);
   }, []);
+
+  const next = useCallback(() => {
+    track("sitting_next", { water: waterSlug, lang, from: phase });
+    dispatch({ type: "next" });
+  }, [phase, waterSlug, lang]);
 
   /* --- what the screen is doing right now -------------------------------- */
   if (phase === "ready") {
@@ -232,7 +237,7 @@ export function Sitting({
           type="button"
           onClick={() => {
             track("sitting_start", { water: waterSlug, lang });
-            setStarted(true);
+            dispatch({ type: "start" });
           }}
           className="label mt-10 min-h-[56px] w-full bg-spot px-8 text-paper transition-colors hover:bg-ink"
         >
@@ -243,28 +248,40 @@ export function Sitting({
   }
 
   if (phase === "stillness") {
-    /* Nothing at all: no timer, no tap target, no way past it. */
+    /* No timer, no tap target, no way past it. The one instruction shows
+       for three seconds in dim ink and then the screen is entirely black. */
+    const announcing = into < STILLNESS_NOTE_SECONDS;
     return (
       <div
-        className="fixed inset-0 z-50 bg-black"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black"
         aria-label={t.stillness.label}
         role="presentation"
         data-sitting
         data-speed={speed}
         data-phase={phase}
+        data-announcing={announcing ? "1" : undefined}
       >
-        <p className="sr-only">{t.stillness.instruction}</p>
+        <p
+          className={`display px-8 text-center text-[1.4rem] text-[#6b665a] transition-opacity duration-1000 ${
+            announcing ? "opacity-100" : "opacity-0"
+          }`}
+          aria-hidden={!announcing}
+        >
+          {t.stillness.instruction}
+        </p>
       </div>
     );
   }
 
-  const into = elapsed - (ENDS[phase as Limb] - SITTING[phase as Limb]);
+  const skippable = phase === "reading" || phase === "breath";
 
   return (
-    <div className="mx-auto max-w-md px-5 py-10" data-sitting data-speed={speed} data-phase={phase}>
+    <div className="mx-auto max-w-md px-5 py-6" data-sitting data-speed={speed} data-phase={phase}>
+      <StoryBar t={t} state={state} />
+
       {/* The name of the part, in the small voice: five parts in sequence,
           and this is the one the screen is on. */}
-      <p className="text-sm text-ink2">{labelFor(t, phase)}</p>
+      <p className="mt-4 text-sm text-ink2">{labelFor(t, phase)}</p>
 
       {phase === "reading" && (
         <div className="mt-6">
@@ -311,17 +328,64 @@ export function Sitting({
               type="button"
               onClick={() => {
                 minted.current = false;
-                setFailed(false);
-                setElapsed(0);
-                setStarted(false);
+                setOutcome({ failed: false, patraId: null });
+                dispatch({ type: "retry" });
               }}
               className="label mt-8 min-h-[48px] w-full bg-spot px-6 text-paper"
             >
               {t.failed.cta}
             </button>
           )}
+          {/* The page moves on by itself; this is for the browser that did
+              not, and for the person who wants to press something. */}
+          {patraHref && (
+            <Link href={patraHref} className="label mt-8 flex min-h-[56px] items-center justify-center bg-spot px-6 text-paper">
+              {t.mark.open}
+            </Link>
+          )}
         </div>
       )}
+
+      {skippable && (
+        <div className="mt-10">
+          <button
+            type="button"
+            onClick={next}
+            className="label flex min-h-[56px] w-full items-center justify-center border-2 border-rulestrong text-ink transition-colors hover:bg-ink hover:text-paper"
+            data-next
+          >
+            {t.next}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Five segments for the five parts, filling left to right, the way a story
+ * bar does. The vow's segment fills with the thumb rather than the clock.
+ * Widths are rounded numbers from the machine, so the server and the browser
+ * print the same markup.
+ */
+function StoryBar({ t, state }: { t: Copy; state: { phase: Phase; into: number; held: number } }) {
+  const fills = progress(state);
+  const n = partNumber(state.phase);
+  return (
+    <div
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={LIMB_ORDER.length}
+      aria-valuenow={n}
+      aria-valuetext={t.partOf.replace("{n}", String(n)).replace("{total}", String(LIMB_ORDER.length))}
+      className="flex gap-1.5"
+      data-story-bar
+    >
+      {LIMB_ORDER.map((limb, i) => (
+        <div key={limb} className="h-[3px] flex-1 bg-rule" data-segment={limb}>
+          <div className="h-full bg-ink" style={{ width: `${(fills[i] * 100).toFixed(1)}%` }} />
+        </div>
+      ))}
     </div>
   );
 }

@@ -35,6 +35,7 @@ export type Event =
   | "purchase"
   | "setup_done"
   | "sitting_start"
+  | "sitting_next"
   | "sitting_done"
   | "share_open"
   | "share_done";
@@ -49,6 +50,8 @@ export type Props = {
   lang?: string;
   /** How the share went: "files", "link", "copied". */
   how?: string;
+  /** The part "next" was pressed on: "reading" | "breath". */
+  from?: string;
 };
 
 export function track(event: Event, props: Props = {}): void {

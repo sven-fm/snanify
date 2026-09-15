@@ -28,6 +28,10 @@ const en = {
     quiet: "Put the phone on silent. It takes three minutes.",
   },
 
+  /** "Part 2 of 5", read by screen readers over the bar; sighted readers see the bar. */
+  partOf: "Part {n} of {total}",
+  next: "Next",
+
   reading: {
     label: "The reading",
     flowLabel: "Flow",
@@ -46,7 +50,7 @@ const en = {
 
   vow: {
     label: "Your sankalp",
-    hold: "Hold your thumb on your words.",
+    hold: "Hold your thumb on your words until the ink fills.",
     holding: "Keep holding.",
     done: "Held.",
   },
@@ -60,6 +64,7 @@ const en = {
     label: "The mark",
     writing: "Your morning is being written into your register.",
     done: "Your morning is kept.",
+    open: "Open your Sankalp Patra",
   },
 
   already: {
@@ -90,6 +95,9 @@ const hi = {
     quiet: "फ़ोन को मौन पर रखिए। इसमें तीन मिनट लगते हैं।",
   },
 
+  partOf: "{total} में से भाग {n}",
+  next: "आगे",
+
   reading: {
     label: "पाठ",
     flowLabel: "प्रवाह",
@@ -108,7 +116,7 @@ const hi = {
 
   vow: {
     label: "आपका संकल्प",
-    hold: "अपने शब्दों पर अंगूठा रखिए।",
+    hold: "स्याही भरने तक अपने शब्दों पर अंगूठा रखिए।",
     holding: "थामे रहिए।",
     done: "थाम लिया।",
   },
@@ -122,6 +130,7 @@ const hi = {
     label: "चिह्न",
     writing: "आपकी सुबह आपकी पंजिका में लिखी जा रही है।",
     done: "आपकी सुबह रख ली गई।",
+    open: "अपना संकल्प पत्र खोलिए",
   },
 
   already: {
