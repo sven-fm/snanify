@@ -209,13 +209,12 @@ export function SnanIntro({ lang }: { lang: Lang }) {
 
         {/* ------------------------------------------------ the sheet ----- */}
         <Section id="patra" tinted>
-          <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start lg:gap-16">
-            <div className="max-w-3xl">
-              <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.patra.title}</h2>
-              <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.patra.lede}</p>
-            </div>
-            <Specimen lang={lang} />
-          </div>
+          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start lg:gap-20">
+            <div>
+              <div className="max-w-3xl">
+                <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.patra.title}</h2>
+                <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.patra.lede}</p>
+              </div>
 
           <dl className="mt-10 border-t-2 border-rulestrong">
             {t.patra.carries.map((row) => (
@@ -238,6 +237,10 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                 {p}
               </p>
             ))}
+          </div>
+            </div>
+
+            <Specimen lang={lang} className="lg:sticky lg:top-28" />
           </div>
         </Section>
 

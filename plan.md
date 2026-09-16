@@ -197,7 +197,7 @@ actually type. The biggest free lever there is.
 - One combined sign-in-or-up screen, one heading.
 - The pack picker: eleven first and raised, one and sixty as ruled rows, a pending label on Pay, the refund line.
 - Packs named by their count; the coined names and their Devanagari retired.
-- The specimen sheet, drawn from today's Ganga figure and labelled on its face, inside a phone on `/`, `/snan` and `/begin`.
+- The specimen sheet, drawn from today's Ganga figure and labelled on its face, inside a phone built around the sheet's own ratio with a masked screen, beside the six waters on `/` and beside the sheet's rows on `/snan`, and with the buyer's own names on `/begin`.
 - Setup under a three-step line, three example sankalps, the hour defaulting to six with the zone named.
 - The sitting takes the whole screen from Begin to done, water behind every part, the breath as the engraved band, a cross to leave, the count on the done screen only, haptics where the browser has them.
 - Press states on every control; settle for menus and the theme; the masthead's Begin and the thumb rail wait for the hero's own button; the blanket section reveal gone.

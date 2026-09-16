@@ -267,23 +267,21 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
         {/* ------------------------------------------------ the six ------- */}
         <Section id="rivers">
-          <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start lg:gap-16">
-            <div className="max-w-3xl">
-              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.rivers.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.rivers.lede}</p>
-            </div>
-            {/* The sheet itself, before a word more is said about it. */}
-            <Specimen lang={lang} />
-          </div>
+          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start lg:gap-20">
+            <div>
+              <div className="max-w-3xl">
+                <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.rivers.title}</h2>
+                <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.rivers.lede}</p>
+              </div>
 
-          {/* A register, not a card grid, and unnumbered: six waters are a
-              choice, not a sequence. */}
-          <ul className="mt-10 border-t-2 border-rulestrong">
+              {/* A register, not a card grid, and unnumbered: six waters are a
+                  choice, not a sequence. */}
+              <ul className="mt-10 border-t-2 border-rulestrong">
             {RIVERS.map((r) => (
               <li key={r.slug}>
                 <Link
                   {...deepHref(lang, `/rivers/${r.slug}`)}
-                  className="group grid gap-y-1 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[14rem_1fr_auto] sm:items-baseline sm:gap-x-8"
+                  className="group impress grid gap-y-1 border-b border-rule py-5 hover:bg-paper3 active:bg-paper3 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline sm:gap-x-8"
                 >
                   <span className="display text-2xl text-ink">{waterName(r, "river", lang)}</span>
                   <span className="text-sm text-ink2">
@@ -295,7 +293,12 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 </Link>
               </li>
             ))}
-          </ul>
+              </ul>
+            </div>
+
+            {/* The sheet itself, beside the waters it is drawn from. */}
+            <Specimen lang={lang} className="lg:sticky lg:top-28" />
+          </div>
         </Section>
 
         {/* ------------------------------------------------ tariff --------
