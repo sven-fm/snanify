@@ -1,7 +1,4 @@
-/* This module carries deep content, which exists in English and Hindi only.
-   `Lang` here is therefore the full-depth pair and not the twelve locales the
-   site serves; see the tier note at the top of src/lib/locales.ts. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Sacred waters, the six ghats, as entity data.
@@ -885,7 +882,7 @@ export function ghatNeighbours(slug: string): { prev: Ghat; next: Ghat } | undef
 
    The index copy for /rivers used to live here too. It moved to
    src/content/rivers-index/, one file per locale, when that page went to
-   twelve languages; this file stays English and Hindi because the six
+   both languages; this file stays English and Hindi because the six
    descriptions in it are prose nobody has written in the other ten.
    --------------------------------------------------------------------------- */
 

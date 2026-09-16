@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { patraPageContent } from "@/content/patra-page";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 
 type Copy = (typeof patraPageContent)["en"];
 

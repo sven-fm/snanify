@@ -20,13 +20,8 @@ import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
 
 const PREFIXES = new Set<string>(LANGS.filter((l) => l !== DEFAULT_LANG));
 
-/**
- * The ten locales the site served on its surface pages until launch was cut to
- * English and Hindi. Their URLs are indexed, so they land on the English page
- * rather than a 404 while Search Console works through them. The copy files are
- * still in the tree; a locale coming back means a row in the registry and its
- * code leaving this list. See plan.md, decision "Locales at launch".
- */
+/** Locale prefixes that were once public. Their URLs are indexed, so they land on
+ * the English page rather than a 404 while Search Console works through them. */
 const RETIRED = new Set(["bn", "mr", "te", "ta", "gu", "kn", "ml", "or", "pa", "as"]);
 
 /**

@@ -10,7 +10,7 @@ import {
 } from "@/components/StructuredData";
 import { RIVERS } from "@/content/rivers";
 import { riversIndexContent } from "@/content/rivers-index";
-import { allLangParams, pickDeep, type Lang } from "@/lib/locales";
+import { langParams, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { navLabel } from "@/lib/nav";
 import { pageMetadata } from "@/lib/seo";
@@ -23,7 +23,7 @@ import { pageMetadata } from "@/lib/seo";
 const ROUTE = "/rivers";
 
 export function generateStaticParams() {
-  return allLangParams();
+  return langParams();
 }
 
 export async function generateMetadata({
@@ -65,7 +65,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         RIVERS.map((ghat) => ({
           name: `${waterName(ghat, "river", lang)}, ${waterName(ghat, "ghat", lang)}, ${waterName(ghat, "city", lang)}`,
           path: `/rivers/${ghat.slug}`,
-          description: pickDeep(ghat.epithet, lang),
+          description: ghat.epithet[lang],
         })),
       ),
       breadcrumb: breadcrumbList(lang, [

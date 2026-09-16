@@ -5,7 +5,7 @@ import { db, profiles, purchases } from "@/db";
 import { beginContent } from "@/content/begin";
 import { requireUser } from "@/lib/auth";
 import { getSession } from "@/lib/stripe";
-import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { LinkButton } from "@/components/ui";
@@ -38,7 +38,7 @@ const EVERY_SECONDS = 2;
 export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({

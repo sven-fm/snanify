@@ -4,7 +4,7 @@ import {
   hreflangMap,
   localeDef,
   localeUrl,
-  localesForPath,
+  LANGS,
   SITE_ORIGIN,
   type Lang,
 } from "@/lib/locales";
@@ -17,14 +17,13 @@ import {
 
    1. SELF-REFERENTIAL. The set on a page includes that page. `hreflangMap`
       iterates every locale serving the route, including the current one.
-   2. RECIPROCAL. If /ta/rivers points at /rivers, /rivers must point back, or
+   2. RECIPROCAL. If /hi/rivers points at /rivers, /rivers must point back, or
       Google discards the whole cluster and not just the one row. Because every
-      page in the set is generated from the same `localesForPath(path)`, the
-      sets are identical by construction and cannot drift.
-   3. NO DEAD ALTERNATES. A locale is only listed for routes it actually
-      serves. `/panchang` exists in English and Hindi only, so its set has two
-      entries and an x-default, while `/rivers` has twelve. An alternate that
-      404s invalidates the cluster.
+      page in the set is generated from the same `hreflangMap(path)`, the sets
+      are identical by construction and cannot drift.
+   3. NO DEAD ALTERNATES. Every route exists in both locales, so every set has
+      two entries and an x-default. An alternate that 404s invalidates the
+      cluster.
    4. ABSOLUTE URLs. hreflang is ignored when relative. Everything here comes
       out of `localeUrl`, which is absolute by construction.
 
@@ -72,7 +71,7 @@ export function pageMetadata({
       title,
       description,
       locale: def.og,
-      alternateLocale: localesForPath(path)
+      alternateLocale: LANGS
         .filter((code) => code !== lang)
         .map((code) => localeDef(code).og),
       ...(images ? { images } : {}),

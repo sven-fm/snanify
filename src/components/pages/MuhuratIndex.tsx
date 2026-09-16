@@ -2,7 +2,7 @@ import Link from "next/link";
 import { WaterBand } from "@/components/WaterBand";
 
 import { content } from "@/lib/content";
-import { deepLang, pickDeep, type Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -206,7 +206,7 @@ function OccasionRow({
           <h4 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot sm:text-[1.6rem]">
             {occasionName(occasion, lang)}
           </h4>
-          <p className="mt-1.5 text-sm leading-[1.7] text-ink2">{pickDeep(occasion.line, lang)}</p>
+          <p className="mt-1.5 text-sm leading-[1.7] text-ink2">{occasion.line[lang]}</p>
           <p className="mt-2 text-sm text-ink2">
             {t.spine.observedAt} {t.spine.waters(waters)}. {t.tiers[occasion.tier]}.
           </p>
@@ -214,14 +214,14 @@ function OccasionRow({
 
         {/* the reckoning */}
         <p className="mt-3 text-sm leading-[1.7] text-ink2 sm:mt-0">
-          {pickDeep(occasion.rule.label, lang)}
+          {occasion.rule.label[lang]}
         </p>
 
         {/* the dates, computed */}
         <div className="mt-3 sm:mt-0 sm:text-right">
           {dates.map((d) => (
             <p key={d.date} className="text-sm text-ink" data-occasion-date={d.date}>
-              {deva(sayResolvedShort(d, deepLang(lang)), lang)}
+              {deva(sayResolvedShort(d, lang), lang)}
             </p>
           ))}
         </div>
@@ -274,7 +274,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
   const todayWindows = ganga.windows.map((slot) => {
     const def = WINDOWS.find((w) => w.id === slot.id);
     return {
-      name: def ? windowName(def.id, def.name, deepLang(lang)) : slot.id,
+      name: def ? windowName(def.id, def.name, lang) : slot.id,
       startsAt: slot.startsAt,
       endsAt: slot.endsAt,
     };
@@ -322,7 +322,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
               <p className="text-sm leading-[1.75] text-ink2">{t.provenance.line}</p>
               <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <ProvisionalBadge lang={lang} />
-                <p className="text-sm text-ink2">{deva(t.hero.asOf.replace("{date}", sayDay(today, deepLang(lang))), lang)}</p>
+                <p className="text-sm text-ink2">{deva(t.hero.asOf.replace("{date}", sayDay(today, lang)), lang)}</p>
               </div>
             </div>
           </div>
@@ -359,9 +359,9 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
                   <h3 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
                     {occasionName(o, lang)}
                   </h3>
-                  <span className="text-sm leading-[1.7] text-ink2">{pickDeep(o.line, lang)}</span>
+                  <span className="text-sm leading-[1.7] text-ink2">{o.line[lang]}</span>
                   <span className="text-sm text-ink sm:text-right">
-                    {pickDeep(o.occurrence.label, lang)}
+                    {o.occurrence.label[lang]}
                   </span>
                 </Link>
               </li>
@@ -424,9 +424,9 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
             <dl className="mt-6 border-t-2 border-rulestrong">
               {MUHURAT.notPublished.map((n) => (
                 <div key={n.id} className="border-b border-rule py-5">
-                  <dt className="display text-lg text-ink">{pickDeep(n.name, lang)}</dt>
+                  <dt className="display text-lg text-ink">{n.name[lang]}</dt>
                   <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
-                    {pickDeep(n.text, lang)}
+                    {n.text[lang]}
                   </dd>
                 </div>
               ))}
@@ -457,17 +457,17 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
                   <dl>
                     <div className="border-t border-rule pt-3">
                       <dt className="label text-ink2">{t.windows.formulaLabel}</dt>
-                      <dd className="mt-1.5 text-sm text-ink">{pickDeep(w.formula, lang)}</dd>
+                      <dd className="mt-1.5 text-sm text-ink">{w.formula[lang]}</dd>
                     </div>
                     <div className="mt-5 border-t border-rule pt-3">
                       <dt className="label text-ink2">{t.windows.basisLabel}</dt>
                       <dd className="mt-1.5 text-sm leading-[1.75] text-ink2">
-                        {pickDeep(w.basis, lang)}
+                        {w.basis[lang]}
                       </dd>
                     </div>
                   </dl>
                   <p className="mt-5 border-t border-rule pt-3 text-sm leading-[1.75] text-ink2">
-                    {pickDeep(w.note, lang)}
+                    {w.note[lang]}
                   </p>
                 </div>
               </li>
@@ -483,9 +483,9 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
             <dl className="mt-6 border-t-2 border-rulestrong">
               {MUHURAT.displayedNotActedOn.map((n) => (
                 <div key={n.id} className="border-b border-rule py-5">
-                  <dt className="display text-lg text-ink">{pickDeep(n.name, lang)}</dt>
+                  <dt className="display text-lg text-ink">{n.name[lang]}</dt>
                   <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
-                    {pickDeep(n.text, lang)}
+                    {n.text[lang]}
                   </dd>
                 </div>
               ))}
@@ -500,7 +500,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
           <LiveClock
             lang={lang}
             t={t.clock}
-            zones={example.zones.map((z) => ({ zone: z.zone, label: pickDeep(z.label, lang) }))}
+            zones={example.zones.map((z) => ({ zone: z.zone, label: z.label[lang] }))}
             windows={todayWindows}
             sunrise={sunriseToday}
           />
@@ -526,7 +526,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
 
             {/* The provenance sentence closes the page as well as opening it. */}
             <p className="mx-auto mt-14 max-w-2xl border-t border-rule pt-8 text-xs leading-[1.75] text-ink2">
-              {pickDeep(MUHURAT.provider.note, lang)}
+              {MUHURAT.provider.note[lang]}
             </p>
           </div>
         </section>

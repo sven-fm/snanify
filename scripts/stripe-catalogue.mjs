@@ -13,8 +13,8 @@
 
    ONE PRICE OBJECT PER PACK, NOT FOUR. Stripe's `currency_options` carries the
    figure for every currency on a single price, so Checkout is handed one
-   lookup key and the currency the reader is in. Twelve price ids in twelve
-   environment variables was the alternative, and it is twelve things to get
+   lookup key and the currency the reader is in. Fifteen price ids in fifteen
+   environment variables was the alternative, and it is fifteen things to get
    wrong on the day a figure changes.
 
    THE FIGURES COME FROM src/content/prices.ts and are written here in minor

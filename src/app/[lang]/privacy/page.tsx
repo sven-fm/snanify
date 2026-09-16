@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Legal } from "@/components/pages/Legal";
 import { legalContent } from "@/content/legal";
-import { fullLangParams, type FullLang as Lang } from "@/lib/locales";
+import { langParams, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 
 const ROUTE = "/privacy";
 
 export function generateStaticParams() {
-  return fullLangParams();
+  return langParams();
 }
 
 export async function generateMetadata({

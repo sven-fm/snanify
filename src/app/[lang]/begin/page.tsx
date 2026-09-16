@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Begin } from "@/components/pages/Begin";
 import { beginContent } from "@/content/begin";
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 
 /* The pack picker. Rendered per request because it greets a signed-in reader
@@ -11,7 +11,7 @@ const ROUTE = "/begin";
 export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({

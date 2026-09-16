@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { content } from "@/lib/content";
-import { localePath, servesPath, type Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 import { navItem, navLabel, type NavKey } from "@/lib/nav";
 import { Mark, Wordmark } from "@/components/Logo";
 
@@ -22,18 +22,6 @@ const COLUMNS: { at: number; keys: NavKey[] }[] = [
   { at: REFERENCE, keys: ["panchang", "live", "rivers", "muhurat", "faq"] },
 ];
 
-/** Where a nav key actually points, so the footer never offers a 404. */
-const ROUTE_OF: Record<NavKey, string> = {
-  begin: "/begin",
-  account: "/account",
-  rivers: "/rivers",
-  snan: "/snan",
-  muhurat: "/muhurat",
-  faq: "/faq",
-  live: "/live",
-  panchang: "/panchang",
-};
-
 /** The imprint: everything the almanac prints at the back. */
 export function Footer({ lang }: { lang: Lang }) {
   const t = content[lang];
@@ -52,19 +40,12 @@ export function Footer({ lang }: { lang: Lang }) {
           </div>
 
           {COLUMNS.map((col) => {
-            /* A locale is only offered the routes it actually serves. Without
-               this a Tamil footer links to /snan, which exists in English and
-               Hindi only, and every one of those links is a 404 for the reader
-               and a broken internal link for a crawler. */
-            const keys = col.keys.filter((k) => servesPath(lang, ROUTE_OF[k]));
-            if (keys.length === 0) return null;
-
             return (
               <div key={col.at}>
                 <h2 className="label text-spot">{t.footer.cols[col.at].h}</h2>
                 <div className="rule-thin mt-3" />
                 <ul className="mt-4 space-y-2.5">
-                  {keys.map((key) => {
+                  {col.keys.map((key) => {
                     const item = navItem(lang, key);
                     return (
                       <li key={key}>

@@ -3,7 +3,7 @@ import { SignIn } from "@clerk/nextjs";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { accountContent } from "@/content/account";
-import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 import { TrackView } from "@/components/site/TrackView";
 
@@ -21,7 +21,7 @@ const ROUTE = "/sign-in";
 
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang, "sign-in": [] as string[] }));
+  return LANGS.map((lang) => ({ lang, "sign-in": [] as string[] }));
 }
 
 export async function generateMetadata({

@@ -1,10 +1,9 @@
 /* ---------------------------------------------------------------------------
    The landing copy, assembled from src/content/landing/<locale>.ts.
 
-   English is the source edition and defines `LandingCopy`; every other file in
-   that directory closes with `satisfies LandingCopy`, so a key added to en.ts
-   without its eleven translations is eleven compile errors rather than eleven
-   silent English strings on a Tamil page.
+   English is the source edition and defines `LandingCopy`; hi.ts closes with
+   `satisfies LandingCopy`, so a key added to en.ts without its translation is
+   a compile error rather than a silent English string on a Hindi page.
 
    The two rules that govern every string, restated because this is the file a
    future edit is most likely to start from:
@@ -23,8 +22,8 @@ import { en, type LandingCopy } from "@/content/landing/en";
 import { hi } from "@/content/landing/hi";
 import type { Lang } from "@/lib/locales";
 
-export type { Lang, FullLang } from "@/lib/locales";
-export { LANGS, FULL_LANGS } from "@/lib/locales";
+export type { Lang } from "@/lib/locales";
+export { LANGS } from "@/lib/locales";
 
 /** The landing edition in every locale the site serves. */
 export const content = {

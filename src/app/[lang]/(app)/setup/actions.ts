@@ -8,7 +8,7 @@ import { balance } from "@/lib/credits";
 import { putPortrait, remove } from "@/lib/blob";
 import { PortraitRejected, processPortrait } from "@/lib/portrait";
 import { validateProfile, type ProfileErrors, type RawProfile } from "@/lib/profile-input";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Saving the setup form.

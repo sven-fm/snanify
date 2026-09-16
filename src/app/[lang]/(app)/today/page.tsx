@@ -15,7 +15,7 @@ import { ordinal } from "@/lib/ordinal";
 import { sittingToday } from "@/lib/sitting";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { LinkButton } from "@/components/ui";
@@ -39,7 +39,7 @@ const ROUTE = "/today";
 export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({

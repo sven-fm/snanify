@@ -19,9 +19,6 @@ import { describe, expect, it } from "vitest";
 const ROOT = path.resolve(__dirname, "../..");
 const SRC = path.join(ROOT, "src");
 
-/** The ten surface locales that were retired and parked in place. */
-const PARKED = /\/(bn|mr|te|ta|gu|kn|ml|or|pa|as)\.ts$/;
-
 /** Every content module that ships, plus the two lib files that carry copy. */
 const MODULES = [
   "@/content/account",
@@ -126,7 +123,7 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
     const file = path.join(dir, name);
     if (statSync(file).isDirectory()) sourceFiles(file, out);
-    else if (/\.(ts|tsx|json)$/.test(name) && !PARKED.test(file)) out.push(file);
+    else if (/\.(ts|tsx|json)$/.test(name)) out.push(file);
   }
   return out;
 }

@@ -8,7 +8,7 @@ import { getLiveSnapshot, istDate, type WaterState } from "@/lib/riverdata";
 import { seedFor } from "@/lib/seed";
 import { readSky } from "@/lib/sky";
 import { greatCircleKm } from "@/lib/distance";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The specimen: a Sankalp Patra a stranger can see before paying.

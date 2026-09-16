@@ -10,7 +10,7 @@ import { readSky } from "@/lib/sky";
 import { getGhat } from "@/content/rivers";
 import { asInstant } from "@/content/muhurat";
 import { riverSlice, seedDay, seedFigure, skySlice } from "@/lib/patra-record";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Minting a morning.

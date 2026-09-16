@@ -8,7 +8,7 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
 import { requireUser } from "@/lib/auth";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, LinkButton, SubmitButton } from "@/components/ui";

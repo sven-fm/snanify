@@ -1,5 +1,5 @@
 import type { GhatId } from "@/content/muhurat";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The prayers offered on /setup, one of which goes on the Sankalp Patra.
@@ -18,8 +18,7 @@ import type { FullLang as Lang } from "@/lib/locales";
    ADDING ONE. Name the work and the verse number. If neither can be named, it
    does not go in. Per-water verses for the Godavari, the Shipra and the Kaveri
    are the obvious gap, and they stay a gap until somebody who knows those
-   traditions supplies them: plan.md carries that as an open
-   item for the owner. Until then those waters are offered the verses that name
+   traditions supplies them. Until then those waters are offered the verses that name
    them, which the snana verse does for the Godavari and the Kaveri both.
 
    The romanisation is a reading aid, not scholarship: macrons and dots are

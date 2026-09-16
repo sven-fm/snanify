@@ -1,7 +1,7 @@
 import "server-only";
 import { emailContent } from "@/content/email";
 import type { Currency } from "@/lib/currency";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
 import type { FlowBand } from "@/lib/riverdata";
 import { unsubscribeUrl } from "@/lib/unsubscribe";

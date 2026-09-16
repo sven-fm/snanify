@@ -12,18 +12,14 @@ import {
   website,
 } from "@/components/StructuredData";
 import { getGhat, RIVERS } from "@/content/rivers";
-/* This route exists in English and Hindi only, because the deep content behind
-   it does; see the tier note at the top of src/lib/locales.ts. `Lang` here is
-   therefore the full-depth pair and not the twelve locales the site serves, and
-   `FULL_LANGS` is what narrows the prerender set away from the layout default. */
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, type Lang } from "@/lib/locales";
 import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
 import { pageMetadata } from "@/lib/seo";
 
 /** Every (lang, river) combination, six waters × two locales. */
 export function generateStaticParams() {
-  return FULL_LANGS.flatMap((lang) => RIVERS.map((r) => ({ lang, river: r.slug })));
+  return LANGS.flatMap((lang) => RIVERS.map((r) => ({ lang, river: r.slug })));
 }
 
 export async function generateMetadata({

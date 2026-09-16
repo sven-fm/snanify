@@ -29,7 +29,7 @@
  * bottom edge the waterline sits under, so the masthead and headline are always
  * above the horizon whatever the viewport does and however the headline wraps.
  * That last part is load bearing: the same headline is four words in English,
- * three in Hindi and wraps differently again in Tamil and Bengali.
+ * three in Hindi.
  *
  * Architecture follows the terrain motif in trainingzones: each frame the paths
  * are recomputed and written straight to the `d` attribute through a group ref,

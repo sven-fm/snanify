@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { RootShell } from "@/components/RootShell";
 import { content } from "@/lib/content";
-import { allLangParams, parseLang } from "@/lib/locales";
+import { langParams, parseLang } from "@/lib/locales";
 import { pageMetadata, siteMetadata } from "@/lib/seo";
 
 /* No `dynamicParams = false` here, on purpose. That setting turns any path
@@ -13,13 +13,9 @@ import { pageMetadata, siteMetadata } from "@/lib/seo";
    notFound() for a stray locale, which renders this segment's not-found page
    inside the shell. The locales that exist are still prerendered. */
 
-/**
- * Every locale is prerendered at this level. Routes that only English and
- * Hindi serve narrow it again with their own `generateStaticParams`; see
- * `fullLangParams` in src/lib/locales.ts.
- */
+/** Every locale is prerendered at this level. */
 export function generateStaticParams() {
-  return allLangParams();
+  return langParams();
 }
 
 /* The browser's own chrome takes the paper's colour, day and night. */

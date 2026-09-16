@@ -1,7 +1,4 @@
-/* This module carries deep content, which exists in English and Hindi only.
-   `Lang` here is therefore the full-depth pair and not the twelve locales the
-   site serves; see the tier note at the top of src/lib/locales.ts. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The Sankalp Patra: the document labels, the record type, and the specimen.
@@ -11,22 +8,10 @@ import type { FullLang as Lang } from "@/lib/locales";
    taken from public data, plus the names and the words the person gave.
    "Kept in the name of" is the strongest line on it, and it is true.
 
-   Two things live here:
-
-   1. `patraContent`, the labels printed on the sheet, keyed by locale. `hi`
-      is checked against the shape of `en`, so a missing translation is a
-      compile error rather than an English word on a Hindi sheet. The labels
-      are plain, short and dignified: this is a document, not a page.
-   2. `specimenPatra()`, a composed record for illustration. Every value in
-      it is an example. The names are the placeholder names of the Sanskrit
-      grammarians (Devadatta, Yajnadatta, the equivalents of "John Doe");
-      nothing has been issued against the identifier; the tithi was not
-      computed from any panchang. The sheet itself is watermarked.
-
-      One value on the specimen is NOT invented, and deliberately so: the seed.
-      It is the real SHA-256 of the canonical line printed beside it, so a
-      reader who runs the hash themselves gets the number on the sheet. See
-      `SPECIMEN_CANONICAL`.
+   `patraContent` is the labels printed on the sheet, keyed by locale. `hi` is
+   checked against the shape of `en`, so a missing translation is a compile
+   error rather than an English word on a Hindi sheet. The labels are plain,
+   short and dignified: this is a document, not a page.
    --------------------------------------------------------------------------- */
 
 /* ---------------------------------- data ---------------------------------- */
@@ -199,103 +184,5 @@ const hi: typeof en = {
 
 export const patraContent = { en, hi } satisfies Record<Lang, typeof en>;
 
-/* ------------------------------- the specimen ------------------------------ */
-
-/** The bilingual watermark word tiled across a specimen sheet. */
-export const SPECIMEN_WATERMARK_TEXT = "SPECIMEN  नमूना";
-
-/**
- * The canonical line the specimen's seed is taken over, in the exact field
- * order the seed builder uses:
- *
- *   snanify.chihna | v | waterId | sourceCell | observedAtUtc | stageM |
- *   dischargeCumecs | keptAtUtc | nameNorm | gotraNorm
- *
- * A field nobody publishes is a single hyphen, which is why the level slot is
- * "-": no public gauge on the Haridwar reach publishes a stage.
- *
- * THIS STRING IS LOAD-BEARING. `SPECIMEN_SEED` is the first twelve characters
- * of its real SHA-256 digest,
- *   fc68aec95e10ffdd60804a6d4bd4112666a8fac87edb679a134dc2e4e9ea3330
- * and /patra invites the reader to run the hash themselves. Edit one byte of
- * the line and the seed on the page becomes a lie, so change both together or
- * neither.
- */
-export const SPECIMEN_CANONICAL =
-  "snanify.chihna|1|ganga-haridwar|GLOFAS-29.925-78.125|2026-05-14T05:00:00Z|-|1444.000|2026-05-13T23:22:00Z|devadatta sharma|kashyapa";
-
-/** The first twelve characters of sha256(SPECIMEN_CANONICAL). Verified. */
-export const SPECIMEN_SEED = "fc68aec95e10";
-
-/**
- * A composed record, for /patra/sample and the illustration on /patra.
- *
- * Devadatta and Yajnadatta are the traditional placeholder names of Sanskrit
- * grammar. The tithi below was NOT computed from a panchang and must never be
- * presented as one: on an issued chihna the tithi cell is omitted unless
- * `confidence === "sourced"`, and it is marked "sourced" here only so the
- * specimen can demonstrate the layout. The identifier is not issued against
- * anything.
- *
- * The level is deliberately shown in its unavailable form. There is no public
- * gauge publishing a stage on the Ganga at Haridwar, and a specimen that
- * invented one is exactly the specimen that ends up copied into production.
- */
-export function specimenPatra(lang: Lang): PatraRecord {
-  const hi = lang === "hi";
-  return {
-    patraId: "pT4mKq9RxB2vLh6nYeW3dU",
-    folioNo: hi ? "००४ २१७" : "004 217",
-    sequenceLine: hi
-      ? "हर की पौड़ी पर रखा गया १,४१२वाँ पत्र"
-      : "the 1,412th sheet kept at Har Ki Pauri",
-
-    names: [
-      { latin: "Devadatta Sharma", devanagari: "देवदत्त शर्मा" },
-      {
-        latin: "Yajnadatta Sharma",
-        devanagari: "यज्ञदत्त शर्मा",
-        relation: hi ? "पिता" : "father",
-      },
-    ],
-    gotra: hi ? "काश्यप" : "Kashyapa",
-    sankalpText: hi
-      ? "बीते वर्ष के लिए कृतज्ञता, और आने वाले वर्ष में मन की शांति के निमित्त।"
-      : "In gratitude for the year that has passed, and for peace of mind in the year ahead.",
-
-    water: hi ? "गंगा" : "Ganga",
-    ghat: hi ? "हर की पौड़ी" : "Har Ki Pauri",
-    place: hi ? "हरिद्वार" : "Haridwar",
-
-    keptOn: hi ? "14 मई 2026" : "14 May 2026",
-    keptIst: "04:52 IST",
-    keptLocal: hi ? "14 मई 2026, 01:22 CEST" : "14 May 2026, 01:22 CEST",
-
-    tithi: {
-      label: hi ? "वैशाख, शुक्ल अष्टमी" : "Vaishakha, Shukla Ashtami",
-      confidence: "sourced",
-    },
-    window: {
-      label: hi ? "ब्रह्म मुहूर्त" : "Brahma Muhurat",
-      span: hi ? "04:24 से 05:12 IST" : "04:24 to 05:12 IST",
-    },
-
-    flow: {
-      value: hi ? "1,444 घन मी/से" : "1,444 m³/s",
-      note: hi
-        ? "1997 से वर्ष के इसी सप्ताह के 41% पाठों से अधिक"
-        : "higher than 41% of readings here in this week of the year since 1997",
-    },
-    distance: {
-      value: hi ? "5,739 किमी" : "5,739 km",
-      note: hi ? "बर्लिन से हर की पौड़ी तक" : "Berlin to Har Ki Pauri",
-    },
-
-    stateLine: hi
-      ? "गंगा वर्ष के इस मोड़ पर अपने सामान्य प्रवाह पर बह रही थीं।"
-      : "The Ganga was running at its usual level for this time of year.",
-
-    seed: SPECIMEN_SEED,
-    verifyUrl: "snanify.com/c/pT4mKq9RxB2vLh6nYeW3dU",
-  };
-}
+/** The bilingual word tiled across a specimen sheet. */
+export const SPECIMEN_TEXT = "SPECIMEN  नमूना";

@@ -1,7 +1,4 @@
-/* This module carries deep content, which exists in English and Hindi only.
-   `Lang` here is therefore the full-depth pair; see the tier note at the top
-   of src/lib/locales.ts. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Privacy and terms.
@@ -18,7 +15,7 @@ import type { FullLang as Lang } from "@/lib/locales";
    particular are the owner's to answer rather than mine: whether an
    Indian GST registration is needed for selling a digital service to consumers
    in India, and which entity's name and address belong at the foot of these
-   pages. Both are marked in plan.md.
+   pages.
 
    WRITTEN TO BE READ. Short sentences, no defined terms, no "the Company".
    Somebody who wants to know whether we keep their photograph should find that

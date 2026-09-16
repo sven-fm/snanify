@@ -75,8 +75,8 @@ Numerals are Devanagari in the Hindi edition (`०१ ०२ ०३`). Tabular f
 line up in a column.
 
 `.wordmark` names its own family (Eczar) rather than reading `--font-display`, and takes none
-of the `html:not([data-script="latin"])` overrides, because the brand stays Latin in all
-twelve locales: one mark, not twelve.
+of the `html:not([data-script="latin"])` overrides, because the brand stays Latin in both
+editions: one mark.
 
 ## Rules
 
@@ -177,7 +177,7 @@ Two things are worth preserving:
 `shape-outside`: the first line keeps the full measure and every line after it wraps around
 the disc. RiverFlow finds that float, paints the sun onto exactly that circle, and takes its
 vanishing point from it, so the type and the water converge on one point. The whole
-composition is sized in `em` off the headline, which is why it holds in all twelve scripts.
+composition is sized in `em` off the headline, which is why it holds in both scripts.
 The float hangs its lower half out of the block with a negative bottom margin, which puts the
 waterline through the sun's centre and makes it set rather than float.
 
@@ -225,7 +225,7 @@ Three things about that dot are load-bearing, and each one bites if changed:
 | The letter is U+0131, the dotless `ı` | Eczar's own tittle would otherwise sit above the bindu. The visible string is therefore not "Snanify", so the lettering is `aria-hidden` and `select-none`, with the real name in an `sr-only` span. Without both, a screen reader says "Snan" plus a stray letter and copying the masthead yields the name twice. |
 
 Every dot measurement is in em, so the lockup works at any size with no per-size tuning:
-22px in the header (24px at `sm`), 20px in the footer, `u(13)` on the Jal Chihna masthead. The
+22px in the header (24px at `sm`), 20px in the footer, `u(13)` on the Sankalp Patra masthead. The
 seal is nudged `translateY(0.14em)`, down from `0.2em`, because a mixed-case word puts its
 optical centre lower than caps do.
 

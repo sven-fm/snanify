@@ -7,7 +7,7 @@ import { clerkClient } from "@clerk/nextjs/server";
 import { db, profiles, sittings, users } from "@/db";
 import { requireUser } from "@/lib/auth";
 import { remove } from "@/lib/blob";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    What somebody can do to their own account.

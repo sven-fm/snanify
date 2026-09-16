@@ -8,7 +8,7 @@ export { fill } from "./en";
 /**
  * The live river page in every locale the site serves. See the header of
  * ./en.ts for the rules the copy is written under, in particular that the
- * {braces} and the units are identical in all twelve.
+ * {braces} and the units are identical in both.
  */
 export const liveContent = {
   en,

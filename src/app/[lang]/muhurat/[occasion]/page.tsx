@@ -11,11 +11,7 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-/* This route exists in English and Hindi only, because the deep content behind
-   it does; see the tier note at the top of src/lib/locales.ts. `Lang` here is
-   therefore the full-depth pair and not the twelve locales the site serves, and
-   `FULL_LANGS` is what narrows the prerender set away from the layout default. */
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, type Lang } from "@/lib/locales";
 import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
 import { MuhuratDetail } from "@/components/pages/MuhuratDetail";
@@ -39,7 +35,7 @@ import { localeDef } from "@/lib/locales";
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return FULL_LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));
+  return LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));
 }
 
 /* ---------------------------------------------------------------------------
@@ -153,9 +149,9 @@ export async function generateMetadata({
   if (!occasion) return {};
 
   /* The shared keys (meta, nav, cta, provenance, tiers, windows, anchors) live
-     in content/muhurat-index/ because the index page needs them in twelve
+     in content/muhurat-index/ because the index page needs them
      locales; the detail-only keys stayed in muhurat.ts. A Record<Lang, ...>
-     indexes fine with a FullLang, so nothing is written twice. */
+     indexes fine with a Lang, so nothing is written twice. */
   const t = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
   /* The year the occasion next falls in, from the same resolver the page
      prints its dates with, so the title says "Kartik Purnima 2026" rather

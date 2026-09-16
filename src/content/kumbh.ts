@@ -1,7 +1,4 @@
-/* This module carries deep content, which exists in English and Hindi only.
-   `Lang` here is therefore the full-depth pair and not the twelve locales the
-   site serves; see the tier note at the top of src/lib/locales.ts. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    /kumbh, the Nashik and Trimbakeshwar Simhastha, as a reference page.
@@ -25,8 +22,8 @@ import type { FullLang as Lang } from "@/lib/locales";
    5. The page says what the Kumbh is, when it falls, where, and what a
       traveller should know. It used to also carry a permit block, a register
       of interest and a two-column list of what the site does not do at a
-      mela. Those spoke the retired officiant model and argued with a critic
-      who was not in the room; they are gone and stay gone.
+      mela. Those argued with a critic who was not in the room; they are gone
+      and stay gone.
    --------------------------------------------------------------------------- */
 
 /** Both locales required, a missing translation is a compile error. */

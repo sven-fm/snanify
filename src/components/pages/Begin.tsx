@@ -11,7 +11,7 @@ import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 import { balance } from "@/lib/credits";
 import { currentUser } from "@/lib/auth";
 import { DEFAULT_TIER, isTier } from "@/lib/packs";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Price, TaxNote } from "@/components/ui";

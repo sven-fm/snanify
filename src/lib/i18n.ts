@@ -11,19 +11,13 @@ export {
   alternatesFor,
   hreflangMap,
   localeDef,
-  localesForPath,
-  isFullLang,
-  isFullOnlyPath,
-  otherFullLang,
-  otherFullLang as otherLang,
+  otherLang,
   parseLang,
-  allLangParams,
-  fullLangParams,
+  langParams,
   LANGS,
-  FULL_LANGS,
   LOCALES,
   DEFAULT_LANG,
   SITE_ORIGIN,
 } from "@/lib/locales";
 
-export type { Lang, FullLang, LocaleDef, Script, Depth } from "@/lib/locales";
+export type { Lang, LocaleDef, Script } from "@/lib/locales";

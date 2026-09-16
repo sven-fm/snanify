@@ -17,7 +17,7 @@ import {
 import type { todayContent } from "@/content/today";
 import { keepThisMorning } from "@/app/[lang]/(app)/today/actions";
 import { track } from "@/lib/track";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The sitting: five parts, three minutes, once a morning.

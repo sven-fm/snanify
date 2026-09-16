@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Account } from "@/components/pages/Account";
 import { accountContent } from "@/content/account";
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 
 /* Behind a sign-in, so it renders per request and is never prerendered with
@@ -11,7 +11,7 @@ const ROUTE = "/account";
 export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({

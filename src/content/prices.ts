@@ -11,7 +11,7 @@ import { DEFAULT_CURRENCY, type Currency } from "@/lib/currency";
    translation. A Tamil reader in Toronto pays Canadian dollars and a Tamil
    reader in Chennai pays rupees; the language follows the reader and the
    currency follows the body. Keeping them here also means a price change is one
-   edit rather than twelve.
+   edit.
 
    THE SHAPE OF THE OFFER. Eleven mornings cost eleven, one for each morning, in
    whatever currency the reader is in. That is the whole hook and it is why

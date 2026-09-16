@@ -1,5 +1,5 @@
 import type { patraPageContent } from "@/content/patra-page";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import type { PatraRecord } from "@/content/patra";
 import { ShareButton } from "@/components/patra/ShareButton";
 import { PatraSheetViewer } from "@/components/SankalpPatra";

@@ -103,7 +103,7 @@ export function LinkButton({
   className = "",
 }: {
   href: string;
-  /** Set when the target is in another language, which `deepHref` decides. */
+  /** Set when the target is in another language. */
   hrefLang?: string;
   children: React.ReactNode;
   variant?: ButtonVariant;
@@ -223,7 +223,7 @@ export function TaxNote({ lang }: { lang: Lang }) {
  *
  * Copy writes `{price:eleven}` and gets the reader's own currency, the same
  * way `{price}` works on the landing hero. A locale file that spells a figure
- * out ships one currency to twelve audiences, which is the bug this exists to
+ * out ships one currency to every audience, which is the bug this exists to
  * prevent: a rupee price read in Toronto is simply the wrong number.
  */
 export function PriceText({ children }: { children: string }) {

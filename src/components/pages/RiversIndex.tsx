@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { WaterBand } from "@/components/WaterBand";
 import { localePath } from "@/lib/i18n";
-import { deepLang, pickDeep, type Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { Colophon, Mark } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
@@ -73,28 +73,18 @@ export function RiversIndex({ lang }: { lang: Lang }) {
                   </h2>
                   <p className="mt-3 text-sm text-ink2">{place(first)}</p>
                 </div>
-
-                {/* The six river descriptions are English and Hindi only: see
-                    the tier note in src/lib/locales.ts. The name above is
-                    localised, this prose is not, and the `lang` says so rather
-                    than letting a screen reader read English with a Tamil
-                    voice. */}
                 <p
-                  className="display mt-8 max-w-xl text-xl leading-[1.45] text-ink sm:text-2xl"
-                  lang={deepLang(lang)}
-                >
-                  {pickDeep(first.epithet, lang)}
+                  className="display mt-8 max-w-xl text-xl leading-[1.45] text-ink sm:text-2xl">
+                  {first.epithet[lang]}
                 </p>
 
-                <p className="mt-5 max-w-xl leading-[1.75] text-ink2" lang={deepLang(lang)}>
-                  {pickDeep(first.standfirst, lang)}
+                <p className="mt-5 max-w-xl leading-[1.75] text-ink2">
+                  {first.standfirst[lang]}
                 </p>
 
                 <p
-                  className="mt-4 max-w-xl text-sm leading-[1.75] text-ink2"
-                  lang={deepLang(lang)}
-                >
-                  {pickDeep(first.sacred, lang)[0]}
+                  className="mt-4 max-w-xl text-sm leading-[1.75] text-ink2">
+                  {first.sacred[lang][0]}
                 </p>
 
                 <div className="mt-9 flex flex-wrap items-center gap-5">
@@ -133,16 +123,12 @@ export function RiversIndex({ lang }: { lang: Lang }) {
                     </h3>
                     <p className="mt-2 text-sm text-ink2">{place(r)}</p>
                     <p
-                      className="display mt-5 max-w-xl text-lg leading-[1.45] text-ink"
-                      lang={deepLang(lang)}
-                    >
-                      {pickDeep(r.epithet, lang)}
+                      className="display mt-5 max-w-xl text-lg leading-[1.45] text-ink">
+                      {r.epithet[lang]}
                     </p>
                     <p
-                      className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2"
-                      lang={deepLang(lang)}
-                    >
-                      {pickDeep(r.standfirst, lang)}
+                      className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2">
+                      {r.standfirst[lang]}
                     </p>
                   </div>
 

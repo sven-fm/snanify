@@ -2,7 +2,7 @@ import Link from "next/link";
 import { alternatesFor, localeDef, type Lang } from "@/lib/locales";
 
 /**
- * The language switch, for twelve locales rather than two.
+ * The language switch.
  *
  * A `<details>` element, so it opens and closes with no JavaScript at all: this
  * sits in the masthead of a page whose whole argument is that it is small and
@@ -11,9 +11,7 @@ import { alternatesFor, localeDef, type Lang } from "@/lib/locales";
  * before it reads the hreflang set.
  *
  * `currentPath` is the locale-independent route, so the switch lands on the same
- * page rather than dumping the reader at home. Only locales that actually serve
- * that route are listed, which is the same rule the hreflang set follows; see
- * `localesForPath` in src/lib/locales.ts.
+ * page rather than dumping the reader at home.
  */
 export function LangSwitch({
   lang,
@@ -41,7 +39,7 @@ export function LangSwitch({
       </summary>
 
       {/* Right-aligned so a long native name cannot push the panel off a 390px
-          screen. max-h with scroll because twelve rows at 44px is taller than
+          screen. max-h with scroll because a long list at 44px a row is taller than
           some phones in landscape. */}
       <div className="settle-panel absolute right-0 z-50 mt-1 max-h-[70svh] w-52 overflow-y-auto border-2 border-rulestrong bg-paper">
         <ul>

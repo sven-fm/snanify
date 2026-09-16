@@ -8,7 +8,7 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
-import { allLangParams, pickDeep, type Lang } from "@/lib/locales";
+import { langParams, type Lang } from "@/lib/locales";
 import { occasionName } from "@/content/names";
 import { navLabel } from "@/lib/nav";
 import { MuhuratIndex } from "@/components/pages/MuhuratIndex";
@@ -28,7 +28,7 @@ const ROUTE = "/muhurat";
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return allLangParams();
+  return langParams();
 }
 
 export async function generateMetadata({
@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
         OCCASIONS.map((occasion) => ({
           name: occasionName(occasion, lang),
           path: `/muhurat/${occasion.slug}`,
-          description: pickDeep(occasion.line, lang),
+          description: occasion.line[lang],
         })),
       ),
       breadcrumb: breadcrumbList(lang, [

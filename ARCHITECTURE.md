@@ -1,7 +1,7 @@
 # Architecture
 
-How Snanify is put together, as it stands. `plan.md` holds the decisions and the queue;
-`CLAUDE.md` the rules; `DESIGNSYSTEM.md` the design language.
+How Snanify is put together, as it stands. `CLAUDE.md` holds the spec and the rules;
+`DESIGNSYSTEM.md` the design language; `plan.md` the work queue.
 
 ---
 
@@ -30,7 +30,7 @@ How Snanify is put together, as it stands. `plan.md` holds the decisions and the
 ```
 src/
   app/
-    [lang]/                    one route tree, two locales
+    [lang]/                    one route tree, two locales, every page in both
       page.tsx                 /            ISR every 30 minutes, the live card
       snan/ rivers/ live/ muhurat/ panchang/ kumbh/ faq/ privacy/ terms/
                                static, prerendered per locale
@@ -81,7 +81,7 @@ English is unprefixed, Hindi lives under `/hi`, and the route tree is authored o
 `src/proxy.ts` does this, deriving the prefix set from `src/lib/locales.ts`. It skips only
 Next internals, `/api`, the files that exist in `public/` and the generated images, so an
 unknown dotted path (`/foo.png`) reaches the catch-all and gets the site's own 404. It 308s
-the ten retired locale prefixes and the folded routes. It writes the currency cookie from
+locale prefixes and routes that were once public. It writes the currency cookie from
 `x-vercel-ip-country` on every response, and runs Clerk's middleware only for the product
 paths (`APP_PATH`), so the marketing pages never pay for a session read.
 
@@ -169,5 +169,5 @@ Vercel, connected to GitHub: push to `main` deploys production, other branches g
 previews. CI on GitHub Actions runs lint, types and unit tests on pushes to `main` and on
 pull requests. Providers are Vercel Marketplace resources except Resend. `.env.local`
 comes from `vercel env pull` and, as of 16 September 2026, still carries the production
-database with the Clerk development instance and Stripe test keys; a Neon branch for
-development is an open item in `plan.md`.
+database with the Clerk development instance and Stripe test keys, so a local sitting
+writes real rows; a Neon branch for development is an open item in `plan.md`.

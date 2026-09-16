@@ -6,7 +6,7 @@ import { patraPageContent } from "@/content/patra-page";
 import { currentUser } from "@/lib/auth";
 import { isId } from "@/lib/ids";
 import { patraView, printableRecord } from "@/lib/patra-view";
-import { localePath, SITE_ORIGIN, type FullLang as Lang } from "@/lib/locales";
+import { localePath, SITE_ORIGIN, type Lang } from "@/lib/locales";
 import { headers } from "next/headers";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";

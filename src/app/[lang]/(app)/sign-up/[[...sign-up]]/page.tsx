@@ -3,7 +3,7 @@ import { SignUp } from "@clerk/nextjs";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { accountContent } from "@/content/account";
-import { FULL_LANGS, localePath, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 
 /* The sign-up screen sits inside the site rather than on a page of its own,
@@ -16,7 +16,7 @@ const ROUTE = "/sign-up";
 
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang, "sign-up": [] as string[] }));
+  return LANGS.map((lang) => ({ lang, "sign-up": [] as string[] }));
 }
 
 export async function generateMetadata({

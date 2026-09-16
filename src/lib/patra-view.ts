@@ -9,7 +9,7 @@ import { blobUrl } from "@/lib/blob";
 import { shortSeed } from "@/lib/seed";
 import type { PatraRecord } from "@/content/patra";
 import { SITE_ORIGIN } from "@/lib/locales";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    One sitting, formatted for a sheet.
@@ -155,11 +155,8 @@ export function patraView(sitting: Sitting, edition?: Lang): PatraView {
 /* ---------------------------------------------------------------------------
    The same sitting, shaped for the printable A4 sheet.
 
-   `SankalpPatra.tsx` was built for the officiant model and kept when that was
-   cancelled, because the furniture was always the good part: the double rule,
-   the folio line, the ruled register, the colophon and the print CSS. It was
-   orphaned when /patra/sample went, and this is what puts it back to work as
-   the owner's own print view.
+   `SankalpPatra.tsx` draws it: the double rule, the folio line, the ruled
+   register, the colophon and the print CSS.
 
    THE SHEET IS THE OWNER'S, SO IT CARRIES THEIR SANKALP. That is the one thing
    `patraView` deliberately never holds, and it is why this takes the sitting

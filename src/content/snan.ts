@@ -1,7 +1,4 @@
-/* This module carries deep content, which exists in English and Hindi only.
-   `Lang` here is therefore the full-depth pair and not the twelve locales the
-   site serves; see the tier note at the top of src/lib/locales.ts. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
 import type { Limb as LimbId } from "@/lib/sitting-plan";
 

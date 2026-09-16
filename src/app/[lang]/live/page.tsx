@@ -13,7 +13,7 @@ import {
 } from "@/components/StructuredData";
 import { liveContent } from "@/content/live";
 import { getGhat } from "@/content/rivers";
-import { allLangParams, type Lang } from "@/lib/locales";
+import { langParams, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { ARCHIVE, REVALIDATE_SECONDS, SOURCES, getLiveSnapshot } from "@/lib/riverdata";
 import { pageMetadata } from "@/lib/seo";
@@ -44,7 +44,7 @@ if (revalidate !== REVALIDATE_SECONDS) {
 }
 
 export function generateStaticParams() {
-  return allLangParams();
+  return langParams();
 }
 
 export async function generateMetadata({

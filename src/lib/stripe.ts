@@ -2,7 +2,7 @@ import "server-only";
 import Stripe from "stripe";
 import type { Currency } from "@/lib/currency";
 import { packForTier, type Pack } from "@/lib/packs";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
 
 /* ---------------------------------------------------------------------------

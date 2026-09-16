@@ -8,7 +8,7 @@ import { getLiveSnapshot } from "@/lib/riverdata";
 import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { profiles } from "@/db/schema";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The morning reminder, sent hourly to whoever is due.

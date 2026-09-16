@@ -1,4 +1,4 @@
-import type { FullLang, Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Clerk, dressed as this site.
@@ -149,13 +149,13 @@ const STRINGS = {
     formFieldInputPlaceholder__emailAddress: "aap@example.com",
     backButton: "वापस",
   },
-} satisfies Record<FullLang, object>;
+} satisfies Record<Lang, object>;
 
 /**
- * The strings for one edition. Takes `Lang` rather than `FullLang` so
+ * The strings for one edition. Takes `Lang` rather than `Lang` so
  * RootShell, which serves every locale, can call it without narrowing; the
  * signed-in routes are English and Hindi only in any case.
  */
 export function clerkLocalization(lang: Lang) {
-  return STRINGS[lang as FullLang] ?? STRINGS.en;
+  return STRINGS[lang as Lang] ?? STRINGS.en;
 }

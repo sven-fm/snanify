@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { WaterBand } from "@/components/WaterBand";
 
-/* This page exists in English and Hindi only; see the tier note and the
-   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
-   the full-depth pair and not the twelve locales the site serves. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -113,8 +110,7 @@ function WindowCell({
 /* --- an occasion, as one line of the register ----------------------------- */
 
 function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
-  /* Shared keys from content/muhurat-index (twelve locales), detail-only keys
-     from muhurat.ts (English and Hindi). See the note in MuhuratDetail. */
+  /* Shared keys from content/muhurat-index, detail-only keys from muhurat.ts. */
   const m = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
 
   return (
@@ -177,8 +173,7 @@ function OccasionTable({
 
 export function Panchang({ lang }: { lang: Lang }) {
   const t = panchangContent[lang];
-  /* Shared keys from content/muhurat-index (twelve locales), detail-only keys
-     from muhurat.ts (English and Hindi). See the note in MuhuratDetail. */
+  /* Shared keys from content/muhurat-index, detail-only keys from muhurat.ts. */
   const m = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
   /* The offsets are read on the reference instant, because four of the seven
      places below observe daylight saving and India does not. A standing

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { RIVER_SLUGS } from "@/content/rivers";
 import { OCCASION_SLUGS } from "@/content/muhurat";
-import { hreflangMap, localeUrl, localesForPath, DEFAULT_LANG } from "@/lib/locales";
+import { hreflangMap, localeUrl, LANGS, DEFAULT_LANG } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The sitemap, generated per locale from the same route manifest that drives
@@ -9,13 +9,9 @@ import { hreflangMap, localeUrl, localesForPath, DEFAULT_LANG } from "@/lib/loca
 
    The important property is that this file cannot disagree with the `<link
    rel="alternate">` tags on the pages themselves: both come out of
-   `localesForPath`, so a route only ever appears in the locales that serve it,
-   and every entry carries the same alternates set as the page it points at.
-   Google treats a mismatch between the two as a reason to ignore both.
-
-   `/rivers` is listed in twelve locales; `/rivers/ganga-haridwar` in two. That
-   asymmetry is the whole point of the route manifest, and it is why the detail
-   routes are built with `isFullOnlyPath` rather than assumed.
+   `hreflangMap`, so every entry carries the same alternates set as the page it
+   points at. Google treats a mismatch between the two as a reason to ignore
+   both.
 
    THERE IS NO `lastModified` HERE, AND THAT IS A DECISION RATHER THAN AN
    OVERSIGHT. It was an oversight until August 2026; this paragraph is the point
@@ -76,7 +72,7 @@ const ROUTES: Route[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.flatMap(({ path, priority, changeFrequency }) => {
     const languages = hreflangMap(path);
-    return localesForPath(path).map((lang) => ({
+    return LANGS.map((lang) => ({
       url: localeUrl(lang, path),
       changeFrequency,
       /* The English edition is the one to crawl first for a given route; the

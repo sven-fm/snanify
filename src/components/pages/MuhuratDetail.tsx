@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { WaterBand } from "@/components/WaterBand";
 
-/* This page exists in English and Hindi only; see the tier note and the
-   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
-   the full-depth pair and not the wider set the site serves. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";

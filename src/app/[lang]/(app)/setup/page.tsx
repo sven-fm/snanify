@@ -8,7 +8,7 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { requireUser } from "@/lib/auth";
 import { blobUrl } from "@/lib/blob";
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -22,7 +22,7 @@ const ROUTE = "/setup";
 export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({

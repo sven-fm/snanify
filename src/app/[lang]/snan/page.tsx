@@ -11,11 +11,7 @@ import {
   website,
 } from "@/components/StructuredData";
 import { snanContent } from "@/content/snan";
-/* This route exists in English and Hindi only, because the deep content behind
-   it does; see the tier note at the top of src/lib/locales.ts. `Lang` here is
-   therefore the full-depth pair and not the twelve locales the site serves, and
-   `FULL_LANGS` is what narrows the prerender set away from the layout default. */
-import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
+import { LANGS, type Lang } from "@/lib/locales";
 import { SOURCES } from "@/lib/riverdata";
 import { pageMetadata } from "@/lib/seo";
 import { currencyForLang, PRICE } from "@/content/prices";
@@ -26,7 +22,7 @@ import { PACKS } from "@/lib/packs";
 const ROUTE = "/snan";
 
 export function generateStaticParams() {
-  return FULL_LANGS.map((lang) => ({ lang }));
+  return LANGS.map((lang) => ({ lang }));
 }
 
 export async function generateMetadata({

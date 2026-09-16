@@ -1,4 +1,4 @@
-import { localePath, servesPath, type Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 
 export type NavItem = { href: string; label: string };
 
@@ -62,17 +62,9 @@ export function navItem(lang: Lang, key: NavKey): NavItem {
   return { href: localePath(lang, PATHS[key]), label: navLabel(lang, key) };
 }
 
-/**
- * The header set, identical on every page so the site reads as one place.
- *
- * Filtered by what the locale actually serves: a Tamil reader is not offered
- * `/snan` and `/faq`, because those exist in English and Hindi only and a
- * nav link into a 404 is worse than a shorter nav.
- */
+/** The header set, identical on every page so the site reads as one place. */
 export function primaryNav(lang: Lang): NavItem[] {
-  return (["snan", "panchang", "live", "rivers", "muhurat", "faq"] as NavKey[])
-    .filter((k) => servesPath(lang, PATHS[k]))
-    .map((k) => navItem(lang, k));
+  return (["snan", "panchang", "live", "rivers", "muhurat", "faq"] as NavKey[]).map((k) => navItem(lang, k));
 }
 
 /** Where the primary CTA goes, from every page. */

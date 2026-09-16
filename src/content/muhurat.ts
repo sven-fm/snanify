@@ -18,11 +18,7 @@
  *              `ghatCivilDate`. The two fields are never merged.
  * ------------------------------------------------------------------------- */
 
-/* This module carries deep content, which exists in English and Hindi only.
-   `Lang` here is therefore the full-depth pair and not the twelve locales the
-   site serves; see the tier note at the top of src/lib/locales.ts. */
-import type { FullLang as Lang, Lang as WideLang } from "@/lib/locales";
-import { monthName } from "@/content/months";
+import type { Lang } from "@/lib/locales";
 import raw from "./data/muhurat.json";
 
 /* --- primitives ---------------------------------------------------------- */
@@ -364,14 +360,10 @@ const MONTH_NAMES: Record<Lang, readonly string[]> = {
   ],
 };
 
-/**
- * Month names are localised in all twelve; see content/names.ts. English and
- * Hindi still come from MONTH_NAMES above, which stays their source of truth.
- */
-export function monthLabel(month: string, lang: WideLang): { name: string; year: string } {
+export function monthLabel(month: string, lang: Lang): { name: string; year: string } {
   const [y, m] = month.split("-");
   const index = Number(m) - 1;
-  return { name: monthName(index, lang, MONTH_NAMES) ?? month, year: y };
+  return { name: MONTH_NAMES[lang][index] ?? month, year: y };
 }
 
 export interface AlmanacMonth {

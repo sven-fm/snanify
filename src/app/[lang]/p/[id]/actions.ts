@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db, sittings } from "@/db";
 import { requireUser } from "@/lib/auth";
 import { isId } from "@/lib/ids";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Taking a Sankalp Patra out of circulation, or putting it back.

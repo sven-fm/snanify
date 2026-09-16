@@ -5,13 +5,10 @@ import { createPortal } from "react-dom";
 import { Colophon, Mark, Wordmark } from "@/components/Logo";
 import {
   patraContent,
-  SPECIMEN_WATERMARK_TEXT,
+  SPECIMEN_TEXT,
   type PatraRecord,
 } from "@/content/patra";
-/* This page exists in English and Hindi only; see the tier note and the
-   FULL_ONLY list at the top of src/lib/locales.ts. `Lang` here is therefore
-   the full-depth pair and not the twelve locales the site serves. */
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The Sankalp Patra, the printable A4 form.
@@ -81,16 +78,16 @@ const PRINT_CSS = `
 }
 `;
 
-export type ChihnaSheetProps = {
+export type PatraSheetProps = {
   lang: Lang;
   data: PatraRecord;
   /**
-   * Marks the sheet as a specimen: tiled watermark, spot-colour rules, and a
+   * Marks the sheet as a specimen: tiled specimen, spot-colour rules, and a
    * stated banner. Anything not issued against a real record must set this.
    */
-  watermark?: boolean;
+  specimen?: boolean;
   /**
-   * The generative engraving for this chihna, drawn from the seed. Slotted
+   * The generative engraving for this sheet, drawn from the seed. Slotted
    * rather than built here, because the plate is a pure module the raster
    * routes share. Absent, nothing is drawn: a decorative stand-in on a
    * document whose entire argument is that nothing on it is decorative would
@@ -147,34 +144,34 @@ function Cell({
   );
 }
 
-export function ChihnaSheet({
+export function PatraSheet({
   lang,
   data,
-  watermark = false,
+  specimen = false,
   plate,
   className = "",
-}: ChihnaSheetProps) {
+}: PatraSheetProps) {
   const t = patraContent[lang].sheet;
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
-  const patternId = `chihna-wm-${uid}`;
+  const patternId = `patra-wm-${uid}`;
   /* Devanagari is set in Eczar in both editions: the sheet titles itself in
      Devanagari even on an English page, so the face is pinned rather than
      inherited from a locale that may not carry the script. */
   const deva = "var(--font-eczar), Georgia, serif";
-  const ringColour = watermark ? "var(--spot)" : "var(--rule)";
+  const ringColour = specimen ? "var(--spot)" : "var(--rule)";
 
   const allRemembrance =
     data.names.length > 0 && data.names.every((n) => n.remembrance);
 
   return (
     <div className={`w-full ${className}`} style={{ containerType: "inline-size" }}>
-      <style href="snanify-chihna-print" precedence="medium">
+      <style href="snanify-patra-print" precedence="medium">
         {PRINT_CSS}
       </style>
 
       <article
         data-patra-sheet
-        aria-label={watermark ? t.ariaSpecimen : t.aria}
+        aria-label={specimen ? t.ariaSpecimen : t.aria}
         className="relative isolate flex flex-col border-2 border-rulestrong bg-paper"
         style={{ aspectRatio: `${W} / ${H}`, padding: u(44) }}
       >
@@ -185,12 +182,12 @@ export function ChihnaSheet({
           style={{ inset: u(14), border: `1px solid ${ringColour}` }}
         />
 
-        {watermark && (
+        {specimen && (
           <svg
             aria-hidden="true"
             /* The viewBox matches the sheet's own proportions, so the tiled
                mark is measured in design pixels and scales with the document,
-               the same watermark on a 390px phone and on an A4 print, rather
+               the same specimen on a 390px phone and on an A4 print, rather
                than a huge one on the small preview. */
             viewBox={`0 0 ${W} ${H}`}
             className="pointer-events-none absolute inset-0 h-full w-full"
@@ -216,7 +213,7 @@ export function ChihnaSheet({
                     letterSpacing: "0.2em",
                   }}
                 >
-                  {SPECIMEN_WATERMARK_TEXT}
+                  {SPECIMEN_TEXT}
                 </text>
               </pattern>
             </defs>
@@ -284,7 +281,7 @@ export function ChihnaSheet({
                 </p>
               )}
 
-              {watermark && (
+              {specimen && (
                 <p
                   className="label text-spot"
                   style={{
@@ -500,7 +497,7 @@ export function ChihnaSheet({
               </span>
             </div>
 
-            {watermark && (
+            {specimen && (
               <p
                 className="border-l-2 text-spot"
                 style={{
@@ -520,7 +517,7 @@ export function ChihnaSheet({
                 where anyone checks the figures. */}
             <p
               className="text-ink2"
-              style={{ marginTop: u(watermark ? 13 : 18), fontSize: u(12.6), lineHeight: 1.55 }}
+              style={{ marginTop: u(specimen ? 13 : 18), fontSize: u(12.6), lineHeight: 1.55 }}
             >
               {t.footerLine}
             </p>
@@ -551,11 +548,11 @@ export function ChihnaSheet({
 export function PatraSheetViewer({
   lang,
   data,
-  watermark = false,
+  specimen = false,
   plate,
   className = "",
   sheetClassName = "",
-}: ChihnaSheetProps & { sheetClassName?: string }) {
+}: PatraSheetProps & { sheetClassName?: string }) {
   const t = patraContent[lang].sheet;
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"fit" | "read">("fit");
@@ -588,7 +585,7 @@ export function PatraSheetViewer({
   return (
     <div className={className}>
       <div className={sheetClassName}>
-        <ChihnaSheet lang={lang} data={data} watermark={watermark} plate={plate} />
+        <PatraSheet lang={lang} data={data} specimen={specimen} plate={plate} />
       </div>
 
       <button
@@ -626,7 +623,7 @@ export function PatraSheetViewer({
                     : { width: `${W}px`, maxWidth: "none" }
                 }
               >
-                <ChihnaSheet lang={lang} data={data} watermark={watermark} plate={plate} />
+                <PatraSheet lang={lang} data={data} specimen={specimen} plate={plate} />
               </div>
             </div>
 

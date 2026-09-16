@@ -1,5 +1,5 @@
 import { currentUser } from "@/lib/auth";
-import { localePath, SITE_ORIGIN, type FullLang as Lang } from "@/lib/locales";
+import { localePath, SITE_ORIGIN, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The reminder hour as a calendar file: one daily event at the person's

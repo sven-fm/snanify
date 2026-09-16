@@ -11,9 +11,8 @@ import { ETHICS_MAIL } from "@/content/trust";
 
    1. NOTHING IS ASSERTED HERE THAT IS NOT ASSERTED ON THE PAGE. Structured
       data is read by crawlers and by language models, and a claim made only
-      to a crawler is still a claim. No prices (nothing is on sale), no
-      officiants (none has consented to be named), no aggregateRating, no
-      geo coordinates (none of the six ghats has been surveyed), no sameAs
+      to a crawler is still a claim. No aggregateRating, no geo coordinates
+      (none of the six ghats has been surveyed), no sameAs
       (no social profile has been verified).
    2. NO INVENTED PRECISION. An occasion whose date we have only to the month
       ships `startDate: "2026-09"`, which is a valid ISO 8601 reduced-precision
@@ -110,7 +109,7 @@ export function publicUrl(lang: Lang, path: string): string {
 /**
  * Every language the site publishes in, as BCP 47 tags, read from the registry
  * rather than listed here. This used to be a hand-written `["en", "hi"]`, which
- * is exactly the kind of thing that stays at two while the site goes to twelve.
+ * is exactly the kind of thing that stays at two while the site grows.
  */
 const SITE_LANGUAGES = LOCALES.map((l) => l.tag);
 
@@ -399,14 +398,13 @@ export interface OccasionEventOptions {
  * One occasion as an Event, or as an EventSeries where there is no dated
  * instance to point at.
  *
- * Attendance is online and only online: the rite is performed at the ghat by an
- * officiant and watched from wherever the reader is, so the attendance mode is
- * OnlineEventAttendanceMode and the location is the virtual one. The ghats are
- * carried on the page node as `mentions`, which links them without claiming
- * anyone attends in person.
+ * Attendance is online and only online: the reader sits with the water from
+ * wherever they are, so the attendance mode is OnlineEventAttendanceMode and
+ * the location is the virtual one. The ghats are carried on the page node as
+ * `mentions`, which links them without claiming anyone attends in person.
  *
- * Deliberately absent: `offers` (nothing is on sale yet), `performer` (no
- * officiant has consented to be named), `eventStatus` (EventScheduled asserts
+ * Deliberately absent: `offers` (an occasion is not the thing on sale),
+ * `performer`, `eventStatus` (EventScheduled asserts
  * the event happens on `startDate` as scheduled, which is more than a
  * provisional month-precision date can carry).
  */

@@ -6,7 +6,7 @@ import { currencyForCountry } from "@/lib/currency";
 import { requireUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
 import { createCheckout } from "@/lib/stripe";
-import { SITE_ORIGIN, type FullLang as Lang } from "@/lib/locales";
+import { SITE_ORIGIN, type Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
 
 /* ---------------------------------------------------------------------------

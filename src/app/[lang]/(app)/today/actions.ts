@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { requireUser } from "@/lib/auth";
 import { requestFix } from "@/lib/distance";
 import { mintSitting } from "@/lib/sitting";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Keeping this morning.

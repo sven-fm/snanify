@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { content } from "@/lib/content";
 import { RIVERS } from "@/content/rivers";
-import { deepHref, type Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { Mark } from "@/components/Logo";
 import { RiverFlow } from "@/components/RiverFlow";
@@ -186,16 +186,16 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 className="ink-in order-6 mt-7 flex flex-col gap-4 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "240ms" }}
               >
-                <Link {...deepHref(lang, "/begin")} className="block" data-hero-cta>
+                <Link href={localePath(lang, "/begin")} className="block" data-hero-cta>
                   <CTA className="w-full !py-4 sm:w-auto">{t.hero.ctaPrimary}</CTA>
                 </Link>
                 <Link
-                  {...deepHref(lang, "/live")}
+                  href={localePath(lang, "/live")}
                   className="impress self-center text-[0.95rem] text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot sm:hidden"
                 >
                   {t.hero.ctaSecondary}
                 </Link>
-                <Link {...deepHref(lang, "/live")} className="hidden sm:block">
+                <Link href={localePath(lang, "/live")} className="hidden sm:block">
                   <CTA variant="ghost" className="!py-4">
                     {t.hero.ctaSecondary}
                   </CTA>
@@ -251,7 +251,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
               </dl>
 
               <Link
-                {...deepHref(lang, "/rivers")}
+                href={localePath(lang, "/rivers")}
                 className="mt-4 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
               >
                 {t.hero.card.link}
@@ -280,7 +280,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             {RIVERS.map((r) => (
               <li key={r.slug}>
                 <Link
-                  {...deepHref(lang, `/rivers/${r.slug}`)}
+                  href={localePath(lang, `/rivers/${r.slug}`)}
                   className="group impress grid gap-y-1 border-b border-rule py-5 hover:bg-paper3 active:bg-paper3 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline sm:gap-x-8"
                 >
                   <span className="display text-2xl text-ink">{waterName(r, "river", lang)}</span>
@@ -355,7 +355,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
           <div className="mt-8">
             <LinkButton
-              {...deepHref(lang, "/snan")}
+              href={localePath(lang, "/snan")}
               variant="ghost"
               className="w-full !py-4 sm:w-auto"
             >
@@ -375,7 +375,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             <p className="mx-auto mt-5 max-w-lg text-[1.02rem] leading-[1.75] text-ink2">
               {t.closing.lede}
             </p>
-            <Link {...deepHref(lang, "/begin")} className="mt-9 block sm:inline-block">
+            <Link href={localePath(lang, "/begin")} className="mt-9 block sm:inline-block">
               <CTA className="w-full !py-4 sm:w-auto sm:!px-10">{t.closing.cta}</CTA>
             </Link>
           </div>
@@ -403,7 +403,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             </p>
           </div>
           <Link
-            {...deepHref(lang, "/begin")}
+            href={localePath(lang, "/begin")}
             className="label impress flex min-h-[48px] shrink-0 items-center bg-spot px-7 text-paper hover:bg-ink active:bg-ink"
           >
             {t.bar.cta}

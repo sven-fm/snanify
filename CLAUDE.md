@@ -5,9 +5,15 @@ of a sacred river in India and make your sankalp yourself, wherever in the world
 
 **Live:** https://www.snanify.com · **Repo:** https://github.com/sven-fm/snanify
 
-**`plan.md` is the spec and the queue.** Read it before building anything; every future
-work step starts from there. `ARCHITECTURE.md` holds the stack, `DESIGNSYSTEM.md` the design
-language. `docs/` is reasoning history and yields to `plan.md` where they disagree.
+This file is the spec: what the product is, the decisions behind it and the rules every
+line of copy and code is written under. `ARCHITECTURE.md` holds how it is built,
+`DESIGNSYSTEM.md` the design language, `plan.md` only the work queue.
+
+## Who it is for
+
+Indians and the Hindu diaspora far from their river, thirty and over, in the US, the UK,
+Canada, the Gulf, Singapore and Australia. English and Hindi. Over ninety percent of readers
+arrive on a phone, at six in the morning, in bed.
 
 ---
 
@@ -48,6 +54,35 @@ language.
 
 Never fabricate a river figure, a panchang timing or a statistic and present it as fact.
 
+## Decisions, locked
+
+The owner's, and not reopened inside a task. A task that discovers it needs one reversed
+stops and says so.
+
+| Question | Decision |
+| --- | --- |
+| Paying entity | Non-Indian. Stripe only, with Managed Payments on: Stripe is the merchant of record and charges and remits VAT and GST itself. Razorpay and UPI only if an Indian entity appears. |
+| What is paid | The snan. One price, three packs (1, 11, 60), the Sankalp Patra included. Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. |
+| Prices | The table below. Every price outside the US is tax-inclusive; US dollars show before sales tax. Eleven mornings cost eleven in every currency: that is the hook. |
+| Pack names | The count is the name: "One morning", "Eleven mornings", "Sixty mornings". No coined names, no Devanagari beside them. |
+| The order | Begin, sign in, set up the sheet, pay, sit. The sheet is made before the packs are shown, and the packs are shown beside a specimen with the buyer's own names on it. |
+| Locales | English and Hindi. The brand stays Latin, "Snanify", in every edition. |
+| On the Patra | Portrait (optional), up to five household names, one chosen prayer, the day's river figure and rank, the tithi, the distance to the water, the time in the person's zone and in IST. The sankalp text is on the owner's copy only. |
+| Sitting | Three minutes: reading 15s, breath 45s, sankalp hold 11s, stillness 60s, mark 20s. Next leaves the reading, the breath and the stillness early; nothing lengthens. |
+| Cadence | One Patra per completed morning. |
+| Sign-in | Clerk: Google and email link, on one combined screen. No phone OTP, no password. |
+| Setup | All six fields (water, photograph, names, prayer, sankalp, hour), under a three-step line whose third step is the packs, with example sankalps to take as they are. |
+| Data | GloFAS modelled discharge through Open-Meteo, one value a day. Named on `/rivers`, `/live`, `/faq` and in the structured data; shown plainly on every product surface. Never called "measured". |
+
+Why, in one line each: two processors is two webhooks, two reconciliations and an Indian
+company, and the diaspora is the paying audience on day one. The sitting is the value, and a
+paywall inside a three-minute ritual is worse than one before it. The buyer pays for a thing
+already half made, with their family's names on it, rather than for a description. Ten more
+locales cost a font call, a copy file and a QA pass per page for pages nobody could buy from.
+One Patra per morning is eleven shareable moments per pack, and the share is the growth
+channel. Three minutes is long enough to be a practice and short enough to keep at 5:40 in
+bed on morning three.
+
 ## The product
 
 **The snan**, three minutes, identical every day; only the river changes. Durations live in
@@ -62,9 +97,19 @@ Never fabricate a river figure, a panchang timing or a statistic and present it 
 | The mark | 20s | One line writes itself into your register |
 
 The artefact is the **Sankalp Patra**: the names, the water, the day's figure and rank, the
-tithi, the time in the person's zone and in IST, a prayer, an optional portrait, and an
-engraving seeded by that day's published flow. Older docs call it the Jal Chihna or the
-Watermark; those names are retired.
+tithi, the distance, the time in the person's zone and in IST, a prayer, an optional
+portrait, and an engraving seeded by that day's published flow.
+
+**As the buyer sees it.** Landing: one live sentence, the headline, the river, one button,
+the reading, a specimen sheet inside a phone beside the six waters, eleven mornings for
+eleven. Begin: sign in on one combined screen. Set up, once, about two minutes. Pay on
+`/begin`, the third step, eleven first and raised beside the specimen with their own names.
+Sit each morning on `/today`: the practice takes the whole screen with the water running
+behind every part, the stillness is black, the mark writes itself, a cross in the corner
+leaves without spending. The sheet arrives on `/p/[id]` pulled from the press and the share
+sheet opens with the image attached; WhatsApp is the target. Tomorrow: an email at the
+chosen hour with a one-tap way out, a line in the register on `/account`, a calendar file
+and the home-screen icon.
 
 **One price, in the reader's own currency**, from `src/content/prices.ts`. Eleven mornings
 cost eleven in every currency: that is the hook. The packs are named by their count.
@@ -82,9 +127,6 @@ on the server (`src/app/[lang]/begin/actions.ts`); the cookie is for display onl
 
 Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. That is the search and daily-return
 surface, not a tier.
-
-**The order is sign in, set up, pay, sit.** `/begin` sends a stranger to sign in and then to
-`/setup`; the packs are the third step, shown beside the specimen with the buyer's own names.
 
 **Routes.** Marketing: `/`, `/snan`, `/rivers`, `/rivers/[river]`, `/live`, `/muhurat`,
 `/muhurat/[occasion]`, `/panchang`, `/kumbh`, `/faq`, `/privacy`, `/terms`. Product: `/begin`,
@@ -104,19 +146,16 @@ npx playwright test   # needs the dev server
 ```
 
 CI runs lint, types and unit tests on every push. `.env.local` comes from `vercel env pull`;
-it holds the production database today (see `plan.md`, the Neon branch item).
+it holds the production database today, so a local sitting writes real rows.
 
-### Two locales, two tiers
+### Two locales
 
 `src/lib/locales.ts` is the registry and the only file that knows the locale set; routing,
-the proxy, hreflang, the sitemap, fonts, the switch and JSON-LD all derive from it. Launch is
-English and Hindi (`FullLang`). Ten surface locales are parked in place, unimported, each with
-a PARKED header; reviving one is a row in `LOCALES` and whatever the compiler then reports.
-
-Copy is `Record<Lang, ...>` with `satisfies`, so a missing translation is a compile error,
-never a silent English fallback. `pickDeep` is the only fallback and it is confined to proper
-nouns. Every locale is real, idiomatic, respectful-register copy, never a literal translation
-of English marketing idiom. The brand stays Latin, "Snanify", in every edition.
+the proxy, hreflang, the sitemap, fonts, the switch and JSON-LD all derive from it. Every page
+exists in both. Copy is `Record<Lang, ...>` with `satisfies`, so a missing translation is a
+compile error, never a silent English fallback. A third locale is a row in `LOCALES` and
+whatever the compiler then reports. Every locale is real, idiomatic, respectful-register
+copy, never a literal translation of English marketing idiom.
 
 ### Routing and metadata
 
@@ -124,8 +163,7 @@ One tree under `src/app/[lang]/`. `src/proxy.ts` keeps the public URLs (English 
 Hindi under `/hi`) and skips only the files that exist in `public/`, so an unknown dotted path
 gets the site's own 404. Build every href with `localePath(lang, path)`. Every page calls
 `pageMetadata({ lang, path, title, description })` from `@/lib/seo` for the canonical, the
-hreflang cluster and the OG locales, and `allLangParams()` or `fullLangParams()` for its
-static params. Navigation asks `servesPath(lang, path)`.
+hreflang cluster and the OG locales, and `langParams()` for its static params.
 
 `/p/[id]`, `/begin` and `/specimen` sit outside the `(app)` route group on purpose: the group
 adds the Clerk provider, and none of them needs it. `auth()` on the server still works there
@@ -143,8 +181,10 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
 - **Apologetics.** Never explain what the product is not, never answer a critic who is not in
   the room. Facts about the data are craftsmanship, not disclaimers.
 - **Coined names.** The practice is "the snan", the artefact the "Sankalp Patra", a pack is
-  its count. Jal Sankalp, Jal Chihna, Watermark, Jal Path, Shwas, Maun, Chihn, Ek Dhara,
-  Gyarah and Varsh Kosh are retired.
+  its count. `tests/unit/copy-guard.test.ts` fails the build on the old ones.
+- **Officiants, priests, rites performed for anyone, subscriptions, gifting, tiers of
+  service.** The product is the three minutes and the sheet. Anything else is an item in
+  `plan.md` argued from revenue, never a quiet addition.
 - Gradients, glows, blurs, rounded corners, soft shadows. The one rounded shape is the phone
   around the specimen, drawn as SVG. See `DESIGNSYSTEM.md`.
 - Fabricated statistics presented as fact.
@@ -165,16 +205,16 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
 - **The pay intent cookie is Secure only over https**, so the sign-in continuation on
   `/begin?go=1` cannot be tested on a plain-http local production build.
 - **A hydration flake on production** (React error 418 on a share of loads, body identical
-  between server and client) is open in `plan.md` 7.1 with its measurements. Read that
-  before touching the bundler or the head scripts.
+  between server and client) is open in `plan.md` with its measurements. Read that before
+  touching the bundler or the head scripts.
 - **`npm i <anything>` prunes `--no-save` installs.**
 
-## Where the thinking lives
+## The other files
 
 | Path | What it holds |
 | --- | --- |
-| `plan.md` | The spec, the queue, the done log |
 | `ARCHITECTURE.md` | Stack, routing, data flow, deployment |
 | `DESIGNSYSTEM.md` | Tokens, type, the four motions, the rules |
-| `docs/seo/` | Search Console runbook, the hreflang contract |
-| `docs/digital/`, `docs/product/`, `docs/design/` | Reasoning history, including the cancelled officiant model; never build from them without checking `plan.md` |
+| `plan.md` | The work queue: what waits for the owner's eyes, what waits for a go, what is done |
+| `docs/seo/search-console.md` | The Search Console runbook and the hreflang contract |
+| `docs/panchang-check.md` | The occasion dates checked against Drik Panchang |

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import type { setupContent } from "@/content/setup";
 import { LIMITS } from "@/lib/limits";
 import { saveProfile, type SaveState } from "@/app/[lang]/(app)/setup/actions";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import { SubmitButton } from "@/components/ui";
 import { track } from "@/lib/track";
 

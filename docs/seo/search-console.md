@@ -46,11 +46,11 @@ Sitemaps → add `https://www.snanify.com/sitemap.xml`.
 One sitemap covers every locale. Each `<url>` carries the full `xhtml:link`
 alternates set for its route, which is the same set the page itself emits in
 `<head>`. Google treats a disagreement between the two as a reason to trust
-neither, so they are generated from one function, `localesForPath`, and cannot
+neither, so they are generated from one function, `hreflangMap`, and cannot
 drift.
 
-Expect roughly 104 URLs today: four routes in twelve locales each, nine routes
-in English and Hindi only, and 6 waters plus 13 occasions in two locales each.
+Every route is listed in both locales: the marketing routes, the six waters and
+the occasions.
 
 ### There is no `lastmod`, on purpose
 
@@ -109,12 +109,11 @@ any of these is violated. `src/lib/seo.ts` enforces all four structurally.
 
 1. **Self-referential.** Every page lists itself. `hreflangMap` iterates every
    locale serving the route, current one included.
-2. **Reciprocal.** If `/ta/rivers` points at `/rivers`, `/rivers` must point
-   back. Every page in a set is built from the same `localesForPath(path)`, so
+2. **Reciprocal.** If `/hi/rivers` points at `/rivers`, `/rivers` must point
+   back. Every page in a set is built from the same `hreflangMap(path)`, so
    the sets are identical by construction.
-3. **No dead alternates.** A locale is only listed for routes it serves.
-   `/panchang` offers `en`, `hi` and `x-default`; `/` offers twelve and an
-   `x-default`. That asymmetry is the whole point of the route manifest.
+3. **No dead alternates.** Every route exists in both locales, so every set is
+   `en`, `hi` and `x-default`.
 4. **Absolute URLs.** hreflang is ignored when relative. Everything comes out
    of `localeUrl`.
 
@@ -122,19 +121,6 @@ any of these is violated. `src/lib/seo.ts` enforces all four structurally.
 language is not in the set, and the only edition in which the whole site
 exists.
 
-### The two tiers
-
-`FULL_ONLY` in `src/lib/locales.ts` is the single list that decides which
-routes are English-and-Hindi-only. Moving a route out of that list is the only
-change needed to publish it in all twelve languages, and the sitemap, the
-hreflang sets, the header nav, the footer and the language switch all follow
-automatically.
-
-Twelve locales: the landing page, `/rivers`, `/live` and `/muhurat`.
-
-Full-depth-only (English and Hindi): `/snan`, `/panchang`, `/ethics`,
-`/how-it-works`, `/faq`, `/patra`, `/verify`, `/kumbh`, and the `/rivers/*`
-and `/muhurat/*` detail pages.
 
 ---
 
@@ -147,5 +133,5 @@ and `/muhurat/*` detail pages.
 - [ ] Export a raster logo to `/logo-512.png`. Google's logo rich result
       ignores SVG, which is what `organization()` currently points at.
 - [ ] Confirm `www.snanify.com` is the canonical host and the apex 301s to it.
-- [ ] Name a panchang source, or keep the "provisional" labels. `/ethics`
+- [ ] Name a panchang source, or keep the "provisional" labels. `/faq#how`
       publicly commits to the stricter rule.

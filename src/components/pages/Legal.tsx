@@ -1,5 +1,5 @@
 import { WaterBand } from "@/components/WaterBand";
-import type { FullLang as Lang } from "@/lib/locales";
+import type { Lang } from "@/lib/locales";
 import { legalContent } from "@/content/legal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";

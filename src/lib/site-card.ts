@@ -11,8 +11,8 @@ import type { Lang } from "@/lib/locales";
    Set the same way as the Sankalp Patra's own card in src/lib/patra-image.ts:
    paper, one spot colour, Eczar shaped to outlines by HarfBuzz so the Hindi
    edition spells itself correctly, and the engraved water along the foot. It
-   replaced a navy card with a gradient, a glow and a line of copy from the
-   officiant era, which every WhatsApp preview of the site was still showing.
+   replaced a navy card with a gradient and a glow, which every WhatsApp
+   preview of the site was still showing.
 
    The band is drawn from a fixed seed. It is decoration here, not a record,
    so it must never look like a particular morning's engraving.
