@@ -207,182 +207,47 @@ export function Panchang({ lang }: { lang: Lang }) {
               {t.hero.title}
             </h1>
 
-            <div className="rule-double mt-8 max-w-xl" />
-            <WaterBand seed="panchang" className="mt-5 h-14 w-full sm:h-16" />
+            <div className="rule-double mt-8 max-w-3xl" />
+            <WaterBand seed="panchang" className="mt-5 h-14 w-full max-w-3xl sm:h-16" />
 
             <p
-              className="ink-in mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2"
+              className="ink-in mt-6 max-w-3xl text-[1.05rem] leading-[1.75] text-ink2"
               style={{ animationDelay: "160ms" }}
             >
               {t.hero.lede}
             </p>
-
-            {/* The provenance block is the same words the calendar carries, not
-                a softened restatement of them. */}
-            <div className="ink-in boxed mt-12 max-w-3xl bg-paper p-6 sm:p-8">
-              <h2 className="display text-2xl">{t.provenance.heading}</h2>
-              <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-ink2">
-                {m.provenance.line}
-              </p>
-              <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-ink2">
-                {t.provenance.extra}
-              </p>
-
-              <dl className="mt-7 border-t-2 border-rulestrong sm:grid sm:grid-cols-3">
-                <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:pr-5">
-                  <dt className="label text-ink2">{m.provenance.sourceLabel}</dt>
-                  <dd className="mt-2 text-sm text-ink">{MUHURAT.provider.displayName[lang]}</dd>
-                </div>
-                <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:px-5">
-                  <dt className="label text-ink2">{m.provenance.ayanamsaLabel}</dt>
-                  <dd className="mt-2 text-sm text-ink">
-                    {MUHURAT.provider.ayanamsa ?? m.provenance.notSet}
-                  </dd>
-                </div>
-                <div className="py-3 sm:pl-5">
-                  <dt className="label text-ink2">{m.provenance.coordinatesLabel}</dt>
-                  <dd className="mt-2 text-sm text-ink">{m.provenance.coordinatesPending}</dd>
-                </div>
-              </dl>
-
-              <div className="mt-7">
-                <ProvisionalBadge lang={lang} />
-              </div>
-            </div>
           </div>
         </section>
 
-        {/* ---------------- why the date moves ---------------- */}
-        <Section>
+        {/* ---------------- the occasion register ---------------- */}
+        <Section id="occasions" tinted>
             <div className="max-w-3xl">
-              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.drift.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.drift.lede}</p>
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.occasions.title}</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.occasions.lede}</p>
             </div>
 
-            <ul className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
-              {t.drift.points.map((p) => (
-                <li key={p.t} className="bg-paper p-7">
-                  <h3 className="display text-2xl">{p.t}</h3>
-                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{p.d}</p>
-                </li>
-              ))}
-            </ul>
-        </Section>
+            <h3 className="display mt-12 text-2xl">{t.occasions.datedHeading}</h3>
+            <OccasionTable occasions={DATED_OCCASIONS} lang={lang} />
 
-        {/* ---------------- amanta and purnimanta ----------------
-            The reason this page exists. Two panels, one worked table, and the
-            six ghats labelled with the reckoning that names their month. */}
-        <Section id="reckoning" tinted>
-            <div className="max-w-3xl">
-              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.reckoning.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.reckoning.lede}</p>
-            </div>
-
-            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
-              {(
-                [
-                  ["amanta", t.reckoning.amanta],
-                  ["purnimanta", t.reckoning.purnimanta],
-                ] as const
-              ).map(([id, panel]) => (
-                <div key={id} className="tint p-7">
-                  <h3 className="display text-3xl text-ink">{panel.name}</h3>
-                  <div className="rule-thin mt-4" />
-                  <p className="mt-4 text-sm leading-[1.75] text-ink">{panel.cut}</p>
-                  <p className="mt-4 text-sm leading-[1.75] text-ink2">{panel.where}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
-              <div>
-                <h3 className="display text-xl">{t.reckoning.agreeHeading}</h3>
-                <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.reckoning.agree}</p>
-              </div>
-              <div>
-                <h3 className="display text-xl">{t.reckoning.differHeading}</h3>
-                <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.reckoning.differ}</p>
-              </div>
-            </div>
-
-            {/* the worked pairs */}
-            <h3 className="display mt-16 text-2xl">{t.reckoning.pairsHeading}</h3>
-            <div className="mt-6 overflow-x-auto" tabIndex={0}>
-              <table className="w-full min-w-[42rem] border-collapse text-left">
-                <thead>
-                  <tr className="border-y-2 border-rulestrong">
-                    <th className="label py-3 pr-4 text-ink2">{t.reckoning.pairsCols.occasion}</th>
-                    <th className="label py-3 pr-4 text-ink2">
-                      {t.reckoning.pairsCols.purnimanta}
-                    </th>
-                    <th className="label py-3 pr-4 text-ink2">{t.reckoning.pairsCols.amanta}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {MASA_PAIRS.map((p) => (
-                    <tr key={p.id} className="border-b border-rule align-top">
-                      <th scope="row" className="py-5 pr-4 text-left font-normal">
-                        <span className="display block text-xl text-ink">{p.occasion[lang]}</span>
-                        <span className="mt-2 block max-w-md text-xs leading-[1.7] text-ink2">
-                          {p.note[lang]}
-                        </span>
-                      </th>
-                      <td className="py-5 pr-4 text-sm text-ink">{p.purnimanta[lang]}</td>
-                      <td className="py-5 pr-4 text-sm text-ink">{p.amanta[lang]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* which reckoning names the month at each ghat */}
-            <h3 className="display mt-16 text-2xl">{t.reckoning.ghatsHeading}</h3>
-            <p className="mt-3 max-w-2xl text-sm leading-[1.75] text-ink2">
-              {t.reckoning.ghatsLede}
+            <h3 className="display mt-16 text-2xl">{t.occasions.recurringHeading}</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-[1.75] text-ink2">
+              {t.occasions.recurringLede}
             </p>
-            <ul className="mt-6 border-t-2 border-rulestrong">
-              {GHAT_SCHEMES.map((g) => (
-                <li
-                  key={g.id}
-                  className="grid gap-x-8 gap-y-1 border-b border-rule py-4 sm:grid-cols-[1fr_12rem] sm:items-baseline"
-                >
-                  <span className="text-sm text-ink">{ghatLabel(g, lang)}</span>
-                  <span className="text-sm text-ink2 sm:text-right">
-                    {t.reckoning.schemes[g.masaScheme]}
-                  </span>
-                </li>
-              ))}
-            </ul>
-        </Section>
+            <OccasionTable occasions={RECURRING_OCCASIONS} lang={lang} />
 
-        {/* ---------------- four reasons households differ ---------------- */}
-        <Section>
-            <div className="max-w-3xl">
-              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.divergence.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.divergence.lede}</p>
+            <div className="mt-8">
+              <ProvisionalBadge lang={lang} />
             </div>
-
-            <ul className="mt-12 border-t-2 border-rulestrong">
-              {t.divergence.items.map((item) => (
-                <li
-                  key={item.t}
-                  className="grid gap-x-8 gap-y-2 border-b border-rule py-7 sm:grid-cols-[16rem_1fr]"
-                >
-                  <h3 className="display text-xl text-ink">{item.t}</h3>
-                  <p className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.d}</p>
-                </li>
-              ))}
-            </ul>
         </Section>
 
         {/* ---------------- Pitru Paksha, as a ladder of tithis ---------------- */}
-        <Section id="pitru-paksha" tinted>
+        <Section id="pitru-paksha">
             <div className="max-w-3xl">
               <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.pitru.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.pitru.lede}</p>
+              <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.pitru.lede}</p>
             </div>
 
-            <div className="boxed mt-10 max-w-3xl bg-paper p-6 sm:p-7">
+            <div className="boxed mt-10 bg-paper p-6 sm:p-7 [&>*]:max-w-3xl">
               <h3 className="display text-xl">{t.pitru.datesHeading}</h3>
               <p className="mt-3 text-sm leading-[1.75] text-ink2">{t.pitru.dates}</p>
               <div className="mt-6">
@@ -434,52 +299,11 @@ export function Panchang({ lang }: { lang: Lang }) {
             </div>
         </Section>
 
-        {/* ---------------- working out a tithi from a date ---------------- */}
-        <Section>
-            <div className="max-w-3xl">
-              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.finding.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.finding.lede}</p>
-            </div>
-
-            <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
-              {t.finding.steps.map((s) => (
-                <li key={s.n} className="bg-paper p-7">
-                  <span className="display block text-2xl text-spot">{s.n}</span>
-                  <h3 className="display mt-3 text-2xl">{s.t}</h3>
-                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
-                </li>
-              ))}
-            </ol>
-
-            <p className="mt-8 max-w-2xl text-sm leading-[1.75] text-ink2">{t.finding.closing}</p>
-        </Section>
-
-        {/* ---------------- the occasion register ---------------- */}
-        <Section id="occasions" tinted>
-            <div className="max-w-3xl">
-              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.occasions.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.occasions.lede}</p>
-            </div>
-
-            <h3 className="display mt-12 text-2xl">{t.occasions.datedHeading}</h3>
-            <OccasionTable occasions={DATED_OCCASIONS} lang={lang} />
-
-            <h3 className="display mt-16 text-2xl">{t.occasions.recurringHeading}</h3>
-            <p className="mt-3 max-w-2xl text-sm leading-[1.75] text-ink2">
-              {t.occasions.recurringLede}
-            </p>
-            <OccasionTable occasions={RECURRING_OCCASIONS} lang={lang} />
-
-            <div className="mt-8">
-              <ProvisionalBadge lang={lang} />
-            </div>
-        </Section>
-
         {/* ---------------- one hour, eight clocks ---------------- */}
-        <Section id="clocks">
+        <Section id="clocks" tinted>
             <div className="max-w-3xl">
               <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.clock.title}</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.clock.lede}</p>
+              <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.clock.lede}</p>
             </div>
 
             {/* the four windows as rules, before any clock is put on them */}
@@ -511,7 +335,7 @@ export function Panchang({ lang }: { lang: Lang }) {
             </div>
 
             {/* what the table assumes, stated before the table, not under it */}
-            <div className="boxed mt-12 max-w-3xl bg-paper p-6 sm:p-7">
+            <div className="boxed mt-12 bg-paper p-6 sm:p-7 [&>*]:max-w-3xl">
               <h3 className="display text-xl">{t.clock.assumptionHeading}</h3>
               <p className="mt-3 text-sm leading-[1.75] text-ink2">{t.clock.assumption}</p>
             </div>
@@ -581,6 +405,186 @@ export function Panchang({ lang }: { lang: Lang }) {
             <div className="mt-8">
               <ProvisionalBadge lang={lang} short />
             </div>
+        </Section>
+
+        {/* ---------------- where the timings come from ----------------
+            The same words the calendar carries, not a softened restatement,
+            placed after the calendar rather than before it: a reader wants
+            the date first and the method second. */}
+        <Section id="how">
+            <div className="boxed bg-paper p-6 sm:p-8 [&>*]:max-w-3xl">
+              <h2 className="display text-2xl">{t.provenance.heading}</h2>
+              <p className="mt-4 text-sm leading-[1.75] text-ink2">
+                {m.provenance.line}
+              </p>
+              <p className="mt-4 text-sm leading-[1.75] text-ink2">
+                {t.provenance.extra}
+              </p>
+
+              <dl className="mt-7 border-t-2 border-rulestrong sm:grid sm:grid-cols-3">
+                <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:pr-5">
+                  <dt className="label text-ink2">{m.provenance.sourceLabel}</dt>
+                  <dd className="mt-2 text-sm text-ink">{MUHURAT.provider.displayName[lang]}</dd>
+                </div>
+                <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:px-5">
+                  <dt className="label text-ink2">{m.provenance.ayanamsaLabel}</dt>
+                  <dd className="mt-2 text-sm text-ink">
+                    {MUHURAT.provider.ayanamsa ?? m.provenance.notSet}
+                  </dd>
+                </div>
+                <div className="py-3 sm:pl-5">
+                  <dt className="label text-ink2">{m.provenance.coordinatesLabel}</dt>
+                  <dd className="mt-2 text-sm text-ink">{m.provenance.coordinatesPending}</dd>
+                </div>
+              </dl>
+
+              <div className="mt-7">
+                <ProvisionalBadge lang={lang} />
+              </div>
+            </div>
+        </Section>
+
+        {/* ---------------- why the date moves ---------------- */}
+        <Section tinted>
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.drift.title}</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.drift.lede}</p>
+            </div>
+
+            <ul className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
+              {t.drift.points.map((p) => (
+                <li key={p.t} className="bg-paper p-7">
+                  <h3 className="display text-2xl">{p.t}</h3>
+                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{p.d}</p>
+                </li>
+              ))}
+            </ul>
+        </Section>
+
+        {/* ---------------- amanta and purnimanta ----------------
+            The reason this page exists. Two panels, one worked table, and the
+            six ghats labelled with the reckoning that names their month. */}
+        <Section id="reckoning">
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.reckoning.title}</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.reckoning.lede}</p>
+            </div>
+
+            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
+              {(
+                [
+                  ["amanta", t.reckoning.amanta],
+                  ["purnimanta", t.reckoning.purnimanta],
+                ] as const
+              ).map(([id, panel]) => (
+                <div key={id} className="tint p-7">
+                  <h3 className="display text-3xl text-ink">{panel.name}</h3>
+                  <div className="rule-thin mt-4" />
+                  <p className="mt-4 text-sm leading-[1.75] text-ink">{panel.cut}</p>
+                  <p className="mt-4 text-sm leading-[1.75] text-ink2">{panel.where}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
+              <div>
+                <h3 className="display text-xl">{t.reckoning.agreeHeading}</h3>
+                <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.reckoning.agree}</p>
+              </div>
+              <div>
+                <h3 className="display text-xl">{t.reckoning.differHeading}</h3>
+                <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.reckoning.differ}</p>
+              </div>
+            </div>
+
+            {/* the worked pairs */}
+            <h3 className="display mt-16 text-2xl">{t.reckoning.pairsHeading}</h3>
+            <div className="mt-6 overflow-x-auto" tabIndex={0}>
+              <table className="w-full min-w-[42rem] border-collapse text-left">
+                <thead>
+                  <tr className="border-y-2 border-rulestrong">
+                    <th className="label py-3 pr-4 text-ink2">{t.reckoning.pairsCols.occasion}</th>
+                    <th className="label py-3 pr-4 text-ink2">
+                      {t.reckoning.pairsCols.purnimanta}
+                    </th>
+                    <th className="label py-3 pr-4 text-ink2">{t.reckoning.pairsCols.amanta}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {MASA_PAIRS.map((p) => (
+                    <tr key={p.id} className="border-b border-rule align-top">
+                      <th scope="row" className="py-5 pr-4 text-left font-normal">
+                        <span className="display block text-xl text-ink">{p.occasion[lang]}</span>
+                        <span className="mt-2 block max-w-md text-xs leading-[1.7] text-ink2">
+                          {p.note[lang]}
+                        </span>
+                      </th>
+                      <td className="py-5 pr-4 text-sm text-ink">{p.purnimanta[lang]}</td>
+                      <td className="py-5 pr-4 text-sm text-ink">{p.amanta[lang]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* which reckoning names the month at each ghat */}
+            <h3 className="display mt-16 text-2xl">{t.reckoning.ghatsHeading}</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-[1.75] text-ink2">
+              {t.reckoning.ghatsLede}
+            </p>
+            <ul className="mt-6 border-t-2 border-rulestrong">
+              {GHAT_SCHEMES.map((g) => (
+                <li
+                  key={g.id}
+                  className="grid gap-x-8 gap-y-1 border-b border-rule py-4 sm:grid-cols-[1fr_12rem] sm:items-baseline"
+                >
+                  <span className="text-sm text-ink">{ghatLabel(g, lang)}</span>
+                  <span className="text-sm text-ink2 sm:text-right">
+                    {t.reckoning.schemes[g.masaScheme]}
+                  </span>
+                </li>
+              ))}
+            </ul>
+        </Section>
+
+        {/* ---------------- four reasons households differ ---------------- */}
+        <Section tinted>
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.divergence.title}</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.divergence.lede}</p>
+            </div>
+
+            <ul className="mt-12 border-t-2 border-rulestrong">
+              {t.divergence.items.map((item) => (
+                <li
+                  key={item.t}
+                  className="grid gap-x-8 gap-y-2 border-b border-rule py-7 sm:grid-cols-[16rem_1fr]"
+                >
+                  <h3 className="display text-xl text-ink">{item.t}</h3>
+                  <p className="max-w-3xl text-sm leading-[1.75] text-ink2">{item.d}</p>
+                </li>
+              ))}
+            </ul>
+        </Section>
+
+        {/* ---------------- working out a tithi from a date ---------------- */}
+        <Section>
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.finding.title}</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.finding.lede}</p>
+            </div>
+
+            <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
+              {t.finding.steps.map((s) => (
+                <li key={s.n} className="bg-paper p-7">
+                  <span className="display block text-2xl text-spot">{s.n}</span>
+                  <h3 className="display mt-3 text-2xl">{s.t}</h3>
+                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+
+            <p className="mt-8 max-w-3xl text-sm leading-[1.75] text-ink2">{t.finding.closing}</p>
         </Section>
 
         {/* ---------------- onward ----------------

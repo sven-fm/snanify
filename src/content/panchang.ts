@@ -356,12 +356,12 @@ export const panchangContent = {
     },
     hero: {
       title: "A panchang reference for families abroad",
-      lede: "The shraddha day moves every year, and the question usually comes up a fortnight too late. This page sets out the rules: which tithi, how the day is decided, which hour it falls in, and what that hour is on your own clock.",
+      lede: "The shraddha day moves every year, and the question usually comes up a fortnight too late. Here are the dates for the twelve months ahead, the sixteen shraddha days, the hour on your own clock, and the rules that decide them.",
     },
     provenance: {
       heading: "Where the timings come from",
       extra:
-        "Everything below is a rule, a definition or arithmetic. The tithi and nakshatra are computed here and were checked against Drik Panchang on eight days, every one to the minute. The calendar dates of the occasions are not listed here yet, so this page gives the rule and leaves the date to your family's panchang.",
+        "The dates in the calendar above come from those rules and roll forward by themselves each morning. Everything below is a rule, a definition or arithmetic.",
     },
     drift: {
       title: "Why the date moves",
@@ -555,12 +555,12 @@ export const panchangContent = {
     },
     hero: {
       title: "विदेश में बसे परिवारों के लिए पंचांग संदर्भ",
-      lede: "श्राद्ध का दिन हर वर्ष बदलता है, और प्रश्न प्रायः एक पक्ष देर से उठता है। यह पृष्ठ नियम रखता है: कौन-सी तिथि, दिन कैसे तय होता है, वह किस बेला में पड़ती है, और आपकी अपनी घड़ी पर वह बेला क्या है।",
+      lede: "श्राद्ध का दिन हर वर्ष बदलता है, और प्रश्न प्रायः एक पक्ष देर से उठता है। यहाँ आगामी बारह महीनों की तारीख़ें हैं, सोलह श्राद्ध के दिन, आपकी अपनी घड़ी पर वह बेला, और वे नियम जो इन्हें तय करते हैं।",
     },
     provenance: {
       heading: "समय कहाँ से आते हैं",
       extra:
-        "नीचे जो कुछ है वह नियम है, परिभाषा है या गणित है। तिथि और नक्षत्र यहीं गणना होते हैं और आठ दिनों पर दृक पंचांग से मिलाए गए, हर एक मिनट तक। पर्वों की अंग्रेज़ी तारीख़ें यहाँ अभी सूचीबद्ध नहीं हैं, इसलिए यह पृष्ठ नियम बताता है और तारीख़ आपके परिवार के पंचांग पर छोड़ता है।",
+        "ऊपर के पंचांग की तारीख़ें इन्हीं नियमों से आती हैं और हर सुबह अपने आप आगे बढ़ती हैं। नीचे जो कुछ है वह नियम है, परिभाषा है या गणित है।",
     },
     drift: {
       title: "तारीख़ क्यों बदलती है",
