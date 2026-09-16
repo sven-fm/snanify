@@ -1,10 +1,11 @@
 name: CI
 
-# Lint, types and the unit tests on every push and pull request. The e2e
+# Lint, types and the unit tests on every push to main and every pull request. The e2e
 # specs need a running server and the provider keys, so they stay a local
 # step for now; see plan.md.
 on:
   push:
+    branches: [main]
   pull_request:
 
 jobs:

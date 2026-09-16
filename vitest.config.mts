@@ -14,6 +14,9 @@ export default defineConfig({
     },
   },
   test: {
+    /* The portrait test presses a photograph through sharp, which takes two
+       seconds here and more on a shared CI runner. */
+    testTimeout: 30000,
     include: ["tests/unit/**/*.test.ts"],
     environment: "node",
     coverage: { provider: "v8", reporter: ["text"] },
