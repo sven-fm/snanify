@@ -324,19 +324,24 @@ export function Sitting({
         className="relative mx-auto flex w-full max-w-md flex-1 flex-col px-5 pt-5"
         style={{ paddingTop: "max(1.25rem, env(safe-area-inset-top))" }}
       >
-        {/* The bar and the cross, dim during the stillness. */}
-        <div className={`flex items-start gap-4 ${stillness ? "opacity-30" : ""}`}>
+        {/* The bar and the cross. In the stillness they take their own dim
+            light tones: the day's ink vanishes on the dark ground. */}
+        <div className="flex items-start gap-4">
           <div className="flex-1 pt-4">
-            <StoryBar t={t} state={state} />
+            <StoryBar t={t} state={state} dark={stillness} />
             {/* The name of the part, in the small voice. */}
-            <p className="mt-3 text-sm text-ink2">{labelFor(t, phase)}</p>
+            <p className={`mt-3 text-sm ${stillness ? "text-[#8a836f]" : "text-ink2"}`}>{labelFor(t, phase)}</p>
           </div>
           {phase !== "done" && (
             <Link
               href={leaveHref}
               aria-label={t.leave}
               title={t.leave}
-              className="impress grid h-11 w-11 shrink-0 place-items-center border border-rule text-ink2 hover:border-rulestrong hover:text-ink active:bg-paper2"
+              className={`impress grid h-11 w-11 shrink-0 place-items-center border ${
+                stillness
+                  ? "border-[#3a3530] text-[#8a836f] hover:border-[#6f685a] hover:text-[#b5ad99] active:text-[#b5ad99]"
+                  : "border-rule text-ink2 hover:border-rulestrong hover:text-ink active:bg-paper2"
+              }`}
               data-leave
             >
               <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4">
@@ -463,7 +468,16 @@ export function Sitting({
  * Widths are rounded numbers from the machine, so the server and the browser
  * print the same markup.
  */
-function StoryBar({ t, state }: { t: Copy; state: { phase: Phase; into: number; held: number } }) {
+function StoryBar({
+  t,
+  state,
+  dark = false,
+}: {
+  t: Copy;
+  state: { phase: Phase; into: number; held: number };
+  /** On the stillness's dark ground: a dim track and a light fill. */
+  dark?: boolean;
+}) {
   const fills = progress(state);
   const n = partNumber(state.phase);
   return (
@@ -477,8 +491,8 @@ function StoryBar({ t, state }: { t: Copy; state: { phase: Phase; into: number; 
       data-story-bar
     >
       {LIMB_ORDER.map((limb, i) => (
-        <div key={limb} className="h-[3px] flex-1 bg-rule" data-segment={limb}>
-          <div className="h-full bg-ink" style={{ width: `${(fills[i] * 100).toFixed(1)}%` }} />
+        <div key={limb} className={`h-[3px] flex-1 ${dark ? "bg-[#2a2622]" : "bg-rule"}`} data-segment={limb}>
+          <div className={`h-full ${dark ? "bg-[#8a836f]" : "bg-ink"}`} style={{ width: `${(fills[i] * 100).toFixed(1)}%` }} />
         </div>
       ))}
     </div>
