@@ -202,6 +202,7 @@ actually type. The biggest free lever there is.
 
 ### 16 September 2026
 
+- On a phone the silhouette opens a drawer under the masthead with the account's rows (your mornings, your snan, buy mornings, sign out), the same rows the hamburger carries; people pressed it expecting their account.
 - The sheet says where to get one: "Your own morning, at snanify.com" on its foot, in its own edition; the recipient's page opens with an invitation strip and a Begin button above the sheet; the link preview carries the same line. The print version prints only the cells that carry something.
 - The memento: the band of water under the ghat's plate is gone, and the water across the page is a faint hairline guilloche, one weight, so the type reads as on a bank note. Sheets rendered before keep their old image.
 - `/muhurat`: the worked example became a live clock, ticking from the phone: the ghat's time in IST, the reader's own zone under it, the same moment in six cities with the day shift, today's open or next window and today's sunrise at Har Ki Pauri.

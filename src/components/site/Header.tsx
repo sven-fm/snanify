@@ -73,9 +73,9 @@ export function Header({
 
             <MobileCta
               begin={ctaTo ?? ctaHref(lang)}
-              account={localePath(lang, "/account")}
               beginLabel={t.nav.cta}
-              accountLabel={t.nav.accountShort}
+              accountLabel={t.nav.account}
+              rows={profileRows}
               afterHero={ctaAfterHero}
             />
 

@@ -78,48 +78,69 @@ export function ProfileMenu({ label, rows }: { label: string; rows: ProfileRow[]
 }
 
 /**
- * The phone bar's one action: "Begin", or "Your mornings" once signed in,
- * beside the menu button. Hidden from the tablet width up, where the wide
- * masthead has Begin and the silhouette.
+ * The phone bar's one action: "Begin" for a stranger, and for somebody signed
+ * in the silhouette, which opens a drawer under the masthead with the same
+ * rows the hamburger carries. The rows are in both places on purpose: people
+ * pressed the silhouette expecting their account and found the front page.
+ * Hidden from the tablet width up, where the wide masthead has Begin and the
+ * silhouette's own menu.
  */
 export function MobileCta({
   begin,
-  account,
   beginLabel,
   accountLabel,
+  rows,
   afterHero = false,
 }: {
   begin: string;
-  account: string;
   beginLabel: string;
   accountLabel: string;
+  /** The account's rows: the register, the sheet, the packs, the way out. */
+  rows: ProfileRow[];
   /** Wait for the hero's own Begin to scroll off; see PastHero. */
   afterHero?: boolean;
 }) {
   const signedIn = useSignedIn();
+
+  if (!signedIn) {
+    return (
+      <Link
+        href={begin}
+        className="label impress flex min-h-[44px] items-center whitespace-nowrap bg-spot px-3 text-paper hover:bg-ink active:bg-ink sm:hidden"
+        data-mobile-cta
+        data-until-scrolled={afterHero ? "" : undefined}
+      >
+        {beginLabel}
+      </Link>
+    );
+  }
+
   return (
-    <Link
-      href={signedIn ? account : begin}
-      aria-label={signedIn ? accountLabel : undefined}
-      title={signedIn ? accountLabel : undefined}
-      className={`label impress flex min-h-[44px] items-center whitespace-nowrap sm:hidden ${
-        signedIn
-          ? "min-w-[44px] justify-center border border-rulestrong text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
-          : "bg-spot px-3 text-paper hover:bg-ink active:bg-ink"
-      }`}
-      data-mobile-cta
-      data-until-scrolled={afterHero && !signedIn ? "" : undefined}
-    >
-      {signedIn ? (
-        /* The silhouette rather than a word: "MORNINGS" on its own said nothing. */
+    <details className="group sm:hidden" data-mobile-account>
+      <summary
+        className="impress flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden"
+        aria-label={accountLabel}
+        title={accountLabel}
+      >
+        {/* The silhouette rather than a word: "MORNINGS" on its own said nothing. */}
         <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
           <circle cx="12" cy="8" r="4" />
           <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" />
         </svg>
-      ) : (
-        beginLabel
-      )}
-    </Link>
+      </summary>
+      {/* The drawer hangs under the masthead rule, the full width of the phone. */}
+      <div className="settle-panel absolute inset-x-0 top-full z-50 border-b-2 border-rulestrong bg-paper">
+        <ul className="mx-auto max-w-6xl px-5">
+          {rows.map((r) => (
+            <li key={r.href} className="border-b border-rule last:border-b-0">
+              <Link href={r.href} className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-spot">
+                {r.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
   );
 }
 
