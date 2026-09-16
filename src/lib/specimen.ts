@@ -26,7 +26,12 @@ const NAMES: Record<Lang, string[]> = {
   hi: ["अंजलि शर्मा", "विक्रम शर्मा"],
 };
 
-export async function specimenView(lang: Lang, at = new Date()): Promise<PatraView> {
+export async function specimenView(
+  lang: Lang,
+  at = new Date(),
+  /** The signed-in person's own names, once they have set up their sheet. */
+  names?: string[],
+): Promise<PatraView> {
   const snapshot = await getLiveSnapshot();
   const water = snapshot.waters.find((w) => w.slug === WATER) ?? snapshot.waters[0];
   const ghat = getGhat(water.slug);
@@ -61,7 +66,7 @@ export async function specimenView(lang: Lang, at = new Date()): Promise<PatraVi
     river,
     sky: skySlice(sky, water as WaterState),
     seed,
-    names: NAMES[lang].map((name) => ({ name })),
+    names: (names && names.length > 0 ? names : NAMES[lang]).map((name) => ({ name })),
     prayerId: "sapta-nadi",
     portraitKey: null,
     sankalpText: "",

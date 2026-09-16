@@ -25,9 +25,9 @@ const en = {
     description: "Choose your water, add your family's names, and write your sankalp once.",
   },
   title: "Set up your sheet",
-  lede: "You do this once. Every morning after it takes three minutes.",
+  lede: "You do this once, before you pick your mornings. Every morning after it takes three minutes.",
   /** The three-step line at the top: the water, the sheet, the hour. */
-  steps: ["Your water", "Your sheet", "Your hour"],
+  steps: ["Your water", "Your sheet", "Your mornings"],
 
   water: {
     label: "Your water",
@@ -100,8 +100,8 @@ const hi = {
     description: "अपना जल चुनिए, परिवार के नाम जोड़िए, और अपना संकल्प एक बार लिखिए।",
   },
   title: "अपना पत्र तय कीजिए",
-  lede: "यह एक बार करना है। उसके बाद हर सुबह तीन मिनट की है।",
-  steps: ["आपका जल", "आपका पत्र", "आपकी घड़ी"],
+  lede: "यह एक बार करना है, अपनी सुबहें चुनने से पहले। उसके बाद हर सुबह तीन मिनट की है।",
+  steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
 
   water: {
     label: "आपका जल",

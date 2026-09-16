@@ -96,9 +96,9 @@ export default async function Page({
         {/* Three steps, as a ruled line: the water, the sheet, the hour. */}
         <ol className="mt-8 grid grid-cols-3 gap-2" aria-label={t.title}>
           {t.steps.map((step, i) => (
-            <li key={step} className="border-t-2 border-rulestrong pt-2">
-              <span className="label text-spot">{String(i + 1).padStart(2, "0")}</span>
-              <span className="mt-1 block text-sm text-ink">{step}</span>
+            <li key={step} className={`border-t-2 pt-2 ${i < 2 ? "border-spot" : "border-rule"}`}>
+              <span className={`label ${i < 2 ? "text-spot" : "text-ink2"}`}>{String(i + 1).padStart(2, "0")}</span>
+              <span className={`mt-1 block text-sm ${i < 2 ? "text-ink" : "text-ink2"}`}>{step}</span>
             </li>
           ))}
         </ol>

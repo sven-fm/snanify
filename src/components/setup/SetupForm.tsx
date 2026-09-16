@@ -142,7 +142,7 @@ export function SetupForm({
   useEffect(() => {
     if (!state.ok) return;
     track("setup_done", { water, lang });
-    router.push(`${lang === "en" ? "" : `/${lang}`}/today`);
+    router.push(state.next ?? `${lang === "en" ? "" : `/${lang}`}/today`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.ok, lang, router]);
 

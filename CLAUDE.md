@@ -82,9 +82,12 @@ on the server (`src/app/[lang]/begin/actions.ts`); the cookie is for display onl
 Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. That is the search and daily-return
 surface, not a tier.
 
+**The order is sign in, set up, pay, sit.** `/begin` sends a stranger to sign in and then to
+`/setup`; the packs are the third step, shown beside the specimen with the buyer's own names.
+
 **Routes.** Marketing: `/`, `/snan`, `/rivers`, `/rivers/[river]`, `/live`, `/muhurat`,
 `/muhurat/[occasion]`, `/panchang`, `/kumbh`, `/faq`, `/privacy`, `/terms`. Product: `/begin`,
-`/setup`, `/today`, `/p/[id]`, `/account`, `/sign-in`. Folded routes (`/ethics`,
+`/setup`, `/today`, `/p/[id]`, `/account`, `/sign-in`, `/specimen`. Folded routes (`/ethics`,
 `/how-it-works`, `/patra`, `/verify`) are 308ed in `src/proxy.ts`.
 
 ## Working in this repo
@@ -123,9 +126,9 @@ gets the site's own 404. Build every href with `localePath(lang, path)`. Every p
 hreflang cluster and the OG locales, and `allLangParams()` or `fullLangParams()` for its
 static params. Navigation asks `servesPath(lang, path)`.
 
-`/p/[id]` and `/begin` sit outside the `(app)` route group on purpose: the group adds the
-Clerk provider, and neither page needs it. `auth()` on the server still works there because
-the proxy runs Clerk's middleware for every product path.
+`/p/[id]`, `/begin` and `/specimen` sit outside the `(app)` route group on purpose: the group
+adds the Clerk provider, and none of them needs it. `auth()` on the server still works there
+because the proxy runs Clerk's middleware for every product path (`APP_PATH`).
 
 ### Mobile first, not mobile also
 
@@ -160,10 +163,9 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
   `<Price>`, never by reading the currency in a component.
 - **The pay intent cookie is Secure only over https**, so the sign-in continuation on
   `/begin?go=1` cannot be tested on a plain-http local production build.
-- **A hydration flake on production**, React error 418 on a share of slow loads of `/`,
-  `/snan` and `/begin`, with body structure and text identical between server and client.
-  Not reproduced by a plain local production build; see `plan.md` for the measurements
-  and the next experiments before touching the bundler or the head scripts.
+- **A hydration flake on production** (React error 418 on a share of loads, body identical
+  between server and client) is open in `plan.md` 7.1 with its measurements. Read that
+  before touching the bundler or the head scripts.
 - **`npm i <anything>` prunes `--no-save` installs.**
 
 ## Where the thinking lives

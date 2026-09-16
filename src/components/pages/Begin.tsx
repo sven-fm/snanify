@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { WaterBand } from "@/components/WaterBand";
 import { Specimen } from "@/components/Specimen";
 import { eq } from "drizzle-orm";
@@ -31,6 +32,12 @@ import { TrackedSubmit } from "@/components/site/TrackedSubmit";
    must be a POST, it must be able to sign the person in first, and it must
    read the currency on the server. A link with a tier in the query string
    would let a crawler open sessions.
+
+   SET UP BEFORE PAYING. A stranger who presses Begin is sent to sign in and
+   then to /setup; the sheet is made first, and this page is the last step,
+   with the buyer's own names on the specimen beside the packs. Paying for a
+   thing you have already half made converts better than paying for a
+   description of it, and a saved profile with no mornings on it is harmless.
 
    ONE PRESS OF PAY, EVEN WITH A SIGN-IN IN BETWEEN. A stranger who presses
    Pay is sent to sign in and comes back to `/begin?pack=eleven&go=1`. With a
@@ -93,6 +100,7 @@ export async function Begin({
   const name = (tier: TierKey) => tiers.find((row) => row.key === tier)!.name;
 
   const user = await currentUser(lang);
+  if (!user) redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(localePath(lang, "/begin"))}`);
   const chosen: TierKey = pack && isTier(pack) ? pack : DEFAULT_TIER;
 
   /* The continuation after a sign-in: see the note at the head of the file. */
@@ -104,14 +112,13 @@ export async function Begin({
     }
   }
 
-  const [credits, profile] = user
-    ? await Promise.all([
-        balance(db, user.id),
-        db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
-      ])
-    : [0, []];
+  const [credits, profile] = await Promise.all([
+    balance(db, user.id),
+    db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
+  ]);
 
   const setUp = profile[0]?.completedAt != null;
+  if (!setUp) redirect(localePath(lang, "/setup"));
 
   return (
     <>
@@ -123,9 +130,24 @@ export async function Begin({
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6 max-w-xl" />
         <WaterBand seed="begin" className="mt-5 h-[68px] w-full" />
-        <div className="grid gap-8 sm:grid-cols-[1fr_200px] sm:items-start sm:gap-12">
-          <p className="mt-5 max-w-xl text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
-          <Specimen lang={lang} caption={false} className="hidden sm:block" />
+
+        {/* The third of the three steps that began on /setup. */}
+        <ol className="mt-8 grid max-w-xl grid-cols-3 gap-2" aria-label={t.title}>
+          {t.steps.map((step, i) => (
+            <li key={step} className={`border-t-2 pt-2 ${i === 2 ? "border-spot" : "border-rule"}`}>
+              <span className={`label ${i === 2 ? "text-spot" : "text-ink2"}`}>{String(i + 1).padStart(2, "0")}</span>
+              <span className={`mt-1 block text-sm ${i === 2 ? "text-ink" : "text-ink2"}`}>{step}</span>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-6 grid gap-8 sm:grid-cols-[1fr_220px] sm:items-start sm:gap-12">
+          <div>
+            <p className="max-w-xl text-[1.02rem] leading-[1.75] text-ink">{credits > 0 ? t.lede : t.setLine}</p>
+            <p className="mt-3 max-w-xl text-[0.98rem] leading-[1.7] text-ink2">{t.lede2}</p>
+          </div>
+          {/* Their own names on it, drawn from today's figure. */}
+          <Specimen lang={lang} caption={false} />
         </div>
 
         {cancelled && (

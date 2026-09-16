@@ -109,7 +109,7 @@ const withClerk = clerkMiddleware(async (_auth, req) => route(req));
  * before the landing page could paint. The pages that call `requireUser` or
  * render Clerk's widgets all live under these prefixes, in either edition.
  */
-const APP_PATH = /^\/(?:[a-z]{2}\/)?(?:begin|setup|today|account|p|sign-in|sign-up|sign-out)(?:\/|$)/;
+const APP_PATH = /^\/(?:[a-z]{2}\/)?(?:begin|setup|today|account|p|specimen|sign-in|sign-up|sign-out)(?:\/|$)/;
 
 export function proxy(req: NextRequest, event: NextFetchEvent) {
   return APP_PATH.test(req.nextUrl.pathname) ? withClerk(req, event) : route(req);

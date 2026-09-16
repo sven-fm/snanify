@@ -1,10 +1,10 @@
 import { content } from "@/lib/content";
-import type { Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    A Sankalp Patra, shown to somebody who has not paid.
 
-   The sheet is drawn from today's figure by /api/specimen, and it sits inside
+   The sheet is drawn from today's figure by the /specimen route, and it sits inside
    the outline of a phone, because that is where it lives: it is sent into a
    family group and opened on one. The outline is the one rounded shape on the
    site, drawn as SVG so the base layer's square corners do not apply; a
@@ -22,7 +22,7 @@ export function Specimen({
   caption?: boolean;
 }) {
   const t = content[lang].specimen;
-  const src = `/api/specimen?lang=${lang}`;
+  const src = localePath(lang, "/specimen");
 
   return (
     <figure className={`pull ${className}`}>

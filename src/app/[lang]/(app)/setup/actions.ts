@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db, profiles, users } from "@/db";
 import { requireUser } from "@/lib/auth";
+import { balance } from "@/lib/credits";
 import { putPortrait, remove } from "@/lib/blob";
 import { PortraitRejected, processPortrait } from "@/lib/portrait";
 import { validateProfile, type ProfileErrors, type RawProfile } from "@/lib/profile-input";
@@ -31,6 +32,8 @@ import { localePath, type FullLang as Lang } from "@/lib/locales";
 export type SaveState = {
   ok: boolean;
   errors: ProfileErrors & { portrait?: string; form?: string };
+  /** Where to go once saved: the morning if there is one in hand, the packs if not. */
+  next?: string;
 };
 
 /**
@@ -123,5 +126,8 @@ export async function saveProfile(
 
   revalidatePath(localePath(lang, "/account"));
 
-  return { ok: true, errors: {} };
+  /* Setup comes before payment. A person with mornings in hand goes to sit;
+     a person with none goes to pick them, with their names on the specimen. */
+  const credits = await balance(db, user.id);
+  return { ok: true, errors: {}, next: localePath(lang, credits > 0 ? "/today" : "/begin") };
 }
