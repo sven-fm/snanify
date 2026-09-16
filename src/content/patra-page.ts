@@ -6,37 +6,27 @@ import type { FullLang as Lang } from "@/lib/locales";
 /* ---------------------------------------------------------------------------
    /p/[id], the Sankalp Patra.
 
-   Two readers, one page. The person who kept the morning, arriving straight
-   from it, and whoever they send it to, arriving cold in a family group. The
-   copy is written for the second: a sheet, a name, a river, a date.
+   Two readers, two pages. The person who kept the morning, arriving straight
+   from it, gets the sheet, the send button, their own words and the controls.
+   Whoever they send it to, arriving cold in a family group, gets the sheet,
+   one line saying what it is, and the invitation. Neither page repeats what
+   the sheet already says, and neither argues for it: the sheet carries its
+   own record line and its own address, and /faq#verify has the rest.
 
    `shareText` is what lands in WhatsApp above the link. It says one true
    thing: somebody kept a sankalp with a named river on a named morning.
    --------------------------------------------------------------------------- */
 
 const en = {
-  keptBy: "Kept in the name of",
   share: "Send to family",
   shareCopied: "Link copied",
+
   yours: "Your sankalp",
   privateNote: "Only you see your sankalp. The sheet you send carries the names and the river.",
 
-  registerHeading: "On this sheet",
-  flow: "Flow",
-  ranked: "Ranked",
-  kept: "Kept at",
-  tithi: "Tithi",
-  nakshatra: "Nakshatra",
-  moon: "Moon",
-  source: "Source",
-  modelledFor: "modelled for {day}",
-  median: "seasonal median, 1997 to 2025",
-  percentile: "{n}th percentile since 1997",
-
-  seedHeading: "Check it yourself",
-  seedBody:
-    "The engraving is drawn from a seed, and the seed is the SHA-256 hash of the line below. Anyone can fetch that day's figure from the flood model, hash the line and redraw the same image.",
-  seedLabel: "Seed",
+  /** One line under the sheet, for the record. Not a section. */
+  recordLine: "The figures on this sheet are the river's published state that morning.",
+  recordLink: "How to check them",
 
   visitTitle: "Sit with your own river tomorrow morning",
   visitBody: "Three minutes at the hour the panchang names, wherever you are.",
@@ -49,7 +39,7 @@ const en = {
   privateTitle: "This sheet is private",
   privateBody: "The person who kept it has made it private.",
 
-  ownerHeading: "Sharing",
+  ownerHeading: "This sheet",
   makePrivate: "Make it private",
   makePublic: "Make it shareable",
   privateNow: "Only you can open this link now.",
@@ -59,28 +49,14 @@ const en = {
 };
 
 const hi = {
-  keptBy: "जिनके नाम से",
   share: "परिवार को भेजिए",
   shareCopied: "कड़ी प्रतिलिपि हो गई",
+
   yours: "आपका संकल्प",
   privateNote: "आपका संकल्प केवल आप देखते हैं। जो पत्र आप भेजते हैं, उस पर नाम और नदी होते हैं।",
 
-  registerHeading: "इस पत्र पर",
-  flow: "प्रवाह",
-  ranked: "स्थान",
-  kept: "समय",
-  tithi: "तिथि",
-  nakshatra: "नक्षत्र",
-  moon: "चंद्रमा",
-  source: "स्रोत",
-  modelledFor: "{day} का मॉडल-मान",
-  median: "ऋतु-मध्यक, 1997 से 2025",
-  percentile: "1997 से {n}वाँ प्रतिशतक",
-
-  seedHeading: "स्वयं जाँच लीजिए",
-  seedBody:
-    "उत्कीर्णन एक बीज से बनता है, और बीज नीचे दी गई पंक्ति का SHA-256 हैश है। कोई भी उस दिन का अंक बाढ़-मॉडल से लेकर, पंक्ति का हैश बनाकर, यही चित्र फिर से बना सकता है।",
-  seedLabel: "बीज",
+  recordLine: "इस पत्र के अंक उस सुबह नदी की प्रकाशित स्थिति हैं।",
+  recordLink: "इन्हें कैसे जाँचें",
 
   visitTitle: "कल सुबह अपनी नदी के साथ बैठिए",
   visitBody: "पंचांग की बताई घड़ी पर तीन मिनट, आप जहाँ भी हों।",
@@ -93,7 +69,7 @@ const hi = {
   privateTitle: "यह पत्र निजी है",
   privateBody: "जिन्होंने इसे रखा, उन्होंने इसे निजी कर दिया है।",
 
-  ownerHeading: "साझा करना",
+  ownerHeading: "यह पत्र",
   makePrivate: "इसे निजी कीजिए",
   makePublic: "इसे साझा योग्य कीजिए",
   privateNow: "अब यह कड़ी केवल आप खोल सकते हैं।",

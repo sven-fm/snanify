@@ -7,7 +7,7 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
 import { requireUser } from "@/lib/auth";
-import { getLiveSnapshot, SOURCES } from "@/lib/riverdata";
+import { getLiveSnapshot } from "@/lib/riverdata";
 import { sittingToday } from "@/lib/sitting";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -130,7 +130,7 @@ export default async function Page({
         : null,
     modelledFor: d.kind === "modelled" ? longDay(d.modelledFor, lang) : null,
     normal: `${NUMBER.format(d.normal.median)} m³/s`,
-    source: t.reading.source.replace("{model}", SOURCES.discharge.model),
+    source: t.reading.source,
   };
 
   const names = (profile.names as { name: string }[]).map((n) => n.name);

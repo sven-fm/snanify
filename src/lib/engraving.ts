@@ -51,6 +51,8 @@ export type EngravingInput = {
   percentile: number | null;
   width?: number;
   height?: number;
+  /** Even spacing edge to edge, for a drawing that tiles vertically. */
+  flat?: boolean;
 };
 
 const round = (n: number) => Number(n.toFixed(2));
@@ -66,6 +68,7 @@ export function engrave({
   percentile,
   width = 1000,
   height = 340,
+  flat = false,
 }: EngravingInput): Engraving {
   const random = generator(seed);
 
@@ -89,8 +92,12 @@ export function engrave({
     const t = i / (count - 1);
 
     /* Laid from the far bank forward, closer together at the top, so the band
-       reads in perspective rather than as a grid. */
-    const baseline = height * (0.1 + 0.86 * (t * 0.55 + t * t * 0.45));
+       reads in perspective rather than as a grid. A flat drawing spaces them
+       evenly with half a gap at each edge, so two copies stacked meet without
+       a seam; that is what the flowing band on the pages is cut from. */
+    const baseline = flat
+      ? height * ((i + 0.5) / count)
+      : height * (0.1 + 0.86 * (t * 0.55 + t * t * 0.45));
 
     const phase = random() * Math.PI * 2;
     /* Long, and longer at the back. Short wavelengths read as noise. */

@@ -4,10 +4,14 @@ import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
    A band of engraved water that never stops moving.
 
    The same lines the Sankalp Patra carries, drawn from a seed so a page's
-   water is the same water each visit, breathing four seconds in and six out
-   and swaying on a slower cycle underneath. Transform only, on the SVG
-   element in screen pixels, so it costs a phone nothing and it stops under
+   water is the same water each visit, flowing steadily downward. The drawing
+   is stacked twice and the stack slides down by one copy on a loop, so the
+   motion has no seam and no turn. Transform only, on the SVG element in
+   screen pixels, so it costs a phone nothing and it stops under
    prefers-reduced-motion. No JavaScript: the motion is the stylesheet's.
+
+   It used to breathe, four seconds up and six down like the sitting. On a
+   band forty pixels tall that read as a squeeze rather than as water.
    --------------------------------------------------------------------------- */
 
 /** A stable hex seed from any short string. */
@@ -29,28 +33,30 @@ export function WaterBand({
   /** Sizes the band; give it a height and a width. */
   className?: string;
 }) {
-  const drawn = engrave({ seed: seedFor(seed), percentile, width: 1000, height: 300 });
-  const amp = 4 + (percentile / 100) * 10;
+  const drawn = engrave({ seed: seedFor(seed), percentile, width: 1000, height: 300, flat: true });
+  const lines = drawn.lines.map((d, i, all) => (
+    <path
+      key={i}
+      d={d}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth(i, all.length) * 1.4}
+      strokeOpacity={strokeOpacity(i, all.length)}
+    />
+  ));
   return (
     <div className={`relative overflow-hidden ${className}`} aria-hidden="true">
+      {/* Twice the band's height, its top one copy above the band, sliding
+          down by one copy: the second drawing arrives exactly where the
+          first began. The drawing is cut flat, so the two meet without a
+          seam. */}
       <svg
-        viewBox="0 0 1000 300"
+        viewBox="0 0 1000 600"
         preserveAspectRatio="none"
-        className="breathe absolute top-0 left-[-4%] h-full w-[108%] text-ink"
-        style={{ ["--amp" as string]: `${amp.toFixed(1)}px` }}
+        className="flow absolute left-[-4%] top-[-100%] h-[200%] w-[108%] text-ink"
       >
-        <g className="sway">
-          {drawn.lines.map((d, i, all) => (
-            <path
-              key={i}
-              d={d}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={strokeWidth(i, all.length) * 1.4}
-              strokeOpacity={strokeOpacity(i, all.length)}
-            />
-          ))}
-        </g>
+        <g>{lines}</g>
+        <g transform="translate(0 300)">{lines}</g>
       </svg>
     </div>
   );

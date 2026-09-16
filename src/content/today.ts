@@ -39,7 +39,7 @@ const en = {
     modelledLabel: "Modelled for",
     normalLabel: "Seasonal median",
     percentile: "{n}th percentile since 1997",
-    source: "{model}, modelled daily.",
+    source: "From the European flood model, which publishes once a day.",
   },
 
   breath: {
@@ -105,7 +105,7 @@ const hi = {
     modelledLabel: "मॉडल दिनांक",
     normalLabel: "ऋतु-मध्यक",
     percentile: "1997 से {n}वाँ प्रतिशतक",
-    source: "{model}, प्रतिदिन मॉडल-मान।",
+    source: "यूरोपीय बाढ़-मॉडल से, जो दिन में एक बार प्रकाशित होता है।",
   },
 
   breath: {

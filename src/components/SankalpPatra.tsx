@@ -502,7 +502,7 @@ export function ChihnaSheet({
             </Cell>
           </div>
 
-          {/* the state of the water, verification, attestation */}
+          {/* the state of the water, the address, the record line */}
           <div>
             {data.stateLine && (
               <div className="border-t-2 border-rulestrong" style={{ paddingTop: u(13) }}>
@@ -557,19 +557,12 @@ export function ChihnaSheet({
               </p>
             )}
 
-            {/* The honesty lines are not fine print. Both clear 9pt when this
-                sheet is printed at A4, which is the floor the record line is
-                held to. */}
-            <p
-              className="text-ink"
-              style={{ marginTop: u(watermark ? 13 : 18), fontSize: u(13.4), lineHeight: 1.55 }}
-            >
-              {t.attestation}
-            </p>
-
+            {/* The record line is not fine print: it clears 9pt when this
+                sheet is printed at A4. One line; the address above it is
+                where anyone checks the figures. */}
             <p
               className="text-ink2"
-              style={{ marginTop: u(9), fontSize: u(12.6), lineHeight: 1.55 }}
+              style={{ marginTop: u(watermark ? 13 : 18), fontSize: u(12.6), lineHeight: 1.55 }}
             >
               {t.footerLine}
             </p>

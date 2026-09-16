@@ -45,42 +45,22 @@ The kept morning is now answered first, and the end of the sitting also
 offers a button to the sheet. What re-requested the page is still unknown; a
 locked phone waking is the likely cause, and the fix holds either way.
 
-## 3. The Sankalp Patra page, for the person who kept it
+## 3. The Sankalp Patra page, for the person who kept it. Done 16 September.
 
-**What is wrong.** The page under the sheet is a second, apologetic version of
-the sheet. "On this sheet" repeats the figures the image already shows. "Check
-it yourself" explains SHA-256 hashing to somebody who just sat in silence for a
-minute, and the sheet's own footer already says "Anyone can check this sheet
-at". Three places on one screen argue for the sheet's honesty. That is the
-violation `CLAUDE.md` describes: a page written against a critic who is not in
-the room.
+Under the sheet now: the send button, the owner's own sankalp with one line
+saying it is private, the controls under a quiet "This sheet" heading, the
+print version, and one line for the record with a link to `/faq#verify`. The
+"On this sheet" register and the "Check it yourself" section are gone, and the
+sheet's footer keeps its address and its record line and loses the second
+honesty sentence. `src/components/patra/PatraOwner.tsx`.
 
-**Done looks like.** Under the sheet, in this order and nothing else:
+## 4. The sheet as it arrives in a family group. Done 16 September.
 
-1. The send button.
-2. The owner's own sankalp, private, one line saying so.
-3. Sharing controls (make private, print version), quieter than they are now.
-4. One line, not a section, for the record: "The figures on this sheet are the
-   river's published state that morning." with a link to `/faq#verify`, which
-   is where the seed and the hash live. The "On this sheet" register and the
-   "Check it yourself" section go.
-
-The sheet itself keeps one attestation line in its footer and loses the second.
-
-**Must not break.** The seed line still exists and `/faq#verify` still explains
-it; the page simply stops repeating it. The print version keeps the sankalp.
-
-## 4. The sheet as it arrives in a family group
-
-**What is wrong.** The person it is sent to sees the owner's page, minus the
-private parts: the same sheet, the same register, the same hashing lesson.
-Nothing on it is written for them.
-
-**Done looks like.** A recipient page that is a greeting rather than a
-dashboard: the sheet, one line in the small voice ("Devadatta kept a sankalp
-with the Ganga on 15 September"), and the invitation to sit with their own river
-tomorrow. No register, no seed, no controls. The owner's page and the recipient
-page are two components, not one page with conditionals.
+A recipient page of its own, `src/components/patra/PatraGuest.tsx`: the
+sheet, one line in the small voice, the invitation to sit with their own
+river. No register, no seed, no controls. Still to do inside it: the line's
+water name and date come out in English on the Hindi page, because the view
+carries them once; they should be set per edition.
 
 ## 5. Sending, on a phone, to WhatsApp
 
@@ -99,29 +79,22 @@ the thread is the sheet even when the file is not attached.
 image is better than a card. The `?new=1` auto-open after a morning stays, but
 it opens the chooser above rather than the bare native sheet.
 
-## 6. The source, said plainly
+## 6. The source, said plainly. Done in part, 16 September.
 
-**What is wrong.** "Copernicus Emergency Management Service, GloFAS" and
-"modelled discharge" are the words of the data's publisher, not the words of a
-reader in Haridwar or Toronto. They sound like a lab report and they are
-repeated on the sitting, the sheet and the page.
-
-**Done looks like.** One human name for the source, used everywhere the reader
-is, and the technical name in one place, `/faq`, where somebody who wants to
-check can follow it. Candidate: "the European flood model, read each morning".
-It stays true: the figure is a model's, it is European, it is read daily. The
-owner picks the wording; the rule is that a sentence about the source is a fact
-about craftsmanship, one line long, and never a defence.
+The sitting's reading now says "From the European flood model, which
+publishes once a day", and the sheet's "Published" cell says "European flood
+model (Copernicus GloFAS)". The technical name stays where somebody checking
+a figure goes: `/live`, the structured data and `/faq`. Open: the owner has
+not chosen the final wording, and `/rivers` and `/live` still print the
+publisher's own name in their badges.
 
 ## 7. Small things seen tonight
 
-- The reading's source line on the sitting screen is a paragraph; it becomes
-  one line or moves to the sheet.
-- "Put the phone on silent. It takes three minutes." is on the ready screen and
-  is right; nothing after it says how long the next part is. Item 1 covers it.
-- The masthead's "Your mornings" link now exists on every page and in the phone
-  menu. Deploy it.
-- The owner's real purchase of `one` is still to be refunded.
+- The reading's source line on the sitting is one line now. Done.
+- The masthead's "Your mornings" link is live. Done.
+- The owner's purchase of `one` is refunded. Done.
+- Sharing text and the recipient line are built once, in English, whatever
+  the edition. See item 4.
 
 ## Still open from build-plan.md, owner's side
 

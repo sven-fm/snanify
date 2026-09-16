@@ -114,6 +114,10 @@ export const SOURCES = {
     model: "Copernicus Emergency Management Service, GloFAS",
     /** For the narrow column on a phone, where the full name does not fit. */
     shortName: "Copernicus EMS, GloFAS",
+    /** The name a reader is given: on the sitting and on the sheet. The
+        technical name above stays on /live, in the structured data and on
+        /faq, which is where somebody checking a figure goes. */
+    plain: "European flood model (Copernicus GloFAS)",
     served: "Open-Meteo Flood API",
     licence: "CC BY 4.0",
     href: "https://open-meteo.com/en/docs/flood-api",

@@ -6,28 +6,12 @@ import { patraPageContent } from "@/content/patra-page";
 import { currentUser } from "@/lib/auth";
 import { isId } from "@/lib/ids";
 import { patraView, printableRecord } from "@/lib/patra-view";
-import { seedLine } from "@/lib/seed";
-import type { RiverSlice } from "@/lib/patra-record";
 import { localePath, SITE_ORIGIN, type FullLang as Lang } from "@/lib/locales";
 import { headers } from "next/headers";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { LinkButton } from "@/components/ui";
-import { ShareButton } from "@/components/patra/ShareButton";
-import { PatraSheetViewer } from "@/components/SankalpPatra";
-import { setPatraPublic } from "@/app/[lang]/(app)/p/[id]/actions";
-import { SubmitButton } from "@/components/ui";
-
-/** "8 Sept 2026", the day the model published for, from its ISO date. */
-function longDay(iso: string | null, lang: Lang): string {
-  if (!iso) return "";
-  return new Intl.DateTimeFormat(lang === "hi" ? "hi-IN" : "en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${iso}T00:00:00Z`));
-}
+import { PatraGuest } from "@/components/patra/PatraGuest";
+import { PatraOwner } from "@/components/patra/PatraOwner";
 
 /* ---------------------------------------------------------------------------
    /p/[id], the sheet somebody was sent.
@@ -36,9 +20,10 @@ function longDay(iso: string | null, lang: Lang): string {
    identifier is twenty-two characters of base58, so the link is the capability
    and nothing needs a sign-in.
 
-   THE OWNER SEES ONE THING MORE: their own sankalp. It is on the row and it is
-   selected only here, only for them. Everything a stranger can reach is built
-   from `patraView`, a type that has never held it.
+   TWO PAGES, NOT ONE PAGE WITH CONDITIONS. The owner gets the sheet, the send
+   button, their own sankalp and the controls; the person it was sent to gets
+   the sheet, one line and the invitation. Everything a stranger can reach is
+   built from `patraView`, a type that has never held the sankalp.
    --------------------------------------------------------------------------- */
 
 export const dynamic = "force-dynamic";
@@ -125,13 +110,12 @@ export default async function Page({
       : SITE_ORIGIN;
   const pageUrl = `${origin}${localePath(lang, `/p/${view.id}`)}`;
   const imageUrl = `${origin}${localePath(lang, `/p/${view.id}/image`)}`;
-
-  const river = sitting.river as RiverSlice;
-  const line = seedLine({
-    sittingId: view.id,
-    waterSlug: sitting.waterSlug,
-    modelledFor: river.modelledFor ?? sitting.keptOn,
-    discharge: river.cumecs,
+  const imageSrc = localePath(lang, `/p/${view.id}/image`);
+  const alt = `${view.names.join(", ")}, ${view.water}, ${view.keptDate}`;
+  const line = fill(t.shareText, {
+    name: view.names[0] ?? "",
+    water: view.water,
+    date: view.keptDate,
   });
 
   return (
@@ -139,129 +123,27 @@ export default async function Page({
       <div className="grain" aria-hidden="true" />
       <Header lang={lang} currentPath="/" />
 
-      <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
-        {/* The sheet itself, at the ratio it is sent in. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={localePath(lang, `/p/${view.id}/image`)}
-          alt={`${view.names.join(", ")}, ${view.water}, ${view.keptDate}`}
-          width={1080}
-          height={1350}
-          className="w-full border-2 border-rulestrong"
+      {isOwner ? (
+        <PatraOwner
+          lang={lang}
+          t={t}
+          id={view.id}
+          imageSrc={imageSrc}
+          alt={alt}
+          pageUrl={pageUrl}
+          imageUrl={imageUrl}
+          shareText={line}
+          waterSlug={sitting.waterSlug}
+          sankalp={sitting.sankalpText}
+          isPublic={sitting.isPublic}
+          printable={printableRecord(sitting)}
+          auto={query.new === "1"}
         />
-
-        <div className="mt-6">
-          <ShareButton
-            url={pageUrl}
-            imageUrl={imageUrl}
-            text={fill(t.shareText, {
-              name: view.names[0] ?? "",
-              water: view.water,
-              date: view.keptDate,
-            })}
-            label={t.share}
-            copiedLabel={t.shareCopied}
-            water={sitting.waterSlug}
-            lang={lang}
-            auto={query.new === "1"}
-          />
-        </div>
-
-        {isOwner && sitting.sankalpText && (
-          <section className="mt-12 border-t-2 border-rulestrong pt-6">
-            <h2 className="display text-xl text-ink">{t.yours}</h2>
-            <p className="display mt-4 text-[1.5rem] leading-[1.45]">{sitting.sankalpText}</p>
-            <p className="mt-4 text-sm text-ink2">{t.privateNote}</p>
-          </section>
-        )}
-
-        {/* ---------------- the owner's own controls ---------------- */}
-        {isOwner && (
-          <section className="mt-12 border-t-2 border-rulestrong pt-6">
-            <h2 className="display text-xl text-ink">{t.ownerHeading}</h2>
-
-            {!sitting.isPublic && <p className="mt-4 text-[0.98rem] text-ink">{t.privateNow}</p>}
-
-            <form
-              action={setPatraPublic.bind(null, lang, view.id, !sitting.isPublic)}
-              className="mt-4"
-            >
-              <SubmitButton variant="ghost">
-                {sitting.isPublic ? t.makePrivate : t.makePublic}
-              </SubmitButton>
-            </form>
-
-            {sitting.isPublic && (
-              <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink2">
-                {t.privateWarning}
-              </p>
-            )}
-
-            {/* The A4 sheet, which carries the sankalp and is meant for paper.
-                Its own viewer handles the phone case, where a fixed-ratio
-                document rendered into 366 pixels would set body type at about
-                six. */}
-            <h3 className="display mt-10 border-t border-rule pt-5 text-xl text-ink">{t.printHeading}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-ink2">{t.printNote}</p>
-            <div className="mt-5">
-              <PatraSheetViewer lang={lang} data={printableRecord(sitting)} />
-            </div>
-          </section>
-        )}
-
-        {/* The register, as text, so it can be read, searched and copied. */}
-        <section className="mt-12">
-          <h2 className="display border-b-2 border-rulestrong pb-3 text-xl text-ink">
-            {t.registerHeading}
-          </h2>
-          <dl className="mt-1">
-            <Row k={t.kept} v={`${view.keptTime} ${view.keptZone}, ${view.keptIst} IST`} />
-            <Row k={t.flow} v={view.flow} />
-            {view.rank && <Row k={t.ranked} v={t.percentile.replace("{n}", view.rank)} />}
-            <Row k={t.tithi} v={view.tithi} />
-            <Row k={t.nakshatra} v={view.nakshatra} />
-            <Row k={t.moon} v={view.moon} />
-            <Row
-              k={t.source}
-              v={
-                view.figureKind === "modelled"
-                  ? `${view.source}, ${t.modelledFor.replace("{day}", longDay(view.modelledFor, lang))}`
-                  : `${view.source}, ${t.median}`
-              }
-            />
-          </dl>
-        </section>
-
-        <section className="mt-12 border-t border-rule pt-6">
-          <h2 className="display text-xl text-ink">{t.seedHeading}</h2>
-          <p className="mt-4 text-[0.98rem] leading-[1.7] text-ink2">{t.seedBody}</p>
-          <pre className="mt-4 overflow-x-auto border border-rule bg-tint p-4 text-[0.8rem] text-ink">
-            {line}
-          </pre>
-          <p className="mt-3 text-sm text-ink2">
-            {t.seedLabel}: <span className="break-all text-ink">{view.seed}</span>
-          </p>
-        </section>
-
-        <section className="mt-14 border-t-2 border-rulestrong pt-8 text-center">
-          <h2 className="display text-[1.7rem] leading-[1.25]">{t.visitTitle}</h2>
-          <p className="mt-4 text-ink2">{t.visitBody}</p>
-          <div className="mt-6">
-            <LinkButton href={localePath(lang, "/begin")}>{t.visitCta}</LinkButton>
-          </div>
-        </section>
-      </main>
+      ) : (
+        <PatraGuest lang={lang} t={t} imageSrc={imageSrc} alt={alt} line={line} />
+      )}
 
       <Footer lang={lang} />
     </>
-  );
-}
-
-function Row({ k, v }: { k: string; v: string }) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-rule py-3">
-      <dt className="label text-ink2">{k}</dt>
-      <dd className="text-right text-[0.98rem] text-ink">{v}</dd>
-    </div>
   );
 }

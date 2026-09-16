@@ -414,6 +414,19 @@ html[data-js] [data-in] .grow {
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 45ms);
 }
 
+/* Engraved water flowing steadily downward: the band's drawing, cut flat so
+   it tiles, is stacked twice and slides down by one copy, so the loop has no
+   seam. Thirty seconds per copy, which on a band this tall is a slow river
+   rather than a scroll. */
+@keyframes flow {
+  from { transform: translateY(0); }
+  to { transform: translateY(50%); }
+}
+.flow {
+  animation: flow 30s linear infinite;
+  will-change: transform;
+}
+
 /* The waterline breathes at the river's own amplitude: four seconds in, six
    out, as the sitting does. `--amp` is set from the percentile. */
 @keyframes breathe {
@@ -466,7 +479,8 @@ html:not([data-js]) .ink-picture-lazy {
     transform: none;
     transition: none;
   }
-  .breathe {
+  .breathe,
+  .flow {
     animation: none;
   }
 }

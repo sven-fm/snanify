@@ -1,3 +1,4 @@
+import { SOURCES } from "@/lib/riverdata";
 import "server-only";
 import type { Sitting } from "@/db/schema";
 import type { RiverSlice, SkySlice } from "@/lib/patra-record";
@@ -107,7 +108,8 @@ export function patraView(sitting: Sitting): PatraView {
     band: river.band,
     rank: river.percentile === null ? null : `${river.percentile}`,
     modelledFor: river.modelledFor,
-    source: river.source,
+    /* The row keeps the publisher's own name; every surface a reader sees prints the plain one. */
+    source: SOURCES.discharge.plain,
     figureKind: river.kind,
 
     tithi: `${sky.paksha === "shukla" ? "Shukla" : "Krishna"} ${sky.tithi}`,
@@ -188,7 +190,7 @@ export function printableRecord(sitting: Sitting): PatraRecord {
 
     reading: {
       at: river.modelledFor ?? sitting.keptOn,
-      agency: river.source,
+      agency: SOURCES.discharge.plain,
     },
 
     seed: view.seed,

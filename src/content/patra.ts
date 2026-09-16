@@ -151,8 +151,6 @@ const en = {
     stateLabel: "The water that morning",
 
     verifyLabel: "Anyone can check this sheet at",
-    attestation:
-      "The figures on this sheet were published by the body named above, and anyone can check them there.",
     footerLine:
       "This sheet records the river's condition at the moment the sankalp was kept, from the public source named above, together with the names and the words given.",
 
@@ -195,8 +193,6 @@ const hi: typeof en = {
     stateLabel: "उस सुबह का जल",
 
     verifyLabel: "इस पत्र की जाँच कोई भी यहाँ कर सकता है",
-    attestation:
-      "इस पत्र के अंक ऊपर अंकित संस्था ने प्रकाशित किए हैं, और कोई भी उन्हें वहाँ मिलाकर देख सकता है।",
     footerLine:
       "यह पत्र उस क्षण की नदी की स्थिति दर्ज करता है जब संकल्प रखा गया, ऊपर अंकित सार्वजनिक स्रोत से, और साथ में वे नाम और वे शब्द जो दिए गए।",
 
