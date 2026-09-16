@@ -10,8 +10,8 @@ import type { FullLang as Lang } from "@/lib/locales";
    from it, gets the sheet, the send button, their own words and the controls.
    Whoever they send it to, arriving cold in a family group, gets the sheet,
    one line saying what it is, and the invitation. Neither page repeats what
-   the sheet already says, and neither argues for it: the sheet carries its
-   own record line and its own address, and /faq#verify has the rest.
+   the sheet already says, and neither argues for it. Where the figures come
+   from is said on /rivers and /faq, and nowhere near a sheet.
 
    `shareText` is what lands in WhatsApp above the link. It says one true
    thing: somebody kept a sankalp with a named river on a named morning.
@@ -23,10 +23,6 @@ const en = {
 
   yours: "Your sankalp",
   privateNote: "Only you see your sankalp. The sheet you send carries the names and the river.",
-
-  /** One line under the sheet, for the record. Not a section. */
-  recordLine: "The figures on this sheet are the river's published state that morning.",
-  recordLink: "How to check them",
 
   visitTitle: "Sit with your own river tomorrow morning",
   visitBody: "Three minutes at the hour the panchang names, wherever you are.",
@@ -54,9 +50,6 @@ const hi = {
 
   yours: "आपका संकल्प",
   privateNote: "आपका संकल्प केवल आप देखते हैं। जो पत्र आप भेजते हैं, उस पर नाम और नदी होते हैं।",
-
-  recordLine: "इस पत्र के अंक उस सुबह नदी की प्रकाशित स्थिति हैं।",
-  recordLink: "इन्हें कैसे जाँचें",
 
   visitTitle: "कल सुबह अपनी नदी के साथ बैठिए",
   visitBody: "पंचांग की बताई घड़ी पर तीन मिनट, आप जहाँ भी हों।",

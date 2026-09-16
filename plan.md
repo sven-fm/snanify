@@ -79,14 +79,14 @@ the thread is the sheet even when the file is not attached.
 image is better than a card. The `?new=1` auto-open after a morning stays, but
 it opens the chooser above rather than the bare native sheet.
 
-## 6. The source, said plainly. Done in part, 16 September.
+## 6. The source, said plainly. Done 16 September, further than planned.
 
-The sitting's reading now says "From the European flood model, which
-publishes once a day", and the sheet's "Published" cell says "European flood
-model (Copernicus GloFAS)". The technical name stays where somebody checking
-a figure goes: `/live`, the structured data and `/faq`. Open: the owner has
-not chosen the final wording, and `/rivers` and `/live` still print the
-publisher's own name in their badges.
+The owner's direction: the source and the word "modelled" are noise on every
+surface a reader feels rather than checks. They now live only on `/rivers`,
+`/live`, `/faq` and `/ethics`. The landing card, the sitting, the sheet and
+its shared image, the Patra page and `/snan` show the figure plainly, with no
+source line, no "modelled for" date and no publisher's name. The copy guard
+fails the build if any of it comes back. `CLAUDE.md` records the rule.
 
 ## 7. Small things seen tonight
 

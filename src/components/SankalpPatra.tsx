@@ -454,23 +454,11 @@ export function ChihnaSheet({
               <BlankCell />
             )}
 
-            {/* Level, in one of its two honest forms: the published figure, or
-                a plain statement that nobody publishes one for this reach. */}
+            {/* A gauge level, where this reach has one; a ruled blank where
+                it does not. */}
             {data.level ? (
               <Cell label={t.levelLabel} sub={data.level.note}>
                 <span className="tabular">{data.level.value}</span>
-              </Cell>
-            ) : data.levelUnavailable ? (
-              <Cell label={t.levelLabel} sub={data.levelUnavailable.note}>
-                <span className="text-ink2">{data.levelUnavailable.value}</span>
-              </Cell>
-            ) : (
-              <BlankCell />
-            )}
-
-            {data.reading ? (
-              <Cell label={t.readingLabel} sub={data.reading.agency}>
-                {data.reading.at}
               </Cell>
             ) : (
               <BlankCell />

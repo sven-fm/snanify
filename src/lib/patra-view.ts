@@ -1,4 +1,4 @@
-import { SOURCES } from "@/lib/riverdata";
+import { ordinal } from "@/lib/ordinal";
 import "server-only";
 import type { Sitting } from "@/db/schema";
 import type { RiverSlice, SkySlice } from "@/lib/patra-record";
@@ -46,7 +46,6 @@ export type PatraView = {
   band: string;
   rank: string | null;
   modelledFor: string | null;
-  source: string;
   /** "modelled" or "normal", so the sheet can say which it is showing. */
   figureKind: RiverSlice["kind"];
 
@@ -108,8 +107,6 @@ export function patraView(sitting: Sitting): PatraView {
     band: river.band,
     rank: river.percentile === null ? null : `${river.percentile}`,
     modelledFor: river.modelledFor,
-    /* The row keeps the publisher's own name; every surface a reader sees prints the plain one. */
-    source: SOURCES.discharge.plain,
     figureKind: river.kind,
 
     tithi: `${sky.paksha === "shukla" ? "Shukla" : "Krishna"} ${sky.tithi}`,
@@ -183,14 +180,9 @@ export function printableRecord(sitting: Sitting): PatraRecord {
     flow: {
       value: view.flow,
       note:
-        river.kind === "modelled"
-          ? `Modelled for ${river.modelledFor}. ${view.rank ? `${view.rank}th percentile since 1997.` : ""}`.trim()
+        river.kind === "modelled" && view.rank
+          ? `${ordinal(Number(view.rank))} percentile since 1997.`
           : "Seasonal median, 1997 to 2025.",
-    },
-
-    reading: {
-      at: river.modelledFor ?? sitting.keptOn,
-      agency: SOURCES.discharge.plain,
     },
 
     seed: view.seed,

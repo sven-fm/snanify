@@ -1,3 +1,4 @@
+import { ordinal } from "@/lib/ordinal";
 import { Landing, type LiveCard } from "@/components/Landing";
 import { content, type Lang } from "@/lib/content";
 import { getGhat } from "@/content/rivers";
@@ -35,15 +36,6 @@ if (revalidate !== REVALIDATE_SECONDS) {
 
 const NUMBER = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
-/** "10 Sep", the day the model published for. */
-function shortDay(iso: string, lang: Lang): string {
-  return new Intl.DateTimeFormat(lang === "hi" ? "hi-IN" : "en-IN", {
-    day: "numeric",
-    month: "short",
-    timeZone: "UTC",
-  }).format(new Date(`${iso}T00:00:00Z`));
-}
-
 /** "04:24", a muhurat window's opening, in India Standard Time. */
 function windowOpens(at: string): string {
   return at.slice(11, 16);
@@ -67,9 +59,8 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
   if (d.kind === "modelled") {
     rows.push({
       k: t.ranked,
-      v: t.percentile.replace("{n}", String(Math.round(d.percentile.value))),
+      v: t.percentile.replace("{n}", ordinal(Math.round(d.percentile.value), lang)),
     });
-    rows.push({ k: t.modelled, v: shortDay(d.modelledFor, lang) });
   } else {
     /* The feed was quiet, so the card stands on the seasonal median and says
        so rather than implying a reading nobody published. */
@@ -84,8 +75,7 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
   const line = (d.kind === "modelled" ? t.lineModelled : t.lineMedian)
     .replace("{river}", river)
     .replace("{city}", city)
-    .replace("{flow}", flow)
-    .replace("{day}", d.kind === "modelled" ? shortDay(d.modelledFor, lang) : "");
+    .replace("{flow}", flow);
 
   return {
     line,

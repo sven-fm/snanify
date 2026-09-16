@@ -73,13 +73,12 @@ export const en = {
     card: {
       /* The one live line above the headline. Two forms, because the feed can
          be quiet, and then the card stands on the seasonal median and says so. */
-      lineModelled: "The {river} at {city} is running at {flow}, modelled for {day}.",
+      lineModelled: "The {river} at {city} is running at {flow} this morning.",
       lineMedian: "The {river} at {city} is running near its seasonal median.",
       flow: "Flow",
       ranked: "Ranked",
-      modelled: "Modelled for",
       muhurat: "Next muhurat",
-      percentile: "{n}th percentile since 1997",
+      percentile: "{n} percentile since 1997",
       median: "Seasonal median, 1997 to 2025",
       link: "See all six waters",
     },

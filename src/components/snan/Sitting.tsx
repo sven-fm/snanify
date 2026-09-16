@@ -63,9 +63,7 @@ type Reading = {
   city: string;
   flow: string;
   rank: string | null;
-  modelledFor: string | null;
   normal: string;
-  source: string;
 };
 
 /** Six breaths a minute: four seconds in, six out, which is where a body settles. */
@@ -294,11 +292,7 @@ export function Sitting({
             <Row k={t.reading.flowLabel} v={reading.flow} />
             {reading.rank && <Row k={t.reading.rankLabel} v={reading.rank} />}
             <Row k={t.reading.normalLabel} v={reading.normal} />
-            {reading.modelledFor && (
-              <Row k={t.reading.modelledLabel} v={reading.modelledFor} />
-            )}
           </dl>
-          <p className="mt-4 text-sm leading-relaxed text-ink2">{reading.source}</p>
         </div>
       )}
 

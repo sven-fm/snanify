@@ -95,19 +95,10 @@ export type PatraRecord = {
   /** The muhurat window the moment fell in: name, and its span in IST. */
   window?: { label: string; span: string };
 
-  /** Modelled river discharge. The note carries the percentile and its window. */
+  /** The river's flow. The note carries the percentile and its window. */
   flow?: PatraFigure;
-  /** A published gauge level, where a gauge on this reach publishes one. */
+  /** A gauge level, where a gauge on this reach has one. */
   level?: PatraFigure;
-  /**
-   * Printed in the level cell when nobody publishes a level for this reach.
-   * Stated in words, in the same cell, rather than left blank: a missing
-   * figure and an unpublished figure are different facts.
-   */
-  levelUnavailable?: PatraFigure;
-
-  /** When the source observed the reading, and who published it. */
-  reading?: { at: string; agency: string };
   /** How far the person was from that water. */
   distance?: PatraFigure;
 
@@ -143,16 +134,15 @@ const en = {
     localLabel: "Your local time",
     tithiLabel: "Tithi",
     windowLabel: "Window",
-    flowLabel: "Flow, modelled",
+    flowLabel: "Flow",
     levelLabel: "Level",
-    readingLabel: "Published",
     distanceLabel: "Distance to the water",
     seedLabel: "Seed",
     stateLabel: "The water that morning",
 
-    verifyLabel: "Anyone can check this sheet at",
+    verifyLabel: "Find this sheet at",
     footerLine:
-      "This sheet records the river's condition at the moment the sankalp was kept, from the public source named above, together with the names and the words given.",
+      "This sheet records the river as it was at the moment the sankalp was kept, with the names and the words given.",
 
     specimenChip: "Specimen",
     specimenBanner:
@@ -185,16 +175,15 @@ const hi: typeof en = {
     localLabel: "आपका स्थानीय समय",
     tithiLabel: "तिथि",
     windowLabel: "बेला",
-    flowLabel: "प्रवाह, मॉडल-मान",
+    flowLabel: "प्रवाह",
     levelLabel: "जलस्तर",
-    readingLabel: "प्रकाशित",
     distanceLabel: "जल तक की दूरी",
     seedLabel: "बीज",
     stateLabel: "उस सुबह का जल",
 
-    verifyLabel: "इस पत्र की जाँच कोई भी यहाँ कर सकता है",
+    verifyLabel: "यह पत्र यहाँ मिलेगा",
     footerLine:
-      "यह पत्र उस क्षण की नदी की स्थिति दर्ज करता है जब संकल्प रखा गया, ऊपर अंकित सार्वजनिक स्रोत से, और साथ में वे नाम और वे शब्द जो दिए गए।",
+      "यह पत्र उस क्षण की नदी को दर्ज करता है जब संकल्प रखा गया, और साथ में वे नाम और वे शब्द जो दिए गए।",
 
     specimenChip: "नमूना",
     specimenBanner:
@@ -296,19 +285,6 @@ export function specimenPatra(lang: Lang): PatraRecord {
       note: hi
         ? "1997 से वर्ष के इसी सप्ताह के 41% पाठों से अधिक"
         : "higher than 41% of readings here in this week of the year since 1997",
-    },
-    levelUnavailable: {
-      value: hi ? "इस धारा के लिए प्रकाशित नहीं" : "Not published for this reach",
-      note: hi
-        ? "इस धारा पर कोई सार्वजनिक गेज जलस्तर प्रकाशित नहीं करता।"
-        : "No public gauge on this reach publishes a level.",
-    },
-
-    reading: {
-      at: hi ? "14 मई 2026, 05:00 IST" : "14 May 2026, 05:00 IST",
-      agency: hi
-        ? "कोपरनिकस EMS, ओपन-मेटियो के माध्यम से"
-        : "Copernicus EMS, via Open-Meteo",
     },
     distance: {
       value: hi ? "5,739 किमी" : "5,739 km",

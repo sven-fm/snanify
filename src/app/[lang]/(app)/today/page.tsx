@@ -8,6 +8,7 @@ import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
 import { requireUser } from "@/lib/auth";
 import { getLiveSnapshot } from "@/lib/riverdata";
+import { ordinal } from "@/lib/ordinal";
 import { sittingToday } from "@/lib/sitting";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -52,16 +53,6 @@ export async function generateMetadata({
 }
 
 const NUMBER = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
-
-/** "11 Sept 2026", the day the model published for, in the reader's edition. */
-function longDay(iso: string, lang: Lang): string {
-  return new Intl.DateTimeFormat(lang === "hi" ? "hi-IN" : "en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${iso}T00:00:00Z`));
-}
 
 export default async function Page({
   params,
@@ -126,11 +117,9 @@ export default async function Page({
     flow: `${NUMBER.format(d.cumecs)} m³/s`,
     rank:
       d.kind === "modelled"
-        ? t.reading.percentile.replace("{n}", String(Math.round(d.percentile.value)))
+        ? t.reading.percentile.replace("{n}", ordinal(Math.round(d.percentile.value), lang))
         : null,
-    modelledFor: d.kind === "modelled" ? longDay(d.modelledFor, lang) : null,
     normal: `${NUMBER.format(d.normal.median)} m³/s`,
-    source: t.reading.source,
   };
 
   const names = (profile.names as { name: string }[]).map((n) => n.name);

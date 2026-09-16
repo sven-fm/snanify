@@ -50,6 +50,24 @@ const MODULES = [
 
 const RETIRED = /\b(Jal Sankalp|Jal Chihna|Watermark|Jal Path|Shwas|Maun|Chihn)\b/;
 
+/** The product surfaces: where a reader sits, pays, and receives the sheet.
+    They show the river's figure plainly. The source, the word "modelled" and
+    the publisher's names live on /rivers, /live, /faq and /ethics, by the
+    owner's direction of 16 September 2026. Case-sensitive, so the specimen's
+    canonical line with its GLOFAS cell id is left alone: that is data. */
+const PRODUCT = new Set([
+  "@/content/today",
+  "@/content/patra",
+  "@/content/patra-page",
+  "@/content/snan",
+  "@/content/begin",
+  "@/content/account",
+  "@/content/setup",
+  "@/content/email",
+  "@/lib/content",
+]);
+const SOURCE_TALK = /\b(modelled|modeled|Modelled|Copernicus|GloFAS|Open-Meteo)\b|मॉडल/;
+
 type Slip = { at: string; text: string; rule: string };
 
 function walkStrings(value: unknown, at: string, out: Slip[]): void {
@@ -58,6 +76,9 @@ function walkStrings(value: unknown, at: string, out: Slip[]): void {
     if (value.includes("·")) out.push({ at, text: value, rule: "middle dot" });
     if (RETIRED.test(value)) out.push({ at, text: value, rule: "retired name" });
     if (/\bmeasured\b/i.test(value)) out.push({ at, text: value, rule: "measured, for a modelled figure" });
+    if (PRODUCT.has(at.split(".")[0]) && SOURCE_TALK.test(value)) {
+      out.push({ at, text: value, rule: "source talk on a product surface" });
+    }
     return;
   }
   if (Array.isArray(value)) {

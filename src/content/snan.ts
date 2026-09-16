@@ -113,10 +113,6 @@ type Copy = {
     readonly carries: readonly Pair[];
     readonly engravingTitle: string;
     readonly engravingBody: readonly string[];
-    readonly checkTitle: string;
-    readonly checkBody: string;
-    readonly seedLine: string;
-    readonly seedNote: string;
   };
 
   readonly before: {
@@ -156,7 +152,7 @@ const en: Copy = {
 
   hero: {
     title: "Three minutes with your river.",
-    lede: "Today's flow of the river you choose, from the Copernicus flood model, published for anyone to check. You sit with it for three minutes. At the end you have a Sankalp Patra with your family's names on it.",
+    lede: "Today's flow of the river you choose. You sit with it for three minutes. At the end you have a Sankalp Patra with your family's names on it.",
     offer: "Eleven mornings for {price}. Take them whenever you like.",
     ctaPrimary: "Begin your snan",
     ctaSecondary: "See the five parts",
@@ -179,7 +175,7 @@ const en: Copy = {
         title: "The reading",
         body: [
           "The river and the ghat, today's flow, where that flow ranks against every day since 1997, and how far you are from the water.",
-          "The flow is the flood model's published figure for the day, so you can look it up yourself.",
+          "The figure is today's, and it changes every morning.",
         ],
       },
       {
@@ -233,7 +229,7 @@ const en: Copy = {
       { k: "Prayer", v: "One prayer you choose when you set up." },
       {
         k: "The river",
-        v: "The water and the ghat, the flow that morning, its rank since 1997, and the day the model published for.",
+        v: "The water and the ghat, the flow that morning, and its rank since 1997.",
       },
       { k: "The sky", v: "The tithi, the nakshatra and the moon that morning." },
       { k: "The moment", v: "When you kept it, in your own time and in India's." },
@@ -241,14 +237,9 @@ const en: Copy = {
     ],
     engravingTitle: "The engraving",
     engravingBody: [
-      "The band of water on the sheet is drawn from a seed. The seed is a SHA-256 hash of four facts printed on the sheet: the sitting's id, the water, the model day and the flow.",
+      "The band of water on the sheet is drawn from a seed. The seed is a SHA-256 hash of four facts printed on the sheet: the sitting's id, the water, the day and the flow.",
       "A river in spate draws dense and high. A slack one draws thin and low. Two mornings at the same water draw differently, because the flow was different.",
     ],
-    checkTitle: "Anyone can check it",
-    checkBody:
-      "Fetch that day's figure from the flood model, build the line below, hash it, and you get the same seed and the same engraving. Changing the sheet means changing the public record first.",
-    seedLine: "<sitting id> | <water> | <model day> | <flow>",
-    seedNote: "Your sheet prints its own line in full, with the real values.",
   },
 
   before: {
@@ -259,8 +250,8 @@ const en: Copy = {
         a: "The panchang names the muhurat, and a reminder comes at the hour you choose, in your own time zone. Sit when you wake. One morning a day.",
       },
       {
-        q: "What if the model has no figure for today?",
-        a: "The sheet stands on the seasonal median for that week and says so. Every figure is labelled where it appears.",
+        q: "What if there is no figure for today?",
+        a: "The sheet stands on the river's usual flow for that week of the year.",
       },
       {
         q: "Can I make it shorter?",
@@ -325,7 +316,7 @@ const hi: Copy = {
 
   hero: {
     title: "अपनी नदी के साथ तीन मिनट।",
-    lede: "आपकी चुनी नदी का आज का प्रवाह, कोपरनिकस बाढ़-मॉडल से, जिसे कोई भी जाँच सकता है। आप उसके साथ तीन मिनट बैठते हैं। अंत में आपके पास एक संकल्प पत्र होता है जिस पर आपके परिवार के नाम हैं।",
+    lede: "आपकी चुनी नदी का आज का प्रवाह। आप उसके साथ तीन मिनट बैठते हैं। अंत में आपके पास एक संकल्प पत्र होता है जिस पर आपके परिवार के नाम हैं।",
     offer: "ग्यारह सुबहें {price} में। जब चाहें, तब लीजिए।",
     ctaPrimary: "अपना स्नान आरंभ कीजिए",
     ctaSecondary: "पाँच अंग देखिए",
@@ -348,7 +339,7 @@ const hi: Copy = {
         title: "पाठ",
         body: [
           "नदी और घाट, आज का प्रवाह, 1997 से अब तक के हर दिन के सामने उसका स्थान, और उस जल से आपकी दूरी।",
-          "प्रवाह बाढ़-मॉडल का उस दिन का प्रकाशित आँकड़ा है, इसलिए आप उसे स्वयं देख सकते हैं।",
+          "आँकड़ा आज का है, और हर सुबह बदलता है।",
         ],
       },
       {
@@ -402,7 +393,7 @@ const hi: Copy = {
       { k: "प्रार्थना", v: "एक प्रार्थना, जो आप सेटअप के समय चुनते हैं।" },
       {
         k: "नदी",
-        v: "जल और घाट, उस सुबह का प्रवाह, 1997 से उसका स्थान, और वह दिन जिसके लिए मॉडल ने आँकड़ा दिया।",
+        v: "जल और घाट, उस सुबह का प्रवाह, और 1997 से उसका स्थान।",
       },
       { k: "आकाश", v: "उस सुबह की तिथि, नक्षत्र और चंद्रमा।" },
       { k: "क्षण", v: "आपने कब रखा, आपके अपने समय में और भारत के समय में।" },
@@ -410,14 +401,9 @@ const hi: Copy = {
     ],
     engravingTitle: "उत्कीर्ण चित्र",
     engravingBody: [
-      "पत्र पर जल की पट्टी एक बीज से बनती है। बीज पत्र पर छपे चार तथ्यों का SHA-256 हैश है: बैठक का क्रमांक, जल, मॉडल का दिन और प्रवाह।",
+      "पत्र पर जल की पट्टी एक बीज से बनती है। बीज पत्र पर छपे चार तथ्यों का SHA-256 हैश है: बैठक का क्रमांक, जल, दिन और प्रवाह।",
       "उफान पर नदी घनी और ऊँची बनती है। मंद नदी पतली और नीची। एक ही जल की दो सुबहें मिलती-जुलती और अलग दिखती हैं, क्योंकि नदी वैसी ही थी।",
     ],
-    checkTitle: "कोई भी जाँच सकता है",
-    checkBody:
-      "उस दिन का आँकड़ा बाढ़-मॉडल से लीजिए, नीचे दी पंक्ति बनाइए, उसका हैश निकालिए, और आपको वही बीज और वही चित्र मिलेगा। पत्र बदलने के लिए पहले सार्वजनिक अभिलेख बदलना पड़ेगा।",
-    seedLine: "<बैठक क्रमांक> | <जल> | <मॉडल का दिन> | <प्रवाह>",
-    seedNote: "आपका पत्र अपनी पंक्ति पूरी छापता है, असली मानों के साथ।",
   },
 
   before: {
@@ -428,8 +414,8 @@ const hi: Copy = {
         a: "पंचांग मुहूर्त बताता है, और स्मरण उस घड़ी पर आता है जो आप चुनते हैं, आपके अपने समय-क्षेत्र में। जब जागें, तब बैठिए। दिन में एक सुबह।",
       },
       {
-        q: "अगर आज के लिए मॉडल का आँकड़ा न हो तो?",
-        a: "तब पत्र उस सप्ताह के ऋतु-मध्यक पर खड़ा होता है और यह बात लिखता है। हर आँकड़ा वहीं लेबल किया जाता है जहाँ वह छपता है।",
+        q: "अगर आज का आँकड़ा न हो तो?",
+        a: "पत्र वर्ष के उस सप्ताह के नदी के सामान्य प्रवाह पर टिकता है।",
       },
       {
         q: "क्या इसे छोटा किया जा सकता है?",

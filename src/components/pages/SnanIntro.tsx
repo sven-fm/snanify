@@ -233,17 +233,6 @@ export function SnanIntro({ lang }: { lang: Lang }) {
               </p>
             ))}
           </div>
-
-          <div className="boxed mt-10 max-w-3xl bg-paper p-5 sm:p-8">
-            <h3 className="display text-[1.6rem] leading-[1.25] sm:text-[2rem]">{t.patra.checkTitle}</h3>
-            <p className="mt-5 text-[1.02rem] leading-[1.85] text-ink2">{t.patra.checkBody}</p>
-            <div className="rule-thin mt-6" />
-            {/* Long, and it must wrap rather than open a sideways scroller. */}
-            <p className="mt-5 break-words text-[1rem] leading-[1.9] text-ink tabular-nums">
-              {t.patra.seedLine}
-            </p>
-            <p className="mt-3 text-[0.98rem] leading-[1.8] text-ink2">{t.patra.seedNote}</p>
-          </div>
         </Section>
 
         {/* ------------------------------------------------ before you pay */}

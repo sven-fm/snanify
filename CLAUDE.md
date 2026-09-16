@@ -45,19 +45,25 @@ not need the lie.
 - **The river is real and public.** The flow at each of the six waters is modelled
   discharge from the Copernicus GloFAS global flood model, read through Open-Meteo, one
   value per day, CC BY 4.0. It is a model at a calibrated grid cell, not an instrument at
-  the ghat, and every surface says "modelled". India's Central Water Commission portal is
-  the register of stations and nothing more: four of the six waters have no published level
-  there. The number on the page is a published figure anyone can fetch and check, and that
-  is the whole point. See `src/lib/riverdata.ts`.
+  the ghat. India's Central Water Commission portal is the register of stations and
+  nothing more: four of the six waters have no published level there. The number on the
+  page is a published figure anyone can fetch and check, and that is the whole point.
+  See `src/lib/riverdata.ts`. **Where that is said**, by the owner's direction of
+  16 September 2026: on `/rivers`, `/live`, `/faq` and `/ethics`, and in the structured
+  data. The product surfaces (the landing card, the sitting, the sheet and its image,
+  the Patra page, `/snan`, the emails) show the figure plainly, with no source line, no
+  "modelled for" date and no publisher's name; `tests/unit/copy-guard.test.ts` fails the
+  build if one comes back. The figure is still never called "measured".
 - **The panchang is real.** Tithi, nakshatra and muhurat are computed, not invented.
 - **The sky is real.** The moon's position is computed offline and deterministically with
   `astronomy-engine`. No API, no key. See `src/lib/sky.ts` and `src/content/nakshatra.ts`.
 - **The sankalp is real.** The user genuinely states an intention. That is a real practice.
 - **The six waters are real places** with real traditions. See `src/content/rivers.ts`.
 
-If a number is not sourced, it is labelled as unsourced, everywhere it appears. Never
-fabricate a river figure, a panchang timing or a statistic and present it as fact. The
-artefact's whole value rests on its numbers being checkable against a public record.
+On the pages that name sources, a number that is not sourced is labelled as unsourced.
+Never fabricate a river figure, a panchang timing or a statistic and present it as fact.
+The artefact's whole value rests on its numbers being checkable against a public record,
+and the checking lives on `/rivers` and `/faq`, not beside the number.
 
 ## The product
 

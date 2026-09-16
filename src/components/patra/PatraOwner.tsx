@@ -1,6 +1,5 @@
-import Link from "next/link";
 import type { patraPageContent } from "@/content/patra-page";
-import { localePath, type FullLang as Lang } from "@/lib/locales";
+import type { FullLang as Lang } from "@/lib/locales";
 import type { PatraRecord } from "@/content/patra";
 import { ShareButton } from "@/components/patra/ShareButton";
 import { PatraSheetViewer } from "@/components/SankalpPatra";
@@ -12,8 +11,8 @@ type Copy = (typeof patraPageContent)["en"];
 /**
  * The sheet for the person who kept it, straight after the morning. In this
  * order and nothing else: the sheet, the send button, their own words, the
- * controls, one line for the record. What the sheet already prints is not
- * printed again underneath it.
+ * controls. What the sheet already prints is not printed again underneath
+ * it, and where its figures come from is said on /rivers and /faq, not here.
  */
 export function PatraOwner({
   lang,
@@ -91,13 +90,6 @@ export function PatraOwner({
           <PatraSheetViewer lang={lang} data={printable} />
         </div>
       </section>
-
-      <p className="mt-12 border-t border-rule pt-5 text-sm leading-relaxed text-ink2">
-        {t.recordLine}{" "}
-        <Link href={localePath(lang, "/faq#verify")} className="underline decoration-rule underline-offset-4">
-          {t.recordLink}
-        </Link>
-      </p>
     </main>
   );
 }

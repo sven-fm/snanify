@@ -33,11 +33,10 @@ export const hi = {
     ctaSecondary: "नदियाँ सजीव देखिए",
     offer: "ग्यारह सुबहें {price} में। जब चाहें, तब लीजिए।",
     card: {
-      lineModelled: "{city} में {river} {flow} पर बह रही है, {day} का मॉडल-मान।",
+      lineModelled: "{city} में {river} आज सुबह {flow} पर बह रही है।",
       lineMedian: "{city} में {river} अपनी ऋतु के मध्यक के आसपास बह रही है।",
       flow: "प्रवाह",
       ranked: "स्थान",
-      modelled: "मॉडल दिनांक",
       muhurat: "अगला मुहूर्त",
       percentile: "1997 से {n}वाँ प्रतिशतक",
       median: "ऋतु-मध्यक, 1997 से 2025",

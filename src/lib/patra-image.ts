@@ -1,3 +1,4 @@
+import { ordinal } from "@/lib/ordinal";
 import "server-only";
 import { Resvg } from "@resvg/resvg-js";
 import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
@@ -143,7 +144,7 @@ export async function patraSvg(view: PatraView): Promise<string> {
   /* --- the register, pinned to the foot ---------------------------------- */
   const rows: [string, string][] = [
     ["Flow", view.flow],
-    ...(view.rank ? ([["Ranked", `${view.rank}th percentile since 1997`]] as [string, string][]) : []),
+    ...(view.rank ? ([["Ranked", `${ordinal(Number(view.rank))} percentile since 1997`]] as [string, string][]) : []),
     ["Kept", `${view.keptTime} ${view.keptZone}, ${view.keptIst} IST`],
     ["Tithi", view.tithi],
     ["Nakshatra", `${view.nakshatra}, moon ${view.moon}`],
@@ -160,21 +161,15 @@ export async function patraSvg(view: PatraView): Promise<string> {
     rowY += rowHeight;
   }
 
-  const provenance =
-    view.figureKind === "modelled"
-      ? `${view.source}, modelled for ${view.modelledFor}.`
-      : `${view.source}, seasonal median 1997 to 2025.`;
-
-  parts.push((await typeset(provenance, { size: 18, x: M, y: rowY + 22, fill: INK_2 })).svg);
   parts.push(
-    (await typeset(`snanify.com/p/${view.id}`, { size: 18, x: M, y: rowY + 52, fill: INK_2 })).svg,
+    (await typeset(`snanify.com/p/${view.id}`, { size: 18, x: M, y: rowY + 30, fill: INK_2 })).svg,
   );
   parts.push(
     (
       await typeset(`seed ${view.seedShort}`, {
         size: 18,
         x: RIGHT,
-        y: rowY + 52,
+        y: rowY + 30,
         fill: INK_2,
         anchor: "end",
       })
@@ -242,7 +237,7 @@ export async function patraCardSvg(view: PatraView): Promise<string> {
 
   parts.push(
     (
-      await typeset(`${view.flow}${view.rank ? `, ${view.rank}th percentile since 1997` : ""}`, {
+      await typeset(`${view.flow}${view.rank ? `, ${ordinal(Number(view.rank))} percentile since 1997` : ""}`, {
         size: 26,
         x: m,
         y: y + 62,
