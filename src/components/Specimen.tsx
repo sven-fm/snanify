@@ -16,19 +16,19 @@ import { localePath, type Lang } from "@/lib/locales";
    percentages are those numbers over the frame's size, so the picture holds
    at any width.
 
-   The outline is the one rounded shape on the site, drawn as SVG so the base
-   layer's square corners do not apply; a phone with square corners reads as a
-   television. The screen's corners are cut with clip-path for the same reason.
+   The phone is the one rounded shape on the site. The base layer sets
+   border-radius to zero everywhere, so its corners are cut with clip-path
+   instead; a phone with square corners reads as a television.
    --------------------------------------------------------------------------- */
 
-/* Frame units. */
+/* Frame units: the screen is the sheet's own ratio, nine by sixteen, and the
+   body is the screen plus a bezel. The island sits over the sheet's top
+   margin, which is paper and water, so it covers no type. */
 const BEZEL = 3;
-const STRIP = 8;
 const SCREEN_W = 84;
-const SHEET_H = (SCREEN_W * 1920) / 1080; // 149.33
-const SCREEN_H = STRIP + SHEET_H; // 157.33
+const SCREEN_H = (SCREEN_W * 1920) / 1080; // 149.33
 const FRAME_W = SCREEN_W + BEZEL * 2; // 90
-const FRAME_H = SCREEN_H + BEZEL * 2; // 163.33
+const FRAME_H = SCREEN_H + BEZEL * 2; // 155.33
 
 const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(3)}%`;
 
@@ -47,20 +47,20 @@ export function Specimen({
 
   return (
     <figure className={`pull ${className}`}>
+      {/* The body: ink, with rounded corners cut by clip-path. */}
       <div
-        className="relative mx-auto w-full max-w-[280px]"
-        style={{ aspectRatio: `${FRAME_W} / ${FRAME_H}` }}
+        className="relative mx-auto w-full max-w-[280px] bg-ink"
+        style={{ aspectRatio: `${FRAME_W} / ${FRAME_H}`, clipPath: "inset(0 round 1.4rem)" }}
       >
-        {/* The screen: paper, with its corners cut. */}
+        {/* The screen: the sheet, edge to edge, its corners cut. */}
         <div
-          className="absolute overflow-hidden"
+          className="absolute overflow-hidden bg-[#faf6ea]"
           style={{
             left: pct(BEZEL, FRAME_W),
             top: pct(BEZEL, FRAME_H),
             width: pct(SCREEN_W, FRAME_W),
             height: pct(SCREEN_H, FRAME_H),
-            backgroundColor: "#faf6ea",
-            clipPath: "inset(0 round 0.55rem)",
+            clipPath: "inset(0 round 0.8rem)",
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -70,20 +70,21 @@ export function Specimen({
             width={1080}
             height={1920}
             loading="lazy"
-            className="absolute inset-x-0 block w-full"
-            style={{ top: pct(STRIP, SCREEN_H), height: pct(SHEET_H, SCREEN_H) }}
+            className="absolute inset-0 block h-full w-full"
           />
         </div>
-        {/* The frame and the island, over the screen. */}
-        <svg
+        {/* The island, over the sheet's top margin. */}
+        <div
           aria-hidden="true"
-          viewBox={`0 0 ${FRAME_W} ${FRAME_H.toFixed(2)}`}
-          className="absolute inset-0 h-full w-full text-ink"
-          fill="none"
-        >
-          <rect x="0.75" y="0.75" width={FRAME_W - 1.5} height={(FRAME_H - 1.5).toFixed(2)} rx="11" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="28" y={BEZEL + 2} width="34" height="5" rx="2.5" fill="currentColor" />
-        </svg>
+          className="absolute bg-ink"
+          style={{
+            left: pct(28, FRAME_W),
+            top: pct(BEZEL + 2.2, FRAME_H),
+            width: pct(34, FRAME_W),
+            height: pct(5, FRAME_H),
+            clipPath: "inset(0 round 999px)",
+          }}
+        />
       </div>
       {caption && (
         <figcaption className="mt-4 text-center text-sm leading-[1.6] text-ink2">
