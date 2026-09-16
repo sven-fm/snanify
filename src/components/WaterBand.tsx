@@ -30,6 +30,7 @@ export function WaterBand({
   percentile = 55,
   className = "",
   faint = false,
+  slow = false,
 }: {
   /** Names the water: a page slug, a river slug. */
   seed: string;
@@ -40,6 +41,9 @@ export function WaterBand({
   /** Faint grey lines edge to edge, for a screen rather than a band. The
       caller positions it; the band's own `relative` is left off. */
   faint?: boolean;
+  /** Eight times slower: for behind a practice, where motion at reading
+      speed made the owner dizzy. */
+  slow?: boolean;
 }) {
   const drawn = engrave({ seed: seedFor(seed), percentile, width: 1000, height: 300, flat: true });
   /* Every line at one weight. The engraver weights its lines from faint at
@@ -75,7 +79,7 @@ export function WaterBand({
       <svg
         viewBox="0 0 1000 600"
         preserveAspectRatio="none"
-        className={`flow absolute left-[-4%] top-[-100%] h-[200%] w-[108%] ${faint ? "text-ink2 opacity-30" : "text-ink"}`}
+        className={`${slow ? "flow-slow" : "flow"} absolute left-[-4%] top-[-100%] h-[200%] w-[108%] ${faint ? "text-ink2 opacity-30" : "text-ink"}`}
       >
         <g>{lines}</g>
         <g transform="translate(0 300)">{lines}</g>

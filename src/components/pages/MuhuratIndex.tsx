@@ -12,15 +12,14 @@ import {
   MUHURAT,
   RECURRING_OCCASIONS,
   WINDOWS,
-  asInstant,
-  asZone,
-  formatDualClock,
   monthLabel,
   type MuhuratWindow,
   type Occasion,
   OCCASIONS,
 } from "@/content/muhurat";
 import { muhuratIndexContent } from "@/content/muhurat-index";
+import { LiveClock } from "@/components/live/LiveClock";
+import { getLiveSnapshot } from "@/lib/riverdata";
 import { horizonFrom, resolveOccasion, sayDay, sayResolvedShort, type ResolvedDate } from "@/lib/occasions";
 import { occasionName, windowName } from "@/content/names";
 
@@ -260,20 +259,34 @@ function almanac(now: Date) {
 
 /* --- page ----------------------------------------------------------------- */
 
-export function MuhuratIndex({ lang }: { lang: Lang }) {
+export async function MuhuratIndex({ lang }: { lang: Lang }) {
   const t = muhuratIndexContent[lang];
   const { from: today, out: months } = almanac(new Date());
+  /* The six cities of the worked example, which are the right six for the
+     live clock too; the example's own instant is no longer printed. */
   const example = MUHURAT.workedExample;
-  const exampleWindow = WINDOWS.find((w) => w.id === example.windowId);
-  const exampleInstant = asInstant(example.instantUtc);
 
-  const ghatReading = formatDualClock({
-    instant: exampleInstant,
-    viewerZone: asZone("Asia/Kolkata"),
-    viewerLabel: "IST",
-    ghatLabel: "IST",
-    lang: deepLang(lang),
+  /* Today's windows and sunrise at Har Ki Pauri, from the same snapshot /live
+     prints, computed once a day with the page. The clock itself is live in
+     the browser and finds the open or the next window from these. */
+  const snapshot = await getLiveSnapshot();
+  const ganga = snapshot.waters.find((w) => w.slug === "ganga-haridwar") ?? snapshot.waters[0];
+  const todayWindows = ganga.windows.map((slot) => {
+    const def = WINDOWS.find((w) => w.id === slot.id);
+    return {
+      name: def ? windowName(def.id, def.name, deepLang(lang)) : slot.id,
+      startsAt: slot.startsAt,
+      endsAt: slot.endsAt,
+    };
   });
+  /* The sky's sunrise is an IST wall-clock string with no offset written on
+     it; read as-is on a server in Berlin it lands three and a half hours out.
+     Pinned to +05:30 before it goes to the browser. */
+  const sunriseToday = ganga.sky.sunrise
+    ? /[Zz]|[+-]\d\d:\d\d$/.test(ganga.sky.sunrise)
+      ? ganga.sky.sunrise
+      : `${ganga.sky.sunrise}+05:30`
+    : null;
 
   return (
     <>
@@ -484,74 +497,13 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
         <Section id="clock">
           <Heading title={t.clock.title} lede={t.clock.lede} />
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-14">
-            {/* the ghat clock, primary, never a parenthetical */}
-            <div className="boxed self-start border-2 bg-paper p-7">
-              <h3 className="display text-xl text-ink">{t.clock.atTheGhat}</h3>
-              <div className="rule-thin mt-4" />
-              <p className="display mt-5 text-2xl text-ink">
-                {ghatReading.ghat.weekday} {ghatReading.ghat.date}
-              </p>
-              <p className="display mt-1 text-4xl text-spot">{ghatReading.ghat.time}</p>
-              <p className="mt-2 text-sm text-ink2">IST, Asia/Kolkata</p>
-
-              <dl className="mt-7 border-t-2 border-rulestrong text-sm">
-                <div className="flex justify-between gap-4 border-b border-rule py-3">
-                  <dt className="label text-ink2">{t.clock.window}</dt>
-                  <dd className="text-right text-ink">{exampleWindow ? windowName(exampleWindow.id, exampleWindow.name, lang) : null}</dd>
-                </div>
-                <div className="flex justify-between gap-4 py-3">
-                  <dt className="label text-ink2">{t.clock.assumed}</dt>
-                  <dd className="text-right text-ink">{example.assumedSunriseIst} IST</dd>
-                </div>
-              </dl>
-
-              <div className="mt-6">
-                <ProvisionalBadge lang={lang} short />
-              </div>
-            </div>
-
-            {/* the same instant, elsewhere */}
-            <div>
-              <h3 className="display text-xl text-ink">{t.clock.elsewhere}</h3>
-              <ul className="mt-5 border-t-2 border-rulestrong">
-                {example.zones.map((z) => {
-                  const clock = formatDualClock({
-                    instant: exampleInstant,
-                    viewerZone: z.zone,
-                    viewerLabel: pickDeep(z.label, lang),
-                    ghatLabel: "IST",
-                    lang: deepLang(lang),
-                  });
-                  return (
-                    <li
-                      key={z.zone}
-                      className="grid gap-1 border-b border-rule py-4 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-6"
-                    >
-                      <p className="text-sm text-ink">{pickDeep(z.label, lang)}</p>
-                      <div>
-                        <p className="text-sm text-ink2">
-                          <span className="text-ink">{clock.viewer.time}</span>, {clock.viewer.weekday}{" "}
-                          {clock.viewer.date}
-                        </p>
-                        <p
-                          className={`mt-1 text-xs ${
-                            clock.dateShift === 0 ? "text-ink2" : "text-spot"
-                          }`}
-                        >
-                          {clock.shiftNote}
-                        </p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <p className="mt-6 max-w-2xl text-xs leading-[1.75] text-ink2">
-                {t.clock.illustration}
-              </p>
-            </div>
-          </div>
+          <LiveClock
+            lang={lang}
+            t={t.clock}
+            zones={example.zones.map((z) => ({ zone: z.zone, label: pickDeep(z.label, lang) }))}
+            windows={todayWindows}
+            sunrise={sunriseToday}
+          />
         </Section>
 
         {/* ---------------- closing ---------------- */}

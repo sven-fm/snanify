@@ -187,6 +187,8 @@ actually type. The biggest free lever there is.
 
 ### 16 September 2026
 
+- `/muhurat`: the worked example became a live clock, ticking from the phone: the ghat's time in IST, the reader's own zone under it, the same moment in six cities with the day shift, today's open or next window and today's sunrise at Har Ki Pauri.
+- The sitting: the water behind the practice runs eight times slower; the stillness is dark again, with the words and the count and nothing else.
 - Every "free to read" and "the snan is what you pay for" line is gone: the landing's free register, the `/live` closing block, the FAQ question, the ledes on `/snan`, `/rivers`, `/panchang` and the metas. The reference pages are in the nav and the footer; the tariff states the price.
 - The flowing water bands draw every line at one weight with the fade on the container, so the loop has no visible period.
 - The reading's fourth row, "From you": the distance to the ghat from the request's own coordinates, rounded to ten kilometres; the copy had promised it since the first plan and nothing computed it.

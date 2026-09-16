@@ -612,6 +612,13 @@ html[data-js] [data-in] .grow {
   animation: flow 30s linear infinite;
   will-change: transform;
 }
+/* The same water, eight times slower: behind the practice, where the reading
+   speed made the owner dizzy. Four minutes per copy is a river seen from a
+   ghat, not from a boat. */
+.flow-slow {
+  animation: flow 240s linear infinite;
+  will-change: transform;
+}
 
 /* A counter's new second settles in: a touch below and faint, then in place. */
 @keyframes tick {
@@ -702,6 +709,7 @@ html:not([data-js]) .ink-picture-lazy {
   }
   .breathe,
   .flow,
+  .flow-slow,
   .tick,
   .hold-box:not([data-holding]) {
     animation: none;

@@ -300,27 +300,32 @@ export function Sitting({
 
   return (
     <div
-      className="sheet-in fixed inset-0 z-50 flex flex-col bg-paper"
+      className={`sheet-in fixed inset-0 z-50 flex flex-col ${stillness ? "bg-[#0b0a08] text-[#8a836f]" : "bg-paper"}`}
       data-sitting
       data-speed={speed}
       data-phase={phase}
       data-announcing={announcing ? "1" : undefined}
     >
-      {/* The water, behind everything, and behind the stillness at full
-          faintness: what tells a person the screen is alive. */}
-      <WaterBand
-        seed={`${waterSlug}-sitting`}
-        percentile={70}
-        faint
-        className={`pointer-events-none absolute inset-0 h-full w-full ${stillness ? "" : "opacity-50"}`}
-      />
+      {/* The water behind the reading, the breath, the vow and the mark,
+          slow enough to be a river seen from the steps. The stillness has
+          none: it is dark, with the words and the count and nothing else,
+          as a contrast to everything before it. */}
+      {!stillness && (
+        <WaterBand
+          seed={`${waterSlug}-sitting`}
+          percentile={70}
+          faint
+          slow
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-50"
+        />
+      )}
 
       <div
         className="relative mx-auto flex w-full max-w-md flex-1 flex-col px-5 pt-5"
         style={{ paddingTop: "max(1.25rem, env(safe-area-inset-top))" }}
       >
         {/* The bar and the cross, dim during the stillness. */}
-        <div className={`flex items-start gap-4 ${stillness ? "opacity-40" : ""}`}>
+        <div className={`flex items-start gap-4 ${stillness ? "opacity-30" : ""}`}>
           <div className="flex-1 pt-4">
             <StoryBar t={t} state={state} />
             {/* The name of the part, in the small voice. */}
@@ -376,17 +381,17 @@ export function Sitting({
           {stillness && (
             <div className="pull flex flex-col items-center text-center">
               <p
-                className={`display text-[1.4rem] text-ink2 transition-opacity duration-1000 ${announcing ? "opacity-100" : "opacity-0"}`}
+                className={`display text-[1.4rem] text-[#8a836f] transition-opacity duration-1000 ${announcing ? "opacity-100" : "opacity-0"}`}
                 aria-hidden={!announcing}
               >
                 {t.stillness.instruction}
               </p>
               <p
-                className={`display mt-2 text-[1.6rem] leading-[1.3] text-ink transition-opacity duration-1000 ${announcing ? "opacity-0" : "opacity-100"}`}
+                className={`display mt-2 text-[1.6rem] leading-[1.3] text-[#b5ad99] transition-opacity duration-1000 ${announcing ? "opacity-0" : "opacity-100"}`}
               >
                 {t.stillness.line}
               </p>
-              <p className="display tabular mt-6 text-[3.6rem] leading-none text-ink2" aria-live="off" data-remaining={remaining(state)}>
+              <p className="display tabular mt-6 text-[3.6rem] leading-none text-[#6f685a]" aria-live="off" data-remaining={remaining(state)}>
                 <Tick value={remaining(state)} />
               </p>
             </div>
@@ -438,7 +443,7 @@ export function Sitting({
             onClick={next}
             className={`label impress absolute inset-x-5 bottom-8 flex min-h-[56px] items-center justify-center border-2 ${
               stillness
-                ? "border-rule text-ink2 hover:border-rulestrong hover:text-ink active:border-rulestrong active:text-ink"
+                ? "border-[#2a2622] text-[#6f685a] hover:border-[#4a443c] hover:text-[#b5ad99] active:border-[#4a443c] active:text-[#b5ad99]"
                 : "border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
             }`}
             style={{ bottom: "max(2rem, env(safe-area-inset-bottom))" }}
