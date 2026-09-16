@@ -46,7 +46,7 @@ export function PatraOwner({
   return (
     <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1350} className="w-full border-2 border-rulestrong" />
+      <img src={imageSrc} alt={alt} width={1080} height={1920} className="w-full border-2 border-rulestrong" />
 
       <div className="mt-6">
         <ShareButton

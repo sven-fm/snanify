@@ -6,7 +6,7 @@ import { sheetUrl, storeSheet } from "@/lib/patra-store";
 import { patraView } from "@/lib/patra-view";
 
 /* ---------------------------------------------------------------------------
-   The share image, 1080 by 1350.
+   The share image, 1080 by 1920: the memento.
 
    Almost always a redirect. The sheet is drawn once, when the morning is
    minted, and stored; this hands the reader that file. A sitting never changes

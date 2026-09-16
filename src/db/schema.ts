@@ -168,7 +168,7 @@ export const sittings = pgTable(
     portraitKey: text("portrait_key"),
     /** The owner's own words. Never selected by anything that serves a stranger. */
     sankalpText: text("sankalp_text").notNull().default(""),
-    /** The rendered 1080x1350 sheet in the public blob store, once it exists. */
+    /** The rendered 1080x1920 memento in the public blob store, once it exists. */
     imageKey: text("image_key"),
     isPublic: boolean("is_public").notNull().default(true),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

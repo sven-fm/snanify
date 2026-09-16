@@ -37,7 +37,7 @@ export async function putPortrait(userId: string, jpeg: Buffer): Promise<Stored>
   return { key: blob.pathname, url: blob.url };
 }
 
-/** A rendered Sankalp Patra, 1080 by 1350. */
+/** A rendered Sankalp Patra memento, 1080 by 1920. */
 export async function putSheet(sittingId: string, png: Buffer): Promise<Stored> {
   const blob = await put(`sheet/${sittingId}.png`, png, {
     access: "public",

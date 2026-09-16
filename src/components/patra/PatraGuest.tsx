@@ -25,7 +25,7 @@ export function PatraGuest({
   return (
     <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1350} className="w-full border-2 border-rulestrong" />
+      <img src={imageSrc} alt={alt} width={1080} height={1920} className="w-full border-2 border-rulestrong" />
 
       <p className="mt-6 text-center text-[1.02rem] leading-[1.7] text-ink2">{line}</p>
 

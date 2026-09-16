@@ -322,8 +322,137 @@ export async function patraCardSvg(view: PatraView): Promise<string> {
   );
 }
 
-/** The sheet as a PNG. */
+/* ---------------------------------------------------------------------------
+   The memento, 1080 by 1920: the sheet as a phone sees it.
+
+   This is what a morning leaves and what gets sent. A phone-shaped page
+   rather than a sheet of paper: the names large, the ghat and its water,
+   the prayer, and two figures, on paper with the water drawn faintly across
+   the whole of it. The A4 sheet with every field stays as the print
+   version on the page; this one is for a thumb and a family group.
+   --------------------------------------------------------------------------- */
+
+export const MEMENTO_SIZE = { width: 1080, height: 1920 };
+
+export async function mementoSvg(view: PatraView): Promise<string> {
+  const W = MEMENTO_SIZE.width;
+  const H = MEMENTO_SIZE.height;
+  const MM = 72;
+  const R = W - MM;
+  const IN = R - MM;
+
+  const parts: string[] = [`<rect width="${W}" height="${H}" fill="${PAPER}" />`];
+
+  /* The water, faintly, across the whole page: the same lines the band
+     draws, cut flat and spread over the page's height. */
+  const ground = engrave({ seed: view.seed, percentile: view.percentile, width: W, height: H, flat: true });
+  parts.push(
+    `<g opacity="0.16">` +
+      ground.lines
+        .map(
+          (d, i) =>
+            `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${(strokeWidth(i, ground.lines.length) * 1.6).toFixed(2)}" stroke-opacity="${strokeOpacity(i, ground.lines.length)}" />`,
+        )
+        .join("") +
+      `</g>`,
+  );
+
+  /* --- masthead --------------------------------------------------------- */
+  parts.push((await typeset("SANKALP PATRA", { size: 26, x: MM, y: 118, fill: SPOT, tracking: 0.26 })).svg);
+  parts.push((await typeset(view.keptDate, { size: 26, x: R, y: 118, fill: INK_2, anchor: "end" })).svg);
+  parts.push(`<rect x="${MM}" y="142" width="${IN}" height="3" fill="${INK}" />`);
+  parts.push(`<rect x="${MM}" y="149" width="${IN}" height="1" fill="${INK}" />`);
+
+  /* --- the ghat and its water ------------------------------------------- */
+  const artTop = 190;
+  const plateH = 430;
+  const bandH = 150;
+  const artH = plateH + bandH;
+  const plate = await ghatPlate(view.waterSlug, IN, plateH);
+  if (plate) {
+    parts.push(`<image href="${plate}" x="${MM}" y="${artTop}" width="${IN}" height="${plateH}" />`);
+    parts.push(band(view, MM, artTop + plateH, IN, bandH));
+  } else {
+    parts.push(band(view, MM, artTop, IN, artH));
+  }
+  parts.push(`<rect x="${MM}" y="${artTop}" width="${IN}" height="${artH}" fill="none" stroke="${INK}" stroke-width="2" />`);
+
+  /* --- the names, and the portrait beside them --------------------------- */
+  let y = artTop + artH + 96;
+  const names = view.names.slice(0, 5);
+  const nameSize = names.length > 3 ? 50 : names.length > 2 ? 56 : 66;
+  const portraitW = 280;
+  const portraitH = 350;
+  const nameX = view.portraitUrl ? MM + portraitW + 40 : MM;
+  const nameMax = R - nameX;
+
+  if (view.portraitUrl) {
+    parts.push(
+      `<image href="${view.portraitUrl}" x="${MM}" y="${y - 52}" width="${portraitW}" height="${portraitH}" preserveAspectRatio="xMidYMid slice" />` +
+        `<rect x="${MM}" y="${y - 52}" width="${portraitW}" height="${portraitH}" fill="none" stroke="${RULE}" />`,
+    );
+  }
+
+  let namesBottom = y;
+  for (const name of names) {
+    for (const piece of await wrap(name, { size: nameSize, weight: 600, maxWidth: nameMax })) {
+      parts.push((await typeset(piece, { size: nameSize, x: nameX, y: namesBottom, weight: 600, fill: INK })).svg);
+      namesBottom += nameSize * 1.22;
+    }
+  }
+  const placeY = Math.max(namesBottom + 8, view.portraitUrl ? y - 52 + portraitH + 44 : 0);
+  parts.push((await typeset(`${view.water}, ${view.ghat}, ${view.city}`, { size: 30, x: MM, y: placeY, fill: INK_2 })).svg);
+  y = placeY + 70;
+
+  /* --- the figures, before the prayer, so they are never squeezed out ---- */
+  const footTop = H - MM - 40;
+  const figuresTop = footTop - 168;
+  parts.push(`<rect x="${MM}" y="${figuresTop}" width="${IN}" height="2" fill="${INK}" />`);
+  parts.push((await typeset("FLOW", { size: 20, x: MM, y: figuresTop + 40, fill: INK_2, tracking: 0.08 })).svg);
+  parts.push((await typeset(view.flow, { size: 46, x: MM, y: figuresTop + 100, weight: 600, fill: INK })).svg);
+  if (view.rank) {
+    parts.push((await typeset("RANKED", { size: 20, x: R, y: figuresTop + 40, fill: INK_2, tracking: 0.08, anchor: "end" })).svg);
+    parts.push((await typeset(`${ordinal(Number(view.rank))} percentile`, { size: 46, x: R, y: figuresTop + 100, weight: 600, fill: INK, anchor: "end" })).svg);
+    parts.push((await typeset("since 1997", { size: 22, x: R, y: figuresTop + 136, fill: INK_2, anchor: "end" })).svg);
+  }
+  parts.push((await typeset(`${view.keptTime} ${view.keptZone}, ${view.keptIst} IST`, { size: 22, x: MM, y: figuresTop + 136, fill: INK_2 })).svg);
+
+  /* --- the prayer, in the room that is left ------------------------------ */
+  if (view.prayer) {
+    const limit = figuresTop - 40;
+    lines: for (const line of view.prayer.devanagari) {
+      for (const piece of await wrap(line, { size: 38, maxWidth: IN })) {
+        if (y + 38 > limit) break lines;
+        parts.push((await typeset(piece, { size: 38, x: MM, y, fill: INK })).svg);
+        y += 58;
+      }
+    }
+    const roman = await wrap(view.prayer.roman.join(" / "), { size: 24, maxWidth: IN });
+    if (y + 8 + roman.length * 34 <= limit) {
+      for (const piece of roman) {
+        parts.push((await typeset(piece, { size: 24, x: MM, y: y + 8, fill: INK_2 })).svg);
+        y += 34;
+      }
+    }
+  }
+
+  /* --- foot --------------------------------------------------------------- */
+  parts.push((await typeset(`snanify.com/p/${view.id}`, { size: 20, x: MM, y: footTop + 14, fill: INK_2 })).svg);
+  parts.push((await typeset(`seed ${view.seedShort}`, { size: 20, x: R, y: footTop + 14, fill: INK_2, anchor: "end" })).svg);
+
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ` +
+    `width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${parts.join("")}</svg>`
+  );
+}
+
+/** The memento as a PNG: what a morning leaves, and what gets sent. */
 export async function renderPatra(view: PatraView): Promise<Buffer> {
+  return rasterise(await mementoSvg(view), MEMENTO_SIZE.width);
+}
+
+/** The four-by-five sheet, kept for anything that still wants a sheet of paper. */
+export async function renderPatraSheet(view: PatraView): Promise<Buffer> {
   return rasterise(await patraSvg(view), PATRA_SIZE.width);
 }
 

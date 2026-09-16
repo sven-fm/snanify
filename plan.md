@@ -95,6 +95,14 @@ daily; the badge reads "Computed here, checked against Drik Panchang".
 Open: read the dated occasions off Drik and record each match in
 `docs/panchang-check.md`.
 
+## 9. The sheet as a memento. Done 16 September.
+
+The shared image is 1080 by 1920, phone-shaped: the ghat and its water in
+one frame, the names large with the portrait beside them, the prayer, and
+two figures, flow and rank, on paper with the water drawn faintly across the
+whole page. The A4 sheet with every field stays as the print version on the
+Patra page. Sheets rendered before keep their old image.
+
 ## Still open from build-plan.md, owner's side
 
 - Read the privacy and terms drafts.
