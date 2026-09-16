@@ -23,6 +23,7 @@ export const hi = {
     cta: "आरंभ कीजिए",
     menu: "मेन्यू",
     account: "आपकी सुबहें",
+    accountShort: "सुबहें",
     profile: "आपका खाता",
     snanSettings: "आपका स्नान",
     buy: "सुबहें खरीदिए",

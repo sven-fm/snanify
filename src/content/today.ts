@@ -56,6 +56,7 @@ const en = {
   stillness: {
     label: "The stillness",
     instruction: "Put the phone down.",
+    line: "The river keeps running.",
   },
 
   mark: {
@@ -122,6 +123,7 @@ const hi = {
   stillness: {
     label: "मौन",
     instruction: "फ़ोन नीचे रख दीजिए।",
+    line: "नदी बहती रहती है।",
   },
 
   mark: {

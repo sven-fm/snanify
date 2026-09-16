@@ -61,6 +61,7 @@ export const en = {
     cta: "Begin",
     menu: "Menu",
     account: "Your mornings",
+    accountShort: "Mornings",
     profile: "Your account",
     snanSettings: "Your snan",
     buy: "Buy mornings",

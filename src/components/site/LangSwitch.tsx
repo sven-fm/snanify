@@ -30,10 +30,11 @@ export function LangSwitch({
   return (
     <details className="group relative">
       <summary
-        className="label flex cursor-pointer list-none items-center gap-1.5 border border-rulestrong px-2.5 py-1.5 text-ink transition-colors hover:bg-ink hover:text-paper [&::-webkit-details-marker]:hidden"
+        className="label flex min-h-[44px] cursor-pointer list-none items-center gap-1.5 border border-rulestrong px-3 text-ink transition-colors hover:bg-ink hover:text-paper [&::-webkit-details-marker]:hidden"
         aria-label={`${def.native}, ${label}`}
       >
-        {def.native}
+        <span className="sm:hidden">{def.code.toUpperCase()}</span>
+        <span className="hidden sm:inline">{def.native}</span>
         <span aria-hidden="true" className="text-[0.6em] leading-none">
           ▼
         </span>

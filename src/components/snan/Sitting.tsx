@@ -4,6 +4,7 @@ import { useCallback, useEffect, useReducer, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LIMB_ORDER, SITTING } from "@/lib/sitting-plan";
+import { WaterBand } from "@/components/WaterBand";
 import {
   INITIAL,
   STILLNESS_NOTE_SECONDS,
@@ -261,38 +262,41 @@ export function Sitting({
   }
 
   if (phase === "stillness") {
-    /* Black. The one instruction for three seconds, then only the seconds
-       left, dim, and a dim Next at the foot for whoever needs it. */
+    /* The whole screen is the water, in faint grey lines, still flowing.
+       The one instruction for three seconds, then a line and the seconds
+       left, and a quiet Next at the foot. */
     const announcing = into < STILLNESS_NOTE_SECONDS;
     const left = remaining(state);
     return (
       <div
-        className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black"
+        className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-paper"
         aria-label={t.stillness.label}
         data-sitting
         data-speed={speed}
         data-phase={phase}
         data-announcing={announcing ? "1" : undefined}
       >
-        <p
-          className={`display px-8 text-center text-[1.4rem] text-[#6b665a] transition-opacity duration-1000 ${
-            announcing ? "opacity-100" : "opacity-0"
-          }`}
-          aria-hidden={!announcing}
-        >
-          {t.stillness.instruction}
-        </p>
-        <p
-          className="display tabular mt-6 text-[3rem] leading-none text-[#3d3a33]"
-          aria-live="off"
-          data-remaining={left}
-        >
-          {left}
-        </p>
+        <WaterBand seed={`${waterSlug}-stillness`} percentile={70} faint className="absolute inset-0 h-full w-full" />
+        <div className="relative flex flex-col items-center px-8 text-center">
+          <p
+            className={`display text-[1.4rem] text-ink2 transition-opacity duration-1000 ${announcing ? "opacity-100" : "opacity-0"}`}
+            aria-hidden={!announcing}
+          >
+            {t.stillness.instruction}
+          </p>
+          <p
+            className={`display mt-2 text-[1.6rem] leading-[1.3] text-ink transition-opacity duration-1000 ${announcing ? "opacity-0" : "opacity-100"}`}
+          >
+            {t.stillness.line}
+          </p>
+          <p className="display tabular mt-6 text-[3.6rem] leading-none text-ink2" aria-live="off" data-remaining={left}>
+            <Tick value={left} />
+          </p>
+        </div>
         <button
           type="button"
           onClick={next}
-          className="label absolute inset-x-5 bottom-8 flex min-h-[56px] items-center justify-center border-2 border-[#3d3a33] text-[#6b665a] transition-colors hover:border-[#6b665a]"
+          className="label absolute inset-x-5 bottom-8 flex min-h-[56px] items-center justify-center border-2 border-rule text-ink2 transition-colors hover:border-rulestrong hover:text-ink"
           data-next
         >
           {t.next}
@@ -327,7 +331,7 @@ export function Sitting({
       )}
 
       {phase === "breath" && (
-        <BreathScreen t={t} into={into} reduced={reduced} band={reading.rank} />
+        <BreathScreen t={t} into={into} left={remaining(state)} reduced={reduced} band={reading.rank} />
       )}
 
       {phase === "hold" && (
@@ -449,11 +453,14 @@ function Row({ k, v }: { k: string; v: string }) {
 function BreathScreen({
   t,
   into,
+  left,
   reduced,
   band,
 }: {
   t: Copy;
   into: number;
+  /** Seconds left in the breath, counted down beside the water. */
+  left: number;
   reduced: boolean;
   band: string | null;
 }) {
@@ -482,8 +489,24 @@ function BreathScreen({
         <line x1="0" y1={y} x2="100" y2={y} stroke="var(--color-ink, #16130f)" strokeWidth="0.4" />
       </svg>
 
-      {band && <p className="mt-4 text-center text-sm text-ink2">{band}</p>}
+      <p className="display tabular mt-4 text-center text-[2.4rem] leading-none text-ink2" data-remaining={left}>
+        <Tick value={left} />
+      </p>
+      {band && <p className="mt-3 text-center text-sm text-ink2">{band}</p>}
     </div>
+  );
+}
+
+/**
+ * A number that arrives: each new value fades and settles in, so a counter
+ * reads as a clock ticking rather than a label changing. The key restarts
+ * the animation; reduced motion turns it off in the stylesheet.
+ */
+function Tick({ value }: { value: number }) {
+  return (
+    <span key={value} className="tick inline-block">
+      {value}
+    </span>
   );
 }
 
@@ -513,29 +536,43 @@ function VowScreen({
     <div className="mt-6">
       <p className="text-center text-sm text-ink2">{names.join(", ")}</p>
 
-      <button
-        type="button"
+      {/* A div with a button's role, not a <button>: Chrome wraps a button's
+          children in an anonymous box of automatic height, and the ink's
+          percentage height resolved against that and came out as nothing. */}
+      <div
+        role="button"
+        tabIndex={0}
         onPointerDown={() => onHold(true)}
         onPointerUp={() => onHold(false)}
         onPointerCancel={() => onHold(false)}
         onPointerLeave={() => onHold(false)}
+        onKeyDown={(e) => {
+          if (e.key === " " || e.key === "Enter") {
+            e.preventDefault();
+            onHold(true);
+          }
+        }}
+        onKeyUp={(e) => {
+          if (e.key === " " || e.key === "Enter") onHold(false);
+        }}
         onContextMenu={(e) => e.preventDefault()}
-        className={`hold-box relative mt-4 block w-full touch-none select-none overflow-hidden border-2 bg-paper2 px-6 py-12 text-center transition-colors ${
+        className={`hold-box relative mt-4 block w-full cursor-pointer touch-none select-none overflow-hidden border-2 bg-paper2 px-6 py-12 text-center transition-colors ${
           pressing ? "border-ink" : "border-rulestrong"
         }`}
         data-holding={pressing ? "1" : undefined}
         aria-label={t.vow.hold}
       >
         <span
-          className="absolute inset-x-0 bottom-0 transition-[height] duration-100 ease-linear"
+          className="absolute inset-x-0 bottom-0"
           style={{ height: `${pct}%`, backgroundColor: "color-mix(in srgb, var(--spot) 28%, transparent)" }}
           aria-hidden="true"
+          data-ink
         />
         <span className="relative display block text-[1.6rem] leading-[1.4]">{sankalp}</span>
         <span className="label relative mt-8 block text-ink2">
           {filled >= 1 ? t.vow.done : pressing ? t.vow.holding : t.vow.hold}
         </span>
-      </button>
+      </div>
     </div>
   );
 }

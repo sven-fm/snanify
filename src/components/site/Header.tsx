@@ -5,7 +5,7 @@ import { ctaHref, primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
-import { ProfileMenu, ProfileRows } from "@/components/site/HeaderCta";
+import { MobileCta, ProfileMenu, ProfileRows } from "@/components/site/HeaderCta";
 
 export type NavLink = { href: string; label: string };
 
@@ -42,24 +42,35 @@ export function Header({
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-paper lg:relative">
+    <header className="sticky top-0 z-50 bg-paper">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* masthead row */}
-        <div className="flex h-14 items-center justify-between gap-4">
-          <Link href={localePath(lang, "/")}>
+        <div className="flex h-14 items-center justify-between gap-3 sm:gap-4">
+          <Link href={localePath(lang, "/")} className="shrink-0">
             <Logo />
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* The almanac's edition line. Vikram Samvat runs ~57 years ahead
                 of CE; each locale sets it in its own numerals. */}
             <span className="label hidden text-ink2 lg:inline">{t.edition}</span>
 
             <LangSwitch lang={lang} currentPath={currentPath} label={t.langLabel} />
 
-            <ThemeToggle label={t.themeLabel} />
+            {/* On a phone the theme switch lives in the menu; the bar keeps
+                the language, the action and the menu button. */}
+            <div className="hidden sm:block">
+              <ThemeToggle label={t.themeLabel} />
+            </div>
 
             <ProfileMenu label={t.nav.profile} rows={profileRows} />
+
+            <MobileCta
+              begin={ctaTo ?? ctaHref(lang)}
+              account={localePath(lang, "/account")}
+              beginLabel={t.nav.cta}
+              accountLabel={t.nav.accountShort}
+            />
 
             {/* The menu, phones and tablets. A <details> so it needs no
                 script and closes itself when the page changes. The panel is
@@ -93,6 +104,10 @@ export function Header({
                       </li>
                     ))}
                     <ProfileRows rows={profileRows} />
+                    <li className="flex min-h-[56px] items-center gap-3 border-b border-rule text-[1rem] text-ink2 sm:hidden">
+                      <ThemeToggle label={t.themeLabel} />
+                      <span>{t.themeLabel}</span>
+                    </li>
                   </ul>
                   <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
                     <a
@@ -109,7 +124,7 @@ export function Header({
 
             <a
               href={ctaTo ?? ctaHref(lang)}
-              className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+              className="label hidden min-h-[44px] items-center bg-spot px-4 text-paper transition-colors hover:bg-ink sm:inline-flex"
             >
               {t.nav.cta}
             </a>

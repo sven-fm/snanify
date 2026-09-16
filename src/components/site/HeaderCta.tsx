@@ -77,6 +77,34 @@ export function ProfileMenu({ label, rows }: { label: string; rows: ProfileRow[]
   );
 }
 
+/**
+ * The phone bar's one action: "Begin", or "Your mornings" once signed in,
+ * beside the menu button. Hidden from the tablet width up, where the wide
+ * masthead has Begin and the silhouette.
+ */
+export function MobileCta({
+  begin,
+  account,
+  beginLabel,
+  accountLabel,
+}: {
+  begin: string;
+  account: string;
+  beginLabel: string;
+  accountLabel: string;
+}) {
+  const signedIn = useSignedIn();
+  return (
+    <Link
+      href={signedIn ? account : begin}
+      className="label flex min-h-[44px] items-center whitespace-nowrap bg-spot px-3 text-paper transition-colors hover:bg-ink sm:hidden"
+      data-mobile-cta
+    >
+      {signedIn ? accountLabel : beginLabel}
+    </Link>
+  );
+}
+
 /** The same four rows, as a ruled group at the foot of the phone menu. */
 export function ProfileRows({ rows }: { rows: ProfileRow[] }) {
   const signedIn = useSignedIn();

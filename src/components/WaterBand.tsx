@@ -25,6 +25,7 @@ export function WaterBand({
   seed,
   percentile = 55,
   className = "",
+  faint = false,
 }: {
   /** Names the water: a page slug, a river slug. */
   seed: string;
@@ -32,6 +33,9 @@ export function WaterBand({
   percentile?: number;
   /** Sizes the band; give it a height and a width. */
   className?: string;
+  /** Faint grey lines edge to edge, for a screen rather than a band. The
+      caller positions it; the band's own `relative` is left off. */
+  faint?: boolean;
 }) {
   const drawn = engrave({ seed: seedFor(seed), percentile, width: 1000, height: 300, flat: true });
   const lines = drawn.lines.map((d, i, all) => (
@@ -42,15 +46,16 @@ export function WaterBand({
       stroke="currentColor"
       strokeWidth={strokeWidth(i, all.length) * 1.4}
       strokeOpacity={strokeOpacity(i, all.length)}
+      vectorEffect="non-scaling-stroke"
     />
   ));
   /* One water, strongest at its crown and gone by its foot. */
   const fade = "linear-gradient(to bottom, #000 0%, #000 30%, transparent 100%)";
   return (
     <div
-      className={`relative overflow-hidden ${className}`}
+      className={`${faint ? "" : "relative"} overflow-hidden ${className}`}
       aria-hidden="true"
-      style={{ maskImage: fade, WebkitMaskImage: fade }}
+      style={faint ? undefined : { maskImage: fade, WebkitMaskImage: fade }}
     >
       {/* Twice the band's height, its top one copy above the band, sliding
           down by one copy: the second drawing arrives exactly where the
@@ -59,7 +64,7 @@ export function WaterBand({
       <svg
         viewBox="0 0 1000 600"
         preserveAspectRatio="none"
-        className="flow absolute left-[-4%] top-[-100%] h-[200%] w-[108%] text-ink"
+        className={`flow absolute left-[-4%] top-[-100%] h-[200%] w-[108%] ${faint ? "text-ink2 opacity-30" : "text-ink"}`}
       >
         <g>{lines}</g>
         <g transform="translate(0 300)">{lines}</g>

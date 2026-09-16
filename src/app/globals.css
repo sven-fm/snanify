@@ -427,6 +427,15 @@ html[data-js] [data-in] .grow {
   will-change: transform;
 }
 
+/* A counter's new second settles in: a touch below and faint, then in place. */
+@keyframes tick {
+  from { opacity: 0.35; transform: translateY(0.12em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tick {
+  animation: tick 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
 /* The vow's box asks to be pressed: its rule breathes between the light and
    the strong rule until a thumb lands, then holds still. */
 @keyframes rule-breathe {
@@ -492,6 +501,7 @@ html:not([data-js]) .ink-picture-lazy {
   }
   .breathe,
   .flow,
+  .tick,
   .hold-box:not([data-holding]) {
     animation: none;
   }
