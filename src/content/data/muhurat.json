@@ -16,12 +16,13 @@
     "  never argues with a reader, and it never promises an outcome.",
     "INVARIANT 4: a dated rule names its amanta lunar month in `masa` (chaitra to",
     "  phalguna). That too is a definition. src/lib/occasions.ts turns rule, masa",
-    "  and the ghat's sunrise into civil dates, and tests hold them to Drik Panchang."
+    "  and the ghat's sunrise into civil dates, and tests hold them to Drik Panchang.",
+    "INVARIANT 5: `rule.masa` is the AMANTA month, the one the resolver names by the sankranti it holds. A dark-fortnight tithi that the north calls Kartika Krishna is therefore filed under `ashwina`; the human-facing `rule.label` keeps the purnimanta name the reader knows."
   ],
   "horizon": {
-    "asOf": "2026-08-10",
-    "from": "2026-08",
-    "to": "2027-07"
+    "asOf": "2026-09-16",
+    "from": "2026-09",
+    "to": "2027-09"
   },
   "provider": {
     "id": "computed-checked-drik-panchang-2026-09",
@@ -1478,6 +1479,1844 @@
       "textualBasis": {
         "en": "The Ganga avatarana narrative and the Dashahara yoga conditions are described in the Puranic literature and in the nibandha treatment of Jyeshtha. A citable edition and passage is still to be added.",
         "hi": "गंगावतरण की कथा और दशहरा योग की शर्तों का वर्णन पुराण-साहित्य और ज्येष्ठ मास के निबंध-विवेचन में है। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "sharad-purnima-2026",
+      "occasionId": "sharad-purnima",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Sharad Purnima",
+        "hi": "शरद पूर्णिमा"
+      },
+      "line": {
+        "en": "Kojagara, the night the moon is held to be full of nectar.",
+        "hi": "कोजागरी, वह रात जब चंद्रमा अमृत से भरा माना जाता है।"
+      },
+      "about": {
+        "en": "Sharad Purnima is the full moon of Ashwina, the first clear full moon after the rains. It is kept at night: kheer is set out under the moon, Lakshmi is held to walk the earth asking who is awake, which is what Kojagara means, and in Braj it is the night of the raas. The morning after is a bathing morning, and it opens the run of Kartika, whose first day is the next day. The tithi is fixed by midnight, since the observance is the night's; the snan follows at the next sunrise.",
+        "hi": "शरद पूर्णिमा आश्विन की पूर्णिमा है, वर्षा के बाद की पहली साफ़ पूर्णिमा। यह रात का पर्व है: चंद्रमा के नीचे खीर रखी जाती है, माना जाता है कि लक्ष्मी धरती पर घूमकर पूछती हैं कि कौन जाग रहा है, यही कोजागरी का अर्थ है, और ब्रज में यह रास की रात है। उसके बाद की सुबह स्नान की सुबह है, और उससे कार्तिक की दौड़ शुरू होती है, जिसका पहला दिन अगला दिन है। तिथि मध्यरात्रि से तय होती है, क्योंकि पर्व रात का है; स्नान अगले सूर्योदय पर।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 15,
+        "paksha": "shukla",
+        "masa": "ashwina",
+        "dayResolution": "nishita",
+        "label": {
+          "en": "Ashwina Shukla Purnima, at midnight",
+          "hi": "आश्विन शुक्ल पूर्णिमा, मध्यरात्रि पर"
+        },
+        "resolutionNote": {
+          "en": "The night on which the tithi is running at midnight, because this is a night observance; the morning snan is the morning after that night.",
+          "hi": "वह रात जिसके मध्य में यह तिथि चल रही हो, क्योंकि यह रात्रि का पर्व है; सुबह का स्नान उस रात के बाद की सुबह है।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2026-10"
+        ],
+        "label": {
+          "en": "October 2026",
+          "hi": "अक्टूबर 2026"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah",
+        "godhuli"
+      ],
+      "ghats": [
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "Vishram Ghat and the whole of Braj keep the raas purnima; the Yamuna is the river of that night.",
+            "hi": "विश्राम घाट और पूरा ब्रज रास पूर्णिमा रखते हैं; यमुना उस रात की नदी है।"
+          }
+        },
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri keeps the day the way it keeps every great tithi: the steps full before first light.",
+            "hi": "हर की पौड़ी इस दिन को वैसे ही रखती है जैसे हर बड़ी तिथि को: पहली रोशनी से पहले सीढ़ियाँ भरी हुई।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters; the Yamuna first, for Braj.",
+        "hi": "छह में से तीन जल; ब्रज के कारण यमुना पहले।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "naraka-chaturdashi-2026",
+      "occasionId": "naraka-chaturdashi",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Naraka Chaturdashi",
+        "hi": "नरक चतुर्दशी"
+      },
+      "line": {
+        "en": "Choti Diwali, and the abhyanga snan before sunrise.",
+        "hi": "छोटी दीपावली, और सूर्योदय से पहले अभ्यंग स्नान।"
+      },
+      "about": {
+        "en": "Naraka Chaturdashi is the fourteenth of the dark fortnight of Kartika, the tithi before Diwali's new moon. It is the one day of the year on which the bath itself is the rite: the abhyanga snan, oil and then water, before sunrise, while the moon is still up. The tradition holds that bathing at that hour on this day is a bath in the Ganga wherever the water comes from. It is kept on the day the tithi runs at moonrise before dawn, which is usually the morning after the tithi begins, and in 2026 is the same civil date as the Lakshmi puja that evening.",
+        "hi": "नरक चतुर्दशी कार्तिक कृष्ण पक्ष की चतुर्दशी है, दीपावली की अमावस्या से पहले की तिथि। यह वर्ष का वह एक दिन है जब स्नान ही अनुष्ठान है: अभ्यंग स्नान, तेल और फिर जल, सूर्योदय से पहले, जब चंद्रमा अभी आकाश में हो। परंपरा मानती है कि इस दिन इस घड़ी का स्नान गंगा-स्नान है, जल कहीं का भी हो। यह उस दिन रखी जाती है जब तिथि भोर से पहले चंद्रोदय पर चल रही हो, जो प्रायः तिथि आरंभ होने के बाद की सुबह होती है, और 2026 में उसी शाम की लक्ष्मी पूजा की अंग्रेज़ी तारीख़ है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 14,
+        "paksha": "krishna",
+        "masa": "ashwina",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Kartika Krishna Chaturdashi, before sunrise",
+          "hi": "कार्तिक कृष्ण चतुर्दशी, सूर्योदय से पहले"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2026-11"
+        ],
+        "label": {
+          "en": "November 2026",
+          "hi": "नवंबर 2026"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "The abhyanga snan is a home rite, and Har Ki Pauri fills with people who would rather do it in the river.",
+            "hi": "अभ्यंग स्नान घर का अनुष्ठान है, और हर की पौड़ी उन लोगों से भरती है जो इसे नदी में करना चाहते हैं।"
+          }
+        },
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "Yama's own day, on Yama's own sister's river.",
+            "hi": "यम का अपना दिन, यम की बहन की नदी पर।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Two of the six waters; the rite is kept at home everywhere.",
+        "hi": "छह में से दो जल; अनुष्ठान हर जगह घर पर रखा जाता है।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "somvati-amavasya-2026",
+      "occasionId": "somvati-amavasya",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Somvati Amavasya",
+        "hi": "सोमवती अमावस्या"
+      },
+      "line": {
+        "en": "The Diwali new moon falls on a Monday.",
+        "hi": "दीपावली की अमावस्या सोमवार को।"
+      },
+      "about": {
+        "en": "A new moon that falls on a Monday is Somvati Amavasya, and it is the greatest of the amavasya bathing days at Haridwar: Har Ki Pauri on a Somvati morning is the fullest the ghat gets outside a Kumbh. In November 2026 the Kartika amavasya, the Diwali new moon, runs at sunrise on Monday the 9th. Lakshmi puja is the evening before, on the 8th, when the tithi holds at dusk; the snan is the Monday morning, when it holds at sunrise. Both are the same new moon.",
+        "hi": "सोमवार को पड़ने वाली अमावस्या सोमवती अमावस्या है, और यह हरिद्वार के अमावस्या स्नान-दिनों में सबसे बड़ी है: सोमवती की सुबह हर की पौड़ी कुंभ के बाहर सबसे भरी होती है। नवंबर 2026 में कार्तिक अमावस्या, दीपावली की अमावस्या, सोमवार 9 तारीख़ के सूर्योदय पर चलती है। लक्ष्मी पूजा उससे पहली शाम, 8 को है, जब तिथि संध्या पर होती है; स्नान सोमवार की सुबह, जब वह सूर्योदय पर होती है। दोनों एक ही अमावस्या हैं।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 30,
+        "paksha": "krishna",
+        "masa": "ashwina",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Kartika Amavasya, at sunrise, on a Monday",
+          "hi": "कार्तिक अमावस्या, सूर्योदय पर, सोमवार को"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2026-11"
+        ],
+        "label": {
+          "en": "November 2026",
+          "hi": "नवंबर 2026"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "The day Har Ki Pauri is built for. Come before four in the morning or stand on the bridge.",
+            "hi": "वह दिन जिसके लिए हर की पौड़ी बनी है। सुबह चार से पहले आइए या पुल पर खड़े रहिए।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        },
+        {
+          "id": "shipra-ujjain",
+          "note": {
+            "en": "Somvati at Ram Ghat is Ujjain's own big amavasya.",
+            "hi": "रामघाट पर सोमवती उज्जैन की अपनी बड़ी अमावस्या है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters, Haridwar first by a distance.",
+        "hi": "छह में से तीन जल, हरिद्वार बहुत आगे।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "chhath-2026",
+      "occasionId": "chhath",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Chhath Puja",
+        "hi": "छठ पूजा"
+      },
+      "line": {
+        "en": "Standing in the river at sunset and again at sunrise.",
+        "hi": "सूर्यास्त पर और फिर सूर्योदय पर नदी में खड़े होकर।"
+      },
+      "about": {
+        "en": "Chhath is the sixth of the bright fortnight of Kartika, kept above all in Bihar, Jharkhand, eastern Uttar Pradesh and the Terai, and now wherever those families live. It is the one great festival kept standing in the water: the sandhya arghya to the setting sun on the evening of Shashthi, a night of vigil, and the usha arghya to the rising sun the next morning, on Saptami. The day given here is the Shashthi of the evening arghya; the morning arghya is the dawn after. The four days begin with Nahay Khay two days before.",
+        "hi": "छठ कार्तिक शुक्ल पक्ष की षष्ठी है, सबसे बढ़कर बिहार, झारखंड, पूर्वी उत्तर प्रदेश और तराई में, और अब जहाँ भी वे परिवार रहते हैं। यह अकेला बड़ा पर्व है जो जल में खड़े होकर रखा जाता है: षष्ठी की शाम डूबते सूर्य को संध्या अर्घ्य, रात का जागरण, और अगली सुबह सप्तमी को उगते सूर्य को उषा अर्घ्य। यहाँ दिया दिन शाम के अर्घ्य की षष्ठी है; सुबह का अर्घ्य उसके बाद की भोर है। चार दिन दो दिन पहले नहाय-खाय से शुरू होते हैं।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 6,
+        "paksha": "shukla",
+        "masa": "kartika",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Kartika Shukla Shashthi",
+          "hi": "कार्तिक शुक्ल षष्ठी"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2026-11"
+        ],
+        "label": {
+          "en": "November 2026",
+          "hi": "नवंबर 2026"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "pratah",
+        "godhuli"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri has a Chhath of its own now, kept by the families from the east who have settled along the Ganga.",
+            "hi": "हर की पौड़ी की अब अपनी छठ है, जिसे गंगा के किनारे बसे पूरब के परिवार रखते हैं।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the ghats fill from the afternoon; Prayagraj is the western edge of the Chhath country.",
+            "hi": "संगम पर घाट दोपहर से भरते हैं; प्रयागराज छठ के देश का पश्चिमी किनारा है।"
+          }
+        },
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "The Yamuna at Mathura and at Delhi is where the Chhath of the diaspora within India is kept.",
+            "hi": "मथुरा और दिल्ली की यमुना पर भारत के भीतर की प्रवासी छठ रखी जाती है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters. Chhath belongs to the Ganga's lower reaches, and every one of these is upstream of that.",
+        "hi": "छह में से तीन जल। छठ गंगा के निचले बहाव की है, और ये सब उससे ऊपर हैं।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "dev-deepawali-2026",
+      "occasionId": "dev-deepawali",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Dev Deepawali",
+        "hi": "देव दीपावली"
+      },
+      "line": {
+        "en": "The evening of Kartik Purnima, the ghats lit from the water up.",
+        "hi": "कार्तिक पूर्णिमा की शाम, जल से ऊपर तक जगमगाते घाट।"
+      },
+      "about": {
+        "en": "Dev Deepawali is the Diwali of the gods, kept on the evening of Kartik Purnima, fifteen days after Diwali. The ghats are set with lamps from the water's edge to the top step. Varanasi made it famous, and Haridwar, Prayagraj and Mathura keep it too. The morning of the same day is the Kartik Purnima snan, the close of the Kartika bathing month, so a family can bathe at dawn and light lamps at dusk on one date. The page for the morning is Kartik Purnima; this one is for the evening, and the two share a tithi.",
+        "hi": "देव दीपावली देवताओं की दीपावली है, कार्तिक पूर्णिमा की शाम, दीपावली के पंद्रह दिन बाद। घाट जल के किनारे से ऊपर की सीढ़ी तक दीपों से सजते हैं। वाराणसी ने इसे प्रसिद्ध किया, और हरिद्वार, प्रयागराज और मथुरा भी इसे रखते हैं। उसी दिन की सुबह कार्तिक पूर्णिमा स्नान है, कार्तिक स्नान-मास का समापन, इसलिए एक परिवार एक ही तारीख़ पर भोर में स्नान और संध्या में दीप कर सकता है। सुबह का पृष्ठ कार्तिक पूर्णिमा है; यह शाम का है, और दोनों की तिथि एक है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 15,
+        "paksha": "shukla",
+        "masa": "kartika",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Kartika Shukla Purnima, the evening",
+          "hi": "कार्तिक शुक्ल पूर्णिमा, संध्या"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2026-11"
+        ],
+        "label": {
+          "en": "November 2026",
+          "hi": "नवंबर 2026"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "godhuli"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Every step of Har Ki Pauri under lamps, and the aarti at dusk to a full moon.",
+            "hi": "हर की पौड़ी की हर सीढ़ी दीपों के नीचे, और पूर्ण चंद्र के सामने संध्या आरती।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "The Sangam's lamps float; the current takes them past the fort.",
+            "hi": "संगम के दीप तैरते हैं; धारा उन्हें क़िले के पास से ले जाती है।"
+          }
+        },
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "Vishram Ghat's last lamp evening of Kartika.",
+            "hi": "विश्राम घाट की कार्तिक की आख़िरी दीप-संध्या।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters, at dusk.",
+        "hi": "छह में से तीन जल, संध्या पर।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "vaikuntha-ekadashi-2026",
+      "occasionId": "vaikuntha-ekadashi",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Vaikuntha Ekadashi",
+        "hi": "वैकुंठ एकादशी"
+      },
+      "line": {
+        "en": "Mokshada Ekadashi, the door of Vaikuntha open for a day.",
+        "hi": "मोक्षदा एकादशी, वैकुंठ का द्वार एक दिन के लिए खुला।"
+      },
+      "about": {
+        "en": "Vaikuntha Ekadashi is the eleventh of the bright fortnight of Margashirsha, kept across the south as the day the northern door of Vishnu's temples is opened, and in the north as Mokshada Ekadashi, the ekadashi of release. It is the day the Gita is held to have been spoken, so it is Gita Jayanti too. It is a fasting day before it is a bathing day, but the snan before the fast is kept, and at Haridwar and Prayagraj the morning is a full one. The date follows the tithi at sunrise; the temples of the south fix theirs by the same rule.",
+        "hi": "वैकुंठ एकादशी मार्गशीर्ष शुक्ल पक्ष की एकादशी है, पूरे दक्षिण में वह दिन जब विष्णु मंदिरों का उत्तर द्वार खोला जाता है, और उत्तर में मोक्षदा एकादशी, मोक्ष की एकादशी। माना जाता है कि इसी दिन गीता कही गई, इसलिए यह गीता जयंती भी है। यह स्नान-दिन से पहले उपवास-दिन है, पर उपवास से पहले का स्नान रखा जाता है, और हरिद्वार और प्रयागराज की सुबह भरी होती है। तारीख़ सूर्योदय की तिथि से है; दक्षिण के मंदिर अपनी तारीख़ उसी नियम से तय करते हैं।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 11,
+        "paksha": "shukla",
+        "masa": "margashirsha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Margashirsha Shukla Ekadashi",
+          "hi": "मार्गशीर्ष शुक्ल एकादशी"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2026-12"
+        ],
+        "label": {
+          "en": "December 2026",
+          "hi": "दिसंबर 2026"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri keeps the day the way it keeps every great tithi: the steps full before first light.",
+            "hi": "हर की पौड़ी इस दिन को वैसे ही रखती है जैसे हर बड़ी तिथि को: पहली रोशनी से पहले सीढ़ियाँ भरी हुई।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        },
+        {
+          "id": "kaveri-talakaveri",
+          "note": {
+            "en": "Srirangam is the Vaikuntha Ekadashi of the south, and it stands on the Kaveri; Talakaveri is the source of that water.",
+            "hi": "श्रीरंगम दक्षिण की वैकुंठ एकादशी है, और वह कावेरी पर खड़ा है; तलकावेरी उसी जल का उद्गम है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters; the Kaveri for the south.",
+        "hi": "छह में से तीन जल; दक्षिण के लिए कावेरी।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "paush-purnima-2027",
+      "occasionId": "paush-purnima",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Paush Purnima",
+        "hi": "पौष पूर्णिमा"
+      },
+      "line": {
+        "en": "The first snan of the Magh Mela.",
+        "hi": "माघ मेले का पहला स्नान।"
+      },
+      "about": {
+        "en": "Paush Purnima is the full moon that closes Pausha and opens Magha. At Prayagraj it is the first of the great bathing days of the Magh Mela and the day the kalpavasis, who stay on the sands for the whole month, begin their vow. From this morning to Magha Purnima the month of Magh Snan runs. It is a bathing day at every Ganga ghat; the Sangam is where it is the beginning of something.",
+        "hi": "पौष पूर्णिमा वह पूर्णिमा है जो पौष पूरा करती है और माघ खोलती है। प्रयागराज में यह माघ मेले के बड़े स्नान-दिनों में पहला है और वह दिन जब कल्पवासी, जो पूरे महीने रेत पर रहते हैं, अपना व्रत शुरू करते हैं। इस सुबह से माघ पूर्णिमा तक माघ स्नान का महीना चलता है। यह हर गंगा घाट पर स्नान का दिन है; संगम वह जगह है जहाँ यह किसी चीज़ की शुरुआत है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 15,
+        "paksha": "shukla",
+        "masa": "pausha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Pausha Shukla Purnima",
+          "hi": "पौष शुक्ल पूर्णिमा"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-01"
+        ],
+        "label": {
+          "en": "January 2027",
+          "hi": "जनवरी 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "The Magh Mela's first snan and the start of kalpavas.",
+            "hi": "माघ मेले का पहला स्नान और कल्पवास का आरंभ।"
+          }
+        },
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri keeps the day the way it keeps every great tithi: the steps full before first light.",
+            "hi": "हर की पौड़ी इस दिन को वैसे ही रखती है जैसे हर बड़ी तिथि को: पहली रोशनी से पहले सीढ़ियाँ भरी हुई।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Two of the six waters, the Sangam first.",
+        "hi": "छह में से दो जल, संगम पहले।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "mauni-amavasya-2027",
+      "occasionId": "mauni-amavasya",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Mauni Amavasya",
+        "hi": "मौनी अमावस्या"
+      },
+      "line": {
+        "en": "The silent new moon, the largest snan of Magha.",
+        "hi": "मौन की अमावस्या, माघ का सबसे बड़ा स्नान।"
+      },
+      "about": {
+        "en": "Mauni Amavasya is the new moon of Magha, kept in silence, mauna, from waking until the snan is done. At Prayagraj it is the greatest single bathing day of the Magh Mela and of the Kumbh when there is one: in a Kumbh year it is the day the akharas process to the water. In an ordinary year it is still the fullest morning on the Sangam sands. The date is the day the amavasya tithi runs at sunrise; in 2027 that is a Saturday.",
+        "hi": "मौनी अमावस्या माघ की अमावस्या है, जागने से स्नान पूरा होने तक मौन में रखी जाती है। प्रयागराज में यह माघ मेले का, और जब कुंभ हो तो कुंभ का, सबसे बड़ा एक स्नान-दिन है: कुंभ के वर्ष में यही दिन है जब अखाड़े जल तक जाते हैं। साधारण वर्ष में भी यह संगम की रेत की सबसे भरी सुबह है। तारीख़ वह दिन है जब अमावस्या तिथि सूर्योदय पर चलती है; 2027 में वह शनिवार है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 30,
+        "paksha": "krishna",
+        "masa": "pausha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Magha Amavasya, at sunrise",
+          "hi": "माघ अमावस्या, सूर्योदय पर"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-02"
+        ],
+        "label": {
+          "en": "February 2027",
+          "hi": "फ़रवरी 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "The day the Sangam is for.",
+            "hi": "वह दिन जिसके लिए संगम है।"
+          }
+        },
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri keeps the day the way it keeps every great tithi: the steps full before first light.",
+            "hi": "हर की पौड़ी इस दिन को वैसे ही रखती है जैसे हर बड़ी तिथि को: पहली रोशनी से पहले सीढ़ियाँ भरी हुई।"
+          }
+        },
+        {
+          "id": "shipra-ujjain",
+          "note": {
+            "en": "Ram Ghat keeps every amavasya; Mauni is the fuller one.",
+            "hi": "रामघाट हर अमावस्या रखता है; मौनी भरी हुई है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters, the Sangam first.",
+        "hi": "छह में से तीन जल, संगम पहले।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "basant-panchami-2027",
+      "occasionId": "basant-panchami",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Basant Panchami",
+        "hi": "बसंत पंचमी"
+      },
+      "line": {
+        "en": "Saraswati's day, and a Magh Mela snan in yellow.",
+        "hi": "सरस्वती का दिन, और पीले में माघ मेले का स्नान।"
+      },
+      "about": {
+        "en": "Basant Panchami is the fifth of the bright fortnight of Magha, the first day of spring by the old reckoning and the day of Saraswati. Yellow is worn, children are taught their first letters, and at Prayagraj it is the third of the Magh Mela's great snans, the last before Magha Purnima. The date follows the tithi at sunrise; when the panchami begins after sunrise and runs into the next day, the almanacs move it to the day it holds at sunrise, and so does this page.",
+        "hi": "बसंत पंचमी माघ शुक्ल पक्ष की पंचमी है, पुराने हिसाब से वसंत का पहला दिन और सरस्वती का दिन। पीला पहना जाता है, बच्चों को पहले अक्षर सिखाए जाते हैं, और प्रयागराज में यह माघ मेले के बड़े स्नानों में तीसरा है, माघ पूर्णिमा से पहले का आख़िरी। तारीख़ सूर्योदय की तिथि से है; जब पंचमी सूर्योदय के बाद शुरू होकर अगले दिन तक चले तो पंचांग इसे उस दिन ले जाते हैं जब वह सूर्योदय पर हो, और यह पृष्ठ भी।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 5,
+        "paksha": "shukla",
+        "masa": "magha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Magha Shukla Panchami",
+          "hi": "माघ शुक्ल पंचमी"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-02"
+        ],
+        "label": {
+          "en": "February 2027",
+          "hi": "फ़रवरी 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "The Magh Mela's third snan.",
+            "hi": "माघ मेले का तीसरा स्नान।"
+          }
+        },
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri keeps the day the way it keeps every great tithi: the steps full before first light.",
+            "hi": "हर की पौड़ी इस दिन को वैसे ही रखती है जैसे हर बड़ी तिथि को: पहली रोशनी से पहले सीढ़ियाँ भरी हुई।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Two of the six waters.",
+        "hi": "छह में से दो जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "magha-purnima-2027",
+      "occasionId": "magha-purnima",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Magha Purnima",
+        "hi": "माघ पूर्णिमा"
+      },
+      "line": {
+        "en": "Maghi Purnima, the close of the month of Magh Snan.",
+        "hi": "माघी पूर्णिमा, माघ स्नान के महीने का समापन।"
+      },
+      "about": {
+        "en": "Magha Purnima closes Magha and with it the month of Magh Snan and the kalpavas at Prayagraj. It is the last of the great bathing days of the Magh Mela before Mahashivratri, and the day the kalpavasis end their vow and go home. Across the north it is a bathing morning in its own right. The date is the day the purnima tithi runs at sunrise.",
+        "hi": "माघ पूर्णिमा माघ पूरा करती है और उसके साथ माघ स्नान का महीना और प्रयागराज का कल्पवास। यह महाशिवरात्रि से पहले माघ मेले के बड़े स्नान-दिनों में आख़िरी है, और वह दिन जब कल्पवासी अपना व्रत पूरा कर घर लौटते हैं। पूरे उत्तर में यह अपने आप में स्नान की सुबह है। तारीख़ वह दिन है जब पूर्णिमा तिथि सूर्योदय पर चलती है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 15,
+        "paksha": "shukla",
+        "masa": "magha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Magha Shukla Purnima",
+          "hi": "माघ शुक्ल पूर्णिमा"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-02"
+        ],
+        "label": {
+          "en": "February 2027",
+          "hi": "फ़रवरी 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "The kalpavas ends; the sands empty over the following days.",
+            "hi": "कल्पवास पूरा होता है; अगले दिनों में रेत खाली होती है।"
+          }
+        },
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri keeps the day the way it keeps every great tithi: the steps full before first light.",
+            "hi": "हर की पौड़ी इस दिन को वैसे ही रखती है जैसे हर बड़ी तिथि को: पहली रोशनी से पहले सीढ़ियाँ भरी हुई।"
+          }
+        },
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "Vishram Ghat keeps the full moon.",
+            "hi": "विश्राम घाट पूर्णिमा रखता है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters.",
+        "hi": "छह में से तीन जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "magh-mela-2027",
+      "occasionId": "magh-mela",
+      "tier": "mahaparva",
+      "cadence": "season",
+      "name": {
+        "en": "Magh Mela",
+        "hi": "माघ मेला"
+      },
+      "line": {
+        "en": "A month on the sands at the Sangam, with six great snans.",
+        "hi": "संगम की रेत पर एक महीना, छह बड़े स्नानों के साथ।"
+      },
+      "about": {
+        "en": "The Magh Mela is the annual month-long gathering on the sands of the Sangam at Prayagraj, the ordinary-year form of the Kumbh. It runs from Makar Sankranti to Mahashivratri, and its spine is six bathing days: Makar Sankranti, Paush Purnima, Mauni Amavasya, Basant Panchami, Magha Purnima and Mahashivratri. Kalpavasis live on the sands for the whole of Magha, from Paush Purnima to Magha Purnima. Each of the six days has its own page here with its computed date; this page holds the span.",
+        "hi": "माघ मेला प्रयागराज के संगम की रेत पर हर वर्ष का महीने भर का समागम है, साधारण वर्ष का कुंभ। यह मकर संक्रांति से महाशिवरात्रि तक चलता है, और इसकी रीढ़ छह स्नान-दिन हैं: मकर संक्रांति, पौष पूर्णिमा, मौनी अमावस्या, बसंत पंचमी, माघ पूर्णिमा और महाशिवरात्रि। कल्पवासी पूरे माघ, पौष पूर्णिमा से माघ पूर्णिमा तक, रेत पर रहते हैं। छह में से हर दिन का यहाँ अपना पृष्ठ है, अपनी गणित तारीख़ के साथ; यह पृष्ठ पूरे काल का है।"
+      },
+      "rule": {
+        "kind": "manual",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "From Makar Sankranti to Mahashivratri",
+          "hi": "मकर संक्रांति से महाशिवरात्रि तक"
+        },
+        "resolutionNote": {
+          "en": "The span is fixed by its first and last snan, each computed on its own page: the sun's entry into Makara and the Magha Krishna Chaturdashi.",
+          "hi": "काल अपने पहले और आख़िरी स्नान से तय है, दोनों अपने-अपने पृष्ठ पर गणित: सूर्य का मकर प्रवेश और माघ कृष्ण चतुर्दशी।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-01",
+          "2027-02",
+          "2027-03"
+        ],
+        "label": {
+          "en": "15 January to 6 March 2027",
+          "hi": "15 जनवरी से 6 मार्च 2027"
+        },
+        "note": {
+          "en": "The six snan days are each computed on their own page; the span runs from the first to the last of them.",
+          "hi": "छह स्नान-दिन अपने-अपने पृष्ठ पर गणित हैं; काल उनमें से पहले से आख़िरी तक चलता है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "The mela is the Sangam; the other waters keep the six days on their own steps.",
+            "hi": "मेला संगम ही है; बाक़ी जल छह दिनों को अपनी सीढ़ियों पर रखते हैं।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "One water.",
+        "hi": "एक जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "somvati-amavasya-march-2027",
+      "occasionId": "somvati-amavasya",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Somvati Amavasya",
+        "hi": "सोमवती अमावस्या"
+      },
+      "line": {
+        "en": "The Phalguna new moon on a Monday, two days after Mahashivratri.",
+        "hi": "फाल्गुन की अमावस्या सोमवार को, महाशिवरात्रि के दो दिन बाद।"
+      },
+      "about": {
+        "en": "A new moon on a Monday is Somvati Amavasya, the amavasya of Haridwar above all others. In March 2027 the Phalguna new moon runs at sunrise on Monday the 8th, two days after Mahashivratri, so the week is a bathing week at Har Ki Pauri and at the Sangam, where it falls just after the Magh Mela has closed. Somvati is kept for ancestors and for husbands; the snan is at dawn and the pipal is circled after.",
+        "hi": "सोमवार की अमावस्या सोमवती अमावस्या है, हरिद्वार की सबसे बड़ी अमावस्या। मार्च 2027 में फाल्गुन की अमावस्या सोमवार 8 तारीख़ के सूर्योदय पर चलती है, महाशिवरात्रि के दो दिन बाद, इसलिए वह सप्ताह हर की पौड़ी पर और संगम पर, जहाँ यह माघ मेले के समापन के ठीक बाद पड़ती है, स्नान का सप्ताह है। सोमवती पितरों और पति के लिए रखी जाती है; स्नान भोर में और उसके बाद पीपल की परिक्रमा।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 30,
+        "paksha": "krishna",
+        "masa": "magha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Phalguna Amavasya, at sunrise, on a Monday",
+          "hi": "फाल्गुन अमावस्या, सूर्योदय पर, सोमवार को"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-03"
+        ],
+        "label": {
+          "en": "March 2027",
+          "hi": "मार्च 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri's own day.",
+            "hi": "हर की पौड़ी का अपना दिन।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Two of the six waters.",
+        "hi": "छह में से दो जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "vaisakhi-2027",
+      "occasionId": "mesha-sankranti",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Vaisakhi",
+        "hi": "वैसाखी"
+      },
+      "line": {
+        "en": "Mesha Sankranti, the solar new year, and the Ganga at Haridwar.",
+        "hi": "मेष संक्रांति, सौर नववर्ष, और हरिद्वार की गंगा।"
+      },
+      "about": {
+        "en": "Vaisakhi is the sun's entry into Mesha, the first sign, and the solar new year across the north: Baisakhi in Punjab, Pohela Boishakh in Bengal, Vishu in Kerala, Puthandu in Tamil Nadu, all on this crossing. At Haridwar it is one of the largest bathing days of the year, the Baisakhi snan, when Punjab comes to Har Ki Pauri. The day is the day of the crossing; the moment is computed and printed, and the snan follows it.",
+        "hi": "वैसाखी सूर्य का मेष, पहली राशि, में प्रवेश है, और पूरे उत्तर का सौर नववर्ष: पंजाब में बैसाखी, बंगाल में पोहेला बोइशाख, केरल में विशु, तमिलनाडु में पुत्तांडु, सब इसी संक्रमण पर। हरिद्वार में यह वर्ष के सबसे बड़े स्नान-दिनों में एक है, बैसाखी स्नान, जब पंजाब हर की पौड़ी आता है। दिन संक्रमण का दिन है; क्षण गणित होकर छपा है, और स्नान उसके बाद।"
+      },
+      "rule": {
+        "kind": "solar-ingress",
+        "dayResolution": "instant",
+        "label": {
+          "en": "Sidereal ingress of the sun into Mesha",
+          "hi": "सूर्य का मेष राशि में निरयण प्रवेश"
+        },
+        "resolutionNote": {
+          "en": "The instant the sun's sidereal longitude crosses the sign boundary under the Lahiri ayanamsa, computed at the ghat.",
+          "hi": "वह क्षण जब लाहिड़ी अयनांश के अनुसार सूर्य का निरयण भोगांश राशि की सीमा पार करे, घाट पर गणित।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-04"
+        ],
+        "label": {
+          "en": "April 2027",
+          "hi": "अप्रैल 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "The Baisakhi snan. Har Ki Pauri and the whole of Haridwar, full.",
+            "hi": "बैसाखी स्नान। हर की पौड़ी और पूरा हरिद्वार, भरा हुआ।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Two of the six waters, Haridwar first.",
+        "hi": "छह में से दो जल, हरिद्वार पहले।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "akshaya-tritiya-2027",
+      "occasionId": "akshaya-tritiya",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Akshaya Tritiya",
+        "hi": "अक्षय तृतीया"
+      },
+      "line": {
+        "en": "The day that does not diminish; Gangotri opens.",
+        "hi": "जो दिन घटता नहीं; गंगोत्री खुलती है।"
+      },
+      "about": {
+        "en": "Akshaya Tritiya is the third of the bright fortnight of Vaishakha, held to be a day on which what is begun does not diminish. It is the day the doors of Gangotri and Yamunotri open for the season, so it is the beginning of the Ganga's own year in the mountains, and a bathing day at Haridwar below them. The Treta yuga is held to have begun on it. The date is the day the tithi runs at sunrise.",
+        "hi": "अक्षय तृतीया वैशाख शुक्ल पक्ष की तृतीया है, माना जाता है कि इस दिन जो शुरू हो वह घटता नहीं। इसी दिन गंगोत्री और यमुनोत्री के कपाट ऋतु के लिए खुलते हैं, इसलिए यह पहाड़ों में गंगा के अपने वर्ष का आरंभ है, और उनके नीचे हरिद्वार में स्नान का दिन। माना जाता है कि त्रेता युग इसी दिन शुरू हुआ। तारीख़ वह दिन है जब तिथि सूर्योदय पर चलती है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 3,
+        "paksha": "shukla",
+        "masa": "vaishakha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Vaishakha Shukla Tritiya",
+          "hi": "वैशाख शुक्ल तृतीया"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-05"
+        ],
+        "label": {
+          "en": "May 2027",
+          "hi": "मई 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "The day the Ganga's source opens, kept at the gateway.",
+            "hi": "वह दिन जब गंगा का उद्गम खुलता है, द्वार पर रखा हुआ।"
+          }
+        },
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "Yamunotri opens the same day; Vishram Ghat keeps it.",
+            "hi": "यमुनोत्री उसी दिन खुलती है; विश्राम घाट इसे रखता है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Two of the six waters.",
+        "hi": "छह में से दो जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "ganga-saptami-2027",
+      "occasionId": "ganga-saptami",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Ganga Saptami",
+        "hi": "गंगा सप्तमी"
+      },
+      "line": {
+        "en": "Ganga Jayanti, the river's birthday.",
+        "hi": "गंगा जयंती, नदी का जन्मदिन।"
+      },
+      "about": {
+        "en": "Ganga Saptami is the seventh of the bright fortnight of Vaishakha, kept as the day the Ganga came into being, which is why it is also Ganga Jayanti. Ganga Dussehra, a month later, is the day she came down to earth; this is the earlier of the two. It is a bathing day at every Ganga ghat and a day of aarti at Har Ki Pauri. The rite is kept at midday, the madhyahna, but the snan is the morning's, and the date is the day the tithi runs at sunrise.",
+        "hi": "गंगा सप्तमी वैशाख शुक्ल पक्ष की सप्तमी है, वह दिन जब गंगा का जन्म हुआ, इसीलिए यह गंगा जयंती भी है। एक महीने बाद की गंगा दशहरा वह दिन है जब वे धरती पर उतरीं; यह दोनों में पहला है। यह हर गंगा घाट पर स्नान का दिन है और हर की पौड़ी पर आरती का दिन। अनुष्ठान मध्याह्न में रखा जाता है, पर स्नान सुबह का है, और तारीख़ वह दिन है जब तिथि सूर्योदय पर चलती है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 7,
+        "paksha": "shukla",
+        "masa": "vaishakha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Vaishakha Shukla Saptami",
+          "hi": "वैशाख शुक्ल सप्तमी"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-05"
+        ],
+        "label": {
+          "en": "May 2027",
+          "hi": "मई 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "The Ganga's own birthday at her own gateway.",
+            "hi": "गंगा का अपना जन्मदिन उनके अपने द्वार पर।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Two of the six waters, both the Ganga's.",
+        "hi": "छह में से दो जल, दोनों गंगा के।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "buddha-purnima-2027",
+      "occasionId": "vaishakha-purnima",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Vaishakha Purnima",
+        "hi": "वैशाख पूर्णिमा"
+      },
+      "line": {
+        "en": "Buddha Purnima, and the Vaishakha snan.",
+        "hi": "बुद्ध पूर्णिमा, और वैशाख स्नान।"
+      },
+      "about": {
+        "en": "Vaishakha Purnima is the full moon that closes Vaishakha, kept across Asia as Buddha Purnima, the birth, enlightenment and passing of the Buddha on one date. In the Ganga country it is also the last day of the Vaishakha snan, the month of dawn bathing that stands beside Kartika and Magha, and a full-moon bathing day in its own right. The date is the day the purnima tithi runs at sunrise.",
+        "hi": "वैशाख पूर्णिमा वह पूर्णिमा है जो वैशाख पूरा करती है, पूरे एशिया में बुद्ध पूर्णिमा, बुद्ध के जन्म, बोध और निर्वाण की एक तारीख़। गंगा के देश में यह वैशाख स्नान का आख़िरी दिन भी है, भोर के स्नान का वह महीना जो कार्तिक और माघ के बराबर खड़ा है, और अपने आप में पूर्णिमा स्नान का दिन। तारीख़ वह दिन है जब पूर्णिमा तिथि सूर्योदय पर चलती है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 15,
+        "paksha": "shukla",
+        "masa": "vaishakha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Vaishakha Shukla Purnima",
+          "hi": "वैशाख शुक्ल पूर्णिमा"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-05"
+        ],
+        "label": {
+          "en": "May 2027",
+          "hi": "मई 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Har Ki Pauri keeps the day the way it keeps every great tithi: the steps full before first light.",
+            "hi": "हर की पौड़ी इस दिन को वैसे ही रखती है जैसे हर बड़ी तिथि को: पहली रोशनी से पहले सीढ़ियाँ भरी हुई।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        },
+        {
+          "id": "godavari-nashik",
+          "note": {
+            "en": "Ram Kund keeps the full moon.",
+            "hi": "रामकुंड पूर्णिमा रखता है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters.",
+        "hi": "छह में से तीन जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "guru-purnima-2027",
+      "occasionId": "guru-purnima",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Guru Purnima",
+        "hi": "गुरु पूर्णिमा"
+      },
+      "line": {
+        "en": "Vyasa Purnima, the teacher's full moon, and the first of the rains.",
+        "hi": "व्यास पूर्णिमा, गुरु की पूर्णिमा, और वर्षा की पहली।"
+      },
+      "about": {
+        "en": "Guru Purnima is the full moon of Ashadha, the day of Vyasa, who arranged the Vedas, and of every teacher after him. It is the first full moon of the monsoon and the day the Kanwar month begins the morning after: from here the pilgrims start walking to Haridwar for the Ganga water they will carry home. It is a bathing morning at every ghat, and at Haridwar the beginning of the fullest weeks of the year. The date is the day the tithi runs at sunrise.",
+        "hi": "गुरु पूर्णिमा आषाढ़ की पूर्णिमा है, वेदों को व्यवस्थित करने वाले व्यास का दिन, और उनके बाद के हर गुरु का। यह वर्षा की पहली पूर्णिमा है और वह दिन जिसके अगली सुबह काँवड़ का महीना शुरू होता है: यहीं से यात्री हरिद्वार की ओर उस गंगाजल के लिए चलते हैं जो वे घर ले जाएँगे। यह हर घाट पर स्नान की सुबह है, और हरिद्वार में वर्ष के सबसे भरे सप्ताहों का आरंभ। तारीख़ वह दिन है जब तिथि सूर्योदय पर चलती है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 15,
+        "paksha": "shukla",
+        "masa": "ashadha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Ashadha Shukla Purnima",
+          "hi": "आषाढ़ शुक्ल पूर्णिमा"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-07"
+        ],
+        "label": {
+          "en": "July 2027",
+          "hi": "जुलाई 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "The eve of the Kanwar Yatra.",
+            "hi": "काँवड़ यात्रा की पूर्व-संध्या।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        },
+        {
+          "id": "godavari-nashik",
+          "note": {
+            "en": "Trimbak, at the Godavari's source, is a Guru Purnima place.",
+            "hi": "गोदावरी के उद्गम त्र्यंबक की गुरु पूर्णिमा अपनी है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters.",
+        "hi": "छह में से तीन जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "kanwar-yatra-2027",
+      "occasionId": "kanwar-yatra",
+      "tier": "mahaparva",
+      "cadence": "season",
+      "name": {
+        "en": "Kanwar Yatra",
+        "hi": "काँवड़ यात्रा"
+      },
+      "line": {
+        "en": "The dark fortnight of Shravana: the walk to Haridwar for Ganga water.",
+        "hi": "श्रावण का कृष्ण पक्ष: गंगाजल के लिए हरिद्वार तक पैदल।"
+      },
+      "about": {
+        "en": "The Kanwar Yatra is the walk to Haridwar in the first fortnight of Shravana, by the purnimanta reckoning the dark fortnight after Guru Purnima. Pilgrims fill a kanwar with Ganga water at Har Ki Pauri and carry it home on foot, to pour on a Shiva linga on Shravana Shivratri, the fourteenth of the fortnight, or on the amavasya that closes it. Millions walk; the roads out of Haridwar are given over to them. The span here is the fortnight, computed by the tithi at sunrise; the pouring day is its last two days.",
+        "hi": "काँवड़ यात्रा श्रावण के पहले पक्ष में हरिद्वार तक की पैदल यात्रा है, पूर्णिमांत गणना से गुरु पूर्णिमा के बाद का कृष्ण पक्ष। यात्री हर की पौड़ी पर काँवड़ में गंगाजल भरते हैं और पैदल घर ले जाते हैं, श्रावण शिवरात्रि, पक्ष की चतुर्दशी, या उसे पूरा करने वाली अमावस्या को शिवलिंग पर चढ़ाने के लिए। लाखों चलते हैं; हरिद्वार से निकलने वाली सड़कें उन्हीं की हो जाती हैं। यहाँ का काल पूरा पक्ष है, सूर्योदय की तिथि से गणित; जल चढ़ाने का दिन उसके आख़िरी दो दिन हैं।"
+      },
+      "rule": {
+        "kind": "tithi-range",
+        "masa": "ashadha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Shravana Krishna Paksha, the dark fortnight",
+          "hi": "श्रावण कृष्ण पक्ष"
+        },
+        "resolutionNote": {
+          "en": "The dark fortnight of the purnimanta month: from the day after the full moon to the new moon that ends it.",
+          "hi": "पूर्णिमांत मास का कृष्ण पक्ष: पूर्णिमा के अगले दिन से उस अमावस्या तक जो उसे पूरा करती है।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-07",
+          "2027-08"
+        ],
+        "label": {
+          "en": "July to August 2027",
+          "hi": "जुलाई से अगस्त 2027"
+        },
+        "note": {
+          "en": "The fortnight is computed from the tithi at sunrise; Shravana Shivratri is its fourteenth day.",
+          "hi": "पक्ष सूर्योदय की तिथि से गणित है; श्रावण शिवरात्रि उसका चौदहवाँ दिन है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Where the water is taken from. Har Ki Pauri in Shravana is the Kanwar.",
+            "hi": "जहाँ से जल लिया जाता है। श्रावण की हर की पौड़ी ही काँवड़ है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "One water. The Kanwar is the Ganga at Haridwar.",
+        "hi": "एक जल। काँवड़ हरिद्वार की गंगा है।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "sawan-2027",
+      "occasionId": "shravana-month",
+      "tier": "parva",
+      "cadence": "season",
+      "name": {
+        "en": "Sawan",
+        "hi": "सावन"
+      },
+      "line": {
+        "en": "Shravana, the month of Shiva and of the Mondays.",
+        "hi": "श्रावण, शिव का और सोमवारों का महीना।"
+      },
+      "about": {
+        "en": "Sawan is Shravana, the month of the rains and of Shiva. Its Mondays, the Sawan Somwar, are fasting days, and the rivers run full. By the purnimanta reckoning of the north it opens the day after Guru Purnima and closes on Shravana Purnima, Raksha Bandhan; the Kanwar Yatra is its first fortnight, and Hariyali Amavasya its middle. This page holds the whole month; the Mondays fall where the calendar puts them and are listed on the month's own pages of the almanac.",
+        "hi": "सावन श्रावण है, वर्षा का और शिव का महीना। इसके सोमवार, सावन सोमवार, व्रत के दिन हैं, और नदियाँ भरी बहती हैं। उत्तर की पूर्णिमांत गणना से यह गुरु पूर्णिमा के अगले दिन खुलता है और श्रावण पूर्णिमा, रक्षाबंधन, पर पूरा होता है; काँवड़ यात्रा इसका पहला पक्ष है, और हरियाली अमावस्या इसका मध्य। यह पृष्ठ पूरे महीने का है; सोमवार जहाँ पंचांग रखे वहाँ पड़ते हैं।"
+      },
+      "rule": {
+        "kind": "lunar-month",
+        "masa": "shravana",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "The purnimanta month of Shravana",
+          "hi": "पूर्णिमांत श्रावण मास"
+        },
+        "resolutionNote": {
+          "en": "The purnimanta month, from the day after the previous full moon to this month's full moon, by the tithi at sunrise.",
+          "hi": "पूर्णिमांत मास, पिछली पूर्णिमा के अगले दिन से इस मास की पूर्णिमा तक, सूर्योदय की तिथि से।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-07",
+          "2027-08"
+        ],
+        "label": {
+          "en": "July to August 2027",
+          "hi": "जुलाई से अगस्त 2027"
+        },
+        "note": {
+          "en": "The month is computed from its two full moons by the tithi at sunrise.",
+          "hi": "महीना अपनी दो पूर्णिमाओं से, सूर्योदय की तिथि से, गणित है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Haridwar's month.",
+            "hi": "हरिद्वार का महीना।"
+          }
+        },
+        {
+          "id": "shipra-ujjain",
+          "note": {
+            "en": "Mahakal's month; Ujjain's Sawan Mondays have their own processions.",
+            "hi": "महाकाल का महीना; उज्जैन के सावन सोमवारों की अपनी सवारियाँ हैं।"
+          }
+        },
+        {
+          "id": "godavari-nashik",
+          "note": {
+            "en": "Trimbakeshwar in Sawan.",
+            "hi": "सावन में त्र्यंबकेश्वर।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters, each with a Shiva of its own.",
+        "hi": "छह में से तीन जल, हर एक के पास अपना शिव।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "hariyali-amavasya-2027",
+      "occasionId": "hariyali-amavasya",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Hariyali Amavasya",
+        "hi": "हरियाली अमावस्या"
+      },
+      "line": {
+        "en": "The green new moon of Sawan, on a Monday in 2027.",
+        "hi": "सावन की हरी अमावस्या, 2027 में सोमवार को।"
+      },
+      "about": {
+        "en": "Hariyali Amavasya is the new moon of Shravana, the green amavasya, kept when the rains have turned everything green: trees are planted, and at Haridwar, Ujjain and Mathura the fairs of the day are among the year's largest. In 2027 the tithi runs at sunrise on Monday 2 August, so it is a Somvati Amavasya as well, and Har Ki Pauri will have the two together. The date is the day the amavasya runs at sunrise.",
+        "hi": "हरियाली अमावस्या श्रावण की अमावस्या है, हरी अमावस्या, जब वर्षा ने सब कुछ हरा कर दिया हो: पेड़ लगाए जाते हैं, और हरिद्वार, उज्जैन और मथुरा में इस दिन के मेले वर्ष के सबसे बड़े मेलों में हैं। 2027 में तिथि सोमवार 2 अगस्त के सूर्योदय पर चलती है, इसलिए यह सोमवती अमावस्या भी है, और हर की पौड़ी पर दोनों साथ होंगी। तारीख़ वह दिन है जब अमावस्या सूर्योदय पर चलती है।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 30,
+        "paksha": "krishna",
+        "masa": "ashadha",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Shravana Amavasya, at sunrise",
+          "hi": "श्रावण अमावस्या, सूर्योदय पर"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-08"
+        ],
+        "label": {
+          "en": "August 2027",
+          "hi": "अगस्त 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "Somvati and Hariyali on one morning.",
+            "hi": "सोमवती और हरियाली एक ही सुबह।"
+          }
+        },
+        {
+          "id": "shipra-ujjain",
+          "note": {
+            "en": "Ujjain's Hariyali Amavasya fair at Ram Ghat.",
+            "hi": "रामघाट पर उज्जैन का हरियाली अमावस्या मेला।"
+          }
+        },
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "Braj keeps it with swings in the temples.",
+            "hi": "ब्रज इसे मंदिरों में झूलों के साथ रखता है।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters.",
+        "hi": "छह में से तीन जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "shravana-purnima-2027",
+      "occasionId": "shravana-purnima",
+      "tier": "parva",
+      "cadence": "annual",
+      "name": {
+        "en": "Shravana Purnima",
+        "hi": "श्रावण पूर्णिमा"
+      },
+      "line": {
+        "en": "Raksha Bandhan, and the Shravani snan that renews the sacred thread.",
+        "hi": "रक्षाबंधन, और श्रावणी स्नान जो यज्ञोपवीत बदलता है।"
+      },
+      "about": {
+        "en": "Shravana Purnima closes Sawan. It is Raksha Bandhan, the day of the thread between brother and sister, and before that it is Shravani, the day the sacred thread is renewed after a river snan, with the rishi tarpan for the seven sages. In the south it is Avani Avittam. So it is a bathing morning first, and the thread ceremonies follow. The date is the day the purnima tithi runs at sunrise; when the tithi begins the day before, the rakhi is tied on the day it holds at sunrise.",
+        "hi": "श्रावण पूर्णिमा सावन पूरा करती है। यह रक्षाबंधन है, भाई-बहन के धागे का दिन, और उससे पहले श्रावणी, वह दिन जब नदी-स्नान के बाद यज्ञोपवीत बदला जाता है, सप्तर्षियों के ऋषि तर्पण के साथ। दक्षिण में यह आवणि अविट्टम है। तो यह पहले स्नान की सुबह है, और धागे की रीतियाँ उसके बाद। तारीख़ वह दिन है जब पूर्णिमा तिथि सूर्योदय पर चलती है; जब तिथि एक दिन पहले शुरू हो तो राखी उस दिन बाँधी जाती है जब वह सूर्योदय पर हो।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 15,
+        "paksha": "shukla",
+        "masa": "shravana",
+        "dayResolution": "udaya",
+        "label": {
+          "en": "Shravana Shukla Purnima",
+          "hi": "श्रावण शुक्ल पूर्णिमा"
+        },
+        "resolutionNote": {
+          "en": "The day on which the tithi is running at sunrise at the ghat, with the usual fallback when a tithi touches no sunrise.",
+          "hi": "वह दिन जिसके सूर्योदय पर घाट पर यह तिथि चल रही हो, और जब तिथि किसी सूर्योदय को न छुए तो सामान्य विकल्प।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-08"
+        ],
+        "label": {
+          "en": "August 2027",
+          "hi": "अगस्त 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "ganga-haridwar",
+          "note": {
+            "en": "The Shravani snan at Har Ki Pauri, and the end of the Kanwar month.",
+            "hi": "हर की पौड़ी पर श्रावणी स्नान, और काँवड़ के महीने का अंत।"
+          }
+        },
+        {
+          "id": "triveni-prayagraj",
+          "note": {
+            "en": "At the Sangam the day is one of the bathing days of the year.",
+            "hi": "संगम पर यह दिन वर्ष के स्नान-दिनों में एक है।"
+          }
+        },
+        {
+          "id": "kaveri-talakaveri",
+          "note": {
+            "en": "Avani Avittam is the same day in the south, and the Kaveri's people keep it.",
+            "hi": "दक्षिण में आवणि अविट्टम यही दिन है, और कावेरी के लोग इसे रखते हैं।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "Three of the six waters.",
+        "hi": "छह में से तीन जल।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+      },
+      "panchang": {
+        "confidence": "provisional",
+        "source": "PLACEHOLDER_PANCHANG_PROVIDER",
+        "computedAt": null,
+        "ayanamsa": null
+      }
+    },
+    {
+      "slug": "janmashtami-2027",
+      "occasionId": "janmashtami",
+      "tier": "mahaparva",
+      "cadence": "annual",
+      "name": {
+        "en": "Krishna Janmashtami",
+        "hi": "कृष्ण जन्माष्टमी"
+      },
+      "line": {
+        "en": "Midnight at Mathura, on the Yamuna.",
+        "hi": "मथुरा में मध्यरात्रि, यमुना पर।"
+      },
+      "about": {
+        "en": "Janmashtami is the eighth of the dark fortnight of Bhadrapada, the night of Krishna's birth at Mathura. It is kept at midnight, so the date is fixed by the tithi at nishita, and the almanacs of the north and of the Vaishnava temples can differ by a day when the ashtami and Rohini nakshatra do not fall together; this page gives the night the tithi holds at midnight. The morning after is a bathing morning on the Yamuna at Mathura and at Vishram Ghat especially, and the Dahi Handi day in Maharashtra.",
+        "hi": "जन्माष्टमी भाद्रपद कृष्ण पक्ष की अष्टमी है, मथुरा में कृष्ण के जन्म की रात। यह मध्यरात्रि में रखी जाती है, इसलिए तारीख़ निशीथ की तिथि से तय है, और जब अष्टमी और रोहिणी नक्षत्र साथ न पड़ें तो उत्तर के और वैष्णव मंदिरों के पंचांग एक दिन का अंतर रख सकते हैं; यह पृष्ठ वह रात देता है जब तिथि मध्यरात्रि पर हो। उसके बाद की सुबह मथुरा में यमुना पर, विशेषकर विश्राम घाट पर, स्नान की सुबह है, और महाराष्ट्र में दही हांडी का दिन।"
+      },
+      "rule": {
+        "kind": "tithi",
+        "tithi": 8,
+        "paksha": "krishna",
+        "masa": "shravana",
+        "dayResolution": "nishita",
+        "label": {
+          "en": "Bhadrapada Krishna Ashtami, at midnight",
+          "hi": "भाद्रपद कृष्ण अष्टमी, मध्यरात्रि पर"
+        },
+        "resolutionNote": {
+          "en": "The night on which the tithi is running at midnight, because this is a night observance; the morning snan is the morning after that night.",
+          "hi": "वह रात जिसके मध्य में यह तिथि चल रही हो, क्योंकि यह रात्रि का पर्व है; सुबह का स्नान उस रात के बाद की सुबह है।"
+        }
+      },
+      "occurrence": {
+        "basis": "month",
+        "months": [
+          "2027-08"
+        ],
+        "label": {
+          "en": "August 2027",
+          "hi": "अगस्त 2027"
+        },
+        "note": {
+          "en": "The date is computed from the tithi at the ghat's own sunrise and rolls with the almanac; the check against Drik Panchang is recorded in docs/panchang-check.md.",
+          "hi": "तारीख़ घाट के अपने सूर्योदय की तिथि से गणित है और पंचांग के साथ चलती है; दृक पंचांग से जाँच docs/panchang-check.md में दर्ज है।"
+        }
+      },
+      "windows": [
+        "brahma",
+        "pratah"
+      ],
+      "ghats": [
+        {
+          "id": "yamuna-mathura",
+          "note": {
+            "en": "The birthplace. Mathura on Janmashtami night, and the Yamuna at dawn after it.",
+            "hi": "जन्मस्थान। जन्माष्टमी की रात का मथुरा, और उसके बाद भोर की यमुना।"
+          }
+        }
+      ],
+      "ghatsNote": {
+        "en": "One water. This night is Mathura's.",
+        "hi": "एक जल। यह रात मथुरा की है।"
+      },
+      "textualBasis": {
+        "en": "The living usage of the ghats named below, and the puranic and dharmashastra literature on the day. A citable edition and passage is still to be added.",
+        "hi": "नीचे नामित घाटों की जीवित परंपरा, और इस दिन पर पुराण और धर्मशास्त्र का साहित्य। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
       },
       "panchang": {
         "confidence": "provisional",

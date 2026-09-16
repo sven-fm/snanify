@@ -65,3 +65,32 @@ Drik reckons a muhurta as a fifteenth of the day or of the night, so Brahma muhu
 - **Ekadashi.** Twenty-four of twenty-five match Drik's Smarta day. The one that differs is Pausha Putrada 2027: Drik Smarta 18 January, Vaishnava 19 January; ours is 19 January, the day the tithi is at sunrise (it ends 07:50, forty minutes after). Recorded, not changed: the page's rule is the tithi at sunrise.
 
 The tests in `tests/unit/occasions.test.ts` pin Makar Sankranti to 15 January 2027 with its moment, Vijaya Ekadashi to 4 March 2027, and the days above.
+
+## Twenty-two more dated pages (16 September 2026)
+
+Added the same evening, each computed by the rule its page states and read against Drik Panchang for Haridwar where Drik has a page. `rule.masa` in the data is the amanta month the resolver names; the dark-fortnight days of the north (Kartika Krishna, Magha Krishna) are therefore filed under the month before, and the page's own label keeps the purnimanta name.
+
+| Occasion | Ours | Drik | |
+| --- | --- | --- | --- |
+| Sharad Purnima 2026 | 25 October (tithi at midnight) | 25 October, Kojagara | Match |
+| Naraka Chaturdashi 2026 | 8 November | Lakshmi puja 8 November; the abhyanga morning is the chaturdashi at arunodaya | By the stated rule; same civil date as Diwali in 2026 |
+| Somvati Amavasya, November 2026 | Monday 9 November | Amavasya 8 and 9 November | Match |
+| Chhath 2026 | 15 November | 15 November | Match |
+| Dev Deepawali 2026 | 24 November | Kartika Purnima 24 November | Match |
+| Vaikuntha Ekadashi 2026 | 20 December | Mokshada Ekadashi 20 December | Match |
+| Paush Purnima 2027 | 22 January | 22 January | Match |
+| Mauni Amavasya 2027 | 6 February | Magha Amavasya 6 February | Match |
+| Basant Panchami 2027 | 11 February | not fetched | Computed |
+| Magha Purnima 2027 | 20 February | 20 February | Match |
+| Somvati Amavasya, March 2027 | Monday 8 March | Amavasya 7 and 8 March | Match |
+| Vaisakhi 2027 | 14 April, 15:33 IST | Mesha Sankranti 14 April 15:33 | Match |
+| Akshaya Tritiya 2027 | 9 May | 9 May | Match |
+| Ganga Saptami 2027 | 12 May | 12 May | Match |
+| Vaishakha Purnima 2027 | 20 May | 20 May | Match |
+| Guru Purnima 2027 | 18 July | 18 July | Match |
+| Kanwar Yatra 2027 | 19 July to 2 August | not fetched | The dark fortnight after Guru Purnima, computed |
+| Sawan 2027 | 19 July to 17 August | not fetched | The purnimanta month, computed |
+| Hariyali Amavasya 2027 | Monday 2 August | Amavasya 2 August | Match |
+| Shravana Purnima 2027 | 17 August | Raksha Bandhan 17 August | Match |
+| Janmashtami 2027 | 24 August (tithi at midnight) | not fetched | Computed by the nishita rule |
+| Magh Mela 2027 | 15 January to 6 March | its six snan days above | A span, not computed on its own |

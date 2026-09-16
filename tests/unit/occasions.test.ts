@@ -98,8 +98,10 @@ describe("the dated occasions", () => {
     expect(ms).toMatchObject({ kind: "span", date: "2027-01-23", to: "2027-02-20" });
   });
 
-  it("gives every occasion at least one answer in the horizon", () => {
-    for (const o of OCCASIONS) {
+  it("gives every computed occasion at least one answer in the horizon", () => {
+    /* A manual span (the Magh Mela) is fixed by the pages of its first and
+       last snan and carries no date of its own. */
+    for (const o of OCCASIONS.filter((x) => x.rule.kind !== "manual")) {
       expect(resolveOccasion(o, FROM, TO).length, o.slug).toBeGreaterThan(0);
     }
   });

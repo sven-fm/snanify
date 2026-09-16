@@ -156,6 +156,7 @@ function ingresses(from: Date, to: Date): { sign: number; at: Date }[] {
 const NAMED_SIGN: Record<string, number> = {
   makar: 9,
   tula: 6,
+  mesha: 0,
 };
 
 /* --- lunar months -------------------------------------------------------- */

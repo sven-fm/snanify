@@ -32,6 +32,7 @@ folios and the email the day before; a third locale chosen from the zone data in
 ### 16 September 2026
 
 - Reviewed and approved on the phone: the whole order, a real face through `/setup`, Pay as a stranger, the firewall rule, the city pages and the loop, the panchang after the fix.
+- Twenty-two more dated occasion pages, Sharad Purnima 2026 to Janmashtami 2027, each read against Drik; Kaveri Sankramana by its own name; snippets that open with the day.
 - `/panchang/[city]` for twenty cities; the sitting looped on `/snan`.
 - The panchang read off Drik: ayanamsa refitted, sun aberration in the tithi, a sankranti after sunset kept the next morning, a two-sunrise ekadashi on the second. Record in `docs/panchang-check.md`.
 - The portrait in the five tones of the river plates.
