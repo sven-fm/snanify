@@ -187,6 +187,7 @@ actually type. The biggest free lever there is.
 
 ### 16 September 2026
 
+- The memento: the band of water under the ghat's plate is gone, and the water across the page is a faint hairline guilloche, one weight, so the type reads as on a bank note. Sheets rendered before keep their old image.
 - `/muhurat`: the worked example became a live clock, ticking from the phone: the ghat's time in IST, the reader's own zone under it, the same moment in six cities with the day shift, today's open or next window and today's sunrise at Har Ki Pauri.
 - The sitting: the water behind the practice runs eight times slower; the stillness is dark again, with the words and the count and nothing else.
 - Every "free to read" and "the snan is what you pay for" line is gone: the landing's free register, the `/live` closing block, the FAQ question, the ledes on `/snan`, `/rivers`, `/panchang` and the metas. The reference pages are in the nav and the footer; the tariff states the price.

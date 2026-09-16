@@ -353,15 +353,14 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   const parts: string[] = [`<rect width="${W}" height="${H}" fill="${PAPER}" />`];
 
   /* The water, faintly, across the whole page: the same lines the band
-     draws, cut flat and spread over the page's height. */
+     draws, cut flat and spread over the page's height. Hairlines at one
+     weight and one faint tone, the way a bank note carries its guilloche:
+     present when looked for, never in the way of the type. */
   const ground = engrave({ seed: view.seed, percentile: view.percentile, width: W, height: H, flat: true });
   parts.push(
-    `<g opacity="0.16">` +
+    `<g opacity="0.085">` +
       ground.lines
-        .map(
-          (d, i) =>
-            `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${(strokeWidth(i, ground.lines.length) * 1.6).toFixed(2)}" stroke-opacity="${strokeOpacity(i, ground.lines.length)}" />`,
-        )
+        .map((d) => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="0.9" />`)
         .join("") +
       `</g>`,
   );
@@ -372,15 +371,16 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   parts.push(`<rect x="${MM}" y="142" width="${IN}" height="3" fill="${INK}" />`);
   parts.push(`<rect x="${MM}" y="149" width="${IN}" height="1" fill="${INK}" />`);
 
-  /* --- the ghat and its water ------------------------------------------- */
+  /* --- the ghat --------------------------------------------------------- */
+  /* The plate alone. A band of engraved water used to sit under it, and with
+     the water already across the whole page it read as a second river. The
+     band stays only as the art when there is no plate to show. */
   const artTop = 190;
-  const plateH = 430;
-  const bandH = 150;
-  const artH = plateH + bandH;
+  const plateH = 480;
+  const artH = plateH;
   const plate = await ghatPlate(view.waterSlug, IN, plateH);
   if (plate) {
     parts.push(`<image href="${plate}" x="${MM}" y="${artTop}" width="${IN}" height="${plateH}" />`);
-    parts.push(band(view, MM, artTop + plateH, IN, bandH));
   } else {
     parts.push(band(view, MM, artTop, IN, artH));
   }
