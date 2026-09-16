@@ -259,7 +259,7 @@ recommended deleting them; that decision has been made and is not to be relitiga
 them with real values before launch.
 
 Everything behind the landing page is held to the stricter rule, because `/faq#how` publicly
-commits to it. Panchang timings ship labelled provisional until a source is named.
+commits to it. The panchang and the occasion dates are computed in `src/lib/sky.ts` and `src/lib/occasions.ts`, checked against Drik Panchang, and the muhurat pages remake themselves daily.
 
 ## The plan
 

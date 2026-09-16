@@ -86,6 +86,15 @@ fails the build if any of it comes back. `CLAUDE.md` records the rule.
 - Sharing text and the recipient line are built once, in English, whatever
   the edition. See item 4.
 
+## 8. The calendar says the day. Done 16 September.
+
+Every occasion resolves to civil dates at the ghat's sunrise, from rules,
+with lunar months named by their sankranti, kshaya tithis kept, and sign
+entries timed. The muhurat pages print the dates and remake themselves
+daily; the badge reads "Computed here, checked against Drik Panchang".
+Open: read the dated occasions off Drik and record each match in
+`docs/panchang-check.md`.
+
 ## Still open from build-plan.md, owner's side
 
 - Read the privacy and terms drafts.

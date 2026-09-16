@@ -12,15 +12,16 @@ import {
   MUHURAT,
   RECURRING_OCCASIONS,
   WINDOWS,
-  almanacMonths,
   asInstant,
   asZone,
   formatDualClock,
   monthLabel,
   type MuhuratWindow,
   type Occasion,
+  OCCASIONS,
 } from "@/content/muhurat";
 import { muhuratIndexContent } from "@/content/muhurat-index";
+import { horizonFrom, resolveOccasion, sayDay, sayResolvedShort, type ResolvedDate } from "@/lib/occasions";
 import { occasionName, windowName } from "@/content/names";
 
 /* Nav is shared with the occasion pages so the two never drift. */
@@ -181,7 +182,16 @@ function DayDiagram({ lang }: { lang: Lang }) {
 const SPINE_COLS =
   "sm:grid sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1.15fr)_13rem] sm:gap-x-8";
 
-function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
+function OccasionRow({
+  occasion,
+  dates,
+  lang,
+}: {
+  occasion: Occasion;
+  /** The occasion's dates inside the month this row sits under. */
+  dates: ResolvedDate[];
+  lang: Lang;
+}) {
   const t = muhuratIndexContent[lang];
   const waters = occasion.ghats.length;
 
@@ -208,23 +218,51 @@ function OccasionRow({ occasion, lang }: { occasion: Occasion; lang: Lang }) {
           {pickDeep(occasion.rule.label, lang)}
         </p>
 
-        {/* the window, and its provenance, inseparably */}
+        {/* the dates, computed */}
         <div className="mt-3 sm:mt-0 sm:text-right">
-          <p className="text-sm text-ink">{pickDeep(occasion.occurrence.label, lang)}</p>
-          <span className="mt-3 inline-block">
-            <ProvisionalBadge lang={lang} short />
-          </span>
+          {dates.map((d) => (
+            <p key={d.date} className="text-sm text-ink" data-occasion-date={d.date}>
+              {deva(sayResolvedShort(d, deepLang(lang)), lang)}
+            </p>
+          ))}
         </div>
       </Link>
     </li>
   );
 }
 
+/**
+ * The register, month by month, from today: each occasion under every month
+ * it has a date in, recurring ones included, the empty months kept because
+ * an almanac shows the quiet weeks too.
+ */
+function almanac(now: Date) {
+  const { from, to } = horizonFrom(now);
+  const resolved = OCCASIONS.map((o) => ({ o, dates: resolveOccasion(o, from, to) }));
+  const out: { month: string; rows: { o: Occasion; dates: ResolvedDate[] }[] }[] = [];
+  let [y, m] = from.split("-").map(Number);
+  const [ty, tm] = to.split("-").map(Number);
+  while (y < ty || (y === ty && m <= tm)) {
+    const key = `${y}-${String(m).padStart(2, "0")}`;
+    const rows = resolved
+      .map(({ o, dates }) => ({ o, dates: dates.filter((d) => d.date.startsWith(key) || (d.to ?? "").startsWith(key)) }))
+      .filter((r) => r.dates.length > 0)
+      .sort((a, b) => a.dates[0].date.localeCompare(b.dates[0].date));
+    out.push({ month: key, rows });
+    m += 1;
+    if (m > 12) {
+      m = 1;
+      y += 1;
+    }
+  }
+  return { from, out };
+}
+
 /* --- page ----------------------------------------------------------------- */
 
 export function MuhuratIndex({ lang }: { lang: Lang }) {
   const t = muhuratIndexContent[lang];
-  const months = almanacMonths();
+  const { from: today, out: months } = almanac(new Date());
   const example = MUHURAT.workedExample;
   const exampleWindow = WINDOWS.find((w) => w.id === example.windowId);
   const exampleInstant = asInstant(example.instantUtc);
@@ -271,7 +309,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
               <p className="text-sm leading-[1.75] text-ink2">{t.provenance.line}</p>
               <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <ProvisionalBadge lang={lang} />
-                <p className="text-sm text-ink2">{deva(t.hero.asOf, lang)}</p>
+                <p className="text-sm text-ink2">{deva(t.hero.asOf.replace("{date}", sayDay(today, deepLang(lang))), lang)}</p>
               </div>
             </div>
           </div>
@@ -351,12 +389,12 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
                       <p className="mt-1 text-sm text-ink2">{deva(year, lang)}</p>
                     </div>
 
-                    {m.occasions.length === 0 ? (
+                    {m.rows.length === 0 ? (
                       <p className="self-center text-sm text-ink2 sm:py-7">{t.spine.empty}</p>
                     ) : (
                       <ul className="divide-y divide-rule sm:py-1">
-                        {m.occasions.map((o) => (
-                          <OccasionRow key={o.slug} occasion={o} lang={lang} />
+                        {m.rows.map((r) => (
+                          <OccasionRow key={r.o.slug} occasion={r.o} dates={r.dates} lang={lang} />
                         ))}
                       </ul>
                     )}

@@ -118,7 +118,7 @@ export const AYANAMSA_SPREAD_MINUTES = Math.round(
   (AYANAMSA_SPREAD_DEG / MOON_DEG_PER_DAY) * 24 * 60,
 );
 
-function ayanamsaDeg(id: AyanamsaId, date: Date): number {
+export function ayanamsaDeg(id: AyanamsaId, date: Date): number {
   const spec = AYANAMSAS[id];
   const jd = date.getTime() / 86_400_000 + 2440587.5;
   const T = (jd - 2451545.0) / 36525;
@@ -234,6 +234,16 @@ export interface TithiReading {
    * from about 19 to about 26 hours. This is that length for this one.
    */
   readonly lengthMinutes: number | null;
+}
+
+/**
+ * The tithi at an instant, cheaply: index, paksha and number, with no search
+ * for its ends. The occasion resolver asks this at a few hundred sunrises,
+ * where `readTithi`'s two crossing searches per call would be the whole cost.
+ */
+export function tithiAt(date: Date): { index: number; paksha: Paksha; numberInPaksha: number } {
+  const i = Math.floor(elongation(date) / TITHI_DEG);
+  return { index: i + 1, paksha: i < 15 ? "shukla" : "krishna", numberInPaksha: i < 15 ? i + 1 : i - 14 };
 }
 
 export function readTithi(date: Date): TithiReading {

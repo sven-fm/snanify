@@ -19,6 +19,8 @@ import {
   type Occasion,
 } from "@/content/muhurat";
 import { muhuratIndexContent } from "@/content/muhurat-index";
+import { GAUGES } from "@/lib/riverdata";
+import { horizonFrom, resolveOccasion, RESOLVER, sayResolved } from "@/lib/occasions";
 
 /** A section heading, in order after the h1. */
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -38,6 +40,18 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
      in content/muhurat-index/; the detail-only keys stayed in muhurat.ts. */
   const t = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
   const d = t.detail;
+  const { from, to } = horizonFrom(new Date());
+  const dates = resolveOccasion(occasion, from, to);
+  const gauge = GAUGES.find((g) => g.slug === (dates[0]?.ghat ?? "ganga-haridwar")) ?? GAUGES[0];
+  const ghatRecord = GHAT_BY_ID[gauge.slug];
+  const ghatName = ghatRecord ? `${ghatRecord.ghat[lang]}, ${ghatRecord.city[lang]}` : gauge.slug;
+  /* A sankranti after sunset at the ghat is kept next day by many; say so. */
+  const afterSunset = (() => {
+    const first = dates[0];
+    if (!first || first.kind !== "instant" || !first.instant) return false;
+    const hourIst = (new Date(first.instant).getUTCHours() + 5.5) % 24;
+    return hourIst >= 18 || hourIst < 5;
+  })();
   const { prev, next } = neighbours(occasion);
   const windows = occasion.windows.map((id) => WINDOW_BY_ID[id]).filter(Boolean);
 
@@ -81,11 +95,30 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                 <h2 className="display text-xl text-ink">{d.whenTitle}</h2>
                 <div className="rule-thin mt-4" />
 
-                <p className="display mt-5 text-3xl text-ink sm:text-4xl">
-                  {occasion.occurrence.label[lang]}
-                </p>
+                {/* The dates, computed at the ghat's own sunrise for the
+                    twelve months from today. A dated occasion has one; a
+                    recurring one lists what is coming. */}
+                {dates.length === 1 ? (
+                  <p className="display mt-5 text-[1.7rem] leading-[1.25] text-ink sm:text-[2.1rem]" data-occasion-date={dates[0].date}>
+                    {sayResolved(dates[0], lang)}
+                  </p>
+                ) : (
+                  <>
+                    <p className="label mt-5 text-ink2">{t.provenance.dates.next}</p>
+                    <ul className="mt-2 border-t border-rule">
+                      {dates.map((d) => (
+                        <li key={d.date} className="border-b border-rule py-2 text-[1.02rem] text-ink" data-occasion-date={d.date}>
+                          {sayResolved(d, lang)}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                {dates.length === 1 && dates[0].kind === "instant" && afterSunset && (
+                  <p className="mt-3 text-sm leading-[1.75] text-ink2">{t.provenance.dates.afterSunset}</p>
+                )}
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">
-                  {occasion.occurrence.note[lang]}
+                  {t.provenance.dates.by.replace("{ghat}", ghatName)}
                 </p>
 
                 <dl className="mt-7 border-t-2 border-rulestrong text-sm">
@@ -227,12 +260,14 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
               <div className="border-b border-rule py-4">
                 <dt className="label text-ink2">{t.provenance.ayanamsaLabel}</dt>
                 <dd className="mt-2 text-ink">
-                  {occasion.panchang.ayanamsa ?? t.provenance.notSet}
+                  {occasion.panchang.ayanamsa ?? RESOLVER.ayanamsaName[lang]}
                 </dd>
               </div>
               <div className="border-b border-rule py-4">
                 <dt className="label text-ink2">{t.provenance.coordinatesLabel}</dt>
-                <dd className="mt-2 text-ink">{t.provenance.coordinatesPending}</dd>
+                <dd className="mt-2 text-ink">
+                  {ghatName}: {gauge.ghat[0].toFixed(4)}, {gauge.ghat[1].toFixed(4)}
+                </dd>
               </div>
             </dl>
 

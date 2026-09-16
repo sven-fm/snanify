@@ -166,10 +166,16 @@ export type DayResolution = "udaya" | "madhyahna" | "aparahna" | "pradosha" | "n
 
 export type OccasionRuleKind = "tithi" | "tithi-range" | "solar-ingress" | "lunar-month" | "manual";
 
+export type MasaName =
+  | "chaitra" | "vaishakha" | "jyeshtha" | "ashadha" | "shravana" | "bhadrapada"
+  | "ashwina" | "kartika" | "margashirsha" | "pausha" | "magha" | "phalguna";
+
 export interface OccasionRule {
   readonly kind: OccasionRuleKind;
   readonly tithi?: number;
   readonly paksha?: "shukla" | "krishna" | "both";
+  /** The amanta lunar month a dated rule belongs to. Absent on recurring rules. */
+  readonly masa?: MasaName;
   readonly dayResolution: DayResolution;
   readonly label: Bilingual;
   readonly resolutionNote: Bilingual;

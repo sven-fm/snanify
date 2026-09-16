@@ -23,6 +23,10 @@ import { pageMetadata } from "@/lib/seo";
  */
 const ROUTE = "/muhurat";
 
+/* The dates are computed from today; the page is remade once a day so the
+   twelve-month horizon rolls forward by itself. */
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   return allLangParams();
 }

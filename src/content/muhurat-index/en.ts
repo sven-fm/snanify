@@ -36,12 +36,18 @@ export const en = {
   hero: {
     title: "The muhurat calendar",
     lede: "The occasions of the twelve months ahead, the windows of the day they are kept in, and how much is known about when each one falls.",
-    asOf: "Twelve months from 10 August 2026",
+    asOf: "Twelve months from {date}",
   },
   provenance: {
-    badge: "Days provisional; tithi and windows checked",
-    badgeShort: "Days provisional",
-    line: "The tithi, the nakshatra, sunrise and the four windows are computed here and were checked against Drik Panchang for Haridwar on eight days between September 2026 and March 2027. Every one matched to the minute. The day an occasion falls on is still given as a month, and is labelled provisional until each occasion's day rule has been checked the same way.",
+    badge: "Computed here, checked against Drik Panchang",
+    badgeShort: "Computed, checked",
+    line: "Every date on this page is computed: the tithi at the ghat's own sunrise, the lunar month named by the sankranti it holds, and the sun's entry into each sign under the Lahiri ayanamsa. The tithi, nakshatra, sunrise and windows were checked against Drik Panchang for Haridwar on eight days between September 2026 and March 2027, every one to the minute, and the dates roll forward by themselves each morning.",
+    dates: {
+      next: "Next dates",
+      one: "The date",
+      by: "By the sunrise at {ghat}",
+      afterSunset: "The sun enters the sign after sunset, so many keep the day that follows.",
+    },
     sourceLabel: "Source",
     ayanamsaLabel: "Ayanamsa",
     coordinatesLabel: "Ghat coordinates",

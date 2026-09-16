@@ -13,7 +13,10 @@
     "  requires surveyed coordinates, which are still to be fixed.",
     "COPY: every prose field is written in plain sentences, one idea each, in both",
     "  editions. It reports what the tradition holds and what the reader does. It",
-    "  never argues with a reader, and it never promises an outcome."
+    "  never argues with a reader, and it never promises an outcome.",
+    "INVARIANT 4: a dated rule names its amanta lunar month in `masa` (chaitra to",
+    "  phalguna). That too is a definition. src/lib/occasions.ts turns rule, masa",
+    "  and the ghat's sunrise into civil dates, and tests hold them to Drik Panchang."
   ],
   "horizon": {
     "asOf": "2026-08-10",
@@ -710,7 +713,8 @@
         "resolutionNote": {
           "en": "Ordinary days of the fortnight are taken at sunrise. Sarva Pitru Amavasya, which closes it, is decided at aparahna, the fourth of five equal parts of the daylight, as shraddha rites are.",
           "hi": "पक्ष के साधारण दिन सूर्योदय पर लिए जाते हैं। इसे पूरा करने वाली सर्व पितृ अमावस्या अपराह्न पर तय होती है, दिनमान के पाँच बराबर भागों में चौथे पर, जैसे सभी श्राद्ध तय होते हैं।"
-        }
+        },
+        "masa": "bhadrapada"
       },
       "occurrence": {
         "basis": "month",
@@ -874,7 +878,8 @@
         "resolutionNote": {
           "en": "Each day of the season is taken at sunrise. Ghats following the Amanta reckoning name the dark fortnight under a different month; the days themselves are the same.",
           "hi": "ऋतु का हर दिन सूर्योदय पर लिया जाता है। अमांत गणना वाले घाट कृष्ण पक्ष को दूसरे मास के नाम से पुकारते हैं; दिन वही रहते हैं।"
-        }
+        },
+        "masa": "kartika"
       },
       "occurrence": {
         "basis": "month",
@@ -969,7 +974,8 @@
         "resolutionNote": {
           "en": "The day on which the tithi is running at sunrise. Where the tithi spans two sunrises the bathing is customarily kept on the first.",
           "hi": "वह दिन जिसके सूर्योदय पर यह तिथि चल रही हो। जहाँ तिथि दो सूर्योदयों तक फैले, वहाँ स्नान रीति से पहले दिन रखा जाता है।"
-        }
+        },
+        "masa": "kartika"
       },
       "occurrence": {
         "basis": "month",
@@ -1041,7 +1047,8 @@
         "resolutionNote": {
           "en": "The day on which the tithi is running at sunrise. When the tithi turns overnight, the evening lamps and the morning snan can fall on different Gregorian dates, and the page will say so.",
           "hi": "वह दिन जिसके सूर्योदय पर यह तिथि चल रही हो। जब तिथि रात में बदले तो शाम के दीप और सुबह का स्नान अलग-अलग अंग्रेज़ी तारीख़ों पर पड़ सकते हैं, और पृष्ठ यह बताएगा।"
-        }
+        },
+        "masa": "kartika"
       },
       "occurrence": {
         "basis": "month",
@@ -1248,7 +1255,8 @@
         "resolutionNote": {
           "en": "Each day of the season is taken at sunrise. The opening day depends on whether local usage counts from Makar Sankranti or from Paush Purnima, and the page states which.",
           "hi": "ऋतु का हर दिन सूर्योदय पर लिया जाता है। पहला दिन इस पर निर्भर है कि स्थानीय रीति मकर संक्रांति से गिनती है या पौष पूर्णिमा से, और पृष्ठ बताता है कि कौन-सी।"
-        }
+        },
+        "masa": "magha"
       },
       "occurrence": {
         "basis": "month",
@@ -1322,7 +1330,8 @@
         "resolutionNote": {
           "en": "The day is decided at nishita kaal, the eighth of the fifteen muhurtas of the night, around true midnight, because the tithi must be running then for the night to be Mahashivratri. That decides the day. The snan of this occasion is a pre-dawn and morning rite, so the window is a separate field.",
           "hi": "दिन निशीथ काल पर तय होता है, रात के पंद्रह मुहूर्तों में आठवाँ, ठीक मध्यरात्रि के आसपास, क्योंकि रात के महाशिवरात्रि होने के लिए तिथि उस समय चल रही होनी चाहिए। इससे दिन तय होता है। इस पर्व का स्नान भोर से पहले और सुबह की विधि है, इसलिए बेला अलग खाना है।"
-        }
+        },
+        "masa": "magha"
       },
       "occurrence": {
         "basis": "month",
@@ -1417,7 +1426,8 @@
         "resolutionNote": {
           "en": "Sunrise. Whether Hasta nakshatra and the other conditions of the Dashahara yoga hold in a given year is a matter of computation, and the page will say which of them did.",
           "hi": "सूर्योदय। किसी वर्ष हस्त नक्षत्र और दशहरा योग की अन्य शर्तें पूरी हुईं या नहीं, यह गणना की बात है, और पृष्ठ बताएगा कि कौन-सी पूरी हुईं।"
-        }
+        },
+        "masa": "jyeshtha"
       },
       "occurrence": {
         "basis": "month",

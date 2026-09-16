@@ -32,6 +32,10 @@ import { muhuratIndexContent } from "@/content/muhurat-index";
 import { occasionName } from "@/content/names";
 
 /** Every (lang, occasion) pair, the slug is identical in both locales. */
+/* The dates are computed from today; the page is remade once a day so the
+   twelve-month horizon rolls forward by itself. */
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   return FULL_LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));
 }
