@@ -566,11 +566,14 @@ function BreathScreen({
         </p>
       </div>
 
-      {/* The water. Its top edge is the waterline. */}
+      {/* The water, in the spot colour: the one thing on the screen that is
+          not ink on paper, because it is the thing itself. Its top edge is
+          the waterline, with a faint wash of the same red beneath. */}
       <div className="relative mt-6 h-[44vh] overflow-hidden border-b border-rule" aria-hidden="true">
         <div className="absolute inset-x-0 bottom-0" style={{ height: `${pct}%` }} data-waterline>
-          <div className="absolute inset-x-0 top-0 h-px bg-ink" />
-          <WaterBand seed={`${waterSlug}-breath`} percentile={78} className="absolute inset-0 h-full w-full" />
+          <div className="absolute inset-0" style={{ backgroundColor: "color-mix(in srgb, var(--spot) 9%, transparent)" }} />
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-spot" />
+          <WaterBand seed={`${waterSlug}-breath`} percentile={78} color="spot" className="absolute inset-0 h-full w-full" />
         </div>
       </div>
 
