@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db, sittings } from "@/db";
 import { isId } from "@/lib/ids";
+import { allow, clientKey } from "@/lib/limiter";
 import { renderPatra } from "@/lib/patra-image";
 import { sheetUrl, storeSheet } from "@/lib/patra-store";
 import { patraView } from "@/lib/patra-view";
@@ -23,11 +24,12 @@ import { patraView } from "@/lib/patra-view";
 export const runtime = "nodejs";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<Response> {
   const { id } = await params;
   if (!isId(id)) return new Response("not found", { status: 404 });
+  if (!allow(`image:${clientKey(request)}`, 60, 60_000)) return new Response("slow down", { status: 429 });
 
   const rows = await db.select().from(sittings).where(eq(sittings.id, id)).limit(1);
 

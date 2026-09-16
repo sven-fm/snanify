@@ -22,6 +22,8 @@ How Snanify is put together, as it stands. `CLAUDE.md` holds the spec and the ru
 | Astronomy | `astronomy-engine` | Offline, deterministic moon and sun. No API, no key |
 | Images | `@resvg/resvg-js`, `harfbuzzjs`, `sharp` | The Sankalp Patra is SVG with every glyph shaped to outlines by HarfBuzz, rasterised by resvg; sharp presses portraits and shrinks the specimen |
 | Analytics | `@vercel/analytics` | Cookieless; nine funnel events, no personal data in a property |
+| Abuse | Vercel BotID, `src/lib/limiter.ts` | The Pay and setup forms check for a script; the two routes that draw a sheet are rate-limited per instance |
+| Alerts | `src/lib/alert.ts` over Resend | A failure that costs somebody something mails the owner from its catch block |
 | Tests | Vitest, Playwright | 173 unit tests offline (pglite for the ledger); two e2e specs against the dev server |
 | Hosting | Vercel | Push to `main` deploys production; other branches get previews |
 
@@ -170,4 +172,4 @@ previews. CI on GitHub Actions runs lint, types and unit tests on pushes to `mai
 pull requests. Providers are Vercel Marketplace resources except Resend. `.env.local`
 comes from `vercel env pull` and, as of 16 September 2026, still carries the production
 database with the Clerk development instance and Stripe test keys, so a local sitting
-writes real rows; a Neon branch for development is an open item in `plan.md`.
+writes real rows. That is the owner's decision of 16 September 2026: one database.

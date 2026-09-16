@@ -16,34 +16,33 @@ Things that exist and want your eyes, or that only you can do.
 2. **Two production checks.** Pay as a stranger over https and land on Stripe without a
    second press (the intent cookie is Secure, so it could not be tried on plain http).
    Send a HEIC photograph from an iPhone through `/setup`, or the word comes out of the
-   portrait copy.
-3. **Apple Pay and Google Pay** on in the Stripe dashboard's payment methods.
-4. **A Neon branch for development and preview.** `.env.local` and Preview point at the
-   production database. Create a branch, pull it into `.env.local`, set it on Preview.
-5. **Rate limits.** Vercel WAF rules by IP on `/begin`, `/setup` and `/p/*/image`;
-   BotID on the pay form if abuse shows.
-6. **Footer tagline.** "A digital snan for Indians everywhere" or "for everyone far from
-   their river".
-7. **Drik Panchang.** Read the dated occasions off Drik and record each match in
-   `docs/panchang-check.md`.
+   portrait copy. The portrait now comes out in the five tones of the river plates; judge
+   it on a real face.
+3. **One WAF rule, five clicks.** The code now carries Vercel BotID on the Pay and setup
+   forms and a per-instance limit on the two routes that draw a sheet. The floor under
+   that is a rate limit at the edge, which only the dashboard can set: Vercel, the
+   snanify project, Firewall, Configure, Add rule. Name it "sheets"; condition Request
+   Path starts with `/p/` and ends with `/image`, or equals `/specimen`; action Rate
+   limit, 60 requests per 60 seconds by IP, then Deny. Save and Publish. BotID Deep
+   Analysis is a paid switch on the same page if abuse ever shows.
+4. **The branch `feat/queue`.** Everything since the repo clean-up is on it and deployed
+   to a preview, nothing on `main`. Say the word and it fast-forwards to production.
 
 ## Waiting for your go
 
-1. **The hydration flake on production. P1, half a day.** On a share of loads of `/`,
-   `/snan` and `/begin` React re-renders the whole page on the client (error 418).
-   Server HTML and client render are identical in structure and text; ruled out: the
-   bundler, analytics, cookies; a plain local build never flakes. Next: previews
-   without `<Analytics />`, with the head scripts moved to `next/script`, and without
-   the theme-colour viewport export, measured one by one.
-2. **Error reporting. P2, an hour.** A Vercel log drain with an alert on
-   `patra: could not pre-render` and `fulfilment failed`, or Sentry's free tier.
+1. **The hydration flake on production. P2.** Now measured: React error 418 on 10 of 36
+   loads in the ten minutes after a production deploy, 0 of 94 loads afterwards, with
+   byte-identical HTML, and 0 of 24 loads of a cold preview. So it is a transient of the
+   first minutes after a deploy, not a fault in the markup. `scripts/hydration-probe.mjs`
+   reproduces the measurement; run it right after the next deploy. Next step if it
+   matters: a preview with `<Analytics />` swapped for the framework-free
+   `@vercel/analytics/react`, probed in its first ten minutes.
+2. **The panchang by city. P2, a day.** `/panchang/[city]` for twenty diaspora cities,
+   each with sunrise, Brahma muhurat and today's tithi in that zone.
 3. **The sitting, shown before it is bought. P2, half a day.** A ten-second loop of the
    five screens under "The five parts" on `/snan`.
-4. **The panchang by city. P2, a day.** `/panchang/[city]` for twenty diaspora cities,
-   each with sunrise, Brahma muhurat and today's tithi in that zone.
-5. **Small things. P3.** A webhook e2e test in Stripe test mode; a ruled hour picker on
-   `/setup`; the 404 page's script-tag warning on client navigation; `sameAs` once a
-   social profile exists; the Vercel CLI update.
+4. **Small things. P3.** A webhook e2e test in Stripe test mode (the nine unit tests
+   already sign real payloads); `sameAs` once a social profile exists.
 
 ## After launch, argued from data
 
@@ -57,6 +56,12 @@ folios and the email the day before; a third locale chosen from the zone data in
 
 ### 16 September 2026
 
+- The panchang read off Drik: the ayanamsa refitted (every sankranti was fifteen minutes early), sun aberration in the tithi, a sankranti after sunset kept the next morning, a two-sunrise ekadashi kept on the second; the record in `docs/panchang-check.md`.
+- The portrait pressed to the five tones of the river plates, on the same paper.
+- BotID on Pay and setup; a per-instance rate limit on the sheet image and the specimen.
+- Failures that cost somebody something mail the owner: fulfilment, a sheet not drawn, a reminder not sent, a plate missing.
+- A ruled hour picker on `/setup`; the Vercel CLI at 59.19.1; the 404 page's console line is the 404 status itself, nothing to fix.
+- Decided: Apple Pay and Google Pay on; the production database stays for development; the footer tagline stays.
 - Pounds live, tax-inclusive prices outside the US, the tax line per currency.
 - The seed gone from every output; the distance to the water on the sheet, the reading and the ready screen.
 - The phone's silhouette opens a drawer with the account's rows.

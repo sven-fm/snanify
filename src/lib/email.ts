@@ -98,6 +98,17 @@ async function send(message: Message): Promise<Sent> {
   return { sent: true, id: body.id };
 }
 
+/** Something broke that the owner should hear about today. Plain text. */
+export async function sendAlert(subject: string, text: string): Promise<Sent> {
+  const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  return send({
+    to: REPLY_TO,
+    subject: `[snanify] ${subject}`,
+    text,
+    html: wrap(`<pre style="white-space:pre-wrap;font:13px/1.5 Menlo,Consolas,monospace;margin:0;">${escaped}</pre>`, "Sent by the site itself, from the place the error was caught."),
+  });
+}
+
 export type ReceiptInput = {
   to: string;
   lang: Lang;

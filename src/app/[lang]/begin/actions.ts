@@ -1,5 +1,6 @@
 "use server";
 
+import { checkBotId } from "botid/server";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { currencyForCountry } from "@/lib/currency";
@@ -68,6 +69,10 @@ export async function checkoutFor(lang: Lang, tier: TierKey, next: string): Prom
 export async function startCheckout(lang: Lang, formData: FormData): Promise<void> {
   const tier = String(formData.get("tier") ?? "");
   if (!isTier(tier)) throw new Error(`unknown tier: ${tier}`);
+
+  /* A script pressing Pay gets nothing; see src/instrumentation-client.ts. */
+  const bot = await checkBotId();
+  if (bot.isBot) throw new Error("pay: refused");
 
   /* The return address after a sign-in carries the intent, and a short-lived
      cookie confirms it, so the buyer is sent on to Stripe without pressing

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withBotId } from "botid/next/config";
 
 /* ---------------------------------------------------------------------------
    Security headers, on every response.
@@ -94,4 +95,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+/* BotID: the rewrites that proxy Vercel's bot check through this origin, so
+   the CSP needs no new host. The client side is src/instrumentation-client.ts;
+   the checks are in the pay and setup actions. */
+export default withBotId(nextConfig);

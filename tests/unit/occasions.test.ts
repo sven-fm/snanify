@@ -70,8 +70,10 @@ describe("the dated occasions", () => {
   it("finds Makar Sankranti in mid January 2027 with its instant", () => {
     const [ms] = resolveOccasion(occasionBySlug("makar-sankranti-2027")!, FROM, TO);
     expect(ms.kind).toBe("instant");
-    expect(["2027-01-14", "2027-01-15"]).toContain(ms.date);
-    expect(ms.instant).toMatch(/^2027-01-1[45]T/);
+    /* Drik Panchang, Haridwar: the sun enters Makara at 21:14 IST on 14
+       January 2027 and the day is kept on the 15th. */
+    expect(ms.date).toBe("2027-01-15");
+    expect(ms.instant).toMatch(/^2027-01-14T15:4[2-6]/);
   });
 
   it("lists twelve sankrantis a year", () => {

@@ -4,6 +4,7 @@ import { db, profiles } from "@/db";
 import { currentUser } from "@/lib/auth";
 import { renderPatra } from "@/lib/patra-image";
 import { specimenView } from "@/lib/specimen";
+import { allow, clientKey } from "@/lib/limiter";
 import { parseLang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
@@ -25,10 +26,11 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ lang: string }> },
 ): Promise<Response> {
   const lang = parseLang((await params).lang) === "hi" ? "hi" : "en";
+  if (!allow(`specimen:${clientKey(request)}`, 30, 60_000)) return new Response("slow down", { status: 429 });
 
   const user = await currentUser(lang);
   let names: string[] | undefined;

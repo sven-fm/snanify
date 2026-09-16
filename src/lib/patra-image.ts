@@ -1,3 +1,4 @@
+import { alertOwner } from "@/lib/alert";
 import { ordinal } from "@/lib/ordinal";
 import "server-only";
 import { Resvg } from "@resvg/resvg-js";
@@ -102,6 +103,7 @@ function ghatPlate(slug: string, w: number, h: number): Promise<string | null> {
       /* A sheet without its picture is still a sheet; the band alone is what
          every sheet carried before 16 September 2026. */
       console.error("patra: plate failed", slug, error);
+      void alertOwner("patra: plate failed", `${slug}\n${String(error)}`);
       return null;
     }
   })();

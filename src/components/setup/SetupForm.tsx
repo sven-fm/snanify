@@ -121,6 +121,7 @@ export function SetupForm({
   };
 
   const [water, setWater] = useState(initial.waterSlug);
+  const [hour, setHour] = useState(initial.reminderHour);
   const [names, setNames] = useState<string[]>(
     initial.names.length > 0 ? initial.names : [""],
   );
@@ -375,17 +376,28 @@ export function SetupForm({
         <legend className="sr-only">{t.reminder.label}</legend>
         <Label label={t.reminder.label} hint={t.reminder.hint} />
 
-        <select
-          name="reminderHour"
-          defaultValue={String(initial.reminderHour)}
-          className="field mt-5 min-h-[48px] w-full text-[1.02rem] text-ink"
-        >
-          {Array.from({ length: 24 }, (_, hour) => (
-            <option key={hour} value={hour}>
-              {String(hour).padStart(2, "0")}:00
-            </option>
+        {/* Twenty-four ruled cells rather than a select: the hour is chosen
+            with a thumb, and the chosen cell is tinted like the chosen water. */}
+        <div className="mt-5 grid grid-cols-4 gap-px bg-rule sm:grid-cols-6">
+          {Array.from({ length: 24 }, (_, h) => (
+            <label
+              key={h}
+              className={`flex min-h-[48px] cursor-pointer items-center justify-center tabular-nums transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-[-2px] has-[:focus-visible]:outline-spot ${
+                hour === h ? "bg-tint text-ink" : "bg-paper text-ink2"
+              }`}
+            >
+              <input
+                type="radio"
+                name="reminderHour"
+                value={h}
+                checked={hour === h}
+                onChange={() => setHour(h)}
+                className="sr-only"
+              />
+              {String(h).padStart(2, "0")}:00
+            </label>
           ))}
-        </select>
+        </div>
         {zone && <p className="mt-2 text-sm text-ink2">{t.reminder.zone.replace("{zone}", zone)}</p>}
         <FieldError>{errors.reminderHour && t.errors.hour}</FieldError>
         <FieldError>{errors.tz && t.errors.zone}</FieldError>

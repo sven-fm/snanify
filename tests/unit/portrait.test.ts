@@ -40,20 +40,28 @@ describe("processPortrait", () => {
     expect(out.buffer.byteLength).toBeLessThan(PORTRAIT.maxBytes);
   });
 
-  it("is grey, because the sheet is ink on paper", async () => {
+  it("is five tones of ink on the paper, like the river plates", async () => {
     const out = await processPortrait(photo);
     const { data, info } = await sharp(out.buffer)
       .raw()
       .toBuffer({ resolveWithObject: true });
 
-    /* A grayscale JPEG may still be written with three channels, so compare
-       the channels rather than trusting the channel count. */
-    if (info.channels >= 3) {
-      for (let i = 0; i < data.length; i += info.channels) {
-        expect(Math.abs(data[i] - data[i + 1])).toBeLessThanOrEqual(2);
-        expect(Math.abs(data[i + 1] - data[i + 2])).toBeLessThanOrEqual(2);
-      }
+    const hex = (c: string) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+    const paper = hex(PORTRAIT.paper);
+    const ink = hex(PORTRAIT.ink);
+    const tones = PORTRAIT.tones.map((a) => paper.map((p, c) => Math.round(p + (ink[c] - p) * (a / 255))));
+
+    /* JPEG blurs the steps a little, so every pixel must sit near one of the
+       five tones rather than on it, and more than one tone must be present. */
+    const seen = new Set<number>();
+    for (let i = 0; i < data.length; i += info.channels) {
+      const px = [data[i], data[i + 1], data[i + 2]];
+      const near = tones.findIndex((t) => px.every((v, c) => Math.abs(v - t[c]) <= 14));
+      if (near >= 0) seen.add(near);
     }
+    expect(seen.size).toBeGreaterThanOrEqual(3);
+    const inkIsBrown = ink[0] > ink[2] && paper[0] > paper[2];
+    expect(inkIsBrown).toBe(true);
   });
 
   it("takes a crop and uses it", async () => {

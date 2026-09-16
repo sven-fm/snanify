@@ -1,3 +1,4 @@
+import { alertOwner } from "@/lib/alert";
 import { timingSafeEqual } from "node:crypto";
 import { and, eq, gt, sql } from "drizzle-orm";
 import { db, users } from "@/db";
@@ -138,6 +139,7 @@ export async function GET(request: Request): Promise<Response> {
       if (result.sent) sent += 1;
     } catch (error) {
       console.error("reminders: could not send to", person.id, error);
+      await alertOwner("reminders: could not send", `person ${person.id}\n${error instanceof Error ? `${error.message}\n${error.stack ?? ""}` : String(error)}`);
     }
   }
 

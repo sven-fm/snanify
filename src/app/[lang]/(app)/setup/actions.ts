@@ -1,5 +1,6 @@
 "use server";
 
+import { checkBotId } from "botid/server";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db, profiles, users } from "@/db";
@@ -50,6 +51,9 @@ export async function saveProfile(
 ): Promise<SaveState> {
   const lang: Lang = formData.get("lang") === "hi" ? "hi" : "en";
   const user = await requireUser(lang, "/setup");
+
+  /* A script filling the form gets the form's own error and no row. */
+  if ((await checkBotId()).isBot) return { ok: false, errors: { form: "refused" } };
 
   const raw: RawProfile = {
     waterSlug: String(formData.get("waterSlug") ?? ""),

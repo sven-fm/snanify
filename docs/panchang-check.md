@@ -30,4 +30,38 @@ Drik reckons a muhurta as a fifteenth of the day or of the night, so Brahma muhu
 
 ## The occasion days, computed (16 September 2026)
 
-`src/lib/occasions.ts` now resolves every occasion to civil dates at the ghat's own sunrise: the tithi at sunrise with the kshaya fallback, lunar months named by the sankranti each holds, and sign entries under Lahiri. `tests/unit/occasions.test.ts` holds the days Drik confirmed above (Sarva Pitru Amavasya 10 October 2026, Rama Ekadashi 5 November 2026, Somvati Amavasya 8 March 2027, the purnima of 26 September 2026) and the days the resolver gives for the rest, which read as expected: Kartik Purnima 24 November 2026, Yam Dwitiya 11 November 2026, Mahashivratri 6 March 2027, Ganga Dussehra 13 June 2027, Makar Sankranti at 21:00 IST on 14 January 2027. The pages print these and roll the horizon forward daily. Still to do: read each of the dated ones off Drik Panchang and note the match here.
+`src/lib/occasions.ts` now resolves every occasion to civil dates at the ghat's own sunrise: the tithi at sunrise with the kshaya fallback, lunar months named by the sankranti each holds, and sign entries under Lahiri. `tests/unit/occasions.test.ts` holds the days Drik confirmed above (Sarva Pitru Amavasya 10 October 2026, Rama Ekadashi 5 November 2026, Somvati Amavasya 8 March 2027, the purnima of 26 September 2026) and the days the resolver gives for the rest, which read as expected: Kartik Purnima 24 November 2026, Yam Dwitiya 11 November 2026, Mahashivratri 6 March 2027, Ganga Dussehra 13 June 2027, Makar Sankranti at 21:00 IST on 14 January 2027. The pages print these and roll the horizon forward daily. Read off Drik Panchang on 16 September 2026; the record is below.
+
+## The occasion days, read off Drik Panchang (16 September 2026)
+
+**Reference:** Drik Panchang for Haridwar (geoname 1270351), the vrat lists for purnima, amavasya and ekadashi, the sankranti list, the Pitru Paksha list and the festival pages for Maha Shivaratri, Ganga Dussehra and the Diwali days. **Ours:** `resolveAll` in `src/lib/occasions.ts` after the fixes this check produced.
+
+### What the check changed
+
+- **The ayanamsa.** Drik prints its Lahiri ayanamsha on every day panchang: 24.003501 (1 January 2010), 24.143189 (2020), 24.199073 (2024), 24.227035 (2026), 24.247917 (1 July 2027). Those lie on one line, 23.8638 degrees at J2000 and 1.3971 degrees a century. Ours was anchored at 23.8531, 38 arcseconds low, which put every sankranti fifteen minutes early. Refitted.
+- **Aberration.** The elongation behind every tithi left out the sun's twenty arcseconds of aberration, which ended each tithi about a minute after Drik. Now both bodies are apparent.
+- **A sankranti after sunset is kept the next morning.** Makar Sankranti 2027: the sun enters Makara at 21:15 IST on 14 January; the day is 15 January, as Drik has it.
+- **An ekadashi that runs at two sunrises is kept on the second.** Vijaya Ekadashi 2027 is 4 March on Drik; the first-sunrise rule gave 3 March.
+
+### Dated occasions
+
+| Occasion | Ours | Drik | |
+| --- | --- | --- | --- |
+| Pitru Paksha 2026 | 27 September to 10 October | Purnima Shraddha 26 September, Sarva Pitru Amavasya 10 October | Drik counts the purnima shraddha as day one; the fortnight itself agrees |
+| Tula Sankramana 2026 | 18 October, the sun crosses 19:58 IST the evening before | 17 October 19:57 IST | Kept the next morning by the after-sunset rule; the moment agrees to the minute |
+| Kartik Snan 2026 | 27 October to 24 November | Ashwina Purnima 25 October, Kartika Purnima 24 November | See the purnima note below |
+| Yam Dwitiya 2026 | 11 November | Bhaiya Dooj 11 November | Match |
+| Kartik Purnima 2026 | 24 November | 24 November | Match |
+| Makar Sankranti 2027 | 15 January, the sun crosses 21:15 IST the evening before | 15 January, at 21:14 IST on 14 January | Match |
+| Magh Snan 2027 | 23 January to 20 February | Pausha Purnima 22 January, Magha Purnima 20 February | Match |
+| Mahashivratri 2027 | 6 March | 6 March, chaturdashi 12:03 on 6 March to 13:46 on 7 March | Match |
+| Ganga Dussehra 2027 | 13 June | 13 June, dashami 02:43 on 13 June to 02:11 on 14 June | Match |
+
+### Recurring days, September 2026 to September 2027
+
+- **Sankranti.** Twelve of twelve within one minute of Drik: Kanya 17 September 07:59, Tula 17 October 19:58, Vrishchika 16 November 19:49, Dhanu 16 December 10:30, Makara 14 January 21:15, Kumbha 13 February 10:14, Meena 15 March 07:05, Mesha 14 April 15:34, Vrishabha 15 May 12:25, Mithuna 15 June 19:01, Karka 17 July 05:53, Simha 17 August 02:17 (all IST, ours; Drik prints each a minute earlier or the same).
+- **Purnima.** Twelve of thirteen match. The one that differs is Ashwina: ours 26 October, Drik 25 October. The tithi runs from 11:55 on the 25th to 09:41 on the 26th, so it is at sunrise on the 26th and ours says so; Drik's vrat date follows the evening, which is also where Sharad Purnima falls. Both are stated rules; ours is the one the page prints.
+- **Amavasya.** Twelve of twelve. Where Drik lists two days (8 and 9 November, 7 and 8 March, 3 and 4 July) ours is the second, the sunrise day, which is also Drik's amavasya day.
+- **Ekadashi.** Twenty-four of twenty-five match Drik's Smarta day. The one that differs is Pausha Putrada 2027: Drik Smarta 18 January, Vaishnava 19 January; ours is 19 January, the day the tithi is at sunrise (it ends 07:50, forty minutes after). Recorded, not changed: the page's rule is the tithi at sunrise.
+
+The tests in `tests/unit/occasions.test.ts` pin Makar Sankranti to 15 January 2027 with its moment, Vijaya Ekadashi to 4 March 2027, and the days above.

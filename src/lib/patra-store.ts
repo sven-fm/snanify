@@ -1,3 +1,4 @@
+import { alertOwner } from "@/lib/alert";
 import "server-only";
 import { eq } from "drizzle-orm";
 import { db, sittings, type Sitting } from "@/db";
@@ -44,6 +45,7 @@ export async function storeSheet(sitting: Sitting): Promise<string | null> {
     return stored.key;
   } catch (error) {
     console.error("patra: could not pre-render", sitting.id, error);
+    await alertOwner("patra: could not pre-render", `sitting ${sitting.id}\n${error instanceof Error ? `${error.message}\n${error.stack ?? ""}` : String(error)}`);
     return null;
   }
 }

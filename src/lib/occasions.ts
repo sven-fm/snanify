@@ -233,10 +233,16 @@ function monthDays(month: LunarMonth, obs: Astro.Observer): string[] {
  */
 function tithiDays(candidates: string[], index: number, resolution: Occasion["rule"]["dayResolution"], obs: Astro.Observer): string[] {
   const out: string[] = [];
+  /* A tithi that runs at two sunrises is kept on the first of them, except
+     the ekadashi, whose fast is kept on the second: that is the day Drik
+     Panchang gives (Vijaya Ekadashi, 4 March 2027). */
+  const second = index === 11 || index === 26;
   for (const d of candidates) {
     const at = tithiAt(momentOn(d, resolution, obs)).index;
     if (at === index) {
-      if (out.length === 0 || addDays(out[out.length - 1], 1) !== d) out.push(d);
+      const prev = out[out.length - 1];
+      if (out.length === 0 || addDays(prev, 1) !== d) out.push(d);
+      else if (second && resolution === "udaya") out[out.length - 1] = d;
       continue;
     }
     if (resolution === "udaya") {
@@ -325,7 +331,15 @@ export function resolveOccasion(
     case "solar-ingress": {
       const sign = Object.entries(NAMED_SIGN).find(([k]) => o.occasionId.startsWith(k));
       const hits = ingresses(istMidnight(wf), istMidnight(addDays(wt, 1))).filter((h) => !sign || h.sign === sign[1]);
-      out = hits.map((h) => ({ ...base, kind: "instant", date: istDay(h.at), instant: h.at.toISOString() }));
+      /* The snan is kept in the punya kaal after the ingress: the same day
+         when the sun crosses by daylight, the next morning when it crosses
+         after sunset. Makar Sankranti 2027 is the case: the sun enters Makara
+         at 21:14 IST on 14 January and the day is 15 January. */
+      out = hits.map((h) => {
+        const day = istDay(h.at);
+        const kept = h.at.getTime() > sunsetOn(day, obs).getTime() ? addDays(day, 1) : day;
+        return { ...base, kind: "instant", date: kept, instant: h.at.toISOString() };
+      });
       if (o.occurrence.basis !== "recurring") out = out.slice(0, 1);
       break;
     }
@@ -390,7 +404,13 @@ export function sayResolved(r: ResolvedDate, lang: "en" | "hi"): string {
     const joiner = lang === "hi" ? " से " : " to ";
     return `${fmt(r.date, lang, false)}${joiner}${fmt(r.to, lang, false)}`;
   }
-  if (r.kind === "instant" && r.instant) return `${fmt(r.date, lang, true)}, ${fmtTime(r.instant, lang)} IST`;
+  if (r.kind === "instant" && r.instant) {
+    const time = `${fmtTime(r.instant, lang)} IST`;
+    if (istDay(new Date(r.instant)) === r.date) return `${fmt(r.date, lang, true)}, ${time}`;
+    return lang === "hi"
+      ? `${fmt(r.date, lang, true)}, संक्रमण पिछली शाम ${time}`
+      : `${fmt(r.date, lang, true)}, the sun crosses at ${time} the evening before`;
+  }
   return fmt(r.date, lang, true);
 }
 

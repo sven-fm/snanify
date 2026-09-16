@@ -7,9 +7,9 @@ import sharp from "sharp";
    phone snapshot dropped into it in full colour looks like a photograph
    pasted onto a certificate, which is exactly the look this design exists to
    avoid. So every portrait is put through the same press: cropped to the
-   sheet's window, desaturated, given a little contrast and a fine grain, and
-   written at a size that can sit inside a 1080 by 1350 share image without
-   dominating its budget.
+   sheet's window, reduced to the five tones of ink the six river plates
+   carry, on the same paper, and written at a size that can sit inside the
+   share image without dominating its budget.
 
    FOUR THINGS THIS FILE REFUSES, and each is a real way a photo upload goes
    wrong rather than a hypothetical:
@@ -42,9 +42,19 @@ export const PORTRAIT = {
   maxBytes: 400 * 1024,
   /** Above this, the file is a bomb rather than a photograph. 100 megapixels. */
   maxPixels: 100_000_000,
-  /** The paper an alpha channel is flattened onto. Matches --paper on the sheet. */
-  paper: "#faf6ea",
+  /** The plate the picture is printed on: the same paper the ghat plate on the sheet is flattened onto. */
+  paper: "#f2ead9",
+  /** The ink of the six plates in public/waters. */
+  ink: "#171310",
+  /** The five tones of ink the plates carry, as alpha over the paper. */
+  tones: [0, 64, 128, 191, 255],
 } as const;
+
+/** "#f2ead9" as [242, 234, 217]. */
+function hex(colour: string): [number, number, number] {
+  const n = parseInt(colour.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
 
 export class PortraitRejected extends Error {
   /** A key the form looks up in its own copy, so the message is in their language. */
@@ -65,24 +75,6 @@ export type Processed = {
   width: number;
   height: number;
 };
-
-/**
- * A fine grain, the same one over every portrait, so the sheet reads as one
- * printed surface rather than a photograph sitting on top of a document.
- * Generated once at module load: it is 800 by 1000 of noise and there is no
- * reason to make it per request.
- */
-const grain = (async () => {
-  const bytes = Buffer.alloc(PORTRAIT.width * PORTRAIT.height);
-  for (let i = 0; i < bytes.length; i += 1) {
-    bytes[i] = 118 + Math.floor(Math.random() * 20);
-  }
-  return sharp(bytes, {
-    raw: { width: PORTRAIT.width, height: PORTRAIT.height, channels: 1 },
-  })
-    .png()
-    .toBuffer();
-})();
 
 /**
  * Put one uploaded photograph through the press.
@@ -126,16 +118,32 @@ export async function processPortrait(input: Buffer, crop?: Crop): Promise<Proce
     pipeline = pipeline.extract({ left: x, top: y, width: w, height: h });
   }
 
-  const pressed = pipeline
+  /* Pressed the way the six river plates were: the photograph reduced to
+     five tones of ink on the paper, so a face and a ghat sit on one sheet as
+     one kind of picture. Luminance is read after a light lift and a sharpen,
+     then each pixel takes the nearest of the five tones. */
+  const { data, info } = await pipeline
     .resize(PORTRAIT.width, PORTRAIT.height, { fit: "cover", position: "attention" })
     .flatten({ background: PORTRAIT.paper })
     .grayscale()
     .linear(1.12, -8)
-    .sharpen({ sigma: 0.6 });
+    .sharpen({ sigma: 0.6 })
+    .raw()
+    .toBuffer({ resolveWithObject: true });
 
-  const composited = pressed.composite([
-    { input: await grain, blend: "soft-light", tile: false },
-  ]);
+  const paper = hex(PORTRAIT.paper);
+  const ink = hex(PORTRAIT.ink);
+  const pixels = info.width * info.height;
+  const rgb = Buffer.alloc(pixels * 3);
+  for (let i = 0; i < pixels; i++) {
+    const dark = (255 - data[i * info.channels]) / 255;
+    /* The steps sit high, so a face keeps its light: a photograph of a
+       person is mostly midtone, and split evenly it comes out as mud. */
+    const level = dark < 0.22 ? 0 : dark < 0.42 ? 1 : dark < 0.62 ? 2 : dark < 0.82 ? 3 : 4;
+    const alpha = PORTRAIT.tones[level] / 255;
+    for (let c = 0; c < 3; c++) rgb[i * 3 + c] = Math.round(paper[c] + (ink[c] - paper[c]) * alpha);
+  }
+  const composited = sharp(rgb, { raw: { width: info.width, height: info.height, channels: 3 } });
 
   /* Quality steps down until the file fits. A portrait that pushes the share
      image over its budget stops being shared, which defeats the point of it. */

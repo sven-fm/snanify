@@ -1,3 +1,4 @@
+import { alertOwner } from "@/lib/alert";
 import type Stripe from "stripe";
 import { db } from "@/db";
 import { fulfilSession } from "@/lib/fulfil";
@@ -82,6 +83,7 @@ export async function POST(request: Request): Promise<Response> {
     }
   } catch (error) {
     console.error("stripe webhook: fulfilment failed", event.id, error);
+    await alertOwner("stripe webhook: fulfilment failed", `event ${event.id}\n${error instanceof Error ? `${error.message}\n${error.stack ?? ""}` : String(error)}`);
     return new Response("fulfilment failed", { status: 500 });
   }
 
