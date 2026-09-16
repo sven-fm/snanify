@@ -837,7 +837,7 @@ export const RIVERS: Ghat[] = [
     occasions: [
       {
         key: "tula-sankramana",
-        name: { en: "Tula Sankramana", hi: "तुला संक्रमण" },
+        name: { en: "Kaveri Sankramana, the Tula Sankramana", hi: "कावेरी संक्रमण, तुला संक्रमण" },
         reckoning: { en: "The sun's entry into Tula", hi: "सूर्य का तुला राशि में प्रवेश" },
         note: {
           en: "The day of the site. The moment is fixed by the panchang and the tank is crowded for it.",

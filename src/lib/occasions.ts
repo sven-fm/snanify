@@ -331,13 +331,16 @@ export function resolveOccasion(
     case "solar-ingress": {
       const sign = Object.entries(NAMED_SIGN).find(([k]) => o.occasionId.startsWith(k));
       const hits = ingresses(istMidnight(wf), istMidnight(addDays(wt, 1))).filter((h) => !sign || h.sign === sign[1]);
-      /* The snan is kept in the punya kaal after the ingress: the same day
-         when the sun crosses by daylight, the next morning when it crosses
-         after sunset. Makar Sankranti 2027 is the case: the sun enters Makara
-         at 21:14 IST on 14 January and the day is 15 January. */
+      /* The day is the moment's own, with one exception. Makar Sankranti is
+         kept in the punya kaal after the ingress, so a crossing after sunset
+         is kept the next morning: in 2027 the sun enters Makara at 21:14 IST
+         on 14 January and the day is 15 January, as Drik Panchang has it.
+         Every other sankranti keeps the moment's day; at Talakaveri the
+         theerthodbhava is the instant itself, whatever the hour. */
+      const nextMorning = o.occasionId.startsWith("makar");
       out = hits.map((h) => {
         const day = istDay(h.at);
-        const kept = h.at.getTime() > sunsetOn(day, obs).getTime() ? addDays(day, 1) : day;
+        const kept = nextMorning && h.at.getTime() > sunsetOn(day, obs).getTime() ? addDays(day, 1) : day;
         return { ...base, kind: "instant", date: kept, instant: h.at.toISOString() };
       });
       if (o.occurrence.basis !== "recurring") out = out.slice(0, 1);

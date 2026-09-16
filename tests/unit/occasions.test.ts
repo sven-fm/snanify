@@ -76,6 +76,12 @@ describe("the dated occasions", () => {
     expect(ms.instant).toMatch(/^2027-01-14T15:4[2-6]/);
   });
 
+  it("keeps Kaveri Sankramana on the day of the crossing, 17 October 2026, whatever the hour", () => {
+    const [ts] = resolveOccasion(occasionBySlug("tula-sankramana-2026")!, FROM, TO);
+    expect(ts.date).toBe("2026-10-17");
+    expect(ts.instant).toMatch(/^2026-10-17T14:2/);
+  });
+
   it("lists twelve sankrantis a year", () => {
     expect(dates("sankranti").length).toBe(12);
   });

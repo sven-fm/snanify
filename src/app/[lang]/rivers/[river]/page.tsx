@@ -42,7 +42,11 @@ export async function generateMetadata({
       ? `${ghat.river.hi}, ${ghat.ghat.hi}, ${ghat.city.hi} | स्नानिफ़ाई`
       : `${ghat.river.en} at ${ghat.ghat.en}, ${ghat.city.en} | Snanify`;
 
-  const description = `${ghat.epithet[lang]}, ${ghat.standfirst[lang]}`;
+  /* The first words answer what a search for "haridwar river name" asks. */
+  const description =
+    lang === "hi"
+      ? `${ghat.city.hi} की नदी ${ghat.river.hi} है, ${ghat.ghat.hi} पर। ${ghat.standfirst.hi}`
+      : `The river at ${ghat.city.en} is the ${ghat.river.en}, at ${ghat.ghat.en}. ${ghat.standfirst.en}`;
 
   return pageMetadata({ lang, path: route, title, description, ogType: "article" });
 }

@@ -26,7 +26,7 @@ import { RIVERS } from "@/content/rivers";
 import { pageMetadata } from "@/lib/seo";
 import { muhuratIndexContent } from "@/content/muhurat-index";
 import { occasionName } from "@/content/names";
-import { horizonFrom, resolveOccasion, sayResolved } from "@/lib/occasions";
+import { horizonFrom, resolveOccasion, sayResolved, type ResolvedDate } from "@/lib/occasions";
 import { localeDef } from "@/lib/locales";
 
 /** Every (lang, occasion) pair, the slug is identical in both locales. */
@@ -93,13 +93,15 @@ function occurrenceClause(lang: Lang, occasion: Occasion): string {
   return label.charAt(0).toLowerCase() + label.slice(1);
 }
 
-function occasionDescription(lang: Lang, occasion: Occasion): string {
+/** The description opens with the computed day where there is one, so the
+    snippet under the title answers the question the search asked. */
+function occasionDescription(lang: Lang, occasion: Occasion, resolved?: ResolvedDate): string {
   const t = seo[lang];
   const rule = occasion.rule.kind === "solar-ingress" ? t.ingressRule : t.tithiRule;
   const waters = t.waters[occasion.ghats.length] ?? t.waters[0];
   return t.description(
     occasion.name[lang],
-    occurrenceClause(lang, occasion),
+    resolved ? sayResolved(resolved, lang) : occurrenceClause(lang, occasion),
     rule,
     waters,
   );
@@ -162,7 +164,7 @@ export async function generateMetadata({
   const title = year
     ? t.meta.detailTitle.replace("{name}", occasion.name[lang]).replace("{year}", year)
     : `${occasion.name[lang]}, ${t.meta.detailSuffix}`;
-  const description = occasionDescription(lang, occasion);
+  const description = occasionDescription(lang, occasion, next);
 
   return pageMetadata({
     lang,
@@ -184,7 +186,6 @@ export default async function Page({
 
   const route = `/muhurat/${slug}`;
   const alt = otherLang(lang);
-  const description = occasionDescription(lang, occasion);
   const t = muhuratIndexContent[lang];
 
   /* "When is Kartik Purnima in 2026?", answered with the computed date, as
@@ -193,6 +194,7 @@ export default async function Page({
   const { from, to } = horizonFrom(new Date());
   const resolved = resolveOccasion(occasion, from, to);
   const first = resolved[0];
+  const description = occasionDescription(lang, occasion, first);
   const year = first?.date?.slice(0, 4);
   const when =
     first && year
