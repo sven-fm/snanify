@@ -5,9 +5,9 @@ import { LIMB_ORDER, SITTING, type Limb } from "@/lib/sitting-plan";
 
    Five parts in a fixed order. Four of them end on their own clock; the vow
    ends when the thumb has held for its whole length, however long that takes.
-   The first two can be left early with "next". The stillness cannot be left
-   at all: no event moves it on except its own sixty seconds, and that is the
-   product decision from build-plan.md written where it can be tested.
+   The reading, the breath and the stillness can be left early with "next";
+   the owner's direction of 16 September 2026 opened the stillness, which had
+   been sealed. The vow waits for the thumb and the mark finishes on its own.
 
    Pressing nothing gives the three minute form exactly, which the tests in
    tests/unit/sitting-machine.test.ts hold to the second.
@@ -38,7 +38,7 @@ export const STILLNESS_NOTE_SECONDS = 3;
 const EPSILON = 1e-6;
 
 /** The parts "next" may leave early. */
-const SKIPPABLE: ReadonlySet<Phase> = new Set<Phase>(["reading", "breath"]);
+const SKIPPABLE: ReadonlySet<Phase> = new Set<Phase>(["reading", "breath", "stillness"]);
 
 function after(phase: Phase): Phase {
   if (phase === "ready") return LIMB_ORDER[0];
@@ -92,6 +92,12 @@ export function progress(state: SittingState): number[] {
     const fill = limb === "hold" ? state.held / SITTING.hold : state.into / SITTING[limb];
     return Number(Math.min(Math.max(fill, 0), 1).toFixed(3));
   });
+}
+
+/** Whole seconds left in a timed part, for the stillness's counter. */
+export function remaining(state: SittingState): number {
+  if (state.phase === "ready" || state.phase === "done" || state.phase === "hold") return 0;
+  return Math.max(0, Math.ceil(SITTING[state.phase] - state.into));
 }
 
 /** Which part, one-based, for "Part 2 of 5". Zero before the start. */

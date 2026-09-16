@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { todayContent } from "@/content/today";
 import { getGhat } from "@/content/rivers";
+import { PICTURES } from "@/content/live/pictures";
+import type { WaterSlug } from "@/lib/riverdata";
 import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
 import { requireUser } from "@/lib/auth";
@@ -84,17 +86,33 @@ export default async function Page({
      pack picker instead of to the sheet they had just made. */
   const kept = await sittingToday(user.id, profile.waterSlug, user.tz);
 
+  const pic = PICTURES[profile.waterSlug as WaterSlug];
+  const picture = { src: pic.src, alt: pic.alt[lang] };
+  const ghat = getGhat(profile.waterSlug);
+
   if (kept) {
     return (
       <>
         <div className="grain" aria-hidden="true" />
         <Header lang={lang} currentPath={ROUTE} />
-        <main className="mx-auto max-w-md px-5 py-16 text-center sm:py-24">
-          <h1 className="display text-[2rem] leading-[1.2]">{t.already.title}</h1>
-          <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.already.body}</p>
-          <div className="mt-9">
-            <LinkButton href={localePath(lang, `/p/${kept.id}`)}>{t.already.cta}</LinkButton>
+        <main className="mx-auto max-w-md px-5 py-8 sm:py-14">
+          <div className="boxed relative aspect-[3/2] overflow-hidden bg-paper2">
+            <div
+              role="img"
+              aria-label={picture.alt}
+              className="ink-picture absolute inset-0"
+              style={{ ["--picture" as string]: `url(${picture.src})` }}
+            />
           </div>
+          <h1 className="display mt-8 text-center text-[2rem] leading-[1.2]">{t.already.title}</h1>
+          <p className="mt-4 text-center text-[1.05rem] leading-[1.7] text-ink2">{t.already.body}</p>
+          <div className="mt-8 flex flex-col gap-3">
+            <LinkButton href={localePath(lang, `/p/${kept.id}?new=1`)}>{t.already.share}</LinkButton>
+            <LinkButton href={localePath(lang, `/p/${kept.id}`)} variant="ghost">
+              {t.already.cta}
+            </LinkButton>
+          </div>
+          <p className="mt-8 text-center text-sm text-ink2">{t.already.tomorrow}</p>
         </main>
         <Footer lang={lang} />
       </>
@@ -107,7 +125,6 @@ export default async function Page({
   const water = snapshot.waters.find((w) => w.slug === profile.waterSlug);
   if (!water) throw new Error(`no live state for ${profile.waterSlug}`);
 
-  const ghat = getGhat(profile.waterSlug);
   const d = water.discharge;
 
   const reading = {
@@ -138,6 +155,7 @@ export default async function Page({
           sankalp={profile.sankalpText}
           names={names}
           waterSlug={profile.waterSlug}
+          picture={picture}
           /* Never outside development: a fast sitting is a testing affordance,
              not a way to hurry the practice. */
           speed={process.env.NODE_ENV === "production" ? 1 : query.fast === "1" ? 30 : 1}

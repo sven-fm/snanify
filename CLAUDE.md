@@ -75,7 +75,7 @@ Durations live in `src/lib/sitting-plan.ts` and nowhere else; copy reads them fr
 | The reading | 15s | The river's flow today, its rank against 29 years, and how far you are from that water |
 | The breath | 45s | The waterline rises and falls at the river's own amplitude |
 | The sankalp | 11s | Your own words, held under your thumb while the ink fills |
-| The stillness | 60s | The screen goes fully black, and it cannot be skipped |
+| The stillness | 60s | The screen goes fully black, with the seconds left in dim ink and a Next |
 | The mark | 20s | One line writes itself into your register |
 
 The artefact is the **Sankalp Patra**: it carries the sitter's portrait, up to five

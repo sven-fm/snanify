@@ -1,6 +1,10 @@
 import { ordinal } from "@/lib/ordinal";
 import "server-only";
 import { Resvg } from "@resvg/resvg-js";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import sharp from "sharp";
+import { SITE_ORIGIN } from "@/lib/locales";
 import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
 import { typeset, wrap } from "@/lib/typeset";
 import type { PatraView } from "@/lib/patra-view";
@@ -53,9 +57,56 @@ function band(view: PatraView, x: number, y: number, w: number, h: number): stri
     .join("");
 
   return (
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${PAPER_2}" stroke="${RULE}" />` +
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${PAPER_2}" />` +
     `<svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="0 0 ${drawn.width} ${drawn.height}" preserveAspectRatio="none">${paths}</svg>`
   );
+}
+
+/* ---------------------------------------------------------------------------
+   The ghat, as ink on the paper.
+
+   public/waters/<slug>.webp is the same five-tone mask /live prints through
+   CSS: ink in the colour channels, density in the alpha. Flattened onto the
+   plate's paper it is the picture, and it is cut to the plate's own size so
+   the SVG carries it without scaling. Read from disk where the files are
+   beside the code, which is every local run, and fetched from the site's own
+   origin where they are not, which is the deployed function. Six pictures,
+   each made once per process.
+   --------------------------------------------------------------------------- */
+const plates = new Map<string, Promise<string | null>>();
+
+async function maskBytes(slug: string): Promise<Buffer> {
+  const local = path.join(process.cwd(), "public", "waters", `${slug}.webp`);
+  try {
+    return await readFile(local);
+  } catch {
+    const res = await fetch(`${SITE_ORIGIN}/waters/${slug}.webp`);
+    if (!res.ok) throw new Error(`no plate for ${slug}: ${res.status}`);
+    return Buffer.from(await res.arrayBuffer());
+  }
+}
+
+function ghatPlate(slug: string, w: number, h: number): Promise<string | null> {
+  const key = `${slug}:${w}x${h}`;
+  const cached = plates.get(key);
+  if (cached) return cached;
+  const made = (async () => {
+    try {
+      const png = await sharp(await maskBytes(slug))
+        .resize(w, h, { fit: "cover", position: "attention" })
+        .flatten({ background: PAPER_2 })
+        .png({ compressionLevel: 9 })
+        .toBuffer();
+      return `data:image/png;base64,${png.toString("base64")}`;
+    } catch (error) {
+      /* A sheet without its picture is still a sheet; the band alone is what
+         every sheet carried before 16 September 2026. */
+      console.error("patra: plate failed", slug, error);
+      return null;
+    }
+  })();
+  plates.set(key, made);
+  return made;
 }
 
 /** One ruled row of the register. */
@@ -108,19 +159,30 @@ export async function patraSvg(view: PatraView): Promise<string> {
     ).svg,
   );
 
-  /* --- the portrait and the river --------------------------------------- */
+  /* --- the portrait, the ghat and the river ------------------------------ */
   const artTop = y + 48;
   const artHeight = 300;
+  const plateHeight = 204;
+
+  const artX = view.portraitUrl ? M + 268 : M;
+  const artW = view.portraitUrl ? INNER - 268 : INNER;
 
   if (view.portraitUrl) {
     parts.push(
       `<image href="${view.portraitUrl}" x="${M}" y="${artTop}" width="240" height="${artHeight}" preserveAspectRatio="xMidYMid slice" />` +
         `<rect x="${M}" y="${artTop}" width="240" height="${artHeight}" fill="none" stroke="${RULE}" />`,
     );
-    parts.push(band(view, M + 268, artTop, INNER - 268, artHeight));
-  } else {
-    parts.push(band(view, M, artTop, INNER, artHeight));
   }
+
+  /* The ghat above, its water below, one frame around both. */
+  const plate = await ghatPlate(view.waterSlug, artW, plateHeight);
+  if (plate) {
+    parts.push(`<image href="${plate}" x="${artX}" y="${artTop}" width="${artW}" height="${plateHeight}" />`);
+    parts.push(band(view, artX, artTop + plateHeight, artW, artHeight - plateHeight));
+  } else {
+    parts.push(band(view, artX, artTop, artW, artHeight));
+  }
+  parts.push(`<rect x="${artX}" y="${artTop}" width="${artW}" height="${artHeight}" fill="none" stroke="${RULE}" />`);
 
   /* --- the prayer -------------------------------------------------------- */
   let after = artTop + artHeight + 56;

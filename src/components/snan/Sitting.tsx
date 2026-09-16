@@ -9,6 +9,7 @@ import {
   STILLNESS_NOTE_SECONDS,
   partNumber,
   progress,
+  remaining,
   step,
   type Phase,
 } from "@/lib/sitting-machine";
@@ -36,11 +37,11 @@ import type { FullLang as Lang } from "@/lib/locales";
    breath early, the vow ends when the thumb has held for its whole length,
    and the stillness ends on its own clock and on nothing else.
 
-   THE STILLNESS CANNOT BE SKIPPED. There is no tap target on that screen and
-   no visible timer. That is the product decision from build-plan.md, and it is
-   the reason the black screen is worth anything at all. It announces itself:
-   the one instruction shows for three seconds in dim ink, then the screen is
-   fully black.
+   THE STILLNESS IS BLACK, WITH A COUNT AND A WAY OUT. It announces itself:
+   the one instruction shows for three seconds in dim ink, then only the
+   seconds left remain, dim, in the middle of the dark, and a Next in the
+   same dim ink at the foot. The owner opened it on 16 September 2026; before
+   that it had no tap target and no clock.
 
    THE BAR ACROSS THE TOP is five segments for the five parts, each filling
    with its own time, so a first morning is never a screen with no way to
@@ -77,6 +78,7 @@ export function Sitting({
   sankalp,
   names,
   waterSlug,
+  picture,
   reducedMotionDefault = false,
   speed = 1,
 }: {
@@ -87,6 +89,8 @@ export function Sitting({
   names: string[];
   /** One of six, and the only thing measurement is told about a morning. */
   waterSlug: string;
+  /** The ghat, as ink on the paper: the same plate /live prints. */
+  picture: { src: string; alt: string };
   reducedMotionDefault?: boolean;
   /**
    * How many times faster than real time the clock runs. Always 1 in
@@ -223,13 +227,24 @@ export function Sitting({
   /* --- what the screen is doing right now -------------------------------- */
   if (phase === "ready") {
     return (
-      <div className="mx-auto max-w-md px-5 py-16 text-center" data-sitting data-speed={speed} data-phase={phase}>
-        <p className="display text-[2rem] leading-[1.2]">{reading.water}</p>
-        <p className="mt-2 text-ink2">
-          {reading.ghat}, {reading.city}
-        </p>
-        <p className="mt-8 text-[1.02rem] leading-[1.7] text-ink2">{t.begin.ready}</p>
-        <p className="mt-2 text-sm text-ink2">{t.begin.quiet}</p>
+      <div className="mx-auto max-w-md px-5 py-6 sm:py-10" data-sitting data-speed={speed} data-phase={phase}>
+        <div className="boxed relative aspect-[3/2] overflow-hidden bg-paper2">
+          <div
+            role="img"
+            aria-label={picture.alt}
+            className="ink-picture absolute inset-0"
+            style={{ ["--picture" as string]: `url(${picture.src})` }}
+          />
+          <div className="absolute bottom-0 left-0 bg-paper px-3 py-2">
+            <p className="display text-[1.4rem] leading-tight">{reading.water}</p>
+            <p className="text-sm text-ink2">
+              {reading.ghat}, {reading.city}
+            </p>
+          </div>
+        </div>
+
+        <p className="display mt-8 text-center text-[1.5rem] leading-[1.3]">{t.begin.ready}</p>
+        <p className="mt-2 text-center text-sm text-ink2">{t.begin.quiet}</p>
 
         <button
           type="button"
@@ -237,7 +252,7 @@ export function Sitting({
             track("sitting_start", { water: waterSlug, lang });
             dispatch({ type: "start" });
           }}
-          className="label mt-10 min-h-[56px] w-full bg-spot px-8 text-paper transition-colors hover:bg-ink"
+          className="label mt-8 min-h-[56px] w-full bg-spot px-8 text-paper transition-colors hover:bg-ink"
         >
           {t.begin.cta}
         </button>
@@ -246,14 +261,14 @@ export function Sitting({
   }
 
   if (phase === "stillness") {
-    /* No timer, no tap target, no way past it. The one instruction shows
-       for three seconds in dim ink and then the screen is entirely black. */
+    /* Black. The one instruction for three seconds, then only the seconds
+       left, dim, and a dim Next at the foot for whoever needs it. */
     const announcing = into < STILLNESS_NOTE_SECONDS;
+    const left = remaining(state);
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black"
+        className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black"
         aria-label={t.stillness.label}
-        role="presentation"
         data-sitting
         data-speed={speed}
         data-phase={phase}
@@ -267,6 +282,21 @@ export function Sitting({
         >
           {t.stillness.instruction}
         </p>
+        <p
+          className="display tabular mt-6 text-[3rem] leading-none text-[#3d3a33]"
+          aria-live="off"
+          data-remaining={left}
+        >
+          {left}
+        </p>
+        <button
+          type="button"
+          onClick={next}
+          className="label absolute inset-x-5 bottom-8 flex min-h-[56px] items-center justify-center border-2 border-[#3d3a33] text-[#6b665a] transition-colors hover:border-[#6b665a]"
+          data-next
+        >
+          {t.next}
+        </button>
       </div>
     );
   }
@@ -457,7 +487,11 @@ function BreathScreen({
   );
 }
 
-/** The vow, held under a thumb while the ink fills. Eleven unbroken seconds. */
+/**
+ * The vow: one pressable box. The ink rises from the foot of the box while
+ * the thumb is down and drains the moment it lifts, and the box says what
+ * to do in the label voice. Eleven unbroken seconds fill it.
+ */
 function VowScreen({
   t,
   sankalp,
@@ -473,29 +507,35 @@ function VowScreen({
 }) {
   const filled = Math.min(held / SITTING.hold, 1);
   const pct = (filled * 100).toFixed(2);
+  const pressing = held > 0;
 
   return (
-    <div
-      className="mt-6 touch-none select-none"
-      onPointerDown={() => onHold(true)}
-      onPointerUp={() => onHold(false)}
-      onPointerCancel={() => onHold(false)}
-      onPointerLeave={() => onHold(false)}
-    >
-      <p className="text-sm text-ink2">{names.join(", ")}</p>
+    <div className="mt-6">
+      <p className="text-center text-sm text-ink2">{names.join(", ")}</p>
 
-      <div className="relative mt-5 border-y-2 border-rulestrong py-6">
-        <div
-          className="absolute inset-y-0 left-0 bg-spot/15"
-          style={{ width: `${pct}%` }}
+      <button
+        type="button"
+        onPointerDown={() => onHold(true)}
+        onPointerUp={() => onHold(false)}
+        onPointerCancel={() => onHold(false)}
+        onPointerLeave={() => onHold(false)}
+        onContextMenu={(e) => e.preventDefault()}
+        className={`hold-box relative mt-4 block w-full touch-none select-none overflow-hidden border-2 bg-paper2 px-6 py-12 text-center transition-colors ${
+          pressing ? "border-ink" : "border-rulestrong"
+        }`}
+        data-holding={pressing ? "1" : undefined}
+        aria-label={t.vow.hold}
+      >
+        <span
+          className="absolute inset-x-0 bottom-0 transition-[height] duration-100 ease-linear"
+          style={{ height: `${pct}%`, backgroundColor: "color-mix(in srgb, var(--spot) 28%, transparent)" }}
           aria-hidden="true"
         />
-        <p className="relative display text-[1.5rem] leading-[1.45]">{sankalp}</p>
-      </div>
-
-      <p className="mt-6 text-center text-[1.02rem] text-ink2">
-        {filled >= 1 ? t.vow.done : held > 0 ? t.vow.holding : t.vow.hold}
-      </p>
+        <span className="relative display block text-[1.6rem] leading-[1.4]">{sankalp}</span>
+        <span className="label relative mt-8 block text-ink2">
+          {filled >= 1 ? t.vow.done : pressing ? t.vow.holding : t.vow.hold}
+        </span>
+      </button>
     </div>
   );
 }

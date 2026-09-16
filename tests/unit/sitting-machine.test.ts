@@ -5,6 +5,7 @@ import {
   STILLNESS_NOTE_SECONDS,
   partNumber,
   progress,
+  remaining,
   step,
   type SittingState,
 } from "@/lib/sitting-machine";
@@ -13,9 +14,9 @@ import {
    The sitting's machine, run the way a browser runs it: many small ticks.
 
    These hold the product rules the copy prints. Pressing nothing is the three
-   minute form to the second. "Next" leaves the reading and the breath early
-   and nothing else. The vow waits for the thumb. The stillness cannot be
-   left by any event but its own clock.
+   minute form to the second. "Next" leaves the reading, the breath and the
+   stillness early and nothing else. The vow waits for the thumb. The mark
+   finishes on its own.
    --------------------------------------------------------------------------- */
 
 const TICK = 0.05;
@@ -78,15 +79,20 @@ describe("next", () => {
     expect(s.phase).toBe("hold");
   });
 
-  it("does not move the vow, the stillness or the mark", () => {
+  it("leaves the stillness early", () => {
+    let s = step(step(started(), { type: "next" }), { type: "next" });
+    s = run(s, SITTING.hold, true);
+    expect(s.phase).toBe("stillness");
+    s = step(run(s, 10), { type: "next" });
+    expect(s.phase).toBe("mark");
+  });
+
+  it("does not move the vow or the mark", () => {
     let s = step(step(started(), { type: "next" }), { type: "next" });
     expect(s.phase).toBe("hold");
     expect(step(s, { type: "next" }).phase).toBe("hold");
 
     s = run(s, SITTING.hold, true);
-    expect(s.phase).toBe("stillness");
-    expect(step(s, { type: "next" }).phase).toBe("stillness");
-
     s = run(s, SITTING.stillness);
     expect(s.phase).toBe("mark");
     expect(step(s, { type: "next" }).phase).toBe("mark");
@@ -136,13 +142,15 @@ describe("the stillness", () => {
     expect(run(s, STILLNESS_NOTE_SECONDS + 0.1).into).toBeGreaterThan(STILLNESS_NOTE_SECONDS);
   });
 
-  it("lasts its full minute whatever is pressed", () => {
+  it("lasts its full minute when nothing is pressed, and counts down", () => {
     let s = atStillness();
+    expect(remaining(s)).toBe(SITTING.stillness);
     s = run(s, 30);
-    s = step(s, { type: "next" });
+    expect(remaining(s)).toBe(30);
     s = step(s, { type: "start" });
     s = run(s, 29.9, true);
     expect(s.phase).toBe("stillness");
+    expect(remaining(s)).toBe(1);
     s = run(s, 0.2);
     expect(s.phase).toBe("mark");
   });

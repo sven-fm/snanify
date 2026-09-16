@@ -427,6 +427,17 @@ html[data-js] [data-in] .grow {
   will-change: transform;
 }
 
+/* The vow's box asks to be pressed: its rule breathes between the light and
+   the strong rule until a thumb lands, then holds still. */
+@keyframes rule-breathe {
+  0% { border-color: var(--rule); }
+  50% { border-color: var(--rule-strong); }
+  100% { border-color: var(--rule); }
+}
+.hold-box:not([data-holding]) {
+  animation: rule-breathe 2.4s ease-in-out infinite;
+}
+
 /* The waterline breathes at the river's own amplitude: four seconds in, six
    out, as the sitting does. `--amp` is set from the percentile. */
 @keyframes breathe {
@@ -480,7 +491,8 @@ html:not([data-js]) .ink-picture-lazy {
     transition: none;
   }
   .breathe,
-  .flow {
+  .flow,
+  .hold-box:not([data-holding]) {
     animation: none;
   }
 }

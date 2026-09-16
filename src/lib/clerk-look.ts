@@ -22,56 +22,78 @@ import type { FullLang, Lang } from "@/lib/locales";
    the honest state of it: a partly translated card is better than a purple one.
    --------------------------------------------------------------------------- */
 
-const PAPER = "#faf6ea";
-const PAPER_2 = "#f2ead9";
-const INK = "#16130f";
-const INK_2 = "#57513f";
-const RULE = "#c3b697";
-const SPOT = "#b32620";
+/* The day and night palettes, the same tokens globals.css sets on :root and
+   on .dark. Clerk cannot read a CSS variable for a colour it has to derive
+   shades from, so the hex values are written out here and the provider
+   picks the pair for the edition the page is in. */
+type Palette = { paper: string; paper2: string; ink: string; ink2: string; rule: string; spot: string };
 
-export const clerkAppearance = {
-  variables: {
-    colorPrimary: SPOT,
-    colorBackground: PAPER,
-    colorText: INK,
-    colorTextSecondary: INK_2,
-    colorInputBackground: PAPER_2,
-    colorInputText: INK,
-    colorDanger: SPOT,
-    borderRadius: "0",
-    fontFamily: "var(--font-martel), ui-sans-serif, system-ui, sans-serif",
-    fontFamilyButtons: "var(--font-martel), ui-sans-serif, system-ui, sans-serif",
-  },
-  elements: {
-    rootBox: { width: "100%" },
-    cardBox: { boxShadow: "none", borderRadius: "0", width: "100%" },
-    card: {
-      boxShadow: "none",
-      borderRadius: "0",
-      border: `2px solid ${INK}`,
-      backgroundColor: PAPER,
-    },
-    headerTitle: {
-      fontFamily: "var(--font-eczar), Georgia, serif",
-      fontSize: "1.5rem",
-    },
-    formButtonPrimary: {
-      borderRadius: "0",
-      boxShadow: "none",
-      textTransform: "uppercase",
-      letterSpacing: "0.08em",
-      minHeight: "48px",
-    },
-    socialButtonsBlockButton: {
-      borderRadius: "0",
-      border: `1px solid ${RULE}`,
-      minHeight: "48px",
-    },
-    formFieldInput: { borderRadius: "0", border: `1px solid ${RULE}`, minHeight: "48px" },
-    footerActionLink: { color: SPOT },
-    footer: { background: PAPER_2, borderRadius: "0" },
-  },
+const DAY: Palette = {
+  paper: "#faf6ea",
+  paper2: "#f2ead9",
+  ink: "#16130f",
+  ink2: "#57513f",
+  rule: "#c3b697",
+  spot: "#b32620",
 };
+
+const NIGHT: Palette = {
+  paper: "#12110e",
+  paper2: "#1a1814",
+  ink: "#ece3cf",
+  ink2: "#99917f",
+  rule: "#35302a",
+  spot: "#e04a40",
+};
+
+function appearanceFor(c: Palette) {
+  return {
+    variables: {
+      colorPrimary: c.spot,
+      colorBackground: c.paper,
+      colorText: c.ink,
+      colorTextSecondary: c.ink2,
+      colorInputBackground: c.paper2,
+      colorInputText: c.ink,
+      colorDanger: c.spot,
+      borderRadius: "0",
+      fontFamily: "var(--font-martel), ui-sans-serif, system-ui, sans-serif",
+      fontFamilyButtons: "var(--font-martel), ui-sans-serif, system-ui, sans-serif",
+    },
+    elements: {
+      rootBox: { width: "100%" },
+      cardBox: { boxShadow: "none", borderRadius: "0", width: "100%" },
+      card: {
+        boxShadow: "none",
+        borderRadius: "0",
+        border: `2px solid ${c.ink}`,
+        backgroundColor: c.paper,
+      },
+      headerTitle: {
+        fontFamily: "var(--font-eczar), Georgia, serif",
+        fontSize: "1.5rem",
+      },
+      formButtonPrimary: {
+        borderRadius: "0",
+        boxShadow: "none",
+        textTransform: "uppercase" as const,
+        letterSpacing: "0.08em",
+        minHeight: "48px",
+      },
+      socialButtonsBlockButton: {
+        borderRadius: "0",
+        border: `1px solid ${c.rule}`,
+        minHeight: "48px",
+      },
+      formFieldInput: { borderRadius: "0", border: `1px solid ${c.rule}`, minHeight: "48px" },
+      footerActionLink: { color: c.spot },
+      footer: { background: c.paper2, borderRadius: "0" },
+    },
+  };
+}
+
+export const clerkAppearance = appearanceFor(DAY);
+export const clerkAppearanceDark = appearanceFor(NIGHT);
 
 const STRINGS = {
   en: {

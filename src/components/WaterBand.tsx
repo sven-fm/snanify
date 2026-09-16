@@ -44,8 +44,14 @@ export function WaterBand({
       strokeOpacity={strokeOpacity(i, all.length)}
     />
   ));
+  /* One water, strongest at its crown and gone by its foot. */
+  const fade = "linear-gradient(to bottom, #000 0%, #000 30%, transparent 100%)";
   return (
-    <div className={`relative overflow-hidden ${className}`} aria-hidden="true">
+    <div
+      className={`relative overflow-hidden ${className}`}
+      aria-hidden="true"
+      style={{ maskImage: fade, WebkitMaskImage: fade }}
+    >
       {/* Twice the band's height, its top one copy above the band, sliding
           down by one copy: the second drawing arrives exactly where the
           first began. The drawing is cut flat, so the two meet without a

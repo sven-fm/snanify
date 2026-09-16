@@ -25,6 +25,8 @@ import type { FullLang as Lang } from "@/lib/locales";
    --------------------------------------------------------------------------- */
 
 export type PatraView = {
+  /** One of six; names the ghat's plate. */
+  waterSlug: string;
   id: string;
   locale: Lang;
 
@@ -94,6 +96,7 @@ export function patraView(sitting: Sitting): PatraView {
     locale: lang,
 
     names: (sitting.names as { name: string }[]).map((n) => n.name),
+    waterSlug: sitting.waterSlug,
     water: ghat ? waterName(ghat, "river", lang) : sitting.waterSlug,
     ghat: ghat ? waterName(ghat, "ghat", lang) : "",
     city: ghat ? waterName(ghat, "city", lang) : "",

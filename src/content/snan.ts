@@ -255,7 +255,7 @@ const en: Copy = {
       },
       {
         q: "Can I make it shorter?",
-        a: "The form runs its full three minutes every morning, the minute of stillness included.",
+        a: "Pressing nothing gives the whole three minutes. Next moves you on when you are ready, from the reading, the breath and the stillness.",
       },
       {
         q: "Who sees my sankalp?",
@@ -419,7 +419,7 @@ const hi: Copy = {
       },
       {
         q: "क्या इसे छोटा किया जा सकता है?",
-        a: "स्वरूप हर सुबह अपने पूरे तीन मिनट चलता है, मौन का मिनट भी।",
+        a: "कुछ न दबाने पर पूरे तीन मिनट मिलते हैं। जब आप तैयार हों, \"आगे\" आपको पाठ, श्वास और मौन से आगे ले जाता है।",
       },
       {
         q: "मेरा संकल्प कौन देखता है?",

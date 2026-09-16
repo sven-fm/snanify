@@ -14,8 +14,9 @@
    stillness are the parts people come back for, so the stillness keeps a full
    minute and the hold keeps its eleven seconds exactly.
 
-   The stillness cannot be skipped. That is a product decision, not a timer
-   detail: a screen that can be tapped past is a screen people tap past.
+   Next moves on early from the reading, the breath and the stillness; the
+   owner opened the stillness on 16 September 2026. Pressing nothing is still
+   the whole form, and the stillness shows its seconds while it runs.
    --------------------------------------------------------------------------- */
 
 export const SITTING = {

@@ -48,9 +48,9 @@ const en = {
 
   vow: {
     label: "Your sankalp",
-    hold: "Hold your thumb on your words until the ink fills.",
-    holding: "Keep holding.",
-    done: "Held.",
+    hold: "Press and hold until the ink fills",
+    holding: "Keep holding",
+    done: "Held",
   },
 
   stillness: {
@@ -66,9 +66,11 @@ const en = {
   },
 
   already: {
-    title: "This morning is kept",
-    body: "One morning a day. The next one is tomorrow.",
-    cta: "Open this morning's sheet",
+    title: "Your morning is kept",
+    body: "Keep it in your heart. Send it to your family.",
+    cta: "Open your Sankalp Patra",
+    share: "Send it to family",
+    tomorrow: "One morning a day. The next one is tomorrow.",
   },
 
   failed: {
@@ -112,9 +114,9 @@ const hi = {
 
   vow: {
     label: "आपका संकल्प",
-    hold: "स्याही भरने तक अपने शब्दों पर अंगूठा रखिए।",
-    holding: "थामे रहिए।",
-    done: "थाम लिया।",
+    hold: "स्याही भरने तक दबाए रखिए",
+    holding: "थामे रहिए",
+    done: "थाम लिया",
   },
 
   stillness: {
@@ -130,9 +132,11 @@ const hi = {
   },
 
   already: {
-    title: "यह सुबह रख ली गई",
-    body: "दिन में एक सुबह। अगली कल है।",
-    cta: "आज का पत्र खोलिए",
+    title: "आपकी सुबह रख ली गई",
+    body: "इसे अपने हृदय में रखिए। अपने परिवार को भेजिए।",
+    cta: "अपना संकल्प पत्र खोलिए",
+    share: "परिवार को भेजिए",
+    tomorrow: "दिन में एक सुबह। अगली कल है।",
   },
 
   failed: {

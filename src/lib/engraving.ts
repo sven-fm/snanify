@@ -100,9 +100,13 @@ export function engrave({
       : height * (0.1 + 0.86 * (t * 0.55 + t * t * 0.45));
 
     const phase = random() * Math.PI * 2;
-    /* Long, and longer at the back. Short wavelengths read as noise. */
-    const wavelength = width * (0.55 - 0.3 * t) * (0.8 + random() * 0.5);
-    const swing = spacing * room * (0.45 + 0.55 * t) * (0.75 + random() * 0.5);
+    /* Long, and longer at the back. Short wavelengths read as noise. A flat
+       drawing has no back and no front, so every line gets the middle
+       distance's wavelength and swing, and two copies stacked read as one
+       water rather than two rivers. */
+    const depth = flat ? 0.5 : t;
+    const wavelength = width * (0.55 - 0.3 * depth) * (0.8 + random() * 0.5);
+    const swing = spacing * room * (0.45 + 0.55 * depth) * (0.75 + random() * 0.5);
 
     /* One gentle second harmonic, at a fifth of the amplitude, so a crest is
        never a perfect sine and never a spike. */

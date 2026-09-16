@@ -1,5 +1,5 @@
-import { ClerkProvider } from "@clerk/nextjs";
-import { clerkAppearance, clerkLocalization } from "@/lib/clerk-look";
+import { ClerkThemed } from "@/components/ClerkThemed";
+import { clerkLocalization } from "@/lib/clerk-look";
 import { LANGS, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
@@ -35,8 +35,8 @@ export default async function AppLayout({
   const edition = (LANGS as readonly string[]).includes(lang) ? (lang as Lang) : "en";
 
   return (
-    <ClerkProvider appearance={clerkAppearance} localization={clerkLocalization(edition)}>
+    <ClerkThemed localization={clerkLocalization(edition)}>
       {children}
-    </ClerkProvider>
+    </ClerkThemed>
   );
 }
