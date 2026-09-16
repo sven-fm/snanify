@@ -1,5 +1,5 @@
 import "../globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { RootShell } from "@/components/RootShell";
 import { content } from "@/lib/content";
@@ -21,6 +21,15 @@ import { pageMetadata, siteMetadata } from "@/lib/seo";
 export function generateStaticParams() {
   return allLangParams();
 }
+
+/* The browser's own chrome takes the paper's colour, day and night. */
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f2ead9" },
+    { media: "(prefers-color-scheme: dark)", color: "#12110e" },
+  ],
+  viewportFit: "cover",
+};
 
 function requireLang(value: string) {
   const lang = parseLang(value);

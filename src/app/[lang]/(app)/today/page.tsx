@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { todayContent } from "@/content/today";
@@ -96,7 +95,7 @@ export default async function Page({
         <div className="grain" aria-hidden="true" />
         <Header lang={lang} currentPath={ROUTE} />
         <main className="mx-auto max-w-md px-5 py-8 sm:py-14">
-          <div className="boxed relative aspect-[3/2] overflow-hidden bg-paper2">
+          <div className="boxed plate relative aspect-[3/2] overflow-hidden">
             <div
               role="img"
               aria-label={picture.alt}
@@ -156,20 +155,13 @@ export default async function Page({
           names={names}
           waterSlug={profile.waterSlug}
           picture={picture}
+          left={credits === 1 ? t.leftOne : t.left.replace("{n}", String(credits - 1))}
+          leaveHref={localePath(lang, "/account")}
           /* Never outside development: a fast sitting is a testing affordance,
              not a way to hurry the practice. */
           speed={process.env.NODE_ENV === "production" ? 1 : query.fast === "1" ? 30 : 1}
         />
       </main>
-
-      <div className="mx-auto max-w-md px-5 pb-10 text-center">
-        <Link
-          href={localePath(lang, "/account")}
-          className="text-sm text-ink2 underline decoration-rule underline-offset-4"
-        >
-          {credits === 1 ? t.leftOne : t.left.replace("{n}", String(credits))}
-        </Link>
-      </div>
 
       <Footer lang={lang} />
     </>

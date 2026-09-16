@@ -78,7 +78,10 @@ export async function startCheckout(lang: Lang, formData: FormData): Promise<voi
     path: "/",
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    /* Secure follows the scheme, not the build: a production build served
+       over plain http on a laptop would otherwise drop the cookie silently
+       and the continuation could never be tested. */
+    secure: (await origin()).startsWith("https"),
     maxAge: 60 * 15,
   });
   await checkoutFor(lang, tier, `/begin?pack=${tier}&go=1`);

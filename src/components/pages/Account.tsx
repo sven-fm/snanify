@@ -38,7 +38,16 @@ function formatKept(keptOn: string, lang: Lang): string {
   }).format(date);
 }
 
-export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boolean }) {
+export async function Account({
+  lang,
+  misstyped,
+  remindersOff,
+}: {
+  lang: Lang;
+  misstyped?: boolean;
+  /** Arrived from the one-tap link in a reminder. */
+  remindersOff?: boolean;
+}) {
   const user = await requireUser(lang, "/account");
   const t = accountContent[lang].account;
 
@@ -107,13 +116,14 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
                   <li key={s.id} className="border-b border-rule">
                     <Link
                       href={localePath(lang, `/p/${s.id}`)}
-                      className="flex min-h-[52px] items-baseline justify-between gap-4 py-3.5 transition-colors hover:text-spot"
+                      className="impress flex min-h-[52px] items-baseline justify-between gap-4 py-3.5 hover:text-spot active:text-spot"
                     >
                       <span className="text-[0.98rem] text-ink2 tabular-nums">
                         {formatKept(s.keptOn, lang)}
                       </span>
-                      <span className="text-right text-[0.98rem] text-ink">
+                      <span className="flex items-baseline gap-3 text-right text-[0.98rem] text-ink">
                         {ghat ? waterName(ghat, "river", lang) : s.waterSlug}
+                        <span aria-hidden="true" className="text-spot">→</span>
                       </span>
                     </Link>
                   </li>
@@ -142,12 +152,15 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
 
           <div>
             <h2 className="display border-b border-rule pb-3 text-xl text-ink">{t.reminderHeading}</h2>
+            {remindersOff && (
+              <p className="mt-4 border-l-2 border-spot pl-3 text-sm text-ink">{t.remindersOff}</p>
+            )}
 
             <form action={setReminder.bind(null, lang)} className="mt-4">
               <select
                 name="reminderHour"
                 defaultValue={String(user.reminderHour)}
-                className="min-h-[48px] w-full border border-rule bg-paper px-4 text-[1.02rem] text-ink outline-none focus:border-spot"
+                className="field min-h-[48px] w-full text-[1.02rem] text-ink"
               >
                 {Array.from({ length: 24 }, (_, hour) => (
                   <option key={hour} value={hour}>
@@ -163,7 +176,7 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
                   name="reminderOn"
                   value="1"
                   defaultChecked={user.reminderOn}
-                  className="h-5 w-5 accent-[var(--color-spot,#b32620)]"
+                  
                 />
                 {t.reminderToggle}
               </label>
@@ -172,12 +185,24 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
                 {t.save}
               </SubmitButton>
             </form>
+            <a
+              href={localePath(lang, "/account/reminder.ics")}
+              className="impress mt-4 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-spot active:text-spot"
+            >
+              {t.calendar}
+            </a>
           </div>
         </section>
 
-        {/* ---------------- deleting everything ---------------- */}
-        <section className="mt-16 border-t-2 border-rulestrong pt-6">
-          <h2 className="display text-xl text-ink">{t.deleteHeading}</h2>
+        {/* ---------------- deleting everything, under a fold ---------------- */}
+        <details className="group mt-16 border-t-2 border-rulestrong pt-6">
+          <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-ink [&::-webkit-details-marker]:hidden">
+            <span className="display text-xl">{t.accountHeading}</span>
+            <span aria-hidden="true" className="display text-xl text-ink2 group-open:hidden">+</span>
+            <span aria-hidden="true" className="display hidden text-xl text-ink2 group-open:inline">−</span>
+          </summary>
+          <section className="settle-panel mt-6">
+          <h2 className="display text-lg text-ink">{t.deleteHeading}</h2>
           <p className="mt-4 max-w-lg text-[0.98rem] leading-[1.7] text-ink2">{t.deleteBody}</p>
 
           <form action={deleteAccount.bind(null, lang)} className="mt-5 max-w-sm">
@@ -186,7 +211,7 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
               name="confirm"
               autoComplete="off"
               placeholder={t.deletePlaceholder}
-              className="min-h-[48px] w-full border border-rule bg-paper px-4 text-[1.02rem] text-ink outline-none focus:border-spot"
+              className="field min-h-[48px] w-full text-[1.02rem] text-ink"
             />
             {misstyped && (
               <p className="mt-2 border-l-2 border-spot pl-3 text-sm text-spot">
@@ -197,7 +222,8 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
               {t.deleteCta}
             </SubmitButton>
           </form>
-        </section>
+          </section>
+        </details>
 
         <div className="mt-12 border-t border-rule pt-6">
           <SignOutButton redirectUrl={localePath(lang, "/")}>

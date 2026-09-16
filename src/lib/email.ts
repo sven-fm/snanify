@@ -4,6 +4,7 @@ import type { Currency } from "@/lib/currency";
 import type { FullLang as Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
 import type { FlowBand } from "@/lib/riverdata";
+import { unsubscribeUrl } from "@/lib/unsubscribe";
 
 /* ---------------------------------------------------------------------------
    The two emails this product sends: a receipt, and the morning reminder.
@@ -36,6 +37,8 @@ type Message = {
   subject: string;
   text: string;
   html: string;
+  /** Extra mail headers, for the one-click unsubscribe on the reminder. */
+  headers?: Record<string, string>;
 };
 
 /** Minor units and a currency, as the receipt prints them. */
@@ -83,6 +86,7 @@ async function send(message: Message): Promise<Sent> {
       subject: message.subject,
       text: message.text,
       html: message.html,
+      headers: message.headers,
     }),
   });
 
@@ -125,27 +129,53 @@ export async function sendReceipt(input: ReceiptInput): Promise<Sent> {
 
 export type ReminderInput = {
   to: string;
+  /** Whose reminder it is, so the unsubscribe link can be signed for them. */
+  userId: string;
   lang: Lang;
   water: string;
   band: FlowBand;
 };
 
-/** Sent by the hourly cron, at most once a day per person. */
+/**
+ * Sent by the hourly cron, at most once a day per person.
+ *
+ * ONE TAP STOPS THEM. The footer link and the List-Unsubscribe headers both
+ * point at a signed URL that needs no sign-in (src/lib/unsubscribe.ts). Gmail
+ * and Yahoo discount a daily sender without those headers, and a person who
+ * wants fewer emails will not sign in to say so.
+ */
 export async function sendReminder(input: ReminderInput): Promise<Sent> {
   const t = emailContent[input.lang].reminder;
   const subject = t.subject.replace("{water}", input.water);
   const line = t.lines[input.band].replace("{water}", input.water);
+  const off = unsubscribeUrl(input.userId);
 
-  const text = [line, "", `${t.link} ${siteUrl(input.lang, "/today")}`, "", t.footer].join("\n");
+  const text = [
+    line,
+    "",
+    `${t.link} ${siteUrl(input.lang, "/today")}`,
+    "",
+    `${t.stop}: ${off}`,
+    t.footer,
+  ].join("\n");
 
   const html = wrap(
     `<p style="margin:0 0 18px;font-size:22px;">${subject}</p>
      <p style="margin:0 0 22px;">${line}</p>
      <p style="margin:0;"><a href="${siteUrl(input.lang, "/today")}" style="background:#b32620;color:#faf6ea;text-decoration:none;padding:12px 20px;display:inline-block;letter-spacing:0.06em;text-transform:uppercase;font-size:13px;">${t.cta}</a></p>`,
-    t.footer,
+    `<a href="${off}" style="color:#57513f;">${t.stop}</a>. ${t.footer}`,
   );
 
-  return send({ to: input.to, subject, text, html });
+  return send({
+    to: input.to,
+    subject,
+    text,
+    html,
+    headers: {
+      "List-Unsubscribe": `<${off}>`,
+      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+    },
+  });
 }
 
 /** An absolute URL, because an email has no origin to be relative to. */

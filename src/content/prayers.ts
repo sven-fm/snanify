@@ -18,7 +18,7 @@ import type { FullLang as Lang } from "@/lib/locales";
    ADDING ONE. Name the work and the verse number. If neither can be named, it
    does not go in. Per-water verses for the Godavari, the Shipra and the Kaveri
    are the obvious gap, and they stay a gap until somebody who knows those
-   traditions supplies them: build-plan.md section 4 carries that as an open
+   traditions supplies them: plan.md carries that as an open
    item for the owner. Until then those waters are offered the verses that name
    them, which the snana verse does for the Godavari and the Kaveri both.
 

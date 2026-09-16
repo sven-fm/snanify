@@ -14,6 +14,7 @@ import {
   website,
 } from "@/components/StructuredData";
 import { PastHero } from "@/components/site/PastHero";
+import { Specimen } from "@/components/Specimen";
 import { CTA, LinkButton, Price, Section } from "@/components/ui";
 import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 
@@ -266,9 +267,13 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
         {/* ------------------------------------------------ the six ------- */}
         <Section id="rivers">
-          <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.rivers.title}</h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.rivers.lede}</p>
+          <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start lg:gap-16">
+            <div className="max-w-3xl">
+              <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.rivers.title}</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.rivers.lede}</p>
+            </div>
+            {/* The sheet itself, before a word more is said about it. */}
+            <Specimen lang={lang} />
           </div>
 
           {/* A register, not a card grid, and unnumbered: six waters are a

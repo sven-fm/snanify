@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { WaterBand } from "@/components/WaterBand";
+import { Specimen } from "@/components/Specimen";
 import { eq } from "drizzle-orm";
 import { db, profiles } from "@/db";
 import { beginContent } from "@/content/begin";
@@ -13,7 +14,7 @@ import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Price } from "@/components/ui";
-import { checkoutFor, startCheckout } from "@/app/[lang]/(app)/begin/actions";
+import { checkoutFor, startCheckout } from "@/app/[lang]/begin/actions";
 import { TrackView } from "@/components/site/TrackView";
 import { TrackedSubmit } from "@/components/site/TrackedSubmit";
 
@@ -122,7 +123,10 @@ export async function Begin({
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6 max-w-xl" />
         <WaterBand seed="begin" className="mt-5 h-[68px] w-full" />
-        <p className="mt-5 max-w-xl text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
+        <div className="grid gap-8 sm:grid-cols-[1fr_200px] sm:items-start sm:gap-12">
+          <p className="mt-5 max-w-xl text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
+          <Specimen lang={lang} caption={false} className="hidden sm:block" />
+        </div>
 
         {cancelled && (
           <p className="mt-6 border-l-2 border-spot pl-4 text-[0.98rem] text-ink2">

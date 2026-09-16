@@ -201,6 +201,77 @@ html[data-js]:not([data-past-hero]) [data-until-scrolled="rail"] {
     transform 240ms cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 
+/* --- Paper ------------------------------------------------------------------
+   Depth without a shadow. The masthead is a sheet laid over the page: once
+   the page has scrolled, a hairline of the deeper tint appears under its
+   rule, the fold. A tint block carries a hairline plate edge inset from its
+   border. Night headings step up one weight, because light ink on dark paper
+   spreads less than dark ink on light.                                        */
+html[data-scrolled] header[data-masthead] {
+  box-shadow: 0 1px 0 0 var(--paper-3);
+}
+.tint {
+  outline: 1px solid var(--paper-3);
+  outline-offset: -5px;
+}
+.dark .display {
+  font-weight: 700;
+}
+
+/* --- Form marks ---------------------------------------------------------------
+   A radio or a checkbox is a ruled square that fills with the spot colour,
+   not the platform's blue circle. Inputs sit on a 2px rule rather than in a
+   box, and the rule turns spot when the field has focus.                    */
+input[type="radio"],
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  border: 1.5px solid var(--rule-strong);
+  background-color: var(--paper);
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease-out,
+    border-color 120ms ease-out;
+}
+input[type="radio"]::before,
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  background-color: var(--spot);
+  transform: scale(0);
+  transition: transform 120ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+input[type="radio"]:checked::before,
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  border-color: var(--spot);
+}
+@utility field {
+  border: 0;
+  border-bottom: 2px solid var(--rule);
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  outline: none;
+  transition: border-color 120ms ease-out;
+}
+.field:focus {
+  border-bottom-color: var(--spot);
+}
+.field::placeholder {
+  color: var(--ink-2);
+  opacity: 0.7;
+}
+
 /* --- Type ---------------------------------------------------------------- */
 
 html[data-script="devanagari"] {
@@ -390,6 +461,24 @@ html:not([data-script="latin"]) i {
   animation: ink-in 0.45s steps(6, end) forwards;
 }
 
+/* The same impression under the name the motion table uses: `pull`, as a
+   sheet is pulled from the press. A part of the sitting arrives this way,
+   and so does the Sankalp Patra. */
+@utility pull {
+  opacity: 0;
+  animation: ink-in 0.45s steps(6, end) forwards;
+}
+
+/* The sitting's sheet laid over the page: one plain fade, so the masthead
+   goes and the water is simply there. */
+@keyframes sheet-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@utility sheet-in {
+  animation: sheet-in 0.5s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -399,7 +488,9 @@ html:not([data-script="latin"]) i {
     transition-duration: 0.001ms !important;
   }
 
-  .ink-in {
+  .ink-in,
+  .pull,
+  .sheet-in {
     opacity: 1;
   }
 }
@@ -554,8 +645,23 @@ html[data-js] [data-in] .grow {
   will-change: transform;
 }
 
+/* The plate a photograph is printed on. By day it is the tint; by night it
+   is the day's paper, so the ink picture masked over it stays a positive:
+   the mask over cream ink on a dark page came out as a photographic
+   negative, and a ghat as a negative is a ghat nobody knows. */
+@utility plate {
+  background-color: var(--paper-2);
+}
+.dark .plate {
+  background-color: #eae0c9;
+}
+.dark .plate .ink-picture,
+.dark .plate .ink-picture-lazy {
+  background-color: #16130f;
+}
+
 /* A photograph printed as ink: the picture is an alpha mask over the ink
-   colour, so it takes the night edition's ink as readily as the day's. */
+   colour. */
 .ink-picture {
   background-color: var(--ink);
   -webkit-mask-image: var(--picture);

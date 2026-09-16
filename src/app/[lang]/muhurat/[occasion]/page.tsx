@@ -30,6 +30,8 @@ import { RIVERS } from "@/content/rivers";
 import { pageMetadata } from "@/lib/seo";
 import { muhuratIndexContent } from "@/content/muhurat-index";
 import { occasionName } from "@/content/names";
+import { horizonFrom, resolveOccasion, sayResolved } from "@/lib/occasions";
+import { localeDef } from "@/lib/locales";
 
 /** Every (lang, occasion) pair, the slug is identical in both locales. */
 /* The dates are computed from today; the page is remade once a day so the
@@ -155,7 +157,15 @@ export async function generateMetadata({
      locales; the detail-only keys stayed in muhurat.ts. A Record<Lang, ...>
      indexes fine with a FullLang, so nothing is written twice. */
   const t = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
-  const title = `${occasion.name[lang]}, ${t.meta.detailSuffix}`;
+  /* The year the occasion next falls in, from the same resolver the page
+     prints its dates with, so the title says "Kartik Purnima 2026" rather
+     than a name alone. A rule with no dated instance keeps the plain title. */
+  const { from, to } = horizonFrom(new Date());
+  const next = resolveOccasion(occasion, from, to)[0];
+  const year = next?.date?.slice(0, 4);
+  const title = year
+    ? t.meta.detailTitle.replace("{name}", occasion.name[lang]).replace("{year}", year)
+    : `${occasion.name[lang]}, ${t.meta.detailSuffix}`;
   const description = occasionDescription(lang, occasion);
 
   return pageMetadata({
@@ -179,6 +189,32 @@ export default async function Page({
   const route = `/muhurat/${slug}`;
   const alt = otherLang(lang);
   const description = occasionDescription(lang, occasion);
+  const t = muhuratIndexContent[lang];
+
+  /* "When is Kartik Purnima in 2026?", answered with the computed date, as
+     the FAQ node a search engine or an answer engine reads. Only where a
+     date exists; a rule alone gets no question it cannot answer. */
+  const { from, to } = horizonFrom(new Date());
+  const resolved = resolveOccasion(occasion, from, to);
+  const first = resolved[0];
+  const year = first?.date?.slice(0, 4);
+  const when =
+    first && year
+      ? [
+          {
+            "@type": "Question",
+            "@id": `${publicUrl(lang, route)}#when`,
+            name: t.meta.whenQuestion.replace("{name}", occasion.name[lang]).replace("{year}", year),
+            inLanguage: localeDef(lang).tag,
+            answerCount: 1,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `${sayResolved(first, lang)}. ${t.provenance.badge}`,
+              inLanguage: localeDef(lang).tag,
+            },
+          },
+        ]
+      : [];
 
   /* The ghats that keep this occasion, named as the Place nodes that live on
      their own pages. They are `mentions` rather than `location`: attendance is
@@ -200,7 +236,7 @@ export default async function Page({
       name: occasionName(occasion, lang),
       description,
       mainEntity: { "@id": `${publicUrl(lang, route)}#occasion` },
-      mentions: ghats,
+      mentions: [...ghats, ...when],
       breadcrumb: breadcrumbList(lang, [
         { name: "Snanify", path: "/" },
         { name: navLabel(lang, "muhurat"), path: "/muhurat" },

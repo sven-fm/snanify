@@ -1,5 +1,5 @@
 /* PARKED. This locale left the registry when launch was cut to English and
-   Hindi; see build-plan.md, decision "Locales at launch". The file is kept
+   Hindi; see plan.md, decision "Locales at launch". The file is kept
    verbatim so the translation is not lost, and it is unimported: nothing in
    src/lib/content.ts or the domain index files reads it.
 

@@ -93,6 +93,16 @@ export default async function Page({
         <div className="rule-double mt-6" />
         <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
 
+        {/* Three steps, as a ruled line: the water, the sheet, the hour. */}
+        <ol className="mt-8 grid grid-cols-3 gap-2" aria-label={t.title}>
+          {t.steps.map((step, i) => (
+            <li key={step} className="border-t-2 border-rulestrong pt-2">
+              <span className="label text-spot">{String(i + 1).padStart(2, "0")}</span>
+              <span className="mt-1 block text-sm text-ink">{step}</span>
+            </li>
+          ))}
+        </ol>
+
         <SetupForm
           lang={lang}
           t={t}
@@ -103,7 +113,10 @@ export default async function Page({
             names,
             prayerId: profile?.prayerId ?? "",
             sankalpText: profile?.sankalpText ?? "",
-            reminderHour: user.reminderHour,
+            /* Six, the first time. The row's default is five, which is the
+               hour a printed panchang names and an hour later than most
+               people in Toronto or Leicester will get up for. */
+            reminderHour: profile ? user.reminderHour : 6,
             portraitUrl: profile?.portraitKey ? blobUrl(profile.portraitKey) : null,
           }}
         />

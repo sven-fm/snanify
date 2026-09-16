@@ -290,15 +290,21 @@ function FlowPanel({
       </div>
 
       {discharge.kind === "modelled" && discharge.series.length > 1 && (
-        <div className="mt-7">
-          <p className="text-sm text-ink2">{t.flow.seriesLabel}</p>
-          <ElevenDays series={discharge.series} />
-          <p className="mt-2 flex justify-between gap-4 text-xs text-ink2">
-            <span>{longDate(discharge.series[0].date, lang)}</span>
-            <span>{longDate(discharge.series[discharge.series.length - 1].date, lang)}</span>
-          </p>
-          <p className="mt-2 text-[0.9rem] leading-snug text-ink2">{t.flow.seriesNote}</p>
-        </div>
+        <details className="group mt-7 border-t border-rule pt-3">
+          <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm text-ink [&::-webkit-details-marker]:hidden">
+            {t.flow.seriesLabel}
+            <span aria-hidden="true" className="text-ink2 group-open:hidden">+</span>
+            <span aria-hidden="true" className="hidden text-ink2 group-open:inline">−</span>
+          </summary>
+          <div className="settle-panel">
+            <ElevenDays series={discharge.series} />
+            <p className="mt-2 flex justify-between gap-4 text-xs text-ink2">
+              <span>{longDate(discharge.series[0].date, lang)}</span>
+              <span>{longDate(discharge.series[discharge.series.length - 1].date, lang)}</span>
+            </p>
+            <p className="mt-2 text-[0.9rem] leading-snug text-ink2">{t.flow.seriesNote}</p>
+          </div>
+        </details>
       )}
     </div>
   );
@@ -380,12 +386,14 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
             </p>
           </div>
           {/* The landmark, printed as ink; see src/content/live/pictures.ts. */}
-          <div
-            role="img"
-            aria-label={PICTURES[water.slug].alt[lang]}
-            className="reveal ink-picture-lazy boxed aspect-[3/2] w-full"
-            style={{ ["--i" as string]: 1, ["--picture" as string]: `url(${PICTURES[water.slug].src})` }}
-          />
+          <div className="reveal plate boxed relative aspect-[3/2] w-full" style={{ ["--i" as string]: 1 }}>
+            <div
+              role="img"
+              aria-label={PICTURES[water.slug].alt[lang]}
+              className="ink-picture-lazy absolute inset-0"
+              style={{ ["--picture" as string]: `url(${PICTURES[water.slug].src})` }}
+            />
+          </div>
         </div>
 
         <div className="rule-thin mt-6" />
@@ -433,8 +441,17 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
             <div className="reveal">
             <SkyPanel sky={sky} lang={lang} />
 
-            {/* ------------------------------------------ the register --- */}
-            <dl className="mt-8 border-t-2 border-rulestrong">
+            {/* ------------------------------------------ the register ---
+                Folded: the page was twenty-three screens on a phone with
+                every register open. The window and the source stay in the
+                fold's summary line; the rest is one tap away. */}
+            <details className="group mt-8 border-t-2 border-rulestrong pt-3">
+            <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm text-ink [&::-webkit-details-marker]:hidden">
+              {t.more}
+              <span aria-hidden="true" className="text-ink2 group-open:hidden">+</span>
+              <span aria-hidden="true" className="hidden text-ink2 group-open:inline">−</span>
+            </summary>
+            <dl className="settle-panel mt-2 border-t border-rule">
               {slot && (
                 <Entry term={slot.open ? t.windows.openNow : t.windows.next}>
                   {windowLine(slot, lang)}
@@ -492,6 +509,7 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
             )}
 
             <p className="mt-3 text-[0.9rem] leading-[1.7] text-ink2">{t.windows.basis}</p>
+            </details>
             </div>
           </InView>
         </div>

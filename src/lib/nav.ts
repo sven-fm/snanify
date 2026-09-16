@@ -70,7 +70,7 @@ export function navItem(lang: Lang, key: NavKey): NavItem {
  * nav link into a 404 is worse than a shorter nav.
  */
 export function primaryNav(lang: Lang): NavItem[] {
-  return (["snan", "live", "rivers", "muhurat", "faq"] as NavKey[])
+  return (["snan", "panchang", "live", "rivers", "muhurat", "faq"] as NavKey[])
     .filter((k) => servesPath(lang, PATHS[k]))
     .map((k) => navItem(lang, k));
 }

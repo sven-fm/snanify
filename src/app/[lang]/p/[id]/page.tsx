@@ -47,7 +47,7 @@ export async function generateMetadata({
   const sitting = await load(id);
   if (!sitting || !sitting.isPublic) return { robots: { index: false, follow: false } };
 
-  const view = patraView(sitting);
+  const view = patraView(sitting, lang);
   const t = patraPageContent[lang];
   const values = {
     name: view.names[0] ?? "",
@@ -79,7 +79,7 @@ export default async function Page({
   if (!sitting) notFound();
 
   const t = patraPageContent[lang];
-  const view = patraView(sitting);
+  const view = patraView(sitting, lang);
 
   const viewer = await currentUser(lang);
   const isOwner = viewer?.id === sitting.userId;

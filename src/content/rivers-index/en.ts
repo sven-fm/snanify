@@ -26,7 +26,7 @@ export const en = {
   meta: {
     title: "Six sacred waters, with today's flow | Snanify",
     description:
-      "The Ganga at Har Ki Pauri, the Sangam at Prayagraj, the Yamuna at Vishram Ghat, the Godavari at Ram Kund, the Shipra at Ram Ghat and the Kaveri at its source. What each place is, what it is kept for, and its modelled flow ranked against 1997 to 2025.",
+      "Six sacred waters with today's flow ranked against 1997 to 2025: the Ganga at Haridwar, the Sangam, the Yamuna, the Godavari, the Shipra and the Kaveri.",
   },
   title: "Six sacred waters",
   lede: "Each has a modelled flow every day, its own sunrise and its own calendar. These pages describe the places and help you choose one.",

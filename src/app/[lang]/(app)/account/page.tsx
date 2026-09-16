@@ -33,8 +33,10 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ lang: Lang }>;
-  searchParams: Promise<{ confirm?: string }>;
+  searchParams: Promise<{ confirm?: string; reminders?: string }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
-  return <Account lang={lang} misstyped={query.confirm === "1"} />;
+  return (
+    <Account lang={lang} misstyped={query.confirm === "1"} remindersOff={query.reminders === "off"} />
+  );
 }

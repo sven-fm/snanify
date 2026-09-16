@@ -61,6 +61,9 @@ export type PatraView = {
   seed: string;
   seedShort: string;
   percentile: number | null;
+
+  /** A specimen for the marketing pages: labelled as one, with no address. */
+  specimen?: boolean;
 };
 
 const NUMBER = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
@@ -82,10 +85,16 @@ function timeIn(at: Date, tz: string): string {
   }).format(at);
 }
 
-export function patraView(sitting: Sitting): PatraView {
+/**
+ * `edition` is the language the strings come out in. The sheet's own image
+ * is drawn in the sitting's edition and never changes; the page around it,
+ * the share line and the link preview follow the reader, so a Hindi page
+ * about an English morning names the water and the date in Hindi.
+ */
+export function patraView(sitting: Sitting, edition?: Lang): PatraView {
   const river = sitting.river as RiverSlice;
   const sky = sitting.sky as SkySlice;
-  const lang = (sitting.locale === "hi" ? "hi" : "en") as Lang;
+  const lang: Lang = edition ?? (sitting.locale === "hi" ? "hi" : "en");
 
   const ghat = getGhat(sitting.waterSlug);
   const prayer = sitting.prayerId ? PRAYER_BY_ID[sitting.prayerId] : undefined;

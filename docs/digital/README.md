@@ -1,6 +1,6 @@
 # The digital-snan design set
 
-**Superseded by `build-plan.md` at the repo root.** Where this directory and the build plan
+**Superseded by `plan.md` at the repo root.** Where this directory and the build plan
 disagree, the build plan wins.
 
 These seven documents were written across several sittings and they are not one design. They
@@ -11,7 +11,7 @@ four of the six waters and switches to the Copernicus flood model, which makes t
 readings quoted throughout `experience.md`, `artefact.md` and `growth.md` fictional. They are
 kept for their reasoning, and for `river.md` and `sky.md`, which are load bearing and correct.
 
-Section 3.5 of `build-plan.md` lists by name everything here that is deliberately out of
+Section 5 of `plan.md` lists by name everything here that is deliberately out of
 scope: the Jal Stambha, Jal Nimantran, the several registers, the subscription tiers, the
 audio engine, the nakshatra SEO pages, and the rest. Do not build from those without a
 decision that reopens them.

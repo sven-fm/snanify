@@ -14,7 +14,7 @@ import {
 /* ---------------------------------------------------------------------------
    The whole database, five tables.
 
-   Read build-plan.md section 3.2 before changing anything here. The shape is
+   Read ARCHITECTURE.md and plan.md before changing anything here. The shape is
    deliberately small: a person, what they set up once, what they bought, the
    ledger that says what they may still spend, and one row per morning kept.
 

@@ -8,6 +8,14 @@ import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
 import { Panchang } from "@/components/pages/Panchang";
 import { panchangContent } from "@/content/panchang";
 import { pageMetadata } from "@/lib/seo";
+import { navLabel } from "@/lib/nav";
+import {
+  StructuredData,
+  breadcrumbList,
+  organization,
+  webPage,
+  website,
+} from "@/components/StructuredData";
 
 /**
  * Public URL shape: English unprefixed, Hindi under /hi. Never "/en/...", and
@@ -31,7 +39,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
-    title: t.title,
+    title: t.title.replace("{year}", String(new Date().getFullYear())),
     description: t.description,
     ogType: "article",
   });
@@ -39,5 +47,26 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
   const { lang } = await params;
-  return <Panchang lang={lang} />;
+  const t = panchangContent[lang].meta;
+  return (
+    <>
+      <StructuredData
+        graph={[
+          organization(lang),
+          website(),
+          webPage({
+            lang,
+            path: ROUTE,
+            name: t.title.replace("{year}", String(new Date().getFullYear())),
+            description: t.description,
+            breadcrumb: breadcrumbList(lang, [
+              { name: "Snanify", path: "/" },
+              { name: navLabel(lang, "panchang"), path: ROUTE },
+            ]),
+          }),
+        ]}
+      />
+      <Panchang lang={lang} />
+    </>
+  );
 }

@@ -9,6 +9,7 @@ import { Footer } from "@/components/site/Footer";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Mark } from "@/components/Logo";
 import { PastHero } from "@/components/site/PastHero";
+import { Specimen } from "@/components/Specimen";
 import { buttonClass, Price, Section } from "@/components/ui";
 import { snanContent } from "@/content/snan";
 import { PER_SNAN, PRICE } from "@/content/prices";
@@ -208,9 +209,12 @@ export function SnanIntro({ lang }: { lang: Lang }) {
 
         {/* ------------------------------------------------ the sheet ----- */}
         <Section id="patra" tinted>
-          <div className="max-w-3xl">
-            <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.patra.title}</h2>
-            <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.patra.lede}</p>
+          <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start lg:gap-16">
+            <div className="max-w-3xl">
+              <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.patra.title}</h2>
+              <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.patra.lede}</p>
+            </div>
+            <Specimen lang={lang} />
           </div>
 
           <dl className="mt-10 border-t-2 border-rulestrong">

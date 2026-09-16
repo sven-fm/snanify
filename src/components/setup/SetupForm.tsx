@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useMemo, useRef, useState } from "react";
+import { useActionState, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import type { setupContent } from "@/content/setup";
 import { LIMITS } from "@/lib/limits";
@@ -129,6 +129,15 @@ export function SetupForm({
   const [dropped, setDropped] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  /* Named beside the hour picker once the browser has said which zone it is
+     in. Read through useSyncExternalStore with an empty server snapshot, so
+     the server render carries no zone it cannot know and hydration matches. */
+  const zone = useSyncExternalStore(
+    () => () => {},
+    () => readZone(),
+    () => "",
+  );
+
 
   useEffect(() => {
     if (!state.ok) return;
@@ -184,7 +193,7 @@ export function SetupForm({
                 value={w.slug}
                 checked={water === w.slug}
                 onChange={() => setWater(w.slug)}
-                className="mt-1 h-5 w-5 shrink-0 accent-[var(--color-spot,#b32620)]"
+                className="mt-1"
               />
             </label>
           ))}
@@ -266,7 +275,7 @@ export function SetupForm({
                 next[index] = e.target.value;
                 setNames(next);
               }}
-              className="min-h-[48px] w-full border border-rule bg-paper px-4 text-[1.02rem] text-ink outline-none focus:border-spot"
+              className="field min-h-[48px] w-full text-[1.02rem] text-ink"
             />
           ))}
         </div>
@@ -295,7 +304,7 @@ export function SetupForm({
               name="prayerId"
               value=""
               defaultChecked={initial.prayerId === ""}
-              className="h-5 w-5 shrink-0 accent-[var(--color-spot,#b32620)]"
+              
             />
             <span className="text-ink2">{t.prayer.none}</span>
           </label>
@@ -310,7 +319,7 @@ export function SetupForm({
                 name="prayerId"
                 value={p.id}
                 defaultChecked={initial.prayerId === p.id}
-                className="mt-1 h-5 w-5 shrink-0 accent-[var(--color-spot,#b32620)]"
+                className="mt-1"
               />
               <span>
                 <span className="block text-ink">{p.title}</span>
@@ -333,11 +342,31 @@ export function SetupForm({
           onChange={(e) => setSankalp(e.target.value)}
           rows={4}
           placeholder={t.sankalp.placeholder}
-          className="mt-5 w-full border border-rule bg-paper p-4 text-[1.05rem] leading-[1.7] text-ink outline-none focus:border-spot"
+          className="field mt-5 w-full py-3 text-[1.05rem] leading-[1.7] text-ink"
         />
         <p className="mt-2 text-right text-sm tabular-nums text-ink2">
           {t.sankalp.remaining.replace("{n}", String(remaining))}
         </p>
+
+        {/* Three to take as they are, for the person who stops here. */}
+        {sankalp.trim() === "" && (
+          <div className="mt-4">
+            <p className="text-sm text-ink2">{t.sankalp.examplesLabel}</p>
+            <ul className="mt-2 flex flex-col gap-2">
+              {t.sankalp.examples.map((example) => (
+                <li key={example}>
+                  <button
+                    type="button"
+                    onClick={() => setSankalp(example)}
+                    className="impress min-h-[44px] w-full border border-rule px-4 py-2 text-left text-[0.98rem] leading-[1.6] text-ink hover:border-rulestrong active:bg-paper2"
+                  >
+                    {example}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <FieldError>{errors.sankalpText && t.errors[errors.sankalpText as "sankalpEmpty"]}</FieldError>
       </fieldset>
 
@@ -349,7 +378,7 @@ export function SetupForm({
         <select
           name="reminderHour"
           defaultValue={String(initial.reminderHour)}
-          className="mt-5 min-h-[48px] w-full border border-rule bg-paper px-4 text-[1.02rem] text-ink outline-none focus:border-spot"
+          className="field mt-5 min-h-[48px] w-full text-[1.02rem] text-ink"
         >
           {Array.from({ length: 24 }, (_, hour) => (
             <option key={hour} value={hour}>
@@ -357,6 +386,7 @@ export function SetupForm({
             </option>
           ))}
         </select>
+        {zone && <p className="mt-2 text-sm text-ink2">{t.reminder.zone.replace("{zone}", zone)}</p>}
         <FieldError>{errors.reminderHour && t.errors.hour}</FieldError>
         <FieldError>{errors.tz && t.errors.zone}</FieldError>
       </fieldset>

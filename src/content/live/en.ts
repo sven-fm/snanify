@@ -66,6 +66,8 @@ export const en = {
   /* The breadcrumb name, read by src/app/[lang]/live/page.tsx. */
   crumb: "The rivers, live",
   title: "How the rivers are running today.",
+  /** The fold under each water: eleven days and the register, for whoever wants them. */
+  more: "More about this morning",
   standfirst:
     "Six waters, one page. The modelled flow, sunrise and sunset, the weather and today's muhurat windows at each, with the date every figure carries. Free to read.",
   assembled: "This page was assembled at {time} IST.",

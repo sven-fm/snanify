@@ -130,7 +130,7 @@ export function organization(lang: Lang): JsonLdNode {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: "Snanify",
-    alternateName: "स्नानिफ़ाई",
+    alternateName: "Snanify",
     url: `${SITE_ORIGIN}/`,
     description: content[lang].meta.description,
     email: ETHICS_MAIL,
@@ -181,7 +181,7 @@ export function website(): JsonLdNode {
     "@id": WEBSITE_ID,
     url: `${SITE_ORIGIN}/`,
     name: "Snanify",
-    alternateName: "स्नानिफ़ाई",
+    alternateName: "Snanify",
     publisher: { "@id": ORGANIZATION_ID },
     inLanguage: SITE_LANGUAGES,
   };

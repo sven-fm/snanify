@@ -38,7 +38,7 @@ export type FullLang = "en" | "hi";
  * Launch is English and Hindi. The site once served ten more locales on its
  * surface pages; those copy files are still in src/content/<domain>/, out of
  * the registry and unimported, and a third language returns by adding its row
- * back here. See build-plan.md, decision "Locales at launch".
+ * back here. See plan.md, decision "Locales at launch".
  */
 export type Lang = FullLang;
 

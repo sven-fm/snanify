@@ -13,13 +13,13 @@ import { Mark, Wordmark } from "@/components/Logo";
 /* In the order `t.footer.cols[LEGAL].links` sets them: privacy, terms, refunds. */
 const LEGAL_ROUTES = ["/privacy", "/terms", "/terms#refunds"];
 
-const SERVICE = 0;
-const COMPANY = 1;
+const PRACTICE = 0;
+const REFERENCE = 1;
 const LEGAL = 2;
 
 const COLUMNS: { at: number; keys: NavKey[] }[] = [
-  { at: SERVICE, keys: ["begin", "snan", "live", "rivers", "muhurat"] },
-  { at: COMPANY, keys: ["panchang", "faq"] },
+  { at: PRACTICE, keys: ["begin", "snan"] },
+  { at: REFERENCE, keys: ["panchang", "live", "rivers", "muhurat", "faq"] },
 ];
 
 /** Where a nav key actually points, so the footer never offers a 404. */
@@ -70,7 +70,7 @@ export function Footer({ lang }: { lang: Lang }) {
                       <li key={key}>
                         <a
                           href={item.href}
-                          className="text-sm text-ink2 underline decoration-rule decoration-1 transition-colors hover:text-spot hover:decoration-spot"
+                          className="impress text-sm text-ink2 underline decoration-rule decoration-1 hover:text-spot hover:decoration-spot active:text-spot"
                         >
                           {navLabel(lang, key)}
                         </a>
@@ -93,7 +93,7 @@ export function Footer({ lang }: { lang: Lang }) {
                 <li key={label}>
                   <Link
                     href={localePath(lang, LEGAL_ROUTES[i] ?? "/terms")}
-                    className="text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:text-spot"
+                    className="impress text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 hover:text-spot active:text-spot"
                   >
                     {label}
                   </Link>

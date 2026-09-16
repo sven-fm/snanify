@@ -18,6 +18,18 @@ import { useEffect } from "react";
 export function ScrollReveal() {
   const path = usePathname();
 
+  /* The masthead's fold: a hairline under the rule once the page has moved. */
+  useEffect(() => {
+    const root = document.documentElement;
+    const onScroll = () => {
+      if (window.scrollY > 8) root.setAttribute("data-scrolled", "");
+      else root.removeAttribute("data-scrolled");
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [path]);
+
   useEffect(() => {
     if (/\/today(\/|$)/.test(path)) return;
     if (!("IntersectionObserver" in window)) return;

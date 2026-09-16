@@ -100,11 +100,25 @@ export function MobileCta({
   return (
     <Link
       href={signedIn ? account : begin}
-      className="label impress flex min-h-[44px] items-center whitespace-nowrap bg-spot px-3 text-paper hover:bg-ink active:bg-ink sm:hidden"
+      aria-label={signedIn ? accountLabel : undefined}
+      title={signedIn ? accountLabel : undefined}
+      className={`label impress flex min-h-[44px] items-center whitespace-nowrap sm:hidden ${
+        signedIn
+          ? "min-w-[44px] justify-center border border-rulestrong text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
+          : "bg-spot px-3 text-paper hover:bg-ink active:bg-ink"
+      }`}
       data-mobile-cta
       data-until-scrolled={afterHero && !signedIn ? "" : undefined}
     >
-      {signedIn ? accountLabel : beginLabel}
+      {signedIn ? (
+        /* The silhouette rather than a word: "MORNINGS" on its own said nothing. */
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
+      ) : (
+        beginLabel
+      )}
     </Link>
   );
 }

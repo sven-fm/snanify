@@ -13,7 +13,7 @@ export { monthName } from "@/content/months";
    waters in English tells a Tamil reader the river is not theirs. The site
    serves two locales now, so both names live upstream and these three readers
    are a straight lookup. The tables are in git, and they come back with their
-   locale. See build-plan.md, decision "Locales at launch".
+   locale. See plan.md, decision "Locales at launch".
 
    The readers are kept rather than inlined at every call site, because a third
    locale puts its table back behind exactly these three signatures.

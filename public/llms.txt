@@ -1,0 +1,56 @@
+# Snanify
+
+> A digital snan. At an hour the panchang names, you sit for three minutes with the live published state of a sacred river in India and make your sankalp yourself, wherever in the world you are. At the end you have a Sankalp Patra with your family's names on it to send home.
+
+Snanify is for Indians and the Hindu diaspora far from their river: the United States, the United Kingdom, Canada, the Gulf, Singapore, Australia. It is in English and Hindi. Nobody performs a rite on anyone's behalf; the practice is the reader's own.
+
+## The snan, three minutes, the same every morning
+
+- The reading, 15 seconds: the river's flow today, its rank against every day since 1997, and how far you are from that water.
+- The breath, 45 seconds: the waterline rises for four seconds and falls for six, at the river's own amplitude.
+- The sankalp, 11 seconds: your own words, held under your thumb while the ink fills.
+- The stillness, 60 seconds: the screen goes black.
+- The mark, 20 seconds: one line is written into your register and your Sankalp Patra is drawn.
+
+## The six waters
+
+- Ganga at Har Ki Pauri, Haridwar, Uttarakhand: https://www.snanify.com/rivers/ganga-haridwar
+- Triveni Sangam, Prayagraj, Uttar Pradesh: https://www.snanify.com/rivers/triveni-prayagraj
+- Yamuna at Vishram Ghat, Mathura, Uttar Pradesh: https://www.snanify.com/rivers/yamuna-mathura
+- Godavari at Ram Kund, Nashik, Maharashtra: https://www.snanify.com/rivers/godavari-nashik
+- Shipra at Ram Ghat, Ujjain, Madhya Pradesh: https://www.snanify.com/rivers/shipra-ujjain
+- Kaveri at Talakaveri, Kodagu, Karnataka: https://www.snanify.com/rivers/kaveri-talakaveri
+
+## Where the figures come from
+
+- River flow: modelled river discharge from the Copernicus Emergency Management Service global flood model (GloFAS), read through Open-Meteo, one value per day per grid cell, licensed CC BY 4.0. It is a model at a calibrated grid cell, not a gauge at the ghat. Each value is ranked against the same cell in the same week of the year, 1997 to 2025.
+- The sky: tithi, nakshatra, the moon and the muhurat windows are computed with astronomy-engine at each ghat's own coordinates, and checked against Drik Panchang.
+- The seed on every Sankalp Patra is a SHA-256 of the sitting's id, the water, the day and the published flow; the engraving is drawn from it.
+
+## Prices
+
+One price, in the reader's own currency. Eleven mornings cost eleven in every currency.
+
+- One morning: $2, 2 euro, C$3, 101 rupees.
+- Eleven mornings: $11, 11 euro, C$11, 501 rupees.
+- Sixty mornings: $48, 45 euro, C$48, 2,100 rupees.
+
+Mornings keep until they are used. Unused mornings are refunded on request.
+
+## Free to read, every day
+
+- The rivers now: https://www.snanify.com/live
+- Today's panchang: https://www.snanify.com/panchang
+- The muhurat calendar: https://www.snanify.com/muhurat
+- The six waters: https://www.snanify.com/rivers
+- Simhastha Kumbh 2027: https://www.snanify.com/kumbh
+
+## Pages
+
+- Home: https://www.snanify.com/
+- The snan: https://www.snanify.com/snan
+- Questions, and how it is made: https://www.snanify.com/faq
+- Hindi edition: https://www.snanify.com/hi
+- Privacy: https://www.snanify.com/privacy
+- Terms: https://www.snanify.com/terms
+- Contact: hello@snanify.com

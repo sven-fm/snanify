@@ -118,15 +118,48 @@ statement should be legible the instant it loads.
 
 ## Motion
 
-Print does not animate. There are exactly two motions.
+Print does not animate, but a press does: a plate lands, a sheet is pulled, a pile settles.
+Four motions, named, and nothing else. Each is a utility in `globals.css`.
 
-- `.ink-in`, a stepped entrance, `steps(6, end)`, so content arrives like an impression
-  being pulled rather than a web page fading in.
-- `<Reveal>`, the same, triggered by `IntersectionObserver` on scroll.
+| Name | What | Where |
+| --- | --- | --- |
+| `impress` | The press. On `:active` the control moves 1px down and 1px right and its ink darkens at once; it lifts back over 120ms. A `.misregister` element's 4px offset closes to 1px as it lands. | Every button, link-button, summary, the vow box, the register rows |
+| `pull` | The stepped entrance, `steps(6, end)`, so content arrives like an impression being pulled rather than a web page fading in. `ink-in` is the same motion under its older name. | A part of the sitting, the Sankalp Patra, the specimen |
+| `settle` | 240ms on `cubic-bezier(0.2, 0.8, 0.3, 1)` for a state change. `settle-panel` on a `<details>` panel slides it down under the rule; `html.theming` cross-fades the whole page when the theme changes. | Menus, the language switch, the account fold, the theme toggle, the breath's two words |
+| `flow` | Continuous water. | The hero river, `WaterBand`, the breath, the stillness |
 
-Both collapse under `prefers-reduced-motion`.
+The press is the one that matters most: a phone has no hover, so `:active` is the only
+feedback a thumb ever gets. Every variant in `src/components/ui` carries a pressed colour as
+well as a hover colour, and `-webkit-tap-highlight-color` is transparent everywhere so the
+browser's grey flash never shows over ours.
 
-The one exception is `RiverFlow`, which is the hero and is genuinely alive.
+Controls that wait for the hero's own button to scroll off (the masthead's Begin, the phone's
+thumb rail) carry `data-until-scrolled`; `PastHero` stamps `data-past-hero` on `<html>` and
+the stylesheet does the showing. Without scripts nothing is ever hidden.
+
+Sections no longer hide their prose until scrolled. Only numerals, bars and pictures reveal
+(`.reveal`, `.grow`, `.ink-picture-lazy` under an `InView`); text is on the page from the
+first frame.
+
+All of it collapses under `prefers-reduced-motion`.
+
+## Paper
+
+Depth without a shadow. Three cues, all hairlines:
+
+- The masthead is a sheet laid over the page: once the page has scrolled (`html[data-scrolled]`),
+  a 1px `--paper-3` line appears under its rule, the fold.
+- A `.tint` block carries a 1px `--paper-3` plate edge inset 5px from its border.
+- Night headings step up one weight, Eczar 700, because light ink on dark paper spreads less.
+
+Photographs print on a `.plate`: the tint by day, and by night the day's paper, so the ink
+picture masked over it stays a positive. Masked over cream ink on the dark page it came out
+as a photographic negative.
+
+## Forms
+
+A radio or a checkbox is a ruled square that fills with the spot colour, never the platform's
+blue circle. Inputs take `.field`: no box, a 2px rule beneath that turns spot on focus.
 
 ## The river
 

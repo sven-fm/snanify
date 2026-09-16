@@ -18,7 +18,7 @@ const en = {
   signIn: {
     meta: "Sign in | Snanify",
     title: "Sign in",
-    lede: "Use Google, or a link sent to your email. Your mornings and your Sankalp Patras are where you left them.",
+    lede: "Google, or a link sent to your email. The same screen makes an account if you have none.",
   },
   signUp: {
     meta: "Create your account | Snanify",
@@ -43,10 +43,13 @@ const en = {
     profileCta: "Edit",
     reminderHeading: "Reminder",
     reminderToggle: "Send me a reminder at this hour",
+    calendar: "Put the hour in your calendar",
     signOut: "Sign out",
     todayCta: "Sit this morning",
     setupCta: "Set up your sheet",
     save: "Save",
+    accountHeading: "Your account",
+    remindersOff: "Your reminders are off.",
     deleteHeading: "Delete your account",
     deleteBody:
       "This removes your account, your register, your sheets and your photograph. Links you have already sent stop working. Type delete to confirm.",
@@ -60,7 +63,7 @@ const hi = {
   signIn: {
     meta: "प्रवेश कीजिए | Snanify",
     title: "प्रवेश कीजिए",
-    lede: "गूगल से, या आपके ईमेल पर भेजी गई कड़ी से। आपकी सुबहें और आपके संकल्प पत्र वहीं हैं जहाँ आपने छोड़े थे।",
+    lede: "गूगल से, या आपके ईमेल पर भेजी गई कड़ी से। खाता न हो तो यही स्क्रीन उसे बना देती है।",
   },
   signUp: {
     meta: "अपना खाता बनाइए | Snanify",
@@ -85,10 +88,13 @@ const hi = {
     profileCta: "बदलिए",
     reminderHeading: "सूचना",
     reminderToggle: "इस घड़ी पर मुझे सूचना भेजिए",
+    calendar: "यह घड़ी अपने कैलेंडर में रखिए",
     signOut: "बाहर निकलिए",
     todayCta: "आज सुबह बैठिए",
     setupCta: "अपना पत्र तय कीजिए",
     save: "सहेजिए",
+    accountHeading: "आपका खाता",
+    remindersOff: "आपकी सूचनाएँ बंद हैं।",
     deleteHeading: "अपना खाता मिटाइए",
     deleteBody:
       "इससे आपका खाता, आपकी पंजिका, आपके पत्र और आपका चित्र हट जाते हैं। जो कड़ियाँ आपने भेजी हैं, वे काम करना बंद कर देंगी। पुष्टि के लिए delete लिखिए।",

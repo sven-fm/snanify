@@ -4,7 +4,7 @@ import type { PatraRecord } from "@/content/patra";
 import { ShareButton } from "@/components/patra/ShareButton";
 import { PatraSheetViewer } from "@/components/SankalpPatra";
 import { SubmitButton } from "@/components/ui";
-import { setPatraPublic } from "@/app/[lang]/(app)/p/[id]/actions";
+import { setPatraPublic } from "@/app/[lang]/p/[id]/actions";
 
 type Copy = (typeof patraPageContent)["en"];
 
@@ -45,10 +45,11 @@ export function PatraOwner({
 }) {
   return (
     <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
+      {/* Pulled from the press, then the send button settles under it. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1920} className="w-full border-2 border-rulestrong" />
+      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull w-full border-2 border-rulestrong" />
 
-      <div className="mt-6">
+      <div className="pull mt-6" style={{ animationDelay: "320ms" }}>
         <ShareButton
           url={pageUrl}
           imageUrl={imageUrl}
@@ -59,6 +60,7 @@ export function PatraOwner({
           lang={lang}
           auto={auto}
         />
+        {auto && <p className="mt-4 text-center text-sm text-ink2">{t.homeScreen}</p>}
       </div>
 
       {sankalp && (

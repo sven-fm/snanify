@@ -82,6 +82,9 @@ const en = {
 
   left: "{n} mornings left",
   leftOne: "One morning left",
+
+  /** The small cross at the corner of the practice. Leaving before the mark spends nothing. */
+  leave: "Leave this morning",
 };
 
 const hi = {
@@ -149,6 +152,8 @@ const hi = {
 
   left: "{n} सुबहें शेष",
   leftOne: "एक सुबह शेष",
+
+  leave: "यह सुबह छोड़िए",
 };
 
 export const todayContent = { en, hi } satisfies Record<Lang, typeof en>;

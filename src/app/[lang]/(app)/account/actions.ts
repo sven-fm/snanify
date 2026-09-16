@@ -14,8 +14,11 @@ import { localePath, type FullLang as Lang } from "@/lib/locales";
 
    DELETION IS REAL AND IT IS IN THE RIGHT ORDER. The files go first, because a
    blob whose row is gone is a file nobody can find to delete afterwards. Then
-   the rows, which cascade from `users`. Then the Clerk account, last, because
-   that is the thing whose absence would stop us reaching the rest.
+   the Clerk account, so the person cannot sign in again halfway through and
+   be given a fresh, empty row. Then our rows, which cascade from `users`. If
+   the last step fails the rows are orphaned rather than the login, and an
+   orphan is found by a sweep; a login with no rows is a person who has lost
+   their mornings.
 
    The one thing deliberately left behind is the purchase and ledger history,
    which cascade with the user. That is a decision worth naming: a business
@@ -72,11 +75,12 @@ export async function deleteAccount(lang: Lang, formData: FormData): Promise<voi
 
   for (const key of keys) await remove(key);
 
-  /* Everything else cascades from here: profile, purchases, ledger, sittings. */
-  await db.delete(users).where(eq(users.id, user.id));
-
   const clerk = await clerkClient();
   await clerk.users.deleteUser(user.id);
+
+  /* Everything else cascades from here: profile, purchases, ledger, sittings.
+     Stripe keeps the payment record, as /privacy says. */
+  await db.delete(users).where(eq(users.id, user.id));
 
   redirect(localePath(lang, "/"));
 }

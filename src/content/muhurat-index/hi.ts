@@ -6,10 +6,12 @@ import type { MuhuratIndexCopy } from "./en";
     wherever it appears, and names the condition under which that changes. */
 export const hi = {
   meta: {
-    indexTitle: "मुहूर्त पंचांग, स्नानिफ़ाई",
+    indexTitle: "मुहूर्त पंचांग, Snanify",
     indexDescription:
       "आगामी बारह महीनों के पर्व, दिन की वे बेलाएँ जिनमें वे रखे जाते हैं, और हर एक की तिथि के बारे में कितना पता है।",
-    detailSuffix: "मुहूर्त पंचांग, स्नानिफ़ाई",
+    detailSuffix: "मुहूर्त पंचांग, Snanify",
+    detailTitle: "{name} {year}: तिथि, स्नान मुहूर्त, और उस सुबह की नदी | Snanify",
+    whenQuestion: "{year} में {name} कब है?",
   },
   nav: { back: "सभी पर्व" },
   hero: {

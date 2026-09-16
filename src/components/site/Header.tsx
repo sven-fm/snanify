@@ -48,7 +48,7 @@ export function Header({
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-paper">
+    <header className="sticky top-0 z-50 bg-paper" data-masthead>
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* masthead row */}
         <div className="flex h-14 items-center justify-between gap-3 sm:gap-4">

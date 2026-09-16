@@ -26,6 +26,8 @@ const en = {
   },
   title: "Set up your sheet",
   lede: "You do this once. Every morning after it takes three minutes.",
+  /** The three-step line at the top: the water, the sheet, the hour. */
+  steps: ["Your water", "Your sheet", "Your hour"],
 
   water: {
     label: "Your water",
@@ -54,10 +56,18 @@ const en = {
     hint: "Your own words, in any language. You read them back every morning.",
     placeholder: "Your sankalp, in your own words",
     remaining: "{n} characters left",
+    /** Three to take as they are, or to start from. Tap one and it fills the field. */
+    examplesLabel: "Or take one of these",
+    examples: [
+      "For my mother, every morning this month.",
+      "For the family, near and far, and a steady mind.",
+      "For my father, who first took me to the river.",
+    ],
   },
   reminder: {
     label: "Reminder hour",
     hint: "In your local time. You can change it or stop it on your account page.",
+    zone: "Your time zone: {zone}",
   },
 
   save: "Save and continue",
@@ -91,6 +101,7 @@ const hi = {
   },
   title: "अपना पत्र तय कीजिए",
   lede: "यह एक बार करना है। उसके बाद हर सुबह तीन मिनट की है।",
+  steps: ["आपका जल", "आपका पत्र", "आपकी घड़ी"],
 
   water: {
     label: "आपका जल",
@@ -119,10 +130,17 @@ const hi = {
     hint: "आपके अपने शब्द, किसी भी भाषा में। हर सुबह आप इन्हें पढ़ते हैं।",
     placeholder: "आपका संकल्प, आपके अपने शब्दों में",
     remaining: "{n} अक्षर शेष",
+    examplesLabel: "या इनमें से एक लीजिए",
+    examples: [
+      "मेरी माँ के लिए, इस महीने हर सुबह।",
+      "परिवार के लिए, पास और दूर, और स्थिर मन के लिए।",
+      "मेरे पिता के लिए, जो मुझे पहली बार नदी पर ले गए।",
+    ],
   },
   reminder: {
     label: "सूचना की घड़ी",
     hint: "आपके स्थानीय समय में। खाते के पृष्ठ पर इसे बदल या रोक सकते हैं।",
+    zone: "आपका समयक्षेत्र: {zone}",
   },
 
   save: "सहेजिए और आगे बढ़िए",

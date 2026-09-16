@@ -142,11 +142,18 @@ export const en = {
     note: "Prices show before local tax.",
     cta: "How it works",
   },
+  /* The sheet a stranger sees before paying: drawn from today's figure, for
+     a family that does not exist, and labelled as a specimen on its face. */
+  specimen: {
+    label: "Specimen",
+    alt: "A Sankalp Patra, as it arrives on a phone: two names, the Ganga at Haridwar, today's flow and rank.",
+    caption: "A sheet as it arrives in a family group, drawn from the Ganga's own figure today.",
+  },
   notFound: {
     code: "404",
-    title: "Page not found",
-    lede: "The address may have changed. Start again from the front page.",
-    cta: "Go to the front page",
+    title: "No ghat at this address.",
+    lede: "The river moved, or the link did. The six waters are still where they were.",
+    cta: "Back to the river",
   },
   closing: {
     title: "Begin tomorrow morning.",
@@ -160,8 +167,8 @@ export const en = {
   footer: {
     tagline: "A digital snan for Indians everywhere.",
     cols: [
-      { h: "Service", links: ["Begin", "The snan", "The river now", "Sacred waters", "Muhurat calendar"] },
-      { h: "Company", links: ["Panchang", "Questions", "How it is made"] },
+      { h: "Practice", links: ["Begin", "The snan"] },
+      { h: "Reference", links: ["Panchang", "The rivers now", "Sacred waters", "Muhurat", "Questions"] },
       { h: "Legal", links: ["Privacy", "Terms", "Refunds"] },
     ],
     made: "Prayagraj and Berlin",

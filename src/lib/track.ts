@@ -31,6 +31,7 @@
 
 export type Event =
   | "begin_view"
+  | "sign_in_view"
   | "checkout_start"
   | "purchase"
   | "setup_done"

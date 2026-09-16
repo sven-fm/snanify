@@ -350,7 +350,7 @@ export function tithiLine(occasion: Occasion, lang: Lang): string {
 export const panchangContent = {
   en: {
     meta: {
-      title: "Panchang: tithi, Pitru Paksha and the shraddha days, in your timezone",
+      title: "Panchang {year}: today's tithi, Pitru Paksha and the shraddha days, in your time zone",
       description:
         "A free reference for families outside India. The sixteen shraddha tithis of Pitru Paksha, the daily windows, why amanta and purnimanta reckoning name the same day differently, and every timing in IST and in seven cities abroad.",
     },
@@ -549,7 +549,7 @@ export const panchangContent = {
 
   hi: {
     meta: {
-      title: "पंचांग: तिथि, पितृ पक्ष और श्राद्ध के दिन, आपके समयक्षेत्र में",
+      title: "पंचांग {year}: आज की तिथि, पितृ पक्ष और श्राद्ध के दिन, आपके समयक्षेत्र में",
       description:
         "विदेश में बसे परिवारों के लिए निःशुल्क संदर्भ। पितृ पक्ष की सोलह श्राद्ध तिथियाँ, दैनिक बेलाएँ, अमांत और पूर्णिमांत गणना एक ही दिन को अलग नाम क्यों देती हैं, और हर समय IST में तथा विदेश के सात नगरों की घड़ी पर।",
     },

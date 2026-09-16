@@ -130,6 +130,7 @@ export async function GET(request: Request): Promise<Response> {
     try {
       const result = await sendReminder({
         to: person.email,
+        userId: person.id,
         lang,
         water: ghat ? waterName(ghat, "river", lang) : person.waterSlug,
         band: water?.discharge.kind === "modelled" ? water.discharge.percentile.band : "usual",

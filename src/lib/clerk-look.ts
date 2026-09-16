@@ -100,7 +100,10 @@ const STRINGS = {
     signIn: {
       start: {
         title: "Sign in to Snanify",
-        subtitle: "Your mornings are where you left them.",
+        subtitle: "Or create your account. Your mornings are where you left them.",
+        /* The combined flow reads these two rather than the pair above. */
+        titleCombined: "Sign in to Snanify",
+        subtitleCombined: "Or create your account. Your mornings are where you left them.",
         actionText: "New here?",
         actionLink: "Create an account",
       },
@@ -123,15 +126,17 @@ const STRINGS = {
   hi: {
     signIn: {
       start: {
-        title: "स्नानिफ़ाई में प्रवेश",
-        subtitle: "आपकी सुबहें वहीं हैं जहाँ आपने छोड़ी थीं।",
+        title: "Snanify में प्रवेश",
+        subtitle: "या अपना खाता बनाइए। आपकी सुबहें वहीं हैं जहाँ आपने छोड़ी थीं।",
+        titleCombined: "Snanify में प्रवेश",
+        subtitleCombined: "या अपना खाता बनाइए। आपकी सुबहें वहीं हैं जहाँ आपने छोड़ी थीं।",
         actionText: "पहली बार आए हैं?",
         actionLink: "खाता बनाइए",
       },
     },
     signUp: {
       start: {
-        title: "स्नानिफ़ाई पर अपना खाता बनाइए",
+        title: "Snanify पर अपना खाता बनाइए",
         subtitle: "एक कदम, फिर नदी।",
         actionText: "खाता पहले से है?",
         actionLink: "प्रवेश कीजिए",

@@ -8,6 +8,13 @@ import { KUMBH_ROUTE, kumbhContent } from "@/content/kumbh";
    `FULL_LANGS` is what narrows the prerender set away from the layout default. */
 import { FULL_LANGS, type FullLang as Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
+import {
+  StructuredData,
+  breadcrumbList,
+  organization,
+  webPage,
+  website,
+} from "@/components/StructuredData";
 
 /**
  * Public URL shape (English unprefixed at /kumbh, Hindi at /hi/kumbh), the
@@ -44,5 +51,26 @@ export default async function Page({
   params: Promise<{ lang: Lang }>;
 }) {
   const { lang } = await params;
-  return <Kumbh lang={lang} />;
+  const t = kumbhContent[lang].meta;
+  return (
+    <>
+      <StructuredData
+        graph={[
+          organization(lang),
+          website(),
+          webPage({
+            lang,
+            path: ROUTE,
+            name: t.title,
+            description: t.description,
+            breadcrumb: breadcrumbList(lang, [
+              { name: "Snanify", path: "/" },
+              { name: t.title, path: ROUTE },
+            ]),
+          }),
+        ]}
+      />
+      <Kumbh lang={lang} />
+    </>
+  );
 }

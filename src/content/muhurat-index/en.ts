@@ -31,6 +31,10 @@ export const en = {
     indexDescription:
       "The occasions of the twelve months ahead, the windows of the day they are kept in, and how much is known about when each one falls.",
     detailSuffix: "Muhurat calendar, Snanify",
+    /** The occasion page's title, query-shaped: the name, the year it next falls in, and what the page answers. */
+    detailTitle: "{name} {year}: date, snan muhurat, and the river that morning | Snanify",
+    /** The FAQ node a search engine reads for the date. */
+    whenQuestion: "When is {name} in {year}?",
   },
   nav: { back: "All occasions" },
   hero: {

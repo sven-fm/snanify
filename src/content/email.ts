@@ -38,7 +38,8 @@ const en = {
     } satisfies Record<FlowBand, string>,
     cta: "Sit this morning",
     link: "Open this morning here:",
-    footer: "Change the hour, or stop these reminders, on your account page. Snanify, snanify.com",
+    stop: "Stop these reminders",
+    footer: "Change the hour on your account page. Snanify, snanify.com",
   },
 };
 
@@ -63,7 +64,8 @@ const hi = {
     } satisfies Record<FlowBand, string>,
     cta: "आज सुबह बैठिए",
     link: "आज की सुबह यहाँ खोलिए:",
-    footer: "घड़ी बदलनी हो या ये सूचनाएँ रोकनी हों, तो अपने खाते के पृष्ठ पर कीजिए। Snanify, snanify.com",
+    stop: "ये सूचनाएँ रोकिए",
+    footer: "घड़ी अपने खाते के पृष्ठ पर बदलिए। Snanify, snanify.com",
   },
 };
 

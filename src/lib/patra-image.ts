@@ -131,7 +131,7 @@ export async function patraSvg(view: PatraView): Promise<string> {
 
   /* --- masthead --------------------------------------------------------- */
   parts.push(
-    (await typeset("SANKALP PATRA", { size: 23, x: M, y: 84, fill: SPOT, tracking: 0.26 })).svg,
+    (await typeset(view.specimen ? "SANKALP PATRA, SPECIMEN" : "SANKALP PATRA", { size: 23, x: M, y: 84, fill: SPOT, tracking: 0.26 })).svg,
   );
   parts.push(
     (await typeset(view.keptDate, { size: 23, x: RIGHT, y: 84, fill: INK_2, anchor: "end" })).svg,
@@ -231,8 +231,17 @@ export async function patraSvg(view: PatraView): Promise<string> {
     rowY += rowHeight;
   }
 
+  /* A specimen has no page of its own, so it carries the site rather than
+     an address that would answer 404. */
   parts.push(
-    (await typeset(`snanify.com/p/${view.id}`, { size: 18, x: M, y: rowY + 30, fill: INK_2 })).svg,
+    (
+      await typeset(view.specimen ? "snanify.com" : `snanify.com/p/${view.id}`, {
+        size: 18,
+        x: M,
+        y: rowY + 30,
+        fill: INK_2,
+      })
+    ).svg,
   );
   parts.push(
     (
@@ -358,7 +367,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   );
 
   /* --- masthead --------------------------------------------------------- */
-  parts.push((await typeset("SANKALP PATRA", { size: 26, x: MM, y: 118, fill: SPOT, tracking: 0.26 })).svg);
+  parts.push((await typeset(view.specimen ? "SANKALP PATRA, SPECIMEN" : "SANKALP PATRA", { size: 26, x: MM, y: 118, fill: SPOT, tracking: 0.26 })).svg);
   parts.push((await typeset(view.keptDate, { size: 26, x: R, y: 118, fill: INK_2, anchor: "end" })).svg);
   parts.push(`<rect x="${MM}" y="142" width="${IN}" height="3" fill="${INK}" />`);
   parts.push(`<rect x="${MM}" y="149" width="${IN}" height="1" fill="${INK}" />`);
@@ -437,7 +446,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   }
 
   /* --- foot --------------------------------------------------------------- */
-  parts.push((await typeset(`snanify.com/p/${view.id}`, { size: 20, x: MM, y: footTop + 14, fill: INK_2 })).svg);
+  parts.push((await typeset(view.specimen ? "snanify.com" : `snanify.com/p/${view.id}`, { size: 20, x: MM, y: footTop + 14, fill: INK_2 })).svg);
   parts.push((await typeset(`seed ${view.seedShort}`, { size: 20, x: R, y: footTop + 14, fill: INK_2, anchor: "end" })).svg);
 
   return (

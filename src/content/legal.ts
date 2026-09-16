@@ -18,7 +18,7 @@ import type { FullLang as Lang } from "@/lib/locales";
    particular are the owner's to answer rather than mine: whether an
    Indian GST registration is needed for selling a digital service to consumers
    in India, and which entity's name and address belong at the foot of these
-   pages. Both are marked in build-plan.md section 4.
+   pages. Both are marked in plan.md.
 
    WRITTEN TO BE READ. Short sentences, no defined terms, no "the Company".
    Somebody who wants to know whether we keep their photograph should find that

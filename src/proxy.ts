@@ -25,7 +25,7 @@ const PREFIXES = new Set<string>(LANGS.filter((l) => l !== DEFAULT_LANG));
  * English and Hindi. Their URLs are indexed, so they land on the English page
  * rather than a 404 while Search Console works through them. The copy files are
  * still in the tree; a locale coming back means a row in the registry and its
- * code leaving this list. See build-plan.md, decision "Locales at launch".
+ * code leaving this list. See plan.md, decision "Locales at launch".
  */
 const RETIRED = new Set(["bn", "mr", "te", "ta", "gu", "kn", "ml", "or", "pa", "as"]);
 
@@ -131,6 +131,6 @@ export const config = {
    * redirect for an `og:image`, so the card would simply come out blank.
    */
   matcher: [
-    "/((?!_next/|api/|waters/|favicon\\.ico|icon\\.svg|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|.*opengraph-image|.*twitter-image).*)",
+    "/((?!_next/|api/|waters/|favicon\\.ico|icon\\.svg|icon-\\d+\\.png|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|.*opengraph-image|.*twitter-image).*)",
   ],
 };

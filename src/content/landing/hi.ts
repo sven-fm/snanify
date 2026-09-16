@@ -3,12 +3,12 @@ import type { LandingCopy } from "./en";
 /** Hindi. Devanagari numerals where a printed panchang would set them, and
     Latin digits wherever a figure must stay checkable against the model's own
     published value. The brand stays Latin: one mark, not two. `footer.rights`
-    used to read "© 2026 स्नानिफ़ाई", which read close to "Bath-ify". */
+    used to read "© 2026 Snanify", which read close to "Bath-ify". */
 export const hi = {
   htmlLang: "hi",
   dir: "ltr" as const,
   meta: {
-    title: "स्नानिफ़ाई, नदी आप तक आती है",
+    title: "Snanify, नदी आप तक आती है",
     description:
       "एक डिजिटल स्नान। पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट बैठिए जिसके पास आप बड़े हुए, और जो पत्र बने उसे परिवार को भेजिए। छहों जल सजीव, पढ़ने के लिए निःशुल्क।",
   },
@@ -99,11 +99,16 @@ export const hi = {
     note: "मूल्य स्थानीय कर से पहले के हैं।",
     cta: "कैसे काम करता है",
   },
+  specimen: {
+    label: "नमूना",
+    alt: "एक संकल्प पत्र, जैसा वह फ़ोन पर पहुँचता है: दो नाम, हरिद्वार में गंगा, आज का प्रवाह और स्थान।",
+    caption: "एक पत्र, जैसा वह परिवार के समूह में पहुँचता है, आज गंगा के अपने आँकड़े से बना।",
+  },
   notFound: {
     code: "404",
-    title: "पृष्ठ नहीं मिला",
-    lede: "यह पता बदल गया होगा। मुखपृष्ठ से फिर आरंभ कीजिए।",
-    cta: "मुखपृष्ठ पर जाइए",
+    title: "इस पते पर कोई घाट नहीं।",
+    lede: "नदी ने रास्ता बदला, या कड़ी ने। छह जल वहीं हैं जहाँ थे।",
+    cta: "नदी की ओर लौटिए",
   },
   closing: {
     title: "कल सुबह आरंभ कीजिए।",
@@ -117,8 +122,8 @@ export const hi = {
   footer: {
     tagline: "विश्वभर के भारतीयों के लिए डिजिटल स्नान।",
     cols: [
-      { h: "सेवा", links: ["आरंभ कीजिए", "स्नान", "नदी, इस समय", "पवित्र जल", "मुहूर्त पंचांग"] },
-      { h: "कंपनी", links: ["पंचांग", "प्रश्न", "यह कैसे बनी है"] },
+      { h: "साधना", links: ["आरंभ कीजिए", "स्नान"] },
+      { h: "संदर्भ", links: ["पंचांग", "अभी की नदियाँ", "पवित्र जल", "मुहूर्त", "प्रश्न"] },
       { h: "कानूनी", links: ["गोपनीयता", "शर्तें", "वापसी"] },
     ],
     made: "प्रयागराज और बर्लिन",

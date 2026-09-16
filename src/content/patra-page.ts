@@ -32,6 +32,9 @@ const en = {
   metaTitle: "{name}, {water}, {date}",
   metaDescription: "A Sankalp Patra kept with the {water} at {ghat}, {city}, on {date}.",
 
+  /** Shown once, straight after a morning: the icon is how this gets opened at six. */
+  homeScreen: "Add Snanify to your home screen. Tomorrow it opens at your hour.",
+
   privateTitle: "This sheet is private",
   privateBody: "The person who kept it has made it private.",
 
@@ -58,6 +61,8 @@ const hi = {
   shareText: "{name} ने {date} को {water} के साथ संकल्प रखा।",
   metaTitle: "{name}, {water}, {date}",
   metaDescription: "{date} को {ghat}, {city} पर {water} के साथ रखा गया एक संकल्प पत्र।",
+
+  homeScreen: "Snanify को अपनी होम स्क्रीन पर जोड़िए। कल यह आपकी घड़ी पर खुलेगा।",
 
   privateTitle: "यह पत्र निजी है",
   privateBody: "जिन्होंने इसे रखा, उन्होंने इसे निजी कर दिया है।",
