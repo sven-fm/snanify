@@ -63,123 +63,58 @@ percent of readers arrive on a phone, at six in the morning, in bed.
 locales, Stripe Checkout and a webhook into an append-only ledger in Neon, Clerk for
 identity, Blob for files, Resend for mail, a GitHub Actions cron for the hour.
 
-## 5. Out of scope, by name
+## 5. Out of scope
 
-Everything in `docs/digital/` and `docs/product/` that is not in this file: Jal Stambha,
-Jal Nimantran, Sang, Ghat Bahi, Sankalp Bahi, Pitru Tithi Panji, Founding Patra, Snan
-Kosh credits, Nitya or Kul subscriptions, gifting scheduler, co-stewards, succession,
-dormancy flows, the fifteen message types, the audio engine, the 54 nakshatra SEO pages,
-the `@snanify_jal` account, `/deewar`, `/khandan`, the A3 print file, the SVG Jal Mudra,
-WhatsApp Business messaging, Razorpay, phone OTP, the ten surface locales, referral caps,
-streak mechanics, the year-end sheet. Any of these can return as its own item here,
-argued from revenue.
+Everything in `docs/` that is not in this file, including the whole officiant-era
+feature set, which `docs/digital/README.md` names so nobody rebuilds it by accident.
+Any of it can return as its own item here, argued from revenue.
 
 ---
 
 ## 6. For you to review
 
-Things that exist and want your eyes, or that only you can do. Each is one look or one
-dashboard.
+Things that exist and want your eyes, or that only you can do.
 
-### 6.1 The new order, on your phone
-
-Sign out, press Begin on the landing page, and go through it: sign in, set up, the packs
-with your own names on the specimen, pay, sit. Built and verified on the dev server on
-16 September; it wants one pass by a person on a real phone. Two things to judge as you
-go: whether the three-step line reads, and whether "Your sheet is set" on the pack page
-is the right first line.
-
-### 6.2 Production, after the deploys
-
-- `/sign-in` renders the combined card clean under the new Content Security Policy
-  (checked headless). Sign in with Google once; a violation shows in the console as
-  "Refused to ...".
-- Pay as a stranger over https and arrive on Stripe without a second press: the intent
-  cookie is Secure and could only be tested on plain http locally.
-- HEIC from an iPhone through `/setup`, or the word comes out of the portrait copy.
-- Apple Pay and Google Pay: on in the Stripe dashboard's payment methods?
-
-### 6.3 A Neon branch for development and preview
-
-`.env.local` and the Preview environment point at the production database. Create a
-branch in Neon, pull it into `.env.local`, set it on Preview, and production stays
-`main`'s alone.
-
-### 6.4 Rate limits
-
-Vercel WAF rules by IP on `/begin`, `/setup` and `/p/*/image`, and BotID on the pay form
-if abuse ever shows. Nothing in the code limits a signed-in bot from opening Checkout
-Sessions all night.
-
-### 6.5 Two lines of copy
-
-- Footer tagline: "A digital snan for Indians everywhere" leaves out the Nepali,
-  Mauritian, Trinidadian and Fijian diaspora and children born abroad. Alternative:
-  "for everyone far from their river".
-- The privacy page says payment records stay with Stripe; account deletion now removes
-  the Clerk login before the rows. Read it once against what the code does.
-
-### 6.6 Drik Panchang
-
-Read the dated occasions off Drik and record each match in `docs/panchang-check.md`.
-
----
+1. **The new order, on your phone.** Sign out, press Begin, go through sign-in, set-up,
+   the packs with your own names on the specimen, pay, sit. Judge the three-step line
+   and the first line on the pack page, "Your sheet is set".
+2. **Two production checks.** Pay as a stranger over https and land on Stripe without a
+   second press (the intent cookie is Secure, so it could not be tried on plain http).
+   Send a HEIC photograph from an iPhone through `/setup`, or the word comes out of the
+   portrait copy.
+3. **Apple Pay and Google Pay** on in the Stripe dashboard's payment methods.
+4. **A Neon branch for development and preview.** `.env.local` and Preview point at the
+   production database. Create a branch, pull it into `.env.local`, set it on Preview.
+5. **Rate limits.** Vercel WAF rules by IP on `/begin`, `/setup` and `/p/*/image`;
+   BotID on the pay form if abuse shows.
+6. **Footer tagline.** "A digital snan for Indians everywhere" or "for everyone far from
+   their river".
+7. **Drik Panchang.** Read the dated occasions off Drik and record each match in
+   `docs/panchang-check.md`.
 
 ## 7. Waiting for your go
 
-Built on your word. Each says what it is and roughly what it costs.
-
-### 7.1 The hydration flake on production. P1, about half a day
-
-On a share of loads of `/`, `/snan` and `/begin` (6 of 18, then 11 of 24, headless
-Chromium at 390 px, 16 September) React throws error 418 and re-renders the whole page
-on the client: the reader sees the page twice. The body's structure and text are
-identical between the server HTML and the client render, so the mismatch is somewhere a
-DOM diff does not show. Ruled out: the bundler (production flakes on webpack and
-Turbopack alike; a plain local build of either never flakes, even throttled), the
-analytics request, cookies. The previous production deployment could not be measured
-(deployment protection). Next, in order: a preview without `<Analytics />`; a preview
-with the two sync head scripts moved to `next/script` `beforeInteractive`; a preview
-with the theme-colour viewport export removed. Whichever removes the error names the
-cause.
-
-### 7.2 Error reporting. P2, an hour
-
-A failed `keepThisMorning` or a sheet that would not render is a `console.error` in
-the function logs and nothing else. A Vercel log drain with an alert on
-`patra: could not pre-render` and `fulfilment failed`, or Sentry's free tier.
-
-### 7.3 The sitting, shown before it is bought. P2, half a day
-
-A ten-second silent loop of the five screens under "The five parts" on `/snan`, the
-way the specimen shows the sheet: a CSS-animated miniature of the story bar, the breath
-and the black.
-
-### 7.4 The panchang by city. P2, a day
-
-`/panchang/[city]` for twenty diaspora cities (Toronto, London, New Jersey, the Bay
-Area, Houston, Leicester, Dubai, Singapore, Sydney and on), each with sunrise, Brahma
-muhurat and today's tithi in that zone. Same data, twenty pages, the query people
-actually type. The biggest free lever there is.
-
-### 7.5 Small things. P3, an hour each
-
-- The e2e specs cover overflow and the CTA hrefs; put `scripts/deliver-webhook.mjs`
-  into a test that books credits in Stripe test mode and asserts the ledger.
-- The hour picker on `/setup` is a native `<select>`; a ruled row of hours is the
-  letterpress version.
-- The 404 page logs "Encountered a script tag while rendering React component" on a
-  client navigation.
-- `sameAs` on the Organization node once an Instagram or YouTube exists.
-- Vercel CLI is behind (59.11.7 against 59.19.0).
+1. **The hydration flake on production. P1, half a day.** On a share of loads of `/`,
+   `/snan` and `/begin` React re-renders the whole page on the client (error 418).
+   Server HTML and client render are identical in structure and text; ruled out: the
+   bundler, analytics, cookies; a plain local build never flakes. Next: previews
+   without `<Analytics />`, with the head scripts moved to `next/script`, and without
+   the theme-colour viewport export, measured one by one.
+2. **Error reporting. P2, an hour.** A Vercel log drain with an alert on
+   `patra: could not pre-render` and `fulfilment failed`, or Sentry's free tier.
+3. **The sitting, shown before it is bought. P2, half a day.** A ten-second loop of the
+   five screens under "The five parts" on `/snan`.
+4. **The panchang by city. P2, a day.** `/panchang/[city]` for twenty diaspora cities,
+   each with sunrise, Brahma muhurat and today's tithi in that zone.
+5. **Small things. P3.** A webhook e2e test in Stripe test mode; a ruled hour picker on
+   `/setup`; the 404 page's script-tag warning on client navigation; `sameAs` once a
+   social profile exists; the Vercel CLI update.
 
 ## 8. After launch, argued from data
 
-1. **Razorpay and UPI**, when an Indian entity exists.
-2. **Gifting**: buy a pack for a parent, the parent sets up with a link.
-3. **Parva days**: Kartik Purnima, Makar Sankranti, Ganga Dussehra, Nashik 2027. A special folio and an email the day before.
-4. **A third locale**, chosen by the zone and locale data in `users`.
-5. **Remembrance sittings**, in the name of someone who has died. High value, high sensitivity, its own plan.
+Razorpay and UPI when an Indian entity exists; gifting a pack to a parent; parva-day
+folios and the email the day before; a third locale chosen from the zone data in
+`users`; remembrance sittings, with their own plan.
 
 ---
 
@@ -187,56 +122,30 @@ actually type. The biggest free lever there is.
 
 ### 16 September 2026
 
-- Pounds live: the live Stripe catalogue carries GBP and the tax rule (run by the owner with the dashboard key), and `CATALOGUE_CURRENCIES` includes it, so a reader in the UK sees and pays £.
-- The seed is gone from every visible output (the memento, the sheet, the print version, `/snan`, the FAQ, `llms.txt`); it stays on the sitting row as a datum.
-- The distance to the water: a `distance_km` column on the sitting, written at the mint from the request's coordinates; printed on the memento beside the time, on the print version as its own cell, on the reading and the ready screen; the specimen carries Toronto's.
-- On a phone the silhouette opens a drawer under the masthead with the account's rows (your mornings, your snan, buy mornings, sign out), the same rows the hamburger carries; people pressed it expecting their account.
-- The sheet says where to get one: "Your own morning, at snanify.com" on its foot, in its own edition; the recipient's page opens with an invitation strip and a Begin button above the sheet; the link preview carries the same line. The print version prints only the cells that carry something.
-- The memento: the band of water under the ghat's plate is gone, and the water across the page is a faint hairline guilloche, one weight, so the type reads as on a bank note. Sheets rendered before keep their old image.
-- `/muhurat`: the worked example became a live clock, ticking from the phone: the ghat's time in IST, the reader's own zone under it, the same moment in six cities with the day shift, today's open or next window and today's sunrise at Har Ki Pauri.
-- The sitting: the water behind the practice runs eight times slower; the stillness is dark again, with the words and the count and nothing else.
-- Every "free to read" and "the snan is what you pay for" line is gone: the landing's free register, the `/live` closing block, the FAQ question, the ledes on `/snan`, `/rivers`, `/panchang` and the metas. The reference pages are in the nav and the footer; the tariff states the price.
-- The flowing water bands draw every line at one weight with the fade on the container, so the loop has no visible period.
-- The reading's fourth row, "From you": the distance to the ghat from the request's own coordinates, rounded to ten kilometres; the copy had promised it since the first plan and nothing computed it.
-- `/live`: the engraved water over the foot of each plate flows downward only, tiled without a seam, covering the water in the photograph; Kaveri's lines in paper over its dark water; a new Shipra plate with the river in frame (Ram Ghat across the Shipra, Shruti Lata, CC BY-SA 4.0).
-- Set up before paying: `/begin` sends a stranger to sign in and then to `/setup`; the packs are the third step, beside the specimen with the buyer's own names; the receipt says "sit tomorrow".
-- Next.js 16.3.5; two critical advisories closed.
-- The charge follows the geo header, never the cookie the browser can edit.
-- Content-Security-Policy, nosniff, Referrer-Policy, Permissions-Policy, HSTS with preload.
-- Unknown dotted paths get the site's 404 instead of a 500; `/llms.txt` exists.
-- The share page and the pack picker left the Clerk route group: 323 KB and 320 KB of script became 10 KB and 7 KB.
-- One press of Pay across a sign-in, via a short-lived intent cookie.
-- One combined sign-in-or-up screen, one heading.
-- The pack picker: eleven first and raised, one and sixty as ruled rows, a pending label on Pay, the refund line.
-- Packs named by their count; the coined names and their Devanagari retired.
-- The specimen sheet, drawn from today's Ganga figure and labelled on its face, inside a phone built around the sheet's own ratio with a masked screen, beside the six waters on `/` and beside the sheet's rows on `/snan`, and with the buyer's own names on `/begin`.
-- Setup under a three-step line, three example sankalps, the hour defaulting to six with the zone named.
-- The sitting takes the whole screen from Begin to done, water behind every part, the breath as the engraved band, a cross to leave, the count on the done screen only, haptics where the browser has them.
-- Press states on every control; settle for menus and the theme; the masthead's Begin and the thumb rail wait for the hero's own button; the blanket section reveal gone.
-- Photographs on a plate so the night edition prints positives; the masthead's fold; the tint's plate edge; night headings at 700; ruled form marks and fields.
-- The Patra arrives pulled from the press; the register rows read as links; deletion under a fold; the `/live` registers fold away; the silhouette in the phone bar once signed in.
-- "One figure a day" on the landing; the `/snan` lede a sentence; the FAQ drops the question that argued with a critic; one contact address; the pack paragraph written once per page; the 404 in the site's voice; the brand Latin in Hindi.
-- The panchang in the navigation; footer columns Practice, Reference, Legal.
-- Occasion titles carry the year and a "When is X in YEAR?" node; `/panchang` and `/kumbh` carry the graph; the rivers description cut to a snippet.
-- The reminder carries a one-tap signed unsubscribe and the List-Unsubscribe headers.
-- Account deletion removes the Clerk login before the rows; `/begin/done` looks the purchase up for its own user; the cron secret compared in constant time.
-- A web app manifest, home-screen icons, theme colour, a calendar file for the hour, the home-screen line after the first morning, `sign_in_view` in the funnel.
-- A CI workflow on pushes to `main` and pull requests; the portrait test given a timeout that survives a shared runner.
-- `build-plan.md` folded into this file; `README.md` deleted; `CLAUDE.md` cut to the rules; `ARCHITECTURE.md` rewritten to what is true; `DESIGNSYSTEM.md` names the four motions and the paper cues.
+- Pounds live, tax-inclusive prices outside the US, the tax line per currency.
+- The seed gone from every output; the distance to the water on the sheet, the reading and the ready screen.
+- The phone's silhouette opens a drawer with the account's rows.
+- The sheet says where to get one; the recipient's page leads with the offer; the print version prints only filled cells.
+- The memento without the band under the plate, its water a faint guilloche.
+- `/muhurat`: a live clock at the ghat and in six cities; today's window and sunrise.
+- The sitting: slower water behind the practice, the stillness dark, the breath's water in red.
+- Every "free to read" line gone; the flowing bands at one weight.
+- `/live`: the water flows downward over the foot of each plate; a new Shipra plate.
+- `/panchang`: the calendar first, one measure for the prose.
+- The specimen sheet inside a phone on `/`, `/snan` and `/begin`, with the buyer's own names once set up.
+- Set up before paying; one combined sign-in screen; one press of Pay across a sign-in.
+- The pack picker: eleven first, the count as the name.
+- Security: Next 16.3.5, the charge from the geo header, CSP and the other headers, dotted paths 404, deletion order, constant-time cron secret.
+- `/p/[id]` and `/begin` out of the Clerk route group: 323 KB and 320 KB of script became 10 KB and 7 KB.
+- Press states on every control, the four named motions, photographs on a plate, the masthead's fold, ruled form marks.
+- Copy: one figure a day; the `/snan` lede; the FAQ without the critic's question; the 404 in the site's voice; the brand Latin in Hindi; occasion titles with the year; `/llms.txt`.
+- Reminders with a one-tap unsubscribe; a manifest, icons, theme colour, a calendar file.
+- CI on pushes to `main`; `build-plan.md` and `README.md` folded away; `CLAUDE.md`, `ARCHITECTURE.md` and `DESIGNSYSTEM.md` rewritten to what is true.
 
-### 15 and 16 September 2026, before the review
+### 7 to 16 September 2026, before the review
 
-- The sitting says where you are: story bar, Next, a vow that waits for the hold, a stillness that announces itself.
-- `/today` shows a morning already kept before it judges the balance.
-- The Patra page for two readers; the native share sheet with the image attached.
-- The source said plainly on `/rivers`, `/live`, `/faq` and in the structured data, and nowhere on a product surface; the copy guard enforces it.
-- Occasion dates computed from rules, checked against Drik Panchang.
-- The sheet as a memento: 1080 by 1920, the water across the whole page.
-- Stripe live with Managed Payments; Clerk production with Google and the custom domain; the first real purchase, sitting and sheet.
-
-### 7 to 14 September 2026, the build
-
-Phases 0 to 7 of the original build plan: the marketing surface cut to nine routes and
-two locales; the foundations (Clerk, Neon, the ledger); purchase through Stripe Checkout
-and a webhook that books once; setup; the sitting; the Sankalp Patra and its image; the
-return loop of reminder and register.
+The build from nothing to the first real morning: the marketing surface cut to two
+locales; Clerk, Neon and the ledger; Stripe Checkout with Managed Payments and a webhook
+that books once; setup; the sitting with its story bar and vow; the Sankalp Patra and its
+memento; the reminder and the register; occasion dates from rules; the first real
+purchase, sitting and sheet.
