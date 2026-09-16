@@ -7,20 +7,7 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
 
 ## For you to review
 
-1. **The whole order, on your phone.** Sign out, Begin, sign in, set up, the packs with
-   your own names on the specimen, pay, sit. Judge the three-step line and "Your sheet
-   is set".
-2. **A real face through `/setup`.** The portrait now comes out in the five tones of the
-   river plates. Send it from an iPhone, so HEIC is tried too.
-3. **Pay as a stranger over https.** One press of Pay across the sign-in, landing on
-   Stripe.
-4. **One firewall rule.** Vercel, the snanify project, Firewall, Configure, Add rule:
-   name "sheets", path starts with `/p/` and ends with `/image` or equals `/specimen`,
-   action Rate limit 60 per 60 seconds by IP, then Deny. Save, Publish.
-5. **The city pages and the loop.** `/panchang/leicester` and nineteen more, linked from
-   `/panchang`; the sitting looped in a phone under "The five parts" on `/snan`.
-6. **The panchang after the fix.** Every sankranti moved fifteen minutes later and every
-   tithi end a minute earlier, to Drik's figures. Read `/panchang` and `/muhurat` once.
+Nothing at the moment.
 
 ## Waiting for your go
 
@@ -44,6 +31,7 @@ folios and the email the day before; a third locale chosen from the zone data in
 
 ### 16 September 2026
 
+- Reviewed and approved on the phone: the whole order, a real face through `/setup`, Pay as a stranger, the firewall rule, the city pages and the loop, the panchang after the fix.
 - `/panchang/[city]` for twenty cities; the sitting looped on `/snan`.
 - The panchang read off Drik: ayanamsa refitted, sun aberration in the tithi, a sankranti after sunset kept the next morning, a two-sunrise ekadashi on the second. Record in `docs/panchang-check.md`.
 - The portrait in the five tones of the river plates.
