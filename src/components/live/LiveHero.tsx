@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
+import { PICTURES } from "@/content/live/pictures";
+import type { WaterSlug } from "@/lib/riverdata";
 import { CountUp } from "@/components/live/CountUp";
 
 /* ---------------------------------------------------------------------------
@@ -145,35 +147,50 @@ function Dial({ percentile, label }: { percentile: number | null; label: string 
   );
 }
 
-/* --- the waterline --------------------------------------------------------- */
+/* --- the waterline ---------------------------------------------------------
 
-function Waterline({ slug, percentile }: { slug: string; percentile: number | null }) {
-  const drawn = engrave({ seed: seedFor(slug), percentile, width: 1000, height: 300 });
-  /* Screen pixels, on the SVG element itself: a transform on an inner group
-     is in viewBox units, which at a phone's width came to a pixel or two and
-     read as nothing moving at all. */
-  const amp = 6 + ((percentile ?? 50) / 100) * 16;
+   The engraved water over the foot of the plate, where the water is in the
+   photograph, running steadily downward and never stopping. The drawing is
+   cut flat so it tiles, stacked twice, and slid down by one copy on a loop,
+   the same motion WaterBand uses, and only that: no sway, no breathing. It used to stand a third of the way up the picture and breathe,
+   which put lines across the ghat steps and left the foot of the plate bare.
+   --------------------------------------------------------------------------- */
+
+function Waterline({
+  slug,
+  percentile,
+  tone = "ink",
+}: {
+  slug: string;
+  percentile: number | null;
+  tone?: "ink" | "paper";
+}) {
+  const drawn = engrave({ seed: seedFor(slug), percentile, width: 1000, height: 300, flat: true });
+  const lines = drawn.lines.map((d, i, all) => (
+    <path
+      key={i}
+      d={d}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth(i, all.length) * 1.6}
+      strokeOpacity={strokeOpacity(i, all.length)}
+      vectorEffect="non-scaling-stroke"
+    />
+  ));
   return (
-    <svg
-      viewBox="0 0 1000 300"
-      preserveAspectRatio="none"
-      className="breathe absolute bottom-0 left-[-4%] h-[36%] w-[108%] text-ink"
-      style={{ ["--amp" as string]: `${amp.toFixed(1)}px` }}
+    <div
+      className={`absolute inset-x-0 bottom-0 h-[19%] overflow-hidden ${tone === "paper" ? "text-paper opacity-80" : "text-ink"}`}
       aria-hidden="true"
     >
-      <g className="sway">
-        {drawn.lines.map((d, i, all) => (
-          <path
-            key={i}
-            d={d}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={strokeWidth(i, all.length) * 1.6}
-            strokeOpacity={strokeOpacity(i, all.length)}
-          />
-        ))}
-      </g>
-    </svg>
+      <svg
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="none"
+        className="flow absolute left-[-4%] top-[-100%] h-[200%] w-[108%]"
+      >
+        <g>{lines}</g>
+        <g transform="translate(0 300)">{lines}</g>
+      </svg>
+    </div>
   );
 }
 
@@ -270,7 +287,12 @@ export function LiveHero({
               className="ink-picture ink-in absolute inset-0"
               style={{ ["--picture" as string]: `url(${w.picture.src})` }}
             />
-            <Waterline key={`${w.slug}-line`} slug={w.slug} percentile={w.percentile} />
+            <Waterline
+              key={`${w.slug}-line`}
+              slug={w.slug}
+              percentile={w.percentile}
+              tone={PICTURES[w.slug as WaterSlug].waterTone}
+            />
             <div className="absolute top-4 left-4 bg-paper px-3 py-2">
               <p className="display text-[1.4rem] leading-tight sm:text-[1.8rem]">{w.river}</p>
               <p className="text-xs text-ink2 sm:text-sm">{w.place}</p>

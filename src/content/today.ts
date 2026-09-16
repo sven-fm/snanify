@@ -38,6 +38,9 @@ const en = {
     rankLabel: "Ranked",
     normalLabel: "Seasonal median",
     percentile: "{n} percentile since 1997",
+    /** "3,880 km from you", from the request's own coordinates. Absent when there are none. */
+    distanceLabel: "From you",
+    distance: "{km} km",
   },
 
   breath: {
@@ -108,6 +111,8 @@ const hi = {
     rankLabel: "स्थान",
     normalLabel: "ऋतु-मध्यक",
     percentile: "1997 से {n}वाँ प्रतिशतक",
+    distanceLabel: "आपसे दूरी",
+    distance: "{km} कि.मी.",
   },
 
   breath: {

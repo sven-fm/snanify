@@ -70,6 +70,8 @@ type Reading = {
   flow: string;
   rank: string | null;
   normal: string;
+  /** "3,880 km", or null when the request carried no coordinates. */
+  distance: string | null;
 };
 
 /** Six breaths a minute: four seconds in, six out, which is where a body settles. */
@@ -351,6 +353,7 @@ export function Sitting({
                 <Row k={t.reading.flowLabel} v={reading.flow} />
                 {reading.rank && <Row k={t.reading.rankLabel} v={reading.rank} />}
                 <Row k={t.reading.normalLabel} v={reading.normal} />
+                {reading.distance && <Row k={t.reading.distanceLabel} v={reading.distance} />}
               </dl>
             </div>
           )}

@@ -187,6 +187,8 @@ actually type. The biggest free lever there is.
 
 ### 16 September 2026
 
+- The reading's fourth row, "From you": the distance to the ghat from the request's own coordinates, rounded to ten kilometres; the copy had promised it since the first plan and nothing computed it.
+- `/live`: the engraved water over the foot of each plate flows downward only, tiled without a seam, covering the water in the photograph; Kaveri's lines in paper over its dark water; a new Shipra plate with the river in frame (Ram Ghat across the Shipra, Shruti Lata, CC BY-SA 4.0).
 - Set up before paying: `/begin` sends a stranger to sign in and then to `/setup`; the packs are the third step, beside the specimen with the buyer's own names; the receipt says "sit tomorrow".
 - Next.js 16.3.5; two critical advisories closed.
 - The charge follows the geo header, never the cookie the browser can edit.

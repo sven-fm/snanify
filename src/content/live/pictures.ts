@@ -11,6 +11,12 @@ import type { WaterSlug } from "@/lib/riverdata";
 
 export interface Picture {
   readonly src: string;
+  /**
+   * The tone of the engraved water laid over the plate's foot on /live. Ink
+   * by default; paper where the photograph's water is nearly black, so the
+   * lines still read.
+   */
+  readonly waterTone?: "ink" | "paper";
   readonly alt: { readonly en: string; readonly hi: string };
   readonly subject: { readonly en: string; readonly hi: string };
   readonly author: string;
@@ -53,14 +59,15 @@ export const PICTURES: Record<WaterSlug, Picture> = {
   },
   "shipra-ujjain": {
     src: "/waters/shipra-ujjain.webp",
-    alt: { en: "The temples on Ram Ghat, Ujjain, beside the Shipra", hi: "शिप्रा के किनारे रामघाट, उज्जैन के मंदिर" },
-    subject: { en: "Ram Ghat, Ujjain", hi: "रामघाट, उज्जैन" },
-    author: "Arian Zwegers",
-    license: "CC BY 2.0",
-    page: "https://commons.wikimedia.org/wiki/File:Ujjain,_Ram_Ghat_(9840921865).jpg",
+    alt: { en: "Ram Ghat, Ujjain, its domes and steps seen across the Shipra", hi: "शिप्रा के पार से रामघाट, उज्जैन के गुंबद और सीढ़ियाँ" },
+    subject: { en: "Ram Ghat, Ujjain, across the Shipra", hi: "शिप्रा के पार रामघाट, उज्जैन" },
+    author: "Shruti Lata",
+    license: "CC BY-SA 4.0",
+    page: "https://commons.wikimedia.org/wiki/File:Ram_ghat,_Ujjain.jpg",
   },
   "kaveri-talakaveri": {
     src: "/waters/kaveri-talakaveri.webp",
+    waterTone: "paper",
     alt: { en: "The spring tank at Talakaveri in the mist", hi: "कोहरे में तलकावेरी का स्रोत-कुंड" },
     subject: { en: "The spring tank, Talakaveri", hi: "स्रोत-कुंड, तलकावेरी" },
     author: "Abhijitsathe",
