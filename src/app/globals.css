@@ -552,6 +552,7 @@ html:not([data-script="latin"]) .inscription {
 html:not([data-cur]) .cur-USD,
 html[data-cur="USD"] .cur-USD,
 html[data-cur="EUR"] .cur-EUR,
+html[data-cur="GBP"] .cur-GBP,
 html[data-cur="CAD"] .cur-CAD,
 html[data-cur="INR"] .cur-INR {
   display: inline;

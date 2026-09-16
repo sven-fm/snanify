@@ -31,9 +31,11 @@ Snanify is for Indians and the Hindu diaspora far from their river: the United S
 
 One price, in the reader's own currency. Eleven mornings cost eleven in every currency.
 
-- One morning: $2, 2 euro, C$3, 101 rupees.
-- Eleven mornings: $11, 11 euro, C$11, 501 rupees.
-- Sixty mornings: $48, 45 euro, C$48, 2,100 rupees.
+- One morning: $2, 2 euro, £2, C$3, 101 rupees.
+- Eleven mornings: $11, 11 euro, £11, C$11, 501 rupees.
+- Sixty mornings: $48, 45 euro, £42, C$48, 2,100 rupees.
+
+Outside the United States every price includes tax; US dollar prices are before sales tax.
 
 Mornings keep until they are used. Unused mornings are refunded on request.
 

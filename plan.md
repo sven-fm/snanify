@@ -26,7 +26,7 @@ percent of readers arrive on a phone, at six in the morning, in bed.
 | --- | --- |
 | Paying entity | Non-Indian. Stripe only, with Managed Payments on: Stripe is the merchant of record and charges and remits VAT and GST itself. Razorpay and UPI are a later phase if an Indian entity appears. |
 | What is paid | The snan. One price, three packs (1, 11, 60), the Sankalp Patra included. Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. |
-| Prices | One morning $2, eleven $11, sixty $48; the same figures in euro and Canadian dollars; ₹101, ₹501, ₹2,100 in India. Eleven mornings cost eleven in every currency: that is the hook. Prices live in `src/content/prices.ts`. |
+| Prices | One morning $2, eleven $11, sixty $48; the same figures in euro, pounds and Canadian dollars (sixty is €45, £42, C$48); ₹101, ₹501, ₹2,100 in India. Every price outside the US is tax-inclusive; US dollars show before sales tax. Eleven mornings cost eleven in every currency: that is the hook. Prices live in `src/content/prices.ts`. |
 | Pack names | The count is the name: "One morning", "Eleven mornings", "Sixty mornings". No coined names, no Devanagari beside them. |
 | The order | Begin, sign in, set up the sheet, pay, sit. The sheet is made before the packs are shown, and the packs are shown beside a specimen with the buyer's own names on it. |
 | Locales | English and Hindi. Ten surface locales are parked in git, out of the registry. The brand stays Latin, "Snanify", in every edition. |
@@ -80,6 +80,21 @@ argued from revenue.
 
 Things that exist and want your eyes, or that only you can do. Each is one look or one
 dashboard.
+
+### 6.0 Pounds: run the live catalogue, then flip the switch
+
+The code, the pages and the Stripe script carry pounds and mark every non-US price
+tax-inclusive, but the live Stripe prices do not yet: the production keys are
+marketplace-provisioned and marked sensitive, so the script could not be run from
+here (the test account is done). Run it once with the live secret key from the
+Stripe dashboard:
+
+```bash
+STRIPE_SECRET_KEY=sk_live_... node scripts/stripe-catalogue.mjs
+```
+
+Then add `"GBP"` to `CATALOGUE_CURRENCIES` in `src/lib/currency.ts` and push. Until
+then a reader in the UK sees and pays US dollars, as before, and nothing breaks.
 
 ### 6.1 The new order, on your phone
 

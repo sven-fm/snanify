@@ -1,7 +1,11 @@
 import { DEFAULT_CURRENCY, type Currency } from "@/lib/currency";
 
 /* ---------------------------------------------------------------------------
-   The tariff, in four currencies.
+   The tariff, in five currencies.
+
+   Outside the United States every figure is tax-inclusive: what is printed
+   is what is charged. US dollars show before sales tax. `currencyForLang`
+   and the Stripe catalogue carry the same rule.
 
    Prices live here and not in the locale files, because a price is not a
    translation. A Tamil reader in Toronto pays Canadian dollars and a Tamil
@@ -24,16 +28,16 @@ export type TierKey = "one" | "eleven" | "sixty";
 
 /** What the tier costs, once. */
 export const PRICE: Record<TierKey, Prices> = {
-  one: { USD: "$2", EUR: "€2", CAD: "C$3", INR: "₹101" },
-  eleven: { USD: "$11", EUR: "€11", CAD: "C$11", INR: "₹501" },
-  sixty: { USD: "$48", EUR: "€45", CAD: "C$48", INR: "₹2,100" },
+  one: { USD: "$2", EUR: "€2", GBP: "£2", CAD: "C$3", INR: "₹101" },
+  eleven: { USD: "$11", EUR: "€11", GBP: "£11", CAD: "C$11", INR: "₹501" },
+  sixty: { USD: "$48", EUR: "€45", GBP: "£42", CAD: "C$48", INR: "₹2,100" },
 };
 
 /** What one morning works out at. Arithmetic on PRICE; keep them in step. */
 export const PER_SNAN: Record<TierKey, Prices> = {
-  one: { USD: "$2", EUR: "€2", CAD: "C$3", INR: "₹101" },
-  eleven: { USD: "$1", EUR: "€1", CAD: "C$1", INR: "₹46" },
-  sixty: { USD: "$0.80", EUR: "€0.75", CAD: "C$0.80", INR: "₹35" },
+  one: { USD: "$2", EUR: "€2", GBP: "£2", CAD: "C$3", INR: "₹101" },
+  eleven: { USD: "$1", EUR: "€1", GBP: "£1", CAD: "C$1", INR: "₹46" },
+  sixty: { USD: "$0.80", EUR: "€0.75", GBP: "£0.70", CAD: "C$0.80", INR: "₹35" },
 };
 
 /* ---------------------------------------------------------------------------

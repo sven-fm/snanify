@@ -10,7 +10,7 @@ import { RiverFlow } from "@/components/RiverFlow";
 import { Mark } from "@/components/Logo";
 import { PastHero } from "@/components/site/PastHero";
 import { Specimen } from "@/components/Specimen";
-import { buttonClass, Price, Section } from "@/components/ui";
+import { buttonClass, Price, Section, TaxNote } from "@/components/ui";
 import { snanContent } from "@/content/snan";
 import { PER_SNAN, PRICE } from "@/content/prices";
 import { clock, LIMB_START, SITTING } from "@/lib/sitting-plan";
@@ -301,7 +301,9 @@ export function SnanIntro({ lang }: { lang: Lang }) {
             ))}
           </ul>
 
-          <p className="mt-6 max-w-3xl text-[0.98rem] leading-[1.8] text-ink2">{t.tariff.note}</p>
+          <p className="mt-6 max-w-3xl text-[0.98rem] leading-[1.8] text-ink2">
+            <TaxNote lang={lang} /> {t.tariff.note}
+          </p>
 
           <div className="mt-8">
             <Link href={begin} className={buttonClass("solid", "min-h-[52px] w-full sm:w-auto")}>

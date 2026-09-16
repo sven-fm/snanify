@@ -14,7 +14,7 @@ import { DEFAULT_TIER, isTier } from "@/lib/packs";
 import { localePath, type FullLang as Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Price } from "@/components/ui";
+import { CTA, Price, TaxNote } from "@/components/ui";
 import { checkoutFor, startCheckout } from "@/app/[lang]/begin/actions";
 import { TrackView } from "@/components/site/TrackView";
 import { TrackedSubmit } from "@/components/site/TrackedSubmit";
@@ -207,7 +207,9 @@ export async function Begin({
           ))}
         </ul>
 
-        <p className="mt-8 max-w-xl text-sm leading-relaxed text-ink2">{t.note}</p>
+        <p className="mt-8 max-w-xl text-sm leading-relaxed text-ink2">
+          {t.note} <TaxNote lang={lang} /> {t.refund}
+        </p>
       </main>
 
       <Footer lang={lang} />

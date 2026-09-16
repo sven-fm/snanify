@@ -32,28 +32,37 @@ let stripe;
 export const CATALOGUE = [
   {
     lookupKey: "snan_one",
-    name: "Ek Dhara, one snan",
+    name: "One morning",
     description: "One morning with a real river, and the Sankalp Patra it leaves.",
     credits: 1,
-    amounts: { usd: 200, eur: 200, cad: 300, inr: 10100 },
+    amounts: { usd: 200, eur: 200, gbp: 200, cad: 300, inr: 10100 },
   },
   {
     lookupKey: "snan_eleven",
-    name: "Gyarah, eleven snans",
+    name: "Eleven mornings",
     description: "Eleven mornings, one for each. Spend them as the year runs.",
     credits: 11,
-    amounts: { usd: 1100, eur: 1100, cad: 1100, inr: 50100 },
+    amounts: { usd: 1100, eur: 1100, gbp: 1100, cad: 1100, inr: 50100 },
   },
   {
     lookupKey: "snan_sixty",
-    name: "Varsh Kosh, sixty snans",
+    name: "Sixty mornings",
     description: "Sixty mornings, five a month for a year.",
     credits: 60,
-    amounts: { usd: 4800, eur: 4500, cad: 4800, inr: 210000 },
+    amounts: { usd: 4800, eur: 4500, gbp: 4200, cad: 4800, inr: 210000 },
   },
 ];
 
 const BASE = "usd";
+
+/**
+ * Tax, per currency. Every price outside the United States is inclusive: the
+ * figure printed is the figure charged, and Stripe as merchant of record
+ * remits the VAT or GST from inside it. US dollars are exclusive, which is
+ * how a US reader reads a price. src/lib/currency.ts states the same rule
+ * for the pages; <TaxNote> prints it.
+ */
+const TAX_BEHAVIOUR = { usd: "exclusive", eur: "inclusive", gbp: "inclusive", cad: "inclusive", inr: "inclusive" };
 
 /**
  * Stripe product tax code. Stripe's own registry: "Software as a service (SaaS),
@@ -115,7 +124,7 @@ async function run() {
     const currencyOptions = {};
     for (const [currency, amount] of Object.entries(item.amounts)) {
       if (currency === BASE) continue;
-      currencyOptions[currency] = { unit_amount: amount };
+      currencyOptions[currency] = { unit_amount: amount, tax_behavior: TAX_BEHAVIOUR[currency] };
     }
 
     /* `currency_options` is not returned unless it is expanded, and without it
@@ -131,10 +140,13 @@ async function run() {
     const sameOthers =
       current &&
       Object.entries(currencyOptions).every(
-        ([c, o]) => current.currency_options?.[c]?.unit_amount === o.unit_amount,
+        ([c, o]) =>
+          current.currency_options?.[c]?.unit_amount === o.unit_amount &&
+          current.currency_options?.[c]?.tax_behavior === o.tax_behavior,
       );
 
-    if (current && sameBase && sameOthers) {
+    const sameTax = current?.tax_behavior === TAX_BEHAVIOUR[BASE];
+    if (current && sameBase && sameOthers && sameTax) {
       console.log(`  price ${item.lookupKey}: unchanged ${current.id}`);
       continue;
     }
@@ -145,6 +157,7 @@ async function run() {
       product: product.id,
       currency: BASE,
       unit_amount: item.amounts[BASE],
+      tax_behavior: TAX_BEHAVIOUR[BASE],
       currency_options: currencyOptions,
       lookup_key: item.lookupKey,
       transfer_lookup_key: true,

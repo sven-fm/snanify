@@ -15,7 +15,7 @@ import {
 } from "@/components/StructuredData";
 import { PastHero } from "@/components/site/PastHero";
 import { Specimen } from "@/components/Specimen";
-import { CTA, LinkButton, Price, Section } from "@/components/ui";
+import { CTA, LinkButton, Price, Section, TaxNote } from "@/components/ui";
 import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 
 /**
@@ -349,7 +349,9 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             })}
           </div>
 
-          <p className="mt-6 max-w-3xl text-sm leading-[1.75] text-ink2">{t.pricing.note}</p>
+          <p className="mt-6 max-w-3xl text-sm leading-[1.75] text-ink2">
+            <TaxNote lang={lang} />
+          </p>
 
           <div className="mt-8">
             <LinkButton

@@ -73,6 +73,7 @@ cost eleven in every currency: that is the hook. The packs are named by their co
 | --- | --- | --- | --- |
 | USD | $2 | **$11** | $48 |
 | EUR | €2 | **€11** | €45 |
+| GBP | £2 | **£11** | £42 |
 | CAD | C$3 | **C$11** | C$48 |
 | INR | ₹101 | **₹501** | ₹2,100 |
 

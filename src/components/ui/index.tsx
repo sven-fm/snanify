@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { CURRENCIES } from "@/lib/currency";
+import { content } from "@/lib/content";
+import type { Lang } from "@/lib/locales";
 import type { Prices, TierKey } from "@/content/prices";
 import { PRICE } from "@/content/prices";
 
@@ -192,6 +194,24 @@ export function Price({ prices, className = "" }: { prices: Prices; className?: 
       {CURRENCIES.map((c) => (
         <span key={c} className={`cur cur-${c} ${className}`}>
           {prices[c]}
+        </span>
+      ))}
+    </>
+  );
+}
+
+/**
+ * The tax line beside a price: "Tax included." everywhere but the United
+ * States, where a price is read before sales tax. Same mechanism as <Price>:
+ * every line is in the markup, CSS shows the reader's own.
+ */
+export function TaxNote({ lang }: { lang: Lang }) {
+  const t = content[lang].pricing.tax;
+  return (
+    <>
+      {CURRENCIES.map((c) => (
+        <span key={c} className={`cur cur-${c}`}>
+          {c === "USD" ? t.exclusive : t.inclusive}
         </span>
       ))}
     </>

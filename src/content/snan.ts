@@ -285,7 +285,7 @@ const en: Copy = {
         body: "Five a month for a year, at the lowest price per morning.",
       },
     ],
-    note: "Prices show before local tax. Mornings keep until you use them.",
+    note: "Mornings keep until you use them.",
     cta: "Begin your snan",
   },
 
@@ -443,7 +443,7 @@ const hi: Copy = {
         body: "महीने में पाँच, पूरे वर्ष, प्रति सुबह सबसे कम मूल्य पर।",
       },
     ],
-    note: "मूल्य स्थानीय कर से पहले के हैं। सुबहें तब तक रखी रहती हैं जब तक आप उन्हें लें।",
+    note: "सुबहें तब तक रखी रहती हैं जब तक आप उन्हें लें।",
     cta: "अपना स्नान आरंभ कीजिए",
   },
 

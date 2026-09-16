@@ -119,7 +119,11 @@ export const en = {
         body: "Five a month for a year, at the lowest price a morning gets.",
       },
     ],
-    note: "Prices show before local tax.",
+    /* Read by <TaxNote>: one line for US dollars, one for every other currency. */
+    tax: {
+      exclusive: "Prices show before US sales tax.",
+      inclusive: "Tax included.",
+    },
     cta: "How it works",
   },
   /* The sheet a stranger sees before paying: drawn from today's figure, for

@@ -121,7 +121,7 @@ const en = {
         h: "The mornings you buy",
         body: [
           "Packs of one, eleven and sixty. They sit on your account until you use them. Nothing expires and nothing renews itself.",
-          "One morning a day per water. Prices are shown in your own currency and before any local tax.",
+          "One morning a day per water. Prices are shown in your own currency, and outside the United States they include tax.",
         ],
       },
       {
@@ -260,7 +260,7 @@ const hi = {
         h: "जो सुबहें आप खरीदते हैं",
         body: [
           "एक, ग्यारह और साठ के पैक। जब तक आप उन्हें लेते नहीं, वे आपके खाते में रहती हैं। कुछ भी समाप्त नहीं होता और कुछ भी अपने आप नवीनीकृत नहीं होता।",
-          "एक जल पर दिन में एक सुबह। मूल्य आपकी अपनी मुद्रा में और स्थानीय कर से पहले दिखाए जाते हैं।",
+          "एक जल पर दिन में एक सुबह। मूल्य आपकी अपनी मुद्रा में दिखाए जाते हैं, और संयुक्त राज्य के बाहर कर सहित।",
         ],
       },
       {

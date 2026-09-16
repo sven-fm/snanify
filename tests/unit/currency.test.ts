@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currencyForCountry, DEFAULT_CURRENCY } from "@/lib/currency";
+import { CATALOGUE_CURRENCIES, currencyForCountry, DEFAULT_CURRENCY } from "@/lib/currency";
 
 describe("currencyForCountry", () => {
   it("gives rupees to India", () => {
@@ -8,6 +8,7 @@ describe("currencyForCountry", () => {
 
   it("gives Canadian dollars to Canada", () => {
     expect(currencyForCountry("CA")).toBe("CAD");
+    expect(currencyForCountry("GB")).toBe(CATALOGUE_CURRENCIES.includes("GBP") ? "GBP" : "USD");
   });
 
   it("gives euro to the eurozone and not to the wider EU", () => {
