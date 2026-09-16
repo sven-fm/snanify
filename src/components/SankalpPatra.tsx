@@ -458,22 +458,6 @@ export function ChihnaSheet({
               </Cell>
             )}
 
-            {/* The seed is a hex digest and the identifier is base58: neither
-                may inherit the inscriptional uppercase transform, somebody
-                will type them off a printed sheet. */}
-            <Cell label={t.seedLabel}>
-              {/* Sixty-four hex characters is one unbreakable word, and a word
-                  wider than the sheet pushes the whole document past the
-                  viewport on a phone. It is allowed to wrap: somebody copying
-                  it off paper reads it in two lines quite happily, and the
-                  alternative is a page that scrolls sideways. */}
-              <span
-                className="tabular"
-                style={{ letterSpacing: "0.06em", overflowWrap: "anywhere" }}
-              >
-                {data.seed}
-              </span>
-            </Cell>
           </div>
 
           {/* the state of the water, the address, the record line */}

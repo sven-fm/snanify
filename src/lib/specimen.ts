@@ -7,6 +7,7 @@ import { patraView, type PatraView } from "@/lib/patra-view";
 import { getLiveSnapshot, istDate, type WaterState } from "@/lib/riverdata";
 import { seedFor } from "@/lib/seed";
 import { readSky } from "@/lib/sky";
+import { greatCircleKm } from "@/lib/distance";
 import type { FullLang as Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
@@ -73,6 +74,8 @@ export async function specimenView(
     imageKey: null,
     isPublic: true,
     createdAt: kept,
+    /* Toronto to the ghat, to the nearest ten kilometres, as a real morning would carry it. */
+    distanceKm: Math.round(greatCircleKm([43.6532, -79.3832], water.gauge.ghat) / 10) * 10,
   };
 
   return { ...patraView(sitting, lang), specimen: true };

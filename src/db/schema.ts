@@ -170,6 +170,12 @@ export const sittings = pgTable(
     sankalpText: text("sankalp_text").notNull().default(""),
     /** The rendered 1080x1920 memento in the public blob store, once it exists. */
     imageKey: text("image_key"),
+    /**
+     * How far the person was from the ghat when they sat, in kilometres to
+     * the nearest ten, from the request's coordinates. Null when the request
+     * carried none. Printed on the sheet; it is part of the morning.
+     */
+    distanceKm: integer("distance_km"),
     isPublic: boolean("is_public").notNull().default(true),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },

@@ -25,7 +25,7 @@ Snanify is for Indians and the Hindu diaspora far from their river: the United S
 
 - River flow: modelled river discharge from the Copernicus Emergency Management Service global flood model (GloFAS), read through Open-Meteo, one value per day per grid cell, licensed CC BY 4.0. It is a model at a calibrated grid cell, not a gauge at the ghat. Each value is ranked against the same cell in the same week of the year, 1997 to 2025.
 - The sky: tithi, nakshatra, the moon and the muhurat windows are computed with astronomy-engine at each ghat's own coordinates, and checked against Drik Panchang.
-- The seed on every Sankalp Patra is a SHA-256 of the sitting's id, the water, the day and the published flow; the engraving is drawn from it.
+- The engraving on every Sankalp Patra is drawn from that morning's water, day and published flow, so no two mornings draw alike.
 
 ## Prices
 

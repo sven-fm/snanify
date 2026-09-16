@@ -1,0 +1,1 @@
+ALTER TABLE "sittings" ADD COLUMN "distance_km" integer;

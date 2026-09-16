@@ -52,7 +52,7 @@ const ethicsEn = {
   meta: {
     title: "How it is made | Snanify",
     description:
-      "Where every number on Snanify comes from: modelled river discharge from the Copernicus flood model, a panchang computed offline, and a Sankalp Patra anyone can recompute from its seed.",
+      "Where every number on Snanify comes from: modelled river discharge from the Copernicus flood model, a panchang computed offline, and a Sankalp Patra whose figure anyone can check.",
   },
   title: "How it is made",
   lede: "Every figure on this site comes from a public source you can check without asking us. This page says where each one comes from, what the sheet records, and who handles your data.",
@@ -93,8 +93,8 @@ const ethicsEn = {
     id: "patra",
     h: "Your Sankalp Patra",
     body: [
-      "The sheet carries the names you added, up to five, the water and the ghat, the moment you sat in your own time zone and in Indian time, the day's river figure with its source, the tithi, and a seed.",
-      "The seed is computed from your sitting and that day's published figure, and the engraving is drawn from the seed. Anyone holding the sheet can recompute it and get the same image. To forge a sheet you would first have to forge the public record. The method is in our public code.",
+      "The sheet carries the names you added, up to five, the water and the ghat, the moment you sat in your own time zone and in Indian time, the day's river figure with its source, and the tithi.",
+      "The engraving is drawn from your sitting and that day's published figure, so two mornings at the same water never draw alike. The figure on the sheet is the one the model published for that day, and anyone can look it up.",
       "Your sankalp is shown to you alone. It is on your own printed copy and nowhere else. Anyone you send the link to sees the names, the water, the day and the figure. You can also make a sheet private from its own page.",
     ],
   },
@@ -126,7 +126,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
   meta: {
     title: "यह कैसे बनी है | Snanify",
     description:
-      "स्नानिफ़ाई का हर अंक कहाँ से आता है: कोपरनिकस बाढ़-मॉडल से नदी का मॉडल-प्रवाह, अपने ही सर्वर पर गणना किया पंचांग, और एक संकल्प पत्र जिसे उसके बीज से कोई भी फिर से बना सकता है।",
+      "स्नानिफ़ाई का हर अंक कहाँ से आता है: कोपरनिकस बाढ़-मॉडल से नदी का मॉडल-प्रवाह, अपने ही सर्वर पर गणना किया पंचांग, और एक संकल्प पत्र जिसका अंक कोई भी जाँच सकता है।",
   },
   title: "यह कैसे बनी है",
   lede: "इस साइट का हर अंक किसी सार्वजनिक स्रोत से आता है, जिसे आप हमसे पूछे बिना जाँच सकते हैं। यह पृष्ठ बताता है कि हर अंक कहाँ से आता है, पत्र पर क्या दर्ज होता है, और आपकी जानकारी किसके हाथ में रहती है।",
@@ -167,8 +167,8 @@ export const ethicsContent = { en: ethicsEn, hi: {
     id: "patra",
     h: "आपका संकल्प पत्र",
     body: [
-      "पत्र पर आपके जोड़े हुए नाम होते हैं, अधिक से अधिक पाँच, जल और घाट, वह क्षण जब आप बैठे, आपके अपने समय और भारतीय समय में, उस दिन नदी का अंक अपने स्रोत सहित, तिथि, और एक बीज।",
-      "बीज आपकी बैठक और उस दिन के प्रकाशित अंक से बनता है, और उत्कीर्णन बीज से बनता है। पत्र रखने वाला कोई भी उसे फिर से बना सकता है और वही चित्र पाता है। पत्र की नकल बनाने के लिए पहले सार्वजनिक अभिलेख की नकल बनानी पड़ेगी। पूरी विधि हमारे सार्वजनिक कोड में है।",
+      "पत्र पर आपके जोड़े हुए नाम होते हैं, अधिक से अधिक पाँच, जल और घाट, वह क्षण जब आप बैठे, आपके अपने समय और भारतीय समय में, उस दिन नदी का अंक अपने स्रोत सहित, और तिथि।",
+      "उत्कीर्णन आपकी बैठक और उस दिन के प्रकाशित अंक से बनता है, इसलिए एक ही जल पर दो सुबहें कभी एक जैसी नहीं बनतीं। पत्र पर छपा अंक वही है जो मॉडल ने उस दिन प्रकाशित किया, और कोई भी उसे देख सकता है।",
       "आपका संकल्प केवल आपको दिखता है। वह आपकी अपनी छपी प्रति पर होता है और कहीं नहीं। जिसे आप कड़ी भेजते हैं, उसे नाम, जल, दिन और अंक दिखते हैं। आप किसी पत्र को उसके अपने पृष्ठ से निजी भी कर सकते हैं।",
     ],
   },
@@ -257,7 +257,7 @@ const faqEn = {
           q: "What is the Sankalp Patra?",
           a: [
             "One sheet for each morning. It carries the names you added, your portrait if you added one, the water and the ghat, the moment you sat in your own time and in Indian time, the river's published figure that day, the tithi, and an engraving drawn from that figure. A monsoon morning draws dark and crowded. A January morning draws pale and open.",
-            "The sheet also carries its seed, so anyone can recompute the engraving and check the figure against the public source.",
+            "The figure on the sheet is the one the model published for that day, and anyone can check it against the public source.",
           ],
         },
       ],
@@ -287,7 +287,7 @@ const faqEn = {
           id: "verify",
           q: "How can I check that a sheet is genuine?",
           a: [
-            "Every sheet carries its seed. Take that day's figure from the flood model, recompute the seed, and you get the same engraving. The method is in our public code.",
+            "Every sheet names its water, its day and its figure. Take that day's figure from the flood model and it matches. The method is in our public code.",
             "To forge a sheet you would first have to forge the public record for that day.",
           ],
         },
@@ -477,7 +477,7 @@ export const faqContent = { en: faqEn, hi: {
           q: "संकल्प पत्र क्या है?",
           a: [
             "हर सुबह का एक पत्र। उस पर आपके जोड़े हुए नाम होते हैं, आपका चित्र यदि आपने जोड़ा हो, जल और घाट, वह क्षण जब आप बैठे, आपके अपने समय और भारतीय समय में, उस दिन नदी का प्रकाशित अंक, तिथि, और उसी अंक से बना एक उत्कीर्णन। वर्षा की सुबह का चित्र गहरा और भरा हुआ बनता है। जनवरी की सुबह का हल्का और खुला।",
-            "पत्र पर उसका बीज भी छपा होता है, इसलिए कोई भी उत्कीर्णन को फिर से बना सकता है और अंक को सार्वजनिक स्रोत से मिला सकता है।",
+            "पत्र पर छपा अंक वही है जो मॉडल ने उस दिन प्रकाशित किया, और कोई भी उसे सार्वजनिक स्रोत से मिला सकता है।",
           ],
         },
       ],
@@ -507,7 +507,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "verify",
           q: "मैं कैसे जाँचूँ कि कोई पत्र असली है?",
           a: [
-            "हर पत्र पर उसका बीज होता है। उस दिन का अंक बाढ़-मॉडल से लीजिए, बीज फिर से बनाइए, और वही उत्कीर्णन मिलेगा। पूरी विधि हमारे सार्वजनिक कोड में है।",
+            "हर पत्र पर उसका जल, उसका दिन और उसका अंक होता है। उस दिन का अंक बाढ़-मॉडल से लीजिए, वह मिल जाएगा। पूरी विधि हमारे सार्वजनिक कोड में है।",
             "पत्र की नकल बनाने के लिए पहले उस दिन के सार्वजनिक अभिलेख की नकल बनानी पड़ेगी।",
           ],
         },

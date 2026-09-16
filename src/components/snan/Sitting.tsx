@@ -278,6 +278,12 @@ export function Sitting({
 
         <p className="display mt-8 text-center text-[1.5rem] leading-[1.3]">{t.begin.ready}</p>
         <p className="mt-2 text-center text-sm text-ink2">{t.begin.quiet}</p>
+        {/* How far the water is from here, when the request carried a fix. */}
+        {reading.distance && (
+          <p className="mt-2 text-center text-sm text-ink2">
+            {t.reading.distanceLabel}: {reading.distance}
+          </p>
+        )}
 
         <button
           type="button"

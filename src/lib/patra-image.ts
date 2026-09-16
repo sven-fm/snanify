@@ -243,17 +243,6 @@ export async function patraSvg(view: PatraView): Promise<string> {
       })
     ).svg,
   );
-  parts.push(
-    (
-      await typeset(`seed ${view.seedShort}`, {
-        size: 18,
-        x: RIGHT,
-        y: rowY + 30,
-        fill: INK_2,
-        anchor: "end",
-      })
-    ).svg,
-  );
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ` +
@@ -424,7 +413,14 @@ export async function mementoSvg(view: PatraView): Promise<string> {
     parts.push((await typeset(`${ordinal(Number(view.rank))} percentile`, { size: 46, x: R, y: figuresTop + 100, weight: 600, fill: INK, anchor: "end" })).svg);
     parts.push((await typeset("since 1997", { size: 22, x: R, y: figuresTop + 136, fill: INK_2, anchor: "end" })).svg);
   }
-  parts.push((await typeset(`${view.keptTime} ${view.keptZone}, ${view.keptIst} IST`, { size: 22, x: MM, y: figuresTop + 136, fill: INK_2 })).svg);
+  parts.push(
+    (
+      await typeset(
+        `${view.keptTime} ${view.keptZone}, ${view.keptIst} IST${view.distance ? `, ${view.distance}` : ""}`,
+        { size: 22, x: MM, y: figuresTop + 136, fill: INK_2 },
+      )
+    ).svg,
+  );
 
   /* --- the prayer, in the room that is left ------------------------------ */
   if (view.prayer) {
@@ -447,7 +443,6 @@ export async function mementoSvg(view: PatraView): Promise<string> {
 
   /* --- foot --------------------------------------------------------------- */
   parts.push((await typeset(view.specimen ? "snanify.com" : `snanify.com/p/${view.id}`, { size: 20, x: MM, y: footTop + 14, fill: INK_2 })).svg);
-  parts.push((await typeset(`seed ${view.seedShort}`, { size: 20, x: R, y: footTop + 14, fill: INK_2, anchor: "end" })).svg);
   /* Where to get one: the sheet travels into family groups on its own, and
      the address is the only way back. In the sheet's own edition. */
   parts.push(`<rect x="${MM}" y="${footTop + 34}" width="${IN}" height="1" fill="${RULE}" />`);

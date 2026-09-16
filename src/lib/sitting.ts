@@ -4,6 +4,7 @@ import { db, profiles, sittings, type Sitting } from "@/db";
 import { balance, book, InsufficientCredits } from "@/lib/credits";
 import { newId } from "@/lib/ids";
 import { seedFor } from "@/lib/seed";
+import { greatCircleKm } from "@/lib/distance";
 import { getLiveSnapshot, istDate, type WaterState } from "@/lib/riverdata";
 import { readSky } from "@/lib/sky";
 import { getGhat } from "@/content/rivers";
@@ -60,11 +61,14 @@ export async function mintSitting({
   tz,
   lang,
   at = new Date(),
+  from = null,
 }: {
   userId: string;
   tz: string;
   lang: Lang;
   at?: Date;
+  /** The request's coordinates, for the distance printed on the sheet. */
+  from?: readonly [number, number] | null;
 }): Promise<Minted> {
   const profileRows = await db
     .select()
@@ -137,6 +141,7 @@ export async function mintSitting({
         prayerId: profile.prayerId,
         portraitKey: profile.portraitKey,
         sankalpText: profile.sankalpText,
+        distanceKm: from ? Math.round(greatCircleKm(from, water.gauge.ghat) / 10) * 10 : null,
       });
     });
   } catch (error) {

@@ -62,6 +62,9 @@ export type PatraView = {
   seedShort: string;
   percentile: number | null;
 
+  /** "3,880 km away", in the edition, or null when the morning carried no fix. */
+  distance: string | null;
+
   /** A specimen for the marketing pages: labelled as one, with no address. */
   specimen?: boolean;
 };
@@ -138,6 +141,13 @@ export function patraView(sitting: Sitting, edition?: Lang): PatraView {
     seed: sitting.seed,
     seedShort: shortSeed(sitting.seed),
     percentile: river.percentile,
+
+    distance:
+      sitting.distanceKm === null || sitting.distanceKm === undefined
+        ? null
+        : lang === "hi"
+          ? `${NUMBER.format(sitting.distanceKm)} कि.मी. दूर`
+          : `${NUMBER.format(sitting.distanceKm)} km away`,
   };
 }
 
@@ -198,6 +208,7 @@ export function printableRecord(sitting: Sitting): PatraRecord {
     },
 
     seed: view.seed,
+    distance: view.distance ? { value: view.distance, note: "" } : undefined,
     verifyUrl: `${SITE_ORIGIN}/p/${sitting.id}`,
   };
 }

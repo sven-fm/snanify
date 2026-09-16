@@ -1,6 +1,8 @@
 "use server";
 
+import { headers } from "next/headers";
 import { requireUser } from "@/lib/auth";
+import { requestFix } from "@/lib/distance";
 import { mintSitting } from "@/lib/sitting";
 import type { FullLang as Lang } from "@/lib/locales";
 
@@ -23,7 +25,15 @@ export type Kept = { id: string | null; already?: boolean; reason?: string };
 export async function keepThisMorning(lang: Lang): Promise<Kept> {
   const user = await requireUser(lang, "/today");
 
-  const result = await mintSitting({ userId: user.id, tz: user.tz, lang });
+  /* The one thing read off the request besides who is asking: where it came
+     from, for the distance the sheet prints. Vercel writes it; a browser
+     cannot. */
+  const result = await mintSitting({
+    userId: user.id,
+    tz: user.tz,
+    lang,
+    from: requestFix(await headers()),
+  });
 
   switch (result.outcome) {
     case "kept":

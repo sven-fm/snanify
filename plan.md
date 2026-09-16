@@ -202,6 +202,8 @@ actually type. The biggest free lever there is.
 
 ### 16 September 2026
 
+- The seed is gone from every visible output (the memento, the sheet, the print version, `/snan`, the FAQ, `llms.txt`); it stays on the sitting row as a datum.
+- The distance to the water: a `distance_km` column on the sitting, written at the mint from the request's coordinates; printed on the memento beside the time, on the print version as its own cell, on the reading and the ready screen; the specimen carries Toronto's.
 - On a phone the silhouette opens a drawer under the masthead with the account's rows (your mornings, your snan, buy mornings, sign out), the same rows the hamburger carries; people pressed it expecting their account.
 - The sheet says where to get one: "Your own morning, at snanify.com" on its foot, in its own edition; the recipient's page opens with an invitation strip and a Begin button above the sheet; the link preview carries the same line. The print version prints only the cells that carry something.
 - The memento: the band of water under the ghat's plate is gone, and the water across the page is a faint hairline guilloche, one weight, so the type reads as on a bank note. Sheets rendered before keep their old image.

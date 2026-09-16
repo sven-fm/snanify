@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { distanceKm } from "@/lib/distance";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { todayContent } from "@/content/today";
@@ -56,27 +57,6 @@ export async function generateMetadata({
 
 const NUMBER = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
-/**
- * How far the reader is from the ghat, in kilometres, from the coordinates
- * Vercel puts on the request. Null where there are none (local development,
- * a request through a proxy that strips them), and then the reading simply
- * has no distance row. The great-circle distance, rounded to the nearest ten
- * kilometres, because an IP fix is a city and not a street.
- */
-async function distanceKm(ghat: readonly [number, number]): Promise<number | null> {
-  const head = await headers();
-  const lat = Number(head.get("x-vercel-ip-latitude"));
-  const lon = Number(head.get("x-vercel-ip-longitude"));
-  if (!Number.isFinite(lat) || !Number.isFinite(lon) || (lat === 0 && lon === 0)) return null;
-
-  const rad = (d: number) => (d * Math.PI) / 180;
-  const [glat, glon] = ghat;
-  const a =
-    Math.sin(rad(glat - lat) / 2) ** 2 +
-    Math.cos(rad(lat)) * Math.cos(rad(glat)) * Math.sin(rad(glon - lon) / 2) ** 2;
-  const km = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return Math.round(km / 10) * 10;
-}
 
 export default async function Page({
   params,
@@ -148,7 +128,7 @@ export default async function Page({
   if (!water) throw new Error(`no live state for ${profile.waterSlug}`);
 
   const d = water.discharge;
-  const km = await distanceKm(water.gauge.ghat);
+  const km = distanceKm(await headers(), water.gauge.ghat);
 
   const reading = {
     water: ghat ? waterName(ghat, "river", lang) : profile.waterSlug,
