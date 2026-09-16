@@ -81,21 +81,6 @@ argued from revenue.
 Things that exist and want your eyes, or that only you can do. Each is one look or one
 dashboard.
 
-### 6.0 Pounds: run the live catalogue, then flip the switch
-
-The code, the pages and the Stripe script carry pounds and mark every non-US price
-tax-inclusive, but the live Stripe prices do not yet: the production keys are
-marketplace-provisioned and marked sensitive, so the script could not be run from
-here (the test account is done). Run it once with the live secret key from the
-Stripe dashboard:
-
-```bash
-STRIPE_SECRET_KEY=sk_live_... node scripts/stripe-catalogue.mjs
-```
-
-Then add `"GBP"` to `CATALOGUE_CURRENCIES` in `src/lib/currency.ts` and push. Until
-then a reader in the UK sees and pays US dollars, as before, and nothing breaks.
-
 ### 6.1 The new order, on your phone
 
 Sign out, press Begin on the landing page, and go through it: sign in, set up, the packs
@@ -202,6 +187,7 @@ actually type. The biggest free lever there is.
 
 ### 16 September 2026
 
+- Pounds live: the live Stripe catalogue carries GBP and the tax rule (run by the owner with the dashboard key), and `CATALOGUE_CURRENCIES` includes it, so a reader in the UK sees and pays £.
 - The seed is gone from every visible output (the memento, the sheet, the print version, `/snan`, the FAQ, `llms.txt`); it stays on the sitting row as a datum.
 - The distance to the water: a `distance_km` column on the sitting, written at the mint from the request's coordinates; printed on the memento beside the time, on the print version as its own cell, on the reading and the ready screen; the specimen carries Toronto's.
 - On a phone the silhouette opens a drawer under the masthead with the account's rows (your mornings, your snan, buy mornings, sign out), the same rows the hamburger carries; people pressed it expecting their account.

@@ -42,7 +42,7 @@ export const DEFAULT_CURRENCY: Currency = "USD";
  * would see a price they cannot pay. Pounds are in the code and the script;
  * add "GBP" here the moment the live run has completed.
  */
-export const CATALOGUE_CURRENCIES: readonly Currency[] = ["USD", "EUR", "CAD", "INR"];
+export const CATALOGUE_CURRENCIES: readonly Currency[] = ["USD", "EUR", "GBP", "CAD", "INR"];
 
 /** The cookie src/proxy.ts writes and the head script reads. */
 export const CURRENCY_COOKIE = "snf-cur";
