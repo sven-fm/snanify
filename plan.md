@@ -62,22 +62,12 @@ river. No register, no seed, no controls. Still to do inside it: the line's
 water name and date come out in English on the Hindi page, because the view
 carries them once; they should be set per edition.
 
-## 5. Sending, on a phone, to WhatsApp
+## 5. Sending, on a phone, to WhatsApp. Parked 16 September.
 
-**What is wrong.** The send button opens only the native share sheet, with the
-image attached when the browser allows it. There is no WhatsApp button, and
-WhatsApp is where the sheet is going.
-
-**Done looks like.** Three ways to send, in this order on a phone: WhatsApp
-(a `wa.me` link carrying the one-line text and the page link, which WhatsApp
-renders with the image card), the native share sheet with the image file as
-now, and copy the link. On desktop the WhatsApp link opens WhatsApp Web. The
-page's Open Graph image is the sheet at the right ratio, so the link card in
-the thread is the sheet even when the file is not attached.
-
-**Must not break.** The image-file path stays, because a message carrying the
-image is better than a card. The `?new=1` auto-open after a morning stays, but
-it opens the chooser above rather than the bare native sheet.
+The owner tested it on the phone: the send button opens the native share
+sheet with the image attached, WhatsApp is one tap inside it, and that is
+good enough. A dedicated WhatsApp button and copy-link stay in the queue for
+a later pass, together with the recipient line's Hindi (item 4).
 
 ## 6. The source, said plainly. Done 16 September, further than planned.
 
