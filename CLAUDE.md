@@ -160,6 +160,10 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
   `<Price>`, never by reading the currency in a component.
 - **The pay intent cookie is Secure only over https**, so the sign-in continuation on
   `/begin?go=1` cannot be tested on a plain-http local production build.
+- **Production builds use webpack, not Turbopack** (`next build --webpack`). The Turbopack
+  build of this app hydrates with a mismatch on about a quarter of slow loads (React error
+  418, the whole page re-rendered on the client); the webpack build of the same commit does
+  not. Measured on 16 September 2026 with a throttled Playwright loop against both.
 - **`npm i <anything>` prunes `--no-save` installs.**
 
 ## Where the thinking lives

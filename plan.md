@@ -217,6 +217,10 @@ one day:
   headers.
 - **Repo.** A CI workflow. `build-plan.md` folded into this file. `CLAUDE.md` cut to the
   rules. `DESIGNSYSTEM.md` names the four motions and the paper cues.
+- **The hydration flake.** Production re-rendered the whole page on the client on about a
+  quarter of slow loads (React error 418) on `/`, `/snan` and `/begin`. Bisected with a
+  throttled Playwright loop: the previous commit built with Turbopack flakes the same way,
+  and any commit built with webpack is clean. The build is webpack now.
 
 ### 15 and 16 September 2026, before the review
 
