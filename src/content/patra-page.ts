@@ -26,11 +26,13 @@ const en = {
 
   visitTitle: "Sit with your own river tomorrow morning",
   visitBody: "Three minutes at the hour the panchang names, wherever you are.",
-  visitCta: "Begin",
+  visitCta: "Begin your snan",
+  /** The strip above the sheet, for whoever it was sent to. */
+  visitTop: "Sit with your own river. Three minutes, at the hour the panchang names.",
 
   shareText: "{name} kept a sankalp with the {water} on {date}.",
   metaTitle: "{name}, {water}, {date}",
-  metaDescription: "A Sankalp Patra kept with the {water} at {ghat}, {city}, on {date}.",
+  metaDescription: "A Sankalp Patra kept with the {water} at {ghat}, {city}, on {date}. Your own morning, at snanify.com.",
 
   /** Shown once, straight after a morning: the icon is how this gets opened at six. */
   homeScreen: "Add Snanify to your home screen. Tomorrow it opens at your hour.",
@@ -56,11 +58,12 @@ const hi = {
 
   visitTitle: "कल सुबह अपनी नदी के साथ बैठिए",
   visitBody: "पंचांग की बताई घड़ी पर तीन मिनट, आप जहाँ भी हों।",
-  visitCta: "आरंभ कीजिए",
+  visitCta: "अपना स्नान आरंभ कीजिए",
+  visitTop: "अपनी नदी के साथ बैठिए। तीन मिनट, पंचांग की बताई घड़ी पर।",
 
   shareText: "{name} ने {date} को {water} के साथ संकल्प रखा।",
   metaTitle: "{name}, {water}, {date}",
-  metaDescription: "{date} को {ghat}, {city} पर {water} के साथ रखा गया एक संकल्प पत्र।",
+  metaDescription: "{date} को {ghat}, {city} पर {water} के साथ रखा गया एक संकल्प पत्र। अपनी सुबह, snanify.com पर।",
 
   homeScreen: "Snanify को अपनी होम स्क्रीन पर जोड़िए। कल यह आपकी घड़ी पर खुलेगा।",
 

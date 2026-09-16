@@ -414,7 +414,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   y = placeY + 70;
 
   /* --- the figures, before the prayer, so they are never squeezed out ---- */
-  const footTop = H - MM - 40;
+  const footTop = H - MM - 62;
   const figuresTop = footTop - 168;
   parts.push(`<rect x="${MM}" y="${figuresTop}" width="${IN}" height="2" fill="${INK}" />`);
   parts.push((await typeset("FLOW", { size: 20, x: MM, y: figuresTop + 40, fill: INK_2, tracking: 0.08 })).svg);
@@ -448,6 +448,20 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   /* --- foot --------------------------------------------------------------- */
   parts.push((await typeset(view.specimen ? "snanify.com" : `snanify.com/p/${view.id}`, { size: 20, x: MM, y: footTop + 14, fill: INK_2 })).svg);
   parts.push((await typeset(`seed ${view.seedShort}`, { size: 20, x: R, y: footTop + 14, fill: INK_2, anchor: "end" })).svg);
+  /* Where to get one: the sheet travels into family groups on its own, and
+     the address is the only way back. In the sheet's own edition. */
+  parts.push(`<rect x="${MM}" y="${footTop + 34}" width="${IN}" height="1" fill="${RULE}" />`);
+  parts.push(
+    (
+      await typeset(view.locale === "hi" ? "अपनी सुबह, snanify.com पर" : "Your own morning, at snanify.com", {
+        size: 22,
+        x: W / 2,
+        y: footTop + 66,
+        fill: SPOT,
+        anchor: "middle",
+      })
+    ).svg,
+  );
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ` +

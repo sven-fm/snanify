@@ -147,16 +147,6 @@ function Cell({
   );
 }
 
-/** A cell that has nothing truthful to print. It keeps the rule running. */
-function BlankCell({ opening = false }: { opening?: boolean }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={opening ? "border-t-2 border-rulestrong" : "border-t border-rule"}
-    />
-  );
-}
-
 export function ChihnaSheet({
   lang,
   data,
@@ -365,13 +355,17 @@ export function ChihnaSheet({
                 ))}
               </ul>
 
-              <p className="text-ink2" style={{ marginTop: u(14), fontSize: u(12) }}>
-                <span className="label text-ink2" style={{ fontSize: u(10) }}>
-                  {t.gotraLabel}
-                </span>
-                <span style={{ paddingLeft: u(8) }} />
-                <span className="text-ink">{data.gotra ?? t.gotraUnstated}</span>
-              </p>
+              {/* The gotra, when one was given. An unstated one printed as
+                  "Not stated" was a line saying nothing. */}
+              {data.gotra && (
+                <p className="text-ink2" style={{ marginTop: u(14), fontSize: u(12) }}>
+                  <span className="label text-ink2" style={{ fontSize: u(10) }}>
+                    {t.gotraLabel}
+                  </span>
+                  <span style={{ paddingLeft: u(8) }} />
+                  <span className="text-ink">{data.gotra}</span>
+                </p>
+              )}
 
               {/* A gift sheet with one name on it fails as a gift, every time. */}
               {data.givenBy && (
@@ -430,46 +424,38 @@ export function ChihnaSheet({
             {/* A tithi is printed only when it has been confirmed against a
                 named panchang source. Unsourced, the cell is a blank rule,
                 never an estimate. */}
-            {data.tithi?.confidence === "sourced" ? (
+            {/* Only what is true prints. A field with nothing behind it used to
+                keep its rule running as an empty cell, which read as a line
+                with no content under it; the register now holds only the
+                cells that carry something. */}
+            {data.tithi?.confidence === "sourced" && (
               <Cell label={t.tithiLabel} opening>
                 {data.tithi.label}
               </Cell>
-            ) : (
-              <BlankCell opening />
             )}
 
-            {data.window ? (
+            {data.window && (
               <Cell label={t.windowLabel} sub={data.window.span}>
                 {data.window.label}
               </Cell>
-            ) : (
-              <BlankCell />
             )}
 
-            {data.flow ? (
+            {data.flow && (
               <Cell label={t.flowLabel} sub={data.flow.note}>
                 <span className="tabular">{data.flow.value}</span>
               </Cell>
-            ) : (
-              <BlankCell />
             )}
 
-            {/* A gauge level, where this reach has one; a ruled blank where
-                it does not. */}
-            {data.level ? (
+            {data.level && (
               <Cell label={t.levelLabel} sub={data.level.note}>
                 <span className="tabular">{data.level.value}</span>
               </Cell>
-            ) : (
-              <BlankCell />
             )}
 
-            {data.distance ? (
+            {data.distance && (
               <Cell label={t.distanceLabel} sub={data.distance.note}>
                 <span className="tabular">{data.distance.value}</span>
               </Cell>
-            ) : (
-              <BlankCell />
             )}
 
             {/* The seed is a hex digest and the identifier is base58: neither
