@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { RIVER_SLUGS } from "@/content/rivers";
 import { OCCASION_SLUGS } from "@/content/muhurat";
+import { CITY_SLUGS } from "@/content/cities";
 import { hreflangMap, localeUrl, LANGS, DEFAULT_LANG } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
@@ -59,6 +60,7 @@ const ROUTES: Route[] = [
   { path: "/snan", priority: 0.95, changeFrequency: "monthly" },
   { path: "/live", priority: 0.9, changeFrequency: "daily" },
   { path: "/panchang", priority: 0.85, changeFrequency: "daily" },
+  ...CITY_SLUGS.map((slug): Route => ({ path: `/panchang/${slug}`, priority: 0.7, changeFrequency: "daily" })),
   { path: "/muhurat", priority: 0.9, changeFrequency: "weekly" },
   ...OCCASION_SLUGS.map(
     (slug): Route => ({ path: `/muhurat/${slug}`, priority: 0.7, changeFrequency: "weekly" }),

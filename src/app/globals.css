@@ -765,3 +765,71 @@ html:not([data-js]) .ink-picture-lazy {
    beat late as grey blocks catching up. Only numerals, bars and pictures
    reveal now (`.reveal`, `.grow`, `.ink-picture-lazy` above); prose is on
    the page from the first frame.                                            */
+
+/* --- the sitting, looped on /snan ------------------------------------------
+   Five screens, each on for a fifth of a ten-second cycle, chosen by --i.
+   The story bar's segments fill in the same fifth; the breath's water rises
+   and falls once; the two ink lines fill across their two seconds. Without
+   motion the first screen stands alone. */
+.loop-screen {
+  opacity: 0;
+  animation: loop-screen 10s linear infinite;
+  animation-delay: calc(var(--i) * 2s);
+}
+@keyframes loop-screen {
+  0%, 1% { opacity: 0; }
+  4%, 19% { opacity: 1; }
+  22%, 100% { opacity: 0; }
+}
+.loop-seg {
+  position: relative;
+  overflow: hidden;
+}
+.loop-seg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--spot);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: loop-seg 10s linear infinite;
+  animation-delay: calc(var(--i) * 2s);
+}
+@keyframes loop-seg {
+  0% { transform: scaleX(0); }
+  20%, 99% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+.loop-water {
+  height: 22%;
+  animation: loop-water 10s ease-in-out infinite;
+  animation-delay: 2s;
+}
+@keyframes loop-water {
+  0%, 20% { height: 22%; }
+  10% { height: 68%; }
+}
+.loop-in, .loop-out { position: absolute; left: 0; animation: loop-word 10s linear infinite; animation-delay: 2s; }
+.loop-out { animation-delay: 3s; }
+@keyframes loop-word {
+  0%, 1% { opacity: 0; }
+  3%, 9% { opacity: 1; }
+  11%, 100% { opacity: 0; }
+}
+.loop-ink {
+  width: 0;
+  animation: loop-ink 10s linear infinite;
+}
+.loop-screen[style*="--i: 2"] .loop-ink { animation-delay: 4s; }
+.loop-screen[style*="--i: 4"] .loop-ink { animation-delay: 8s; }
+@keyframes loop-ink {
+  0%, 2% { width: 0; }
+  18%, 100% { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loop-screen, .loop-seg::after, .loop-water, .loop-in, .loop-out, .loop-ink { animation: none; }
+  .loop-screen { opacity: 0; }
+  .loop-screen[style*="--i: 0"] { opacity: 1; }
+  .loop-out { opacity: 0; }
+  .loop-ink { width: 60%; }
+}

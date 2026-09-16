@@ -6,6 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Mark } from "@/components/Logo";
 import { PastHero } from "@/components/site/PastHero";
+import { SittingLoop } from "@/components/snan/SittingLoop";
 import { Specimen } from "@/components/Specimen";
 import { buttonClass, Price, Section, TaxNote } from "@/components/ui";
 import { snanContent } from "@/content/snan";
@@ -128,12 +129,14 @@ export function SnanIntro({ lang }: { lang: Lang }) {
             <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.form.lede}</p>
           </div>
 
-          {/* The five parts at a glance: a ruled row each, five columns wide. */}
-          <ul className="mt-10 border-t-2 border-rulestrong lg:grid lg:grid-cols-5 lg:border-b-2">
+          {/* The sitting itself, looped in a phone, beside the five parts at a glance. */}
+          <div className="mt-10 grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start lg:gap-14">
+          <SittingLoop lang={lang} />
+          <ul className="border-t-2 border-rulestrong lg:border-b-2">
             {t.form.limbs.map((l) => (
               <li
                 key={`glance-${l.id}`}
-                className="flex items-baseline justify-between gap-4 border-b border-rule py-3 lg:flex-col lg:items-start lg:gap-1 lg:border-r lg:border-b-0 lg:py-4 lg:pr-4 lg:last:border-r-0"
+                className="flex items-baseline justify-between gap-4 border-b border-rule py-3 lg:py-4"
               >
                 <span className="display text-[1.25rem] text-ink">{l.title}</span>
                 <span className="text-sm text-ink2 tabular-nums">
@@ -142,6 +145,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
               </li>
             ))}
           </ul>
+          </div>
 
           {/* The long version. Numbered, because the parts run in this order. */}
           <ol className="mt-12 border-t-2 border-rulestrong">

@@ -25,7 +25,11 @@ Things that exist and want your eyes, or that only you can do.
    Path starts with `/p/` and ends with `/image`, or equals `/specimen`; action Rate
    limit, 60 requests per 60 seconds by IP, then Deny. Save and Publish. BotID Deep
    Analysis is a paid switch on the same page if abuse ever shows.
-4. **The branch `feat/queue`.** Everything since the repo clean-up is on it and deployed
+4. **Twenty city pages and the loop.** `/panchang/leicester` and nineteen more, linked
+   from `/panchang` and the sitemap: sunrise, Brahma muhurat and the tithi at sunrise on
+   the city's own clock with IST beside it. And the sitting looped in a phone under "The
+   five parts" on `/snan`. Both want your eyes on a phone.
+5. **The branch `feat/queue`.** Everything since the repo clean-up is on it and deployed
    to a preview, nothing on `main`. Say the word and it fast-forwards to production.
 
 ## Waiting for your go
@@ -37,11 +41,7 @@ Things that exist and want your eyes, or that only you can do.
    reproduces the measurement; run it right after the next deploy. Next step if it
    matters: a preview with `<Analytics />` swapped for the framework-free
    `@vercel/analytics/react`, probed in its first ten minutes.
-2. **The panchang by city. P2, a day.** `/panchang/[city]` for twenty diaspora cities,
-   each with sunrise, Brahma muhurat and today's tithi in that zone.
-3. **The sitting, shown before it is bought. P2, half a day.** A ten-second loop of the
-   five screens under "The five parts" on `/snan`.
-4. **Small things. P3.** A webhook e2e test in Stripe test mode (the nine unit tests
+2. **Small things. P3.** A webhook e2e test in Stripe test mode (the nine unit tests
    already sign real payloads); `sameAs` once a social profile exists.
 
 ## After launch, argued from data
@@ -56,6 +56,7 @@ folios and the email the day before; a third locale chosen from the zone data in
 
 ### 16 September 2026
 
+- `/panchang/[city]` for twenty diaspora cities, prerendered and refreshed every half hour; the sitting looped in a phone on `/snan`.
 - The panchang read off Drik: the ayanamsa refitted (every sankranti was fifteen minutes early), sun aberration in the tithi, a sankranti after sunset kept the next morning, a two-sunrise ekadashi kept on the second; the record in `docs/panchang-check.md`.
 - The portrait pressed to the five tones of the river plates, on the same paper.
 - BotID on Pay and setup; a per-instance rate limit on the sheet image and the specimen.

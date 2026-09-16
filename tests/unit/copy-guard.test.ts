@@ -29,6 +29,8 @@ const MODULES = [
   "@/content/muhurat",
   "@/content/names",
   "@/content/panchang",
+  "@/content/panchang-city",
+  "@/content/cities",
   "@/content/patra",
   "@/content/patra-page",
   "@/content/prayers",

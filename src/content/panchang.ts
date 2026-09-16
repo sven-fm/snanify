@@ -497,6 +497,9 @@ export const panchangContent = {
       krishna: "Krishna paksha, the dark fortnight",
       both: "Both fortnights",
     },
+    cities: {
+      lede: "Sunrise, Brahma muhurat and the tithi at sunrise for twenty cities, each on its own sky and its own clock.",
+    },
     clock: {
       title: "The ghat's hour on your clock",
       lede: "A window at the ghat is one moment. Its date and hour on your clock depend on where you live, and in the Americas the morning window falls on the previous evening. Both clocks are printed every time.",
@@ -695,6 +698,9 @@ export const panchangContent = {
       shukla: "शुक्ल पक्ष",
       krishna: "कृष्ण पक्ष",
       both: "दोनों पक्ष",
+    },
+    cities: {
+      lede: "बीस शहरों के लिए सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि, हर एक अपने आकाश और अपनी घड़ी पर।",
     },
     clock: {
       title: "घाट की बेला आपकी घड़ी पर",

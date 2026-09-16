@@ -34,6 +34,8 @@ import {
 } from "@/content/panchang";
 import { muhuratIndexContent } from "@/content/muhurat-index";
 import { muhuratContent } from "@/content/muhurat";
+import { CITIES } from "@/content/cities";
+import { panchangCityContent } from "@/content/panchang-city";
 
 /* --- numerals -------------------------------------------------------------
    Same rule as the rest of the almanac: a printed panchang sets its figures in
@@ -292,6 +294,27 @@ export function Panchang({ lang }: { lang: Lang }) {
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.pitru.unknown}</p>
               </div>
             </div>
+        </Section>
+
+        {/* ---------------- the morning, city by city ---------------- */}
+        <Section id="cities">
+          <div className="max-w-3xl">
+            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{panchangCityContent[lang].kicker}</h2>
+            <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.cities.lede}</p>
+          </div>
+          <ul className="mt-8 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
+            {CITIES.map((x) => (
+              <li key={x.slug} className="border-b border-rule">
+                <Link
+                  href={localePath(lang, `/panchang/${x.slug}`)}
+                  className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
+                >
+                  <span className="display text-[1.1rem]">{x.name[lang]}</span>
+                  <span className="text-sm text-ink2">{x.country[lang]}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Section>
 
         {/* ---------------- one hour, eight clocks ---------------- */}
