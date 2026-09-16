@@ -102,7 +102,30 @@ picker with the buyer's own names printed on the specimen, `/today` gating on cr
 as it already does, and the receipt's "set up your sheet" line becoming "sit tomorrow".
 About a day. Say yes and it goes first.
 
-### 6.2 Verify on production. P1
+### 6.2 The hydration flake on production. P1
+
+**What is wrong.** On a share of loads of `/`, `/snan` and `/begin` (6 of 18, then 11 of
+24, measured with headless Chromium at 390 px on 16 September) React throws error 418
+and re-renders the whole page on the client. The reader sees the page twice: once as
+HTML, then again after the scripts arrive. The body's structure and text are identical
+between the server HTML and the client render, so the mismatch is somewhere React
+checks that a DOM diff does not show: the head, the body's child list at the moment of
+hydration, or a hoistable.
+
+**What is known.** A plain local production build does not flake, with either bundler,
+even under a throttled network; a local Turbopack build did flake a little, a local
+webpack build not at all, and production flakes on both, so the bundler is not the
+cause and `next build` stays as it was. Blocking the analytics request and hiding
+cookies made no difference. The previous production deployment could not be measured
+(deployment protection).
+
+**Next experiments, in order.** The local build with `VERCEL=1 VERCEL_ENV=production`
+was also clean (0 of 14), though the analytics script tag did not render locally, so it
+is not excluded. Deploy a preview without `<Analytics />` and measure it. Deploy a preview with the two sync head
+scripts moved to `next/script` `beforeInteractive` and measure it. Whichever removes the
+error names the cause.
+
+### 6.3 Verify on production. P1
 
 Everything below was verified on a local production build; each needs one look at
 www.snanify.com after the deploy.
@@ -115,38 +138,38 @@ www.snanify.com after the deploy.
 - HEIC from an iPhone through `/setup`, or the word comes out of the portrait copy.
 - Apple Pay and Google Pay on in the Stripe dashboard's payment methods.
 
-### 6.3 A Neon branch for development and preview. P1, owner
+### 6.4 A Neon branch for development and preview. P1, owner
 
 `.env.local` and the Preview environment point at the production database. Create a
 branch, pull it into `.env.local`, set it on Preview, and production stays `main`'s
 alone. `scripts/grant.mjs` stops needing to ask which of two rows an email means.
 
-### 6.4 Rate limits. P2, owner
+### 6.5 Rate limits. P2, owner
 
 Vercel WAF rules by IP on `/begin`, `/setup` and `/p/*/image`, and BotID on the pay
 form if abuse ever shows. Nothing in the code limits a signed-in bot from opening
 Checkout Sessions all night.
 
-### 6.5 Error reporting. P2
+### 6.6 Error reporting. P2
 
 A failed `keepThisMorning` or a sheet that would not render is a `console.error` in
 the function logs and nothing else. Add a Vercel log drain with an alert on
 `patra: could not pre-render` and `fulfilment failed`, or Sentry's free tier.
 
-### 6.6 The sitting, shown before it is bought. P2
+### 6.7 The sitting, shown before it is bought. P2
 
 A ten-second silent loop of the five screens under "The five parts" on `/snan`, the
 way the specimen shows the sheet. A CSS-animated miniature of the story bar, the
 breath and the black, rather than a video.
 
-### 6.7 The panchang by city. P2
+### 6.8 The panchang by city. P2
 
 `/panchang/[city]` for twenty diaspora cities (Toronto, London, New Jersey, the Bay
 Area, Houston, Leicester, Dubai, Singapore, Sydney and on), each with sunrise, Brahma
 muhurat and today's tithi in that zone. Same data, twenty pages, the query people
 actually type. The biggest free lever there is.
 
-### 6.8 Small things. P3
+### 6.9 Small things. P3
 
 - The e2e specs cover overflow and the CTA hrefs; put `scripts/deliver-webhook.mjs`
   into a test that books credits in Stripe test mode and asserts the ledger.
@@ -217,11 +240,6 @@ one day:
   headers.
 - **Repo.** A CI workflow. `build-plan.md` folded into this file. `CLAUDE.md` cut to the
   rules. `DESIGNSYSTEM.md` names the four motions and the paper cues.
-- **The hydration flake.** Production re-rendered the whole page on the client on about a
-  quarter of slow loads (React error 418) on `/`, `/snan` and `/begin`. Bisected with a
-  throttled Playwright loop: the previous commit built with Turbopack flakes the same way,
-  and any commit built with webpack is clean. The build is webpack now.
-
 ### 15 and 16 September 2026, before the review
 
 - The sitting says where you are: story bar, Next, a vow that waits for the hold, a
