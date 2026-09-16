@@ -135,7 +135,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
                 </h1>
 
                 <div className="rule-double mt-7 max-w-xl" />
-                <WaterBand seed={ghat.slug} className="mt-5 h-14 w-full max-w-xl sm:h-16" />
+                <WaterBand seed={ghat.slug} className="mt-5 h-14 w-full sm:h-16" />
 
                 <p
                   className="ink-in mt-6 text-xl text-ink sm:text-2xl"

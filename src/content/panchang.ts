@@ -538,7 +538,7 @@ export const panchangContent = {
           note: "The three minutes, part by part, and the Sankalp Patra.",
         },
         {
-          href: "/ethics",
+          href: "/faq#how",
           label: "Our commitments",
           note: "The rules this site is written under.",
         },
@@ -737,7 +737,7 @@ export const panchangContent = {
           note: "तीन मिनट, अंग दर अंग, और संकल्प पत्र।",
         },
         {
-          href: "/ethics",
+          href: "/faq#how",
           label: "हमारे वचन",
           note: "वे नियम जिनके अधीन यह साइट लिखी गई है।",
         },

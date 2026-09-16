@@ -23,6 +23,10 @@ export const hi = {
     cta: "आरंभ कीजिए",
     menu: "मेन्यू",
     account: "आपकी सुबहें",
+    profile: "आपका खाता",
+    snanSettings: "आपका स्नान",
+    buy: "सुबहें खरीदिए",
+    signOut: "बाहर निकलिए",
   },
   edition: "संवत् २०८३",
   hero: {

@@ -161,7 +161,6 @@ const FULL_ONLY: readonly string[] = [
   "/terms",
   "/p/",
   "/panchang",
-  "/ethics",
   "/faq",
   "/kumbh",
   "/rivers/",

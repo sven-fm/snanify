@@ -4,26 +4,20 @@ import Link from "next/link";
 import { useSyncExternalStore } from "react";
 
 /* ---------------------------------------------------------------------------
-   The masthead's account link, on every page, without Clerk in the bundle.
+   The account, in the masthead, for somebody signed in.
 
-   Somebody signed in has already bought; sending them to the pack picker again
-   is the site forgetting who they are. The masthead sits on every page, and
-   the earlier version answered this with Clerk's `useAuth`, which meant the
-   link could only exist on the (app) pages: importing Clerk's hooks into the
-   header would have shipped 115 KB to every marketing page for a button they
-   never showed. So on a phone, where the wide button is hidden anyway, a
-   signed-in reader had no way to their own register at all.
+   Everybody sees "Begin". Somebody signed in also gets the silhouette, and
+   under it the four places their account lives: the register of mornings,
+   the snan they set up, the pack picker, and the way out. It is a <details>,
+   so it needs no script to open, and it decides whether to exist at all from
+   Clerk's `__client_uat` cookie rather than from Clerk's hooks, which keeps
+   Clerk's bundle off the marketing pages. See the note in the earlier
+   version of this file, kept here in short: the cookie is written by Clerk's
+   browser script, is "0" once signed out, and outlives the session cookie.
 
-   Clerk keeps a `__client_uat` cookie on the site's domain: the time of the
-   last sign-in, "0" once signed out. It is written by Clerk's browser script,
-   so it is readable here, and it outlives the sixty-second session cookie.
-   Reading it costs nothing and tells this component the one thing it needs.
-
-   The prerendered HTML carries the signed-out state, which is right for
-   everybody arriving from a search, and the browser corrects it a moment
-   after paint. `useSyncExternalStore` with a server snapshot of "signed out"
-   is how React does that without a mismatch: hydration uses the server
-   answer, then re-renders once with the cookie's.
+   The prerendered HTML carries the signed-out state, and the browser corrects
+   it after paint through useSyncExternalStore, so hydration sees no
+   mismatch.
    --------------------------------------------------------------------------- */
 
 function readSignedIn(): boolean {
@@ -37,8 +31,6 @@ function readSignedIn(): boolean {
   }
 }
 
-/* The cookie changes only on a sign-in or sign-out, both of which navigate,
-   so a re-read on focus is enough to catch a tab that was left open. */
 function subscribe(onChange: () => void): () => void {
   window.addEventListener("focus", onChange);
   return () => window.removeEventListener("focus", onChange);
@@ -48,41 +40,56 @@ function useSignedIn(): boolean {
   return useSyncExternalStore(subscribe, readSignedIn, () => false);
 }
 
-/** The wide masthead's one action: "Begin", or "Your mornings" once signed in. */
-export function HeaderCta({
-  begin,
-  account,
-  beginLabel,
-  accountLabel,
-  className,
-}: {
-  begin: string;
-  account: string;
-  beginLabel: string;
-  accountLabel: string;
-  className: string;
-}) {
+export type ProfileRow = { href: string; label: string };
+
+/**
+ * The silhouette and its menu, from the tablet width up. On a phone the
+ * masthead has no room for one more control without folding the wordmark,
+ * so the same rows live in the phone menu instead: see ProfileRows.
+ */
+export function ProfileMenu({ label, rows }: { label: string; rows: ProfileRow[] }) {
   const signedIn = useSignedIn();
+  if (!signedIn) return null;
+
   return (
-    <Link href={signedIn ? account : begin} className={className}>
-      {signedIn ? accountLabel : beginLabel}
-    </Link>
+    <details className="group relative hidden sm:block" data-profile-menu>
+      <summary
+        className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong text-ink transition-colors hover:bg-ink hover:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden"
+        aria-label={label}
+        title={label}
+      >
+        {/* The silhouette everybody reads as "me": a head over shoulders. */}
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
+      </summary>
+      <ul className="absolute right-0 top-full z-50 mt-2 w-60 border-2 border-rulestrong bg-paper">
+        {rows.map((r) => (
+          <li key={r.href} className="border-b border-rule last:border-b-0">
+            <Link href={r.href} className="display flex min-h-[48px] items-center px-4 text-[1.05rem] text-ink transition-colors hover:bg-paper2">
+              {r.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }
 
-/**
- * One more ruled row in the phone menu, present only for somebody signed in.
- * The menu's action underneath stays "Begin", because buying another pack is
- * still the thing to do from anywhere; this row is the way home.
- */
-export function AccountMenuRow({ href, label }: { href: string; label: string }) {
+/** The same four rows, as a ruled group at the foot of the phone menu. */
+export function ProfileRows({ rows }: { rows: ProfileRow[] }) {
   const signedIn = useSignedIn();
   if (!signedIn) return null;
   return (
-    <li className="border-b border-rule">
-      <Link href={href} className="display flex min-h-[56px] items-center text-[1.25rem] text-ink" data-account-row>
-        {label}
-      </Link>
-    </li>
+    <>
+      {rows.map((r, i) => (
+        <li key={r.href} className={`border-b border-rule ${i === 0 ? "border-t-2 border-t-rulestrong" : ""}`} data-profile-row>
+          <Link href={r.href} className="display flex min-h-[56px] items-center text-[1.25rem] text-ink">
+            {r.label}
+          </Link>
+        </li>
+      ))}
+    </>
   );
 }

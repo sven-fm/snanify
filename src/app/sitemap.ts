@@ -68,7 +68,6 @@ const ROUTES: Route[] = [
     (slug): Route => ({ path: `/muhurat/${slug}`, priority: 0.7, changeFrequency: "weekly" }),
   ),
   { path: "/kumbh", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/ethics", priority: 0.8, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.7, changeFrequency: "monthly" },
   { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" },

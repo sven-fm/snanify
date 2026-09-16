@@ -26,7 +26,7 @@
    words. Full stops over commas.
 
    THE TWO RULES HOLD: nothing here claims a rite was performed, and nothing
-   promises an outcome. Where the numbers come from is on /ethics.
+   promises an outcome. Where the numbers come from is on /faq#how.
 
    FIGURES. `hero.record` carries the three figures the owner asked to keep on
    the page, written as a sentence a reader could check: six waters in
@@ -61,6 +61,10 @@ export const en = {
     cta: "Begin",
     menu: "Menu",
     account: "Your mornings",
+    profile: "Your account",
+    snanSettings: "Your snan",
+    buy: "Buy mornings",
+    signOut: "Sign out",
   },
   edition: "Samvat 2083",
   hero: {

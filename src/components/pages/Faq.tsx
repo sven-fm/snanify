@@ -9,7 +9,7 @@ import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { PriceText } from "@/components/ui";
-import { ETHICS_MAIL, faqContent } from "@/content/trust";
+import { ETHICS_MAIL, ethicsContent, faqContent } from "@/content/trust";
 
 /**
  * /faq, <details>/<summary>, so every answer is reachable with JavaScript off
@@ -26,33 +26,52 @@ import { ETHICS_MAIL, faqContent } from "@/content/trust";
  */
 
 /**
- * Questions whose long answer lives on another page. The fragment matters: a
- * link that lands at a masthead is a link that loses the reader. Every id here
- * is a section id in ethicsContent, and those ids are identical in both
- * locales on purpose.
+ * Questions whose long answer lives elsewhere: on /snan, or further down this
+ * page, in "How it is made", which was its own page (/ethics) until
+ * 16 September 2026. The fragment matters: a link that lands at a masthead is
+ * a link that loses the reader. Every "#how-" id is a section id in
+ * ethicsContent with that prefix, because the questions have a "river"
+ * group of their own; the ids are identical in both locales on purpose.
  */
 const DEEP_LINKS: Record<string, string> = {
   "what-happens": "/snan#form",
   "black-screen": "/snan#form",
   shipping: "/snan#form",
   mark: "/snan#patra",
-  data: "/ethics#river",
-  percentile: "/ethics#river",
-  offline: "/ethics#river",
-  verify: "/ethics#patra",
+  data: "#how-river",
+  percentile: "#how-river",
+  offline: "#how-river",
+  verify: "#how-patra",
   "paying-for": "/snan#price",
   free: "/snan#price",
   prices: "/snan#price",
   eleven: "/snan#price",
-  "sankalp-private": "/ethics#patra",
-  delete: "/ethics#hands",
-  tracking: "/ethics#hands",
-  panchang: "/ethics#sky",
+  "sankalp-private": "#how-patra",
+  delete: "#how-hands",
+  tracking: "#how-hands",
+  panchang: "#how-sky",
 };
+
+/** Prose column for the workshop section: ~68ch measure, generous leading. */
+function P({ children }: { children: React.ReactNode }) {
+  return <p className="mt-5 text-[1.02rem] leading-[1.8] text-ink2">{children}</p>;
+}
+
+/** A term over its value on a phone, a two-column ruled row from `sm` up. */
+function RegisterRow({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="grid gap-1.5 border-b border-rule py-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6">
+      <dt className="label pt-1 text-ink2">{k}</dt>
+      <dd className="text-[0.98rem] leading-[1.75] text-ink2">{v}</dd>
+    </div>
+  );
+}
 
 export function Faq({ lang }: { lang: Lang }) {
   const t = faqContent[lang];
+  const made = ethicsContent[lang];
   const cta = ctaHref(lang);
+  const index = [...t.groups.map((g) => ({ id: g.id, title: g.title })), { id: "how", title: made.title }];
 
   return (
     <>
@@ -69,8 +88,8 @@ export function Faq({ lang }: { lang: Lang }) {
               <h1 className="display text-[2.3rem] leading-[1.12] sm:text-6xl">
                 {t.title}
               </h1>
-              <div className="rule-double mt-7 max-w-xl" />
-              <WaterBand seed="faq" className="mt-5 h-14 w-full max-w-xl sm:h-16" />
+              <div className="rule-double mt-7" />
+              <WaterBand seed="faq" className="mt-5 h-14 w-full sm:h-16" />
               <p className="mt-6 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2 sm:text-[1.08rem]">
                 {t.lede}
               </p>
@@ -85,7 +104,7 @@ export function Faq({ lang }: { lang: Lang }) {
               <div className="sticky top-24 py-20">
                 <p className="text-sm text-ink2">{t.indexLabel}</p>
                 <ul className="mt-4 border-t-2 border-rulestrong">
-                  {t.groups.map((g) => (
+                  {index.map((g) => (
                     <li key={g.id} className="border-b border-rule">
                       <a
                         href={`#${g.id}`}
@@ -106,7 +125,7 @@ export function Faq({ lang }: { lang: Lang }) {
               <nav aria-label={t.indexLabel} className="mb-12 lg:hidden">
                 <p className="text-sm text-ink2">{t.indexLabel}</p>
                 <ul className="mt-3 border-t-2 border-rulestrong">
-                  {t.groups.map((g) => (
+                  {index.map((g) => (
                     <li key={g.id} className="border-b border-rule">
                       <a
                         href={`#${g.id}`}
@@ -162,7 +181,7 @@ export function Faq({ lang }: { lang: Lang }) {
                               {to && (
                                 <p className="mt-5">
                                   <Link
-                                    href={localePath(lang, to)}
+                                    href={to.startsWith("#") ? to : localePath(lang, to)}
                                     className="inline-flex min-h-[44px] items-center text-[0.98rem] text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
                                   >
                                     {t.moreLabel}
@@ -176,6 +195,40 @@ export function Faq({ lang }: { lang: Lang }) {
                     </div>
                 </section>
               ))}
+
+              {/* ---------------- how it is made ----------------
+                  The workshop, once a page of its own at /ethics: the two
+                  rules as the standard, the river, the sky, the sheet, and
+                  the five companies that touch the product. */}
+              <section id="how" className="mt-16 scroll-mt-20 sm:mt-20">
+                <h2 className="display border-t-2 border-rulestrong pt-4 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
+                  {made.title}
+                </h2>
+                <p className="mt-4 max-w-[38rem] text-[1rem] leading-[1.8] text-ink2">{made.lede}</p>
+                <p className="mt-3 text-sm text-ink2">{made.version}</p>
+
+                {[made.s1, made.s2, made.s3, made.s4].map((sec) => (
+                  <section key={sec.id} id={`how-${sec.id}`} className="mt-12 scroll-mt-20">
+                    <h3 className="display border-t border-rule pt-4 text-[1.25rem] leading-snug text-ink">{sec.h}</h3>
+                    {sec.body.map((para) => (
+                      <P key={para}>{para}</P>
+                    ))}
+                  </section>
+                ))}
+
+                <section id={`how-${made.s5.id}`} className="mt-12 scroll-mt-20">
+                  <h3 className="display border-t border-rule pt-4 text-[1.25rem] leading-snug text-ink">{made.s5.h}</h3>
+                  <P>{made.s5.lede}</P>
+                  <dl className="mt-6 border-t-2 border-rulestrong">
+                    {made.s5.rows.map((r) => (
+                      <RegisterRow key={r.k} k={r.k} v={r.v} />
+                    ))}
+                  </dl>
+                  {made.s5.body.map((para) => (
+                    <P key={para}>{para}</P>
+                  ))}
+                </section>
+              </section>
 
               {/* ---------------- closing ---------------- */}
               <section className="mt-16 border-t-2 border-rulestrong pt-10 sm:mt-20 sm:pt-12">

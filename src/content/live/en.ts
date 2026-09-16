@@ -7,7 +7,7 @@ import type { FlowBand, Trend, WaterSlug, WeatherId } from "@/lib/riverdata";
 
    1. NOTHING IS PERFORMED, and this page does not say so. It reports a river,
       and reporting it is the whole of the job. The commitment in the negative
-      lives on /ethics.
+      lives on /faq#how.
    2. NOTHING IS PROMISED. No outcome is attached to reading this page or to
       anything sold elsewhere on the site.
    3. EVERY NUMBER SAYS WHERE IT CAME FROM. "Modelled" stands beside the flow

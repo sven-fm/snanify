@@ -33,8 +33,8 @@ rule, and re-adding one is too. Keep sentences short: this is read at six in the
 a phone, by many readers whose English is a third language.
 
 **Not claiming is not the same as denying.** The two rules above forbid the claim, not the
-silence. The commitment stated at length and in the negative belongs on `/ethics`, which
-every page links, and nowhere else.
+silence. The commitment stated at length and in the negative belongs on `/faq#how`, "How it
+is made", which every page links, and nowhere else.
 
 The rules are also the moat. "We never pretended a priest did anything" is what makes the
 category defensible when somebody attacks it, and it costs nothing, because the product does
@@ -49,7 +49,7 @@ not need the lie.
   nothing more: four of the six waters have no published level there. The number on the
   page is a published figure anyone can fetch and check, and that is the whole point.
   See `src/lib/riverdata.ts`. **Where that is said**, by the owner's direction of
-  16 September 2026: on `/rivers`, `/live`, `/faq` and `/ethics`, and in the structured
+  16 September 2026: on `/rivers`, `/live` and `/faq` (its "How it is made" section), and in the structured
   data. The product surfaces (the landing card, the sitting, the sheet and its image,
   the Patra page, `/snan`, the emails) show the figure plainly, with no source line, no
   "modelled for" date and no publisher's name; `tests/unit/copy-guard.test.ts` fails the
@@ -109,7 +109,8 @@ Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. That is the SEO and d
 surface, not a product tier.
 
 **The routes**, after the cut: `/`, `/snan`, `/rivers`, `/rivers/[river]`, `/live`,
-`/muhurat`, `/muhurat/[occasion]`, `/panchang`, `/kumbh`, `/faq`, `/ethics`.
+`/muhurat`, `/muhurat/[occasion]`, `/panchang`, `/kumbh`, `/faq`. `/ethics` was folded
+into `/faq#how` on 16 September 2026 and is 308ed in `src/proxy.ts`.
 `/how-it-works`, `/patra`, `/patra/sample` and `/verify` were folded into `/snan` and `/faq`
 and are 308ed in `src/proxy.ts`. The product routes (`/begin`, `/setup`, `/today`, `/p/[id]`,
 `/account`) arrive in phases 3 to 7 of `build-plan.md`.
@@ -257,7 +258,7 @@ The landing hero figures (`1,20,000+ sankalps`, `48 countries`) and the live bad
 recommended deleting them; that decision has been made and is not to be relitigated. Replace
 them with real values before launch.
 
-Everything behind the landing page is held to the stricter rule, because `/ethics` publicly
+Everything behind the landing page is held to the stricter rule, because `/faq#how` publicly
 commits to it. Panchang timings ship labelled provisional until a source is named.
 
 ## The plan

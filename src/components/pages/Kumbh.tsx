@@ -165,7 +165,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
   const onwardHref: Record<string, string> = {
     river: localePath(lang, "/rivers/godavari-nashik"),
     muhurat: localePath(lang, "/muhurat"),
-    ethics: localePath(lang, "/ethics"),
+    ethics: localePath(lang, "/faq#how"),
   };
 
   return (
@@ -190,7 +190,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
             </p>
 
             <div className="rule-double mt-8 max-w-2xl" />
-            <WaterBand seed="kumbh" className="mt-5 h-14 w-full max-w-2xl sm:h-16" />
+            <WaterBand seed="kumbh" className="mt-5 h-14 w-full sm:h-16" />
 
             <p
               className="ink-in mt-7 max-w-2xl text-xl leading-[1.5] text-ink sm:text-2xl"

@@ -67,7 +67,7 @@ export async function Account({ lang, misstyped }: { lang: Lang; misstyped?: boo
       <main className="mx-auto max-w-3xl px-5 py-10 pb-24 sm:px-8 sm:py-16 sm:pb-16">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
         <div className="rule-double mt-6" />
-        <WaterBand seed="account" className="mt-5 h-[68px] w-full max-w-xl" />
+        <WaterBand seed="account" className="mt-5 h-[68px] w-full" />
 
         {/* ---------------- what is in hand ---------------- */}
         <section className="mt-9 border-2 border-rulestrong p-5 sm:p-6">

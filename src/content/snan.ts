@@ -17,7 +17,7 @@ import type { Limb as LimbId } from "@/lib/sitting-plan";
  *
  * Those forbid the claim, not the silence, and this page states neither the
  * claim nor its denial. It says what happens. The commitment stated at length
- * lives on /ethics, which every page links.
+ * lives on /faq#how, which every page links.
  *
  * NO NEGATIVE CONSTRUCTIONS. /snan carries the same hard rule as the landing
  * page. A sentence built on "no", "nobody", "nothing" or "there is no" gets

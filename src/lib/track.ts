@@ -12,7 +12,7 @@
 
    NO PERSONAL DATA IN A PROPERTY, EVER. Not a name, not an email, not a
    sitting id, not a sankalp. The properties here are a pack name and a water
-   slug, both of which are the same handful of values for everybody. /ethics
+   slug, both of which are the same handful of values for everybody. /faq#how
    promises no advertising script and no session replay, and a product analytics
    event carrying somebody's identifier would be the same promise broken
    quietly.

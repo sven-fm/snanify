@@ -247,7 +247,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
         {/* ---------------- masthead ----------------
             Title, one sentence, and the provenance sentence with its badge.
             The provenance is part of the masthead rather than a footnote,
-            because /ethics promises that every timing carries it. */}
+            because /faq#how promises that every timing carries it. */}
         <section className="border-b-2 border-rulestrong">
           <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20">
             <h1 className="ink-in display max-w-3xl text-[2.9rem] leading-[0.98] sm:text-6xl lg:text-7xl">
@@ -255,7 +255,7 @@ export function MuhuratIndex({ lang }: { lang: Lang }) {
             </h1>
 
             <div className="rule-double mt-8 max-w-xl" />
-            <WaterBand seed="muhurat" className="mt-5 h-14 w-full max-w-xl sm:h-16" />
+            <WaterBand seed="muhurat" className="mt-5 h-14 w-full sm:h-16" />
 
             <p
               className="ink-in mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2"

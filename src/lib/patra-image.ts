@@ -184,25 +184,6 @@ export async function patraSvg(view: PatraView): Promise<string> {
   }
   parts.push(`<rect x="${artX}" y="${artTop}" width="${artW}" height="${artHeight}" fill="none" stroke="${RULE}" />`);
 
-  /* --- the prayer -------------------------------------------------------- */
-  let after = artTop + artHeight + 56;
-
-  if (view.prayer) {
-    for (const line of view.prayer.devanagari) {
-      const fitted = await wrap(line, { size: 30, maxWidth: INNER });
-      for (const piece of fitted) {
-        parts.push((await typeset(piece, { size: 30, x: M, y: after, fill: INK })).svg);
-        after += 46;
-      }
-    }
-
-    const roman = view.prayer.roman.join(" / ");
-    for (const piece of await wrap(roman, { size: 20, maxWidth: INNER })) {
-      parts.push((await typeset(piece, { size: 20, x: M, y: after + 6, fill: INK_2 })).svg);
-      after += 30;
-    }
-  }
-
   /* --- the register, pinned to the foot ---------------------------------- */
   const rows: [string, string][] = [
     ["Flow", view.flow],
@@ -214,6 +195,33 @@ export async function patraSvg(view: PatraView): Promise<string> {
 
   const rowHeight = 52;
   const footTop = PATRA_SIZE.height - M - 74 - rows.length * rowHeight;
+
+  /* --- the prayer, in the room between the art and the register ---------- */
+  let after = artTop + artHeight + 56;
+  /* Five names push the art down and the register does not move, so the
+     prayer takes what room is left: every Devanagari line that fits, and the
+     roman line only if it fits under them. Nothing is ever set over a rule. */
+  const limit = footTop - 26 - 20;
+
+  if (view.prayer) {
+    lines: for (const line of view.prayer.devanagari) {
+      const fitted = await wrap(line, { size: 30, maxWidth: INNER });
+      for (const piece of fitted) {
+        if (after > limit) break lines;
+        parts.push((await typeset(piece, { size: 30, x: M, y: after, fill: INK })).svg);
+        after += 46;
+      }
+    }
+
+    const roman = view.prayer.roman.join(" / ");
+    const romanPieces = await wrap(roman, { size: 20, maxWidth: INNER });
+    if (after + 6 + romanPieces.length * 30 <= limit) {
+      for (const piece of romanPieces) {
+        parts.push((await typeset(piece, { size: 20, x: M, y: after + 6, fill: INK_2 })).svg);
+        after += 30;
+      }
+    }
+  }
 
   parts.push(rule(footTop - 26, true));
 

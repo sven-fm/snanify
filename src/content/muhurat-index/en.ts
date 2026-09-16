@@ -19,7 +19,7 @@
    arguing is gone.
 
    THE PROVENANCE COPY IS LOAD BEARING. Every edition says that the timings
-   are provisional until a panchang source is named and checked. /ethics
+   are provisional until a panchang source is named and checked. /faq#how
    commits to that publicly, so no edition may sound more certain than this
    one. `provenance.line` and `provenance.badge` are also read by the panchang
    page and by the occasion pages' structured data.

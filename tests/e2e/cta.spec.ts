@@ -8,7 +8,7 @@ import { expect, test } from "@playwright/test";
  * was a scroll. This asserts the href rather than the navigation, because
  * /begin itself lands in phase 3 of build-plan.md.
  */
-const PAGES = ["/", "/snan", "/live", "/rivers", "/faq", "/ethics", "/hi", "/hi/snan"];
+const PAGES = ["/", "/snan", "/live", "/rivers", "/faq", "/hi", "/hi/snan"];
 
 for (const path of PAGES) {
   test(`${path} sends every primary action to /begin`, async ({ page }) => {

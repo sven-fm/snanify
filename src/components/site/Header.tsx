@@ -5,7 +5,7 @@ import { ctaHref, primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
-import { AccountMenuRow, HeaderCta } from "@/components/site/HeaderCta";
+import { ProfileMenu, ProfileRows } from "@/components/site/HeaderCta";
 
 export type NavLink = { href: string; label: string };
 
@@ -30,11 +30,16 @@ export function Header({
 }) {
   const t = content[lang];
   const navLinks = links ?? primaryNav(lang);
-  const accountHref = localePath(lang, "/account");
 
-  /* Somebody signed in sees "Your mornings" in place of "Begin", and a row
-     for it in the phone menu. Which of the two they see is decided in the
-     browser, so this page can stay prerendered: see HeaderCta.tsx. */
+  /* Everybody sees "Begin". Somebody signed in also gets the silhouette
+     beside it, with their account under it. Whether it exists is decided in
+     the browser, so this page can stay prerendered: see HeaderCta.tsx. */
+  const profileRows = [
+    { href: localePath(lang, "/account"), label: t.nav.account },
+    { href: localePath(lang, "/setup"), label: t.nav.snanSettings },
+    { href: localePath(lang, "/begin"), label: t.nav.buy },
+    { href: localePath(lang, "/sign-out"), label: t.nav.signOut },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-paper lg:relative">
@@ -53,6 +58,8 @@ export function Header({
             <LangSwitch lang={lang} currentPath={currentPath} label={t.langLabel} />
 
             <ThemeToggle label={t.themeLabel} />
+
+            <ProfileMenu label={t.nav.profile} rows={profileRows} />
 
             {/* The menu, phones and tablets. A <details> so it needs no
                 script and closes itself when the page changes. The panel is
@@ -85,7 +92,7 @@ export function Header({
                         </a>
                       </li>
                     ))}
-                    <AccountMenuRow href={accountHref} label={t.nav.account} />
+                    <ProfileRows rows={profileRows} />
                   </ul>
                   <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
                     <a
@@ -100,22 +107,12 @@ export function Header({
               </details>
             )}
 
-            {ctaTo ? (
-              <a
-                href={ctaTo}
-                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
-              >
-                {t.nav.cta}
-              </a>
-            ) : (
-              <HeaderCta
-                begin={ctaHref(lang)}
-                account={accountHref}
-                beginLabel={t.nav.cta}
-                accountLabel={t.nav.account}
-                className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
-              />
-            )}
+            <a
+              href={ctaTo ?? ctaHref(lang)}
+              className="label hidden bg-spot px-4 py-2.5 text-paper transition-colors hover:bg-ink sm:inline-block"
+            >
+              {t.nav.cta}
+            </a>
           </div>
         </div>
       </div>

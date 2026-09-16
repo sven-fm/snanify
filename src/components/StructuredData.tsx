@@ -154,10 +154,10 @@ export function organization(lang: Lang): JsonLdNode {
       name: l.english,
       alternateName: l.tag,
     })),
-    /* /ethics is the binding published position, so it is named as both the
+    /* /faq#how is the binding published position, so it is named as both the
        ethics policy and the publishing principles rather than left implicit. */
-    ethicsPolicy: `${SITE_ORIGIN}/ethics`,
-    publishingPrinciples: `${SITE_ORIGIN}/ethics`,
+    ethicsPolicy: `${SITE_ORIGIN}/faq#how`,
+    publishingPrinciples: `${SITE_ORIGIN}/faq#how`,
     /* No sameAs: no social profile has been verified as belonging to us.
        No foundingDate, no numberOfEmployees, no aggregateRating. */
   };

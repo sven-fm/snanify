@@ -65,7 +65,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                 </h1>
 
                 <div className="rule-double mt-7 max-w-md" />
-                <WaterBand seed={occasion.slug} className="mt-5 h-12 w-full max-w-md sm:h-14" />
+                <WaterBand seed={occasion.slug} className="mt-5 h-12 w-full sm:h-14" />
 
                 <p
                   className="ink-in mt-6 max-w-lg text-[1.05rem] leading-[1.75] text-ink2"

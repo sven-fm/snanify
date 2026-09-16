@@ -52,7 +52,7 @@ const RETIRED = /\b(Jal Sankalp|Jal Chihna|Watermark|Jal Path|Shwas|Maun|Chihn)\
 
 /** The product surfaces: where a reader sits, pays, and receives the sheet.
     They show the river's figure plainly. The source, the word "modelled" and
-    the publisher's names live on /rivers, /live, /faq and /ethics, by the
+    the publisher's names live on /rivers, /live, /faq and /faq#how, by the
     owner's direction of 16 September 2026. Case-sensitive, so the specimen's
     canonical line with its GLOFAS cell id is left alone: that is data. */
 const PRODUCT = new Set([

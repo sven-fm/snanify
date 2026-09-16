@@ -19,7 +19,7 @@ const LEGAL = 2;
 
 const COLUMNS: { at: number; keys: NavKey[] }[] = [
   { at: SERVICE, keys: ["begin", "snan", "live", "rivers", "muhurat"] },
-  { at: COMPANY, keys: ["panchang", "faq", "ethics"] },
+  { at: COMPANY, keys: ["panchang", "faq"] },
 ];
 
 /** Where a nav key actually points, so the footer never offers a 404. */
@@ -29,7 +29,6 @@ const ROUTE_OF: Record<NavKey, string> = {
   rivers: "/rivers",
   snan: "/snan",
   muhurat: "/muhurat",
-  ethics: "/ethics",
   faq: "/faq",
   live: "/live",
   panchang: "/panchang",
