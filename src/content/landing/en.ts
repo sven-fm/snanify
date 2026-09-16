@@ -47,7 +47,7 @@ export const en = {
   meta: {
     title: "Snanify, the river comes to you",
     description:
-      "A digital snan. Sit three minutes with the river you grew up near, at the hour the panchang names, and send your family the sheet that comes out of it. Six rivers, live and free to read.",
+      "A digital snan. Sit three minutes with the river you grew up near, at the hour the panchang names, and send your family the sheet that comes out of it. Six rivers, live.",
   },
   /* The one line on the share card a chat app unfurls; see src/lib/site-card.ts. */
   share: "A digital snan. Three minutes with the river you grew up near, and a sheet to send home.",
@@ -95,27 +95,7 @@ export const en = {
   },
   pricing: {
     title: "Eleven mornings for eleven.",
-    lede: "The rivers, the panchang and the muhurat calendar are free to read. You pay for the snan and the sheet it leaves behind.",
-    free: {
-      label: "Free to read",
-      items: [
-        {
-          name: "The rivers, live",
-          d: "Today's flow at all six waters, and how it compares with past years.",
-          href: "/rivers",
-        },
-        {
-          name: "The panchang",
-          d: "Today's tithi and nakshatra, with the muhurat windows in Indian time and in yours.",
-          href: "/panchang",
-        },
-        {
-          name: "Muhurat",
-          d: "The year's occasions, with the dates and the bathing windows for each.",
-          href: "/muhurat",
-        },
-      ],
-    },
+    lede: "One price, in your own currency. Take the mornings whenever you like.",
     labels: {
       each: "Per morning",
     },

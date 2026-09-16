@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
+import { engrave } from "@/lib/engraving";
+import { UNIFORM_OPACITY, UNIFORM_WIDTH } from "@/components/WaterBand";
 import { PICTURES } from "@/content/live/pictures";
 import type { WaterSlug } from "@/lib/riverdata";
 import { CountUp } from "@/components/live/CountUp";
@@ -166,14 +167,16 @@ function Waterline({
   tone?: "ink" | "paper";
 }) {
   const drawn = engrave({ seed: seedFor(slug), percentile, width: 1000, height: 300, flat: true });
-  const lines = drawn.lines.map((d, i, all) => (
+  /* One weight for every line, as WaterBand draws them: a tile that is
+     heavy at one end reads as a refresh each time it passes. */
+  const lines = drawn.lines.map((d, i) => (
     <path
       key={i}
       d={d}
       fill="none"
       stroke="currentColor"
-      strokeWidth={strokeWidth(i, all.length) * 1.6}
-      strokeOpacity={strokeOpacity(i, all.length)}
+      strokeWidth={UNIFORM_WIDTH * 1.1}
+      strokeOpacity={UNIFORM_OPACITY + 0.1}
       vectorEffect="non-scaling-stroke"
     />
   ));

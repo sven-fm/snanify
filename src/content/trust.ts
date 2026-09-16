@@ -313,13 +313,6 @@ const faqEn = {
           ],
         },
         {
-          id: "free",
-          q: "Is there a free version?",
-          a: [
-            "The rivers, the panchang and the muhurat calendar are free to read every day, with no account. The snan is what you pay for.",
-          ],
-        },
-        {
           id: "prices",
           q: "What does it cost?",
           a: [
@@ -537,13 +530,6 @@ export const faqContent = { en: faqEn, hi: {
           a: [
             "एक सुबह का: उस दिन नदी की प्रकाशित स्थिति के साथ तीन मिनट, आपकी चुनी घड़ी पर, आपके अपने शब्दों के साथ।",
             "और जो वह छोड़ जाती है: एक संकल्प पत्र, जिस पर आपके परिवार के नाम और उस दिन का अंक है, और आपकी पंजिका में एक पंक्ति।",
-          ],
-        },
-        {
-          id: "free",
-          q: "क्या कोई निःशुल्क रूप है?",
-          a: [
-            "नदियाँ, पंचांग और मुहूर्त-पंचांग हर दिन, बिना खाते के, निःशुल्क पढ़े जा सकते हैं। मूल्य स्नान का है।",
           ],
         },
         {

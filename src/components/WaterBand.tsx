@@ -1,4 +1,8 @@
-import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
+import { engrave } from "@/lib/engraving";
+
+/** One weight for every line of a flowing band; see the note in WaterBand. */
+export const UNIFORM_WIDTH = 1.5;
+export const UNIFORM_OPACITY = 0.42;
 
 /* ---------------------------------------------------------------------------
    A band of engraved water that never stops moving.
@@ -38,19 +42,26 @@ export function WaterBand({
   faint?: boolean;
 }) {
   const drawn = engrave({ seed: seedFor(seed), percentile, width: 1000, height: 300, flat: true });
-  const lines = drawn.lines.map((d, i, all) => (
+  /* Every line at one weight. The engraver weights its lines from faint at
+     the back to heavy at the front, which is right for a sheet and wrong for
+     a loop: a tile heavy at one end slides past as a dark block, washes
+     out, and the next block arrives, which reads as a refresh. A uniform
+     drawing has no period to see; the fade below is the container's, applied
+     once, and it holds still while the water moves. */
+  const lines = drawn.lines.map((d, i) => (
     <path
       key={i}
       d={d}
       fill="none"
       stroke="currentColor"
-      strokeWidth={strokeWidth(i, all.length) * 1.4}
-      strokeOpacity={strokeOpacity(i, all.length)}
+      strokeWidth={UNIFORM_WIDTH}
+      strokeOpacity={UNIFORM_OPACITY}
       vectorEffect="non-scaling-stroke"
     />
   ));
-  /* One water, strongest at its crown and gone by its foot. */
-  const fade = "linear-gradient(to bottom, #000 0%, #000 30%, transparent 100%)";
+  /* One water, fading from its crown to nothing at its foot, from the first
+     pixel: the fade is on the container and never moves. */
+  const fade = "linear-gradient(to bottom, #000 0%, transparent 100%)";
   return (
     <div
       className={`${faint ? "" : "relative"} overflow-hidden ${className}`}

@@ -971,7 +971,7 @@ export const riverDetailContent = {
     },
     offer: {
       title: "What you find here",
-      lede: "The same four things at every water on this site. Three of them are free to read.",
+      lede: "The same four things at every water on this site.",
       items: [
         {
           key: "state",
@@ -1054,7 +1054,7 @@ export const riverDetailContent = {
     },
     offer: {
       title: "यहाँ आपको क्या मिलता है",
-      lede: "इस साइट के हर जल पर यही चार बातें। इनमें से तीन पढ़ने के लिए निःशुल्क हैं।",
+      lede: "इस साइट के हर जल पर यही चार बातें।",
       items: [
         {
           key: "state",

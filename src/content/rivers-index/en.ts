@@ -38,7 +38,7 @@ export const en = {
   },
   offer: {
     title: "What you find at every water",
-    lede: "The same four things at all six. Three of them are free to read.",
+    lede: "The same four things at all six.",
     items: [
       {
         key: "state",

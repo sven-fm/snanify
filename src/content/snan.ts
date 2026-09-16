@@ -265,7 +265,7 @@ const en: Copy = {
 
   tariff: {
     title: "Prices",
-    lede: "The rivers, the panchang and the muhurat calendar are free to read. You pay for the snan and the sheet it leaves behind. One price, in your own currency.",
+    lede: "One price, in your own currency.",
     heads: { price: "Price", per: "Per morning" },
     rows: [
       {
@@ -423,7 +423,7 @@ const hi: Copy = {
 
   tariff: {
     title: "मूल्य",
-    lede: "नदियाँ, पंचांग और मुहूर्त पढ़ना निःशुल्क है। आप स्नान और उससे बने पत्र का मूल्य देते हैं। एक मूल्य, आपकी अपनी मुद्रा में।",
+    lede: "एक मूल्य, आपकी अपनी मुद्रा में।",
     heads: { price: "मूल्य", per: "प्रति सुबह" },
     rows: [
       {

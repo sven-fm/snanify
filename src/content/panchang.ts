@@ -520,7 +520,7 @@ export const panchangContent = {
     },
     close: {
       title: "More on this site",
-      lede: "The muhurat calendar carries the same occasions at length. The snan is what you pay for, at the hour this calendar names.",
+      lede: "The muhurat calendar carries the same occasions at length. The snan sits at the hour this calendar names.",
       links: [
         {
           href: "/muhurat",
@@ -551,7 +551,7 @@ export const panchangContent = {
     meta: {
       title: "पंचांग {year}: आज की तिथि, पितृ पक्ष और श्राद्ध के दिन, आपके समयक्षेत्र में",
       description:
-        "विदेश में बसे परिवारों के लिए निःशुल्क संदर्भ। पितृ पक्ष की सोलह श्राद्ध तिथियाँ, दैनिक बेलाएँ, अमांत और पूर्णिमांत गणना एक ही दिन को अलग नाम क्यों देती हैं, और हर समय IST में तथा विदेश के सात नगरों की घड़ी पर।",
+        "विदेश में बसे परिवारों के लिए संदर्भ। पितृ पक्ष की सोलह श्राद्ध तिथियाँ, दैनिक बेलाएँ, अमांत और पूर्णिमांत गणना एक ही दिन को अलग नाम क्यों देती हैं, और हर समय IST में तथा विदेश के सात नगरों की घड़ी पर।",
     },
     hero: {
       title: "विदेश में बसे परिवारों के लिए पंचांग संदर्भ",
@@ -719,7 +719,7 @@ export const panchangContent = {
     },
     close: {
       title: "इस साइट पर और",
-      lede: "मुहूर्त पंचांग में यही पर्व विस्तार से हैं। स्नान वह है जिसका आप मूल्य देते हैं, उसी घड़ी पर जो यह पंचांग बताता है।",
+      lede: "मुहूर्त पंचांग में यही पर्व विस्तार से हैं। स्नान उसी घड़ी पर बैठता है जो यह पंचांग बताता है।",
       links: [
         {
           href: "/muhurat",

@@ -55,7 +55,7 @@ export const en = {
   meta: {
     title: "Six sacred waters, live | Snanify",
     description:
-      "Modelled flow, sunrise, weather and today's muhurat windows at six sacred waters, from the Ganga at Haridwar to the Kaveri at Talakaveri. Ranked against 1997 to 2025. Free to read.",
+      "Modelled flow, sunrise, weather and today's muhurat windows at six sacred waters, from the Ganga at Haridwar to the Kaveri at Talakaveri. Ranked against 1997 to 2025.",
   },
 
   badges: {
@@ -69,7 +69,7 @@ export const en = {
   /** The fold under each water: eleven days and the register, for whoever wants them. */
   more: "More about this morning",
   standfirst:
-    "Six waters, one page. The modelled flow, sunrise and sunset, the weather and today's muhurat windows at each, with the date every figure carries. Free to read.",
+    "Six waters, one page. The modelled flow, sunrise and sunset, the weather and today's muhurat windows at each, with the date every figure carries.",
   assembled: "This page was assembled at {time} IST.",
   modelledEvery: "The flood model publishes one value per cell per day.",
 
@@ -249,8 +249,8 @@ export const en = {
   },
 
   close: {
-    title: "Free to read",
-    body: "This page, the panchang, the muhurat calendar and the six water pages cost nothing to read. The three minute snan, sat with this same river data, is what you pay for.",
+    title: "Every morning",
+    body: "The six waters, the panchang and the muhurat calendar are here every day. Three minutes with your own river, at the hour it names, is the snan.",
     links: {
       rivers: "The six waters",
       muhurat: "The muhurat calendar",

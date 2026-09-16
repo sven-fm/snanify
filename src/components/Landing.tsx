@@ -302,9 +302,8 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
         </Section>
 
         {/* ------------------------------------------------ tariff --------
-            Paid only, three lines. The free register comes first because it is
-            the larger half of the offer and because it is what makes the paid
-            half easy to state: reading is free, the snan is paid.
+            Three lines and one price. The reference pages sell nothing here;
+            they are in the nav and the footer, where a reader looks for them.
 
             Every per-morning figure is arithmetic on the price above it and is
             documented in src/content/prices.ts. The middle line is the one to
@@ -316,24 +315,6 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.pricing.title}</h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.pricing.lede}</p>
           </div>
-
-          <h3 className="display mt-12 text-xl text-ink">{t.pricing.free.label}</h3>
-
-          <ul className="mt-4 border-t-2 border-rulestrong">
-            {t.pricing.free.items.map((f) => (
-              <li key={f.name}>
-                <Link
-                  {...deepHref(lang, f.href)}
-                  className="grid gap-1 border-b border-rule py-4 transition-colors hover:bg-paper3 sm:grid-cols-[15rem_1fr] sm:items-baseline sm:gap-6"
-                >
-                  <span className="display text-xl text-ink underline decoration-rule decoration-1 underline-offset-4">
-                    {f.name}
-                  </span>
-                  <span className="text-sm leading-[1.7] text-ink2">{f.d}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
 
           {/* the three lines: stacked ruled rows on a phone, three columns
               from lg, hairlines drawn by the gap over an inked ground */}
