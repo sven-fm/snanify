@@ -30,9 +30,16 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ lang: Lang }>;
-  searchParams: Promise<{ pack?: string; cancelled?: string }>;
+  searchParams: Promise<{ pack?: string; cancelled?: string; go?: string }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
 
-  return <Begin lang={lang} pack={query.pack} cancelled={query.cancelled === "1"} />;
+  return (
+    <Begin
+      lang={lang}
+      pack={query.pack}
+      go={query.go === "1"}
+      cancelled={query.cancelled === "1"}
+    />
+  );
 }

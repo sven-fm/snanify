@@ -30,7 +30,7 @@ export function LangSwitch({
   return (
     <details className="group relative">
       <summary
-        className="label flex min-h-[44px] cursor-pointer list-none items-center gap-1.5 border border-rulestrong px-3 text-ink transition-colors hover:bg-ink hover:text-paper [&::-webkit-details-marker]:hidden"
+        className="label impress flex min-h-[44px] cursor-pointer list-none items-center gap-1.5 border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden"
         aria-label={`${def.native}, ${label}`}
       >
         <span className="sm:hidden">{def.code.toUpperCase()}</span>
@@ -43,7 +43,7 @@ export function LangSwitch({
       {/* Right-aligned so a long native name cannot push the panel off a 390px
           screen. max-h with scroll because twelve rows at 44px is taller than
           some phones in landscape. */}
-      <div className="absolute right-0 z-50 mt-1 max-h-[70svh] w-52 overflow-y-auto border-2 border-rulestrong bg-paper">
+      <div className="settle-panel absolute right-0 z-50 mt-1 max-h-[70svh] w-52 overflow-y-auto border-2 border-rulestrong bg-paper">
         <ul>
           {others.map(({ def: other, href }) => (
             <li key={other.code} className="border-b border-rule last:border-b-0">
@@ -51,7 +51,7 @@ export function LangSwitch({
                 href={href}
                 hrefLang={other.tag}
                 lang={other.tag}
-                className="flex min-h-11 items-center justify-between gap-3 px-3 py-2.5 text-ink transition-colors hover:bg-ink hover:text-paper"
+                className="impress flex min-h-11 items-center justify-between gap-3 px-3 py-2.5 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
               >
                 <span className="text-[0.95rem]">{other.native}</span>
                 {/* The English name too, because a reader who lands in the

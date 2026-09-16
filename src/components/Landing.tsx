@@ -13,6 +13,7 @@ import {
   webPage,
   website,
 } from "@/components/StructuredData";
+import { PastHero } from "@/components/site/PastHero";
 import { CTA, LinkButton, Price, Section } from "@/components/ui";
 import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 
@@ -86,7 +87,8 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} currentPath="/" />
+      <PastHero />
+      <Header lang={lang} currentPath="/" ctaAfterHero />
 
       <main>
         {/* ------------------------------------------------ front page ----
@@ -175,26 +177,38 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   target and neither is a 90px pill in a corner. On a phone they
                   sit directly under the river, which puts the primary action
                   inside the first screen instead of a scroll below it. */}
+              {/* One solid button, marked so the masthead's Begin and the
+                  thumb rail can wait for it to scroll off (PastHero). The
+                  second action is a quiet link on a phone and a ruled button
+                  from `sm`, where there is room beside the first. */}
               <div
-                className="ink-in order-5 mt-7 flex flex-col gap-3 sm:order-6 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
+                className="ink-in order-6 mt-7 flex flex-col gap-4 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "240ms" }}
               >
-                <Link {...deepHref(lang, "/begin")} className="block">
+                <Link {...deepHref(lang, "/begin")} className="block" data-hero-cta>
                   <CTA className="w-full !py-4 sm:w-auto">{t.hero.ctaPrimary}</CTA>
                 </Link>
-                <Link {...deepHref(lang, "/live")} className="block">
-                  <CTA variant="ghost" className="w-full !py-4 sm:w-auto">
+                <Link
+                  {...deepHref(lang, "/live")}
+                  className="impress self-center text-[0.95rem] text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot sm:hidden"
+                >
+                  {t.hero.ctaSecondary}
+                </Link>
+                <Link {...deepHref(lang, "/live")} className="hidden sm:block">
+                  <CTA variant="ghost" className="!py-4">
                     {t.hero.ctaSecondary}
                   </CTA>
                 </Link>
               </div>
 
-              {/* From `sm` up the lede sits below the horizon, over the water
-                  lines, and type over hatching is unreadable. It gets a paper
-                  slip, so it reads as printed on a card laid over the river
-                  rather than engraved into it. The price line shares the slip. */}
+              {/* The lede sits above the buttons at every width, so the
+                  sentence saying what this is comes before the thing to press.
+                  From `sm` up it sits below the horizon, over the water lines,
+                  and type over hatching is unreadable: it gets a paper slip,
+                  so it reads as printed on a card laid over the river rather
+                  than engraved into it. The price line shares the slip. */}
               <div
-                className="ink-in order-6 mt-7 max-w-xl sm:order-5 sm:mt-5 sm:bg-paper sm:px-4 sm:py-3"
+                className="ink-in order-5 mt-7 max-w-xl sm:mt-5 sm:bg-paper sm:px-4 sm:py-3"
                 style={{ animationDelay: "160ms" }}
               >
                 <p className="text-[1.02rem] leading-[1.7] text-ink2 sm:text-[1.05rem] sm:leading-[1.75]">
@@ -315,49 +329,35 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
           {/* the three lines: stacked ruled rows on a phone, three columns
               from lg, hairlines drawn by the gap over an inked ground */}
-          <div className="mt-14 grid gap-px border-2 border-rulestrong bg-rule lg:grid-cols-3">
-            {t.pricing.tiers.map((tier) => (
-              <div
-                key={tier.name}
-                className={`flex flex-col p-6 sm:p-7 ${tier.key === "eleven" ? "bg-paper3" : "tint"}`}
-              >
-                <p className="text-sm text-ink2">{tier.sub}</p>
-
-                <div className="mt-1 flex items-baseline justify-between gap-4">
+          {/* Eleven first on a phone and raised with the second impression;
+              from lg the three sit side by side with eleven in the middle,
+              where the eye lands. The count is the name, so each line needs
+              only its price, its per-morning figure and one sentence. */}
+          <div className="mt-14 grid gap-5 lg:grid-cols-3 lg:items-start">
+            {t.pricing.tiers.map((tier) => {
+              const hero = tier.key === "eleven";
+              return (
+                <div
+                  key={tier.name}
+                  className={`flex flex-col border-2 border-rulestrong p-6 sm:p-7 ${
+                    hero ? "misregister order-first bg-paper lg:order-none lg:-mt-3" : "tint"
+                  }`}
+                >
                   <h3 className="display text-[1.7rem] leading-tight sm:text-2xl">{tier.name}</h3>
-                  <span className="text-sm text-ink2">{tier.alt}</span>
-                </div>
 
-                {/* One price, in the reader's own currency. Every currency
-                    ships in the markup and CSS shows one; see lib/currency.ts. */}
-                <div className="mt-5 border-y border-rule py-4">
-                  <p className="display text-[2.4rem] leading-none text-spot">
+                  {/* One price, in the reader's own currency. Every currency
+                      ships in the markup and CSS shows one; see lib/currency.ts. */}
+                  <p className={`display mt-5 leading-none text-ink ${hero ? "text-[3.2rem]" : "text-[2.4rem]"}`}>
                     <Price prices={PRICE[tier.key as TierKey]} />
                   </p>
+                  <p className="mt-2 text-sm text-ink2">
+                    <Price prices={PER_SNAN[tier.key as TierKey]} /> {t.pricing.labels.each}
+                  </p>
+
+                  <p className="mt-5 text-[0.98rem] leading-[1.7] text-ink2">{tier.body}</p>
                 </div>
-
-                <p className="mt-5 text-sm leading-[1.75] text-ink2">{tier.body}</p>
-
-                <dl className="mt-6 border-t border-rule">
-                  {[
-                    { k: t.pricing.labels.snans, v: tier.snans },
-                    {
-                      k: t.pricing.labels.each,
-                      v: <Price prices={PER_SNAN[tier.key as TierKey]} />,
-                    },
-                    { k: t.pricing.labels.expiry, v: tier.expiry },
-                  ].map((r) => (
-                    <div
-                      key={r.k}
-                      className="flex justify-between gap-6 border-b border-rule py-2.5 last:border-b-0"
-                    >
-                      <dt className="label shrink-0 pt-0.5 text-ink2">{r.k}</dt>
-                      <dd className="text-right text-sm leading-snug text-ink">{r.v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <p className="mt-6 max-w-3xl text-sm leading-[1.75] text-ink2">{t.pricing.note}</p>
@@ -400,7 +400,9 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
           where the buttons in the flow are already reachable.             */}
       <aside
         aria-label={t.bar.label}
+        data-until-scrolled="rail"
         className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <div className="flex items-center justify-between gap-4 px-5 py-2.5">
           <div className="min-w-0">
@@ -411,7 +413,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
           </div>
           <Link
             {...deepHref(lang, "/begin")}
-            className="label flex min-h-[48px] shrink-0 items-center bg-spot px-7 text-paper transition-colors hover:bg-ink"
+            className="label impress flex min-h-[48px] shrink-0 items-center bg-spot px-7 text-paper hover:bg-ink active:bg-ink"
           >
             {t.bar.cta}
           </Link>

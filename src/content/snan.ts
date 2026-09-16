@@ -63,9 +63,8 @@ export type Question = { readonly q: string; readonly a: string };
 export type TariffRow = {
   /** Which line of src/content/prices.ts this row shows. */
   readonly key: TierKey;
+  /** "Eleven mornings": the count is the name. */
   readonly name: string;
-  readonly deva: string;
-  readonly what: string;
   readonly body: string;
   /** The hero SKU. Exactly one row carries this. */
   readonly hero?: true;
@@ -152,7 +151,7 @@ const en: Copy = {
 
   hero: {
     title: "Three minutes with your river.",
-    lede: "Today's flow of the river you choose. You sit with it for three minutes. At the end you have a Sankalp Patra with your family's names on it.",
+    lede: "You choose a river. Every morning it shows you today's flow, and you sit with it for three minutes. At the end you have a Sankalp Patra with your family's names on it.",
     offer: "Eleven mornings for {price}. Take them whenever you like.",
     ctaPrimary: "Begin your snan",
     ctaSecondary: "See the five parts",
@@ -271,25 +270,19 @@ const en: Copy = {
     rows: [
       {
         key: "one",
-        name: "Ek Dhara",
-        deva: "एक धारा",
-        what: "One morning",
-        body: "One morning, to see what it is like.",
+        name: "One morning",
+        body: "To see what it is like.",
       },
       {
         key: "eleven",
-        name: "Gyarah",
-        deva: "ग्यारह",
-        what: "Eleven mornings",
-        body: "Eleven mornings, paid once. Take them on eleven days in a row or spread them through the year.",
+        name: "Eleven mornings",
+        body: "Paid once. Eleven days in a row, or spread across the year.",
         hero: true,
       },
       {
         key: "sixty",
-        name: "Varsh Kosh",
-        deva: "वर्ष कोष",
-        what: "Sixty mornings",
-        body: "Sixty mornings, five a month for a year, at the lowest price per morning.",
+        name: "Sixty mornings",
+        body: "Five a month for a year, at the lowest price per morning.",
       },
     ],
     note: "Prices show before local tax. Mornings keep until you use them.",
@@ -316,7 +309,7 @@ const hi: Copy = {
 
   hero: {
     title: "अपनी नदी के साथ तीन मिनट।",
-    lede: "आपकी चुनी नदी का आज का प्रवाह। आप उसके साथ तीन मिनट बैठते हैं। अंत में आपके पास एक संकल्प पत्र होता है जिस पर आपके परिवार के नाम हैं।",
+    lede: "आप एक नदी चुनते हैं। हर सुबह वह आपको आज का प्रवाह दिखाती है, और आप उसके साथ तीन मिनट बैठते हैं। अंत में आपके पास एक संकल्प पत्र होता है जिस पर आपके परिवार के नाम हैं।",
     offer: "ग्यारह सुबहें {price} में। जब चाहें, तब लीजिए।",
     ctaPrimary: "अपना स्नान आरंभ कीजिए",
     ctaSecondary: "पाँच अंग देखिए",
@@ -435,25 +428,19 @@ const hi: Copy = {
     rows: [
       {
         key: "one",
-        name: "Ek Dhara",
-        deva: "एक धारा",
-        what: "एक सुबह",
-        body: "एक सुबह, यह देखने के लिए कि यह कैसा है।",
+        name: "एक सुबह",
+        body: "यह देखने के लिए कि यह कैसा है।",
       },
       {
         key: "eleven",
-        name: "Gyarah",
-        deva: "ग्यारह",
-        what: "ग्यारह सुबहें",
-        body: "ग्यारह सुबहें, एक बार का भुगतान। लगातार ग्यारह दिन लीजिए, या पूरे वर्ष में फैला लीजिए।",
+        name: "ग्यारह सुबहें",
+        body: "एक बार का भुगतान। लगातार ग्यारह दिन, या पूरे वर्ष में फैली हुई।",
         hero: true,
       },
       {
         key: "sixty",
-        name: "Varsh Kosh",
-        deva: "वर्ष कोष",
-        what: "साठ सुबहें",
-        body: "साठ सुबहें, महीने में पाँच, पूरे वर्ष, प्रति सुबह सबसे कम मूल्य पर।",
+        name: "साठ सुबहें",
+        body: "महीने में पाँच, पूरे वर्ष, प्रति सुबह सबसे कम मूल्य पर।",
       },
     ],
     note: "मूल्य स्थानीय कर से पहले के हैं। सुबहें तब तक रखी रहती हैं जब तक आप उन्हें लें।",

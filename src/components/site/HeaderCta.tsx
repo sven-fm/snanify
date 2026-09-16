@@ -54,7 +54,7 @@ export function ProfileMenu({ label, rows }: { label: string; rows: ProfileRow[]
   return (
     <details className="group relative hidden sm:block" data-profile-menu>
       <summary
-        className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong text-ink transition-colors hover:bg-ink hover:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden"
+        className="impress flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden"
         aria-label={label}
         title={label}
       >
@@ -64,10 +64,10 @@ export function ProfileMenu({ label, rows }: { label: string; rows: ProfileRow[]
           <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" />
         </svg>
       </summary>
-      <ul className="absolute right-0 top-full z-50 mt-2 w-60 border-2 border-rulestrong bg-paper">
+      <ul className="settle-panel absolute right-0 top-full z-50 mt-2 w-60 border-2 border-rulestrong bg-paper">
         {rows.map((r) => (
           <li key={r.href} className="border-b border-rule last:border-b-0">
-            <Link href={r.href} className="display flex min-h-[48px] items-center px-4 text-[1.05rem] text-ink transition-colors hover:bg-paper2">
+            <Link href={r.href} className="display impress flex min-h-[48px] items-center px-4 text-[1.05rem] text-ink hover:bg-paper2 active:bg-paper3">
               {r.label}
             </Link>
           </li>
@@ -87,18 +87,22 @@ export function MobileCta({
   account,
   beginLabel,
   accountLabel,
+  afterHero = false,
 }: {
   begin: string;
   account: string;
   beginLabel: string;
   accountLabel: string;
+  /** Wait for the hero's own Begin to scroll off; see PastHero. */
+  afterHero?: boolean;
 }) {
   const signedIn = useSignedIn();
   return (
     <Link
       href={signedIn ? account : begin}
-      className="label flex min-h-[44px] items-center whitespace-nowrap bg-spot px-3 text-paper transition-colors hover:bg-ink sm:hidden"
+      className="label impress flex min-h-[44px] items-center whitespace-nowrap bg-spot px-3 text-paper hover:bg-ink active:bg-ink sm:hidden"
       data-mobile-cta
+      data-until-scrolled={afterHero && !signedIn ? "" : undefined}
     >
       {signedIn ? accountLabel : beginLabel}
     </Link>
@@ -113,7 +117,7 @@ export function ProfileRows({ rows }: { rows: ProfileRow[] }) {
     <>
       {rows.map((r, i) => (
         <li key={r.href} className={`border-b border-rule ${i === 0 ? "border-t-2 border-t-rulestrong" : ""}`} data-profile-row>
-          <Link href={r.href} className="display flex min-h-[56px] items-center text-[1.25rem] text-ink">
+          <Link href={r.href} className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-spot">
             {r.label}
           </Link>
         </li>

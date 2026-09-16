@@ -28,16 +28,21 @@ export function Section({
 }
 
 const buttonBase =
-  "label inline-flex items-center justify-center gap-2 px-6 py-3.5 transition-colors duration-150";
+  "label impress inline-flex items-center justify-center gap-2 px-6 py-3.5 select-none";
 
+/* Every variant has a pressed state as well as a hover, because a phone has
+   no hover: the press is the only feedback a thumb ever gets. `impress` in
+   globals.css moves the plate; these set its ink. */
 const buttonVariants = {
   /* The press impression: solid spot colour, inverted type. */
-  solid: "bg-spot text-paper hover:bg-ink hover:text-paper",
-  /* A ruled box that fills with ink on hover. Opaque, not transparent: the
-     hero sits this button on top of the river, and ripples reading through the
-     type made the label almost unreadable. */
-  ghost: "border border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper",
-  quiet: "text-ink underline decoration-spot decoration-2 hover:text-spot px-0 py-1",
+  solid: "bg-spot text-paper hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
+  /* A ruled box that fills with ink on hover and on press. Opaque, not
+     transparent: the hero sits this button on top of the river, and ripples
+     reading through the type made the label almost unreadable. */
+  ghost:
+    "border border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
+  quiet:
+    "text-ink underline decoration-spot decoration-2 hover:text-spot active:text-spot px-0 py-1",
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;

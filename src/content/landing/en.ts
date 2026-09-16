@@ -87,8 +87,7 @@ export const en = {
       median: "Seasonal median, 1997 to 2025",
       link: "See all six waters",
     },
-    record:
-      "Six waters, refreshed forty-eight times a day and ranked against every day since 1997.",
+    record: "Six waters, one figure a day, each ranked against every day since 1997.",
   },
   rivers: {
     title: "Six sacred waters",
@@ -118,37 +117,26 @@ export const en = {
       ],
     },
     labels: {
-      snans: "Mornings",
       each: "Per morning",
-      expiry: "Validity",
     },
+    /* The count is the name. The packs once carried coined names with
+       Devanagari beside them, three words to learn on the one table where a
+       reader decides to pay. */
     tiers: [
       {
         key: "one",
-        name: "Ek Dhara",
-        alt: "एक धारा",
-        sub: "One snan",
-        body: "One morning, and the Sankalp Patra that comes out of it.",
-        snans: "One",
-        expiry: "Forever",
+        name: "One morning",
+        body: "One morning and the sheet it leaves behind.",
       },
       {
         key: "eleven",
-        name: "Gyarah",
-        alt: "ग्यारह",
-        sub: "Eleven snans",
-        body: "Eleven mornings, paid once. Take them on eleven days in a row or spread them through the year.",
-        snans: "Eleven",
-        expiry: "Forever",
+        name: "Eleven mornings",
+        body: "One for each morning, paid once. Any eleven days you like. They keep.",
       },
       {
         key: "sixty",
-        name: "Varsh Kosh",
-        alt: "वर्ष कोष",
-        sub: "Sixty snans",
-        body: "Sixty mornings, five a month for a year, at the lowest price per morning.",
-        snans: "Sixty",
-        expiry: "Forever",
+        name: "Sixty mornings",
+        body: "Five a month for a year, at the lowest price a morning gets.",
       },
     ],
     note: "Prices show before local tax.",

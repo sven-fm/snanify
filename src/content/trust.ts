@@ -44,7 +44,7 @@ import { SITTING } from "@/lib/sitting-plan";
  * currently has no MX record, so neither it nor hello@ receives mail.
  */
 
-export const ETHICS_MAIL = "ethics@snanify.com";
+export const ETHICS_MAIL = "hello@snanify.com";
 
 /* ------------------------------------------------------------- /ethics --- */
 
@@ -335,13 +335,6 @@ const faqEn = {
           ],
         },
         {
-          id: "india",
-          q: "Why is the price different in India?",
-          a: [
-            "Prices are set in rupees for India, Canadian dollars for Canada, euro for the eurozone and US dollars everywhere else. The mornings are the same in every currency.",
-          ],
-        },
-        {
           id: "refund",
           q: "Can I get a refund?",
           a: [
@@ -566,13 +559,6 @@ export const faqContent = { en: faqEn, hi: {
           q: "ग्यारह ही क्यों?",
           a: [
             "कार्ड शुल्क के कारण। एक छोटा अकेला भुगतान अपना लगभग एक-तिहाई कार्ड नेटवर्क को दे देता है। ग्यारह एक साथ लगभग छह प्रतिशत। ग्यारह को एक साथ बेचने से ही प्रति सुबह मूल्य कम रहता है।",
-          ],
-        },
-        {
-          id: "india",
-          q: "भारत में मूल्य अलग क्यों है?",
-          a: [
-            "मूल्य भारत के लिए रुपये में, कनाडा के लिए कनाडाई डॉलर में, यूरो-क्षेत्र के लिए यूरो में और बाकी सब जगह अमेरिकी डॉलर में तय हैं। सुबहें हर मुद्रा में एक जैसी हैं।",
           ],
         },
         {

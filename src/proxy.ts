@@ -117,8 +117,12 @@ export function proxy(req: NextRequest, event: NextFetchEvent) {
 
 export const config = {
   /**
-   * Skip Next internals, anything with a file extension, and the generated
-   * image routes.
+   * Skip Next internals, the files that actually exist in public/, and the
+   * generated image routes. Everything else, dotted or not, goes through the
+   * locale rewrite, so `/llms.txt.bak` or `/wp-login.php` lands on the
+   * catch-all and gets the site's own 404. The matcher used to skip every
+   * path with a dot, which let `/foo.png` reach `[lang]/page.tsx` with a
+   * locale of "foo.png" and answer 500 to every bot probe.
    *
    * `opengraph-image` is load bearing. It lives at `[lang]/opengraph-image`, so
    * Next writes the English one as `/en/opengraph-image`, which the redirect
@@ -126,5 +130,7 @@ export const config = {
    * cache-busting query while doing it. Scrapers do not reliably follow a
    * redirect for an `og:image`, so the card would simply come out blank.
    */
-  matcher: ["/((?!_next/|api/|.*\\..*|.*opengraph-image|.*twitter-image).*)"],
+  matcher: [
+    "/((?!_next/|api/|waters/|favicon\\.ico|icon\\.svg|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|.*opengraph-image|.*twitter-image).*)",
+  ],
 };

@@ -21,24 +21,16 @@ Beyond those two, **sell the thing**. This is a legitimate digital product, nobo
 to buy it, and the copy is not apologetic, hedging or padded with disclaimers nobody asked
 for. Never argue against the product in its own voice.
 
-That has a mechanic, and it is a hard rule on the landing page and on `/snan`:
+That has a mechanic, and it is a hard rule on every page:
 
 > **No negative constructions.** If a sentence is built on "no", "nobody", "nothing" or
-> "there is no", rewrite it until it is built on a noun and a verb.
+> "there is no", rewrite it until it is built on a noun and a verb. Use active voice!
 
 "Nobody stands in the water for you" becomes "the practice is yours". "There is no quick
 mode" becomes "the form is the form". The page was once built almost entirely out of denials
 and read as an argument with a critic who was not in the room; that was a violation of this
 rule, and re-adding one is too. Keep sentences short: this is read at six in the morning, on
 a phone, by many readers whose English is a third language.
-
-**Not claiming is not the same as denying.** The two rules above forbid the claim, not the
-silence. The commitment stated at length and in the negative belongs on `/faq#how`, "How it
-is made", which every page links, and nowhere else.
-
-The rules are also the moat. "We never pretended a priest did anything" is what makes the
-category defensible when somebody attacks it, and it costs nothing, because the product does
-not need the lie.
 
 ## What is actually true, and therefore load-bearing
 
@@ -47,7 +39,7 @@ not need the lie.
   value per day, CC BY 4.0. It is a model at a calibrated grid cell, not an instrument at
   the ghat. India's Central Water Commission portal is the register of stations and
   nothing more: four of the six waters have no published level there. The number on the
-  page is a published figure anyone can fetch and check, and that is the whole point.
+  page is a published figure anyone can fetch and check.
   See `src/lib/riverdata.ts`. **Where that is said**, by the owner's direction of
   16 September 2026: on `/rivers`, `/live` and `/faq` (its "How it is made" section), and in the structured
   data. The product surfaces (the landing card, the sitting, the sheet and its image,
@@ -60,7 +52,6 @@ not need the lie.
 - **The sankalp is real.** The user genuinely states an intention. That is a real practice.
 - **The six waters are real places** with real traditions. See `src/content/rivers.ts`.
 
-On the pages that name sources, a number that is not sourced is labelled as unsourced.
 Never fabricate a river figure, a panchang timing or a statistic and present it as fact.
 The artefact's whole value rests on its numbers being checkable against a public record,
 and the checking lives on `/rivers` and `/faq`, not beside the number.
@@ -86,8 +77,7 @@ Watermark; `build-plan.md` retires those names.)
 
 **Pricing is paid-only, and there is exactly one price**, shown in the reader's own currency:
 rupees in India, Canadian dollars in Canada, euro in the eurozone, US dollars everywhere
-else. The site used to print a world ladder and an India ladder side by side with an essay
-explaining why; that is gone.
+else. 
 
 | | one | eleven, the hero SKU | sixty |
 | --- | --- | --- | --- |
@@ -255,8 +245,7 @@ mid-range Android.
 
 The landing hero figures (`1,20,000+ sankalps`, `48 countries`) and the live badge are
 **placeholder marketing figures kept at the owner's explicit direction**. Several analyses
-recommended deleting them; that decision has been made and is not to be relitigated. Replace
-them with real values before launch.
+recommended deleting them; that decision has been made and is not to be relitigated.
 
 Everything behind the landing page is held to the stricter rule, because `/faq#how` publicly
 commits to it. The panchang and the occasion dates are computed in `src/lib/sky.ts` and `src/lib/occasions.ts`, checked against Drik Panchang, and the muhurat pages remake themselves daily.

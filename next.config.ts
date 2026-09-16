@@ -1,5 +1,58 @@
 import type { NextConfig } from "next";
 
+/* ---------------------------------------------------------------------------
+   Security headers, on every response.
+
+   THE CONTENT SECURITY POLICY NAMES EVERY THIRD PARTY THIS SITE TALKS TO,
+   and nothing else may load. Clerk serves its browser script and its API
+   from the instance domain (clerk.snanify.com in production, a
+   *.clerk.accounts.dev host in development) and its bot check from
+   Cloudflare. Stripe is reached by a redirect, never embedded, so it appears
+   only in form-action: Chrome applies form-action to the redirect a form
+   submission ends in, and the Pay button is a form that ends on
+   checkout.stripe.com. Vercel Analytics posts to its own host. The blob store
+   serves portraits and sheets.
+
+   `'unsafe-inline'` on scripts is the price of the two sync <head> scripts
+   (theme and currency) and of Next's own inline bootstrap. A nonce would
+   need every page to render per request, which the marketing pages must not.
+   frame-ancestors, base-uri, object-src and form-action are where the value
+   is, and those are strict.
+
+   Test on /sign-in, /begin, the Pay press and the Stripe return after any
+   change here. A wrong CSP is a blank checkout, silently.
+   --------------------------------------------------------------------------- */
+
+const CLERK = "https://clerk.snanify.com https://*.clerk.accounts.dev";
+const BLOB = "https://*.public.blob.vercel-storage.com";
+
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline' ${CLERK} https://challenges.cloudflare.com https://va.vercel-scripts.com`,
+  `connect-src 'self' ${CLERK} ${BLOB} https://vitals.vercel-insights.com https://va.vercel-scripts.com`,
+  `img-src 'self' data: blob: ${BLOB} https://img.clerk.com`,
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  `frame-src ${CLERK} https://challenges.cloudflare.com`,
+  "worker-src 'self' blob:",
+  "form-action 'self' https://checkout.stripe.com",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
+].join("; ");
+
+const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+  },
+  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+];
+
 const nextConfig: NextConfig = {
   /**
    * Left out of the bundle and required at runtime instead.
@@ -23,6 +76,21 @@ const nextConfig: NextConfig = {
    */
   experimental: {
     serverActions: { bodySizeLimit: "12mb" },
+  },
+
+  async headers() {
+    /* Development runs on http, where upgrade-insecure-requests would break
+       every local fetch; the rest applies everywhere. */
+    const value =
+      process.env.NODE_ENV === "production" ? csp : csp.replace("; upgrade-insecure-requests", "");
+    return [
+      {
+        source: "/(.*)",
+        headers: securityHeaders.map((h) =>
+          h.key === "Content-Security-Policy" ? { ...h, value } : h,
+        ),
+      },
+    ];
   },
 };
 

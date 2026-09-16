@@ -21,12 +21,18 @@ export function Header({
   links,
   currentPath = "/",
   ctaTo,
+  ctaAfterHero = false,
 }: {
   lang: Lang;
   links?: NavLink[];
   currentPath?: string;
   /** An in-page anchor for the action instead of the pack picker. */
   ctaTo?: string;
+  /**
+   * On a page whose hero carries its own Begin, the masthead's waits until
+   * that one has scrolled off: see PastHero and `[data-until-scrolled]`.
+   */
+  ctaAfterHero?: boolean;
 }) {
   const t = content[lang];
   const navLinks = links ?? primaryNav(lang);
@@ -70,6 +76,7 @@ export function Header({
               account={localePath(lang, "/account")}
               beginLabel={t.nav.cta}
               accountLabel={t.nav.accountShort}
+              afterHero={ctaAfterHero}
             />
 
             {/* The menu, phones and tablets. A <details> so it needs no
@@ -78,7 +85,7 @@ export function Header({
                 shows in its row, with the one action underneath. */}
             {navLinks.length > 0 && (
               <details className="group lg:hidden">
-                <summary className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong px-3 text-ink transition-colors hover:bg-ink hover:text-paper [&::-webkit-details-marker]:hidden">
+                <summary className="impress flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden">
                   <span aria-hidden="true" className="flex flex-col gap-[5px] group-open:hidden">
                     <span className="block h-[2px] w-5 bg-current" />
                     <span className="block h-[2px] w-5 bg-current" />
@@ -91,13 +98,13 @@ export function Header({
                 </summary>
                 {/* Positioned against the sticky header, so it spans the
                     page and hangs under the masthead rule. */}
-                <div className="absolute inset-x-0 top-full z-50 max-h-[80svh] overflow-y-auto border-b-2 border-rulestrong bg-paper">
+                <div className="settle-panel absolute inset-x-0 top-full z-50 max-h-[80svh] overflow-y-auto border-b-2 border-rulestrong bg-paper">
                   <ul className="mx-auto max-w-6xl px-5 sm:px-8">
                     {navLinks.map((l) => (
                       <li key={l.href} className="border-b border-rule">
                         <a
                           href={l.href}
-                          className="display flex min-h-[56px] items-center text-[1.25rem] text-ink"
+                          className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-spot"
                         >
                           {l.label}
                         </a>
@@ -112,7 +119,7 @@ export function Header({
                   <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
                     <a
                       href={ctaTo ?? ctaHref(lang)}
-                      className="label flex min-h-[48px] items-center justify-center bg-spot text-paper transition-colors hover:bg-ink"
+                      className="label impress flex min-h-[48px] items-center justify-center bg-spot text-paper hover:bg-ink active:bg-ink"
                     >
                       {t.nav.cta}
                     </a>
@@ -124,7 +131,8 @@ export function Header({
 
             <a
               href={ctaTo ?? ctaHref(lang)}
-              className="label hidden min-h-[44px] items-center bg-spot px-4 text-paper transition-colors hover:bg-ink sm:inline-flex"
+              data-until-scrolled={ctaAfterHero ? "" : undefined}
+              className="label impress hidden min-h-[44px] items-center bg-spot px-4 text-paper hover:bg-ink active:bg-ink sm:inline-flex"
             >
               {t.nav.cta}
             </a>
@@ -145,7 +153,7 @@ export function Header({
               <li key={l.href} className="first:pl-0">
                 <a
                   href={l.href}
-                  className="label block px-5 py-2.5 text-ink2 transition-colors hover:bg-ink hover:text-paper"
+                  className="label impress block px-5 py-2.5 text-ink2 hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
                 >
                   {l.label}
                 </a>

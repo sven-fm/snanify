@@ -104,6 +104,101 @@
   a {
     text-underline-offset: 0.25em;
   }
+
+  /* Our own press state, not the browser's grey flash; and no 300ms tap
+     delay on the phones that still have one. */
+  button,
+  [role="button"],
+  a,
+  summary,
+  label {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button,
+  [role="button"],
+  a,
+  summary {
+    touch-action: manipulation;
+  }
+}
+
+/* --- The impression ---------------------------------------------------------
+   A control is a plate. Under the thumb it lands: one pixel down and one
+   right, the ink darkening at once, and it lifts back on release over 120ms.
+   Every button, link-button, summary and the vow box carries `impress`; the
+   colour of the pressed state is set per variant in src/components/ui.
+   A second impression (`misregister`) registers with the first as it lands:
+   its four-pixel offset closes to one.                                      */
+@utility impress {
+  transition-property: transform, background-color, color, border-color, box-shadow, opacity;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
+}
+.impress:active,
+a:active > .impress,
+label:active > .impress {
+  transform: translate(1px, 1px);
+  transition-duration: 0ms;
+}
+.misregister:active,
+a:active > .misregister {
+  box-shadow: 1px 1px 0 0 var(--spot);
+  transform: translate(3px, 3px);
+  transition-duration: 0ms;
+}
+
+/* --- Settle -----------------------------------------------------------------
+   A state change takes 240ms on one curve: a menu opening, a row selected,
+   a control appearing once the hero has scrolled off. Nothing floats and
+   nothing bounces; it settles, the way a sheet settles onto the pile.      */
+@utility settle {
+  transition-property: opacity, transform, background-color, color, border-color;
+  transition-duration: 240ms;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+@keyframes settle-down {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+details[open] > .settle-panel {
+  animation: settle-down 240ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+/* The theme changes as one cross-fade rather than a cut. The toggle puts
+   `theming` on <html> for the length of the fade and takes it off again. */
+html.theming,
+html.theming *,
+html.theming *::before,
+html.theming *::after {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    fill 200ms ease,
+    stroke 200ms ease !important;
+}
+
+/* Controls that wait for the hero to scroll off: the masthead's Begin and
+   the phone's thumb rail. PastHero in src/components/site/PastHero.tsx sets
+   `data-past-hero` on <html> once the hero's own button has left the screen.
+   Without scripts they are simply there.                                    */
+html[data-js]:not([data-past-hero]) [data-until-scrolled] {
+  opacity: 0;
+  pointer-events: none;
+}
+html[data-js]:not([data-past-hero]) [data-until-scrolled="rail"] {
+  transform: translateY(100%);
+}
+[data-until-scrolled] {
+  transition:
+    opacity 240ms cubic-bezier(0.2, 0.8, 0.3, 1),
+    transform 240ms cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 
 /* --- Type ---------------------------------------------------------------- */
@@ -549,35 +644,9 @@ html:not([data-js]) .ink-picture-lazy {
     animation: none;
   }
 }
-
-/* --- Every page sets itself as the reader scrolls -------------------------
-   src/components/ScrollReveal.tsx marks each section below the first screen
-   `data-reveal`, then `data-in` as it arrives. The section's blocks (the
-   children of its container) come up in six steps, one after another. The
-   hidden state exists only under html[data-js]; without scripts the page
-   shows whole. Specificity: hidden (0,4,1), shown (0,5,1).                */
-html[data-js] main section[data-reveal]:not([data-in]) > * > * {
-  opacity: 0;
-  transform: translateY(8px);
-}
-html[data-js] main section[data-reveal][data-in] > * > * {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 0.42s steps(6, end) var(--d, 0ms),
-    transform 0.42s cubic-bezier(0.2, 0.8, 0.3, 1) var(--d, 0ms);
-}
-html[data-js] main section[data-reveal] > * > :nth-child(2) { --d: 70ms; }
-html[data-js] main section[data-reveal] > * > :nth-child(3) { --d: 140ms; }
-html[data-js] main section[data-reveal] > * > :nth-child(4) { --d: 210ms; }
-html[data-js] main section[data-reveal] > * > :nth-child(5) { --d: 280ms; }
-html[data-js] main section[data-reveal] > * > :nth-child(6) { --d: 350ms; }
-html[data-js] main section[data-reveal] > * > :nth-child(n + 7) { --d: 420ms; }
-
-@media (prefers-reduced-motion: reduce) {
-  html[data-js] main section[data-reveal] > * > * {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
+/* --- Sections no longer hide their text until scrolled ------------------
+   A blanket reveal on every section below the fold once held all of it at
+   opacity 0 until an observer fired, and on a phone the headings arrived a
+   beat late as grey blocks catching up. Only numerals, bars and pictures
+   reveal now (`.reveal`, `.grow`, `.ink-picture-lazy` above); prose is on
+   the page from the first frame.                                            */

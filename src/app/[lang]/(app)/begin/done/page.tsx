@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { db, profiles, purchases } from "@/db";
@@ -71,7 +71,7 @@ export default async function Page({
   const booked = await db
     .select({ id: purchases.id })
     .from(purchases)
-    .where(eq(purchases.stripeSessionId, sessionId))
+    .where(and(eq(purchases.stripeSessionId, sessionId), eq(purchases.userId, user.id)))
     .limit(1);
 
   if (booked[0]) {

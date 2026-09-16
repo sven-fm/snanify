@@ -1,6 +1,8 @@
 import { ordinal } from "@/lib/ordinal";
 import { Landing, type LiveCard } from "@/components/Landing";
+import { notFound } from "next/navigation";
 import { content, type Lang } from "@/lib/content";
+import { parseLang } from "@/lib/locales";
 import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { getLiveSnapshot, REVALIDATE_SECONDS, type WaterState } from "@/lib/riverdata";
@@ -84,8 +86,12 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
   };
 }
 
-export default async function Page({ params }: { params: Promise<{ lang: Lang }> }) {
-  const { lang } = await params;
+export default async function Page({ params }: { params: Promise<{ lang: string }> }) {
+  /* The layout throws notFound() for a stray segment, but a page renders in
+     parallel with its layout, so this one checks for itself before it reads
+     any copy. */
+  const lang = parseLang((await params).lang);
+  if (!lang) notFound();
 
   const snapshot = await getLiveSnapshot();
   /* The Ganga at Har Ki Pauri is the water on the card, because it is the one

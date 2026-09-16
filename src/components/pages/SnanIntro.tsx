@@ -8,6 +8,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Mark } from "@/components/Logo";
+import { PastHero } from "@/components/site/PastHero";
 import { buttonClass, Price, Section } from "@/components/ui";
 import { snanContent } from "@/content/snan";
 import { PER_SNAN, PRICE } from "@/content/prices";
@@ -66,7 +67,8 @@ export function SnanIntro({ lang }: { lang: Lang }) {
     <>
       <div className="grain" aria-hidden="true" />
 
-      <Header lang={lang} currentPath={ROUTE} ctaTo="#tariff" />
+      <PastHero />
+      <Header lang={lang} currentPath={ROUTE} ctaTo="#tariff" ctaAfterHero />
 
       <main>
         {/* ------------------------------------------------ masthead ------ */}
@@ -111,7 +113,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
               className="ink-in mt-9 flex flex-col gap-3 bg-paper sm:flex-row sm:flex-wrap sm:items-center lg:bg-transparent"
               style={{ animationDelay: "260ms" }}
             >
-              <Link href={begin} className={buttonClass("solid", "min-h-[52px] w-full sm:w-auto")}>
+              <Link href={begin} className={buttonClass("solid", "min-h-[52px] w-full sm:w-auto")} data-hero-cta>
                 {t.hero.ctaPrimary}
               </Link>
               <a href="#form" className={buttonClass("ghost", "min-h-[52px] w-full sm:w-auto")}>
@@ -268,10 +270,8 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                 <div className={`py-7 ${row.hero ? "px-4 sm:px-6" : ""}`}>
                   <div className="sm:flex sm:items-start sm:justify-between sm:gap-10">
                     <div className="min-w-0">
-                      <h3 className="display text-[1.7rem] leading-none sm:text-[2.1rem]">{row.deva}</h3>
-                      <p className="mt-2 text-sm text-ink2">
-                        {row.name}, {row.what}
-                      </p>
+                      <h3 className="display text-[1.7rem] leading-none sm:text-[2.1rem]">{row.name}</h3>
+                      <p className="mt-3 max-w-[40rem] text-[1.02rem] leading-[1.85] text-ink2">{row.body}</p>
                     </div>
 
                     {/* One price, in the reader's own currency. */}
@@ -289,7 +289,6 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                       <Price prices={PER_SNAN[row.key]} />
                     </dd>
                   </dl>
-                  <p className="mt-4 max-w-[40rem] text-[1.02rem] leading-[1.85] text-ink2">{row.body}</p>
                 </div>
               </li>
             ))}
@@ -330,6 +329,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
           that expires. */}
       <aside
         aria-label={t.sticky.name}
+        data-until-scrolled="rail"
         className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-rulestrong bg-paper lg:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
