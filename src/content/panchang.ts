@@ -197,18 +197,18 @@ export const SHRADDHA_OCCASION_SLUGS: readonly string[] = [
 export const panchangContent = {
   en: {
     meta: {
-      title: "Panchang {year} by city: today's sunrise, Brahma muhurat and tithi in three hundred cities",
+      title: "Panchang {year} by city: today's tithi in 300 cities",
       description:
-        "Today's tithi, sunrise and Brahma muhurat for three hundred cities where the diaspora lives, from Edison to Brampton to Leicester to Dubai, each on its own sky and its own clock, with the ghat's hour in IST beside it.",
+        "Today's tithi, sunrise and Brahma muhurat where you live. 300 cities in 48 countries, with the ghat's hour in IST.",
     },
     hero: {
       title: "The panchang, in your own city",
-      lede: "Sunrise, Brahma muhurat and the tithi at sunrise, computed for the sky over your own town and printed on your own clock, with the ghat's hour in IST beside each. Three hundred cities. Find yours.",
+      lede: "Today's sunrise, Brahma muhurat and tithi where you live, with the ghat's hour in IST. Pick your city.",
     },
     provenance: {
       heading: "Where the timings come from",
       extra:
-        "The dates on the muhurat calendar come from those rules and roll forward by themselves each morning. Everything on this page is a rule, a definition or arithmetic.",
+        "The muhurat calendar's dates come from these rules and roll forward each morning.",
     },
     drift: {
       title: "Why the date moves",
@@ -230,7 +230,7 @@ export const panchangContent = {
     },
     reckoning: {
       title: "Amanta and purnimanta",
-      lede: "Two branches of one family often keep the same shraddha a month apart, and both are right. The two reckonings cut the month at different points, and the name of the dark fortnight moves with the cut. This is the most common cause.",
+      lede: "Two branches of one family often keep the same shraddha a month apart. The two reckonings cut the month at different points, and the name of the dark fortnight moves with the cut.",
       amanta: {
         name: "Amanta",
         cut: "The month ends at the new moon. Amavasya is the last day, and the month opens on the first day of the bright fortnight.",
@@ -321,91 +321,64 @@ export const panchangContent = {
       closing: "If your family already keeps a day, keep it. This page is for households that lost the thread.",
     },
     cities: {
-      lede: "The three largest communities first, then the rest of the world by country. Every city is its own page, refreshed through the morning.",
+      lede: "The United States, Canada and the United Kingdom first, then the rest by country.",
     },
     finder: {
       label: "Find your city",
       placeholder: "Type a city, a state or a country",
-      hint: "Three hundred cities in forty-eight countries. Start typing and the list narrows.",
+      hint: "300 cities in 48 countries. Start typing.",
       matches: "{n} cities match",
       match: "One city matches",
       empty: "Try a shorter spelling, or pick a country below.",
       clear: "Show every city",
     },
     ghats: {
-      title: "The six waters, this morning",
-      lede: "Every city page prints the ghat's hour beside your own. These are the six ghats the hour is read at, each with its own page, its flow today and its panchang.",
-      live: "Every river's flow now, on one page",
+      title: "The six waters",
+      lede: "The IST hour on every city page is read at one of these ghats.",
+      live: "All six rivers now",
     },
     guide: {
       kicker: "The shraddha guide",
       title: "Which day is your father's shraddha?",
-      lede: "Why the date moves every year, why two branches of one family keep it a month apart and are both right, and how to find the tithi from a date of death in ten minutes. The sixteen days of Pitru Paksha, as a ladder of tithis.",
+      lede: "The date moves every year. Two households keep it a month apart. Here is why, and how to find the day from a date of death.",
       cta: "Read the guide",
     },
     close: {
       title: "More on this site",
-      lede: "The muhurat calendar carries every occasion at length. The snan sits at the hour this panchang names.",
       links: [
-        {
-          href: "/panchang/shraddha",
-          label: "The shraddha guide",
-          note: "Pitru Paksha as a ladder of tithis, amanta and purnimanta, and how to find a tithi from a date.",
-        },
-        {
-          href: "/muhurat",
-          label: "The muhurat calendar",
-          note: "Every occasion for the year ahead, with its windows and where each timing comes from.",
-        },
-        {
-          href: "/live",
-          label: "The rivers now",
-          note: "Today's published flow at all six waters, and its rank against every day since 1997.",
-        },
-        {
-          href: "/rivers",
-          label: "The six waters",
-          note: "The six places, and what each is known for.",
-        },
-        {
-          href: "/snan",
-          label: "How it works",
-          note: "The three minutes, part by part, and the Sankalp Patra.",
-        },
-        {
-          href: "/kumbh",
-          label: "The Kumbh",
-          note: "The gatherings, their dates and the water each is held at.",
-        },
+        { href: "/panchang/shraddha", label: "The shraddha guide" },
+        { href: "/muhurat", label: "The muhurat calendar" },
+        { href: "/live", label: "The rivers now" },
+        { href: "/rivers", label: "The six waters" },
+        { href: "/snan", label: "How the snan works" },
       ],
-      note: "Add your city's page to your home screen. It is refreshed every half hour.",
+      note: "Add your city's page to your home screen.",
     },
     shraddha: {
       meta: {
-        title: "Shraddha and Pitru Paksha {year}: which day, why it moves, and how to find the tithi from a date",
+        title: "Shraddha {year}: which day, and why it moves",
         description:
-          "The sixteen shraddha tithis of Pitru Paksha, why the date moves eleven days a year, why amanta and purnimanta reckoning name the same fortnight differently, and a ten-minute method for finding a tithi from a date of death.",
+          "The sixteen days of Pitru Paksha, why the date moves every year, why two households keep it a month apart, and how to find the tithi from a date of death.",
       },
       kicker: "The shraddha guide",
       hero: {
         title: "Which day is the shraddha?",
-        lede: "The day moves every year, and the question usually comes up a fortnight too late. Here are the sixteen days of Pitru Paksha as a ladder of tithis, the rules that decide them, the reason two households differ, and a way to find the tithi from a date.",
+        lede: "The day moves every year, and the question comes up a fortnight too late. Here are the sixteen days, the rules behind them, and how to find the day from a date of death.",
       },
       cityTitle: "This morning's tithi, in your city",
-      cityLede: "The tithi at sunrise is printed for three hundred cities, each on its own sky. Sixteen of the largest are here, and the rest are on the panchang page.",
+      cityLede: "The tithi at sunrise in the sixteen largest cities. The rest are on the panchang page.",
       cityAll: "Every city, by country",
       occasionsTitle: "The occasions in the calendar",
-      occasionsLede: "The days a shraddha family keeps most, each with its own page: the rule that sets it, the windows, and the ghats where it is kept.",
+      occasionsLede: "The days a shraddha family keeps most. Each has a page.",
       watersTitle: "The waters kept for the ancestors",
-      watersLede: "Tarpan and pind daan have their own places. Each of the six has a page with its traditions, its flow today and the hour at the ghat.",
+      watersLede: "Tarpan and pind daan have their places. Each of the six has a page.",
       close: {
         title: "More on this site",
         links: [
-          { href: "/panchang", label: "The panchang by city", note: "Sunrise, Brahma muhurat and the tithi at sunrise, in three hundred cities." },
-          { href: "/muhurat", label: "The muhurat calendar", note: "Every occasion for the year ahead, with its windows." },
-          { href: "/live", label: "The rivers now", note: "Today's published flow at all six waters." },
-          { href: "/snan", label: "The snan", note: "Three minutes with the river at the hour the panchang names, and the Sankalp Patra." },
-          { href: "/faq#how", label: "Our commitments", note: "The rules this site is written under." },
+          { href: "/panchang", label: "The panchang by city" },
+          { href: "/muhurat", label: "The muhurat calendar" },
+          { href: "/live", label: "The rivers now" },
+          { href: "/snan", label: "How the snan works" },
         ],
         note: "Bookmark this page for next year.",
       },
@@ -414,18 +387,18 @@ export const panchangContent = {
 
   hi: {
     meta: {
-      title: "पंचांग {year} शहर के अनुसार: तीन सौ शहरों में आज का सूर्योदय, ब्रह्म मुहूर्त और तिथि",
+      title: "पंचांग {year} शहर के अनुसार: 300 शहरों में आज की तिथि",
       description:
-        "प्रवासी भारतीयों के तीन सौ शहरों के लिए आज की तिथि, सूर्योदय और ब्रह्म मुहूर्त, एडिसन से ब्रैम्पटन, लेस्टर और दुबई तक, हर एक अपने आकाश और अपनी घड़ी पर, साथ में घाट का समय IST में।",
+        "आप जहाँ रहते हैं, वहाँ की आज की तिथि, सूर्योदय और ब्रह्म मुहूर्त। 48 देशों के 300 शहर, साथ में घाट का समय IST में।",
     },
     hero: {
       title: "पंचांग, आपके अपने शहर में",
-      lede: "सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि, आपके अपने नगर के आकाश से गणित और आपकी अपनी घड़ी पर, हर पंक्ति के साथ घाट का समय IST में। तीन सौ शहर। अपना शहर खोजिए।",
+      lede: "आप जहाँ रहते हैं, वहाँ का आज का सूर्योदय, ब्रह्म मुहूर्त और तिथि, साथ में घाट का समय IST में। अपना शहर चुनिए।",
     },
     provenance: {
       heading: "समय कहाँ से आते हैं",
       extra:
-        "मुहूर्त पंचांग की तारीख़ें इन्हीं नियमों से आती हैं और हर सुबह अपने आप आगे बढ़ती हैं। इस पृष्ठ पर जो कुछ है वह नियम है, परिभाषा है या गणित है।",
+        "मुहूर्त पंचांग की तारीख़ें इन्हीं नियमों से आती हैं और हर सुबह आगे बढ़ती हैं।",
     },
     drift: {
       title: "तारीख़ क्यों बदलती है",
@@ -447,7 +420,7 @@ export const panchangContent = {
     },
     reckoning: {
       title: "अमांत और पूर्णिमांत",
-      lede: "एक ही परिवार की दो शाखाएँ प्रायः एक ही श्राद्ध को एक मास के अंतर से करती हैं, और दोनों सही होती हैं। दोनों गणनाएँ मास को अलग जगह काटती हैं, और कृष्ण पक्ष का नाम उसी के साथ बदल जाता है। यही सबसे आम कारण है।",
+      lede: "एक ही परिवार की दो शाखाएँ प्रायः एक ही श्राद्ध एक महीने के अंतर पर रखती हैं। दोनों गणनाएँ महीने को अलग बिंदु पर काटती हैं, और कृष्ण पक्ष का नाम उसी कटाव के साथ खिसकता है।",
       amanta: {
         name: "अमांत",
         cut: "मास अमावस्या पर समाप्त होता है। अमावस्या अंतिम दिन है, और मास शुक्ल पक्ष की प्रतिपदा से आरंभ होता है।",
@@ -538,91 +511,64 @@ export const panchangContent = {
       closing: "यदि आपका परिवार पहले से कोई दिन मानता है, तो वही मानिए। यह पृष्ठ उन घरों के लिए है जिनसे यह सूत्र छूट गया।",
     },
     cities: {
-      lede: "पहले तीन सबसे बड़े समुदाय, फिर देश के अनुसार शेष विश्व। हर शहर का अपना पृष्ठ है, जो सुबह भर ताज़ा होता रहता है।",
+      lede: "पहले अमेरिका, कनाडा और यूनाइटेड किंगडम, फिर शेष देश के अनुसार।",
     },
     finder: {
       label: "अपना शहर खोजिए",
       placeholder: "शहर, राज्य या देश लिखिए",
-      hint: "अड़तालीस देशों के तीन सौ शहर। लिखना शुरू कीजिए और सूची छोटी होती जाएगी।",
+      hint: "48 देशों के 300 शहर। लिखना शुरू कीजिए।",
       matches: "{n} शहर मिले",
       match: "एक शहर मिला",
       empty: "छोटी वर्तनी आज़माइए, या नीचे से देश चुनिए।",
       clear: "सभी शहर दिखाइए",
     },
     ghats: {
-      title: "छह जल, आज की सुबह",
-      lede: "हर शहर के पृष्ठ पर आपकी घड़ी के साथ घाट का समय छपा है। ये वे छह घाट हैं जहाँ वह समय पढ़ा जाता है, हर एक का अपना पृष्ठ, आज का प्रवाह और पंचांग।",
-      live: "हर नदी का प्रवाह अभी, एक पृष्ठ पर",
+      title: "छह जल",
+      lede: "हर शहर के पृष्ठ पर IST का समय इन्हीं छह घाटों में से एक पर पढ़ा जाता है।",
+      live: "छहों नदियाँ अभी",
     },
     guide: {
       kicker: "श्राद्ध मार्गदर्शिका",
       title: "पिताजी का श्राद्ध किस दिन है?",
-      lede: "तारीख़ हर वर्ष क्यों बदलती है, एक ही परिवार की दो शाखाएँ इसे एक महीने के अंतर पर क्यों रखती हैं और दोनों सही क्यों हैं, और मृत्यु की तारीख़ से तिथि दस मिनट में कैसे निकालें। पितृ पक्ष के सोलह दिन, तिथियों की सीढ़ी के रूप में।",
+      lede: "तारीख़ हर वर्ष बदलती है। दो घर इसे एक महीने के अंतर पर रखते हैं। यहाँ इसका कारण है, और मृत्यु की तारीख़ से दिन निकालने का तरीक़ा।",
       cta: "मार्गदर्शिका पढ़िए",
     },
     close: {
       title: "इस साइट पर और",
-      lede: "मुहूर्त पंचांग में हर पर्व विस्तार से है। स्नान उसी घड़ी पर बैठता है जो यह पंचांग बताता है।",
       links: [
-        {
-          href: "/panchang/shraddha",
-          label: "श्राद्ध मार्गदर्शिका",
-          note: "पितृ पक्ष तिथियों की सीढ़ी के रूप में, अमांत और पूर्णिमांत, और तारीख़ से तिथि कैसे निकालें।",
-        },
-        {
-          href: "/muhurat",
-          label: "मुहूर्त पंचांग",
-          note: "आने वाले वर्ष का हर पर्व, उसकी बेलाओं के साथ और यह कि हर समय कहाँ से आया।",
-        },
-        {
-          href: "/live",
-          label: "नदियाँ अभी",
-          note: "छहों जल पर आज का प्रकाशित प्रवाह, और 1997 से हर दिन के सामने उसका क्रम।",
-        },
-        {
-          href: "/rivers",
-          label: "छह पवित्र जल",
-          note: "छहों स्थान, और हर एक किस लिए जाना जाता है।",
-        },
-        {
-          href: "/snan",
-          label: "कैसे काम करता है",
-          note: "तीन मिनट, अंग दर अंग, और संकल्प पत्र।",
-        },
-        {
-          href: "/kumbh",
-          label: "कुंभ",
-          note: "मेले, उनकी तारीख़ें और वह जल जहाँ हर एक लगता है।",
-        },
+        { href: "/panchang/shraddha", label: "श्राद्ध मार्गदर्शिका" },
+        { href: "/muhurat", label: "मुहूर्त पंचांग" },
+        { href: "/live", label: "नदियाँ अभी" },
+        { href: "/rivers", label: "छह पवित्र जल" },
+        { href: "/snan", label: "स्नान कैसे होता है" },
       ],
-      note: "अपने शहर का पृष्ठ होम स्क्रीन पर जोड़ लीजिए। यह हर आधे घंटे ताज़ा होता है।",
+      note: "अपने शहर का पृष्ठ होम स्क्रीन पर जोड़ लीजिए।",
     },
     shraddha: {
       meta: {
-        title: "श्राद्ध और पितृ पक्ष {year}: किस दिन, तारीख़ क्यों बदलती है, और तारीख़ से तिथि कैसे निकालें",
+        title: "श्राद्ध {year}: किस दिन, और तारीख़ क्यों बदलती है",
         description:
-          "पितृ पक्ष की सोलह श्राद्ध तिथियाँ, तारीख़ हर वर्ष ग्यारह दिन क्यों खिसकती है, अमांत और पूर्णिमांत गणना एक ही पक्ष को अलग नाम क्यों देती हैं, और मृत्यु की तारीख़ से तिथि निकालने की दस मिनट की विधि।",
+          "पितृ पक्ष के सोलह दिन, तारीख़ हर वर्ष क्यों बदलती है, दो घर इसे एक महीने के अंतर पर क्यों रखते हैं, और मृत्यु की तारीख़ से तिथि कैसे निकालें।",
       },
       kicker: "श्राद्ध मार्गदर्शिका",
       hero: {
         title: "श्राद्ध किस दिन है?",
-        lede: "दिन हर वर्ष बदलता है, और प्रश्न प्रायः एक पक्ष देर से उठता है। यहाँ पितृ पक्ष के सोलह दिन तिथियों की सीढ़ी के रूप में हैं, वे नियम जो इन्हें तय करते हैं, वह कारण जिससे दो घर अलग दिन रखते हैं, और तारीख़ से तिथि निकालने का तरीक़ा।",
+        lede: "दिन हर वर्ष बदलता है, और प्रश्न एक पक्ष देर से उठता है। यहाँ सोलह दिन हैं, उनके पीछे के नियम, और मृत्यु की तारीख़ से दिन निकालने का तरीक़ा।",
       },
       cityTitle: "आज सुबह की तिथि, आपके शहर में",
-      cityLede: "सूर्योदय की तिथि तीन सौ शहरों के लिए छपी है, हर एक अपने आकाश पर। सोलह सबसे बड़े यहाँ हैं, शेष पंचांग पृष्ठ पर।",
+      cityLede: "सोलह सबसे बड़े शहरों में सूर्योदय की तिथि। शेष पंचांग पृष्ठ पर।",
       cityAll: "देश के अनुसार सभी शहर",
       occasionsTitle: "पंचांग के पर्व",
-      occasionsLede: "वे दिन जो श्राद्ध रखने वाला परिवार सबसे अधिक मानता है, हर एक का अपना पृष्ठ: उसे तय करने वाला नियम, बेलाएँ, और वे घाट जहाँ वह रखा जाता है।",
+      occasionsLede: "वे दिन जो श्राद्ध रखने वाला परिवार सबसे अधिक मानता है। हर एक का पृष्ठ है।",
       watersTitle: "पितरों के लिए रखे गए जल",
-      watersLede: "तर्पण और पिंडदान के अपने स्थान हैं। छहों में से हर एक का पृष्ठ है, उसकी परंपराओं, आज के प्रवाह और घाट की घड़ी के साथ।",
+      watersLede: "तर्पण और पिंडदान के अपने स्थान हैं। छहों में से हर एक का पृष्ठ है।",
       close: {
         title: "इस साइट पर और",
         links: [
-          { href: "/panchang", label: "शहर के अनुसार पंचांग", note: "तीन सौ शहरों में सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि।" },
-          { href: "/muhurat", label: "मुहूर्त पंचांग", note: "आने वाले वर्ष का हर पर्व, उसकी बेलाओं के साथ।" },
-          { href: "/live", label: "नदियाँ अभी", note: "छहों जल पर आज का प्रकाशित प्रवाह।" },
-          { href: "/snan", label: "स्नान", note: "पंचांग की बताई घड़ी पर नदी के साथ तीन मिनट, और संकल्प पत्र।" },
-          { href: "/faq#how", label: "हमारे वचन", note: "वे नियम जिनके अधीन यह साइट लिखी गई है।" },
+          { href: "/panchang", label: "शहर के अनुसार पंचांग" },
+          { href: "/muhurat", label: "मुहूर्त पंचांग" },
+          { href: "/live", label: "नदियाँ अभी" },
+          { href: "/snan", label: "स्नान कैसे होता है" },
         ],
         note: "अगले वर्ष के लिए यह पृष्ठ सहेज लीजिए।",
       },

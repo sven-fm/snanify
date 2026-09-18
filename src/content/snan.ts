@@ -16,18 +16,7 @@ import type { Limb as LimbId } from "@/lib/sitting-plan";
  * claim nor its denial. It says what happens. The commitment stated at length
  * lives on /faq#how, which every page links.
  *
- * NO NEGATIVE CONSTRUCTIONS. /snan carries the same hard rule as the landing
- * page. A sentence built on "no", "nobody", "nothing" or "there is no" gets
- * rewritten until it is built on a noun and a verb.
- *
- * PLAIN SENTENCES. This page once described a different product: gauge
- * readings in metres, a danger line, a register called the Jal Panjika, five
- * limbs with coined names, a seed built from the Government of India's gauge
- * record. It also wrote in the rhythm generated copy falls into: three
- * parallel clauses to a line, a koan for a title, a labelled box insisting on
- * "what is actually true". Every sentence here now says what the thing is,
- * what the reader does, or what they get, in words a person would use to a
- * friend, and every claim matches the product in src/lib and src/components.
+ * The copy rules are in CLAUDE.md.
  *
  * WHAT IS TRUE, and therefore what this page says: the river's flow for the
  * day is the Copernicus GloFAS model's published figure, read through

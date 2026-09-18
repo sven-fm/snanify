@@ -3,30 +3,8 @@
    directory is typed against `LandingCopy` below, so a key added here without a
    translation is a compile error, which is the point.
 
-   HOW THIS COPY IS WRITTEN.
-
-   PLAIN SENTENCES. A noun, a verb, a full stop. The page was once written in
-   the rhythm that generated copy falls into: three parallel clauses to a line
-   ("its own page, its own days, its own reading this hour"), an aphorism for
-   a closing headline, a label on top of every block. Every one of those was
-   rewritten as something a person would say to a friend. If a sentence has a
-   beat to it, it is probably wrong.
-
-   SAY WHAT THE READER GETS. "Sit three minutes with the river you grew up
-   near." "At the end you have a sheet with your family's names on it." Say
-   what the thing is, and stop. Nothing here argues for the product, and
-   nothing here argues against a critic.
-
-   NO NEGATIVE CONSTRUCTIONS. If a sentence is built on "no", "nobody",
-   "nothing" or "there is no", rewrite it until it is built on a noun and a
-   verb. This is a rule, not a preference.
-
-   SHORT. The reader is half awake, on a phone, at six in the morning, and for
-   many of them English is a third language. One idea per sentence. Common
-   words. Full stops over commas.
-
-   THE TWO RULES HOLD: nothing here claims a rite was performed, and nothing
-   promises an outcome. Where the numbers come from is on /faq#how.
+   The copy rules are in CLAUDE.md: plain sentences, a noun and a verb, one
+   idea each, and never a negative construction.
 
    FIGURES. `hero.record` carries the three figures the owner asked to keep on
    the page, written as a sentence a reader could check: six waters in

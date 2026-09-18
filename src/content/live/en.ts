@@ -15,12 +15,7 @@ import type { FlowBand, Trend, WaterSlug, WeatherId } from "@/lib/riverdata";
       gauge reading. Cutting the page never cuts a provenance label.
    4. THE ARCHIVE STARTS IN 1997. The Copernicus reanalysis returns nulls
       before that, so 1997 is the floor and no string here says 1991.
-   5. PLAIN SENTENCES. A noun, a verb, a full stop. The page once opened with
-      "The river, reported. Free to read, and it stays free." and closed on
-      "The reading is free. You pay for the morning.", and the rivers were
-      "she" throughout. Fragments used as beats, two-fragment headlines and a
-      river personified in a data report are the rhythm generated copy falls
-      into, and every one was rewritten as something a person would say.
+   5. PLAIN SENTENCES. The copy rules are in CLAUDE.md.
    6. HINDI IS WRITTEN, NOT CONVERTED. Rivers take the respectful plural
       there, as they do in speech.
    --------------------------------------------------------------------------- */
@@ -69,7 +64,7 @@ export const en = {
   /** The fold under each water: eleven days and the register, for whoever wants them. */
   more: "More about this morning",
   standfirst:
-    "Six waters, one page. The modelled flow, sunrise and sunset, the weather and today's muhurat windows at each, with the date every figure carries.",
+    "The modelled flow, sunrise and sunset, weather and today's muhurat windows at all six waters, each figure with its date.",
   assembled: "This page was assembled at {time} IST.",
   modelledEvery: "The flood model publishes one value per cell per day.",
 

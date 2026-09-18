@@ -10,13 +10,7 @@
    tiers, windows, anchors). The detail-only copy stayed in muhurat.ts. The
    occasion prose itself is in src/content/data/muhurat.json.
 
-   HOW IT IS WRITTEN. Plain sentences, one idea each, in both editions. Titles
-   are a noun phrase or one plain sentence. The page used to open every block
-   with a caps label, number things that were not a sequence, and close on an
-   aphorism; it also carried two sections that existed to answer a critic
-   ("what we will not print", "asked for, and refused"). The facts from those
-   are stated plainly under "Kumbh, Simhastha and the solar calendars"; the
-   arguing is gone.
+   The copy rules are in CLAUDE.md.
 
    THE PROVENANCE COPY IS LOAD BEARING. Every edition says that the timings
    are provisional until a panchang source is named and checked. /faq#how
@@ -45,7 +39,7 @@ export const en = {
   provenance: {
     badge: "Computed here, checked against Drik Panchang",
     badgeShort: "Computed, checked",
-    line: "Every date on this page is computed: the tithi at the ghat's own sunrise, the lunar month named by the sankranti it holds, and the sun's entry into each sign under the Lahiri ayanamsa. The tithi, nakshatra, sunrise and windows were checked against Drik Panchang for Haridwar on eight days between September 2026 and March 2027, every one to the minute, and the dates roll forward by themselves each morning.",
+    line: "Every date here is computed: the tithi at the ghat's sunrise, the month named by the sankranti it holds, and the sun's entry into each sign under the Lahiri ayanamsa. Tithi, nakshatra, sunrise and windows were checked against Drik Panchang for Haridwar on eight days between September 2026 and March 2027, to the minute. The dates roll forward each morning.",
     dates: {
       next: "Next dates",
       one: "The date",
@@ -88,7 +82,7 @@ export const en = {
   },
   windows: {
     title: "The four windows of the day",
-    lede: "Each window is a rule rather than a clock time. It is counted in muhurtas from sunrise, from the sun's transit or from sunset, and a muhurta is a fifteenth of the day or of the night, so the windows stretch and shrink with the season and hold at every latitude.",
+    lede: "Each window is a rule, counted in muhurtas from sunrise, the sun's transit or sunset. A muhurta is a fifteenth of the day or of the night, so the windows stretch and shrink with the season.",
     formulaLabel: "Definition",
     lengthLabel: "Length",
     basisLabel: "Why this hour",
@@ -98,9 +92,9 @@ export const en = {
     alsoTitle: "Also shown on the day",
   },
   clock: {
-    cityLink: "Sunrise and the tithi in your own city, on the panchang by city",
+    cityLink: "Sunrise and the tithi in your own city",
     title: "The clock at the ghat, now",
-    lede: "A window at the ghat is one moment in time. The date it carries on your own calendar depends on where you are, and for much of the diaspora it is the previous evening. This is that moment, live.",
+    lede: "A window at the ghat is one moment. On your calendar its date depends on where you are, and for much of the diaspora it is the previous evening.",
     atTheGhat: "At the ghat",
     whereYouAre: "Where you are",
     elsewhere: "The same moment elsewhere",

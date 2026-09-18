@@ -12,12 +12,7 @@ import type { WaterForm } from "@/content/rivers";
    rules hold: nothing is performed at any of the six, and no outcome is
    promised, and neither is said here, because the page describes places.
 
-   HOW IT IS WRITTEN. Plain sentences, one idea each, a noun and a verb. The
-   page once carried a boxed notice about "what Snanify does at these six
-   places", a two-column "this is / this is not" block, and a lede that ran
-   five clauses to name five waters; all of that was the page arguing with a
-   critic who was not in the room, and it is gone. The blocks that remain
-   state what the reader gets and which water to choose.
+   The copy rules are in CLAUDE.md.
 
    The six waters name themselves through `waterName` in src/content/names.ts.
    --------------------------------------------------------------------------- */
@@ -29,11 +24,11 @@ export const en = {
       "Six sacred waters with today's flow ranked against 1997 to 2025: the Ganga at Haridwar, the Sangam, the Yamuna, the Godavari, the Shipra and the Kaveri.",
   },
   title: "Six sacred waters",
-  lede: "Each has a modelled flow every day, its own sunrise and its own calendar. These pages describe the places and help you choose one.",
+  lede: "Each has a modelled flow every day, a sunrise and a calendar. These pages describe the places and help you choose one.",
   lead: { read: "Read about this water" },
   index: {
     title: "The other five",
-    lede: "A confluence, a town's ghat of rest, a kund where a city gives its dead to the water, the ghat under the city of Mahakal, and a spring in a temple tank.",
+    lede: "Five more waters, each with a page.",
     read: "Read",
   },
   offer: {
@@ -89,7 +84,7 @@ export const en = {
     ],
   },
   closing: {
-    title: "Read a water before you choose one.",
+    title: "Read about a water, then choose.",
     lede: "Each page says what the place is, what it is kept for, who looks after it, and how its figure is read.",
     cta: "Begin your snan",
   },

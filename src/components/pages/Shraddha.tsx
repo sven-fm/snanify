@@ -395,15 +395,12 @@ export function Shraddha({ lang }: { lang: Lang }) {
 
             <ul className="mt-12 border-t-2 border-rulestrong">
               {g.close.links.map((l) => (
-                <li key={l.href}>
+                <li key={l.href} className="border-b border-rule">
                   <Link
                     href={localePath(lang, l.href)}
-                    className="group grid gap-x-8 gap-y-1 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[14rem_1fr]"
+                    className="impress flex min-h-[56px] items-center py-4 text-ink active:text-spot"
                   >
-                    <span className="display text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
-                      {l.label}
-                    </span>
-                    <span className="text-sm leading-[1.7] text-ink2">{l.note}</span>
+                    <span className="display text-xl underline decoration-rule decoration-1 underline-offset-4">{l.label}</span>
                   </Link>
                 </li>
               ))}

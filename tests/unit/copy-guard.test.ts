@@ -49,6 +49,21 @@ const MODULES = [
 
 const RETIRED = /\b(Jal Sankalp|Jal Chihna|Watermark|Jal Path|Shwas|Maun|Chihn)\b/;
 
+/** The marketing pages: read at six in the morning, on a phone, by a reader
+    whose English may be a third language. Short sentences, and none of the
+    phrases generated copy reaches for. */
+const MARKETING = [
+  "@/content/landing/en",
+  "@/content/live/en",
+  "@/content/rivers-index/en",
+  "@/content/muhurat-index/en",
+  "@/content/panchang",
+  "@/content/panchang-city",
+  "@/content/snan",
+];
+const TICS = /its own sky|each on its own|on its own clock|This is that moment|part by part/;
+const MAX_WORDS = 40;
+
 /** The product surfaces: where a reader sits, pays, and receives the sheet.
     They show the river's figure plainly. The source, the word "modelled" and
     the publisher's names live on /rivers, /live, /faq and /faq#how, by the
@@ -149,6 +164,22 @@ describe("the copy rules", () => {
     walkStrings(json, "content/data/muhurat.json", slips);
 
     expect(slips.map((s) => `${s.rule}: ${s.at}: ${s.text.slice(0, 80)}`)).toEqual([]);
+  });
+
+  it("keeps the marketing pages short and free of the generated tics", async () => {
+    const slips: string[] = [];
+    const collect = (v: unknown, at: string): void => {
+      if (typeof v === "string") {
+        if (/[\u0900-\u097F]/.test(v)) return;
+        if (TICS.test(v)) slips.push(`tic: ${at}: ${v.slice(0, 90)}`);
+        for (const sentence of v.split(/(?<=[.!?])\s+/)) {
+          if (sentence.split(/\s+/).length > MAX_WORDS) slips.push(`${MAX_WORDS}+ words: ${at}: ${sentence.slice(0, 90)}`);
+        }
+      } else if (Array.isArray(v)) v.forEach((x, i) => collect(x, `${at}[${i}]`));
+      else if (v && typeof v === "object") for (const [k, x] of Object.entries(v as object)) collect(x, `${at}.${k}`);
+    };
+    for (const name of MARKETING) collect(await import(name), name);
+    expect(slips).toEqual([]);
   });
 
   it("gives Hindi every key English has, and nothing English lacks", async () => {
