@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CITIES, type City } from "@/content/cities";
+import { citiesByCountry, type City } from "@/content/cities";
 import { panchangCityContent } from "@/content/panchang-city";
 import { PAKSHA_NAMES } from "@/lib/sky";
 import type { CityDay } from "@/lib/city-day";
@@ -44,6 +44,7 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
   const t = panchangCityContent[lang];
   const name = city.name[lang];
   const fill = (s: string) => s.replace(/\{city\}/g, name);
+  const neighbours = (citiesByCountry(lang).find((g) => g.country.code === city.countryCode)?.cities ?? []).filter((x) => x.slug !== city.slug);
   const tithi = `${day.tithi.name[lang]}, ${PAKSHA_NAMES[day.tithi.paksha][lang]}`;
   const ends = day.tithi.endsAt ? new Date(day.tithi.endsAt) : null;
 
@@ -122,20 +123,26 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
         </Section>
 
         <Section id="cities">
-          <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.others}</h2>
+          <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.othersIn.replace("{country}", city.country[lang])}</h2>
           <ul className="mt-6 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
-            {CITIES.filter((x) => x.slug !== city.slug).map((x) => (
+            {neighbours.map((x) => (
               <li key={x.slug} className="border-b border-rule">
                 <Link
                   href={localePath(lang, `/panchang/${x.slug}`)}
                   className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
                 >
                   <span className="display text-[1.1rem]">{x.name[lang]}</span>
-                  <span className="text-sm text-ink2">{x.country[lang]}</span>
+                  {x.region && <span className="text-sm text-ink2">{x.region[lang]}</span>}
                 </Link>
               </li>
             ))}
           </ul>
+          <Link
+            href={localePath(lang, "/panchang#cities")}
+            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+          >
+            {t.allCities}
+          </Link>
         </Section>
       </main>
       <Footer lang={lang} />

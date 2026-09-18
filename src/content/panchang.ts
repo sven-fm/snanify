@@ -498,7 +498,7 @@ export const panchangContent = {
       both: "Both fortnights",
     },
     cities: {
-      lede: "Sunrise, Brahma muhurat and the tithi at sunrise for twenty cities, each on its own sky and its own clock.",
+      lede: "Sunrise, Brahma muhurat and the tithi at sunrise for three hundred cities where the diaspora lives, from Edison to Durban to Parramatta, each on its own sky and its own clock.",
     },
     clock: {
       title: "The ghat's hour on your clock",
@@ -700,7 +700,7 @@ export const panchangContent = {
       both: "दोनों पक्ष",
     },
     cities: {
-      lede: "बीस शहरों के लिए सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि, हर एक अपने आकाश और अपनी घड़ी पर।",
+      lede: "प्रवासी भारतीयों के तीन सौ शहरों के लिए, एडिसन से डरबन से पैरामाटा तक, सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि, हर एक अपने आकाश और अपनी घड़ी पर।",
     },
     clock: {
       title: "घाट की बेला आपकी घड़ी पर",

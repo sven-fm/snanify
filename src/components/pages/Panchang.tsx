@@ -34,7 +34,7 @@ import {
 } from "@/content/panchang";
 import { muhuratIndexContent } from "@/content/muhurat-index";
 import { muhuratContent } from "@/content/muhurat";
-import { CITIES } from "@/content/cities";
+import { citiesByCountry } from "@/content/cities";
 import { panchangCityContent } from "@/content/panchang-city";
 
 /* --- numerals -------------------------------------------------------------
@@ -302,19 +302,24 @@ export function Panchang({ lang }: { lang: Lang }) {
             <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{panchangCityContent[lang].kicker}</h2>
             <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.cities.lede}</p>
           </div>
-          <ul className="mt-8 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
-            {CITIES.map((x) => (
-              <li key={x.slug} className="border-b border-rule">
-                <Link
-                  href={localePath(lang, `/panchang/${x.slug}`)}
-                  className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
-                >
-                  <span className="display text-[1.1rem]">{x.name[lang]}</span>
-                  <span className="text-sm text-ink2">{x.country[lang]}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {citiesByCountry(lang).map((group) => (
+            <div key={group.country.code} className="mt-10">
+              <h3 className="label text-ink2">{group.country.name[lang]}</h3>
+              <ul className="mt-3 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
+                {group.cities.map((x) => (
+                  <li key={x.slug} className="border-b border-rule">
+                    <Link
+                      href={localePath(lang, `/panchang/${x.slug}`)}
+                      className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
+                    >
+                      <span className="display text-[1.1rem]">{x.name[lang]}</span>
+                      {x.region && <span className="text-sm text-ink2">{x.region[lang]}</span>}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </Section>
 
         {/* ---------------- one hour, eight clocks ---------------- */}
