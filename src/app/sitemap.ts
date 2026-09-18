@@ -60,6 +60,7 @@ const ROUTES: Route[] = [
   { path: "/snan", priority: 0.95, changeFrequency: "monthly" },
   { path: "/live", priority: 0.9, changeFrequency: "daily" },
   { path: "/panchang", priority: 0.85, changeFrequency: "daily" },
+  { path: "/panchang/shraddha", priority: 0.8, changeFrequency: "monthly" },
   ...CITY_SLUGS.map((slug): Route => ({ path: `/panchang/${slug}`, priority: 0.7, changeFrequency: "daily" })),
   { path: "/muhurat", priority: 0.9, changeFrequency: "weekly" },
   ...OCCASION_SLUGS.map(

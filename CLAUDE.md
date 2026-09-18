@@ -129,7 +129,7 @@ Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. That is the search an
 surface, not a tier.
 
 **Routes.** Marketing: `/`, `/snan`, `/rivers`, `/rivers/[river]`, `/live`, `/muhurat`,
-`/muhurat/[occasion]`, `/panchang`, `/kumbh`, `/faq`, `/privacy`, `/terms`. Product: `/begin`,
+`/muhurat/[occasion]`, `/panchang`, `/panchang/[city]`, `/panchang/shraddha`, `/kumbh`, `/faq`, `/privacy`, `/terms`. Product: `/begin`,
 `/setup`, `/today`, `/p/[id]`, `/account`, `/sign-in`, `/specimen`. Folded routes (`/ethics`,
 `/how-it-works`, `/patra`, `/verify`) are 308ed in `src/proxy.ts`.
 

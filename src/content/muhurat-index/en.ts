@@ -98,6 +98,7 @@ export const en = {
     alsoTitle: "Also shown on the day",
   },
   clock: {
+    cityLink: "Sunrise and the tithi in your own city, on the panchang by city",
     title: "The clock at the ghat, now",
     lede: "A window at the ghat is one moment in time. The date it carries on your own calendar depends on where you are, and for much of the diaspora it is the previous evening. This is that moment, live.",
     atTheGhat: "At the ghat",

@@ -5,9 +5,11 @@ import { Panchang } from "@/components/pages/Panchang";
 import { panchangContent } from "@/content/panchang";
 import { pageMetadata } from "@/lib/seo";
 import { navLabel } from "@/lib/nav";
+import { CITIES } from "@/content/cities";
 import {
   StructuredData,
   breadcrumbList,
+  itemList,
   organization,
   webPage,
   website,
@@ -60,6 +62,15 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
               { name: navLabel(lang, "panchang"), path: ROUTE },
             ]),
           }),
+          itemList(
+            lang,
+            ROUTE,
+            CITIES.map((c) => ({
+              name: c.name[lang],
+              path: `/panchang/${c.slug}`,
+              description: [c.region?.[lang], c.country[lang]].filter(Boolean).join(", "),
+            })),
+          ),
         ]}
       />
       <Panchang lang={lang} />

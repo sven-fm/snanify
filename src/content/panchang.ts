@@ -1,187 +1,25 @@
 /* ---------------------------------------------------------------------------
- * Snanify, the free panchang reference.
+ * Snanify, the free panchang reference: /panchang and /panchang/shraddha.
  *
  * This file adds NO calendar data. Every occasion, window, ghat and provenance
  * label is imported from `@/content/muhurat`, which owns them, so a correction
  * made there lands here without a second edit.
  *
- * What this file does add is the material the reference page needs and the
+ * What this file does add is the material the two pages need and the
  * calendar itself has no business carrying:
  *
- *   1. The reader's zones. Seven of them, chosen because that is where the
- *      families who cannot read an IST time actually live.
- *   2. A pinned reference sunrise, so a window defined as an offset can be
- *      shown as a clock time in eight places at once. It is an illustration
- *      and is labelled as one everywhere it appears; the assertion at the end
- *      of this file pins it to the same notional day the /muhurat worked
- *      example uses, so the two pages can never drift apart.
- *   3. The two lunar-month reckonings, written out with worked pairs. This is
- *      the explanation the page exists for.
- *   4. The sixteen shraddha tithis of Pitru Paksha, as a ladder of tithis.
+ *   1. The two lunar-month reckonings, written out with worked pairs. This is
+ *      the explanation the shraddha guide exists for.
+ *   2. The sixteen shraddha tithis of Pitru Paksha, as a ladder of tithis.
  *      Not as Gregorian dates. `loadMuhuratData()` refuses day-level precision
  *      until a panchang provider is named, and a free reference that quietly
  *      broke that rule would be worse than no reference.
+ *   3. The copy of the directory (/panchang, three hundred cities) and of the
+ *      guide (/panchang/shraddha), and the hub cities the guide points at.
  * ------------------------------------------------------------------------- */
 
 import type { Lang } from "@/lib/locales";
-import {
-  GHAT_ZONE,
-  MUHURAT,
-  WINDOWS,
-  asInstant,
-  asZone,
-  type Bilingual,
-  type IanaZone,
-  type Instant,
-  type Occasion,
-  type WindowAnchor,
-} from "@/content/muhurat";
-
-/* --- the reader's zones ---------------------------------------------------
-   Ordered west to east, the way the diaspora wakes up. Toronto keeps New
-   York's clock and is listed separately anyway, because a reader in Toronto
-   should not have to know that.                                            */
-
-export interface PanchangZone {
-  readonly zone: IanaZone;
-  readonly city: Bilingual;
-  /** The zone as a person would name it, not as an IANA id. */
-  readonly region: Bilingual;
-}
-
-export const PANCHANG_ZONES: readonly PanchangZone[] = [
-  {
-    zone: asZone("America/Los_Angeles"),
-    city: { en: "San Francisco", hi: "सैन फ़्रांसिस्को" },
-    region: { en: "US Pacific", hi: "अमेरिका, प्रशांत तट" },
-  },
-  {
-    zone: asZone("America/Toronto"),
-    city: { en: "Toronto", hi: "टोरंटो" },
-    region: { en: "Canada Eastern", hi: "कनाडा, पूर्वी" },
-  },
-  {
-    zone: asZone("America/New_York"),
-    city: { en: "New York", hi: "न्यूयॉर्क" },
-    region: { en: "US Eastern", hi: "अमेरिका, पूर्वी तट" },
-  },
-  {
-    zone: asZone("Europe/London"),
-    city: { en: "London", hi: "लंदन" },
-    region: { en: "United Kingdom", hi: "यूनाइटेड किंगडम" },
-  },
-  {
-    zone: asZone("Asia/Dubai"),
-    city: { en: "Dubai", hi: "दुबई" },
-    region: { en: "Gulf", hi: "खाड़ी" },
-  },
-  {
-    zone: asZone("Asia/Singapore"),
-    city: { en: "Singapore", hi: "सिंगापुर" },
-    region: { en: "Singapore", hi: "सिंगापुर" },
-  },
-  {
-    zone: asZone("Australia/Sydney"),
-    city: { en: "Sydney", hi: "सिडनी" },
-    region: { en: "Eastern Australia", hi: "पूर्वी ऑस्ट्रेलिया" },
-  },
-];
-
-/* --- the reference day ----------------------------------------------------
-   A window in `muhurat.ts` is a rule, an offset in minutes from sunrise, from
-   the sun's transit or from sunset. A rule cannot be converted into a reader's
-   timezone; only an instant can. So we pin one notional day, state the three
-   anchors we assume on it, and derive the eight window edges from the same
-   arithmetic the window records already carry.
-
-   15 September 2026 and a 06:00 sunrise are the /muhurat worked example's own
-   assumptions, reused deliberately. Nothing falls on this day, no tithi is
-   claimed for it, and the assertion at the foot of this file fails the build
-   if the two pages ever stop agreeing.                                     */
-
-const REFERENCE_ANCHORS: Record<WindowAnchor, Instant> = {
-  sunrise: asInstant("2026-09-15T00:30:00.000Z"), // 06:00 IST
-  "solar-noon": asInstant("2026-09-15T06:30:00.000Z"), // 12:00 IST
-  sunset: asInstant("2026-09-15T12:30:00.000Z"), // 18:00 IST
-};
-
-export const REFERENCE_ANCHORS_IST: Record<WindowAnchor, string> = {
-  sunrise: "06:00",
-  "solar-noon": "12:00",
-  sunset: "18:00",
-};
-
-function shiftMinutes(instant: Instant, minutes: number): Instant {
-  return asInstant(new Date(new Date(instant).getTime() + minutes * 60_000).toISOString());
-}
-
-export interface WindowSpan {
-  readonly id: string;
-  readonly name: Bilingual;
-  readonly anchor: WindowAnchor;
-  readonly durationMin: number;
-  readonly formula: Bilingual;
-  readonly start: Instant;
-  readonly end: Instant;
-}
-
-/** The four daily windows, resolved onto the reference day. */
-export const WINDOW_SPANS: readonly WindowSpan[] = WINDOWS.map((w) => ({
-  id: w.id,
-  name: w.name,
-  anchor: w.anchor,
-  durationMin: w.durationMin,
-  formula: w.formula,
-  start: shiftMinutes(REFERENCE_ANCHORS[w.anchor], w.offsetStartMin),
-  end: shiftMinutes(REFERENCE_ANCHORS[w.anchor], w.offsetEndMin),
-}));
-
-/* --- offsets --------------------------------------------------------------
-   The offset between a reader's clock and the ghat's is the one number on this
-   page that survives without a panchang: it is a property of the two zones and
-   the date, nothing else. It still moves twice a year in four of the seven
-   places listed above, which is exactly why it is printed rather than assumed.
-                                                                            */
-
-function wallClockAsUtcMs(instant: Instant, zone: IanaZone): number {
-  const fmt = new Intl.DateTimeFormat("en-CA", {
-    timeZone: zone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hourCycle: "h23",
-  });
-  const p: Record<string, string> = {};
-  for (const part of fmt.formatToParts(new Date(instant))) p[part.type] = part.value;
-  return Date.UTC(
-    Number(p.year),
-    Number(p.month) - 1,
-    Number(p.day),
-    Number(p.hour),
-    Number(p.minute),
-    Number(p.second),
-  );
-}
-
-/** Minutes a zone's clock reads ahead of (positive) or behind (negative) IST. */
-export function offsetFromIstMinutes(instant: Instant, zone: IanaZone): number {
-  return Math.round(
-    (wallClockAsUtcMs(instant, zone) - wallClockAsUtcMs(instant, GHAT_ZONE)) / 60_000,
-  );
-}
-
-/** "IST -9:30", "IST +2:30", or the same-clock case spelled out. */
-export function formatOffsetFromIst(minutes: number, lang: Lang): string {
-  if (minutes === 0) return lang === "hi" ? "IST के समान" : "The same as IST";
-  const sign = minutes < 0 ? "-" : "+";
-  const abs = Math.abs(minutes);
-  const h = Math.floor(abs / 60);
-  const m = String(abs % 60).padStart(2, "0");
-  return `IST ${sign}${h}:${m}`;
-}
+import { MUHURAT, type Bilingual } from "@/content/muhurat";
 
 /* --- the two reckonings ---------------------------------------------------
    Both reckonings use the same moon and the same tithis. They cut the month at
@@ -318,47 +156,59 @@ export const SHRADDHA_LADDER: readonly ShraddhaDay[] = [
 /** Which reckoning names the month at each of the six ghats. Read from data. */
 export const GHAT_SCHEMES = MUHURAT.ghats;
 
-/**
- * The tithi rule of an occasion, stated as one line, without restating the
- * month-name pair. The month names live in the reckoning section above, where
- * they can be explained rather than asserted in a table cell.
- */
-export function tithiLine(occasion: Occasion, lang: Lang): string {
-  const c = panchangContent[lang].tithiKinds;
-  const rule = occasion.rule;
-  const paksha = rule.paksha ? panchangContent[lang].paksha[rule.paksha] : "";
+/* --- the hub cities -------------------------------------------------------
+   Where the guide sends a reader for this morning's tithi: the largest
+   communities in each country, by slug in `@/content/cities`.              */
 
-  switch (rule.kind) {
-    case "tithi":
-      return rule.tithi ? c.tithi(paksha, rule.tithi) : c.manual;
-    case "tithi-range":
-      return c.range(paksha);
-    case "lunar-month":
-      return c.month;
-    case "solar-ingress":
-      return c.ingress;
-    default:
-      return c.manual;
-  }
-}
+export const HUB_CITY_SLUGS: readonly string[] = [
+  "new-york",
+  "edison",
+  "san-jose",
+  "chicago",
+  "houston",
+  "toronto",
+  "brampton",
+  "vancouver",
+  "london",
+  "leicester",
+  "birmingham",
+  "dubai",
+  "singapore",
+  "sydney",
+  "melbourne",
+  "durban",
+];
+
+/** The occasions a shraddha family keeps most, by slug in `@/content/muhurat`. */
+export const SHRADDHA_OCCASION_SLUGS: readonly string[] = [
+  "pitru-paksha-2026",
+  "amavasya",
+  "purnima",
+  "ekadashi",
+  "somvati-amavasya-2026",
+  "kartik-purnima-2026",
+  "mauni-amavasya-2027",
+  "magh-mela-2027",
+  "somvati-amavasya-march-2027",
+];
 
 /* --- page copy ------------------------------------------------------------ */
 
 export const panchangContent = {
   en: {
     meta: {
-      title: "Panchang {year}: today's tithi, Pitru Paksha and the shraddha days, in your time zone",
+      title: "Panchang {year} by city: today's sunrise, Brahma muhurat and tithi in three hundred cities",
       description:
-        "A free reference for families outside India. The sixteen shraddha tithis of Pitru Paksha, the daily windows, why amanta and purnimanta reckoning name the same day differently, and every timing in IST and in seven cities abroad.",
+        "Today's tithi, sunrise and Brahma muhurat for three hundred cities where the diaspora lives, from Edison to Brampton to Leicester to Dubai, each on its own sky and its own clock, with the ghat's hour in IST beside it.",
     },
     hero: {
-      title: "A panchang reference for families abroad",
-      lede: "The shraddha day moves every year, and the question usually comes up a fortnight too late. Here are the dates for the twelve months ahead, the sixteen shraddha days, the hour on your own clock, and the rules that decide them.",
+      title: "The panchang, in your own city",
+      lede: "Sunrise, Brahma muhurat and the tithi at sunrise, computed for the sky over your own town and printed on your own clock, with the ghat's hour in IST beside each. Three hundred cities. Find yours.",
     },
     provenance: {
       heading: "Where the timings come from",
       extra:
-        "The dates in the calendar above come from those rules and roll forward by themselves each morning. Everything below is a rule, a definition or arithmetic.",
+        "The dates on the muhurat calendar come from those rules and roll forward by themselves each morning. Everything on this page is a rule, a definition or arithmetic.",
     },
     drift: {
       title: "Why the date moves",
@@ -470,62 +320,47 @@ export const panchangContent = {
       ],
       closing: "If your family already keeps a day, keep it. This page is for households that lost the thread.",
     },
-    occasions: {
-      title: "The occasions in the calendar",
-      lede: "Every occasion in the Snanify calendar, with the rule that sets its tithi, the part of the day it is decided at, and the windows it is kept in. The month is given as a range, for the reason above.",
-      cols: {
-        occasion: "Occasion",
-        tithi: "Tithi rule",
-        reckoning: "Decided at",
-        windows: "Windows",
-        when: "Falls in",
-      },
-      datedHeading: "The next twelve months",
-      recurringHeading: "Every month",
-      recurringLede:
-        "Four occasions come round every month. They are the easiest to plan around from abroad, because the next one is always a few weeks away.",
-    },
-    tithiKinds: {
-      tithi: (paksha: string, n: number) => `${paksha}, tithi ${n}`,
-      range: (paksha: string) => `Every tithi of the ${paksha} in turn`,
-      month: "A whole lunar month, every day of it",
-      ingress: "The sun's entry into a sign, not a tithi",
-      manual: "Set by hand, rule to be published",
-    },
-    paksha: {
-      shukla: "Shukla paksha, the bright fortnight",
-      krishna: "Krishna paksha, the dark fortnight",
-      both: "Both fortnights",
-    },
     cities: {
-      lede: "Sunrise, Brahma muhurat and the tithi at sunrise for three hundred cities where the diaspora lives, from Edison to Durban to Parramatta, each on its own sky and its own clock.",
+      lede: "The three largest communities first, then the rest of the world by country. Every city is its own page, refreshed through the morning.",
     },
-    clock: {
-      title: "The ghat's hour on your clock",
-      lede: "A window at the ghat is one moment. Its date and hour on your clock depend on where you live, and in the Americas the morning window falls on the previous evening. Both clocks are printed every time.",
-      assumptionHeading: "How this table is drawn",
-      assumption:
-        "The four windows are counted in muhurtas from sunrise, noon and sunset. To show them as clock times the table assumes those three moments, 06:00, 12:00 and 18:00 IST on 15 September 2026, and a 48-minute muhurta, which is its length at the equinox. It is an illustration, and the date carries no occasion. The gaps in the left column are exact for that date.",
-      atTheGhat: "At the ghat",
-      ghatZone: "Asia/Kolkata, IST",
-      place: "Where you are",
-      offsetCol: "Gap from IST",
-      legend:
-        "A time in red falls on a different calendar date from the ghat's. The date is printed under every time.",
-      dstNote:
-        "The United States, Canada, the United Kingdom and Australia change their clocks twice a year, and India does not. The gap in the left column is given for the reference date. Check it again in the changeover weeks.",
-      windowCols: { window: "Window", length: "Length", rule: "Definition" },
-      previousDay: "previous day",
-      nextDay: "next day",
+    finder: {
+      label: "Find your city",
+      placeholder: "Type a city, a state or a country",
+      hint: "Three hundred cities in forty-eight countries. Start typing and the list narrows.",
+      matches: "{n} cities match",
+      match: "One city matches",
+      empty: "Try a shorter spelling, or pick a country below.",
+      clear: "Show every city",
+    },
+    ghats: {
+      title: "The six waters, this morning",
+      lede: "Every city page prints the ghat's hour beside your own. These are the six ghats the hour is read at, each with its own page, its flow today and its panchang.",
+      live: "Every river's flow now, on one page",
+    },
+    guide: {
+      kicker: "The shraddha guide",
+      title: "Which day is your father's shraddha?",
+      lede: "Why the date moves every year, why two branches of one family keep it a month apart and are both right, and how to find the tithi from a date of death in ten minutes. The sixteen days of Pitru Paksha, as a ladder of tithis.",
+      cta: "Read the guide",
     },
     close: {
       title: "More on this site",
-      lede: "The muhurat calendar carries the same occasions at length. The snan sits at the hour this calendar names.",
+      lede: "The muhurat calendar carries every occasion at length. The snan sits at the hour this panchang names.",
       links: [
+        {
+          href: "/panchang/shraddha",
+          label: "The shraddha guide",
+          note: "Pitru Paksha as a ladder of tithis, amanta and purnimanta, and how to find a tithi from a date.",
+        },
         {
           href: "/muhurat",
           label: "The muhurat calendar",
-          note: "The same occasions at length, with every window and where each timing comes from.",
+          note: "Every occasion for the year ahead, with its windows and where each timing comes from.",
+        },
+        {
+          href: "/live",
+          label: "The rivers now",
+          note: "Today's published flow at all six waters, and its rank against every day since 1997.",
         },
         {
           href: "/rivers",
@@ -538,29 +373,59 @@ export const panchangContent = {
           note: "The three minutes, part by part, and the Sankalp Patra.",
         },
         {
-          href: "/faq#how",
-          label: "Our commitments",
-          note: "The rules this site is written under.",
+          href: "/kumbh",
+          label: "The Kumbh",
+          note: "The gatherings, their dates and the water each is held at.",
         },
       ],
-      note: "Bookmark this page for next year.",
+      note: "Add your city's page to your home screen. It is refreshed every half hour.",
+    },
+    shraddha: {
+      meta: {
+        title: "Shraddha and Pitru Paksha {year}: which day, why it moves, and how to find the tithi from a date",
+        description:
+          "The sixteen shraddha tithis of Pitru Paksha, why the date moves eleven days a year, why amanta and purnimanta reckoning name the same fortnight differently, and a ten-minute method for finding a tithi from a date of death.",
+      },
+      kicker: "The shraddha guide",
+      hero: {
+        title: "Which day is the shraddha?",
+        lede: "The day moves every year, and the question usually comes up a fortnight too late. Here are the sixteen days of Pitru Paksha as a ladder of tithis, the rules that decide them, the reason two households differ, and a way to find the tithi from a date.",
+      },
+      cityTitle: "This morning's tithi, in your city",
+      cityLede: "The tithi at sunrise is printed for three hundred cities, each on its own sky. Sixteen of the largest are here, and the rest are on the panchang page.",
+      cityAll: "Every city, by country",
+      occasionsTitle: "The occasions in the calendar",
+      occasionsLede: "The days a shraddha family keeps most, each with its own page: the rule that sets it, the windows, and the ghats where it is kept.",
+      watersTitle: "The waters kept for the ancestors",
+      watersLede: "Tarpan and pind daan have their own places. Each of the six has a page with its traditions, its flow today and the hour at the ghat.",
+      close: {
+        title: "More on this site",
+        links: [
+          { href: "/panchang", label: "The panchang by city", note: "Sunrise, Brahma muhurat and the tithi at sunrise, in three hundred cities." },
+          { href: "/muhurat", label: "The muhurat calendar", note: "Every occasion for the year ahead, with its windows." },
+          { href: "/live", label: "The rivers now", note: "Today's published flow at all six waters." },
+          { href: "/snan", label: "The snan", note: "Three minutes with the river at the hour the panchang names, and the Sankalp Patra." },
+          { href: "/faq#how", label: "Our commitments", note: "The rules this site is written under." },
+        ],
+        note: "Bookmark this page for next year.",
+      },
     },
   },
 
   hi: {
     meta: {
-      title: "पंचांग {year}: आज की तिथि, पितृ पक्ष और श्राद्ध के दिन, आपके समयक्षेत्र में",
+      title: "पंचांग {year} शहर के अनुसार: तीन सौ शहरों में आज का सूर्योदय, ब्रह्म मुहूर्त और तिथि",
       description:
-        "विदेश में बसे परिवारों के लिए संदर्भ। पितृ पक्ष की सोलह श्राद्ध तिथियाँ, दैनिक बेलाएँ, अमांत और पूर्णिमांत गणना एक ही दिन को अलग नाम क्यों देती हैं, और हर समय IST में तथा विदेश के सात नगरों की घड़ी पर।",
+        "प्रवासी भारतीयों के तीन सौ शहरों के लिए आज की तिथि, सूर्योदय और ब्रह्म मुहूर्त, एडिसन से ब्रैम्पटन, लेस्टर और दुबई तक, हर एक अपने आकाश और अपनी घड़ी पर, साथ में घाट का समय IST में।",
     },
     hero: {
-      title: "विदेश में बसे परिवारों के लिए पंचांग संदर्भ",
-      lede: "श्राद्ध का दिन हर वर्ष बदलता है, और प्रश्न प्रायः एक पक्ष देर से उठता है। यहाँ आगामी बारह महीनों की तारीख़ें हैं, सोलह श्राद्ध के दिन, आपकी अपनी घड़ी पर वह बेला, और वे नियम जो इन्हें तय करते हैं।",
+      title: "पंचांग, आपके अपने शहर में",
+      lede: "सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि, आपके अपने नगर के आकाश से गणित और आपकी अपनी घड़ी पर, हर पंक्ति के साथ घाट का समय IST में। तीन सौ शहर। अपना शहर खोजिए।",
     },
     provenance: {
       heading: "समय कहाँ से आते हैं",
       extra:
-        "ऊपर के पंचांग की तारीख़ें इन्हीं नियमों से आती हैं और हर सुबह अपने आप आगे बढ़ती हैं। नीचे जो कुछ है वह नियम है, परिभाषा है या गणित है।",
+        "मुहूर्त पंचांग की तारीख़ें इन्हीं नियमों से आती हैं और हर सुबह अपने आप आगे बढ़ती हैं। इस पृष्ठ पर जो कुछ है वह नियम है, परिभाषा है या गणित है।",
     },
     drift: {
       title: "तारीख़ क्यों बदलती है",
@@ -672,62 +537,47 @@ export const panchangContent = {
       ],
       closing: "यदि आपका परिवार पहले से कोई दिन मानता है, तो वही मानिए। यह पृष्ठ उन घरों के लिए है जिनसे यह सूत्र छूट गया।",
     },
-    occasions: {
-      title: "पंचांग के पर्व",
-      lede: "स्नानिफ़ाई के पंचांग का हर पर्व, उस नियम के साथ जो उसकी तिथि तय करता है, दिन के उस भाग के साथ जिस पर निर्णय होता है, और उन बेलाओं के साथ जिनमें वह मनाया जाता है। मास अवधि के रूप में दिया है, कारण ऊपर है।",
-      cols: {
-        occasion: "पर्व",
-        tithi: "तिथि नियम",
-        reckoning: "निर्णय",
-        windows: "बेलाएँ",
-        when: "कब",
-      },
-      datedHeading: "अगले बारह मास",
-      recurringHeading: "हर मास",
-      recurringLede:
-        "चार पर्व हर मास लौटते हैं। विदेश से इन्हीं की योजना सबसे सरल है, क्योंकि अगला सदा कुछ सप्ताह दूर होता है।",
-    },
-    tithiKinds: {
-      tithi: (paksha: string, n: number) => `${paksha}, तिथि ${n}`,
-      range: (paksha: string) => `${paksha} की प्रत्येक तिथि, क्रम से`,
-      month: "पूरा चांद्र मास, उसका हर दिन",
-      ingress: "सूर्य का राशि-प्रवेश, तिथि नहीं",
-      manual: "हाथ से नियत, नियम प्रकाशित होना शेष",
-    },
-    paksha: {
-      shukla: "शुक्ल पक्ष",
-      krishna: "कृष्ण पक्ष",
-      both: "दोनों पक्ष",
-    },
     cities: {
-      lede: "प्रवासी भारतीयों के तीन सौ शहरों के लिए, एडिसन से डरबन से पैरामाटा तक, सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि, हर एक अपने आकाश और अपनी घड़ी पर।",
+      lede: "पहले तीन सबसे बड़े समुदाय, फिर देश के अनुसार शेष विश्व। हर शहर का अपना पृष्ठ है, जो सुबह भर ताज़ा होता रहता है।",
     },
-    clock: {
-      title: "घाट की बेला आपकी घड़ी पर",
-      lede: "घाट की बेला एक ही क्षण है। आपकी घड़ी पर उसकी तारीख़ और समय इस पर निर्भर है कि आप कहाँ रहते हैं, और अमेरिका में सुबह की बेला पिछली शाम पड़ती है। दोनों घड़ियाँ हर बार छपी हैं।",
-      assumptionHeading: "यह सारणी कैसे बनी है",
-      assumption:
-        "चारों बेलाएँ सूर्योदय, मध्याह्न और सूर्यास्त से नापी जाती हैं। उन्हें घड़ी के समय में दिखाने के लिए सारणी ये तीन क्षण मान लेती है: 15 सितंबर 2026 को 06:00, 12:00 और 18:00 IST। यह उदाहरण है, और उस दिन कोई पर्व नहीं है। बाईं ओर दिए अंतर उस तारीख़ के लिए सही हैं।",
-      atTheGhat: "घाट पर",
-      ghatZone: "एशिया/कोलकाता, IST",
-      place: "आप कहाँ हैं",
-      offsetCol: "IST से अंतर",
-      legend:
-        "लाल रंग का समय घाट से अलग तारीख़ पर पड़ता है। हर समय के नीचे तारीख़ छपी है।",
-      dstNote:
-        "अमेरिका, कनाडा, यूनाइटेड किंगडम और ऑस्ट्रेलिया वर्ष में दो बार घड़ी बदलते हैं, भारत नहीं बदलता। बाईं ओर का अंतर संदर्भ तारीख़ के लिए है। घड़ी बदलने वाले सप्ताहों में फिर देख लीजिए।",
-      windowCols: { window: "बेला", length: "अवधि", rule: "परिभाषा" },
-      previousDay: "पिछला दिन",
-      nextDay: "अगला दिन",
+    finder: {
+      label: "अपना शहर खोजिए",
+      placeholder: "शहर, राज्य या देश लिखिए",
+      hint: "अड़तालीस देशों के तीन सौ शहर। लिखना शुरू कीजिए और सूची छोटी होती जाएगी।",
+      matches: "{n} शहर मिले",
+      match: "एक शहर मिला",
+      empty: "छोटी वर्तनी आज़माइए, या नीचे से देश चुनिए।",
+      clear: "सभी शहर दिखाइए",
+    },
+    ghats: {
+      title: "छह जल, आज की सुबह",
+      lede: "हर शहर के पृष्ठ पर आपकी घड़ी के साथ घाट का समय छपा है। ये वे छह घाट हैं जहाँ वह समय पढ़ा जाता है, हर एक का अपना पृष्ठ, आज का प्रवाह और पंचांग।",
+      live: "हर नदी का प्रवाह अभी, एक पृष्ठ पर",
+    },
+    guide: {
+      kicker: "श्राद्ध मार्गदर्शिका",
+      title: "पिताजी का श्राद्ध किस दिन है?",
+      lede: "तारीख़ हर वर्ष क्यों बदलती है, एक ही परिवार की दो शाखाएँ इसे एक महीने के अंतर पर क्यों रखती हैं और दोनों सही क्यों हैं, और मृत्यु की तारीख़ से तिथि दस मिनट में कैसे निकालें। पितृ पक्ष के सोलह दिन, तिथियों की सीढ़ी के रूप में।",
+      cta: "मार्गदर्शिका पढ़िए",
     },
     close: {
       title: "इस साइट पर और",
-      lede: "मुहूर्त पंचांग में यही पर्व विस्तार से हैं। स्नान उसी घड़ी पर बैठता है जो यह पंचांग बताता है।",
+      lede: "मुहूर्त पंचांग में हर पर्व विस्तार से है। स्नान उसी घड़ी पर बैठता है जो यह पंचांग बताता है।",
       links: [
+        {
+          href: "/panchang/shraddha",
+          label: "श्राद्ध मार्गदर्शिका",
+          note: "पितृ पक्ष तिथियों की सीढ़ी के रूप में, अमांत और पूर्णिमांत, और तारीख़ से तिथि कैसे निकालें।",
+        },
         {
           href: "/muhurat",
           label: "मुहूर्त पंचांग",
-          note: "यही पर्व विस्तार से, हर बेला के साथ और यह कि हर समय कहाँ से आया।",
+          note: "आने वाले वर्ष का हर पर्व, उसकी बेलाओं के साथ और यह कि हर समय कहाँ से आया।",
+        },
+        {
+          href: "/live",
+          label: "नदियाँ अभी",
+          note: "छहों जल पर आज का प्रकाशित प्रवाह, और 1997 से हर दिन के सामने उसका क्रम।",
         },
         {
           href: "/rivers",
@@ -740,40 +590,44 @@ export const panchangContent = {
           note: "तीन मिनट, अंग दर अंग, और संकल्प पत्र।",
         },
         {
-          href: "/faq#how",
-          label: "हमारे वचन",
-          note: "वे नियम जिनके अधीन यह साइट लिखी गई है।",
+          href: "/kumbh",
+          label: "कुंभ",
+          note: "मेले, उनकी तारीख़ें और वह जल जहाँ हर एक लगता है।",
         },
       ],
-      note: "अगले वर्ष के लिए यह पृष्ठ सहेज लीजिए।",
+      note: "अपने शहर का पृष्ठ होम स्क्रीन पर जोड़ लीजिए। यह हर आधे घंटे ताज़ा होता है।",
+    },
+    shraddha: {
+      meta: {
+        title: "श्राद्ध और पितृ पक्ष {year}: किस दिन, तारीख़ क्यों बदलती है, और तारीख़ से तिथि कैसे निकालें",
+        description:
+          "पितृ पक्ष की सोलह श्राद्ध तिथियाँ, तारीख़ हर वर्ष ग्यारह दिन क्यों खिसकती है, अमांत और पूर्णिमांत गणना एक ही पक्ष को अलग नाम क्यों देती हैं, और मृत्यु की तारीख़ से तिथि निकालने की दस मिनट की विधि।",
+      },
+      kicker: "श्राद्ध मार्गदर्शिका",
+      hero: {
+        title: "श्राद्ध किस दिन है?",
+        lede: "दिन हर वर्ष बदलता है, और प्रश्न प्रायः एक पक्ष देर से उठता है। यहाँ पितृ पक्ष के सोलह दिन तिथियों की सीढ़ी के रूप में हैं, वे नियम जो इन्हें तय करते हैं, वह कारण जिससे दो घर अलग दिन रखते हैं, और तारीख़ से तिथि निकालने का तरीक़ा।",
+      },
+      cityTitle: "आज सुबह की तिथि, आपके शहर में",
+      cityLede: "सूर्योदय की तिथि तीन सौ शहरों के लिए छपी है, हर एक अपने आकाश पर। सोलह सबसे बड़े यहाँ हैं, शेष पंचांग पृष्ठ पर।",
+      cityAll: "देश के अनुसार सभी शहर",
+      occasionsTitle: "पंचांग के पर्व",
+      occasionsLede: "वे दिन जो श्राद्ध रखने वाला परिवार सबसे अधिक मानता है, हर एक का अपना पृष्ठ: उसे तय करने वाला नियम, बेलाएँ, और वे घाट जहाँ वह रखा जाता है।",
+      watersTitle: "पितरों के लिए रखे गए जल",
+      watersLede: "तर्पण और पिंडदान के अपने स्थान हैं। छहों में से हर एक का पृष्ठ है, उसकी परंपराओं, आज के प्रवाह और घाट की घड़ी के साथ।",
+      close: {
+        title: "इस साइट पर और",
+        links: [
+          { href: "/panchang", label: "शहर के अनुसार पंचांग", note: "तीन सौ शहरों में सूर्योदय, ब्रह्म मुहूर्त और सूर्योदय की तिथि।" },
+          { href: "/muhurat", label: "मुहूर्त पंचांग", note: "आने वाले वर्ष का हर पर्व, उसकी बेलाओं के साथ।" },
+          { href: "/live", label: "नदियाँ अभी", note: "छहों जल पर आज का प्रकाशित प्रवाह।" },
+          { href: "/snan", label: "स्नान", note: "पंचांग की बताई घड़ी पर नदी के साथ तीन मिनट, और संकल्प पत्र।" },
+          { href: "/faq#how", label: "हमारे वचन", note: "वे नियम जिनके अधीन यह साइट लिखी गई है।" },
+        ],
+        note: "अगले वर्ष के लिए यह पृष्ठ सहेज लीजिए।",
+      },
     },
   },
 } satisfies Record<Lang, unknown>;
 
 export type PanchangCopy = (typeof panchangContent)["en"];
-
-/* --- load-time assertions -------------------------------------------------
-   The reference day is shared with the /muhurat worked example on purpose. If
-   either side is edited without the other, the two pages would quietly print
-   different clock times for the same window, which is precisely the class of
-   error the rest of this codebase spends its type system preventing.       */
-
-const brahmaSpan = WINDOW_SPANS.find((w) => w.id === "brahma");
-
-if (!brahmaSpan) {
-  throw new Error("panchang: no brahma window span, the window records have changed");
-}
-
-if (brahmaSpan.start !== MUHURAT.workedExample.instantUtc) {
-  throw new Error(
-    `panchang: reference day drifted from the /muhurat worked example, ` +
-      `${brahmaSpan.start} against ${MUHURAT.workedExample.instantUtc}`,
-  );
-}
-
-if (MUHURAT.workedExample.assumedSunriseIst !== REFERENCE_ANCHORS_IST.sunrise) {
-  throw new Error(
-    `panchang: assumed sunrise drifted, ` +
-      `${MUHURAT.workedExample.assumedSunriseIst} against ${REFERENCE_ANCHORS_IST.sunrise}`,
-  );
-}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { citiesByCountry, type City } from "@/content/cities";
+import { RIVERS } from "@/content/rivers";
 import { panchangCityContent } from "@/content/panchang-city";
 import { PAKSHA_NAMES } from "@/lib/sky";
 import type { CityDay } from "@/lib/city-day";
@@ -105,8 +106,11 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
             <Link href={ctaHref(lang)} className="label impress flex min-h-[48px] items-center bg-spot px-7 text-paper hover:bg-ink active:bg-ink">
               {t.begin}
             </Link>
-            <Link href={localePath(lang, "/panchang")} className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot">
+            <Link href={localePath(lang, "/muhurat")} className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot">
               {t.ghatLink}
+            </Link>
+            <Link href={localePath(lang, "/panchang/shraddha")} className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot">
+              {t.guideLink}
             </Link>
           </div>
         </Section>
@@ -122,7 +126,33 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
           </div>
         </Section>
 
-        <Section id="cities">
+        <Section id="ghats">
+          <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.ghatsTitle}</h2>
+          <p className="mt-4 max-w-3xl leading-[1.8] text-ink2">{t.ghatsLede}</p>
+          <ul className="mt-6 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
+            {RIVERS.map((r) => (
+              <li key={r.slug} className="border-b border-rule">
+                <Link
+                  href={localePath(lang, `/rivers/${r.slug}`)}
+                  className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
+                >
+                  <span className="display text-[1.1rem]">{r.river[lang]}</span>
+                  <span className="text-right text-sm text-ink2">
+                    {r.city[lang]}, {r.state[lang]}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href={localePath(lang, "/live")}
+            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+          >
+            {t.liveLink}
+          </Link>
+        </Section>
+
+        <Section id="cities" tinted>
           <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.othersIn.replace("{country}", city.country[lang])}</h2>
           <ul className="mt-6 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
             {neighbours.map((x) => (

@@ -504,6 +504,12 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
             windows={todayWindows}
             sunrise={sunriseToday}
           />
+          <Link
+            href={localePath(lang, "/panchang")}
+            className="impress mt-10 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+          >
+            {t.clock.cityLink}
+          </Link>
         </Section>
 
         {/* ---------------- closing ---------------- */}
