@@ -155,7 +155,7 @@ export async function generateMetadata({
   const { from, to } = horizonFrom(new Date());
   const next = resolveOccasion(occasion, from, to)[0];
   const year = next?.date?.slice(0, 4);
-  const title = occasionTitle(lang, occasion.name[lang], year);
+  const title = occasionTitle(lang, occasion, year);
   const description = occasionDescription(lang, occasion, next);
 
   return pageMetadata({

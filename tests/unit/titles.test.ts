@@ -52,17 +52,38 @@ describe("the occasion titles", () => {
     for (const lang of LANGS) {
       for (const o of OCCASIONS) {
         for (const year of ["2026", "2027", "2028", "2029", undefined]) {
-          const t = occasionTitle(lang, o.name[lang], year);
+          const t = occasionTitle(lang, o, year);
           expect(t.length, t).toBeLessThanOrEqual(TITLE_MAX);
         }
       }
     }
   });
 
+  const bySlug = (slug: string) => OCCASIONS.find((o) => o.slug === slug)!;
+
   it("name the year and what is searched for", () => {
-    expect(occasionTitle("en", "Krishna Janmashtami", "2027")).toBe(
+    expect(occasionTitle("en", bySlug("janmashtami-2027"), "2027")).toBe(
       "Krishna Janmashtami 2027: date and snan muhurat | Snanify",
     );
-    expect(occasionTitle("hi", "कृष्ण जन्माष्टमी", "2027")).toBe("कृष्ण जन्माष्टमी 2027: तिथि और स्नान मुहूर्त | Snanify");
+    expect(occasionTitle("hi", bySlug("janmashtami-2027"), "2027")).toBe(
+      "कृष्ण जन्माष्टमी 2027: तिथि और स्नान मुहूर्त | Snanify",
+    );
+  });
+
+  it("give a span the resolver leaves undated the year of its first month", () => {
+    expect(occasionTitle("en", bySlug("magh-mela-2028"))).toBe("Magh Mela 2028: date and snan muhurat | Snanify");
+  });
+
+  it("name the month where one occasion falls twice in a year", () => {
+    expect(occasionTitle("en", bySlug("somvati-amavasya-december-2027"), "2027")).toBe(
+      "Somvati Amavasya December 2027: date and snan muhurat",
+    );
+  });
+
+  it("are unique across every dated page, in both editions", () => {
+    for (const lang of LANGS) {
+      const all = OCCASIONS.map((o) => occasionTitle(lang, o, o.occurrence.months[0]?.slice(0, 4)));
+      expect(all.filter((t, i) => all.indexOf(t) !== i)).toEqual([]);
+    }
   });
 });
