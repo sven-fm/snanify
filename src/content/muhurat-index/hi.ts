@@ -10,7 +10,7 @@ export const hi = {
     indexDescription:
       "आगामी बारह महीनों के पर्व, दिन की वे बेलाएँ जिनमें वे रखे जाते हैं, और हर एक की तिथि के बारे में कितना पता है।",
     detailSuffix: "मुहूर्त पंचांग, Snanify",
-    detailTitle: "{name} {year}: तिथि, स्नान मुहूर्त, और उस सुबह की नदी | Snanify",
+    detailTitle: "{name} {year}: तिथि और स्नान मुहूर्त | Snanify",
     whenQuestion: "{year} में {name} कब है?",
   },
   nav: { back: "सभी पर्व" },

@@ -4,7 +4,7 @@ import type { RiversIndexCopy } from "./en";
     respectful register, and the same blocks. See the header of ./en.ts. */
 export const hi = {
   meta: {
-    title: "छह पवित्र जल, आज के प्रवाह के साथ | स्नानिफ़ाई",
+    title: "छह पवित्र जल, आज के प्रवाह के साथ | Snanify",
     description:
       "हर की पौड़ी पर गंगा, प्रयागराज का संगम, विश्राम घाट पर यमुना, रामकुंड पर गोदावरी, रामघाट पर शिप्रा, और अपने उद्गम पर कावेरी। हर स्थान क्या है, किसके लिए माना जाता है, और उसका मॉडल-प्रवाह 1997 से 2025 के सापेक्ष कहाँ है।",
   },

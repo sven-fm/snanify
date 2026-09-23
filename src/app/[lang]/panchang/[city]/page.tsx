@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { CityPanchang } from "@/components/pages/CityPanchang";
 import { StructuredData, breadcrumbList, organization, webPage, website } from "@/components/StructuredData";
 import { CITY_SLUGS, cityBySlug } from "@/content/cities";
-import { panchangCityContent } from "@/content/panchang-city";
+import { cityTitle, panchangCityContent } from "@/content/panchang-city";
 import { cityDay } from "@/lib/city-day";
 import { LANGS, type Lang } from "@/lib/locales";
 import { navLabel } from "@/lib/nav";
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
   return pageMetadata({
     lang,
     path: `/panchang/${slug}`,
-    title: t.title.replace("{city}", name),
+    title: cityTitle(lang, name),
     description: t.description.replace("{city}", name),
     ogType: "article",
   });
@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang; c
           webPage({
             lang,
             path,
-            name: t.title.replace("{city}", name),
+            name: cityTitle(lang, name),
             description: t.description.replace("{city}", name),
             breadcrumb: breadcrumbList(lang, [
               { name: "Snanify", path: "/" },

@@ -35,6 +35,24 @@ import {
    src/proxy.ts rewrites to.
    --------------------------------------------------------------------------- */
 
+/**
+ * The longest a page title may run. Bing's site scan flags anything over 70
+ * characters; Google sets no count but cuts the result line at about 600
+ * pixels, which is 55 to 60 characters of Latin text. Sixty satisfies both.
+ * Devanagari counts its vowel signs as characters, so the same count sets
+ * narrower on screen and is the safer side of the line.
+ */
+export const TITLE_MAX = 60;
+
+/**
+ * The first title that fits, from the fullest to the barest. A template that
+ * takes a name (a city, an occasion) is written in two or three lengths, so a
+ * long name loses a clause instead of being cut off mid-word in the results.
+ */
+export function fitTitle(candidates: readonly string[]): string {
+  return candidates.find((t) => t.length <= TITLE_MAX) ?? candidates[candidates.length - 1];
+}
+
 export type PageMetaArgs = {
   lang: Lang;
   /** The locale-independent route, e.g. "/rivers" or "/muhurat/kartik-purnima". */

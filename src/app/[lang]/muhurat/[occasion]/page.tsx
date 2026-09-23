@@ -18,13 +18,12 @@ import { MuhuratDetail } from "@/components/pages/MuhuratDetail";
 import {
   GHAT_ZONE,
   OCCASIONS,
-  muhuratContent,
   occasionBySlug,
   type Occasion,
 } from "@/content/muhurat";
 import { RIVERS } from "@/content/rivers";
 import { pageMetadata } from "@/lib/seo";
-import { muhuratIndexContent } from "@/content/muhurat-index";
+import { muhuratIndexContent, occasionTitle } from "@/content/muhurat-index";
 import { occasionName } from "@/content/names";
 import { horizonFrom, resolveOccasion, sayResolved, type ResolvedDate } from "@/lib/occasions";
 import { localeDef } from "@/lib/locales";
@@ -150,20 +149,13 @@ export async function generateMetadata({
   const occasion = occasionBySlug(slug);
   if (!occasion) return {};
 
-  /* The shared keys (meta, nav, cta, provenance, tiers, windows, anchors) live
-     in content/muhurat-index/ because the index page needs them
-     locales; the detail-only keys stayed in muhurat.ts. A Record<Lang, ...>
-     indexes fine with a Lang, so nothing is written twice. */
-  const t = { ...muhuratIndexContent[lang], ...muhuratContent[lang] };
   /* The year the occasion next falls in, from the same resolver the page
      prints its dates with, so the title says "Kartik Purnima 2026" rather
      than a name alone. A rule with no dated instance keeps the plain title. */
   const { from, to } = horizonFrom(new Date());
   const next = resolveOccasion(occasion, from, to)[0];
   const year = next?.date?.slice(0, 4);
-  const title = year
-    ? t.meta.detailTitle.replace("{name}", occasion.name[lang]).replace("{year}", year)
-    : `${occasion.name[lang]}, ${t.meta.detailSuffix}`;
+  const title = occasionTitle(lang, occasion.name[lang], year);
   const description = occasionDescription(lang, occasion, next);
 
   return pageMetadata({

@@ -87,6 +87,16 @@ node scripts/indexnow.mjs /live       # only these paths
 
 Google does not read IndexNow; the sitemap above is still its route in.
 
+### Titles stay within sixty characters
+
+Bing's site scan flags a title over 70 characters. Google sets no count but
+cuts the result line at about 600 pixels, roughly 55 to 60 Latin characters,
+and rewrites titles it finds long or padded. `TITLE_MAX` in `src/lib/seo.ts`
+is 60, which satisfies both. The two templates that take a name, the city
+panchang and the occasion pages, are written in more than one length and
+`fitTitle` takes the fullest that fits. `tests/unit/titles.test.ts` checks
+every city and occasion in both editions.
+
 ## 3. Do NOT set international targeting
 
 Legacy "International Targeting" is retired, and country targeting would be

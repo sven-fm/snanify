@@ -39,7 +39,7 @@ export async function generateMetadata({
      with a grammatically wrong interpolation. */
   const title =
     lang === "hi"
-      ? `${ghat.river.hi}, ${ghat.ghat.hi}, ${ghat.city.hi} | स्नानिफ़ाई`
+      ? `${ghat.river.hi}, ${ghat.ghat.hi}, ${ghat.city.hi} | Snanify`
       : `${ghat.river.en} at ${ghat.ghat.en}, ${ghat.city.en} | Snanify`;
 
   /* The first words answer what a search for "haridwar river name" asks. */

@@ -1,10 +1,16 @@
 import type { Lang } from "@/lib/locales";
+import { fitTitle } from "@/lib/seo";
 
 /* The copy of /panchang/[city]. `{city}` is the city's name. */
 export const panchangCityContent = {
   en: {
     meta: {
-      title: "{city} panchang today: sunrise, Brahma muhurat and the tithi",
+      /** Fullest first; the page takes the first that fits TITLE_MAX. */
+      titles: [
+        "{city} panchang today: sunrise, Brahma muhurat, tithi",
+        "{city} panchang today: sunrise and Brahma muhurat",
+        "{city} panchang today",
+      ],
       description:
         "Today's sunrise, Brahma muhurat and tithi in {city}, on your clock and in IST.",
     },
@@ -40,7 +46,11 @@ export const panchangCityContent = {
   },
   hi: {
     meta: {
-      title: "{city} का आज का पंचांग: सूर्योदय, ब्रह्म मुहूर्त और तिथि",
+      titles: [
+        "{city} का आज का पंचांग: सूर्योदय, ब्रह्म मुहूर्त और तिथि",
+        "{city} का आज का पंचांग: सूर्योदय और ब्रह्म मुहूर्त",
+        "{city} का आज का पंचांग",
+      ],
       description:
         "{city} में आज का सूर्योदय, ब्रह्म मुहूर्त और तिथि, आपकी घड़ी और IST में।",
     },
@@ -77,3 +87,8 @@ export const panchangCityContent = {
 } satisfies Record<Lang, unknown>;
 
 export type PanchangCityCopy = (typeof panchangCityContent)["en"];
+
+/** A city page's title: the fullest of its lengths that fits beside the city's name. */
+export function cityTitle(lang: Lang, city: string): string {
+  return fitTitle(panchangCityContent[lang].meta.titles.map((t) => t.replace("{city}", city)));
+}
