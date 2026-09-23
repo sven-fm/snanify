@@ -72,6 +72,20 @@ is no crawl budget problem for `lastmod` to solve.
 If you ever see a recrawl-latency problem that you can actually attribute to
 this, the fix is a build step with full git history, not a stamped date.
 
+### IndexNow, for the engines that are not Google
+
+Bing, Yandex, Naver, Seznam and Yep take a push instead of waiting for a crawl.
+The key is verified by the file at `public/8b6cc2fb2f124d6a8955bba929f94f10.txt`,
+which `src/proxy.ts` serves as a static file, and the submission is one command
+run after a deploy that adds or changes public pages:
+
+```bash
+node scripts/indexnow.mjs             # every URL in the live sitemap
+node scripts/indexnow.mjs /live       # only these paths
+```
+
+Google does not read IndexNow; the sitemap above is still its route in.
+
 ## 3. Do NOT set international targeting
 
 Legacy "International Targeting" is retired, and country targeting would be

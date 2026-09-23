@@ -124,8 +124,12 @@ export const config = {
    * above would otherwise 308 to a path that does not exist and mangle the
    * cache-busting query while doing it. Scrapers do not reliably follow a
    * redirect for an `og:image`, so the card would simply come out blank.
+   *
+   * The 32-hex `.txt` is the IndexNow key file (public/<key>.txt). Search
+   * engines fetch it to verify a submission and want the bare key back, so it
+   * is served as the static file it is, like robots.txt.
    */
   matcher: [
-    "/((?!_next/|api/|waters/|favicon\\.ico|icon\\.svg|icon-\\d+\\.png|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|.*opengraph-image|.*twitter-image).*)",
+    "/((?!_next/|api/|waters/|favicon\\.ico|icon\\.svg|icon-\\d+\\.png|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|[0-9a-f]{32}\\.txt|.*opengraph-image|.*twitter-image).*)",
   ],
 };
