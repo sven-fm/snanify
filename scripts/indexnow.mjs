@@ -16,7 +16,11 @@
    precise about which ones moved.
 
    The reply is a status with an empty body: 200 or 202 means accepted, 403 is
-   a key mismatch, 422 is a URL outside the host, 429 is too many requests.
+   a key mismatch, 422 is a URL outside the host, 429 is too many requests. A
+   fresh key answers 403 "SiteVerificationNotCompleted" for a minute or two
+   while the engine fetches the key file; that and a 429 are retried.
+
+   .github/workflows/indexnow.yml runs this after every production deploy.
    --------------------------------------------------------------------------- */
 
 const ORIGIN = "https://www.snanify.com";
@@ -49,14 +53,26 @@ if (outside.length) throw new Error(`URLs outside ${HOST}: ${outside.join(", ")}
 await verifyKeyFile();
 console.log(`key verified at ${KEY_LOCATION}`);
 
+const RETRY_AFTER_MS = 60_000;
+const ATTEMPTS = 6;
+
+async function submit(slice) {
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+    const res = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "content-type": "application/json; charset=utf-8" },
+      body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList: slice }),
+    });
+    const text = (await res.text()).trim();
+    console.log(`submitted ${slice.length} URLs: ${res.status}${text ? ` ${text}` : ""}`);
+    const transient = res.status === 429 || (res.status === 403 && text.includes("SiteVerificationNotCompleted"));
+    if (!transient || attempt === ATTEMPTS) return res.status < 400;
+    console.log(`retrying in ${RETRY_AFTER_MS / 1000}s (${attempt}/${ATTEMPTS})`);
+    await new Promise((r) => setTimeout(r, RETRY_AFTER_MS));
+  }
+  return false;
+}
+
 for (let i = 0; i < urlList.length; i += BATCH) {
-  const slice = urlList.slice(i, i + BATCH);
-  const res = await fetch(ENDPOINT, {
-    method: "POST",
-    headers: { "content-type": "application/json; charset=utf-8" },
-    body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList: slice }),
-  });
-  const text = (await res.text()).trim();
-  console.log(`submitted ${slice.length} URLs: ${res.status}${text ? ` ${text}` : ""}`);
-  if (res.status >= 400) process.exitCode = 1;
+  if (!(await submit(urlList.slice(i, i + BATCH)))) process.exitCode = 1;
 }

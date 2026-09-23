@@ -76,8 +76,9 @@ this, the fix is a build step with full git history, not a stamped date.
 
 Bing, Yandex, Naver, Seznam and Yep take a push instead of waiting for a crawl.
 The key is verified by the file at `public/8b6cc2fb2f124d6a8955bba929f94f10.txt`,
-which `src/proxy.ts` serves as a static file, and the submission is one command
-run after a deploy that adds or changes public pages:
+which `src/proxy.ts` serves as a static file. `.github/workflows/indexnow.yml`
+submits the whole sitemap after every production deploy, on the success status
+Vercel's GitHub app records. By hand, for a check or a single page:
 
 ```bash
 node scripts/indexnow.mjs             # every URL in the live sitemap
