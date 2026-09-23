@@ -62,12 +62,32 @@ describe("the occasion titles", () => {
   const bySlug = (slug: string) => OCCASIONS.find((o) => o.slug === slug)!;
 
   it("name the year and what is searched for", () => {
-    expect(occasionTitle("en", bySlug("janmashtami-2027"), "2027")).toBe(
-      "Krishna Janmashtami 2027: date and snan muhurat | Snanify",
+    expect(occasionTitle("en", bySlug("kartik-snan-2026"), "2026")).toBe(
+      "Kartik Snan 2026: date and snan muhurat | Snanify",
     );
-    expect(occasionTitle("hi", bySlug("janmashtami-2027"), "2027")).toBe(
-      "कृष्ण जन्माष्टमी 2027: तिथि और स्नान मुहूर्त | Snanify",
+    expect(occasionTitle("hi", bySlug("chhath-2026"), "2026")).toBe(
+      "छठ पूजा (Chhath Puja) 2026: तिथि और स्नान मुहूर्त | Snanify",
     );
+  });
+
+  it("carry the day's second name, the one it is searched by", () => {
+    /* Search Console, September 2026: "tula sankramana 2026" and "yama
+       dvitiya" found these pages under names they did not print. */
+    expect(occasionTitle("en", bySlug("tula-sankramana-2026"), "2026")).toBe(
+      "Kaveri Sankramana (Tula Sankramana) 2026: date",
+    );
+    expect(occasionTitle("en", bySlug("yam-dwitiya-2026"), "2026")).toBe(
+      "Yam Dwitiya (Bhai Dooj) 2026: date and snan muhurat",
+    );
+    expect(occasionTitle("hi", bySlug("yam-dwitiya-2026"), "2026")).toBe(
+      "यम द्वितीया (Bhai Dooj) 2026: तिथि और स्नान मुहूर्त",
+    );
+  });
+
+  it("give every Hindi page a Latin name for searches typed in Latin script", () => {
+    for (const o of OCCASIONS) {
+      expect(occasionTitle("hi", o, o.occurrence.months[0]?.slice(0, 4)), o.slug).toMatch(/\([A-Za-z]/);
+    }
   });
 
   it("give a span the resolver leaves undated the year of its first month", () => {

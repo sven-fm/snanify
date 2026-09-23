@@ -201,6 +201,9 @@ export interface Occasion {
   readonly tier: OccasionTier;
   readonly cadence: "monthly" | "annual" | "season";
   readonly name: Bilingual;
+  /** The other name the same day is searched and kept by (Yam Dwitiya is Bhai
+      Dooj). Present only where the second name is in common use for this day. */
+  readonly aka?: Bilingual;
   readonly line: Bilingual;
   readonly about: Bilingual;
   readonly rule: OccasionRule;
@@ -548,6 +551,7 @@ export const muhuratContent = {
     detail: {
       aboutTitle: "What it is",
       whenTitle: "When it falls",
+      alsoCalled: "Also called {aka}",
       rulePrefix: "The rule",
       resolutionPrefix: "Which day",
       watersTitle: "Where it is kept",
@@ -585,6 +589,7 @@ export const muhuratContent = {
     detail: {
       aboutTitle: "यह क्या है",
       whenTitle: "कब पड़ता है",
+      alsoCalled: "इसे {aka} भी कहते हैं",
       rulePrefix: "नियम",
       resolutionPrefix: "कौन-सा दिन",
       watersTitle: "कहाँ रखा जाता है",

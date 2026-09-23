@@ -695,6 +695,10 @@
         "en": "Pitru Paksha",
         "hi": "पितृ पक्ष"
       },
+      "aka": {
+        "en": "Shraddha",
+        "hi": "श्राद्ध"
+      },
       "line": {
         "en": "Sixteen days for the departed of one's line.",
         "hi": "अपने कुल के पितरों के लिए सोलह दिन।"
@@ -789,6 +793,10 @@
       "name": {
         "en": "Kaveri Sankramana",
         "hi": "कावेरी संक्रमण"
+      },
+      "aka": {
+        "en": "Tula Sankramana",
+        "hi": "तुला संक्रमण"
       },
       "line": {
         "en": "Tula Sankramana, the theerthodbhava: the Kaveri rises at its source.",
@@ -954,6 +962,10 @@
       "name": {
         "en": "Yam Dwitiya",
         "hi": "यम द्वितीया"
+      },
+      "aka": {
+        "en": "Bhai Dooj",
+        "hi": "भाई दूज"
       },
       "line": {
         "en": "Brother and sister bathe together in the Yamuna.",
@@ -1130,6 +1142,10 @@
       "name": {
         "en": "Makar Sankranti",
         "hi": "मकर संक्रांति"
+      },
+      "aka": {
+        "en": "Uttarayan",
+        "hi": "उत्तरायण"
       },
       "line": {
         "en": "The sun turns north.",
@@ -1496,6 +1512,10 @@
         "en": "Sharad Purnima",
         "hi": "शरद पूर्णिमा"
       },
+      "aka": {
+        "en": "Kojagari Purnima",
+        "hi": "कोजागरी पूर्णिमा"
+      },
       "line": {
         "en": "Kojagara, the night the moon is held to be full of nectar.",
         "hi": "कोजागरी, वह रात जब चंद्रमा अमृत से भरा माना जाता है।"
@@ -1584,6 +1604,10 @@
       "name": {
         "en": "Naraka Chaturdashi",
         "hi": "नरक चतुर्दशी"
+      },
+      "aka": {
+        "en": "Choti Diwali",
+        "hi": "छोटी दिवाली"
       },
       "line": {
         "en": "Choti Diwali, and the abhyanga snan before sunrise.",
@@ -2016,6 +2040,10 @@
         "en": "Paush Purnima",
         "hi": "पौष पूर्णिमा"
       },
+      "aka": {
+        "en": "Shakambhari Purnima",
+        "hi": "शाकंभरी पूर्णिमा"
+      },
       "line": {
         "en": "The first snan of the Magh Mela.",
         "hi": "माघ मेले का पहला स्नान।"
@@ -2096,6 +2124,10 @@
       "name": {
         "en": "Mauni Amavasya",
         "hi": "मौनी अमावस्या"
+      },
+      "aka": {
+        "en": "Maghi Amavasya",
+        "hi": "माघी अमावस्या"
       },
       "line": {
         "en": "The silent new moon, the largest snan of Magha.",
@@ -2185,6 +2217,10 @@
         "en": "Basant Panchami",
         "hi": "बसंत पंचमी"
       },
+      "aka": {
+        "en": "Saraswati Puja",
+        "hi": "सरस्वती पूजा"
+      },
       "line": {
         "en": "Saraswati's day, and a Magh Mela snan in yellow.",
         "hi": "सरस्वती का दिन, और पीले में माघ मेले का स्नान।"
@@ -2265,6 +2301,10 @@
       "name": {
         "en": "Magha Purnima",
         "hi": "माघ पूर्णिमा"
+      },
+      "aka": {
+        "en": "Maghi Purnima",
+        "hi": "माघी पूर्णिमा"
       },
       "line": {
         "en": "Maghi Purnima, the close of the month of Magh Snan.",
@@ -2508,6 +2548,10 @@
         "en": "Vaisakhi",
         "hi": "वैसाखी"
       },
+      "aka": {
+        "en": "Baisakhi",
+        "hi": "बैसाखी"
+      },
       "line": {
         "en": "Mesha Sankranti, the solar new year, and the Ganga at Haridwar.",
         "hi": "मेष संक्रांति, सौर नववर्ष, और हरिद्वार की गंगा।"
@@ -2585,6 +2629,10 @@
       "name": {
         "en": "Akshaya Tritiya",
         "hi": "अक्षय तृतीया"
+      },
+      "aka": {
+        "en": "Akha Teej",
+        "hi": "आखा तीज"
       },
       "line": {
         "en": "The day that does not diminish; Gangotri opens.",
@@ -2667,6 +2715,10 @@
         "en": "Ganga Saptami",
         "hi": "गंगा सप्तमी"
       },
+      "aka": {
+        "en": "Ganga Jayanti",
+        "hi": "गंगा जयंती"
+      },
       "line": {
         "en": "Ganga Jayanti, the river's birthday.",
         "hi": "गंगा जयंती, नदी का जन्मदिन।"
@@ -2747,6 +2799,10 @@
       "name": {
         "en": "Vaishakha Purnima",
         "hi": "वैशाख पूर्णिमा"
+      },
+      "aka": {
+        "en": "Buddha Purnima",
+        "hi": "बुद्ध पूर्णिमा"
       },
       "line": {
         "en": "Buddha Purnima, and the Vaishakha snan.",
@@ -2835,6 +2891,10 @@
       "name": {
         "en": "Guru Purnima",
         "hi": "गुरु पूर्णिमा"
+      },
+      "aka": {
+        "en": "Vyasa Purnima",
+        "hi": "व्यास पूर्णिमा"
       },
       "line": {
         "en": "Vyasa Purnima, the teacher's full moon, and the first of the rains.",
@@ -2996,6 +3056,10 @@
       "name": {
         "en": "Sawan",
         "hi": "सावन"
+      },
+      "aka": {
+        "en": "Shravan",
+        "hi": "श्रावण"
       },
       "line": {
         "en": "Shravana, the month of Shiva and of the Mondays.",
@@ -3172,6 +3236,10 @@
         "en": "Shravana Purnima",
         "hi": "श्रावण पूर्णिमा"
       },
+      "aka": {
+        "en": "Raksha Bandhan",
+        "hi": "रक्षा बंधन"
+      },
       "line": {
         "en": "Raksha Bandhan, and the Shravani snan that renews the sacred thread.",
         "hi": "रक्षाबंधन, और श्रावणी स्नान जो यज्ञोपवीत बदलता है।"
@@ -3260,6 +3328,10 @@
         "en": "Krishna Janmashtami",
         "hi": "कृष्ण जन्माष्टमी"
       },
+      "aka": {
+        "en": "Gokulashtami",
+        "hi": "गोकुलाष्टमी"
+      },
       "line": {
         "en": "Midnight at Mathura, on the Yamuna.",
         "hi": "मथुरा में मध्यरात्रि, यमुना पर।"
@@ -3333,6 +3405,10 @@
       "name": {
         "en": "Pitru Paksha",
         "hi": "पितृ पक्ष"
+      },
+      "aka": {
+        "en": "Shraddha",
+        "hi": "श्राद्ध"
       },
       "line": {
         "en": "Sixteen days for the departed of one's line.",
@@ -3427,6 +3503,10 @@
       "name": {
         "en": "Sharad Purnima",
         "hi": "शरद पूर्णिमा"
+      },
+      "aka": {
+        "en": "Kojagari Purnima",
+        "hi": "कोजागरी पूर्णिमा"
       },
       "line": {
         "en": "Kojagara, the night the moon is held to be full of nectar.",
@@ -3611,6 +3691,10 @@
         "en": "Kaveri Sankramana",
         "hi": "कावेरी संक्रमण"
       },
+      "aka": {
+        "en": "Tula Sankramana",
+        "hi": "तुला संक्रमण"
+      },
       "line": {
         "en": "Tula Sankramana, the theerthodbhava: the Kaveri rises at its source.",
         "hi": "तुला संक्रमण, तीर्थोद्भव: कावेरी अपने उद्गम पर उमड़ती है।"
@@ -3681,6 +3765,10 @@
       "name": {
         "en": "Naraka Chaturdashi",
         "hi": "नरक चतुर्दशी"
+      },
+      "aka": {
+        "en": "Choti Diwali",
+        "hi": "छोटी दिवाली"
       },
       "line": {
         "en": "Choti Diwali, and the abhyanga snan before sunrise.",
@@ -3761,6 +3849,10 @@
       "name": {
         "en": "Yam Dwitiya",
         "hi": "यम द्वितीया"
+      },
+      "aka": {
+        "en": "Bhai Dooj",
+        "hi": "भाई दूज"
       },
       "line": {
         "en": "Brother and sister bathe together in the Yamuna.",
@@ -4289,6 +4381,10 @@
         "en": "Paush Purnima",
         "hi": "पौष पूर्णिमा"
       },
+      "aka": {
+        "en": "Shakambhari Purnima",
+        "hi": "शाकंभरी पूर्णिमा"
+      },
       "line": {
         "en": "The first snan of the Magh Mela.",
         "hi": "माघ मेले का पहला स्नान।"
@@ -4369,6 +4465,10 @@
       "name": {
         "en": "Makar Sankranti",
         "hi": "मकर संक्रांति"
+      },
+      "aka": {
+        "en": "Uttarayan",
+        "hi": "उत्तरायण"
       },
       "line": {
         "en": "The sun turns north.",
@@ -4622,6 +4722,10 @@
         "en": "Mauni Amavasya",
         "hi": "मौनी अमावस्या"
       },
+      "aka": {
+        "en": "Maghi Amavasya",
+        "hi": "माघी अमावस्या"
+      },
       "line": {
         "en": "The silent new moon, the largest snan of Magha.",
         "hi": "मौन की अमावस्या, माघ का सबसे बड़ा स्नान।"
@@ -4710,6 +4814,10 @@
         "en": "Basant Panchami",
         "hi": "बसंत पंचमी"
       },
+      "aka": {
+        "en": "Saraswati Puja",
+        "hi": "सरस्वती पूजा"
+      },
       "line": {
         "en": "Saraswati's day, and a Magh Mela snan in yellow.",
         "hi": "सरस्वती का दिन, और पीले में माघ मेले का स्नान।"
@@ -4790,6 +4898,10 @@
       "name": {
         "en": "Magha Purnima",
         "hi": "माघ पूर्णिमा"
+      },
+      "aka": {
+        "en": "Maghi Purnima",
+        "hi": "माघी पूर्णिमा"
       },
       "line": {
         "en": "Maghi Purnima, the close of the month of Magh Snan.",
@@ -4974,6 +5086,10 @@
         "en": "Vaisakhi",
         "hi": "वैसाखी"
       },
+      "aka": {
+        "en": "Baisakhi",
+        "hi": "बैसाखी"
+      },
       "line": {
         "en": "Mesha Sankranti, the solar new year, and the Ganga at Haridwar.",
         "hi": "मेष संक्रांति, सौर नववर्ष, और हरिद्वार की गंगा।"
@@ -5140,6 +5256,10 @@
         "en": "Akshaya Tritiya",
         "hi": "अक्षय तृतीया"
       },
+      "aka": {
+        "en": "Akha Teej",
+        "hi": "आखा तीज"
+      },
       "line": {
         "en": "The day that does not diminish; Gangotri opens.",
         "hi": "जो दिन घटता नहीं; गंगोत्री खुलती है।"
@@ -5221,6 +5341,10 @@
         "en": "Ganga Saptami",
         "hi": "गंगा सप्तमी"
       },
+      "aka": {
+        "en": "Ganga Jayanti",
+        "hi": "गंगा जयंती"
+      },
       "line": {
         "en": "Ganga Jayanti, the river's birthday.",
         "hi": "गंगा जयंती, नदी का जन्मदिन।"
@@ -5301,6 +5425,10 @@
       "name": {
         "en": "Vaishakha Purnima",
         "hi": "वैशाख पूर्णिमा"
+      },
+      "aka": {
+        "en": "Buddha Purnima",
+        "hi": "बुद्ध पूर्णिमा"
       },
       "line": {
         "en": "Buddha Purnima, and the Vaishakha snan.",
@@ -5478,6 +5606,10 @@
         "en": "Guru Purnima",
         "hi": "गुरु पूर्णिमा"
       },
+      "aka": {
+        "en": "Vyasa Purnima",
+        "hi": "व्यास पूर्णिमा"
+      },
       "line": {
         "en": "Vyasa Purnima, the teacher's full moon, and the first of the rains.",
         "hi": "व्यास पूर्णिमा, गुरु की पूर्णिमा, और वर्षा की पहली।"
@@ -5637,6 +5769,10 @@
       "name": {
         "en": "Sawan",
         "hi": "सावन"
+      },
+      "aka": {
+        "en": "Shravan",
+        "hi": "श्रावण"
       },
       "line": {
         "en": "Shravana, the month of Shiva and of the Mondays.",
@@ -5813,6 +5949,10 @@
         "en": "Shravana Purnima",
         "hi": "श्रावण पूर्णिमा"
       },
+      "aka": {
+        "en": "Raksha Bandhan",
+        "hi": "रक्षा बंधन"
+      },
       "line": {
         "en": "Raksha Bandhan, and the Shravani snan that renews the sacred thread.",
         "hi": "रक्षाबंधन, और श्रावणी स्नान जो यज्ञोपवीत बदलता है।"
@@ -5901,6 +6041,10 @@
         "en": "Krishna Janmashtami",
         "hi": "कृष्ण जन्माष्टमी"
       },
+      "aka": {
+        "en": "Gokulashtami",
+        "hi": "गोकुलाष्टमी"
+      },
       "line": {
         "en": "Midnight at Mathura, on the Yamuna.",
         "hi": "मथुरा में मध्यरात्रि, यमुना पर।"
@@ -5974,6 +6118,10 @@
       "name": {
         "en": "Pitru Paksha",
         "hi": "पितृ पक्ष"
+      },
+      "aka": {
+        "en": "Shraddha",
+        "hi": "श्राद्ध"
       },
       "line": {
         "en": "Sixteen days for the departed of one's line.",

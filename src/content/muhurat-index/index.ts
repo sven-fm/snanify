@@ -29,9 +29,26 @@ export function occasionTitle(lang: Lang, o: Occasion, resolvedYear?: string): s
   const m = muhuratIndexContent[lang].meta;
   const name = o.name[lang];
   const year = resolvedYear ?? firstYear(o);
-  if (!year) return fitTitle([`${name}, ${m.detailSuffix}`, name]);
   const twin = OCCASIONS.some((x) => x !== o && x.occasionId === o.occasionId && firstYear(x) === year);
   const when = twin && o.occurrence.months.length === 1 ? o.occurrence.label[lang] : year;
-  const full = m.detailTitle.replace("{name}", name).replace("{year}", when);
-  return fitTitle([full, full.replace(/ \| Snanify$/, "")]);
+  /* The second name goes in brackets. In English it is the day's other name;
+     in Hindi it is a Latin name, the other name where there is one, because
+     the Hindi edition is searched in Latin script as often as in Devanagari.
+     When room is short the brand goes first, then what the page answers,
+     and the second name last. */
+  const other = lang === "en" ? o.aka?.en : o.aka?.en ?? o.name.en;
+  if (!year) {
+    const bare = other ? `${name} (${other})` : name;
+    return fitTitle([`${bare}, ${m.detailSuffix}`, bare]);
+  }
+  const named = (n: string) => m.detailTitle.replace("{name}", n).replace("{year}", when);
+  const unbranded = (t: string) => t.replace(/ \| Snanify$/, "");
+  const answer = (t: string) => t.replace(/: .*$/, `: ${m.detailAnswerShort}`);
+  const full = named(name);
+  const withOther = other ? named(`${name} (${other})`) : undefined;
+  return fitTitle(
+    withOther
+      ? [withOther, unbranded(withOther), answer(withOther), full, unbranded(full)]
+      : [full, unbranded(full)],
+  );
 }

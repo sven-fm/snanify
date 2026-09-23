@@ -99,7 +99,7 @@ function occasionDescription(lang: Lang, occasion: Occasion, resolved?: Resolved
   const rule = occasion.rule.kind === "solar-ingress" ? t.ingressRule : t.tithiRule;
   const waters = t.waters[occasion.ghats.length] ?? t.waters[0];
   return t.description(
-    occasion.name[lang],
+    occasion.aka ? `${occasion.name[lang]} (${occasion.aka[lang]})` : occasion.name[lang],
     resolved ? sayResolved(resolved, lang) : occurrenceClause(lang, occasion),
     rule,
     waters,
@@ -237,7 +237,7 @@ export default async function Page({
       lang,
       path: route,
       name: occasion.name[lang],
-      alternateName: occasion.name[alt],
+      alternateName: [occasion.name[alt], ...(occasion.aka ? [occasion.aka[lang], occasion.aka[alt]] : [])],
       description,
       /* The provenance label verbatim, so the date's status travels with the
          date wherever the node is read. */

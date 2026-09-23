@@ -371,8 +371,8 @@ export interface OccasionEventOptions {
   readonly lang: Lang;
   readonly path: string;
   readonly name: string;
-  /** The occasion's name in the other locale. */
-  readonly alternateName?: string;
+  /** The occasion's name in the other locale, and its second name in both. */
+  readonly alternateName?: string | readonly string[];
   readonly description: string;
   /**
    * The published provenance label, verbatim. An Event whose date is unchecked

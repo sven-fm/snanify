@@ -28,6 +28,8 @@ export const en = {
     /** The occasion page's title, query-shaped: the name, the year it next falls in, and what the page answers.
         The river that morning is the page's own offer and lives in the description; the title carries what is searched. */
     detailTitle: "{name} {year}: date and snan muhurat | Snanify",
+    /** The shortest answer, when a second name needs the room. */
+    detailAnswerShort: "date",
     /** The FAQ node a search engine reads for the date. */
     whenQuestion: "When is {name} in {year}?",
   },

@@ -74,6 +74,9 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                 <h1 className="ink-in display text-[2.7rem] leading-[1.0] sm:text-6xl">
                   {occasion.name[lang]}
                 </h1>
+                {occasion.aka && (
+                  <p className="label mt-4 text-ink2">{d.alsoCalled.replace("{aka}", occasion.aka[lang])}</p>
+                )}
 
                 <div className="rule-double mt-7 max-w-md" />
                 <WaterBand seed={occasion.slug} className="mt-5 h-12 w-full sm:h-14" />
