@@ -2,6 +2,7 @@ import Link from "next/link";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
+import { vikramSamvat } from "@/lib/occasions";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
@@ -35,6 +36,9 @@ export function Header({
   ctaAfterHero?: boolean;
 }) {
   const t = content[lang];
+  /* The almanac's edition line, computed so it turns over at Chaitra by itself. */
+  const samvat = String(vikramSamvat());
+  const edition = t.edition.replace("{samvat}", lang === "hi" ? [...samvat].map((d) => "०१२३४५६७८९"[Number(d)]).join("") : samvat);
   const navLinks = links ?? primaryNav(lang);
 
   /* Everybody sees "Begin". Somebody signed in also gets the silhouette
@@ -59,7 +63,7 @@ export function Header({
           <div className="flex items-center gap-2 sm:gap-4">
             {/* The almanac's edition line. Vikram Samvat runs ~57 years ahead
                 of CE; each locale sets it in its own numerals. */}
-            <span className="label hidden text-ink2 lg:inline">{t.edition}</span>
+            <span className="label hidden text-ink2 lg:inline">{edition}</span>
 
             <LangSwitch lang={lang} currentPath={currentPath} label={t.langLabel} />
 
@@ -123,7 +127,7 @@ export function Header({
                     >
                       {t.nav.cta}
                     </a>
-                    <p className="label mt-4 text-ink2">{t.edition}</p>
+                    <p className="label mt-4 text-ink2">{edition}</p>
                   </div>
                 </div>
               </details>

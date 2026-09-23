@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { OCCASIONS, occasionBySlug } from "@/content/muhurat";
-import { horizonFrom, resolveOccasion } from "@/lib/occasions";
+import { horizonFrom, resolveOccasion, vikramSamvat } from "@/lib/occasions";
 
 /* ---------------------------------------------------------------------------
    Occasion dates, against the days Drik Panchang names.
@@ -98,12 +98,54 @@ describe("the dated occasions", () => {
     expect(ms).toMatchObject({ kind: "span", date: "2027-01-23", to: "2027-02-20" });
   });
 
-  it("gives every computed occasion at least one answer in the horizon", () => {
+  it("gives every computed occasion at least one answer in its own months", () => {
     /* A manual span (the Magh Mela) is fixed by the pages of its first and
-       last snan and carries no date of its own. */
+       last snan and carries no date of its own. The range is wide; a dated
+       occasion narrows it to the months it names. */
     for (const o of OCCASIONS.filter((x) => x.rule.kind !== "manual")) {
-      expect(resolveOccasion(o, FROM, TO).length, o.slug).toBeGreaterThan(0);
+      expect(resolveOccasion(o, FROM, "2028-09-30").length, o.slug).toBeGreaterThan(0);
     }
+  });
+});
+
+describe("the dated occasions of 2027 to 2028, against Drik Panchang for Haridwar", () => {
+  const T = "2028-09-30";
+  const day = (slug: string) => resolveOccasion(occasionBySlug(slug)!, FROM, T)[0];
+
+  it("keeps the Diwali amavasya of 2027 at sunrise on 29 October, with Naraka Chaturdashi the day before and Yam Dwitiya two days after", () => {
+    expect(resolveOccasion(occasionBySlug("amavasya")!, FROM, T).map((r) => r.date)).toContain("2027-10-29");
+    expect(day("naraka-chaturdashi-2027").date).toBe("2027-10-28");
+    expect(day("yam-dwitiya-2027").date).toBe("2027-10-31");
+  });
+
+  it("puts Chhath 2027 on 4 November and Kartik Purnima 2027 on 14 November", () => {
+    expect(day("chhath-2027").date).toBe("2027-11-04");
+    expect(day("kartik-purnima-2027").date).toBe("2027-11-14");
+    expect(day("kartik-snan-2027")).toMatchObject({ kind: "span", to: "2027-11-14" });
+  });
+
+  it("finds the two Somvati amavasyas on their Mondays", () => {
+    expect(day("somvati-amavasya-december-2027").date).toBe("2027-12-27");
+    expect(day("somvati-amavasya-april-2028").date).toBe("2028-04-24");
+    for (const d of ["2027-12-27", "2028-04-24"]) expect(new Date(`${d}T12:00:00Z`).getUTCDay()).toBe(1);
+  });
+
+  it("keeps Makar Sankranti 2028 on 15 January, Mahashivratri 2028 on 23 February and Janmashtami 2028 on 13 August", () => {
+    expect(day("makar-sankranti-2028").date).toBe("2028-01-15");
+    expect(day("mahashivratri-2028").date).toBe("2028-02-23");
+    expect(day("janmashtami-2028").date).toBe("2028-08-13");
+  });
+
+  it("runs Pitru Paksha 2028 from 4 to 18 September, ending on a Monday", () => {
+    expect(day("pitru-paksha-2028")).toMatchObject({ kind: "span", date: "2028-09-04", to: "2028-09-18" });
+  });
+});
+
+describe("the Samvat", () => {
+  it("turns over at Chaitra", () => {
+    expect(vikramSamvat(new Date("2026-09-16T06:00:00Z"))).toBe(2083);
+    expect(vikramSamvat(new Date("2027-03-01T06:00:00Z"))).toBe(2083);
+    expect(vikramSamvat(new Date("2027-04-10T06:00:00Z"))).toBe(2084);
   });
 });
 

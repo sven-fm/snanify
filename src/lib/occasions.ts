@@ -356,6 +356,15 @@ export function resolveOccasion(
   return out;
 }
 
+/** Vikram Samvat on `now`: the year of the last Chaitra new moon, plus 57.
+    The year turns at Chaitra Shukla Pratipada, the day after that new moon. */
+export function vikramSamvat(now = new Date()): number {
+  const months = lunarMonths(new Date(now.getTime() - 400 * DAY_MS), now);
+  const chaitra = months.filter((m) => m.name === "chaitra" && !m.adhika && m.from <= now).pop();
+  const start = chaitra ? istDay(chaitra.from) : istDay(now);
+  return Number(start.slice(0, 4)) + 57;
+}
+
 /** A rolling twelve months from today, in India. */
 export function horizonFrom(now = new Date()): { from: string; to: string } {
   const from = istDay(now);

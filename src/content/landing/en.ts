@@ -45,7 +45,7 @@ export const en = {
     buy: "Buy mornings",
     signOut: "Sign out",
   },
-  edition: "Samvat 2083",
+  edition: "Samvat {samvat}",
   hero: {
     titleA: "The river",
     titleB: "comes to you.",

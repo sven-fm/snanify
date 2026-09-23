@@ -29,7 +29,7 @@ export const hi = {
     buy: "सुबहें खरीदिए",
     signOut: "बाहर निकलिए",
   },
-  edition: "संवत् २०८३",
+  edition: "संवत् {samvat}",
   hero: {
     titleA: "नदी",
     titleB: "आप तक आती है।",

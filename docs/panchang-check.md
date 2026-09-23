@@ -94,3 +94,19 @@ Added the same evening, each computed by the rule its page states and read again
 | Shravana Purnima 2027 | 17 August | Raksha Bandhan 17 August | Match |
 | Janmashtami 2027 | 24 August (tithi at midnight) | not fetched | Computed by the nishita rule |
 | Magh Mela 2027 | 15 January to 6 March | its six snan days above | A span, not computed on its own |
+
+## The year ahead: thirty-two dated pages, September 2027 to September 2028 (18 September 2026)
+
+Each 2026 and 2027 page cloned for the following year, the months recomputed from its rule by `resolveOccasion`, and five days read against Drik Panchang's day panchang for Haridwar. The Somvati amavasyas are the two Mondays the resolver found in the range; the November 2026 and March 2027 ones have no 2027 to 2028 counterpart.
+
+| Day | Ours | Drik, Haridwar | |
+| --- | --- | --- | --- |
+| Kartika Amavasya 2027 (Diwali) | 29 October at sunrise | Amavasya at sunrise, ends 19:05; Lakshmi Puja, Diwali | Match |
+| Chhath 2027 | 4 November | Shashthi at sunrise, ends 21:37; Chhath Puja | Match |
+| Makar Sankranti 2028 | 15 January, the sun crosses 03:27 IST | Makara Sankranti, Pongal, Uttarayana | Match |
+| Mahashivratri 2028 | 23 February | Maha Shivaratri, Wednesday 23 February | Match |
+| Janmashtami 2028 | 13 August (tithi at midnight) | Krishna Ashtami at sunrise, ends 05:36 on the 14th; Krishna Janmashtami | Match |
+
+Computed, read against nothing yet: Pitru Paksha 2027 (16 to 30 September), Sharad Purnima 2027 (14 October), Kartik Snan 2027 (16 October to 14 November), Kaveri Sankramana 2027 (18 October), Naraka Chaturdashi 2027 (28 October), Yam Dwitiya 2027 (31 October), Kartik Purnima and Dev Deepawali 2027 (14 November), Vaikuntha Ekadashi 2027 (9 December), Somvati Amavasya (Monday 27 December 2027), Paush Purnima 2028 (12 January), Magh Snan 2028 (13 January to 10 February), Magh Mela 2028 (15 January to 23 February), Mauni Amavasya 2028 (26 January), Basant Panchami 2028 (1 February), Magha Purnima 2028 (10 February), Vaisakhi 2028 (13 April), Somvati Amavasya (Monday 24 April 2028), Akshaya Tritiya 2028 (27 April), Ganga Saptami 2028 (1 May), Buddha Purnima 2028 (8 May), Ganga Dussehra 2028 (2 June), Guru Purnima 2028 (6 July), Kanwar Yatra 2028 (7 to 22 July), Sawan 2028 (7 July to 5 August), Hariyali Amavasya 2028 (Saturday 22 July), Shravana Purnima 2028 (5 August), Pitru Paksha 2028 (4 to 18 September, ending on a Monday).
+
+The masthead's Samvat is now computed from the last Chaitra new moon plus 57, and every page re-renders at least once a day, so the year, the Samvat and the twelve-month horizon roll without a deploy.

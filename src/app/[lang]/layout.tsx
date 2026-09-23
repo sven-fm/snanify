@@ -14,6 +14,11 @@ import { pageMetadata, siteMetadata } from "@/lib/seo";
    inside the shell. The locales that exist are still prerendered. */
 
 /** Every locale is prerendered at this level. */
+/* Every page under this layout is remade at least once a day, so the year in
+   a title, the Samvat in the masthead and the calendar horizon roll over
+   without a deploy. Pages that set a shorter interval keep it. */
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   return langParams();
 }
