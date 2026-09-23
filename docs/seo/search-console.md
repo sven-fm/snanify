@@ -97,6 +97,16 @@ panchang and the occasion pages, are written in more than one length and
 `fitTitle` takes the fullest that fits. `tests/unit/titles.test.ts` checks
 every city and occasion in both editions.
 
+### Second names
+
+An occasion searched by another name (Yam Dwitiya is Bhai Dooj, Kaveri
+Sankramana is Tula Sankramana) carries it as `aka` in
+`src/content/data/muhurat.json`. It goes in the title in brackets, the
+description, a line under the heading and the Event's `alternateName`. Every
+Hindi title carries a Latin name, because the Hindi edition is searched in
+Latin script. Add an `aka` only where the second name is in common use for
+the same day; Search Console's Queries report is where the need shows up.
+
 ## 3. Do NOT set international targeting
 
 Legacy "International Targeting" is retired, and country targeting would be
