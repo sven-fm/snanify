@@ -20,6 +20,9 @@ const PER_LOCALE = [70, 90];
 const SAMPLE = 20;
 const CONCURRENCY = 8;
 
+/** "https://www.snanify.com/" and "https://www.snanify.com" are one URL. */
+const norm = (u) => (u ? new URL(u).href : u);
+
 const failures = [];
 const warnings = [];
 const fail = (what) => failures.push(what);
@@ -59,7 +62,7 @@ async function pool(items, fn) {
 
 /* The sitemap */
 const xml = await (await fetch(`${ORIGIN}/sitemap.xml`)).text();
-const sitemap = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+const sitemap = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => norm(m[1].trim()));
 const inSitemap = new Set(sitemap);
 const hindi = sitemap.filter((u) => new URL(u).pathname.startsWith("/hi")).length;
 const english = sitemap.length - hindi;
@@ -74,8 +77,8 @@ const rows = await pool(sitemap, async (url) => {
   const problems = [];
   if (status !== 200) problems.push(`status ${status}`);
   if (/noindex/i.test(h.robots)) problems.push(`robots "${h.robots}"`);
-  if (h.canonical !== url) problems.push(`canonical ${h.canonical ?? "missing"}`);
-  const stray = h.hreflang.filter((u) => !inSitemap.has(u));
+  if (norm(h.canonical) !== url) problems.push(`canonical ${h.canonical ?? "missing"}`);
+  const stray = h.hreflang.filter((u) => !inSitemap.has(norm(u)));
   if (stray.length) problems.push(`hreflang outside the sitemap: ${stray.join(" ")}`);
   if (h.title.length > 60) warnings.push(`title ${h.title.length}: ${url}  "${h.title}"`);
   if (h.description.length < 120 || h.description.length > 155) {
