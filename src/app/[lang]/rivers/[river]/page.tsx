@@ -12,6 +12,7 @@ import {
   website,
 } from "@/components/StructuredData";
 import { getGhat, RIVERS } from "@/content/rivers";
+import { riverDescription } from "@/content/rivers-index";
 import { LANGS, type Lang } from "@/lib/locales";
 import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
@@ -42,11 +43,7 @@ export async function generateMetadata({
       ? `${ghat.river.hi}, ${ghat.ghat.hi}, ${ghat.city.hi} | Snanify`
       : `${ghat.river.en} at ${ghat.ghat.en}, ${ghat.city.en} | Snanify`;
 
-  /* The first words answer what a search for "haridwar river name" asks. */
-  const description =
-    lang === "hi"
-      ? `${ghat.city.hi} की नदी ${ghat.river.hi} है, ${ghat.ghat.hi} पर। ${ghat.standfirst.hi}`
-      : `The river at ${ghat.city.en} is the ${ghat.river.en}, at ${ghat.ghat.en}. ${ghat.standfirst.en}`;
+  const description = riverDescription(lang, ghat);
 
   return pageMetadata({ lang, path: route, title, description, ogType: "article" });
 }

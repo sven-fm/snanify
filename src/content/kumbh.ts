@@ -273,7 +273,7 @@ export const kumbhContent = {
     meta: {
       title: "Simhastha Kumbh 2027, Nashik and Trimbakeshwar | Snanify",
       description:
-        "When the Simhastha Kumbh falls at Nashik and Trimbakeshwar, how it is reckoned, the bathing days published for 2027 at Ram Kund and Kushavarta, and what to know if you are going.",
+        "When the Simhastha Kumbh falls at Nashik and Trimbakeshwar, how it is reckoned, and the bathing days published for 2027 at Ram Kund and Kushavarta.",
     },
     hero: {
       title: "The Simhastha Kumbh",
@@ -473,7 +473,7 @@ export const kumbhContent = {
     meta: {
       title: "सिंहस्थ कुंभ २०२७, नासिक एवं त्र्यंबकेश्वर | Snanify",
       description:
-        "सिंहस्थ कुंभ नासिक और त्र्यंबकेश्वर में कब पड़ता है, उसकी गणना कैसे होती है, रामकुंड और कुशावर्त के लिए २०२७ की प्रकाशित स्नान-तिथियाँ, और यदि आप जा रहे हैं तो क्या जानना चाहिए।",
+        "सिंहस्थ कुंभ नासिक और त्र्यंबकेश्वर में कब पड़ता है, उसकी गणना कैसे होती है, और रामकुंड व कुशावर्त पर २०२७ की प्रकाशित स्नान-तिथियाँ।",
     },
     hero: {
       title: "सिंहस्थ कुंभ",

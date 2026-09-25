@@ -58,6 +58,26 @@ export function fitTitle(candidates: readonly string[]): string {
   return candidates.find((t) => t.length <= TITLE_MAX) ?? candidates[candidates.length - 1];
 }
 
+/**
+ * The length a meta description should land in. Bing's site scan flags one
+ * outside 120 to 155 characters; Google cuts the snippet at about 155.
+ */
+export const DESCRIPTION_MIN = 120;
+export const DESCRIPTION_MAX = 155;
+
+/**
+ * The first description that lands in range, from the fullest to the barest,
+ * else the first that is not too long, else the last. A template that takes a
+ * name is written in several lengths, as the titles are.
+ */
+export function fitDescription(candidates: readonly string[]): string {
+  return (
+    candidates.find((d) => d.length >= DESCRIPTION_MIN && d.length <= DESCRIPTION_MAX) ??
+    candidates.find((d) => d.length <= DESCRIPTION_MAX) ??
+    candidates[candidates.length - 1]
+  );
+}
+
 export type PageMetaArgs = {
   lang: Lang;
   /** The locale-independent route, e.g. "/rivers" or "/muhurat/kartik-purnima". */

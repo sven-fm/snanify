@@ -19,24 +19,16 @@ import { hreflangMap, localeUrl, LANGS, DEFAULT_LANG } from "@/lib/locales";
    Remade once a day, so a dated occasion enters as it comes within 180 days
    and leaves once it is past.
 
-   THERE IS NO `lastModified` HERE, AND THAT IS A DECISION RATHER THAN AN
-   OVERSIGHT. Search engines use `lastmod` only while it is consistently and
-   verifiably accurate, and discount the whole signal once it is not. Every
-   implementation available to this repo fails that test:
-
-     · Build time on every entry claims every URL changed on every deploy.
-     · A date from `git log -1` over the content behind each route is accurate
-       only with full history; Vercel clones shallow, so in CI it returns the
-       clone boundary's date or nothing.
-     · A committed manifest is accurate on the day it is generated and quietly
-       wrong from the next content commit onward.
-
-   We would rather publish nothing than a date we cannot stand behind. If a
-   real content-modification date ever becomes available, this is where it
-   goes.
+   `lastModified` is one fixed date, the day the index was last cut and its
+   pages rewritten. It is never the build time: a date that moves on every
+   deploy claims every URL changed, and search engines stop reading lastmod
+   from a site that does that. Move LAST_MODIFIED forward by hand in the
+   commit that changes what the pages say, and only then.
    --------------------------------------------------------------------------- */
 
 export const revalidate = 86400;
+
+const LAST_MODIFIED = "2026-09-25";
 
 type Route = {
   path: string;
@@ -72,6 +64,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const languages = hreflangMap(path);
     return LANGS.map((lang) => ({
       url: localeUrl(lang, path),
+      lastModified: LAST_MODIFIED,
       changeFrequency,
       /* The English edition is the one to crawl first for a given route; the
          others are the same page in another language, not a lesser page. A

@@ -50,7 +50,7 @@ export const en = {
   meta: {
     title: "Six sacred waters, live | Snanify",
     description:
-      "Modelled flow, sunrise, weather and today's muhurat windows at six sacred waters, from the Ganga at Haridwar to the Kaveri at Talakaveri. Ranked against 1997 to 2025.",
+      "Modelled flow, sunrise, weather and today's muhurat at six sacred waters, from the Ganga at Haridwar to the Kaveri. Ranked against 1997 to 2025.",
   },
 
   badges: {

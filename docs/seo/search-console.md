@@ -74,24 +74,14 @@ own content first, once most of the current list is indexed.
 the sitemap, on a sampled non-indexed page without `noindex`, and on an apex
 redirect that is not one hop.
 
-### There is no `lastmod`, on purpose
+### `lastmod` is one fixed date
 
-Search Console will not complain about its absence, and you should not add one
-to make a report look tidier. The reasoning is written out at the top of
-`src/app/sitemap.ts`; the short version is that Google uses `lastmod` only while
-it stays verifiably accurate and discounts it once it does not, and none of the
-three implementations open to this repo stays accurate:
-
-| Approach | Fails because |
-| --- | --- |
-| Build time on every entry | claims every URL changed on every deploy |
-| `git log -1` per route | Vercel clones shallow, so it returns empty in CI |
-| Committed manifest | correct the day it is generated, wrong from the next content commit, and looks maintained |
-
-`changefreq` and `priority` already carry which routes move.
-
-If you ever see a recrawl-latency problem that you can actually attribute to
-this, the fix is a build step with full git history, not a stamped date.
+Every sitemap entry carries `LAST_MODIFIED` from `src/app/sitemap.ts`, the day
+the pages were last rewritten (25 September 2026). It is never the build
+time: a date that moves on every deploy claims every URL changed, and Google
+and Bing discount lastmod from a site that does that. Move it forward by hand
+in the commit that changes what the pages say, and only then. A per-route date
+from git is out of reach while Vercel clones shallow.
 
 ### IndexNow, for the engines that are not Google
 

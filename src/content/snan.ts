@@ -130,7 +130,7 @@ const en: Copy = {
   meta: {
     title: "The snan, three minutes with your river",
     description:
-      "A digital snan. Three minutes with the river you grew up near, at the hour the panchang names, and a Sankalp Patra with your family's names on it. Eleven mornings for eleven.",
+      "Three minutes with the river you grew up near, at the hour the panchang names, and a Sankalp Patra with your family's names. Eleven mornings for eleven.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
@@ -287,7 +287,7 @@ const hi: Copy = {
   meta: {
     title: "स्नान, अपनी नदी के साथ तीन मिनट",
     description:
-      "एक डिजिटल स्नान। पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट जिसके पास आप बड़े हुए, और एक संकल्प पत्र जिस पर आपके परिवार के नाम हैं। ग्यारह सुबहें, ग्यारह में।",
+      "पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट जिसके पास आप बड़े हुए, और एक संकल्प पत्र जिस पर आपके परिवार के नाम हैं। ग्यारह सुबहें, ग्यारह में।",
   },
 
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },

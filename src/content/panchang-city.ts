@@ -1,5 +1,5 @@
 import type { Lang } from "@/lib/locales";
-import { fitTitle } from "@/lib/seo";
+import { fitDescription, fitTitle } from "@/lib/seo";
 
 /* The copy of /panchang/[city]. `{city}` is the city's name. */
 export const panchangCityContent = {
@@ -11,8 +11,11 @@ export const panchangCityContent = {
         "{city} panchang today: sunrise and Brahma muhurat",
         "{city} panchang today",
       ],
-      description:
-        "Today's sunrise, Brahma muhurat and tithi in {city}, on your clock and in IST.",
+      descriptions: [
+        "Today's sunrise, Brahma muhurat, sunset and tithi in {city}, computed at the city's own coordinates. On your clock, with the ghat's hour in IST.",
+        "Today's sunrise, Brahma muhurat, sunset and tithi in {city}, computed at its own coordinates. On your clock and in IST.",
+        "Today's sunrise, Brahma muhurat, sunset and tithi in {city}, on your clock and in IST.",
+      ],
     },
     kicker: "Panchang by city",
     title: "{city}, this morning",
@@ -51,8 +54,11 @@ export const panchangCityContent = {
         "{city} का आज का पंचांग: सूर्योदय और ब्रह्म मुहूर्त",
         "{city} का आज का पंचांग",
       ],
-      description:
-        "{city} में आज का सूर्योदय, ब्रह्म मुहूर्त और तिथि, आपकी घड़ी और IST में।",
+      descriptions: [
+        "{city} में आज का सूर्योदय, ब्रह्म मुहूर्त, सूर्यास्त और तिथि, शहर के अपने निर्देशांकों पर गणना किए हुए। आपकी घड़ी पर, और साथ में घाट का समय IST में।",
+        "{city} में आज का सूर्योदय, ब्रह्म मुहूर्त, सूर्यास्त और तिथि, उसके अपने निर्देशांकों पर गणना किए हुए। आपकी घड़ी और IST में।",
+        "{city} में आज का सूर्योदय, ब्रह्म मुहूर्त, सूर्यास्त और तिथि, आपकी घड़ी और IST में।",
+      ],
     },
     kicker: "शहर के अनुसार पंचांग",
     title: "{city}, आज की सुबह",
@@ -89,6 +95,10 @@ export const panchangCityContent = {
 export type PanchangCityCopy = (typeof panchangCityContent)["en"];
 
 /** A city page's title: the fullest of its lengths that fits beside the city's name. */
+export function cityDescription(lang: Lang, city: string): string {
+  return fitDescription(panchangCityContent[lang].meta.descriptions.map((t) => t.replace("{city}", city)));
+}
+
 export function cityTitle(lang: Lang, city: string): string {
   return fitTitle(panchangCityContent[lang].meta.titles.map((t) => t.replace("{city}", city)));
 }

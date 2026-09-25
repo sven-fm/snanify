@@ -199,7 +199,7 @@ export const panchangContent = {
     meta: {
       title: "Panchang {year} by city: today's tithi in 300 cities",
       description:
-        "Today's tithi, sunrise and Brahma muhurat where you live. 300 cities in 48 countries, with the ghat's hour in IST.",
+        "Today's tithi, sunrise and Brahma muhurat where you live. 300 cities in 48 countries, on your own clock with the ghat's hour in IST beside it.",
     },
     hero: {
       title: "The panchang, in your own city",
@@ -389,7 +389,7 @@ export const panchangContent = {
     meta: {
       title: "पंचांग {year} शहर के अनुसार: 300 शहरों में आज की तिथि",
       description:
-        "आप जहाँ रहते हैं, वहाँ की आज की तिथि, सूर्योदय और ब्रह्म मुहूर्त। 48 देशों के 300 शहर, साथ में घाट का समय IST में।",
+        "आप जहाँ रहते हैं, वहाँ की आज की तिथि, सूर्योदय और ब्रह्म मुहूर्त। 48 देशों के 300 शहर, आपकी अपनी घड़ी पर, और साथ में घाट का समय IST में।",
     },
     hero: {
       title: "पंचांग, आपके अपने शहर में",

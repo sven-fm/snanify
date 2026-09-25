@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { CityPanchang } from "@/components/pages/CityPanchang";
 import { StructuredData, breadcrumbList, organization, webPage, website } from "@/components/StructuredData";
 import { CITY_SLUGS, cityBySlug } from "@/content/cities";
-import { cityTitle, panchangCityContent } from "@/content/panchang-city";
+import { cityDescription, cityTitle } from "@/content/panchang-city";
 import { cityDay } from "@/lib/city-day";
 import { LANGS, type Lang } from "@/lib/locales";
 import { navLabel } from "@/lib/nav";
@@ -23,13 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Lan
   const { lang, city: slug } = await params;
   const city = cityBySlug(slug);
   if (!city) return {};
-  const t = panchangCityContent[lang].meta;
   const name = city.name[lang];
   return pageMetadata({
     lang,
     path: `/panchang/${slug}`,
     title: cityTitle(lang, name),
-    description: t.description.replace("{city}", name),
+    description: cityDescription(lang, name),
     ogType: "article",
   });
 }
@@ -40,7 +39,6 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang; c
   if (!city) notFound();
   const day = cityDay(city);
   if (!day) notFound();
-  const t = panchangCityContent[lang].meta;
   const name = city.name[lang];
   const path = `/panchang/${slug}`;
   return (
@@ -53,7 +51,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang; c
             lang,
             path,
             name: cityTitle(lang, name),
-            description: t.description.replace("{city}", name),
+            description: cityDescription(lang, name),
             breadcrumb: breadcrumbList(lang, [
               { name: "Snanify", path: "/" },
               { name: navLabel(lang, "panchang"), path: "/panchang" },

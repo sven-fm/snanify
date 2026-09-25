@@ -23,9 +23,9 @@ import {
 } from "@/content/muhurat";
 import { RIVERS } from "@/content/rivers";
 import { pageMetadata } from "@/lib/seo";
-import { muhuratIndexContent, occasionTitle } from "@/content/muhurat-index";
+import { muhuratIndexContent, occasionDescription, occasionTitle } from "@/content/muhurat-index";
 import { occasionName } from "@/content/names";
-import { horizonFrom, resolveOccasion, sayResolved, type ResolvedDate } from "@/lib/occasions";
+import { horizonFrom, resolveOccasion, sayResolved } from "@/lib/occasions";
 import { localeDef } from "@/lib/locales";
 
 /** Every (lang, occasion) pair, the slug is identical in both locales. */
@@ -35,75 +35,6 @@ export const revalidate = 86400;
 
 export function generateStaticParams() {
   return LANGS.flatMap((lang) => OCCASIONS.map((o) => ({ lang, occasion: o.slug })));
-}
-
-/* ---------------------------------------------------------------------------
-   Search-result copy.
-
-   The description that used to ship here ended with the provenance badge,
-   "Provisional, to be confirmed against the panchang". That sentence is the
-   right sentence in the wrong place: on the page, printed beside the date, it
-   builds trust; in the 155 characters that decide a click it reads as a site
-   that does not know its own dates, against operators who assert theirs
-   confidently. The badge stays on the page, in MuhuratDetail, and it also
-   stays in the JSON-LD below, where a machine reads it. It comes out of the
-   snippet and nothing else changes.
-
-   The replacement is query-shaped rather than brand-shaped: the occasion, when
-   it falls, the rule that decides the day, and how many waters keep it. Hindi
-   is written as Hindi, not as a gloss of the English line.
-   --------------------------------------------------------------------------- */
-
-const seo = {
-  en: {
-    /** Indexed by count, so a single water is never called "one waters". */
-    waters: [
-      "no water",
-      "one water",
-      "two waters",
-      "three waters",
-      "four waters",
-      "five waters",
-      "six waters",
-    ],
-    tithiRule: "The tithi rule",
-    ingressRule: "The ingress rule",
-    description: (name: string, when: string, rule: string, waters: string) =>
-      `${name}, ${when}. ${rule}, the snan windows, and the ${waters} where it is kept. In IST and your own timezone.`,
-  },
-  hi: {
-    waters: ["कोई जल नहीं", "एक जल", "दो जल", "तीन जल", "चार जल", "पाँच जल", "छह जल"],
-    tithiRule: "तिथि का नियम",
-    ingressRule: "राशि-प्रवेश का नियम",
-    description: (name: string, when: string, rule: string, waters: string) =>
-      `${name}, ${when}। ${rule}, स्नान की बेलाएँ, और ${waters} जहाँ यह रखा जाता है। समय IST में और आपके समयक्षेत्र में।`,
-  },
-} satisfies Record<Lang, unknown>;
-
-/**
- * "Every lunar month" is a sentence opener in the data and a mid-sentence
- * clause here, so the recurring labels are lowercased. Dated labels are left
- * exactly as written, because "September-October 2026" is a proper noun and
- * lowercasing it would be wrong.
- */
-function occurrenceClause(lang: Lang, occasion: Occasion): string {
-  const label = occasion.occurrence.label[lang];
-  if (lang !== "en" || occasion.occurrence.basis !== "recurring") return label;
-  return label.charAt(0).toLowerCase() + label.slice(1);
-}
-
-/** The description opens with the computed day where there is one, so the
-    snippet under the title answers the question the search asked. */
-function occasionDescription(lang: Lang, occasion: Occasion, resolved?: ResolvedDate): string {
-  const t = seo[lang];
-  const rule = occasion.rule.kind === "solar-ingress" ? t.ingressRule : t.tithiRule;
-  const waters = t.waters[occasion.ghats.length] ?? t.waters[0];
-  return t.description(
-    occasion.aka ? `${occasion.name[lang]} (${occasion.aka[lang]})` : occasion.name[lang],
-    resolved ? sayResolved(resolved, lang) : occurrenceClause(lang, occasion),
-    rule,
-    waters,
-  );
 }
 
 /* --- schedule ------------------------------------------------------------- */
@@ -156,7 +87,7 @@ export async function generateMetadata({
   const next = resolveOccasion(occasion, from, to)[0];
   const year = next?.date?.slice(0, 4);
   const title = occasionTitle(lang, occasion, year);
-  const description = occasionDescription(lang, occasion, next);
+  const description = occasionDescription(lang, occasion, next ? sayResolved(next, lang) : undefined);
 
   return pageMetadata({
     lang,
@@ -186,7 +117,7 @@ export default async function Page({
   const { from, to } = horizonFrom(new Date());
   const resolved = resolveOccasion(occasion, from, to);
   const first = resolved[0];
-  const description = occasionDescription(lang, occasion, first);
+  const description = occasionDescription(lang, occasion, first ? sayResolved(first, lang) : undefined);
   const year = first?.date?.slice(0, 4);
   const when =
     first && year
