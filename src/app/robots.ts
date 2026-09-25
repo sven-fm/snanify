@@ -10,12 +10,12 @@ import { SITE_ORIGIN } from "@/lib/locales";
  * it to the unprefixed form, so a crawler should never see one, but a stray
  * internal link would otherwise offer Google a second URL for every English
  * page. The rest of the tree is open; there is nothing here to hide, and every
- * paid surface is behind an action rather than a URL.
+ * paid surface is behind an action rather than a URL. There is no `Host:`
+ * line: only Yandex ever read it, and the apex already 308s to www.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [{ userAgent: "*", allow: "/", disallow: ["/en/"] }],
     sitemap: `${SITE_ORIGIN}/sitemap.xml`,
-    host: SITE_ORIGIN,
   };
 }

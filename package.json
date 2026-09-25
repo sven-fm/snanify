@@ -9,7 +9,10 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "indexnow": "node scripts/indexnow.mjs",
+    "seo:check": "node scripts/seo-check.mjs",
+    "seo:similarity": "node scripts/similarity.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.1",

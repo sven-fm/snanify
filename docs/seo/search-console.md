@@ -49,8 +49,30 @@ alternates set for its route, which is the same set the page itself emits in
 neither, so they are generated from one function, `hreflangMap`, and cannot
 drift.
 
-Every route is listed in both locales: the marketing routes, the six waters and
-the occasions.
+### The index is a short list, on purpose
+
+`src/lib/indexable.ts` decides which pages ask to be indexed, and the sitemap,
+every page's robots tag and hreflang, and the IndexNow script all read it:
+
+| Page | Indexed |
+| --- | --- |
+| The core pages, the six waters, `/panchang/shraddha` | always |
+| `/muhurat/{purnima,amavasya,ekadashi,sankranti}` | always |
+| A dated occasion (`/muhurat/kartik-purnima-2026`) | while it falls within the next 180 days |
+| A city (`/panchang/edison`) | when its slug is in `INDEXABLE_CITIES` (thirty today) |
+| `/privacy`, `/terms` | never |
+
+Everything else stays live, returns 200 and is linked as before, with
+`noindex, follow`, no hreflang set and no sitemap entry. Both locales follow
+the same rule. In September 2026 Bing had indexed 1 of 770 URLs and flagged
+the templated city pages as a quality problem, which held back the whole
+domain; the index grows again in batches of about twenty cities, each with its
+own content first, once most of the current list is indexed.
+
+`npm run seo:check` reads production and fails on any sitemap URL that is not
+200, carries `noindex`, has a foreign canonical or an hreflang target outside
+the sitemap, on a sampled non-indexed page without `noindex`, and on an apex
+redirect that is not one hop.
 
 ### There is no `lastmod`, on purpose
 
@@ -62,12 +84,11 @@ three implementations open to this repo stays accurate:
 
 | Approach | Fails because |
 | --- | --- |
-| Build time on every entry | claims all 104 URLs changed on every deploy |
+| Build time on every entry | claims every URL changed on every deploy |
 | `git log -1` per route | Vercel clones shallow, so it returns empty in CI |
 | Committed manifest | correct the day it is generated, wrong from the next content commit, and looks maintained |
 
-`changefreq` and `priority` already carry which routes move. At 104 URLs there
-is no crawl budget problem for `lastmod` to solve.
+`changefreq` and `priority` already carry which routes move.
 
 If you ever see a recrawl-latency problem that you can actually attribute to
 this, the fix is a build step with full git history, not a stamped date.
@@ -76,14 +97,20 @@ this, the fix is a build step with full git history, not a stamped date.
 
 Bing, Yandex, Naver, Seznam and Yep take a push instead of waiting for a crawl.
 The key is verified by the file at `public/8b6cc2fb2f124d6a8955bba929f94f10.txt`,
-which `src/proxy.ts` serves as a static file. `.github/workflows/indexnow.yml`
-submits the whole sitemap after every production deploy, on the success status
-Vercel's GitHub app records. By hand, for a check or a single page:
+which `src/proxy.ts` serves as a static file. Submit a page when what it says
+changed, by hand, after the deploy that changed it:
 
 ```bash
-node scripts/indexnow.mjs             # every URL in the live sitemap
-node scripts/indexnow.mjs /live       # only these paths
+npm run indexnow -- --since <ref> --dry-run   # the pages the diff since <ref> touched
+npm run indexnow -- --since <ref>             # submit them
+npm run indexnow -- /live /kumbh              # these routes, both locales
 ```
+
+Only URLs in the live sitemap go out, at most 100 a run, in one POST. Nothing
+submits on a schedule or on every deploy: until 25 September 2026 a workflow
+posted the whole sitemap on each deploy, about seven times per URL on a busy
+day, and Bing reads a repeated unchanged URL as noise. A city page's new
+sunrise is the page working, not a change to submit.
 
 Google does not read IndexNow; the sitemap above is still its route in.
 

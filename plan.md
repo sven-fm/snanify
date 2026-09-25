@@ -7,7 +7,10 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
 
 ## For you to review
 
-Nothing at the moment.
+1. **Bing and the index, your steps. P1.** In Bing Webmaster Tools: add
+   `https://www.snanify.com/` (or the domain by DNS), submit its sitemap, remove the old
+   non-www sitemap; submit the top ten URLs by hand. Win five to ten real referring
+   domains. Re-check coverage on 9 and 23 October 2026.
 
 ## Waiting for your go
 
@@ -16,7 +19,14 @@ Nothing at the moment.
    preview. A transient of the deploy, not the markup. `scripts/hydration-probe.mjs`
    measures it. Next step if it matters: a preview with `<Analytics />` swapped for
    `@vercel/analytics/react`, probed in its first ten minutes.
-2. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
+2. **A voice of its own for each indexed city. P1.** A "Snan in <City>" section for the
+   thirty cities in `INDEXABLE_CITIES`, en and hi, 150 to 250 words each: local mandirs
+   and community centres (name and neighbourhood), the water people use, the DST shift
+   against IST, the festivals kept there. Only facts that can be sourced. Gate:
+   `npm run seo:similarity` at or below 0.5 on every pair (twelve pairs are above it
+   today; Brampton and Mississauga at 0.78). Then, once more than sixty of the seventy
+   routes are indexed, the next twenty cities, each with its content first.
+3. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
    profile exists.
 
 ## After launch, argued from data
@@ -28,6 +38,15 @@ folios and the email the day before; a third locale chosen from the zone data in
 ---
 
 ## Done
+
+### 25 September 2026
+
+- The index cut to seventy routes a locale (`src/lib/indexable.ts`): thirty cities, the
+  dated occasions within 180 days plus Ganga Dussehra 2027, which already earns
+  impressions; the rest `noindex, follow`, out of the sitemap, still live. IndexNow by hand
+  only, at most 100 changed URLs a run; the deploy workflow gone. Eight nearest cities on
+  a city page, not the whole country. A shorter homepage description; no `Host:` in
+  robots.txt. `npm run seo:check` and `npm run seo:similarity`.
 
 ### 16 September 2026
 

@@ -2,47 +2,41 @@ import type { MetadataRoute } from "next";
 import { RIVER_SLUGS } from "@/content/rivers";
 import { OCCASION_SLUGS } from "@/content/muhurat";
 import { CITY_SLUGS } from "@/content/cities";
+import { isIndexable } from "@/lib/indexable";
 import { hreflangMap, localeUrl, LANGS, DEFAULT_LANG } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The sitemap, generated per locale from the same route manifest that drives
-   hreflang.
+   hreflang, and filtered through src/lib/indexable.ts, the one list of pages
+   that ask to be indexed. A page outside it stays live with `noindex` and is
+   left out here.
 
-   The important property is that this file cannot disagree with the `<link
-   rel="alternate">` tags on the pages themselves: both come out of
-   `hreflangMap`, so every entry carries the same alternates set as the page it
-   points at. Google treats a mismatch between the two as a reason to ignore
-   both.
+   This file cannot disagree with the `<link rel="alternate">` tags on the
+   pages themselves: both come out of `hreflangMap`, so every entry carries the
+   same alternates set as the page it points at, and both locales of a route
+   are in or out together.
+
+   Remade once a day, so a dated occasion enters as it comes within 180 days
+   and leaves once it is past.
 
    THERE IS NO `lastModified` HERE, AND THAT IS A DECISION RATHER THAN AN
-   OVERSIGHT. It was an oversight until August 2026; this paragraph is the point
-   at which it stopped being one, so nobody adds one in good faith later.
+   OVERSIGHT. Search engines use `lastmod` only while it is consistently and
+   verifiably accurate, and discount the whole signal once it is not. Every
+   implementation available to this repo fails that test:
 
-   Google uses `lastmod` only while it is consistently and verifiably accurate,
-   and discounts the whole signal once it is not. Every implementation available
-   to this repo fails that test:
-
-     · Build time on every entry claims all 104 URLs changed on every deploy.
-       That is false on 103 of them for a one-line copy fix, and it is the
-       version that gets the signal ignored.
-     · A date derived from `git log -1` over the content file behind each route
-       is accurate, but Vercel clones shallow by default, so it returns empty in
-       CI and silently ships a sitemap with no lastmod anyway, or worse, with
-       the clone boundary's date on everything.
+     · Build time on every entry claims every URL changed on every deploy.
+     · A date from `git log -1` over the content behind each route is accurate
+       only with full history; Vercel clones shallow, so in CI it returns the
+       clone boundary's date or nothing.
      · A committed manifest is accurate on the day it is generated and quietly
-       wrong from the next content commit onward, which is the worst of the
-       three because it looks maintained.
+       wrong from the next content commit onward.
 
-   The upside is small enough to make that trade obvious: 104 URLs is far inside
-   any crawl budget, and `changefreq` and `priority` below already say which
-   routes move. `/live` is daily, the river pages are monthly, the occasions are
-   weekly.
-
-   The rule this file is under is the same one the shraddha ladder on /panchang
-   is under: we would rather publish nothing than publish a date we cannot stand
-   behind. If a real content-modification date ever becomes available, from a
-   CMS or a build step that can see full history, this is where it goes.
+   We would rather publish nothing than a date we cannot stand behind. If a
+   real content-modification date ever becomes available, this is where it
+   goes.
    --------------------------------------------------------------------------- */
+
+export const revalidate = 86400;
 
 type Route = {
   path: string;
@@ -73,7 +67,8 @@ const ROUTES: Route[] = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ROUTES.flatMap(({ path, priority, changeFrequency }) => {
+  const now = new Date();
+  return ROUTES.filter(({ path }) => isIndexable(path, now)).flatMap(({ path, priority, changeFrequency }) => {
     const languages = hreflangMap(path);
     return LANGS.map((lang) => ({
       url: localeUrl(lang, path),

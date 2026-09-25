@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { citiesByCountry, type City } from "@/content/cities";
+import { CITIES, type City } from "@/content/cities";
 import { RIVERS } from "@/content/rivers";
 import { panchangCityContent } from "@/content/panchang-city";
 import { PAKSHA_NAMES } from "@/lib/sky";
@@ -9,12 +9,28 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/ui";
 import { ctaHref } from "@/lib/nav";
+import { greatCircleKm } from "@/lib/distance";
+import { isIndexableCity } from "@/lib/indexable";
 
 /* ---------------------------------------------------------------------------
    One city's morning, as a ruled register: each row the city's own clock on
    the left and the ghat's IST on the right, so a reader in Leicester sees
    both without arithmetic.
    --------------------------------------------------------------------------- */
+
+/** Eight cities near this one: the indexed ones within a day's drive first,
+    then the nearest of the rest. The whole list is one link away on /panchang. */
+const NEIGHBOURS = 8;
+const NEAR_KM = 1000;
+
+function nearest(city: City): readonly City[] {
+  const byDistance = CITIES.filter((x) => x.slug !== city.slug)
+    .map((x) => ({ x, d: greatCircleKm([city.lat, city.lon], [x.lat, x.lon]) }))
+    .sort((a, b) => a.d - b.d);
+  const indexed = byDistance.filter(({ x, d }) => d <= NEAR_KM && isIndexableCity(x.slug));
+  const rest = byDistance.filter((n) => !indexed.includes(n));
+  return [...indexed, ...rest].slice(0, NEIGHBOURS).map(({ x }) => x);
+}
 
 const DEVA = "०१२३४५६७८९";
 const deva = (s: string, lang: Lang) =>
@@ -45,7 +61,7 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
   const t = panchangCityContent[lang];
   const name = city.name[lang];
   const fill = (s: string) => s.replace(/\{city\}/g, name);
-  const neighbours = (citiesByCountry(lang).find((g) => g.country.code === city.countryCode)?.cities ?? []).filter((x) => x.slug !== city.slug);
+  const neighbours = nearest(city);
   const tithi = `${day.tithi.name[lang]}, ${PAKSHA_NAMES[day.tithi.paksha][lang]}`;
   const ends = day.tithi.endsAt ? new Date(day.tithi.endsAt) : null;
 
@@ -153,7 +169,7 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
         </Section>
 
         <Section id="cities" tinted>
-          <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.othersIn.replace("{country}", city.country[lang])}</h2>
+          <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{fill(t.othersIn)}</h2>
           <ul className="mt-6 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
             {neighbours.map((x) => (
               <li key={x.slug} className="border-b border-rule">

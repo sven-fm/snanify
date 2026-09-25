@@ -8,6 +8,7 @@ import {
   SITE_ORIGIN,
   type Lang,
 } from "@/lib/locales";
+import { isIndexable } from "@/lib/indexable";
 
 /* ---------------------------------------------------------------------------
    One page, one metadata block, built the same way everywhere.
@@ -29,6 +30,10 @@ import {
 
    X-DEFAULT points at English: it is the fallback for a reader whose language
    is not in the set, and English is the edition in which the whole site exists.
+
+   A page outside the index (src/lib/indexable.ts) carries `noindex, follow`
+   and no hreflang set: its counterpart is outside the index too, and an
+   alternate may only point at an indexable page.
 
    CANONICALS are self-referential and always in the public URL shape (English
    unprefixed, everything else prefixed), never the internal `/en/...` form that
@@ -74,14 +79,13 @@ export function pageMetadata({
 }: PageMetaArgs): Metadata {
   const def = localeDef(lang);
   const url = localeUrl(lang, path);
+  const indexed = isIndexable(path);
 
   return {
     title,
     description,
-    alternates: {
-      canonical: url,
-      languages: hreflangMap(path),
-    },
+    alternates: indexed ? { canonical: url, languages: hreflangMap(path) } : { canonical: url },
+    ...(indexed ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       type: ogType,
       url,

@@ -25,7 +25,7 @@ export const en = {
   meta: {
     title: "Snanify, the river comes to you",
     description:
-      "A digital snan. Sit three minutes with the river you grew up near, at the hour the panchang names, and send your family the sheet that comes out of it. Six rivers, live.",
+      "Sit three minutes with the river you grew up near, at the hour the panchang names. Six sacred rivers, live, with the muhurat for every day.",
   },
   /* The one line on the share card a chat app unfurls; see src/lib/site-card.ts. */
   share: "A digital snan. Three minutes with the river you grew up near, and a sheet to send home.",
