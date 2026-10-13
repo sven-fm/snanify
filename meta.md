@@ -19,8 +19,9 @@ already in `plan.md`. It does not touch the ad funnel.
 
 **Built:** the Meta Pixel (PageView per route, ViewContent, InitiateCheckout,
 CompleteRegistration) and Purchase from the Stripe webhook through the Conversions API,
-hashed and keyed by the session. Off in the EU, the EEA, the UK and Switzerland until a
-consent banner exists; the privacy page says so. It switches on when
+hashed and keyed by the session. In the EU, the EEA, the UK and Switzerland a cookie
+notice asks first and Meta loads only after a yes; everywhere else it loads from the first
+visit, with no notice. The privacy page says so and carries the choice. It switches on when
 `NEXT_PUBLIC_META_PIXEL_ID` and `META_CAPI_TOKEN` are set in Vercel (`plan.md`, item 1).
 
 - The site has no Meta Pixel and no Conversions API. Meta cannot optimise for purchases, and

@@ -5,6 +5,7 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { currencyForCountry } from "@/lib/currency";
 import { adsAllowed } from "@/lib/meta";
+import { CONSENT_COOKIE } from "@/lib/consent";
 import { requireUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
 import { createCheckout } from "@/lib/stripe";
@@ -57,10 +58,11 @@ export async function checkoutFor(lang: Lang, tier: TierKey, next: string): Prom
   const currency = currencyForCountry(country);
 
   /* What Meta matches the purchase on, kept only where Meta may measure this
-     buyer; the webhook sends it through the Conversions API. */
+     buyer: a country that lets it, or a yes to the cookie notice. The webhook
+     sends it through the Conversions API. */
   let meta: { fbp?: string; fbc?: string; ip?: string; ua?: string } | undefined;
-  if (adsAllowed(country)) {
-    const jar = await cookies();
+  const jar = await cookies();
+  if (adsAllowed(country) || jar.get(CONSENT_COOKIE)?.value === "yes") {
     meta = {
       fbp: jar.get("_fbp")?.value,
       fbc: jar.get("_fbc")?.value,

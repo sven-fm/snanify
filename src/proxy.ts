@@ -50,10 +50,11 @@ function stampCurrency(res: NextResponse, req: NextRequest): NextResponse {
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 30,
   });
-  /* Whether the Meta Pixel may load for this reader; see src/lib/meta.ts.
+  /* Whether the Meta Pixel may load from the first visit ("1") or only after
+     the reader says yes to the cookie notice ("ask"); see src/lib/meta.ts.
      Read by the browser, so not httpOnly, and rewritten on every response
-     like the currency, so a reader who travels is measured by where they are. */
-  res.cookies.set(ADS_COOKIE, adsAllowed(country) ? "1" : "0", {
+     like the currency, so a reader who travels is treated by where they are. */
+  res.cookies.set(ADS_COOKIE, adsAllowed(country) ? "1" : "ask", {
     path: "/",
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 30,

@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { MetaPixel } from "@/components/MetaPixel";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import { themeScript } from "@/components/ThemeToggle";
 import { currencyScript } from "@/lib/currency";
 import { fontClass } from "@/lib/fonts";
@@ -40,6 +41,8 @@ export function RootShell({ lang, children }: { lang: Lang; children: React.Reac
         <Analytics />
         {/* Meta, only where it may measure; see src/lib/meta.ts. */}
         <MetaPixel />
+        {/* The cookie notice, only where the law asks for one. */}
+        <ConsentBanner lang={lang} />
       </body>
     </html>
   );

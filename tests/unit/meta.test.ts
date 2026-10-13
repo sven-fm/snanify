@@ -86,3 +86,27 @@ describe("sendPurchase", () => {
     await expect(sendPurchase(purchase)).resolves.toBeUndefined();
   });
 });
+
+describe("the cookie notice", () => {
+  it("lets Meta load from the first visit where no notice is owed", async () => {
+    const { metaMayLoad, noticeOwed } = await import("@/lib/consent");
+    expect(metaMayLoad("1", undefined)).toBe(true);
+    expect(noticeOwed("1", undefined)).toBe(false);
+  });
+
+  it("asks in a consent country, and loads Meta only after a yes", async () => {
+    const { metaMayLoad, noticeOwed } = await import("@/lib/consent");
+    expect(noticeOwed("ask", undefined)).toBe(true);
+    expect(metaMayLoad("ask", undefined)).toBe(false);
+    expect(metaMayLoad("ask", "no")).toBe(false);
+    expect(noticeOwed("ask", "no")).toBe(false);
+    expect(metaMayLoad("ask", "yes")).toBe(true);
+    expect(noticeOwed("ask", "yes")).toBe(false);
+  });
+
+  it("treats a missing cookie as a reader Meta may not measure", async () => {
+    const { metaMayLoad, noticeOwed } = await import("@/lib/consent");
+    expect(metaMayLoad(undefined, "yes")).toBe(false);
+    expect(noticeOwed(undefined, undefined)).toBe(false);
+  });
+});

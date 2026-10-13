@@ -71,16 +71,17 @@ const en = {
           { k: "Neon", v: "The database: your profile, your register and your sheets." },
           { k: "Vercel", v: "Hosting, file storage, and page counts with no cookies." },
           { k: "Resend", v: "Your receipt and your morning reminder, and nothing else." },
-          { k: "Meta", v: "Measures our ads, for readers outside the EU, the EEA, the UK and Switzerland. See below." },
+          { k: "Meta", v: "Measures our ads. In the EU, the EEA, the UK and Switzerland, only after you accept. See below." },
         ],
       },
       {
         h: "Measuring our ads",
+        consent: true,
         body: [
-          "Outside the EU, the EEA, the UK and Switzerland, this site loads the Meta Pixel. It sets Meta's cookie and tells Meta which pages you open, and when you reach the packs, begin a checkout or finish setting up your sheet. That is how we learn which of our ads bring people who stay.",
+          "This site loads the Meta Pixel: from your first visit outside the EU, the EEA, the UK and Switzerland, and inside them only after you accept the cookie notice. It sets Meta's cookie and tells Meta which pages you open, and when you reach the packs, begin a checkout or finish setting up your sheet. That is how we learn which of our ads bring people who stay.",
           "When you buy, our server tells Meta about the purchase: the amount and currency, your email address and account number scrambled with SHA-256, your IP address, your browser, and Meta's cookie if your browser holds one.",
           "Your sankalp, your names, your photograph and your sheets stay with us.",
-          "In the EU, the EEA, the UK and Switzerland the pixel stays off.",
+          "In the EU, the EEA, the UK and Switzerland, a purchase is told to Meta only after you accept. Your answer lasts six months, and you can change it here at any time.",
         ],
       },
       {
@@ -220,16 +221,17 @@ const hi = {
           { k: "Neon", v: "आँकड़ा-कोष: आपकी प्रोफ़ाइल, आपकी पंजिका और आपके पत्र।" },
           { k: "Vercel", v: "होस्टिंग, फ़ाइल भंडारण, और बिना कुकी के पृष्ठ-गणना।" },
           { k: "Resend", v: "आपकी रसीद और प्रातःकालीन सूचना, इसके अतिरिक्त कुछ नहीं।" },
-          { k: "Meta", v: "हमारे विज्ञापनों का मापन, यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड से बाहर के पाठकों के लिए। नीचे देखिए।" },
+          { k: "Meta", v: "हमारे विज्ञापनों का मापन। यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड में केवल आपकी स्वीकृति के बाद। नीचे देखिए।" },
         ],
       },
       {
         h: "हमारे विज्ञापनों का मापन",
+        consent: true,
         body: [
-          "यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड से बाहर, यह साइट Meta Pixel लोड करती है। वह Meta की कुकी रखता है और Meta को बताता है कि आप कौन-से पृष्ठ खोलते हैं, और कब आप सुबहों के मूल्य तक पहुँचते हैं, भुगतान शुरू करते हैं या अपना पत्र तैयार करते हैं। इसी से हम जानते हैं कि हमारे कौन-से विज्ञापन ऐसे लोगों को लाते हैं जो रुकते हैं।",
+          "यह साइट Meta Pixel लोड करती है: यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड से बाहर पहली बार आते ही, और उनके भीतर केवल तब, जब आप कुकी सूचना स्वीकार करें। वह Meta की कुकी रखता है और Meta को बताता है कि आप कौन-से पृष्ठ खोलते हैं, और कब आप सुबहों के मूल्य तक पहुँचते हैं, भुगतान शुरू करते हैं या अपना पत्र तैयार करते हैं। इसी से हम जानते हैं कि हमारे कौन-से विज्ञापन ऐसे लोगों को लाते हैं जो रुकते हैं।",
           "जब आप खरीदते हैं, हमारा सर्वर Meta को उस ख़रीद के बारे में बताता है: राशि और मुद्रा, SHA-256 से गूढ़ किया हुआ आपका ईमेल पता और खाता-संख्या, आपका IP पता, आपका ब्राउज़र, और Meta की कुकी, यदि आपके ब्राउज़र में हो।",
           "आपका संकल्प, आपके नाम, आपका चित्र और आपके पत्र हमारे पास रहते हैं।",
-          "यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड में पिक्सेल बंद रहता है।",
+          "यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड में ख़रीद की सूचना Meta को केवल आपकी स्वीकृति के बाद जाती है। आपका उत्तर छह महीने रहता है, और आप उसे यहाँ कभी भी बदल सकते हैं।",
         ],
       },
       {

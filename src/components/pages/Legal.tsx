@@ -3,6 +3,7 @@ import type { Lang } from "@/lib/locales";
 import { legalContent } from "@/content/legal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { ConsentChoice } from "@/components/ConsentChoice";
 
 /* ---------------------------------------------------------------------------
    /privacy and /terms, set as one page with two sets of copy.
@@ -20,6 +21,8 @@ type Section = {
   h: string;
   body?: readonly string[];
   rows?: readonly { k: string; v: string }[];
+  /** Where the reader's answer to the cookie notice is shown and changed. */
+  consent?: boolean;
 };
 
 export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" }) {
@@ -68,6 +71,8 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
                 ))}
               </dl>
             )}
+
+            {section.consent && <ConsentChoice lang={lang} />}
           </section>
         ))}
       </main>

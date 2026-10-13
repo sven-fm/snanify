@@ -2,10 +2,13 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { ADS_COOKIE, META_PIXEL_ID } from "@/lib/meta";
+import { META_PIXEL_ID } from "@/lib/meta";
+import { CONSENT_EVENT, metaMayLoad, readAds, readConsent } from "@/lib/consent";
 
 /* ---------------------------------------------------------------------------
-   The Meta Pixel, for readers Meta may measure (src/lib/meta.ts).
+   The Meta Pixel, for readers Meta may measure: from the first visit outside
+   the consent countries, after a yes to the cookie notice inside them
+   (src/lib/meta.ts, src/lib/consent.ts).
 
    INJECTED AFTER HYDRATION, NEVER RENDERED. The loader is Meta's own snippet,
    run from an effect, so the server HTML and the first client render are
@@ -35,7 +38,7 @@ declare global {
 }
 
 function allowed(): boolean {
-  return new RegExp(`(?:^|; )${ADS_COOKIE}=1(?:;|$)`).test(document.cookie);
+  return metaMayLoad(readAds(), readConsent());
 }
 
 /** Meta's base code, as published, with the ID passed in. */
@@ -68,6 +71,19 @@ export function MetaPixel() {
     load(META_PIXEL_ID);
     window.fbq?.("track", "PageView");
   }, [pathname]);
+
+  /* A yes to the cookie notice loads the pixel on the page the reader is
+     already on, with the PageView it would have sent on arrival. */
+  useEffect(() => {
+    const onAnswer = () => {
+      if (!META_PIXEL_ID || !allowed()) return;
+      const fresh = !window.fbq;
+      load(META_PIXEL_ID);
+      if (fresh) window.fbq?.("track", "PageView");
+    };
+    window.addEventListener(CONSENT_EVENT, onAnswer);
+    return () => window.removeEventListener(CONSENT_EVENT, onAnswer);
+  }, []);
 
   return null;
 }
