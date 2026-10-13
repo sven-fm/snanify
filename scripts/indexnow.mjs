@@ -49,6 +49,7 @@ const ROUTES_BY_FILE = [
   [/^src\/content\/(muhurat\.ts|data\/muhurat\.json|names\.ts)$|^src\/components\/pages\/MuhuratDetail|^src\/app\/\[lang\]\/muhurat\/\[occasion\]/, ["/muhurat", "/muhurat/*"]],
   [/^src\/content\/kumbh\.ts$|^src\/components\/pages\/Kumbh|^src\/app\/\[lang\]\/kumbh\//, ["/kumbh"]],
   [/^src\/content\/trust\.ts$|^src\/components\/pages\/Faq|^src\/app\/\[lang\]\/faq\//, ["/faq"]],
+  [/^src\/content\/about\.ts$|^src\/components\/pages\/About|^src\/app\/\[lang\]\/about\//, ["/about"]],
 ];
 
 async function sitemapUrls() {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { aboutContent } from "@/content/about";
 import { CITIES } from "@/content/cities";
 import { OCCASIONS } from "@/content/muhurat";
 import { occasionDescription } from "@/content/muhurat-index";
@@ -47,5 +48,11 @@ describe("the templated descriptions", () => {
         if (next) inRange(occasionDescription(lang, o, sayResolved(next, lang)));
       }
     }
+  });
+});
+
+describe("the hand-written descriptions", () => {
+  it("fit for /about in both editions", () => {
+    for (const lang of LANGS) inRange(aboutContent[lang].meta.description);
   });
 });

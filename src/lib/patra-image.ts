@@ -188,9 +188,10 @@ export async function patraSvg(view: PatraView): Promise<string> {
 
   /* --- the register, pinned to the foot ---------------------------------- */
   const rows: [string, string][] = [
+    ["Today", view.state],
     ["Flow", view.flow],
     ...(view.rank ? ([["Ranked", `${ordinal(Number(view.rank))} percentile since 1997`]] as [string, string][]) : []),
-    ["Kept", `${view.keptTime} ${view.keptZone}, ${view.keptIst} IST`],
+    ["Kept", `${view.keptLocal}, ${view.keptIst} IST`],
     ["Tithi", view.tithi],
     ["Nakshatra", `${view.nakshatra}, moon ${view.moon}`],
   ];
@@ -307,7 +308,7 @@ export async function patraCardSvg(view: PatraView): Promise<string> {
 
   parts.push(
     (
-      await typeset(`${view.flow}${view.rank ? `, ${ordinal(Number(view.rank))} percentile since 1997` : ""}`, {
+      await typeset(`${view.state}: ${view.flow}${view.rank ? `, ${ordinal(Number(view.rank))} percentile since 1997` : ""}`, {
         size: 26,
         x: m,
         y: y + 62,
@@ -408,17 +409,19 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   const footTop = H - MM - 62;
   const figuresTop = footTop - 168;
   parts.push(`<rect x="${MM}" y="${figuresTop}" width="${IN}" height="2" fill="${INK}" />`);
-  parts.push((await typeset("FLOW", { size: 20, x: MM, y: figuresTop + 40, fill: INK_2, tracking: 0.08 })).svg);
-  parts.push((await typeset(view.flow, { size: 46, x: MM, y: figuresTop + 100, weight: 600, fill: INK })).svg);
+  /* The river's state leads in words and the figures follow as its proof:
+     "Running full" on the left, the flow on the right, the rank under it. */
+  parts.push((await typeset(view.locale === "hi" ? "आज" : "TODAY", { size: 20, x: MM, y: figuresTop + 40, fill: INK_2, tracking: 0.08 })).svg);
+  parts.push((await typeset(view.state, { size: 46, x: MM, y: figuresTop + 100, weight: 600, fill: INK })).svg);
+  parts.push((await typeset("FLOW", { size: 20, x: R, y: figuresTop + 40, fill: INK_2, tracking: 0.08, anchor: "end" })).svg);
+  parts.push((await typeset(view.flow, { size: 34, x: R, y: figuresTop + 100, weight: 600, fill: INK, anchor: "end" })).svg);
   if (view.rank) {
-    parts.push((await typeset("RANKED", { size: 20, x: R, y: figuresTop + 40, fill: INK_2, tracking: 0.08, anchor: "end" })).svg);
-    parts.push((await typeset(`${ordinal(Number(view.rank))} percentile`, { size: 46, x: R, y: figuresTop + 100, weight: 600, fill: INK, anchor: "end" })).svg);
-    parts.push((await typeset("since 1997", { size: 22, x: R, y: figuresTop + 136, fill: INK_2, anchor: "end" })).svg);
+    parts.push((await typeset(`${ordinal(Number(view.rank))} percentile since 1997`, { size: 22, x: R, y: figuresTop + 136, fill: INK_2, anchor: "end" })).svg);
   }
   parts.push(
     (
       await typeset(
-        `${view.keptTime} ${view.keptZone}, ${view.keptIst} IST${view.distance ? `, ${view.distance}` : ""}`,
+        `${view.keptLocal}, ${view.keptIst} IST${view.distance ? `, ${view.distance}` : ""}`,
         { size: 22, x: MM, y: figuresTop + 136, fill: INK_2 },
       )
     ).svg,

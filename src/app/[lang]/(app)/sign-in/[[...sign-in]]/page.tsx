@@ -33,7 +33,7 @@ export async function generateMetadata({
   const t = accountContent[lang].signIn;
 
   return {
-    ...(await pageMetadata({ lang, path: ROUTE, title: t.meta, description: t.lede })),
+    ...(await pageMetadata({ lang, path: ROUTE, title: t.meta, description: t.description })),
     robots: { index: false, follow: false },
   };
 }
@@ -48,9 +48,21 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       <TrackView event="sign_in_view" props={{ lang }} />
       <Header lang={lang} currentPath={ROUTE} />
 
-      <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
+      <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-md">
           <h1 className="sr-only">{t.title}</h1>
+
+          {/* Where this sits, for a visitor who came straight from an ad: the
+              same three-step line /setup and /begin carry, none of it done yet. */}
+          <p className="text-[0.98rem] leading-[1.7] text-ink">{t.next}</p>
+          <ol className="mt-4 mb-6 grid grid-cols-3 gap-2" aria-label={t.stepsLabel}>
+            {t.steps.map((step, i) => (
+              <li key={step} className="border-t-2 border-rule pt-2">
+                <span className="label text-ink2">{String(i + 1).padStart(2, "0")}</span>
+                <span className="mt-1 block text-sm text-ink2">{step}</span>
+              </li>
+            ))}
+          </ol>
 
           <div className="flex justify-center">
             <SignIn

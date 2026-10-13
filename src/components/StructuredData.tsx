@@ -167,6 +167,48 @@ export function organizationRef(): JsonLdNode {
   return { "@id": ORGANIZATION_ID };
 }
 
+/* --- people -------------------------------------------------------------- */
+
+export interface PersonOptions {
+  /** A stable slug, so the same founder is one node across both editions. */
+  readonly id: string;
+  /** The name as written on their own sites. */
+  readonly name: string;
+  /** The name as this edition prints it, where it differs. */
+  readonly alternateName?: string;
+  readonly jobTitle: string;
+  readonly description: string;
+  /** The city they live in. */
+  readonly city: string;
+  /** Their own sites and profiles. Every one is a visible link on /about. */
+  readonly sameAs: readonly string[];
+  readonly image?: string;
+}
+
+/**
+ * A founder, as the /about page presents them. `sameAs` holds the person's
+ * own site and profile, each linked on the page itself, which is the line
+ * rule 1 draws: the Organization carries no sameAs, the people do.
+ */
+export function personId(id: string): string {
+  return `${SITE_ORIGIN}/#person-${id}`;
+}
+
+export function person(o: PersonOptions): JsonLdNode {
+  return {
+    "@type": "Person",
+    "@id": personId(o.id),
+    name: o.name,
+    alternateName: o.alternateName,
+    jobTitle: o.jobTitle,
+    description: o.description,
+    worksFor: { "@id": ORGANIZATION_ID },
+    homeLocation: { "@type": "City", name: o.city },
+    sameAs: o.sameAs,
+    image: o.image ? `${SITE_ORIGIN}${o.image}` : undefined,
+  };
+}
+
 /* --- website ------------------------------------------------------------- */
 
 /**

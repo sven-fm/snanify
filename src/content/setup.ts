@@ -8,7 +8,9 @@ import type { Lang } from "@/lib/locales";
    sankalp, and when to be reminded. Everything can be changed later.
 
    THE LABELS DO THE TEACHING. A label and one short hint is the whole
-   instruction for a field: somebody here has already paid and read /snan.
+   instruction for a field. Setup comes before paying, so somebody here may
+   have arrived from an ad and read only the landing page: the lede says what
+   the form makes, and each hint says what its field is for.
 
    `errors` holds one line per failure key returned by src/lib/profile-input.ts.
    Those keys are the contract between the validator and this file: the
@@ -22,7 +24,7 @@ const en = {
     description: "Choose your water, add your family's names, and write your sankalp once.",
   },
   title: "Set up your sheet",
-  lede: "You do this once, before you pick your mornings. Every morning after it takes three minutes.",
+  lede: "About two minutes, once. It makes your sheet, with your family's names on it. Then you choose your mornings, and each one takes three minutes.",
   /** The three-step line at the top: the water, the sheet, the hour. */
   steps: ["Your water", "Your sheet", "Your mornings"],
 
@@ -64,7 +66,7 @@ const en = {
   reminder: {
     label: "Reminder hour",
     hint: "In your local time. You can change it or stop it on your account page.",
-    zone: "Your time zone: {zone}",
+    zone: "Reminders follow the time in {zone}.",
   },
 
   save: "Save and continue",
@@ -97,7 +99,7 @@ const hi = {
     description: "अपना जल चुनिए, परिवार के नाम जोड़िए, और अपना संकल्प एक बार लिखिए।",
   },
   title: "अपना पत्र तय कीजिए",
-  lede: "यह एक बार करना है, अपनी सुबहें चुनने से पहले। उसके बाद हर सुबह तीन मिनट की है।",
+  lede: "लगभग दो मिनट, एक बार। इससे आपका पत्र बनता है, आपके परिवार के नामों के साथ। फिर आप अपनी सुबहें चुनते हैं, और हर सुबह तीन मिनट की है।",
   steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
 
   water: {
@@ -137,7 +139,7 @@ const hi = {
   reminder: {
     label: "सूचना की घड़ी",
     hint: "आपके स्थानीय समय में। खाते के पृष्ठ पर इसे बदल या रोक सकते हैं।",
-    zone: "आपका समयक्षेत्र: {zone}",
+    zone: "सूचना {zone} के समय से आती है।",
   },
 
   save: "सहेजिए और आगे बढ़िए",

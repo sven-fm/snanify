@@ -114,7 +114,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             className="absolute inset-0 hidden h-full w-full text-ink sm:block"
           />
 
-          <div className="relative mx-auto w-full max-w-6xl px-5 pt-8 pb-28 sm:px-8 sm:pt-28 sm:pb-16">
+          <div className="relative mx-auto w-full max-w-6xl px-5 pt-6 pb-16 sm:px-8 sm:pt-28 sm:pb-16">
             <div className="flex flex-col">
               {/* The one live fact, as a sentence in body type. The filled
                   square is the site's mark for a figure that is live, and it
@@ -133,7 +133,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   and holds together at any measure and in any script. */}
               <h1
                 data-horizon-anchor
-                className="ink-in display order-2 mt-6 text-[2.65rem] leading-[1.02] sm:mt-7 sm:text-[4.6rem] lg:text-[7rem]"
+                className="ink-in display order-2 mt-4 text-[2.5rem] leading-[1.04] sm:mt-7 sm:text-[4.6rem] lg:text-[7rem]"
                 style={{ animationDelay: "80ms" }}
               >
                 <span
@@ -163,11 +163,15 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 {t.hero.titleA} {t.hero.titleB}
               </h1>
 
-              {/* Phone only: the river gets a band of its own, above the fold,
-                  with nothing set over it. Full bleed through the container's
-                  own gutter. At this size the panorama above is display:none,
-                  so only one of the two ever animates. */}
-              <div className="relative order-4 -mx-5 mt-8 h-[30svh] max-h-[320px] min-h-[210px] sm:hidden">
+              {/* Phone only: the river gets a band of its own, with nothing set
+                  over it, under the button. On a phone the words come first:
+                  the headline, the sentence saying what this is and the button
+                  all sit inside a 390 x 700 screen (a phone inside the
+                  Instagram browser), and the river opens beneath them as the
+                  reader scrolls. Full bleed through the container's own
+                  gutter. At this size the panorama above is display:none, so
+                  only one of the two ever animates. */}
+              <div className="relative order-5 -mx-5 mt-9 h-[30svh] max-h-[320px] min-h-[210px] sm:hidden">
                 <RiverFlow
                   variant="portrait"
                   className="absolute inset-0 h-full w-full text-ink"
@@ -183,19 +187,19 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   second action is a quiet link on a phone and a ruled button
                   from `sm`, where there is room beside the first. */}
               <div
-                className="ink-in order-6 mt-7 flex flex-col gap-4 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
+                className="ink-in order-4 mt-6 flex flex-col gap-3 sm:order-6 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "240ms" }}
               >
                 <Link href={localePath(lang, "/begin")} className="block" data-hero-cta>
                   <CTA className="w-full !py-4 sm:w-auto">{t.hero.ctaPrimary}</CTA>
                 </Link>
                 <Link
-                  href={localePath(lang, "/live")}
-                  className="impress self-center text-[0.95rem] text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot sm:hidden"
+                  href={localePath(lang, "/snan")}
+                  className="impress flex min-h-[44px] items-center self-center text-[0.95rem] text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot sm:hidden"
                 >
                   {t.hero.ctaSecondary}
                 </Link>
-                <Link href={localePath(lang, "/live")} className="hidden sm:block">
+                <Link href={localePath(lang, "/snan")} className="hidden sm:block">
                   <CTA variant="ghost" className="!py-4">
                     {t.hero.ctaSecondary}
                   </CTA>
@@ -209,16 +213,16 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   so it reads as printed on a card laid over the river rather
                   than engraved into it. The price line shares the slip. */}
               <div
-                className="ink-in order-5 mt-7 max-w-xl sm:mt-5 sm:bg-paper sm:px-4 sm:py-3"
+                className="ink-in order-3 mt-5 max-w-xl sm:order-5 sm:mt-5 sm:bg-paper sm:px-4 sm:py-3"
                 style={{ animationDelay: "160ms" }}
               >
-                <p className="text-[1.02rem] leading-[1.7] text-ink2 sm:text-[1.05rem] sm:leading-[1.75]">
+                <p className="text-[1.02rem] leading-[1.6] text-ink sm:text-[1.05rem] sm:leading-[1.75] sm:text-ink2">
                   {t.hero.lede}
                 </p>
                 {/* The offer, stated in the hero rather than buried in the
                     tariff. A price is a fact about the thing, not a reveal.
                     {price} is the eleven-morning line, in the reader's currency. */}
-                <p className="mt-4 text-sm leading-[1.75] text-ink">
+                <p className="mt-3 text-sm leading-[1.75] text-ink sm:mt-4">
                   {t.hero.offer.split("{price}")[0]}
                   <Price prices={PRICE.eleven} className="display text-[1.15rem]" />
                   {t.hero.offer.split("{price}")[1]}
@@ -227,6 +231,22 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             </div>
           </div>
         </section>
+
+        {/* ------------------------------------------------ the sheet -----
+            What people pay for, straight under the hero: a sheet with a
+            family's names on it, inside a phone, because that is where it is
+            opened. It used to sit beside the six waters, sixty per cent of
+            the way down the page, after the figures. The words sit beside it
+            from lg and above it on a phone.                                 */}
+        <Section id="sheet">
+          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-center lg:gap-20">
+            <div className="max-w-2xl">
+              <h2 className="display text-[2.1rem] leading-tight sm:text-[2.9rem]">{t.sheet.title}</h2>
+              <p className="mt-4 leading-relaxed text-ink2">{t.sheet.lede}</p>
+            </div>
+            <Specimen lang={lang} />
+          </div>
+        </Section>
 
         {/* ------------------------------------------------ the reading ---
             The live river is the product, so it is the first thing under the
@@ -267,7 +287,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
         {/* ------------------------------------------------ the six ------- */}
         <Section id="rivers">
-          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start lg:gap-20">
+          <div>
             <div>
               <div className="max-w-3xl">
                 <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.rivers.title}</h2>
@@ -295,9 +315,6 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             ))}
               </ul>
             </div>
-
-            {/* The sheet itself, beside the waters it is drawn from. */}
-            <Specimen lang={lang} className="lg:sticky lg:top-28" />
           </div>
         </Section>
 

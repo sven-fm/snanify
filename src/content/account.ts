@@ -15,7 +15,14 @@ const en = {
   signIn: {
     meta: "Sign in | Snanify",
     title: "Sign in",
-    lede: "Google, or a link sent to your email. The same screen makes an account if you have none.",
+    description:
+      "Sign in to Snanify with Google or a link to your email. Then set up your sheet with your family's names in about two minutes, and choose your mornings.",
+    /* Above the card, for somebody who arrived from an ad and needs to know
+       where they are: what this is, and what follows it. */
+    next: "Sign in first. Then about two minutes to set up your sheet with your family's names, and you choose your mornings.",
+    stepsLabel: "What comes next",
+    steps: ["Your water", "Your sheet", "Your mornings"],
+    lede: "Google, or a link sent to your email. This one screen signs you in, and on your first visit it opens your account.",
   },
   signUp: {
     meta: "Create your account | Snanify",
@@ -60,7 +67,12 @@ const hi = {
   signIn: {
     meta: "प्रवेश कीजिए | Snanify",
     title: "प्रवेश कीजिए",
-    lede: "गूगल से, या आपके ईमेल पर भेजी गई कड़ी से। खाता न हो तो यही स्क्रीन उसे बना देती है।",
+    description:
+      "गूगल से या ईमेल पर भेजी गई कड़ी से Snanify में प्रवेश कीजिए। फिर लगभग दो मिनट में परिवार के नामों के साथ अपना पत्र तैयार कीजिए, और अपनी सुबहें चुनिए।",
+    next: "पहले प्रवेश कीजिए। फिर लगभग दो मिनट में अपने परिवार के नामों के साथ अपना पत्र तैयार कीजिए, और अपनी सुबहें चुनिए।",
+    stepsLabel: "आगे क्या है",
+    steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
+    lede: "गूगल से, या आपके ईमेल पर भेजी गई कड़ी से। यही स्क्रीन आपको प्रवेश कराती है, और पहली बार आने पर आपका खाता भी खोल देती है।",
   },
   signUp: {
     meta: "अपना खाता बनाइए | Snanify",

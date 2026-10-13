@@ -7,6 +7,7 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { getLiveSnapshot, REVALIDATE_SECONDS, type WaterState } from "@/lib/riverdata";
 import { liveContent } from "@/content/live";
+import { flowContent } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
    The landing page, with a real river on it.
@@ -56,7 +57,17 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
      model's own published value, so its digits are Latin in both editions. */
   const flow = `${NUMBER.format(d.cumecs)} ${liveContent[lang].flow.unit}`;
 
-  const rows: { k: string; v: string }[] = [{ k: t.flow, v: flow }];
+  /* The state leads and the figures prove it (src/content/flow.ts): a reader
+     takes in "Running full" at a glance, and the flow and its rank sit under
+     it for anyone who wants to check. */
+  const words = flowContent[lang];
+  const rows: { k: string; v: string }[] = [
+    {
+      k: t.today,
+      v: d.kind === "modelled" ? words.state[d.percentile.band] : words.stateMedian,
+    },
+    { k: t.flow, v: flow },
+  ];
 
   if (d.kind === "modelled") {
     rows.push({
@@ -72,12 +83,11 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
   const next = water.next ?? water.current;
   if (next) rows.push({ k: t.muhurat, v: `${windowOpens(next.startsAt)} IST` });
 
-  /* One plain sentence above the headline, in place of the boxed badge that
-     used to join the same facts with middle dots. */
-  const line = (d.kind === "modelled" ? t.lineModelled : t.lineMedian)
+  /* One plain sentence above the headline, in words: how the river is
+     running, never the raw figure, which waits in the card below. */
+  const line = (d.kind === "modelled" ? words.line[d.percentile.band] : words.lineMedian)
     .replace("{river}", river)
-    .replace("{city}", city)
-    .replace("{flow}", flow);
+    .replace("{city}", city);
 
   return {
     line,

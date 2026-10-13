@@ -1,4 +1,5 @@
 import type { FlowBand, Trend, WaterSlug, WeatherId } from "@/lib/riverdata";
+import { flowContent } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
    /live, the copy.
@@ -111,13 +112,8 @@ export const en = {
     spate: "{river} is in spate, higher than on nine days in ten at this time of year.",
   } satisfies Record<FlowBand, string>,
 
-  bandWords: {
-    slack: "Thin",
-    low: "Low",
-    usual: "Usual",
-    full: "Full",
-    spate: "In spate",
-  } satisfies Record<FlowBand, string>,
+  /* One vocabulary for how a river runs: src/content/flow.ts. */
+  bandWords: flowContent.en.word,
 
   trends: {
     rising: "Up {pct} per cent {since}",

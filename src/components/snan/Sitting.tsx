@@ -67,6 +67,8 @@ type Reading = {
   water: string;
   ghat: string;
   city: string;
+  /** "Running full", from src/content/flow.ts: the words lead the reading. */
+  state: string;
   flow: string;
   rank: string | null;
   normal: string;
@@ -365,7 +367,11 @@ export function Sitting({
                 {reading.ghat}, {reading.city}
               </p>
 
-              <dl className="mt-8 border-t-2 border-rulestrong">
+              {/* How the river is running, in words, before the figures that
+                  prove it. */}
+              <p className="display mt-7 text-[1.6rem] leading-tight text-spot">{reading.state}</p>
+
+              <dl className="mt-5 border-t-2 border-rulestrong">
                 <Row k={t.reading.flowLabel} v={reading.flow} />
                 {reading.rank && <Row k={t.reading.rankLabel} v={reading.rank} />}
                 <Row k={t.reading.normalLabel} v={reading.normal} />

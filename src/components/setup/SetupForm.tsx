@@ -8,6 +8,7 @@ import { saveProfile, type SaveState } from "@/app/[lang]/(app)/setup/actions";
 import type { Lang } from "@/lib/locales";
 import { SubmitButton } from "@/components/ui";
 import { track } from "@/lib/track";
+import { zonePlace } from "@/lib/zone-place";
 
 /* ---------------------------------------------------------------------------
    The setup form.
@@ -398,7 +399,7 @@ export function SetupForm({
             </label>
           ))}
         </div>
-        {zone && <p className="mt-2 text-sm text-ink2">{t.reminder.zone.replace("{zone}", zone)}</p>}
+        {zone && <p className="mt-2 text-sm text-ink2">{t.reminder.zone.replace("{zone}", zonePlace(zone))}</p>}
         <FieldError>{errors.reminderHour && t.errors.hour}</FieldError>
         <FieldError>{errors.tz && t.errors.zone}</FieldError>
       </fieldset>

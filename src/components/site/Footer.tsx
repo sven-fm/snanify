@@ -18,7 +18,7 @@ const REFERENCE = 1;
 const LEGAL = 2;
 
 const COLUMNS: { at: number; keys: NavKey[] }[] = [
-  { at: PRACTICE, keys: ["begin", "snan"] },
+  { at: PRACTICE, keys: ["begin", "snan", "about"] },
   { at: REFERENCE, keys: ["panchang", "live", "rivers", "muhurat", "faq"] },
 ];
 

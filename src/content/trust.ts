@@ -224,7 +224,7 @@ const faqEn = {
           id: "black-screen",
           q: "Why does the screen go black for a minute?",
           a: [
-            "That minute is the stillness. The screen asks you to put the phone down and goes dark. It cannot be skipped, and it comes back on its own when the minute is over.",
+            "That minute is the stillness. The screen asks you to put the phone down and goes dark, with the seconds left in dim ink. It lights again on its own when the minute is over. On a hurried morning, Next leaves it early.",
           ],
         },
         {
@@ -321,7 +321,7 @@ const faqEn = {
           id: "eleven",
           q: "Why eleven?",
           a: [
-            "Card fees. A single small charge loses about a third of itself to the card network. Eleven at once loses about six percent. Selling eleven together is what keeps the price per morning low.",
+            "Shagun comes in elevens: 11, 51, 101, 501. The extra one carries the gift past the round number and onward. Eleven mornings keep the same custom, and so does their price.",
           ],
         },
         {
@@ -444,7 +444,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "black-screen",
           q: "स्क्रीन एक मिनट के लिए काली क्यों हो जाती है?",
           a: [
-            "वह मिनट स्थिरता का है। स्क्रीन आपसे फ़ोन नीचे रखने को कहती है और अँधेरी हो जाती है। उसे छोड़ा नहीं जा सकता, और मिनट पूरा होते ही वह अपने आप लौट आती है।",
+            "वह मिनट स्थिरता का है। स्क्रीन आपसे फ़ोन नीचे रखने को कहती है और अँधेरी हो जाती है, बचे हुए सेकंड हल्की स्याही में दिखते हैं। मिनट पूरा होते ही वह अपने आप लौट आती है। जल्दी की सुबह हो, तो “आगे” दबाकर पहले उठ सकते हैं।",
           ],
         },
         {
@@ -541,7 +541,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "eleven",
           q: "ग्यारह ही क्यों?",
           a: [
-            "कार्ड शुल्क के कारण। एक छोटा अकेला भुगतान अपना लगभग एक-तिहाई कार्ड नेटवर्क को दे देता है। ग्यारह एक साथ लगभग छह प्रतिशत। ग्यारह को एक साथ बेचने से ही प्रति सुबह मूल्य कम रहता है।",
+            "शगुन ग्यारह की रीति से दिया जाता है: 11, 51, 101, 501। ऊपर का एक शगुन को गोल अंक से आगे बढ़ाता है। ग्यारह सुबहें इसी रीति पर हैं, और उनका मूल्य भी।",
           ],
         },
         {

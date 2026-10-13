@@ -1,4 +1,5 @@
 import type { LiveCopy } from "./en";
+import { flowContent } from "@/content/flow";
 
 /** Hindi. Devanagari numerals in prose, Latin digits wherever a figure must
     stay checkable against the model's own published value. Rivers take the
@@ -67,13 +68,8 @@ export const hi = {
     spate: "{river} उफान पर हैं, वर्ष के इस समय के दस में से नौ दिनों से ऊपर।",
   },
 
-  bandWords: {
-    slack: "पतली",
-    low: "कम",
-    usual: "सामान्य",
-    full: "भरी",
-    spate: "उफान",
-  },
+  /* One vocabulary for how a river runs: src/content/flow.ts. */
+  bandWords: flowContent.hi.word,
 
   trends: {
     rising: "{since} {pct} प्रतिशत ऊपर",

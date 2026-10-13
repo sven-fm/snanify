@@ -21,6 +21,7 @@ const SRC = path.join(ROOT, "src");
 
 /** Every content module that ships, plus the two lib files that carry copy. */
 const MODULES = [
+  "@/content/about",
   "@/content/account",
   "@/content/begin",
   "@/content/email",
@@ -53,6 +54,7 @@ const RETIRED = /\b(Jal Sankalp|Jal Chihna|Watermark|Jal Path|Shwas|Maun|Chihn)\
     whose English may be a third language. Short sentences, and none of the
     phrases generated copy reaches for. */
 const MARKETING = [
+  "@/content/about",
   "@/content/landing/en",
   "@/content/live/en",
   "@/content/rivers-index/en",

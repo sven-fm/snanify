@@ -39,6 +39,10 @@ const LABELS = {
     en: "Panchang",
     hi: "पंचांग",
   },
+  about: {
+    en: "Who we are",
+    hi: "हम कौन हैं",
+  },
 } satisfies Record<string, Record<Lang, string>>;
 
 export type NavKey = keyof typeof LABELS;
@@ -56,6 +60,7 @@ const PATHS: Record<NavKey, string> = {
   faq: "/faq",
   live: "/live",
   panchang: "/panchang",
+  about: "/about",
 };
 
 export function navItem(lang: Lang, key: NavKey): NavItem {

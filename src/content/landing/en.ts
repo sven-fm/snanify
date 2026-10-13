@@ -47,17 +47,21 @@ export const en = {
   },
   edition: "Samvat {samvat}",
   hero: {
-    titleA: "The river",
-    titleB: "comes to you.",
-    lede: "Sit three minutes with the river you grew up near, at the hour the panchang names. At the end you have a sheet with your family's names on it, and you send it home.",
+    /* The headline says what this is, for a reader who arrived from an ad and
+       has never heard the name. The lede says what happens, in four short
+       sentences, and all of it sits above the fold at 390 x 700 (a phone
+       inside the Instagram browser), with the button. */
+    titleA: "A daily snan,",
+    titleB: "wherever you live.",
+    lede: "Three minutes each morning with the Ganga, the Yamuna or another sacred river, as it runs today. You breathe with it and make your sankalp. Then you send home a sheet with your family's names on it.",
     ctaPrimary: "Begin your snan",
-    ctaSecondary: "See the rivers live",
+    ctaSecondary: "See how it works",
     offer: "Eleven mornings for {price}. Take them whenever you like.",
     card: {
-      /* The one live line above the headline. Two forms, because the feed can
-         be quiet, and then the card stands on the seasonal median and says so. */
-      lineModelled: "The {river} at {city} is running at {flow} this morning.",
-      lineMedian: "The {river} at {city} is running near its seasonal median.",
+      /* The live line above the headline and the card's first row take their
+         words from src/content/flow.ts: the river's state leads, the figure
+         proves it. */
+      today: "Today",
       flow: "Flow",
       ranked: "Ranked",
       muhurat: "Next muhurat",
@@ -106,6 +110,12 @@ export const en = {
   },
   /* The sheet a stranger sees before paying: drawn from today's figure, for
      a family that does not exist, and labelled as a specimen on its face. */
+  /* The band that shows the sheet, straight under the hero: it is the thing
+     people pay for, so it comes before the figures and the six waters. */
+  sheet: {
+    title: "A sheet to send home, every morning.",
+    lede: "Each morning ends with a Sankalp Patra: your family's names, the river as it ran, the tithi and the hour. It opens ready to send to the family group.",
+  },
   specimen: {
     label: "Specimen",
     alt: "A Sankalp Patra, as it arrives on a phone: two names, the Ganga at Haridwar, today's flow and rank.",

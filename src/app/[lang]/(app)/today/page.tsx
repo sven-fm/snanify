@@ -21,6 +21,7 @@ import { Footer } from "@/components/site/Footer";
 import { LinkButton } from "@/components/ui";
 import { Sitting } from "@/components/snan/Sitting";
 import { TrackView } from "@/components/site/TrackView";
+import { flowContent } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
    /today, the morning itself.
@@ -134,6 +135,7 @@ export default async function Page({
     water: ghat ? waterName(ghat, "river", lang) : profile.waterSlug,
     ghat: ghat ? waterName(ghat, "ghat", lang) : "",
     city: ghat ? waterName(ghat, "city", lang) : "",
+    state: d.kind === "modelled" ? flowContent[lang].state[d.percentile.band] : flowContent[lang].stateMedian,
     flow: `${NUMBER.format(d.cumecs)} m³/s`,
     rank:
       d.kind === "modelled"

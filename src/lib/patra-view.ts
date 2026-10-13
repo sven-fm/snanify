@@ -10,6 +10,8 @@ import { shortSeed } from "@/lib/seed";
 import type { PatraRecord } from "@/content/patra";
 import { SITE_ORIGIN } from "@/lib/locales";
 import type { Lang } from "@/lib/locales";
+import { timeAtPlace, zonePlace } from "@/lib/zone-place";
+import { flowContent } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
    One sitting, formatted for a sheet.
@@ -40,10 +42,15 @@ export type PatraView = {
   keptDate: string;
   /** "06:12", the person's own clock. */
   keptTime: string;
+  /** "Toronto": the place the zone is named for, never the raw IANA key. */
   keptZone: string;
+  /** "06:12 in Toronto", in the edition. */
+  keptLocal: string;
   /** The same instant in India Standard Time. */
   keptIst: string;
 
+  /** "Running full": how the river ran, in words. It leads; the figures prove it. */
+  state: string;
   flow: string;
   band: string;
   rank: string | null;
@@ -115,9 +122,14 @@ export function patraView(sitting: Sitting, edition?: Lang): PatraView {
 
     keptDate: dateIn(at, sitting.keptTz, lang),
     keptTime: timeIn(at, sitting.keptTz),
-    keptZone: sitting.keptTz,
+    keptZone: zonePlace(sitting.keptTz),
+    keptLocal: timeAtPlace(timeIn(at, sitting.keptTz), sitting.keptTz, lang),
     keptIst: timeIn(at, "Asia/Kolkata"),
 
+    state:
+      river.kind === "modelled"
+        ? flowContent[lang].state[river.band]
+        : flowContent[lang].stateMedian,
     flow: `${NUMBER.format(river.cumecs)} m³/s`,
     band: river.band,
     rank: river.percentile === null ? null : `${river.percentile}`,
@@ -188,7 +200,7 @@ export function printableRecord(sitting: Sitting): PatraRecord {
 
     keptOn: view.keptDate,
     keptIst: `${view.keptIst} IST`,
-    keptLocal: `${view.keptTime} ${view.keptZone}`,
+    keptLocal: view.keptLocal,
 
     /* Printed since the check of 11 September 2026: the tithi is computed
        here and was matched against Drik Panchang on eight days, every one to
@@ -200,7 +212,7 @@ export function printableRecord(sitting: Sitting): PatraRecord {
       value: view.flow,
       note:
         river.kind === "modelled" && view.rank
-          ? `${ordinal(Number(view.rank))} percentile since 1997.`
+          ? `${view.state}. ${ordinal(Number(view.rank))} percentile since 1997.`
           : "Seasonal median, 1997 to 2025.",
     },
 
