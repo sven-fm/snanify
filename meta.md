@@ -34,7 +34,9 @@ visit, with no notice. The privacy page says so and carries the choice. It switc
   `sign_in_view`, `checkout_start`, `purchase`, `setup_done`). Use them to see where people
   drop off.
 
-### 2. Signing in from inside Instagram and Facebook (open)
+### 2. Signing in from inside Instagram and Facebook (done, 13 October 2026)
+
+**Done:** tested by the owner on a phone; Google and the email link both sign in.
 
 - People who tap an ad open the site inside the Instagram or Facebook app, not in Safari.
 - Google often refuses sign-in inside those in-app browsers. A spoofed test got through,
@@ -146,7 +148,7 @@ on that assumption and may expect more context than a cold visitor has.
 
 1. The Meta Pixel (with the CSP change) and the server-side Purchase event. Built; set the
    two environment variables to switch it on.
-2. Sign-in tested inside Instagram on a real phone. Open.
+2. Sign-in tested inside Instagram on a real phone. Done.
 3. The untrue line removed. Done.
 4. The top of `/` rewritten. Done.
 5. The specimen sheet moved up the homepage. Done.
