@@ -39,6 +39,11 @@ Sangam abroad, Kannada koota
 
 | Date | Type | Name | Link | Size |
 | --- | --- | --- | --- | --- |
+| 2026-10-13 | Group | 🕉️Har ki Pauri Haridwar Ganga aarti Darshan Group🕉️ | https://www.facebook.com/groups/540964748046064/ | 134K members, 90+ posts a day |
+| 2026-10-13 | Group | Live Ganga Aarti From Triveni Ghat Rishikesh | https://www.facebook.com/groups/304834860941958/ | 4.2K members, 30 posts a day |
+| 2026-10-13 | Page | Aarti Darshan Haridwar/कुंभ नगरी हर की पौड़ी हरिद्वार | https://www.facebook.com/magakumbh | 366K followers |
+| 2026-10-13 | Page | Shri Mahakaleshwar Ujjain (official, verified) | https://www.facebook.com/shreemahakaleshwarujjain | 1.7M followers |
+| 2026-10-13 | Page | New England Chhath USA | https://www.facebook.com/nechhathusa | 4.4K followers |
 
 ## Needs Sven
 
@@ -54,8 +59,15 @@ Looked at and left, so the task does not look again.
 
 | Date | Name | Link | Why |
 | --- | --- | --- | --- |
+| 2026-10-13 | Ganga Aarti (Gangotri Seva Samiti, Dashashwamedh) | https://www.facebook.com/gangamahaarti | Last post June 2023 |
+| 2026-10-13 | Har ki Pauri Haridwar | https://www.facebook.com/HarkipauriHaridwar108 | Last post July 3, stuffed with unrelated trending hashtags |
+| 2026-10-13 | Har Ki Pauri Haridwar-हर की पौड़ी हरिद्वार | https://www.facebook.com/haridwarharkipauri | Last post August 10, AI images |
+| 2026-10-13 | Haridwar Live | https://www.facebook.com/Haridwarlive.in | Local news, paid promotions and politics, off topic |
+| 2026-10-13 | Kaveri / Cauvery RIVER | https://www.facebook.com/profile.php?id=100067845097369 | Last post 2019 |
+| 2026-10-13 | एकादशी व्रत कथाएं | https://www.facebook.com/ekadashi.vrat.kathayen | Last post October 2023, WhatsApp link |
 
 ## Runs
 
 | Date | Actions | Note |
 | --- | --- | --- |
+| 2026-10-13 | 5 (2 groups, 3 Pages) | Terms: Ganga aarti, Har Ki Pauri, Haridwar, Prayagraj Sangam, Kumbh Mela, Mathura Vrindavan, Ujjain Mahakal, Nashik Ram Kund, Talakaveri, Kartik maas, Ekadashi vrat, Hindu panchang, Chhath puja USA. Next run starts at Hindu temple New Jersey. Acted as Snanify throughout; both groups joined at once with no questions. Pages search mostly returns dormant fan pages, creators and astrology sellers; the official institution Pages and the groups are the better finds. No warnings. |
