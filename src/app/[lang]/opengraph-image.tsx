@@ -4,7 +4,11 @@ import { DEFAULT_LANG, parseLang } from "@/lib/locales";
 /* The site's link preview, one per edition. `src/proxy.ts` excludes every
    `opengraph-image` path from the locale rewrite so the English one, which
    Next writes as /en/opengraph-image, is not redirected out from under the
-   scraper; see the note there. */
+   scraper; see the note there.
+
+   The card is drawn in src/lib/site-card.ts, but the hash in its URL follows
+   this file alone. When the drawing changes, change this file too, so Facebook
+   and WhatsApp fetch the new card instead of the one they cached. */
 
 export const runtime = "nodejs";
 export const alt = "Snanify, the river comes to you";

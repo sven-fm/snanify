@@ -2,6 +2,7 @@ import * as Astro from "astronomy-engine";
 import { OCCASIONS, type MasaName, type Occasion } from "@/content/muhurat";
 import { GAUGES, type WaterSlug } from "@/lib/riverdata";
 import { ayanamsaDeg, tithiAt, DEFAULT_AYANAMSA, type AyanamsaId } from "@/lib/sky";
+import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The calendar day each occasion falls on, computed.
@@ -363,6 +364,12 @@ export function vikramSamvat(now = new Date()): number {
   const chaitra = months.filter((m) => m.name === "chaitra" && !m.adhika && m.from <= now).pop();
   const start = chaitra ? istDay(chaitra.from) : istDay(now);
   return Number(start.slice(0, 4)) + 57;
+}
+
+/** An edition line with its "{samvat}" filled, in Devanagari numerals for Hindi. */
+export function withSamvat(template: string, lang: Lang, now = new Date()): string {
+  const year = String(vikramSamvat(now));
+  return template.replace("{samvat}", lang === "hi" ? [...year].map((d) => "०१२३४५६७८९"[Number(d)]).join("") : year);
 }
 
 /** A rolling twelve months from today, in India. */

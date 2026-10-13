@@ -2,7 +2,7 @@ import Link from "next/link";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
-import { vikramSamvat } from "@/lib/occasions";
+import { withSamvat } from "@/lib/occasions";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
@@ -37,8 +37,7 @@ export function Header({
 }) {
   const t = content[lang];
   /* The almanac's edition line, computed so it turns over at Chaitra by itself. */
-  const samvat = String(vikramSamvat());
-  const edition = t.edition.replace("{samvat}", lang === "hi" ? [...samvat].map((d) => "०१२३४५६७८९"[Number(d)]).join("") : samvat);
+  const edition = withSamvat(t.edition, lang);
   const navLinks = links ?? primaryNav(lang);
 
   /* Everybody sees "Begin". Somebody signed in also gets the silhouette

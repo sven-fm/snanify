@@ -17,7 +17,7 @@ import { SITE_CARD_VERSION, pageMetadata, siteCard } from "@/lib/seo";
    --------------------------------------------------------------------------- */
 
 const ROUTE = "src/app/[lang]/opengraph-image.tsx";
-const ROUTE_SHA256 = "762bdd2ca0a84428a98834663d3326c48a4d4b2369f9ddaf2b55fece077c9031";
+const ROUTE_SHA256 = "0e5cf9948ab529561529376b5a0ede1af5b6cd9f0647d41d31751b78c15ce429";
 
 describe("the site card on every page", () => {
   it("names the card on a subpage in both editions, for Open Graph and X", () => {

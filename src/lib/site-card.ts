@@ -1,7 +1,8 @@
 import "server-only";
 import { Resvg } from "@resvg/resvg-js";
 import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
-import { typeset, wrap } from "@/lib/typeset";
+import { measure, typeset, wrap } from "@/lib/typeset";
+import { withSamvat } from "@/lib/occasions";
 import { content } from "@/lib/content";
 import type { Lang } from "@/lib/locales";
 
@@ -65,13 +66,15 @@ export async function siteCardSvg(lang: Lang): Promise<string> {
   parts.push(mark(m, 56, 52));
   parts.push((await typeset("Snanify", { size: 40, x: m + 68, y: 96, weight: 600, fill: INK })).svg);
   parts.push(
-    (await typeset(t.edition, { size: 22, x: right, y: 94, fill: INK_2, anchor: "end" })).svg,
+    (await typeset(withSamvat(t.edition, lang), { size: 22, x: right, y: 94, fill: INK_2, anchor: "end" })).svg,
   );
   parts.push(`<rect x="${m}" y="124" width="${right - m}" height="2.5" fill="${INK}" />`);
 
-  /* the headline, one colour, one line */
+  /* the headline, one colour, one line, set smaller when 78 would run past the margin */
   const title = `${t.hero.titleA} ${t.hero.titleB}`;
-  parts.push((await typeset(title, { size: 78, x: m, y: 236, weight: 600, fill: INK })).svg);
+  const natural = await measure(title, { size: 78, weight: 600 });
+  const titleSize = Math.min(78, Math.floor((78 * (right - m)) / natural));
+  parts.push((await typeset(title, { size: titleSize, x: m, y: 236, weight: 600, fill: INK })).svg);
 
   /* the one line under it */
   let y = 300;
