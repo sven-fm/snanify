@@ -12,7 +12,8 @@ import { withBotId } from "botid/next/config";
    only in form-action: Chrome applies form-action to the redirect a form
    submission ends in, and the Pay button is a form that ends on
    checkout.stripe.com. Vercel Analytics posts to its own host. The blob store
-   serves portraits and sheets.
+   serves portraits and sheets. The Meta Pixel loads from connect.facebook.net
+   and reports to www.facebook.com.
 
    `'unsafe-inline'` on scripts is the price of the two sync <head> scripts
    (theme and currency) and of Next's own inline bootstrap. A nonce would
@@ -26,12 +27,15 @@ import { withBotId } from "botid/next/config";
 
 const CLERK = "https://clerk.snanify.com https://*.clerk.accounts.dev";
 const BLOB = "https://*.public.blob.vercel-storage.com";
+/* The Meta Pixel loads from connect.facebook.net and reports to
+   www.facebook.com, by request and by image beacon; see src/lib/meta.ts. */
+const META = "https://connect.facebook.net";
 
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${CLERK} https://challenges.cloudflare.com https://va.vercel-scripts.com`,
-  `connect-src 'self' ${CLERK} ${BLOB} https://vitals.vercel-insights.com https://va.vercel-scripts.com`,
-  `img-src 'self' data: blob: ${BLOB} https://img.clerk.com`,
+  `script-src 'self' 'unsafe-inline' ${CLERK} https://challenges.cloudflare.com https://va.vercel-scripts.com ${META}`,
+  `connect-src 'self' ${CLERK} ${BLOB} https://vitals.vercel-insights.com https://va.vercel-scripts.com ${META} https://www.facebook.com`,
+  `img-src 'self' data: blob: ${BLOB} https://img.clerk.com https://www.facebook.com`,
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
   `frame-src ${CLERK} https://challenges.cloudflare.com`,

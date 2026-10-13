@@ -4,6 +4,8 @@ import { db } from "@/db";
 import { fulfilSession } from "@/lib/fulfil";
 import { stripe } from "@/lib/stripe";
 import { sendReceipt } from "@/lib/email";
+import { sendPurchase } from "@/lib/meta-capi";
+import { localeUrl } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Stripe's webhook. The only place credits are ever bought.
@@ -51,6 +53,25 @@ async function handle(session: Stripe.Checkout.Session): Promise<void> {
     });
   } catch (error) {
     console.error("stripe webhook: receipt not sent", session.id, error);
+  }
+
+  /* Meta hears about the sale only where it may measure the buyer, which the
+     checkout recorded as `ads`; see src/lib/meta-capi.ts. Never throws. */
+  const m = session.metadata ?? {};
+  if (m.ads === "1") {
+    await sendPurchase({
+      sessionId: session.id,
+      email: result.email,
+      userId: session.client_reference_id ?? m.userId ?? "",
+      amountMinor: session.amount_total ?? 0,
+      currency: session.currency ?? "usd",
+      sourceUrl: localeUrl(m.lang === "hi" ? "hi" : "en", "/begin"),
+      fbp: m.fbp,
+      fbc: m.fbc,
+      ip: m.ip,
+      ua: m.ua,
+      at: session.created,
+    });
   }
 }
 

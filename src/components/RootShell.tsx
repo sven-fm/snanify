@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { MetaPixel } from "@/components/MetaPixel";
 import { themeScript } from "@/components/ThemeToggle";
 import { currencyScript } from "@/lib/currency";
 import { fontClass } from "@/lib/fonts";
@@ -37,6 +38,8 @@ export function RootShell({ lang, children }: { lang: Lang; children: React.Reac
         <ScrollReveal />
         {/* Vercel Web Analytics, no cookies, no cross-site identifiers. */}
         <Analytics />
+        {/* Meta, only where it may measure; see src/lib/meta.ts. */}
+        <MetaPixel />
       </body>
     </html>
   );

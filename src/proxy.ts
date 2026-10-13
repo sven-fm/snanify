@@ -2,6 +2,7 @@ import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
 import { DEFAULT_LANG, LANGS } from "@/lib/locales";
 import { CURRENCY_COOKIE, currencyForCountry } from "@/lib/currency";
+import { ADS_COOKIE, adsAllowed } from "@/lib/meta";
 
 /**
  * Keeps the public URL scheme (English unprefixed, every other locale under its
@@ -45,6 +46,14 @@ const FOLDED: Record<string, string> = {
 function stampCurrency(res: NextResponse, req: NextRequest): NextResponse {
   const country = req.headers.get("x-vercel-ip-country");
   res.cookies.set(CURRENCY_COOKIE, currencyForCountry(country), {
+    path: "/",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 30,
+  });
+  /* Whether the Meta Pixel may load for this reader; see src/lib/meta.ts.
+     Read by the browser, so not httpOnly, and rewritten on every response
+     like the currency, so a reader who travels is measured by where they are. */
+  res.cookies.set(ADS_COOKIE, adsAllowed(country) ? "1" : "0", {
     path: "/",
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 30,

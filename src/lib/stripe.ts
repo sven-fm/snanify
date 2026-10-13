@@ -66,6 +66,9 @@ export type CheckoutRequest = {
   currency: Currency;
   lang: Lang;
   origin: string;
+  /** What Meta matches a purchase on, present only where Meta may measure
+      this buyer (src/lib/meta.ts). Carried to the webhook in metadata. */
+  meta?: { fbp?: string; fbc?: string; ip?: string; ua?: string };
 };
 
 /**
@@ -90,6 +93,17 @@ export async function createCheckout(req: CheckoutRequest): Promise<string> {
       credits: String(pack.credits),
       userId: req.userId,
       lang: req.lang,
+      /* Stripe caps a metadata value at 500 characters; a user agent can run
+         longer, and the cut costs Meta nothing it matches on. */
+      ...(req.meta
+        ? {
+            ads: "1",
+            ...(req.meta.fbp ? { fbp: req.meta.fbp.slice(0, 500) } : {}),
+            ...(req.meta.fbc ? { fbc: req.meta.fbc.slice(0, 500) } : {}),
+            ...(req.meta.ip ? { ip: req.meta.ip.slice(0, 100) } : {}),
+            ...(req.meta.ua ? { ua: req.meta.ua.slice(0, 500) } : {}),
+          }
+        : {}),
     },
     /* Clerk holds the email and Stripe holds the card. Neither needs the
        other's copy, and a saved customer object is one more place a person's

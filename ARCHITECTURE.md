@@ -22,6 +22,7 @@ How Snanify is put together, as it stands. `CLAUDE.md` holds the spec and the ru
 | Astronomy | `astronomy-engine` | Offline, deterministic moon and sun. No API, no key |
 | Images | `@resvg/resvg-js`, `harfbuzzjs`, `sharp` | The Sankalp Patra is SVG with every glyph shaped to outlines by HarfBuzz, rasterised by resvg; sharp presses portraits and shrinks the specimen |
 | Analytics | `@vercel/analytics` | Cookieless; nine funnel events, no personal data in a property |
+| Ads measurement | Meta Pixel + Conversions API | `src/lib/meta.ts`: outside the EU, EEA, UK and Switzerland only, until a consent banner exists. PageView per route, ViewContent / InitiateCheckout / CompleteRegistration from `track()`, Purchase from the Stripe webhook (`src/lib/meta-capi.ts`), hashed, keyed by the session. Inert without `NEXT_PUBLIC_META_PIXEL_ID` and `META_CAPI_TOKEN`; `META_TEST_EVENT_CODE` for Events Manager's test tab |
 | Abuse | Vercel BotID, `src/lib/limiter.ts` | The Pay and setup forms check for a script; the two routes that draw a sheet are rate-limited per instance |
 | Alerts | `src/lib/alert.ts` over Resend | A failure that costs somebody something mails the owner from its catch block |
 | Tests | Vitest, Playwright | 173 unit tests offline (pglite for the ledger); two e2e specs against the dev server |
@@ -157,8 +158,8 @@ which reads Clerk's cookie through `useSyncExternalStore` rather than loading Cl
 
 ## Security
 
-Content-Security-Policy (Clerk, Cloudflare's bot check, Vercel Analytics and the blob store
-allowlisted; `form-action` includes `checkout.stripe.com` because the Pay form ends in a
+Content-Security-Policy (Clerk, Cloudflare's bot check, Vercel Analytics, the blob store
+and the Meta Pixel allowlisted; `form-action` includes `checkout.stripe.com` because the Pay form ends in a
 redirect there), `nosniff`, `Referrer-Policy`, `Permissions-Policy`, HSTS with preload, all
 from `next.config.ts`. The webhook checks Stripe's signature against the raw body. Server
 actions validate every field; the portrait pipeline checks the pixel budget before decoding,

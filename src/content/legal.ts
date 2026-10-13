@@ -31,7 +31,7 @@ const en = {
     },
     title: "What we hold",
     lede: "In short: your email address, what you chose to put on your sheet, and one line for each morning you kept. One button deletes all of it.",
-    updated: "Version 1, September 2026.",
+    updated: "Version 2, October 2026.",
 
     sections: [
       {
@@ -71,13 +71,23 @@ const en = {
           { k: "Neon", v: "The database: your profile, your register and your sheets." },
           { k: "Vercel", v: "Hosting, file storage, and page counts with no cookies." },
           { k: "Resend", v: "Your receipt and your morning reminder, and nothing else." },
+          { k: "Meta", v: "Measures our ads, for readers outside the EU, the EEA, the UK and Switzerland. See below." },
+        ],
+      },
+      {
+        h: "Measuring our ads",
+        body: [
+          "Outside the EU, the EEA, the UK and Switzerland, this site loads the Meta Pixel. It sets Meta's cookie and tells Meta which pages you open, and when you reach the packs, begin a checkout or finish setting up your sheet. That is how we learn which of our ads bring people who stay.",
+          "When you buy, our server tells Meta about the purchase: the amount and currency, your email address and account number scrambled with SHA-256, your IP address, your browser, and Meta's cookie if your browser holds one.",
+          "Your sankalp, your names, your photograph and your sheets stay with us.",
+          "In the EU, the EEA, the UK and Switzerland the pixel stays off.",
         ],
       },
       {
         h: "What we never do",
         body: [
-          "No advertising script and no session replay anywhere on this site. Nothing records the screen where you type your sankalp.",
-          "Your email address is not sold, rented, or given to anybody for their own purposes.",
+          "No session replay anywhere on this site. Nothing records the screen where you type your sankalp.",
+          "Your email address is never sold or rented. Meta receives it only scrambled, to measure our ads, as above.",
         ],
       },
       {
@@ -170,7 +180,7 @@ const hi = {
     },
     title: "हम क्या रखते हैं",
     lede: "संक्षेप में: आपका ईमेल, जो आपने अपने पत्र पर रखना चुना, और हर निभाई हुई सुबह के लिए एक पंक्ति। एक बटन यह सब मिटा देता है।",
-    updated: "संस्करण १, सितंबर २०२६।",
+    updated: "संस्करण २, अक्टूबर २०२६।",
 
     sections: [
       {
@@ -210,13 +220,23 @@ const hi = {
           { k: "Neon", v: "आँकड़ा-कोष: आपकी प्रोफ़ाइल, आपकी पंजिका और आपके पत्र।" },
           { k: "Vercel", v: "होस्टिंग, फ़ाइल भंडारण, और बिना कुकी के पृष्ठ-गणना।" },
           { k: "Resend", v: "आपकी रसीद और प्रातःकालीन सूचना, इसके अतिरिक्त कुछ नहीं।" },
+          { k: "Meta", v: "हमारे विज्ञापनों का मापन, यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड से बाहर के पाठकों के लिए। नीचे देखिए।" },
+        ],
+      },
+      {
+        h: "हमारे विज्ञापनों का मापन",
+        body: [
+          "यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड से बाहर, यह साइट Meta Pixel लोड करती है। वह Meta की कुकी रखता है और Meta को बताता है कि आप कौन-से पृष्ठ खोलते हैं, और कब आप सुबहों के मूल्य तक पहुँचते हैं, भुगतान शुरू करते हैं या अपना पत्र तैयार करते हैं। इसी से हम जानते हैं कि हमारे कौन-से विज्ञापन ऐसे लोगों को लाते हैं जो रुकते हैं।",
+          "जब आप खरीदते हैं, हमारा सर्वर Meta को उस ख़रीद के बारे में बताता है: राशि और मुद्रा, SHA-256 से गूढ़ किया हुआ आपका ईमेल पता और खाता-संख्या, आपका IP पता, आपका ब्राउज़र, और Meta की कुकी, यदि आपके ब्राउज़र में हो।",
+          "आपका संकल्प, आपके नाम, आपका चित्र और आपके पत्र हमारे पास रहते हैं।",
+          "यूरोपीय संघ, ईईए, ब्रिटेन और स्विट्ज़रलैंड में पिक्सेल बंद रहता है।",
         ],
       },
       {
         h: "जो हम कभी नहीं करते",
         body: [
-          "इस साइट पर कहीं कोई विज्ञापन-स्क्रिप्ट नहीं और कोई सत्र-रिकॉर्डिंग नहीं। जिस स्क्रीन पर आप संकल्प लिखते हैं, उसे कुछ भी दर्ज नहीं करता।",
-          "आपका ईमेल पता न बेचा जाता है, न किराए पर दिया जाता है, न किसी को उनके अपने प्रयोजन के लिए दिया जाता है।",
+          "इस साइट पर कहीं कोई सत्र-रिकॉर्डिंग नहीं। जिस स्क्रीन पर आप संकल्प लिखते हैं, उसे कुछ भी दर्ज नहीं करता।",
+          "आपका ईमेल पता न बेचा जाता है, न किराए पर दिया जाता है। Meta को वह केवल गूढ़ रूप में मिलता है, विज्ञापनों के मापन के लिए, जैसा ऊपर लिखा है।",
         ],
       },
       {

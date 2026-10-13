@@ -4,6 +4,7 @@ import { checkBotId } from "botid/server";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { currencyForCountry } from "@/lib/currency";
+import { adsAllowed } from "@/lib/meta";
 import { requireUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
 import { createCheckout } from "@/lib/stripe";
@@ -52,7 +53,21 @@ export async function checkoutFor(lang: Lang, tier: TierKey, next: string): Prom
   const user = await requireUser(lang, next);
 
   const head = await headers();
-  const currency = currencyForCountry(head.get("x-vercel-ip-country"));
+  const country = head.get("x-vercel-ip-country");
+  const currency = currencyForCountry(country);
+
+  /* What Meta matches the purchase on, kept only where Meta may measure this
+     buyer; the webhook sends it through the Conversions API. */
+  let meta: { fbp?: string; fbc?: string; ip?: string; ua?: string } | undefined;
+  if (adsAllowed(country)) {
+    const jar = await cookies();
+    meta = {
+      fbp: jar.get("_fbp")?.value,
+      fbc: jar.get("_fbc")?.value,
+      ip: head.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined,
+      ua: head.get("user-agent") ?? undefined,
+    };
+  }
 
   const url = await createCheckout({
     userId: user.id,
@@ -61,6 +76,7 @@ export async function checkoutFor(lang: Lang, tier: TierKey, next: string): Prom
     currency,
     lang,
     origin: await origin(),
+    meta,
   });
 
   redirect(url);

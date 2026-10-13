@@ -7,26 +7,38 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
 
 ## For you to review
 
-1. **Bing and the index, your steps. P1.** In Bing Webmaster Tools: add
+1. **Switch the Meta Pixel on, your steps. P1.** In Meta Business Suite, Events Manager:
+   create a dataset (the pixel) for snanify.com and copy its ID; under Settings, generate a
+   Conversions API access token. In Vercel, set `NEXT_PUBLIC_META_PIXEL_ID` and
+   `META_CAPI_TOKEN` for Production and redeploy (the ID is compiled into the page). To watch
+   a test purchase arrive, set `META_TEST_EVENT_CODE` from the Test events tab, then remove
+   it. Verify the domain in Business Settings. Visitors in the EU, EEA, UK and Switzerland
+   stay unmeasured until the consent banner
+   (Waiting for your go, item 1) ships.
+2. **Bing and the index, your steps. P1.** In Bing Webmaster Tools: add
    `https://www.snanify.com/` (or the domain by DNS), submit its sitemap, remove the old
    non-www sitemap; submit the top ten URLs by hand. Win five to ten real referring
    domains. Re-check coverage on 9 and 23 October 2026.
 
 ## Waiting for your go
 
-1. **The hydration flake. P2.** React error 418 on 13 of 72 loads in the ten minutes
+1. **A consent banner. P1, before ads run in Europe.** Then `adsAllowed()` in
+   `src/lib/meta.ts` becomes "the reader said yes", the country list goes, and the privacy
+   page's ads section is rewritten to match. Until then the pixel and the Conversions API
+   are off for the EU, the EEA, the UK and Switzerland.
+2. **The hydration flake. P2.** React error 418 on 13 of 72 loads in the ten minutes
    after a production deploy, 0 of 118 afterwards, HTML byte-identical, none on a cold
    preview. A transient of the deploy, not the markup. `scripts/hydration-probe.mjs`
    measures it. Next step if it matters: a preview with `<Analytics />` swapped for
    `@vercel/analytics/react`, probed in its first ten minutes.
-2. **A voice of its own for each indexed city. P1.** A "Snan in <City>" section for the
+3. **A voice of its own for each indexed city. P1.** A "Snan in <City>" section for the
    thirty cities in `INDEXABLE_CITIES`, en and hi, 150 to 250 words each: local mandirs
    and community centres (name and neighbourhood), the water people use, the DST shift
    against IST, the festivals kept there. Only facts that can be sourced. Gate:
    `npm run seo:similarity` at or below 0.5 on every pair (twelve pairs are above it
    today; Brampton and Mississauga at 0.78). Then, once more than sixty of the seventy
    routes are indexed, the next twenty cities, each with its content first.
-3. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
+4. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
    profile exists.
 
 ## After launch, argued from data

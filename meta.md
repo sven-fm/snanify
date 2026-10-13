@@ -15,7 +15,13 @@ already in `plan.md`. It does not touch the ad funnel.
 
 ## Fix before spending money
 
-### 1. Tracking (open)
+### 1. Tracking (built, 13 October 2026; waiting for the pixel ID)
+
+**Built:** the Meta Pixel (PageView per route, ViewContent, InitiateCheckout,
+CompleteRegistration) and Purchase from the Stripe webhook through the Conversions API,
+hashed and keyed by the session. Off in the EU, the EEA, the UK and Switzerland until a
+consent banner exists; the privacy page says so. It switches on when
+`NEXT_PUBLIC_META_PIXEL_ID` and `META_CAPI_TOKEN` are set in Vercel (`plan.md`, item 1).
 
 - The site has no Meta Pixel and no Conversions API. Meta cannot optimise for purchases, and
   nobody can tell which ad sold anything.
@@ -137,7 +143,8 @@ on that assumption and may expect more context than a cold visitor has.
 
 ## This week, in order
 
-1. The Meta Pixel (with the CSP change) and the server-side Purchase event. Open.
+1. The Meta Pixel (with the CSP change) and the server-side Purchase event. Built; set the
+   two environment variables to switch it on.
 2. Sign-in tested inside Instagram on a real phone. Open.
 3. The untrue line removed. Done.
 4. The top of `/` rewritten. Done.

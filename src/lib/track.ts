@@ -18,7 +18,11 @@
    quietly.
 
    Vercel Web Analytics is cookieless and does not follow anybody between
-   sites, which is why it is the only measurement on the site.
+   sites, and it counts every reader. Four of these moments are also told to
+   the Meta Pixel, for readers Meta may measure (src/lib/meta.ts), so the ads
+   can be judged on what people do after the click; the privacy page says
+   so. Purchase is sent from the Stripe webhook instead, through
+   the Conversions API, because the webhook is where a sale is certain.
 
    THE LIBRARY IS LOADED WHEN AN EVENT IS SENT, NOT WHEN THIS MODULE IS
    IMPORTED. Importing `@vercel/analytics` at the top of a client component
@@ -66,4 +70,18 @@ export function track(event: Event, props: Props = {}): void {
   void import("@vercel/analytics")
     .then(({ track: send }) => send(event, clean as Record<string, string>))
     .catch(() => {});
+
+  /* Meta's own names for the same moments. `window.fbq` exists only where the
+     pixel was allowed to load, so everywhere else this is a no-op. */
+  const meta = META_EVENTS[event];
+  if (meta && typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", meta, clean.pack ? { content_name: clean.pack } : {});
+  }
 }
+
+/** The funnel moments Meta is told about, by Meta's standard event names. */
+const META_EVENTS: Partial<Record<Event, string>> = {
+  begin_view: "ViewContent",
+  setup_done: "CompleteRegistration",
+  checkout_start: "InitiateCheckout",
+};
