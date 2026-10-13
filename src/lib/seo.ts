@@ -85,9 +85,38 @@ export type PageMetaArgs = {
   title: string;
   description: string;
   ogType?: "website" | "article";
-  /** Set on pages that should be indexed but carry no useful preview image. */
+  /** A page's own preview image. Left out, the page carries the site card. */
   images?: string[];
 };
+
+/**
+ * The query on the site card's URL, which is Next's content hash of
+ * src/app/[lang]/opengraph-image.tsx as the homepage emits it. Every page
+ * names the card by the same URL, so Facebook and WhatsApp fetch and cache one
+ * image per edition. Edit that file and the homepage's query moves:
+ * tests/unit/og-image.test.ts then fails until this value matches again.
+ */
+export const SITE_CARD_VERSION = "4959ee7f0a5a27a4";
+
+/**
+ * The site card for an edition, absolute, with its size so a chat app can lay
+ * out the preview before the image arrives.
+ *
+ * Next merges metadata one key deep: a page that sets `openGraph` replaces the
+ * layout's whole object, and with it the image Next adds for the file at
+ * src/app/[lang]/opengraph-image.tsx. Every page sets `openGraph` here, so the
+ * card is named here too. A segment with its own image file (p/[id]) still
+ * wins, since Next applies a segment's files over its metadata object.
+ */
+export function siteCard(lang: Lang) {
+  return {
+    url: `${SITE_ORIGIN}/${lang}/opengraph-image?${SITE_CARD_VERSION}`,
+    width: 1200,
+    height: 630,
+    type: "image/png",
+    alt: "Snanify, the river comes to you",
+  };
+}
 
 export function pageMetadata({
   lang,
@@ -100,6 +129,7 @@ export function pageMetadata({
   const def = localeDef(lang);
   const url = localeUrl(lang, path);
   const indexed = isIndexable(path);
+  const preview = images ?? [siteCard(lang)];
 
   return {
     title,
@@ -116,13 +146,13 @@ export function pageMetadata({
       alternateLocale: LANGS
         .filter((code) => code !== lang)
         .map((code) => localeDef(code).og),
-      ...(images ? { images } : {}),
+      images: preview,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(images ? { images } : {}),
+      images: preview,
     },
   };
 }
