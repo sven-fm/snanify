@@ -138,8 +138,15 @@ export const config = {
    * The 32-hex `.txt` is the IndexNow key file (public/<key>.txt). Search
    * engines fetch it to verify a submission and want the bare key back, so it
    * is served as the static file it is, like robots.txt.
+   *
+   * The `149e9513-…` prefix is BotID's. `withBotId` in next.config.ts rewrites
+   * it to Vercel's bot check, but the proxy runs before those rewrites: caught
+   * here, the challenge script got the locale rewrite and a 404, the browser
+   * never sent the server action, and saving setup and paying both failed.
+   * tests/unit/proxy-matcher.test.ts reads the prefix from the installed
+   * package, so an upgrade that moves it fails there first.
    */
   matcher: [
-    "/((?!_next/|api/|waters/|favicon\\.ico|icon\\.svg|icon-\\d+\\.png|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|[0-9a-f]{32}\\.txt|.*opengraph-image|.*twitter-image).*)",
+    "/((?!_next/|api/|waters/|149e9513-01fa-4fb0-aad4-566afd725d1b/|favicon\\.ico|icon\\.svg|icon-\\d+\\.png|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|[0-9a-f]{32}\\.txt|.*opengraph-image|.*twitter-image).*)",
   ],
 };
