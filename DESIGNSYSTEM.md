@@ -366,10 +366,12 @@ no em dashes, no coined names. This is how the voice sounds inside them.
 | --- | --- |
 | Six sacred waters | Pick your river |
 | A sheet to send home, every morning | Send this morning home to the family |
-| One price, in your own currency | Eleven mornings for €11. Start tomorrow. |
-| Begin | Sit with the Ganga |
+| One price, in your own currency | Eleven mornings for €11. Your first one today. |
+| Begin | Start your snan now, or "Sit with the Ganga" once the page knows the river |
 | Running full (alone, as a label) | The Ganga is running full this morning |
 
+- **Now, never tomorrow.** People arrive wanting to sit. Every invitation is for today, and a
+  selling page offers one way forward: no second button beside Begin.
 - **Verbs on every button**, naming the river or the family wherever the page knows them.
 - **Headings are invitations**, never category names.
 - **Name the family.** Once the sheet is set up, the names are on the page: "For Asha, Ravi

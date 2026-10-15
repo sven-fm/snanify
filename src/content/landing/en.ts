@@ -54,9 +54,8 @@ export const en = {
     titleA: "A daily snan,",
     titleB: "wherever you live.",
     lede: "Three minutes with the Ganga, the Yamuna or another sacred river, as it runs this morning. Breathe with it. Make your sankalp. Then send the family a sheet with their names on it.",
-    ctaPrimary: "Begin your first snan",
-    ctaSecondary: "Watch the three minutes",
-    offer: "Eleven mornings for {price}. Start tomorrow.",
+    ctaPrimary: "Start your snan now",
+    offer: "Eleven mornings for {price}. Your first one today.",
     card: {
       /* The live line above the headline and the card's first row take their
          words from src/content/flow.ts: the river's state leads, the figure
@@ -107,7 +106,6 @@ export const en = {
       exclusive: "Prices show before US sales tax.",
       inclusive: "Tax included.",
     },
-    cta: "Watch the three minutes",
   },
   /* The sheet a stranger sees before paying: drawn from today's figure, for
      a family that does not exist, and labelled as a specimen on its face. */
@@ -129,13 +127,13 @@ export const en = {
     cta: "Back to the river",
   },
   closing: {
-    title: "Sit with the river tomorrow.",
-    lede: "Set it up tonight in two minutes. Sit for three in the morning, and the sheet is ready to send before your chai.",
-    cta: "Begin your snan",
+    title: "Sit with your river today.",
+    lede: "Set it up in two minutes and sit for three. The sheet is ready to send the moment you finish.",
+    cta: "Start your snan now",
   },
   bar: {
     label: "Eleven mornings",
-    cta: "Begin",
+    cta: "Start now",
   },
   footer: {
     tagline: "A digital snan for Indians everywhere.",

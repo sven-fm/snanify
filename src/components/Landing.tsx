@@ -16,7 +16,7 @@ import {
 } from "@/components/StructuredData";
 import { PastHero } from "@/components/site/PastHero";
 import { Specimen } from "@/components/Specimen";
-import { CTA, LinkButton, Price, Section, TaxNote } from "@/components/ui";
+import { CTA, Price, Section, TaxNote } from "@/components/ui";
 import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 
 /**
@@ -192,10 +192,10 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   target and neither is a 90px pill in a corner. On a phone they
                   sit directly under the river, which puts the primary action
                   inside the first screen instead of a scroll below it. */}
-              {/* One solid button, marked so the masthead's Begin and the
-                  thumb rail can wait for it to scroll off (PastHero). The
-                  second action is a quiet link on a phone and a ruled button
-                  from `sm`, where there is room beside the first. */}
+              {/* One solid button and nothing beside it: a second way out
+                  ("watch the three minutes") drew readers away from starting.
+                  It is marked so the masthead's Begin and the thumb rail can
+                  wait for it to scroll off (PastHero). */}
               <div
                 className="ink-in order-4 mt-6 flex flex-col gap-3 sm:order-6 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "240ms" }}
@@ -204,17 +204,6 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   <CTA className="w-full !py-4 sm:w-auto">
                     {t.hero.ctaPrimary}
                     <Diya className="text-[1.1rem]" />
-                  </CTA>
-                </Link>
-                <Link
-                  href={localePath(lang, "/snan")}
-                  className="impress flex min-h-[44px] items-center self-center text-[0.95rem] text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot sm:hidden"
-                >
-                  {t.hero.ctaSecondary}
-                </Link>
-                <Link href={localePath(lang, "/snan")} className="hidden sm:block">
-                  <CTA variant="ghost" className="!py-4">
-                    {t.hero.ctaSecondary}
                   </CTA>
                 </Link>
               </div>
@@ -395,16 +384,6 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
           <p className="mt-6 max-w-3xl text-sm leading-[1.75] text-ink2">
             <TaxNote lang={lang} />
           </p>
-
-          <div className="mt-8">
-            <LinkButton
-              href={localePath(lang, "/snan")}
-              variant="ghost"
-              className="w-full !py-4 sm:w-auto"
-            >
-              {t.pricing.cta}
-            </LinkButton>
-          </div>
         </Section>
 
         {/* ------------------------------------------------ colophon ------ */}

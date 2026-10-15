@@ -139,8 +139,8 @@ const en: Copy = {
   hero: {
     title: "Three minutes with your river.",
     lede: "Pick the river you grew up near. Each morning it shows you how it runs today, and you sit with it for three minutes. Then you send the family a Sankalp Patra with their names on it.",
-    offer: "Eleven mornings for {price}. Start tomorrow.",
-    ctaPrimary: "Begin your first snan",
+    offer: "Eleven mornings for {price}. Your first one today.",
+    ctaPrimary: "Start your snan now",
     ctaSecondary: "Walk through the five parts",
   },
 
@@ -273,13 +273,13 @@ const en: Copy = {
       },
     ],
     note: "Your mornings keep until you sit them.",
-    cta: "Begin your first snan",
+    cta: "Start your snan now",
   },
 
   closing: {
-    title: "Sit with your river tomorrow.",
-    body: "Set it up tonight in two minutes: your river, your family's names, your sankalp. Then sit with it before the day begins.",
-    cta: "Begin your snan",
+    title: "Sit with your river today.",
+    body: "Set it up in two minutes: your river, your family's names, your sankalp. Then sit with it straight away.",
+    cta: "Start your snan now",
   },
 };
 
@@ -297,8 +297,8 @@ const hi: Copy = {
   hero: {
     title: "अपनी नदी के साथ तीन मिनट।",
     lede: "वह नदी चुनिए जिसके पास आप बड़े हुए। हर सुबह वह दिखाती है कि आज कैसे बह रही है, और आप उसके साथ तीन मिनट बैठते हैं। फिर परिवार को उनके नामों वाला संकल्प पत्र भेजिए।",
-    offer: "ग्यारह सुबहें {price} में। कल से आरंभ कीजिए।",
-    ctaPrimary: "अपना पहला स्नान आरंभ कीजिए",
+    offer: "ग्यारह सुबहें {price} में। पहली आज ही।",
+    ctaPrimary: "अभी अपना स्नान आरंभ कीजिए",
     ctaSecondary: "पाँचों अंग देखिए",
   },
 
@@ -431,13 +431,13 @@ const hi: Copy = {
       },
     ],
     note: "आपकी सुबहें तब तक रखी रहती हैं जब तक आप बैठें।",
-    cta: "अपना पहला स्नान आरंभ कीजिए",
+    cta: "अभी अपना स्नान आरंभ कीजिए",
   },
 
   closing: {
-    title: "कल सुबह अपनी नदी के साथ बैठिए।",
-    body: "आज रात दो मिनट में तैयारी कीजिए: अपनी नदी, परिवार के नाम, अपना संकल्प। फिर दिन शुरू होने से पहले उसके साथ बैठिए।",
-    cta: "अपना स्नान आरंभ कीजिए",
+    title: "आज ही अपनी नदी के साथ बैठिए।",
+    body: "दो मिनट में तैयारी कीजिए: अपनी नदी, परिवार के नाम, अपना संकल्प। फिर तुरंत उसके साथ बैठिए।",
+    cta: "अभी अपना स्नान आरंभ कीजिए",
   },
 };
 
