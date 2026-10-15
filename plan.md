@@ -34,7 +34,7 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
       new voice in en and hi.
    3. *The buyer's path.* Done 15 October, with sign-in's step line and a kept-morning count at the mark; the signed-in screens still want a look on a real account. `/begin`, `/setup`, `/today` (diya at the hold, petals and the kept
       count at the mark), `/p/[id]` and `patra-image.ts` (its hex tokens), `/account`.
-   4. *Reference pages.* `/live`, `/rivers`, `/muhurat`, `/panchang`, `/kumbh`, `/faq`,
+   4. *Reference pages.* Done 15 October, with the consent banner, menus and sign-up, and `/snan` in the new voice. `/live`, `/rivers`, `/muhurat`, `/panchang`, `/kumbh`, `/faq`,
       `/about`: rules only in timing tables, labels out.
    5. *Email.* Sentence-case button, the mauli above the footer, the river's state first.
    6. *Campaigns.* Matchbox, signboard and calendar-art templates in `ads/src/`; the link

@@ -129,7 +129,7 @@ export function MobileCta({
         </svg>
       </summary>
       {/* The drawer hangs under the masthead rule, the full width of the phone. */}
-      <div className="settle-panel absolute inset-x-0 top-full z-50 border-b-2 border-rulestrong bg-paper">
+      <div className="settle-panel absolute inset-x-0 top-full z-50 border-b border-rule bg-paper">
         <ul className="mx-auto max-w-6xl px-5">
           {rows.map((r) => (
             <li key={r.href} className="border-b border-rule last:border-b-0">

@@ -48,8 +48,8 @@ export function ConsentBanner({ lang }: { lang: Lang }) {
   return (
     <aside
       aria-label={t.label}
-      className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-rulestrong bg-paper"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      className="fixed inset-x-0 bottom-0 z-50 bg-paper"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)", boxShadow: "0 -1px 0 0 var(--paper-3)" }}
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:gap-8 sm:px-8">
         <p className="text-sm leading-[1.6] text-ink sm:flex-1">

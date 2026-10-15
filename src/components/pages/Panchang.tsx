@@ -13,7 +13,7 @@ import { RIVERS } from "@/content/rivers";
 import { MUHURAT } from "@/content/muhurat";
 
 /* ---------------------------------------------------------------------------
-   /panchang: the directory. A masthead, the shraddha guide in one box, the
+   /panchang: the directory. A masthead, the shraddha guide in one warm block, the
    three hundred cities behind a filter, the six ghats, and the way onward.
    The explainers live on /panchang/shraddha, where the reader who needs them
    will finish them.
@@ -48,7 +48,7 @@ export function Panchang({ lang }: { lang: Lang }) {
 
       <main>
         {/* ---------------- masthead ---------------- */}
-        <section className="border-b-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-20 sm:pb-24">
             <h1
               className="ink-in display max-w-3xl text-[2.6rem] leading-[1] sm:text-6xl lg:text-7xl"
@@ -57,8 +57,7 @@ export function Panchang({ lang }: { lang: Lang }) {
               {t.hero.title}
             </h1>
 
-            <div className="rule-double mt-8 max-w-3xl" />
-            <WaterBand seed="panchang" className="mt-5 h-14 w-full max-w-3xl sm:h-16" />
+            <WaterBand seed="panchang" className="mt-8 h-14 w-full max-w-3xl sm:h-16" />
 
             <p
               className="ink-in mt-6 max-w-3xl text-[1.05rem] leading-[1.75] text-ink2"
@@ -79,7 +78,7 @@ export function Panchang({ lang }: { lang: Lang }) {
 
         {/* ---------------- the shraddha guide ---------------- */}
         <Section id="shraddha" tinted>
-          <div className="boxed bg-paper p-6 sm:p-8 [&>*]:max-w-3xl">
+          <div className="warm p-6 sm:p-8 [&>*]:max-w-3xl">
             <p className="label text-ink2">{t.guide.kicker}</p>
             <h2 className="display mt-3 text-[2.1rem] leading-tight sm:text-[2.9rem]">{t.guide.title}</h2>
             <p className="mt-4 leading-relaxed text-ink2">{t.guide.lede}</p>
@@ -98,7 +97,7 @@ export function Panchang({ lang }: { lang: Lang }) {
             <h2 className="display text-[2.1rem] leading-tight sm:text-[2.9rem]">{t.ghats.title}</h2>
             <p className="mt-4 leading-relaxed text-ink2">{t.ghats.lede}</p>
           </div>
-          <ul className="mt-10 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
+          <ul className="mt-10 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
             {RIVERS.map((g) => (
               <li key={g.slug} className="border-b border-rule">
                 <Link
@@ -122,17 +121,16 @@ export function Panchang({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ---------------- onward ---------------- */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-24">
             <div className="text-center">
               <Mark className="mx-auto h-12 w-12 text-ink" />
-              <div className="rule-double mt-8" />
-              <h2 className="display mt-8 text-[2.2rem] leading-tight sm:text-[3rem]">{t.close.title}</h2>
+              <h2 className="display mt-10 text-[2.2rem] leading-tight sm:text-[3rem]">{t.close.title}</h2>
             </div>
 
-            <ul className="mt-12 border-t-2 border-rulestrong">
+            <ul className="mt-12">
               {t.close.links.map((l) => (
-                <li key={l.href} className="border-b border-rule">
+                <li key={l.href}>
                   <Link
                     href={localePath(lang, l.href)}
                     className="impress flex min-h-[56px] items-center py-4 text-ink active:text-spot"
@@ -145,7 +143,7 @@ export function Panchang({ lang }: { lang: Lang }) {
 
             <p className="mt-10 text-center text-xs leading-[1.75] text-ink2">{t.close.note}</p>
 
-            <p className="mx-auto mt-14 max-w-2xl border-t border-rule pt-8 text-center text-xs leading-[1.75] text-ink2">
+            <p className="mx-auto mt-16 max-w-2xl text-center text-xs leading-[1.75] text-ink2">
               {MUHURAT.provider.note[lang]}
             </p>
           </div>

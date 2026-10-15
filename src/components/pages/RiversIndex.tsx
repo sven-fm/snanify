@@ -40,34 +40,32 @@ export function RiversIndex({ lang }: { lang: Lang }) {
 
       <main>
         {/* ------------------------------------------------ front page --- */}
-        <section className="border-b-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20">
             <h1 className="ink-in display max-w-4xl text-[2.7rem] sm:text-6xl lg:text-[4.6rem]">
               {t.title}
             </h1>
 
-            <div className="rule-double mt-8 max-w-xl" />
-
             <p
-              className="ink-in mt-6 max-w-2xl text-[1.05rem] leading-[1.75] text-ink2"
+              className="ink-in mt-8 max-w-2xl text-[1.05rem] leading-[1.75] text-ink2"
               style={{ animationDelay: "120ms" }}
             >
               {t.lede}
             </p>
 
-            {/* the water itself, set as a ruled plate across the page */}
-            <div className="mt-12 border-y-2 border-rulestrong py-5">
+            {/* The water itself, set across the page with space around it. */}
+            <div className="mt-12 py-5">
               <WaterBand seed="rivers" className="h-20 w-full sm:h-24" />
             </div>
           </div>
         </section>
 
         {/* ------------------------------------------- the lead water --- */}
-        <section className="tint border-b-2 border-rulestrong">
+        <section className="tint">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
             <div className="grid items-start gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16">
               <div>
-                <div className="border-t-2 border-rulestrong pt-6">
+                <div>
                   <h2 className="display text-4xl sm:text-5xl lg:text-6xl">
                     {waterName(first, "river", lang)}
                   </h2>
@@ -110,12 +108,12 @@ export function RiversIndex({ lang }: { lang: Lang }) {
           </div>
 
           {/* A register, unnumbered: five waters are a choice, not a sequence. */}
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {rest.map((r) => (
               <li key={r.slug}>
                 <Link
                   href={localePath(lang, `/rivers/${r.slug}`)}
-                  className="grid gap-y-4 border-b border-rule py-8 transition-colors hover:bg-paper3 md:grid-cols-[1fr_14rem] md:gap-x-8 md:py-10"
+                  className="impress -mx-3 grid gap-y-4 px-3 py-8 transition-colors hover:bg-paper3 active:bg-paper3 md:grid-cols-[1fr_14rem] md:gap-x-8 md:py-10"
                 >
                   <div>
                     <h3 className="display text-3xl text-ink sm:text-4xl">
@@ -145,7 +143,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ------------------------------------------------- offer ------
-            The four things at every one of the six, as ruled rows: at 390px
+            The four things at every one of the six, as rows set apart by space: at 390px
             the name sits on its own line and the body runs full width under
             it, so nothing is set in a column narrower than the text needs. */}
         <Section id="offer" tinted>
@@ -154,11 +152,11 @@ export function RiversIndex({ lang }: { lang: Lang }) {
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.offer.lede}</p>
           </div>
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {t.offer.items.map((item) => (
               <li
                 key={item.key}
-                className="grid gap-y-2 border-b border-rule py-6 md:grid-cols-[15rem_1fr] md:gap-x-8 md:py-7"
+                className="grid gap-y-2 py-6 md:grid-cols-[15rem_1fr] md:gap-x-8 md:py-7"
               >
                 <span className="display text-xl text-ink sm:text-2xl">{item.name}</span>
                 <span className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.body}</span>
@@ -174,11 +172,11 @@ export function RiversIndex({ lang }: { lang: Lang }) {
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.choosing.lede}</p>
           </div>
 
-          <dl className="mt-10 border-t-2 border-rulestrong">
+          <dl className="mt-10">
             {t.choosing.rows.map((row) => (
               <div
                 key={row.key}
-                className="grid gap-3 border-b border-rule py-7 md:grid-cols-[15rem_1fr] md:gap-10 md:py-9"
+                className="grid gap-3 py-7 md:grid-cols-[15rem_1fr] md:gap-10 md:py-9"
               >
                 <dt className="display text-xl text-ink">{row.label}</dt>
                 <dd className="max-w-2xl leading-[1.75] text-ink2">{row.body}</dd>
@@ -188,11 +186,10 @@ export function RiversIndex({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ------------------------------------------------ closing ----- */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
             <Mark className="mx-auto h-12 w-12 text-ink" />
-            <div className="rule-double mt-8" />
-            <h2 className="display mt-8 text-[2.2rem] leading-tight sm:text-[3.2rem]">
+            <h2 className="display mt-10 text-[2.2rem] leading-tight sm:text-[3.2rem]">
               {t.closing.title}
             </h2>
             <p className="mx-auto mt-5 max-w-xl leading-[1.75] text-ink2">{t.closing.lede}</p>

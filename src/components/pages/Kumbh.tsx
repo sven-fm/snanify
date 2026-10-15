@@ -104,8 +104,8 @@ function MonthPlate({
   while (cells.length % 7 !== 0) cells.push(null);
 
   return (
-    <figure className="boxed bg-paper">
-      <figcaption className="label border-b border-rulestrong px-4 py-3 text-ink">
+    <figure className="bg-paper">
+      <figcaption className="label px-4 pt-4 pb-2 text-ink">
         {months[month - 1]} {deva(String(year), lang)}
       </figcaption>
 
@@ -132,7 +132,7 @@ function MonthPlate({
               key={i}
               className={[
                 "flex aspect-square items-center justify-center border-r border-b border-rule text-sm",
-                "[&:nth-child(7n)]:border-r-0",
+                "[&:nth-child(7n)]:border-r-0 [&:nth-last-child(-n+7)]:border-b-0",
                 bathing ? "bg-spot font-bold text-paper" : "text-ink2",
               ].join(" ")}
             >
@@ -173,7 +173,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
 
       <main>
         {/* ------------------------------------------------- masthead ---- */}
-        <section className="border-b-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 pt-10 pb-16 sm:px-8 sm:pt-14 sm:pb-20">
             <h1 className="ink-in display text-[3.2rem] sm:text-6xl lg:text-[5.2rem]">
               {t.hero.title}
@@ -186,8 +186,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
               {t.hero.kicker}
             </p>
 
-            <div className="rule-double mt-8 max-w-2xl" />
-            <WaterBand seed="kumbh" className="mt-5 h-14 w-full sm:h-16" />
+            <WaterBand seed="kumbh" className="mt-8 h-14 w-full sm:h-16" />
 
             <p
               className="ink-in mt-7 max-w-2xl text-xl leading-[1.5] text-ink sm:text-2xl"
@@ -210,9 +209,9 @@ export function Kumbh({ lang }: { lang: Lang }) {
         </section>
 
         {/* -------------------------------------------- standing entry --- */}
-        <section className="tint border-b-2 border-rulestrong">
+        <section className="tint">
           <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
-            <dl className="grid gap-x-10 border-t-2 border-rulestrong md:grid-cols-2">
+            <dl className="grid gap-x-10 md:grid-cols-2">
               {t.facts.rows.map((row) => (
                 <div
                   key={row.key}
@@ -279,10 +278,10 @@ export function Kumbh({ lang }: { lang: Lang }) {
           </div>
 
           {/* the register of days */}
-          <div className="mt-10 overflow-x-auto border-t-2 border-rulestrong" tabIndex={0}>
+          <div className="mt-10 overflow-x-auto" tabIndex={0}>
             <table className="w-full min-w-[46rem] border-collapse text-left">
               <thead>
-                <tr className="border-b border-rulestrong">
+                <tr className="border-b border-rule">
                   <th scope="col" className="label py-3 pr-6 text-ink2">
                     {c.columns.date}
                   </th>
@@ -384,7 +383,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.attend.lede}</p>
           </div>
 
-          <dl className="mt-10 border-t-2 border-rulestrong">
+          <dl className="mt-10">
             {t.attend.rows.map((row) => (
               <div
                 key={row.key}
@@ -404,7 +403,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.sources.lede}</p>
           </div>
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {KUMBH_SOURCES.map((s) => (
               <li
                 key={s.key}
@@ -425,11 +424,11 @@ export function Kumbh({ lang }: { lang: Lang }) {
 
           <div className="mt-14 max-w-3xl">
             <h3 className="display text-2xl text-ink">{t.sources.unverifiedTitle}</h3>
-            <ul className="mt-5 border-t-2 border-rulestrong">
+            <ul className="mt-6 space-y-4">
               {t.sources.unverified.map((item, i) => (
                 <li
                   key={i}
-                  className="border-b border-rule py-4 text-[0.95rem] leading-[1.8] text-ink2"
+                  className="text-[0.95rem] leading-[1.8] text-ink2"
                 >
                   {item}
                 </li>
@@ -440,16 +439,16 @@ export function Kumbh({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ------------------------------------------------------ onward -- */}
-        <section className="tint border-t-2 border-rulestrong">
+        <section className="tint">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
             <h2 className="display text-3xl sm:text-4xl">{t.onward.title}</h2>
 
-            <div className="mt-8 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
+            <div className="mt-8 grid gap-3 md:grid-cols-3">
               {t.onward.links.map((l) => (
                 <Link
                   key={l.key}
                   href={onwardHref[l.key] ?? localePath(lang, "/")}
-                  className="bg-paper p-7 transition-colors hover:bg-paper3 sm:p-8"
+                  className="impress bg-paper p-7 transition-colors hover:bg-paper3 sm:p-8"
                 >
                   <span className="display block text-xl text-ink">{l.label}</span>
                   <span className="mt-3 block text-sm leading-[1.75] text-ink2">{l.note}</span>

@@ -58,8 +58,9 @@ import {
    WHAT WAS TAKEN OFF THIS PAGE, and must stay off: the caps eyebrow with a
    red dash above every section, the 01 to 06 numerals on six waters that are
    a choice and not a sequence, meta lines joining facts with middle dots, the
-   red-boxed "not a reading" warning, and the arrow after every link. Small
-   caps stay where they head a column of figures and on the button.
+   red-boxed "not a reading" warning, the heavy rules between sections, and
+   the arrow after every link. Everything is sentence case, the button too.
+   Space divides the page; a hairline stays only between rows of figures.
    --------------------------------------------------------------------------- */
 
 const locale = (lang: Lang) => (lang === "hi" ? "hi-IN" : "en-IN");
@@ -221,16 +222,16 @@ function FlowPanel({
 
   return (
     <div className="mt-8">
-      {/* A quiet feed is stated in a ruled box, in the same voice as the
-          rest of the page, rather than shouted from a red one. */}
+      {/* A quiet feed is stated in a tint block, in the same voice as the
+          rest of the page, rather than shouted from a red box. */}
       {discharge.kind === "normal" && (
-        <div className="boxed tint mb-6 p-4">
+        <div className="tint mb-6 p-4">
           <h3 className="display text-lg leading-tight">{t.feed.normalHeading}</h3>
           <p className="mt-2 text-[0.95rem] leading-[1.7] text-ink">{t.feed.normalNote}</p>
         </div>
       )}
 
-      <div className="border-y-2 border-rulestrong py-6">
+      <div className="py-6">
         <p className="text-sm text-ink2">
           {discharge.kind === "modelled" ? t.flow.label : t.feed.normalHeading}
         </p>
@@ -277,7 +278,7 @@ function FlowPanel({
         </div>
       )}
 
-      <div className="mt-7 tint boxed p-5">
+      <div className="mt-7 tint p-5">
         <p className="text-sm text-ink2">{t.flow.normalLabel}</p>
         <p className="mt-2 text-[0.95rem] leading-[1.7] text-ink">
           {fill(t.flow.normalBody, {
@@ -290,7 +291,7 @@ function FlowPanel({
       </div>
 
       {discharge.kind === "modelled" && discharge.series.length > 1 && (
-        <details className="group mt-7 border-t border-rule pt-3">
+        <details className="group mt-8">
           <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm text-ink [&::-webkit-details-marker]:hidden">
             {t.flow.seriesLabel}
             <span aria-hidden="true" className="text-ink2 group-open:hidden">+</span>
@@ -322,8 +323,8 @@ function SkyPanel({ sky, lang }: { sky: Sky; lang: Lang }) {
       {/* Two cells, never four. A four-up grid reflows into two rows on a phone
           and the row-two cells lose their alignment with the page edge; two
           cells hold their shape at every width from 320px up. Air and rain live
-          in the ruled register below, where a long value can wrap. */}
-      <div className="mt-3 grid grid-cols-2 border-y-2 border-rulestrong">
+          in the register below, where a long value can wrap. */}
+      <div className="mt-3 grid grid-cols-2">
         <div className="border-r border-rule py-4 pr-4">
           <p className="label text-ink2">{t.sky.sunrise}</p>
           <p className="display tabular mt-1.5 text-[1.7rem] leading-none">{clock(sky.sunrise)}</p>
@@ -372,8 +373,8 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
   const read = discharge.kind === "modelled" ? discharge : null;
 
   return (
-    <InView as="section" className="scroll-mt-20 border-t-2 border-rulestrong">
-      <div id={water.slug} className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+    <InView as="section" className="scroll-mt-20">
+      <div id={water.slug} className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
         {/* ------------------------------------------------------- head --- */}
         <div className="grid gap-6 sm:grid-cols-[1fr_16rem] sm:items-end lg:grid-cols-[1fr_22rem]">
           <div className="reveal min-w-0">
@@ -386,7 +387,7 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
             </p>
           </div>
           {/* The landmark, printed as ink; see src/content/live/pictures.ts. */}
-          <div className="reveal plate boxed relative aspect-[3/2] w-full" style={{ ["--i" as string]: 1 }}>
+          <div className="reveal plate relative aspect-[3/2] w-full" style={{ ["--i" as string]: 1 }}>
             <div
               role="img"
               aria-label={PICTURES[water.slug].alt[lang]}
@@ -396,12 +397,10 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
           </div>
         </div>
 
-        <div className="rule-thin mt-6" />
-
         {/* --------------------------------------------- the sentence --- */}
         {read && (
           <p
-            className="reveal display mt-6 max-w-3xl text-[1.4rem] leading-[1.3] sm:text-[2rem]"
+            className="reveal display mt-8 max-w-3xl text-[1.4rem] leading-[1.3] sm:text-[2rem]"
             style={{ ["--i" as string]: 2 }}
           >
             {fill(t.bands[read.percentile.band], { river: subject })}
@@ -445,13 +444,13 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
                 Folded: the page was twenty-three screens on a phone with
                 every register open. The window and the source stay in the
                 fold's summary line; the rest is one tap away. */}
-            <details className="group mt-8 border-t-2 border-rulestrong pt-3">
+            <details className="group mt-10">
             <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm text-ink [&::-webkit-details-marker]:hidden">
               {t.more}
               <span aria-hidden="true" className="text-ink2 group-open:hidden">+</span>
               <span aria-hidden="true" className="hidden text-ink2 group-open:inline">−</span>
             </summary>
-            <dl className="settle-panel mt-2 border-t border-rule">
+            <dl className="settle-panel mt-2">
               {slot && (
                 <Entry term={slot.open ? t.windows.openNow : t.windows.next}>
                   {windowLine(slot, lang)}
@@ -583,8 +582,8 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
           it. Above lg the bar is gone and so is the padding. */}
       <main className="pb-28 lg:pb-0">
         {/* ---------------------------------------------- front matter --- */}
-        <section className="border-b-2 border-rulestrong">
-          <div className="mx-auto max-w-6xl px-5 pt-8 pb-8 sm:px-8 sm:pt-10 sm:pb-9">
+        <section>
+          <div className="mx-auto max-w-6xl px-5 pt-8 pb-4 sm:px-8 sm:pt-10 sm:pb-6">
             {/* The badge names the rung the page is actually on. The spot
                 square fills only when the feed is genuinely live, which is the
                 one thing that square is for. */}
@@ -619,13 +618,13 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         />
 
         {/* ------------------------------------------------- the index --- */}
-        <section className="tint border-b-2 border-rulestrong">
+        <section className="tint">
           <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
             <h2 className="display text-[1.7rem] leading-tight sm:text-[2.2rem]">
               {t.index.title}
             </h2>
 
-            <InView as="ul" className="mt-6 border-t-2 border-rulestrong">
+            <InView as="ul" className="mt-6">
               {snapshot.waters.map((water, i) => {
                 const ghat = getGhat(water.slug);
                 if (!ghat) return null;
@@ -674,7 +673,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         ))}
 
         {/* -------------------------------------------- how we know it --- */}
-        <section className="tint border-t-2 border-rulestrong">
+        <section className="tint">
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
             <h2 className="display text-[1.9rem] leading-tight sm:text-[2.7rem]">
               {t.provenance.heading}
@@ -706,9 +705,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
               {t.sky.noWater}
             </p>
 
-            <div className="rule-thin mt-9 max-w-3xl" />
-
-            <h3 className="display mt-6 text-lg">{t.provenance.attributionLabel}</h3>
+            <h3 className="display mt-14 text-lg">{t.provenance.attributionLabel}</h3>
             <ul className="mt-3 max-w-3xl space-y-2">
               {t.provenance.attribution.map((line) => (
                 <li key={line.slice(0, 24)} className="text-[0.9rem] leading-[1.7] text-ink2">
@@ -758,12 +755,12 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         </section>
 
         {/* ---------------------------------------------------- close --- */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
             <h2 className="display max-w-3xl text-[1.9rem] sm:text-[2.7rem]">{t.close.title}</h2>
             <p className="mt-5 max-w-2xl text-[1rem] leading-[1.75] text-ink2">{t.close.body}</p>
 
-            <ul className="mt-9 border-t-2 border-rulestrong">
+            <ul className="mt-9">
               {(
                 [
                   ["/rivers", t.close.links.rivers],
@@ -771,7 +768,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                   ["/panchang", t.close.links.panchang],
                 ] as const
               ).map(([path, label]) => (
-                <li key={path} className="border-b border-rule">
+                <li key={path}>
                   <Link
                     href={localePath(lang, path)}
                     className="display flex min-h-[56px] items-center py-3 text-xl text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
@@ -789,7 +786,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
 
       {/* The primary action, put where a thumb reaches on a 390px screen.
           Hidden above lg, where the masthead's own button is in reach. */}
-      <aside aria-label={t.close.title} className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-rulestrong bg-paper px-5 py-3 lg:hidden">
+      <aside aria-label={t.close.title} className="warm fixed inset-x-0 bottom-0 z-50 px-5 py-3 lg:hidden">
         <a
           href={cta}
           className="label flex min-h-[48px] items-center justify-center bg-spot px-6 text-paper transition-colors hover:bg-ink"

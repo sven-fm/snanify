@@ -84,7 +84,6 @@ export default async function Page({
 
       <main className="mx-auto max-w-md px-5 py-14 sm:py-20">
         <h1 className="display text-[2rem] leading-[1.2]">{off ? t.doneTitle : t.title}</h1>
-        <div className="rule-double mt-6" />
         <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{off ? t.doneBody : t.body}</p>
 
         {off ? (

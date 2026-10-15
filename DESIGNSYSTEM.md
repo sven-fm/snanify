@@ -197,8 +197,8 @@ Controls that wait for the hero's own button to scroll off (the masthead's Begin
 thumb rail) carry `data-until-scrolled`; `PastHero` stamps `data-past-hero` on `<html>` and
 the stylesheet does the showing. Without scripts nothing is ever hidden.
 
-`StatusBadge` pulses only when `live` is true. A pulsing dot asserts that something is running
-right now.
+`StatusBadge` leads with a vermillion bindu only when `live` is true, and a faint one
+otherwise. A vermillion dot asserts that something is running right now.
 
 ## The river
 

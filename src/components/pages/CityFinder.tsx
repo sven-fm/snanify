@@ -8,10 +8,10 @@ import { localePath, type Lang } from "@/lib/locales";
    The directory of cities, with a filter above it.
 
    Three hundred rows is too many to scroll on a phone, so the reader types
-   and the list narrows to ruled rows. With the box empty every country is a
+   and the list narrows to rows split by hairlines. With the box empty every country is a
    run of names, by state or province where the country has them, which is
    how a printed almanac lists its towns and about a fifth of the height of
-   a ruled list. The whole list is in the HTML either way, so a crawler reads
+   a list of rows. The whole list is in the HTML either way, so a crawler reads
    every link without touching the box.
    --------------------------------------------------------------------------- */
 
@@ -131,7 +131,7 @@ export function CityFinder({ lang, groups, t }: { lang: Lang; groups: readonly F
 
       {q ? (
         <>
-          <ul className="mt-8 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
+          <ul className="mt-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
             {found.map((c) => (
               <Row key={c.slug} city={c} lang={lang} sub={[c.region, c.country].filter(Boolean).join(", ")} />
             ))}
@@ -147,7 +147,7 @@ export function CityFinder({ lang, groups, t }: { lang: Lang; groups: readonly F
       ) : (
         groups.map((g) => (
           <div key={g.code} className="mt-10">
-            <h3 className="label border-b-2 border-rulestrong pb-3 text-ink2">{g.name}</h3>
+            <h3 className="label text-ink2">{g.name}</h3>
             <div className="mt-3 space-y-3">
               {byRegion(g.cities).map((r) => (
                 <Run key={r.region ?? g.code} cities={r.cities} lang={lang} region={r.region} />

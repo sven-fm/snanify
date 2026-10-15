@@ -5,6 +5,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Mark } from "@/components/Logo";
+import { Tilak } from "@/components/marks";
 import { PastHero } from "@/components/site/PastHero";
 import { SittingLoop } from "@/components/snan/SittingLoop";
 import { Specimen } from "@/components/Specimen";
@@ -30,7 +31,7 @@ import { clock, LIMB_START, SITTING } from "@/lib/sitting-plan";
  *    thumb arc, on phones only. Desktop keeps the masthead CTA. The bar is
  *    plain CSS with no observers, and it carries no countdown, no scarcity and
  *    no urgency, because there is none.
- *  - The tariff is a stack of ruled rows, not a table.
+ *  - The tariff is a stack of rows set apart by space, not a table.
  *
  * WHAT WAS TAKEN OFF THIS PAGE, and must stay off: the caps eyebrow with a
  * red dash above every heading, the fade-and-rise on every section, numbered
@@ -71,16 +72,17 @@ export function SnanIntro({ lang }: { lang: Lang }) {
 
       <main>
         {/* ------------------------------------------------ masthead ------ */}
-        {/* The river is anchored under the headline's double rule, as the
-            landing anchors it under the headline: everything above the rule
-            is on sky, and the lede and the offer sit on a paper slip below it. */}
-        <section className="relative overflow-hidden border-b-2 border-rulestrong">
+        {/* The river is anchored under the headline at an invisible horizon,
+            as the landing anchors it under the headline: everything above the
+            horizon is on sky, and the lede and the offer sit on a paper slip
+            below it. */}
+        <section className="relative overflow-hidden">
           {/* Phone: a band under the type. The panorama tuning's small sun
               stays inside the band; the portrait one rose into the offer line. */}
           <RiverFlow
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[34%] w-full text-ink lg:hidden"
           />
-          {/* Wide: the full panorama behind the type, horizon on the rule. */}
+          {/* Wide: the full panorama behind the type, horizon on the anchor. */}
           <RiverFlow
             variant="panorama"
             anchorSelector="[data-snan-horizon]"
@@ -88,11 +90,16 @@ export function SnanIntro({ lang }: { lang: Lang }) {
           />
 
           <div className="relative mx-auto max-w-6xl px-5 pt-10 pb-14 sm:px-8 sm:pt-16 sm:pb-20">
-            <h1 className="ink-in display max-w-4xl text-[2.5rem] leading-[1.06] sm:text-[3.8rem] lg:text-[5rem]">
-              {t.hero.title}
-            </h1>
+            {/* The tilak marks the one headline on the page. */}
+            <div className="flex items-start gap-3">
+              <Tilak className="mt-[0.15em] text-[1.6rem] sm:text-[1.9rem]" />
+              <h1 className="ink-in display min-w-0 max-w-4xl text-[2.5rem] leading-[1.06] sm:text-[3.8rem] lg:text-[5rem]">
+                {t.hero.title}
+              </h1>
+            </div>
 
-            <div data-snan-horizon className="rule-double mt-7 max-w-xl" />
+            {/* The horizon anchor: an empty line the panorama's waterline sits on. */}
+            <div data-snan-horizon className="mt-7 h-1 max-w-xl" />
 
             <div
               className="ink-in mt-6 max-w-2xl lg:bg-paper lg:px-4 lg:py-3"
@@ -132,7 +139,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
           {/* The sitting itself, looped in a phone, beside the five parts at a glance. */}
           <div className="mt-10 grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start lg:gap-14">
           <SittingLoop lang={lang} />
-          <ul className="border-t-2 border-rulestrong lg:border-b-2">
+          <ul>
             {t.form.limbs.map((l) => (
               <li
                 key={`glance-${l.id}`}
@@ -148,12 +155,12 @@ export function SnanIntro({ lang }: { lang: Lang }) {
           </div>
 
           {/* The long version. Numbered, because the parts run in this order. */}
-          <ol className="mt-12 border-t-2 border-rulestrong">
+          <ol className="mt-14">
             {t.form.limbs.map((l, i) => (
               <li
                 key={l.id}
                 id={l.id}
-                className="scroll-mt-20 border-b border-rule py-9 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-14"
+                className="scroll-mt-20 py-9 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-14"
               >
                 <div className="flex items-baseline gap-4 lg:sticky lg:top-24 lg:block lg:self-start">
                   <span className="display text-[2.2rem] leading-none text-spot tabular-nums">
@@ -174,7 +181,6 @@ export function SnanIntro({ lang }: { lang: Lang }) {
 
                 <div className="mt-6 lg:mt-0">
                   <h3 className="display text-[1.75rem] leading-[1.25] sm:text-[2.1rem]">{l.title}</h3>
-                  <div className="rule-thin mt-5" />
                   {l.body.map((p) => (
                     <p key={p} className="mt-5 max-w-[38rem] text-[1.05rem] leading-[1.85] text-ink2">
                       {p}
@@ -190,17 +196,15 @@ export function SnanIntro({ lang }: { lang: Lang }) {
             The one reverse block on the site: ink ground, paper type, which is
             what a press does when it wants a page to stop you. It is also
             literally what the part does. */}
-        <section id="stillness" className="border-t-2 border-rulestrong bg-ink text-paper">
+        <section id="stillness" className="bg-ink text-paper">
           <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
             <h2 className="display max-w-3xl text-[2rem] leading-[1.14] sm:text-[2.9rem]">
               {t.still.title}
             </h2>
 
-            <div className="mt-8 h-px w-full max-w-3xl bg-paper" />
+            <p className="mt-10 max-w-2xl text-[1.05rem] leading-[1.85]">{t.still.body}</p>
 
-            <p className="mt-8 max-w-2xl text-[1.05rem] leading-[1.85]">{t.still.body}</p>
-
-            <div className="mt-10 max-w-xl border border-paper px-5 py-10 text-center sm:px-8 sm:py-14">
+            <div className="mt-10 max-w-xl px-5 py-10 text-center sm:px-8 sm:py-14">
               <p className="display text-[1.3rem] leading-[1.5] sm:text-[1.7rem]">{t.still.instruction}</p>
             </div>
 
@@ -217,11 +221,11 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                 <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.patra.lede}</p>
               </div>
 
-          <dl className="mt-10 border-t-2 border-rulestrong">
+          <dl className="mt-10">
             {t.patra.carries.map((row) => (
               <div
                 key={row.k}
-                className="border-b border-rule py-5 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-10"
+                className="py-5 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-10"
               >
                 <dt className="display text-[1.3rem] leading-none text-ink">{row.k}</dt>
                 <dd className="mt-2 max-w-[38rem] text-[1.02rem] leading-[1.85] text-ink2 sm:mt-0">
@@ -249,9 +253,9 @@ export function SnanIntro({ lang }: { lang: Lang }) {
         <Section id="questions">
           <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.before.title}</h2>
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {t.before.items.map((item) => (
-              <li key={item.q} className="border-b border-rule py-7">
+              <li key={item.q} className="py-7">
                 <h3 className="display text-[1.4rem] leading-[1.3] sm:text-[1.7rem]">{item.q}</h3>
                 <p className="mt-4 max-w-[40rem] text-[1.05rem] leading-[1.85] text-ink2">{item.a}</p>
               </li>
@@ -260,20 +264,20 @@ export function SnanIntro({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ------------------------------------------------ the tariff -----
-            A price list set as ruled rows, so it stacks on a phone instead of
-            becoming a horizontal scroller. The hero row stands on paper with
-            the spot rule; nothing here counts down or runs out. */}
+            A price list set as rows apart by space, so it stacks on a phone
+            instead of becoming a horizontal scroller. The hero row stands on
+            the haldi ground; nothing here counts down or runs out. */}
         <Section id="tariff" tinted>
           <div className="max-w-3xl">
             <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.tariff.title}</h2>
             <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.tariff.lede}</p>
           </div>
 
-          <ul className="mt-11 border-t-2 border-rulestrong">
+          <ul className="mt-11 space-y-4">
             {t.tariff.rows.map((row) => (
               <li
                 key={row.name}
-                className={`border-b border-rule ${row.hero ? "border-l-4 border-l-spot bg-paper" : ""}`}
+                className={row.hero ? "warm" : undefined}
               >
                 {/* The whole row is the press, and it carries the pack to the
                     picker through sign-in and setup. */}
@@ -285,7 +289,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                     </div>
 
                     {/* One price, in the reader's own currency. */}
-                    <dl className="mt-5 border-t border-rule pt-4 sm:mt-0 sm:shrink-0 sm:border-t-0 sm:pt-0 sm:text-right">
+                    <dl className="mt-5 pt-2 sm:mt-0 sm:shrink-0 sm:pt-0 sm:text-right">
                       <dt className="label text-ink2">{t.tariff.heads.price}</dt>
                       <dd className="display mt-1.5 text-[2.4rem] leading-none text-spot tabular-nums">
                         <Price prices={PRICE[row.key]} />
@@ -293,7 +297,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                     </dl>
                   </div>
 
-                  <dl className="mt-6 flex items-baseline gap-3 border-t border-rule pt-4">
+                  <dl className="mt-6 flex items-baseline gap-3 pt-2">
                     <dt className="label shrink-0 text-ink2">{t.tariff.heads.per}</dt>
                     <dd className="text-[1.05rem] leading-none text-ink tabular-nums">
                       <Price prices={PER_SNAN[row.key]} />
@@ -320,11 +324,10 @@ export function SnanIntro({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ------------------------------------------------ colophon ------ */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
             <Mark className="mx-auto h-12 w-12 text-ink" />
-            <div className="rule-double mt-8" />
-            <h2 className="display mt-8 text-[1.9rem] leading-[1.2] sm:text-[2.9rem]">{t.closing.title}</h2>
+            <h2 className="display mt-10 text-[1.9rem] leading-[1.2] sm:text-[2.9rem]">{t.closing.title}</h2>
             <p className="mx-auto mt-6 max-w-lg text-[1.05rem] leading-[1.85] text-ink2">{t.closing.body}</p>
             <Link href={begin} className={buttonClass("solid", "mt-9 min-h-[52px] w-full sm:w-auto")}>
               {t.closing.cta}
@@ -336,7 +339,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
       <Footer lang={lang} />
 
       {/* The footer's own ground continued behind the fixed bar, so the last
-          rule of the page is never sitting underneath it. */}
+          line of the page is never sitting underneath it. */}
       <div aria-hidden="true" className="tint h-24 lg:hidden" />
 
       {/* ------------------------------------------------ thumb rail -----
@@ -346,7 +349,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
       <aside
         aria-label={t.sticky.name}
         data-until-scrolled="rail"
-        className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-rulestrong bg-paper lg:hidden"
+        className="warm fixed inset-x-0 bottom-0 z-50 lg:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <div className="flex items-center justify-between gap-4 px-4 py-2.5">

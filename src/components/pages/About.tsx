@@ -12,10 +12,10 @@ import { ETHICS_MAIL } from "@/content/trust";
 /**
  * /about, the two people behind the site.
  *
- * Set as the FAQ is set: a masthead with the double rule and the water, then
- * one prose column of ruled sections. Each founder is a block of their own:
- * an optional square portrait on a plate, the name in the display face, a
- * role line, four or five short sentences, and their links as ruled rows.
+ * Set as the FAQ is set: a masthead with the water, then one prose column of
+ * sections set apart by space. Each founder is a block of their own: an
+ * optional square portrait on a plate, the name in the display face, a role
+ * line, four or five short sentences, and their links as a short list.
  *
  * MOBILE FIRST. One column at 390px; the portrait sits above the name on a
  * phone and beside the text from `sm` up. The primary action closes the page
@@ -24,7 +24,7 @@ import { ETHICS_MAIL } from "@/content/trust";
 
 function Portrait({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="boxed plate relative aspect-square w-32 shrink-0 overflow-hidden sm:w-40">
+    <div className="plate relative aspect-square w-32 shrink-0 overflow-hidden sm:w-40">
       <div
         role="img"
         aria-label={alt}
@@ -39,7 +39,7 @@ function FounderBlock({ f }: { f: Founder }) {
   const portrait = FOUNDERS[f.id].portrait;
 
   return (
-    <article id={f.id} className="scroll-mt-20 border-t border-rule pt-8 first:border-t-0 first:pt-0">
+    <article id={f.id} className="scroll-mt-20">
       <div className={portrait ? "sm:flex sm:gap-8" : ""}>
         {portrait && (
           <div className="mb-6 sm:mb-0">
@@ -53,9 +53,9 @@ function FounderBlock({ f }: { f: Founder }) {
         </div>
       </div>
 
-      <ul className="mt-6 border-t-2 border-rulestrong">
+      <ul className="mt-6">
         {f.links.map((l) => (
-          <li key={l.href} className="border-b border-rule">
+          <li key={l.href}>
             <a
               href={l.href}
               rel="noopener"
@@ -86,12 +86,11 @@ export function About({ lang }: { lang: Lang }) {
       {/* The bottom rail is 3.75rem tall on a phone; the page ends above it. */}
       <main className="pb-20 sm:pb-0">
         {/* ---------------- masthead ---------------- */}
-        <header className="border-b-2 border-rulestrong">
+        <header>
           <div className="mx-auto max-w-6xl px-5 pt-10 pb-10 sm:px-8 sm:pt-24 sm:pb-20">
             <div className="ink-in max-w-3xl">
               <h1 className="display text-[2.3rem] leading-[1.12] sm:text-6xl">{t.title}</h1>
-              <div className="rule-double mt-7" />
-              <WaterBand seed="about" className="mt-5 h-14 w-full sm:h-16" />
+              <WaterBand seed="about" className="mt-8 h-14 w-full sm:h-16" />
               <p className="mt-6 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2 sm:text-[1.08rem]">
                 {t.lede}
               </p>
@@ -103,7 +102,7 @@ export function About({ lang }: { lang: Lang }) {
           <div className="max-w-[44rem] py-12 sm:py-20">
             {/* ---------------- why ---------------- */}
             <section id="why" className="scroll-mt-20">
-              <h2 className="display border-t-2 border-rulestrong pt-4 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
+              <h2 className="display text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
                 {t.why.title}
               </h2>
               {t.why.body.map((p) => (
@@ -115,10 +114,10 @@ export function About({ lang }: { lang: Lang }) {
 
             {/* ---------------- the founders ---------------- */}
             <section id="founders" className="mt-16 scroll-mt-20 sm:mt-20">
-              <h2 className="display border-t-2 border-rulestrong pt-4 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
+              <h2 className="display text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
                 {t.founders.title}
               </h2>
-              <div className="mt-8 space-y-10">
+              <div className="mt-8 space-y-14">
                 {t.founders.people.map((f) => (
                   <FounderBlock key={f.id} f={f} />
                 ))}
@@ -127,7 +126,7 @@ export function About({ lang }: { lang: Lang }) {
 
             {/* ---------------- write to us ---------------- */}
             <section id="write" className="mt-16 scroll-mt-20 sm:mt-20">
-              <h2 className="display border-t-2 border-rulestrong pt-4 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
+              <h2 className="display text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
                 {t.write.title}
               </h2>
               <p className="mt-5 max-w-[38rem] text-[1rem] leading-[1.8] text-ink2">{t.write.body}</p>
@@ -145,11 +144,10 @@ export function About({ lang }: { lang: Lang }) {
         </div>
 
         {/* ---------------- colophon ---------------- */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
             <Mark className="mx-auto h-12 w-12 text-ink" />
-            <div className="rule-double mt-8" />
-            <h2 className="display mt-8 text-[1.9rem] leading-[1.2] sm:text-[2.9rem]">{t.closing.title}</h2>
+            <h2 className="display mt-10 text-[1.9rem] leading-[1.2] sm:text-[2.9rem]">{t.closing.title}</h2>
             <p className="mx-auto mt-6 max-w-lg text-[1.05rem] leading-[1.85] text-ink2">{t.closing.body}</p>
             <Link href={begin} className={buttonClass("solid", "mt-9 min-h-[52px] w-full sm:w-auto")}>
               {t.closing.cta}
@@ -161,7 +159,7 @@ export function About({ lang }: { lang: Lang }) {
       <Footer lang={lang} />
 
       {/* ---------------- thumb rail, phones only ---------------- */}
-      <aside aria-label={t.closing.cta} className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden">
+      <aside aria-label={t.closing.cta} className="fixed inset-x-0 bottom-0 z-40 bg-paper sm:hidden">
         <a href={begin} className="label flex min-h-[3.75rem] items-center justify-center bg-spot px-5 text-paper">
           {t.closing.cta}
         </a>

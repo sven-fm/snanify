@@ -66,7 +66,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
 
       <main>
         {/* ---------------- masthead ---------------- */}
-        <section className="border-b-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-20 sm:pb-24">
             <p className="label text-ink2">{g.kicker}</p>
             <h1
@@ -76,8 +76,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               {g.hero.title}
             </h1>
 
-            <div className="rule-double mt-8 max-w-3xl" />
-            <WaterBand seed="shraddha" className="mt-5 h-14 w-full max-w-3xl sm:h-16" />
+            <WaterBand seed="shraddha" className="mt-8 h-14 w-full max-w-3xl sm:h-16" />
 
             <p
               className="ink-in mt-6 max-w-3xl text-[1.05rem] leading-[1.75] text-ink2"
@@ -95,7 +94,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.pitru.lede}</p>
             </div>
 
-            <div className="boxed mt-10 bg-paper p-6 sm:p-7 [&>*]:max-w-3xl">
+            <div className="tint mt-10 p-6 sm:p-7 [&>*]:max-w-3xl">
               <h3 className="display text-xl">{t.pitru.datesHeading}</h3>
               <p className="mt-3 text-sm leading-[1.75] text-ink2">{t.pitru.dates}</p>
               <div className="mt-6">
@@ -106,7 +105,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
             <div className="mt-12 overflow-x-auto" tabIndex={0}>
               <table className="w-full min-w-[44rem] border-collapse text-left">
                 <thead>
-                  <tr className="border-y-2 border-rulestrong">
+                  <tr className="border-b border-rule">
                     <th className="label py-3 pr-4 text-ink2">{t.pitru.cols.n}</th>
                     <th className="label py-3 pr-4 text-ink2">{t.pitru.cols.tithi}</th>
                     <th className="label py-3 text-ink2">{t.pitru.cols.kept}</th>
@@ -135,7 +134,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               </table>
             </div>
 
-            <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
+            <div className="mt-16 grid gap-10 md:grid-cols-2 md:gap-16">
               <div>
                 <h3 className="display text-xl">{t.pitru.conventionHeading}</h3>
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.pitru.convention}</p>
@@ -153,7 +152,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
             placed after the calendar rather than before it: a reader wants
             the date first and the method second. */}
         <Section id="how">
-            <div className="boxed bg-paper p-6 sm:p-8 [&>*]:max-w-3xl">
+            <div className="tint p-6 sm:p-8 [&>*]:max-w-3xl">
               <h2 className="display text-2xl">{t.provenance.heading}</h2>
               <p className="mt-4 text-sm leading-[1.75] text-ink2">
                 {m.provenance.line}
@@ -162,18 +161,18 @@ export function Shraddha({ lang }: { lang: Lang }) {
                 {t.provenance.extra}
               </p>
 
-              <dl className="mt-7 border-t-2 border-rulestrong sm:grid sm:grid-cols-3">
-                <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:pr-5">
+              <dl className="mt-7 grid gap-5 sm:grid-cols-3 sm:gap-8">
+                <div>
                   <dt className="label text-ink2">{m.provenance.sourceLabel}</dt>
                   <dd className="mt-2 text-sm text-ink">{MUHURAT.provider.displayName[lang]}</dd>
                 </div>
-                <div className="border-b border-rule py-3 sm:border-r sm:border-b-0 sm:px-5">
+                <div>
                   <dt className="label text-ink2">{m.provenance.ayanamsaLabel}</dt>
                   <dd className="mt-2 text-sm text-ink">
                     {MUHURAT.provider.ayanamsa ?? m.provenance.notSet}
                   </dd>
                 </div>
-                <div className="py-3 sm:pl-5">
+                <div>
                   <dt className="label text-ink2">{m.provenance.coordinatesLabel}</dt>
                   <dd className="mt-2 text-sm text-ink">{m.provenance.coordinatesPending}</dd>
                 </div>
@@ -192,7 +191,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.drift.lede}</p>
             </div>
 
-            <ul className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-3">
+            <ul className="mt-12 grid gap-4 md:grid-cols-3">
               {t.drift.points.map((p) => (
                 <li key={p.t} className="bg-paper p-7">
                   <h3 className="display text-2xl">{p.t}</h3>
@@ -211,7 +210,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.reckoning.lede}</p>
             </div>
 
-            <div className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
+            <div className="mt-12 grid gap-4 md:grid-cols-2">
               {(
                 [
                   ["amanta", t.reckoning.amanta],
@@ -220,14 +219,13 @@ export function Shraddha({ lang }: { lang: Lang }) {
               ).map(([id, panel]) => (
                 <div key={id} className="tint p-7">
                   <h3 className="display text-3xl text-ink">{panel.name}</h3>
-                  <div className="rule-thin mt-4" />
                   <p className="mt-4 text-sm leading-[1.75] text-ink">{panel.cut}</p>
                   <p className="mt-4 text-sm leading-[1.75] text-ink2">{panel.where}</p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 grid gap-10 border-t-2 border-rulestrong pt-10 md:grid-cols-2 md:gap-16">
+            <div className="mt-16 grid gap-10 md:grid-cols-2 md:gap-16">
               <div>
                 <h3 className="display text-xl">{t.reckoning.agreeHeading}</h3>
                 <p className="mt-4 text-sm leading-[1.75] text-ink2">{t.reckoning.agree}</p>
@@ -243,7 +241,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
             <div className="mt-6 overflow-x-auto" tabIndex={0}>
               <table className="w-full min-w-[42rem] border-collapse text-left">
                 <thead>
-                  <tr className="border-y-2 border-rulestrong">
+                  <tr className="border-b border-rule">
                     <th className="label py-3 pr-4 text-ink2">{t.reckoning.pairsCols.occasion}</th>
                     <th className="label py-3 pr-4 text-ink2">
                       {t.reckoning.pairsCols.purnimanta}
@@ -273,7 +271,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
             <p className="mt-3 max-w-3xl text-sm leading-[1.75] text-ink2">
               {t.reckoning.ghatsLede}
             </p>
-            <ul className="mt-6 border-t-2 border-rulestrong">
+            <ul className="mt-6">
               {GHAT_SCHEMES.map((g) => (
                 <li
                   key={g.id}
@@ -295,7 +293,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.divergence.lede}</p>
             </div>
 
-            <ul className="mt-12 border-t-2 border-rulestrong">
+            <ul className="mt-12">
               {t.divergence.items.map((item) => (
                 <li
                   key={item.t}
@@ -315,9 +313,9 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{t.finding.lede}</p>
             </div>
 
-            <ol className="mt-12 grid gap-px border-2 border-rulestrong bg-rule md:grid-cols-2">
+            <ol className="mt-12 grid gap-4 md:grid-cols-2">
               {t.finding.steps.map((s) => (
-                <li key={s.n} className="bg-paper p-7">
+                <li key={s.n} className="tint p-7">
                   <span className="display block text-2xl text-spot">{s.n}</span>
                   <h3 className="display mt-3 text-2xl">{s.t}</h3>
                   <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
@@ -335,7 +333,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{g.cityTitle}</h2>
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{g.cityLede}</p>
             </div>
-            <ul className="mt-10 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
+            <ul className="mt-10 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
               {hubs.map((c) => (
                 <LinkRow key={c.slug} href={`/panchang/${c.slug}`} lang={lang} title={c.name[lang]} sub={c.country[lang]} />
               ))}
@@ -354,7 +352,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{g.occasionsTitle}</h2>
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{g.occasionsLede}</p>
             </div>
-            <ul className="mt-10 border-t-2 border-rulestrong">
+            <ul className="mt-10">
               {occasions.map((o) => (
                 <li key={o.slug}>
                   <Link
@@ -377,7 +375,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
               <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{g.watersTitle}</h2>
               <p className="mt-4 max-w-3xl leading-relaxed text-ink2">{g.watersLede}</p>
             </div>
-            <ul className="mt-10 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
+            <ul className="mt-10 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
               {RIVERS.map((r) => (
                 <LinkRow key={r.slug} href={`/rivers/${r.slug}`} lang={lang} title={r.river[lang]} sub={`${r.city[lang]}, ${r.state[lang]}`} />
               ))}
@@ -385,17 +383,16 @@ export function Shraddha({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ---------------- onward ---------------- */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-24">
             <div className="text-center">
               <Mark className="mx-auto h-12 w-12 text-ink" />
-              <div className="rule-double mt-8" />
-              <h2 className="display mt-8 text-[2.2rem] leading-tight sm:text-[3rem]">{g.close.title}</h2>
+              <h2 className="display mt-10 text-[2.2rem] leading-tight sm:text-[3rem]">{g.close.title}</h2>
             </div>
 
-            <ul className="mt-12 border-t-2 border-rulestrong">
+            <ul className="mt-12">
               {g.close.links.map((l) => (
-                <li key={l.href} className="border-b border-rule">
+                <li key={l.href}>
                   <Link
                     href={localePath(lang, l.href)}
                     className="impress flex min-h-[56px] items-center py-4 text-ink active:text-spot"
@@ -408,7 +405,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
 
             <p className="mt-10 text-center text-xs leading-[1.75] text-ink2">{g.close.note}</p>
 
-            <p className="mx-auto mt-14 max-w-2xl border-t border-rule pt-8 text-center text-xs leading-[1.75] text-ink2">
+            <p className="mx-auto mt-16 max-w-2xl text-center text-xs leading-[1.75] text-ink2">
               {MUHURAT.provider.note[lang]}
             </p>
           </div>

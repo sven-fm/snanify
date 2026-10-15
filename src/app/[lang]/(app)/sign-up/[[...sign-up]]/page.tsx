@@ -45,7 +45,6 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-md">
           <h1 className="display text-[2rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-          <div className="rule-double mt-6" />
           <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
 
           <div className="mt-9 flex justify-center">

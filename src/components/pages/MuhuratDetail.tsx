@@ -60,7 +60,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
 
       <main>
         {/* ---------------- masthead ---------------- */}
-        <section className="border-b-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-20">
             <Link
               href={localePath(lang, "/muhurat")}
@@ -78,8 +78,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                   <p className="label mt-4 text-ink2">{d.alsoCalled.replace("{aka}", occasion.aka[lang])}</p>
                 )}
 
-                <div className="rule-double mt-7 max-w-md" />
-                <WaterBand seed={occasion.slug} className="mt-5 h-12 w-full sm:h-14" />
+                <WaterBand seed={occasion.slug} className="mt-8 h-12 w-full sm:h-14" />
 
                 <p
                   className="ink-in mt-6 max-w-lg text-[1.05rem] leading-[1.75] text-ink2"
@@ -91,9 +90,8 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
 
               {/* The provisional window. Date, rule and provenance in one block,
                   so the timing can never be read without its caveat. */}
-              <div className="boxed self-start border-2 bg-paper p-7 sm:p-8">
+              <div className="tint self-start p-7 sm:p-8">
                 <h2 className="display text-xl text-ink">{d.whenTitle}</h2>
-                <div className="rule-thin mt-4" />
 
                 {/* The dates, computed at the ghat's own sunrise for the
                     twelve months from today. A dated occasion has one; a
@@ -105,7 +103,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                 ) : (
                   <>
                     <p className="label mt-5 text-ink2">{t.provenance.dates.next}</p>
-                    <ul className="mt-2 border-t border-rule">
+                    <ul className="mt-2">
                       {dates.map((d) => (
                         <li key={d.date} className="border-b border-rule py-2 text-[1.02rem] text-ink" data-occasion-date={d.date}>
                           {sayResolved(d, lang)}
@@ -121,12 +119,12 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                   {t.provenance.dates.by.replace("{ghat}", ghatName)}
                 </p>
 
-                <dl className="mt-7 border-t-2 border-rulestrong text-sm">
-                  <div className="border-b border-rule py-4">
+                <dl className="mt-8 space-y-5 text-sm">
+                  <div>
                     <dt className="label text-ink2">{d.rulePrefix}</dt>
                     <dd className="mt-2 text-ink">{occasion.rule.label[lang]}</dd>
                   </div>
-                  <div className="border-b border-rule py-4">
+                  <div>
                     <dt className="label text-ink2">{d.resolutionPrefix}</dt>
                     <dd className="mt-2 text-ink">
                       {t.resolutions[occasion.rule.dayResolution]}
@@ -135,11 +133,11 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                       {occasion.rule.resolutionNote[lang]}
                     </dd>
                   </div>
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-rule py-4">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                     <dt className="label text-ink2">{d.tierLabel}</dt>
                     <dd className="text-ink">{t.tiers[occasion.tier]}</dd>
                   </div>
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-4">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                     <dt className="label text-ink2">{d.cadenceLabel}</dt>
                     <dd className="text-ink">{t.cadences[occasion.cadence]}</dd>
                   </div>
@@ -170,7 +168,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
             <p className="mt-5 leading-[1.75] text-ink2">{occasion.ghatsNote[lang]}</p>
           </div>
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {occasion.ghats.map((entry) => {
               const ghat = GHAT_BY_ID[entry.id];
               if (!ghat) return null;
@@ -203,7 +201,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
           </div>
 
           {/* the day's schedule for this occasion, ruled */}
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {windows.map((w) => (
               <li
                 key={w.id}
@@ -217,12 +215,12 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
 
                 <div className="max-w-2xl">
                   <dl>
-                    <div className="border-t border-rule pt-3">
+                    <div>
                       <dt className="label text-ink2">{t.windows.formulaLabel}</dt>
                       <dd className="mt-1.5 text-sm text-ink">{w.formula[lang]}</dd>
                     </div>
                   </dl>
-                  <p className="mt-5 border-t border-rule pt-3 text-sm leading-[1.75] text-ink2">
+                  <p className="mt-6 text-sm leading-[1.75] text-ink2">
                     {w.note[lang]}
                   </p>
                 </div>
@@ -252,18 +250,18 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
           </div>
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-            <dl className="border-t-2 border-rulestrong text-sm">
-              <div className="border-b border-rule py-4">
+            <dl className="space-y-6 text-sm">
+              <div>
                 <dt className="label text-ink2">{t.provenance.sourceLabel}</dt>
                 <dd className="mt-2 text-ink">{MUHURAT.provider.displayName[lang]}</dd>
               </div>
-              <div className="border-b border-rule py-4">
+              <div>
                 <dt className="label text-ink2">{t.provenance.ayanamsaLabel}</dt>
                 <dd className="mt-2 text-ink">
                   {occasion.panchang.ayanamsa ?? RESOLVER.ayanamsaName[lang]}
                 </dd>
               </div>
-              <div className="border-b border-rule py-4">
+              <div>
                 <dt className="label text-ink2">{t.provenance.coordinatesLabel}</dt>
                 <dd className="mt-2 text-ink">
                   {ghatName}: {gauge.ghat[0].toFixed(4)}, {gauge.ghat[1].toFixed(4)}
@@ -273,11 +271,10 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
 
             <div>
               <h3 className="display text-xl text-ink">{d.basisTitle}</h3>
-              <div className="rule-thin mt-3" />
               <p className="mt-4 max-w-xl text-sm leading-[1.75] text-ink2">
                 {occasion.textualBasis[lang]}
               </p>
-              <p className="mt-7 max-w-xl border-t border-rule pt-6 text-sm leading-[1.75] text-ink2">
+              <p className="mt-8 max-w-xl text-sm leading-[1.75] text-ink2">
                 {t.provenance.line}
               </p>
               <div className="mt-6">
@@ -288,13 +285,13 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
         </Section>
 
         {/* ---------------- neighbours ---------------- */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
-            <div className="grid gap-px bg-rule sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               {prev ? (
                 <Link
                   href={localePath(lang, `/muhurat/${prev.slug}`)}
-                  className="group block bg-paper p-6 transition-colors hover:bg-paper3"
+                  className="impress tint group block p-6 transition-colors hover:bg-paper3"
                 >
                   <p className="text-sm text-ink2">{d.prev}</p>
                   <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
@@ -302,13 +299,13 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                   </p>
                 </Link>
               ) : (
-                <span className="bg-paper" />
+                <span className="hidden sm:block" />
               )}
 
               {next && (
                 <Link
                   href={localePath(lang, `/muhurat/${next.slug}`)}
-                  className="group block bg-paper p-6 transition-colors hover:bg-paper3 sm:text-right"
+                  className="impress tint group block p-6 transition-colors hover:bg-paper3 sm:text-right"
                 >
                   <p className="text-sm text-ink2">{d.next}</p>
                   <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">

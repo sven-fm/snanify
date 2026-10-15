@@ -111,7 +111,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
 
       <main>
         {/* -------------------------------------------------- hero ------ */}
-        <section className="border-b-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 pt-6 pb-16 sm:px-8 sm:pt-8 sm:pb-20">
             <Link
               href={riversHref}
@@ -131,8 +131,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
                   {ghat.river[lang]}
                 </h1>
 
-                <div className="rule-double mt-7 max-w-xl" />
-                <WaterBand seed={ghat.slug} className="mt-5 h-14 w-full sm:h-16" />
+                <WaterBand seed={ghat.slug} className="mt-8 h-14 w-full sm:h-16" />
 
                 <p
                   className="ink-in mt-6 text-xl text-ink sm:text-2xl"
@@ -160,9 +159,9 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
               </div>
 
               {/* the plate: a printed diagram of what the place physically is */}
-              <figure className="boxed self-start bg-paper">
+              <figure className="tint self-start">
                 <WaterMotif form={ghat.form} className="block h-44 w-full text-ink sm:h-52" />
-                <figcaption className="border-t border-rulestrong px-4 py-3 text-sm text-ink2">
+                <figcaption className="px-4 py-3 text-sm text-ink2">
                   {ghat.ghat[lang]}, {ghat.city[lang]}
                 </figcaption>
               </figure>
@@ -171,13 +170,13 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
         </section>
 
         {/* --------------------------------------------- fact strip ----- */}
-        <section className="tint border-b-2 border-rulestrong">
+        <section className="tint">
           <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
-            <dl className="flex flex-wrap border-y-2 border-rulestrong">
+            <dl className="flex flex-wrap gap-x-8 gap-y-6">
               {facts.map((f) => (
                 <div
                   key={f.key}
-                  className="min-w-[8.5rem] flex-1 border-r border-rule px-4 py-5 first:pl-0 last:border-r-0"
+                  className="min-w-[8.5rem] flex-1"
                 >
                   <dt className="label text-ink2">{f.label}</dt>
                   <dd className="mt-2 text-sm text-ink">{f.value}</dd>
@@ -188,13 +187,13 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
         </section>
 
         {/* ----------------------------------------------- caution ------
-            A fact the reader needs before choosing this water. Ruled in the
-            spot colour because it matters, headed in display type rather
+            A fact the reader needs before choosing this water. Set on the
+            haldi ground because it matters, headed in display type rather
             than a caps bar. */}
         {ghat.caution && (
-          <section className="border-b-2 border-rulestrong">
+          <section>
             <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
-              <div className="max-w-3xl border-2 border-spot px-5 py-6 sm:px-7 sm:py-7">
+              <div className="warm max-w-3xl px-5 py-6 sm:px-7 sm:py-7">
                 <h2 className="display text-xl text-ink">{t.caution.label}</h2>
                 <p className="mt-3 leading-[1.75] text-ink">{ghat.caution[lang]}</p>
               </div>
@@ -230,7 +229,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
 
           {/* The masthead of a data publication: where the figures come from
               and the licence they carry. */}
-          <div className="mt-14 max-w-3xl border-t-2 border-rulestrong pt-6">
+          <div className="mt-16 max-w-3xl">
             <h3 className="display text-xl text-ink">{t.reading.provenanceLabel}</h3>
             <div className="mt-4 space-y-4">
               {t.reading.provenance.map((para, i) => (
@@ -240,8 +239,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
               ))}
             </div>
 
-            <div className="rule-thin mt-7" />
-            <h3 className="display mt-6 text-xl text-ink">{t.reading.attributionLabel}</h3>
+            <h3 className="display mt-10 text-xl text-ink">{t.reading.attributionLabel}</h3>
             <ul className="mt-3 space-y-1.5">
               {t.reading.attribution.map((line) => (
                 <li key={line} className="text-sm leading-[1.7] text-ink2">
@@ -256,11 +254,11 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
         <Section id="offer" tinted>
           <Heading title={t.offer.title} lede={t.offer.lede} />
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {t.offer.items.map((item) => (
               <li
                 key={item.key}
-                className="grid gap-y-2 border-b border-rule py-6 md:grid-cols-[14rem_1fr] md:gap-x-8 md:py-7"
+                className="grid gap-y-2 py-6 md:grid-cols-[14rem_1fr] md:gap-x-8 md:py-7"
               >
                 <span className="display text-xl text-ink">{item.name}</span>
                 <span className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.body}</span>
@@ -282,11 +280,11 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
         <Section id="tradition">
           <Heading title={t.tradition.title} lede={t.tradition.lede} />
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {ghat.tradition.map((item) => (
               <li
                 key={item.key}
-                className="grid gap-x-8 gap-y-3 border-b border-rule py-7 md:grid-cols-[1fr_14rem] md:py-8"
+                className="grid gap-x-8 gap-y-3 py-7 md:grid-cols-[1fr_14rem] md:py-8"
               >
                 <div>
                   <h3 className="display text-2xl text-ink">{item.name[lang]}</h3>
@@ -309,7 +307,8 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
             <StatusBadge>{t.occasions.provisional}</StatusBadge>
           </div>
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          {/* The reckonings line up in a column, so the rows keep their hairline. */}
+          <ul className="mt-10">
             {ghat.occasions.map((o) => (
               <li
                 key={o.key}
@@ -332,17 +331,17 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
         </Section>
 
         {/* ------------------------------------------------ onward ------ */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
             <h2 className="display text-3xl sm:text-4xl">{t.onward.title}</h2>
 
             {neighbours && (
-              <div className="mt-10 grid gap-px border-2 border-rulestrong bg-rule sm:grid-cols-2">
+              <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {[neighbours.prev, neighbours.next].map((g) => (
                   <Link
                     key={g.slug}
                     href={localePath(lang, `/rivers/${g.slug}`)}
-                    className="bg-paper p-7 transition-colors hover:bg-paper3 sm:p-8"
+                    className="tint impress p-7 transition-colors hover:bg-paper3 active:bg-paper3 sm:p-8"
                   >
                     <span className="display block text-2xl text-ink">{g.river[lang]}</span>
                     <span className="mt-2 block text-sm text-ink2">

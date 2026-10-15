@@ -251,8 +251,8 @@ export function LiveHero({
     .replace("{rank}", rank === null ? "" : String(rank));
 
   return (
-    <section className="border-b-2 border-rulestrong">
-      <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
+    <section>
+      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12">
         <p className="text-sm text-ink2">{labels.pick}</p>
 
         {/* Six tabs in a row that scrolls on a phone and wraps from sm. Each
@@ -282,7 +282,7 @@ export function LiveHero({
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
           {/* --------------------------------------------------- plate --- */}
-          <div className="boxed relative aspect-[3/2] overflow-hidden bg-paper2">
+          <div className="relative aspect-[3/2] overflow-hidden bg-paper2">
             <div
               key={w.slug}
               role="img"
@@ -338,7 +338,7 @@ export function LiveHero({
               </div>
             </div>
 
-            <dl className="mt-5 border-t-2 border-rulestrong">
+            <dl className="mt-5">
               <div className="flex items-baseline justify-between gap-4 border-b border-rule py-2.5">
                 <dt className="label text-ink2">{labels.rank}</dt>
                 <dd className="text-sm text-ink">

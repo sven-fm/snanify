@@ -79,14 +79,13 @@ export function Faq({ lang }: { lang: Lang }) {
       {/* The bottom rail is 3.75rem tall on a phone; the page ends above it. */}
       <main className="pb-20 sm:pb-0">
         {/* ---------------- masthead ---------------- */}
-        <header className="border-b-2 border-rulestrong">
+        <header>
           <div className="mx-auto max-w-6xl px-5 pt-10 pb-10 sm:px-8 sm:pt-24 sm:pb-20">
             <div className="ink-in max-w-3xl">
               <h1 className="display text-[2.3rem] leading-[1.12] sm:text-6xl">
                 {t.title}
               </h1>
-              <div className="rule-double mt-7" />
-              <WaterBand seed="faq" className="mt-5 h-14 w-full sm:h-16" />
+              <WaterBand seed="faq" className="mt-8 h-14 w-full sm:h-16" />
               <p className="mt-6 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2 sm:text-[1.08rem]">
                 {t.lede}
               </p>
@@ -100,9 +99,9 @@ export function Faq({ lang }: { lang: Lang }) {
             <nav aria-label={t.indexLabel} className="hidden lg:block">
               <div className="sticky top-24 py-20">
                 <p className="text-sm text-ink2">{t.indexLabel}</p>
-                <ul className="mt-4 border-t-2 border-rulestrong">
+                <ul className="mt-4 space-y-1">
                   {index.map((g) => (
-                    <li key={g.id} className="border-b border-rule">
+                    <li key={g.id}>
                       <a
                         href={`#${g.id}`}
                         className="block py-2.5 text-[0.9rem] leading-snug text-ink transition-colors hover:text-spot"
@@ -118,12 +117,12 @@ export function Faq({ lang }: { lang: Lang }) {
             {/* ---------------- questions ---------------- */}
             <div className="max-w-[44rem] py-12 sm:py-20">
               {/* On a phone the sticky index is gone, so the six groups are
-                  offered as a ruled jump list before the first question. */}
+                  offered as a jump list before the first question. */}
               <nav aria-label={t.indexLabel} className="mb-12 lg:hidden">
                 <p className="text-sm text-ink2">{t.indexLabel}</p>
-                <ul className="mt-3 border-t-2 border-rulestrong">
+                <ul className="mt-3">
                   {index.map((g) => (
-                    <li key={g.id} className="border-b border-rule">
+                    <li key={g.id}>
                       <a
                         href={`#${g.id}`}
                         className="flex min-h-[44px] items-center py-2 text-[0.98rem] leading-snug text-ink"
@@ -139,12 +138,13 @@ export function Faq({ lang }: { lang: Lang }) {
                 <section key={group.id} className={gi === 0 ? "" : "mt-16 sm:mt-20"}>
                     <h2
                       id={group.id}
-                      className="display scroll-mt-20 border-t-2 border-rulestrong pt-4 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]"
+                      className="display scroll-mt-20 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]"
                     >
                       {group.title}
                     </h2>
 
-                    <div className="mt-5 border-t border-rule">
+                    {/* A long run of collapsed questions: a hairline between them, none above. */}
+                    <div className="mt-5 [&>details:last-child]:border-b-0">
                       {group.items.map((item) => {
                         const to = DEEP_LINKS[item.id];
                         return (
@@ -198,7 +198,7 @@ export function Faq({ lang }: { lang: Lang }) {
                   rules as the standard, the river, the sky, the sheet, and
                   the five companies that touch the product. */}
               <section id="how" className="mt-16 scroll-mt-20 sm:mt-20">
-                <h2 className="display border-t-2 border-rulestrong pt-4 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
+                <h2 className="display text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
                   {made.title}
                 </h2>
                 <p className="mt-4 max-w-[38rem] text-[1rem] leading-[1.8] text-ink2">{made.lede}</p>
@@ -206,7 +206,7 @@ export function Faq({ lang }: { lang: Lang }) {
 
                 {[made.s1, made.s2, made.s3, made.s4].map((sec) => (
                   <section key={sec.id} id={`how-${sec.id}`} className="mt-12 scroll-mt-20">
-                    <h3 className="display border-t border-rule pt-4 text-[1.25rem] leading-snug text-ink">{sec.h}</h3>
+                    <h3 className="display text-[1.25rem] leading-snug text-ink">{sec.h}</h3>
                     {sec.body.map((para) => (
                       <P key={para}>{para}</P>
                     ))}
@@ -214,9 +214,11 @@ export function Faq({ lang }: { lang: Lang }) {
                 ))}
 
                 <section id={`how-${made.s5.id}`} className="mt-12 scroll-mt-20">
-                  <h3 className="display border-t border-rule pt-4 text-[1.25rem] leading-snug text-ink">{made.s5.h}</h3>
+                  <h3 className="display text-[1.25rem] leading-snug text-ink">{made.s5.h}</h3>
                   <P>{made.s5.lede}</P>
-                  <dl className="mt-6 border-t-2 border-rulestrong">
+                  {/* Five companies against what each one does: a table to read
+                      across, so its rows keep their hairline. */}
+                  <dl className="mt-6">
                     {made.s5.rows.map((r) => (
                       <RegisterRow key={r.k} k={r.k} v={r.v} />
                     ))}
@@ -228,7 +230,7 @@ export function Faq({ lang }: { lang: Lang }) {
               </section>
 
               {/* ---------------- closing ---------------- */}
-              <section className="mt-16 border-t-2 border-rulestrong pt-10 sm:mt-20 sm:pt-12">
+              <section className="mt-20 sm:mt-28">
                 <h2 className="display text-[1.7rem] leading-[1.2] sm:text-[2.2rem]">
                   {t.closing.title}
                 </h2>
@@ -254,7 +256,7 @@ export function Faq({ lang }: { lang: Lang }) {
       <Footer lang={lang} />
 
       {/* ---------------- thumb rail, phones only ---------------- */}
-      <aside aria-label={t.ctaLabel} className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden">
+      <aside aria-label={t.ctaLabel} className="fixed inset-x-0 bottom-0 z-40 bg-paper sm:hidden">
         <a
           href={cta}
           className="label flex min-h-[3.75rem] items-center justify-center bg-spot px-5 text-paper"

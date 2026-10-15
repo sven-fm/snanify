@@ -4,6 +4,7 @@ import { content } from "@/lib/content";
 import type { Lang } from "@/lib/locales";
 import type { Prices, TierKey } from "@/content/prices";
 import { PRICE } from "@/content/prices";
+import { Bindu } from "@/components/marks";
 
 /* Shared primitives. Everything here is flat: solid fills, square boxes,
    vermillion for the action. See DESIGNSYSTEM.md. */
@@ -126,8 +127,9 @@ export function LinkButton({
 }
 
 /**
- * A boxed label. The square only fills with the spot colour when something is
- * genuinely live, it must never decorate a static line.
+ * A status line led by a bindu. The bindu is vermillion only when something is
+ * genuinely live; on a static line it is the faint dot, so it never asserts a
+ * thing is running when it is not.
  */
 export function StatusBadge({
   children,
@@ -137,8 +139,8 @@ export function StatusBadge({
   live?: boolean;
 }) {
   return (
-    <p className="label inline-flex items-center gap-2.5 border border-rulestrong px-3 py-2 text-ink">
-      <span className={`h-2 w-2 ${live ? "bg-spot" : "border border-ink2"}`} />
+    <p className="label inline-flex min-h-[44px] items-center gap-2.5 text-ink">
+      <Bindu tone={live ? "spot" : "faint"} className="shrink-0 text-[1.1rem]" />
       {children}
     </p>
   );

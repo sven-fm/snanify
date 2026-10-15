@@ -99,7 +99,7 @@ function DayDiagram({ lang }: { lang: Lang }) {
   const byId = Object.fromEntries(WINDOWS.map((w) => [w.id, w])) as Record<string, MuhuratWindow>;
 
   return (
-    <figure className="mt-12 hidden border-t-2 border-rulestrong pt-8 sm:block">
+    <figure className="mt-14 hidden sm:block">
       <svg
         viewBox="0 0 1000 236"
         className="w-full text-ink2"
@@ -299,14 +299,13 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
             Title, one sentence, and the provenance sentence with its badge.
             The provenance is part of the masthead rather than a footnote,
             because /faq#how promises that every timing carries it. */}
-        <section className="border-b-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20">
             <h1 className="ink-in display max-w-3xl text-[2.9rem] leading-[0.98] sm:text-6xl lg:text-7xl">
               {t.hero.title}
             </h1>
 
-            <div className="rule-double mt-8 max-w-xl" />
-            <WaterBand seed="muhurat" className="mt-5 h-14 w-full sm:h-16" />
+            <WaterBand seed="muhurat" className="mt-8 h-14 w-full sm:h-16" />
 
             <p
               className="ink-in mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2"
@@ -316,7 +315,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
             </p>
 
             <div
-              className="ink-in mt-10 max-w-2xl border-t border-rule pt-6"
+              className="ink-in tint mt-10 max-w-2xl px-5 py-5"
               style={{ animationDelay: "200ms" }}
             >
               <p className="text-sm leading-[1.75] text-ink2">{t.provenance.line}</p>
@@ -332,7 +331,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
         <Section>
           <Heading title={t.reading.title} />
 
-          <dl className="mt-10 border-t-2 border-rulestrong">
+          <dl className="mt-10">
             {t.reading.items.map((item) => (
               <div
                 key={item.t}
@@ -349,7 +348,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
         <Section tinted>
           <Heading title={t.rhythm.title} lede={t.rhythm.lede} />
 
-          <ul className="mt-10 border-t-2 border-rulestrong">
+          <ul className="mt-10">
             {RECURRING_OCCASIONS.map((o) => (
               <li key={o.slug}>
                 <Link
@@ -379,7 +378,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
 
           <div className="mt-10">
             {/* column heads, as a printed register sets them */}
-            <div className="hidden border-y-2 border-rulestrong sm:grid sm:grid-cols-[8rem_1fr] sm:gap-x-8">
+            <div className="hidden border-b border-rule sm:grid sm:grid-cols-[8rem_1fr] sm:gap-x-8">
               <p className="label py-3 text-ink2">{t.spine.columns.month}</p>
               <div className={SPINE_COLS}>
                 <p className="label py-3 text-ink2">{t.spine.columns.occasion}</p>
@@ -388,7 +387,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
               </div>
             </div>
 
-            <div className="border-t-2 border-rulestrong sm:border-t-0">
+            <div>
               {months.map((m) => {
                 const { name, year } = monthLabel(m.month, lang);
                 return (
@@ -421,9 +420,9 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
               not follow, stated as facts under the register they qualify. */}
           <div className="mt-16 max-w-3xl">
             <h3 className="display text-2xl text-ink">{t.elsewhere.title}</h3>
-            <dl className="mt-6 border-t-2 border-rulestrong">
+            <dl className="mt-6 space-y-7">
               {MUHURAT.notPublished.map((n) => (
-                <div key={n.id} className="border-b border-rule py-5">
+                <div key={n.id}>
                   <dt className="display text-lg text-ink">{n.name[lang]}</dt>
                   <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
                     {n.text[lang]}
@@ -441,7 +440,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
           <DayDiagram lang={lang} />
 
           {/* the day's schedule, ruled, in the order the day runs */}
-          <ul className="mt-12 border-t-2 border-rulestrong">
+          <ul className="mt-12">
             {WINDOWS.map((w) => (
               <li
                 key={w.id}
@@ -455,18 +454,18 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
 
                 <div className="max-w-2xl">
                   <dl>
-                    <div className="border-t border-rule pt-3">
+                    <div>
                       <dt className="label text-ink2">{t.windows.formulaLabel}</dt>
                       <dd className="mt-1.5 text-sm text-ink">{w.formula[lang]}</dd>
                     </div>
-                    <div className="mt-5 border-t border-rule pt-3">
+                    <div className="mt-6">
                       <dt className="label text-ink2">{t.windows.basisLabel}</dt>
                       <dd className="mt-1.5 text-sm leading-[1.75] text-ink2">
                         {w.basis[lang]}
                       </dd>
                     </div>
                   </dl>
-                  <p className="mt-5 border-t border-rule pt-3 text-sm leading-[1.75] text-ink2">
+                  <p className="mt-6 text-sm leading-[1.75] text-ink2">
                     {w.note[lang]}
                   </p>
                 </div>
@@ -480,9 +479,9 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
 
           <div className="mt-14 max-w-3xl">
             <h3 className="display text-2xl text-ink">{t.windows.alsoTitle}</h3>
-            <dl className="mt-6 border-t-2 border-rulestrong">
+            <dl className="mt-6 space-y-7">
               {MUHURAT.displayedNotActedOn.map((n) => (
-                <div key={n.id} className="border-b border-rule py-5">
+                <div key={n.id}>
                   <dt className="display text-lg text-ink">{n.name[lang]}</dt>
                   <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
                     {n.text[lang]}
@@ -513,10 +512,9 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ---------------- closing ---------------- */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
             <Mark className="mx-auto h-12 w-12 text-ink" />
-            <div className="rule-double mt-8" />
             <h2 className="display mt-8 text-[2.2rem] leading-tight sm:text-[3.2rem]">
               {t.cta.title}
             </h2>
@@ -531,7 +529,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
             </div>
 
             {/* The provenance sentence closes the page as well as opening it. */}
-            <p className="mx-auto mt-14 max-w-2xl border-t border-rule pt-8 text-xs leading-[1.75] text-ink2">
+            <p className="mx-auto mt-16 max-w-2xl text-xs leading-[1.75] text-ink2">
               {MUHURAT.provider.note[lang]}
             </p>
           </div>

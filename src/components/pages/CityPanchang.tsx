@@ -13,7 +13,7 @@ import { greatCircleKm } from "@/lib/distance";
 import { isIndexableCity } from "@/lib/indexable";
 
 /* ---------------------------------------------------------------------------
-   One city's morning, as a ruled register: each row the city's own clock on
+   One city's morning, as a register of hairline rows: each row the city's own clock on
    the left and the ghat's IST on the right, so a reader in Leicester sees
    both without arithmetic.
    --------------------------------------------------------------------------- */
@@ -84,7 +84,7 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
     <>
       <Header lang={lang} currentPath="/panchang" />
       <main className="mx-auto max-w-6xl px-5 sm:px-8">
-        <section className="border-b-2 border-rulestrong pt-10 pb-10 sm:pt-14 sm:pb-14">
+        <section className="pt-10 pb-10 sm:pt-14 sm:pb-14">
           <p className="label text-spot">{t.kicker}</p>
           <h1 className="display mt-3 text-[2.4rem] leading-[1.08] sm:text-[3.4rem]">{fill(t.title)}</h1>
           <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2">{fill(t.lede)}</p>
@@ -98,7 +98,7 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
           <div className="overflow-x-auto" tabIndex={0}>
             <table className="w-full min-w-[30rem] border-collapse text-left">
               <thead>
-                <tr className="border-b-2 border-rulestrong">
+                <tr className="border-b border-rule">
                   <th className="label py-3 pr-4 text-ink2" />
                   <th className="label py-3 pr-4 text-ink2">{fill(t.localLabel)}</th>
                   <th className="label py-3 text-ink2">{t.istLabel}</th>
@@ -145,7 +145,7 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
         <Section id="ghats">
           <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.ghatsTitle}</h2>
           <p className="mt-4 max-w-3xl leading-[1.8] text-ink2">{t.ghatsLede}</p>
-          <ul className="mt-6 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
+          <ul className="mt-6 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
             {RIVERS.map((r) => (
               <li key={r.slug} className="border-b border-rule">
                 <Link
@@ -170,7 +170,7 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
 
         <Section id="cities" tinted>
           <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{fill(t.othersIn)}</h2>
-          <ul className="mt-6 border-t-2 border-rulestrong sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
+          <ul className="mt-6 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
             {neighbours.map((x) => (
               <li key={x.slug} className="border-b border-rule">
                 <Link

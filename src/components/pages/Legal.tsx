@@ -10,8 +10,8 @@ import { ConsentChoice } from "@/components/ConsentChoice";
 
    The same shape serves both because they answer the same kind of question and
    are read the same way: somebody scanning for one paragraph. Numbered
-   sections, a rule between each, a ruled register where the content is a list
-   of who holds what.
+   sections set apart by space, and a register with a hairline between rows
+   where the content is a list of who holds what.
 
    Set in the site's own type rather than a legal template, because a page that
    looks like it was pasted from a generator reads as one nobody meant.
@@ -36,14 +36,13 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
 
       <main className="mx-auto max-w-2xl px-5 py-10 pb-20 sm:px-8 sm:py-16">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-        <div className="rule-double mt-6" />
-        <WaterBand seed="legal" className="mt-5 h-12 w-full" />
+        <WaterBand seed="legal" className="mt-8 h-12 w-full" />
         <p className="mt-6 text-[1.05rem] leading-[1.8] text-ink2">{t.lede}</p>
-        <p className="mt-6 border-t border-rule pt-4 text-sm text-ink2">{t.updated}</p>
+        <p className="mt-8 text-sm text-ink2">{t.updated}</p>
 
         {sections.map((section, index) => (
-          <section key={section.h} className="mt-14">
-            <div className="flex items-baseline gap-4 border-t-2 border-rulestrong pt-4">
+          <section key={section.h} className="mt-16">
+            <div className="flex items-baseline gap-4">
               <span className="display text-[1.2rem] leading-none text-spot tabular-nums">
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -59,7 +58,7 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
             ))}
 
             {section.rows && (
-              <dl className="mt-6 border-t-2 border-rulestrong">
+              <dl className="mt-6">
                 {section.rows.map((r) => (
                   <div
                     key={r.k}

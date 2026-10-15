@@ -282,7 +282,7 @@ export function Sitting({
   if (phase === "ready") {
     return (
       <div className="mx-auto max-w-md px-5 py-6 sm:py-10" data-sitting data-speed={speed} data-phase={phase}>
-        <div className="boxed plate relative aspect-[3/2] overflow-hidden">
+        <div className="plate relative aspect-[3/2] overflow-hidden">
           <div
             role="img"
             aria-label={picture.alt}

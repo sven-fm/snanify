@@ -61,7 +61,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
           <div className="loop-screen absolute inset-x-4 top-24" style={{ ["--i" as string]: 0 }}>
             <p className="display text-[1.15rem] leading-tight">{lang === "hi" ? "गंगा" : "Ganga"}</p>
             <p className="mt-0.5 text-[0.65rem] text-ink2">{lang === "hi" ? "हर की पौड़ी, हरिद्वार" : "Har Ki Pauri, Haridwar"}</p>
-            <dl className="mt-4 border-t-2 border-rulestrong text-[0.65rem]">
+            <dl className="mt-4 text-[0.65rem]">
               {[t.reading.flowLabel, t.reading.rankLabel, t.reading.distanceLabel].map((k) => (
                 <div key={k} className="flex items-baseline justify-between border-b border-rule py-1.5">
                   <dt className="text-ink2">{k}</dt>

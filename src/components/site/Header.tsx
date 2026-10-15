@@ -102,7 +102,7 @@ export function Header({
                 </summary>
                 {/* Positioned against the sticky header, so it spans the
                     page and hangs under the masthead rule. */}
-                <div className="settle-panel absolute inset-x-0 top-full z-50 max-h-[80svh] overflow-y-auto border-b-2 border-rulestrong bg-paper">
+                <div className="settle-panel absolute inset-x-0 top-full z-50 max-h-[80svh] overflow-y-auto border-b border-rule bg-paper">
                   <ul className="mx-auto max-w-6xl px-5 sm:px-8">
                     {navLinks.map((l) => (
                       <li key={l.href} className="border-b border-rule">

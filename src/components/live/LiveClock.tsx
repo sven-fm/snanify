@@ -123,10 +123,9 @@ export function LiveClock({
   return (
     <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-14">
       {/* the ghat clock, primary */}
-      <div className="boxed self-start border-2 bg-paper p-7">
+      <div className="tint self-start p-7">
         <h3 className="display text-xl text-ink">{t.atTheGhat}</h3>
-        <div className="rule-thin mt-4" />
-        <p className="display mt-5 text-2xl text-ink" suppressHydrationWarning>
+        <p className="display mt-6 text-2xl text-ink" suppressHydrationWarning>
           {dayIn(now, GHAT_ZONE, lang)}
         </p>
         <p className="display tabular mt-1 text-4xl text-spot" suppressHydrationWarning>
@@ -138,7 +137,7 @@ export function LiveClock({
         </p>
 
         {mine && mine !== GHAT_ZONE && (
-          <div className="mt-6 border-t border-rule pt-4">
+          <div className="mt-8">
             <p className="label text-ink2">{t.whereYouAre}</p>
             <p className="display tabular mt-2 text-2xl text-ink">
               {timeIn(now, mine, lang)}
@@ -148,7 +147,7 @@ export function LiveClock({
           </div>
         )}
 
-        <dl className="mt-7 border-t-2 border-rulestrong text-sm">
+        <dl className="mt-7 text-sm">
           {shown && (
             <div className="flex justify-between gap-4 border-b border-rule py-3">
               <dt className="label text-ink2">{open ? t.openNow : t.nextWindow}</dt>
@@ -169,7 +168,7 @@ export function LiveClock({
       {/* the same instant, elsewhere */}
       <div>
         <h3 className="display text-xl text-ink">{t.elsewhere}</h3>
-        <ul className="mt-5 border-t-2 border-rulestrong">
+        <ul className="mt-5">
           {zones.map((z) => {
             const s = shift(now, z.zone);
             return (

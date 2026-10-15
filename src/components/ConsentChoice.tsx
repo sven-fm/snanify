@@ -32,7 +32,7 @@ export function ConsentChoice({ lang }: { lang: Lang }) {
   if (!META_PIXEL_ID || !state.asks) return null;
 
   return (
-    <div className="mt-6 border-t-2 border-rulestrong pt-4">
+    <div className="mt-8">
       <p className="label text-ink2">{t.title}</p>
       <p className="mt-2 text-[1.02rem] leading-[1.8] text-ink" aria-live="polite">
         {state.answer === "yes" ? t.yes : state.answer === "no" ? t.no : t.unset}
