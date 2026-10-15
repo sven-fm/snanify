@@ -58,9 +58,9 @@
   .mb .stamp .t { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #f2c230; }
   .mb .stamp .big { font-weight: 800; font-size: var(--seal); line-height: 0.9; }
   .mb .stamp .small { font-weight: 800; font-size: 22px; line-height: 1.15; max-width: 170px; margin-top: 4px; }
-  .mb .striker { position: relative; margin: 0 -72px; height: 190px; background: #5b3420; display: flex; align-items: center; justify-content: space-between; padding: 0 72px; }
-  .mb .striker .go { position: relative; font-weight: 800; font-size: 80px; color: #f2c230; text-shadow: 6px 6px 0 #1a1410; }
-  .mb .striker .url { position: relative; font-weight: 800; font-size: 40px; color: #f2c230; }
+  .mb .side { position: relative; margin: 0 -72px; height: 190px; background: #5b3420; display: flex; align-items: center; justify-content: space-between; padding: 0 72px; }
+  .mb .side .go { position: relative; font-weight: 800; font-size: 80px; color: #f2c230; text-shadow: 6px 6px 0 #1a1410; }
+  .mb .side .url { position: relative; font-weight: 800; font-size: 40px; color: #f2c230; }
 
   /* 4:5 is shorter: the matchbox label and its type step down to fit. */
   .short.mb .hook { font-size: calc(var(--hook) * 0.84); }
@@ -69,7 +69,7 @@
   .short.mb .emblem { width: 300px; height: 214px; }
   .short.mb .name { font-size: calc(var(--name) * 0.78); }
   .short.mb .tag { font-size: 28px; margin-top: 8px; }
-  .short.mb .striker { height: 150px; }
+  .short.mb .side { height: 150px; }
   .short.mb .stamp { width: 230px; height: 230px; top: -64px; }
   .short.mb .stamp .big { font-size: calc(var(--seal) * 0.8); }
   /* A long call to action (the Hindi one) steps down to stay on one line. */
@@ -155,7 +155,7 @@
       <rect x="120" y="202" width="180" height="17" fill="#1a1410"/><rect x="74" y="236" width="272" height="17" fill="#1a1410"/><rect x="18" y="270" width="384" height="17" fill="#1a1410"/></svg>`;
   }
 
-  /* The striker: the brown strip along a matchbox's side, its grit as dots. */
+  /* The brown side of the box, its grain as dots: it carries the call to action. */
   function grit() {
     const dots = [];
     for (let i = 0; i < 260; i++) {
@@ -218,7 +218,7 @@
         </div>
       </div>
       <div class="grow"></div>
-      <div class="striker">${grit()}<span class="go d caps">${esc(p.cta)} →</span><span class="url d">snanify.com</span></div>
+      <div class="side">${grit()}<span class="go d caps">${esc(p.cta)} →</span><span class="url d">snanify.com</span></div>
     </div>`;
   } else {
     document.body.className = "cal";

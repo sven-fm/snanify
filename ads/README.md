@@ -97,7 +97,7 @@ two rules, same Meta rules; the only urgency is Kartik's real start date.
 | File | What |
 | --- | --- |
 | `out/loud-signboard-{en,hi}-{diaspora,india}-{45,916}.png` | Truck art: hazard stripes round all four edges, GANGA SNAN in stacked capitals with hard offsets, a starburst price seal, a tilted black band, Start now, SNAN OK PLEASE between two diyas. The 9:16 carries the offer large |
-| `out/loud-matchbox-…` | Full-bleed red: STRIKE A MORNING, the label tilted with a hard black offset and a "No. 11", a starburst price stamp, a brown striker strip carrying Start now |
+| `out/loud-matchbox-…` | Full-bleed red: SEND THE GANGA HOME, the label tilted with a hard black offset and a "No. 11", a starburst price stamp, the box's brown side carrying Start now |
 | `out/loud-calendar-…` | Kartik calendar art: the painted ghat with the sun turned up, a gold sash "Starts 27 October", KARTIK SNAN with a gold offset, Start now on a cream bar |
 
 Re-render: `node ads/src/render-loud.mjs` (or one style: `signboard`, `matchbox`, `calendar`). Words:

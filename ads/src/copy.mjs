@@ -85,13 +85,13 @@ export const CAMPAIGN = {
       brand: "Sankalp brand",
       name: "Ganga snan",
       tagline: "Three minutes, six rivers",
-      hook: "Strike a morning. Sit with the Ganga.",
+      hook: "Send the Ganga home.",
     },
     hi: {
       brand: "संकल्प छाप",
       name: "गंगा स्नान",
       tagline: "तीन मिनट, छह नदियाँ",
-      hook: "एक सुबह जलाइए। गंगा के साथ बैठिए।",
+      hook: "गंगा घर भेजिए।",
     },
   },
   signboard: {
@@ -148,7 +148,7 @@ export const LOUD = {
   },
   matchbox: {
     en: {
-      hook: "Strike a morning.",
+      hook: "Send the Ganga home.",
       brand: "Sankalp brand",
       number: "No. 11",
       name: "Ganga snan",
@@ -156,7 +156,7 @@ export const LOUD = {
       cta: "Start now",
     },
     hi: {
-      hook: "एक सुबह जलाइए।",
+      hook: "गंगा घर भेजिए।",
       brand: "संकल्प छाप",
       number: "नं. 11",
       name: "गंगा स्नान",
