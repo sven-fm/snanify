@@ -68,3 +68,5 @@ tradition (third person), its hour at the ghat, and the river that morning. Duri
 
 | Date (NY) | Time (NY) | Theme | Headline | Card | Link |
 | --- | --- | --- | --- | --- | --- |
+| 2026-10-14 | 05:00 | A ghat: Ganga at Har Ki Pauri (Wednesday; scheduled on 13 Oct after 05:00 had passed) | Where the Ganga leaves the mountains | ads/posts/2026-10-14/card.png | https://www.snanify.com/rivers/ganga-haridwar?utm_source=facebook&utm_medium=organic&utm_campaign=daily |
+| 2026-10-15 | 04:45 | The calendar: Kaveri Sankramana, Sat 17 Oct, 19:58 IST (Thursday) | The Kaveri rises at its source | ads/posts/2026-10-15/card.png | https://www.snanify.com/muhurat/tula-sankramana-2026?utm_source=facebook&utm_medium=organic&utm_campaign=daily |
