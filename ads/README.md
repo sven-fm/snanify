@@ -87,3 +87,51 @@ India: "ग्यारह सुबहें ₹501 में।" in 1 and 3. A
 - Week one: cost per completed setup, and the drop from `begin_view` to `setup_done` in Vercel Analytics.
 - India: checkout starts against purchases. A wide gap means Indian cards refusing an international charge; pause the ad set rather than raise it.
 - After 7 days: the ad with the higher click-through keeps its place; the other is swapped for `static-kartik`.
+
+## LOUD, the second Kartik set (15 October 2026)
+
+The campaign layer turned all the way up, to stop a thumb: type that fills the frame, hard offsets
+(a press slipping, never a soft shadow), starburst price seals, tilted labels, a diagonal sash. Same
+two rules, same Meta rules; the only urgency is Kartik's real start date.
+
+| File | What |
+| --- | --- |
+| `out/loud-signboard-{en,hi}-{diaspora,india}-{45,916}.png` | Truck art: hazard stripes round all four edges, GANGA SNAN in stacked capitals with hard offsets, a starburst price seal, a tilted black band, Start now, SNAN OK PLEASE between two diyas. The 9:16 carries the offer large |
+| `out/loud-matchbox-…` | Full-bleed red: STRIKE A MORNING, the label tilted with a hard black offset and a "No. 11", a starburst price stamp, a brown striker strip carrying Start now |
+| `out/loud-calendar-…` | Kartik calendar art: the painted ghat with the sun turned up, a gold sash "Starts 27 October", KARTIK SNAN with a gold offset, Start now on a cream bar |
+
+Re-render: `node ads/src/render-loud.mjs` (or one style: `signboard`, `matchbox`, `calendar`). Words:
+`LOUD` (images) and `LOUD_TEXT` (Ads Manager) in `src/copy.mjs`; `{offer}` takes the market's line
+from `OFFER`.
+
+### Ads Manager copy, English
+
+Primary text:
+
+1. Kartik starts 27 October. Sit with the Ganga every morning of it, wherever you live. Three minutes: today's flow at Har Ki Pauri, a breath with the river, your own sankalp. Then the family gets a Sankalp Patra with their names on it. Eleven mornings for eleven. Start now.
+2. Ganga snan. Three minutes. Every morning. Your first one can be today, and the sheet reaches the family WhatsApp before your chai.
+3. Eleven mornings for eleven. Your first morning with the Ganga starts the moment you do.
+4. Send the Ganga home this Kartik. Your family's names beside today's river, on one sheet, ready for WhatsApp. Start now.
+
+Headlines: Start your Ganga snan now; Kartik starts 27 October; Eleven mornings for eleven; Send the Ganga home
+
+Description: Kartik snan, 27 Oct to 24 Nov
+
+India: "Eleven mornings for ₹501." in 1 and 3, and the headline "Eleven mornings for ₹501".
+
+### Ads Manager copy, Hindi
+
+1. कार्तिक 27 अक्टूबर से है। उसकी हर सुबह गंगा के साथ बैठिए, आप जहाँ भी हों। तीन मिनट: हर की पौड़ी पर आज का प्रवाह, नदी के साथ साँस, आपका अपना संकल्प। फिर परिवार को उनके नामों वाला संकल्प पत्र। ग्यारह सुबहें, ग्यारह में। अभी आरंभ कीजिए।
+2. गंगा स्नान। तीन मिनट। हर सुबह। पहली सुबह आज ही हो सकती है, और पत्र चाय से पहले परिवार के WhatsApp पर।
+3. इस कार्तिक गंगा घर भेजिए। आज की नदी के साथ परिवार के नाम, एक पत्र पर। अभी आरंभ कीजिए।
+
+Headlines: अभी गंगा स्नान आरंभ कीजिए; कार्तिक 27 अक्टूबर से; ग्यारह सुबहें, ग्यारह में; गंगा घर भेजिए
+
+Description: कार्तिक स्नान, 27 अक्टूबर से 24 नवंबर
+
+India: "ग्यारह सुबहें ₹501 में।" in 1. A native reader checks the Hindi before it runs.
+
+Suggested ads per ad set: one per style (Signboard, Matchbox, Kartik calendar), each with its 4:5
+for Feed and 9:16 for Stories and Reels, English and Hindi as separate ads as before, the call to
+action "Sign up" or "See details", landing on `/` (it now says Start your snan now).
+

@@ -126,3 +126,83 @@ export const CAMPAIGN = {
     },
   },
 };
+
+/* LOUD, the second Kartik set (15 October 2026): the same three styles turned
+   all the way up, built to stop a thumb. Same two rules: no rite claimed, no
+   outcome promised. The only urgency is the real one, Kartik's own dates.
+   Capitals are set by the template, so the words here are written plainly. */
+export const LOUD = {
+  signboard: {
+    en: {
+      top: "Ganga",
+      bottom: "snan",
+      band: "Every morning. Three minutes. Wherever you live.",
+      cta: "Start now",
+    },
+    hi: {
+      top: "गंगा",
+      bottom: "स्नान",
+      band: "हर सुबह। तीन मिनट। आप जहाँ भी हों।",
+      cta: "अभी आरंभ कीजिए",
+    },
+  },
+  matchbox: {
+    en: {
+      hook: "Strike a morning.",
+      brand: "Sankalp brand",
+      number: "No. 11",
+      name: "Ganga snan",
+      tagline: "Three minutes with the river",
+      cta: "Start now",
+    },
+    hi: {
+      hook: "एक सुबह जलाइए।",
+      brand: "संकल्प छाप",
+      number: "नं. 11",
+      name: "गंगा स्नान",
+      tagline: "नदी के साथ तीन मिनट",
+      cta: "अभी आरंभ कीजिए",
+    },
+  },
+  calendar: {
+    en: {
+      sash: "Starts 27 October",
+      title: "Kartik snan",
+      sub: "Every morning of Kartik with the Ganga",
+      line: "Three minutes at Har Ki Pauri, from wherever you live. Then the family gets a sheet with their names on it.",
+      cta: "Start now",
+    },
+    hi: {
+      sash: "27 अक्टूबर से",
+      title: "कार्तिक स्नान",
+      sub: "कार्तिक की हर सुबह गंगा के साथ",
+      line: "हर की पौड़ी पर तीन मिनट, आप जहाँ भी हों। फिर परिवार को उनके नामों वाला पत्र।",
+      cta: "अभी आरंभ कीजिए",
+    },
+  },
+};
+
+/* The words in Ads Manager for the loud set: primary texts (Meta rotates
+   them), headlines and the description, per language. India swaps in ₹501
+   through OFFER. */
+export const LOUD_TEXT = {
+  en: {
+    primary: [
+      "Kartik starts 27 October. Sit with the Ganga every morning of it, wherever you live. Three minutes: today's flow at Har Ki Pauri, a breath with the river, your own sankalp. Then the family gets a Sankalp Patra with their names on it. {offer} Start now.",
+      "Ganga snan. Three minutes. Every morning. Your first one can be today, and the sheet reaches the family WhatsApp before your chai.",
+      "{offer} Your first morning with the Ganga starts the moment you do.",
+      "Send the Ganga home this Kartik. Your family's names beside today's river, on one sheet, ready for WhatsApp. Start now.",
+    ],
+    headlines: ["Start your Ganga snan now", "Kartik starts 27 October", "Eleven mornings for eleven", "Send the Ganga home"],
+    description: "Kartik snan, 27 Oct to 24 Nov",
+  },
+  hi: {
+    primary: [
+      "कार्तिक 27 अक्टूबर से है। उसकी हर सुबह गंगा के साथ बैठिए, आप जहाँ भी हों। तीन मिनट: हर की पौड़ी पर आज का प्रवाह, नदी के साथ साँस, आपका अपना संकल्प। फिर परिवार को उनके नामों वाला संकल्प पत्र। {offer} अभी आरंभ कीजिए।",
+      "गंगा स्नान। तीन मिनट। हर सुबह। पहली सुबह आज ही हो सकती है, और पत्र चाय से पहले परिवार के WhatsApp पर।",
+      "इस कार्तिक गंगा घर भेजिए। आज की नदी के साथ परिवार के नाम, एक पत्र पर। अभी आरंभ कीजिए।",
+    ],
+    headlines: ["अभी गंगा स्नान आरंभ कीजिए", "कार्तिक 27 अक्टूबर से", "ग्यारह सुबहें, ग्यारह में", "गंगा घर भेजिए"],
+    description: "कार्तिक स्नान, 27 अक्टूबर से 24 नवंबर",
+  },
+};
