@@ -54,6 +54,13 @@ import type { Lang } from "@/lib/locales";
    the line draws still leaves a Sankalp Patra. The animation is twenty seconds
    of drawing over work that has already been done.
 
+   THE CROSS GOES WHEN THE MARK BEGINS. Until then leaving spends nothing;
+   from the first frame of the mark the morning is already written, so the
+   one way on is forward, to the sheet.
+
+   A MORNING WITH NO CREDIT BEHIND IT goes to the pack picker. The server
+   refuses the spend, and a Try again would be refused every time.
+
    HAPTICS where the browser has them (Android): a short pulse as the thumb
    lands on the vow and one as the mark completes. iOS has none and gets none.
 
@@ -97,6 +104,8 @@ export function Sitting({
   waterSlug,
   picture,
   left,
+  more,
+  outHref,
   leaveHref,
   reducedMotionDefault = false,
   speed = 1,
@@ -112,6 +121,10 @@ export function Sitting({
   picture: { src: string; alt: string };
   /** "Ten mornings left", shown on the done screen and nowhere earlier. */
   left: string;
+  /** The way to the next pack, when this morning is the last on the account. */
+  more: { href: string; label: string } | null;
+  /** The pack picker's "your mornings are complete" line, for a refused spend. */
+  outHref: string;
   /** Where the corner cross goes. Leaving before the mark spends nothing. */
   leaveHref: string;
   reducedMotionDefault?: boolean;
@@ -236,10 +249,11 @@ export function Sitting({
           setOutcome({ patraId: result.id });
           track("sitting_done", { water: waterSlug, lang });
           pulse(12);
-        } else setOutcome({ failed: true });
+        } else if (result.reason === "no-credit") router.push(outHref);
+        else setOutcome({ failed: true });
       })
       .catch(() => setOutcome({ failed: true }));
-  }, [phase, lang, waterSlug]);
+  }, [phase, lang, waterSlug, router, outHref]);
 
   /* --- and the page moves on once both are finished --------------------- */
   const patraHref = patraId ? `${lang === "en" ? "" : `/${lang}`}/p/${patraId}?new=1` : null;
@@ -340,7 +354,7 @@ export function Sitting({
             {/* The name of the part, in the small voice. */}
             <p className={`mt-3 text-sm ${stillness ? "text-[#8a836f]" : "text-ink2"}`}>{labelFor(t, phase)}</p>
           </div>
-          {phase !== "done" && (
+          {phase !== "done" && phase !== "mark" && (
             <Link
               href={leaveHref}
               aria-label={t.leave}
@@ -448,6 +462,14 @@ export function Sitting({
                 </Link>
               )}
               {!failed && <p className="mt-8 text-sm text-ink2">{left}</p>}
+              {!failed && more && (
+                <Link
+                  href={more.href}
+                  className="label impress mt-4 flex min-h-[48px] items-center justify-center border-2 border-rulestrong px-6 text-ink active:bg-ink active:text-paper"
+                >
+                  {more.label}
+                </Link>
+              )}
             </div>
           )}
         </div>

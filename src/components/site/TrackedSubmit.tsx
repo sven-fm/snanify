@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { track, type Event, type Props } from "@/lib/track";
 import { SubmitButton } from "@/components/ui";
@@ -14,7 +15,12 @@ import type { ButtonVariant } from "@/components/ui";
    or two on a phone, and a button that sits unchanged for that long is a
    button that gets pressed twice. `useFormStatus` reads the enclosing form's
    state, so the label changes and the control disables from the first frame
-   after the press. */
+   after the press.
+
+   AND IT SAYS SO ONLY WHILE IT IS TRUE. Swiping back from Stripe restores this
+   page from the back-forward cache exactly as it was left, mid-press, with the
+   label still "Opening" and the button still disabled. A pending button that
+   comes back from that cache reloads the page, so the buyer meets a fresh one. */
 export function TrackedSubmit({
   children,
   pending: pendingLabel,
@@ -32,6 +38,16 @@ export function TrackedSubmit({
   className?: string;
 }) {
   const { pending } = useFormStatus();
+
+  useEffect(() => {
+    if (!pending) return;
+    const onShow = (event: PageTransitionEvent) => {
+      if (event.persisted) window.location.reload();
+    };
+    window.addEventListener("pageshow", onShow);
+    return () => window.removeEventListener("pageshow", onShow);
+  }, [pending]);
+
   return (
     <SubmitButton
       variant={variant}

@@ -1,6 +1,14 @@
 "use client";
 
-import { useActionState, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { useRouter } from "next/navigation";
 import type { setupContent } from "@/content/setup";
 import { LIMITS } from "@/lib/limits";
@@ -8,6 +16,7 @@ import { saveProfile, type SaveState } from "@/app/[lang]/(app)/setup/actions";
 import type { Lang } from "@/lib/locales";
 import { SubmitButton } from "@/components/ui";
 import { track } from "@/lib/track";
+import { shrinkPhoto } from "@/lib/shrink-photo";
 import { zonePlace } from "@/lib/zone-place";
 
 /* ---------------------------------------------------------------------------
@@ -30,6 +39,11 @@ import { zonePlace } from "@/lib/zone-place";
    THE PORTRAIT PREVIEW IS THE BROWSER'S OWN OBJECT URL, not an upload. Nothing
    leaves the phone until the form is submitted, and the pressed grey version
    the sheet will actually use is made on the server.
+
+   THE PORTRAIT IS SHRUNK THE MOMENT IT IS CHOSEN. A phone photograph is larger
+   than the 4.5 MB a Vercel Function accepts, so it is redrawn at 1600 pixels
+   (src/lib/shrink-photo.ts) while the rest of the form is filled, and the
+   smaller file replaces the original on the FormData at submit.
 
    ONE BUG WORTH REMEMBERING. This page used to log React error #418, a
    hydration mismatch, on most first loads: React would throw away the server
@@ -89,12 +103,15 @@ function Label({ label, hint }: { label: string; hint: string }) {
 
 export function SetupForm({
   lang,
+  pack,
   t,
   waters,
   prayers,
   initial,
 }: {
   lang: Lang;
+  /** A pack chosen on a price table, carried on to /begin after the save. */
+  pack?: string;
   t: Copy;
   waters: Water[];
   prayers: Prayer[];
@@ -116,9 +133,22 @@ export function SetupForm({
      around a form action, so the server received an empty string and refused
      the form with "we could not read your time zone". Setting it here happens
      after any reset and cannot be undone by one. */
-  const action = (formData: FormData) => {
+  const action = async (formData: FormData) => {
     formData.set("tz", readZone());
-    rawAction(formData);
+
+    /* Usually long finished by the time Save is pressed; awaited in case not. */
+    const photo = await shrinking.current;
+    if (photo) {
+      if (photo.size > LIMITS.portraitBytes) {
+        setTooLarge(true);
+        return;
+      }
+      formData.set("portrait", photo, photo.name);
+    }
+
+    /* After an await the action is outside the form's transition, so it is
+       put back into one; otherwise React warns and `pending` never shows. */
+    startTransition(() => rawAction(formData));
   };
 
   const [water, setWater] = useState(initial.waterSlug);
@@ -130,6 +160,9 @@ export function SetupForm({
   const [preview, setPreview] = useState<string | null>(initial.portraitUrl);
   const [dropped, setDropped] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  /* The chosen photograph, shrunk for sending; null until one is chosen. */
+  const shrinking = useRef<Promise<File> | null>(null);
+  const [tooLarge, setTooLarge] = useState(false);
 
   /* Named beside the hour picker once the browser has said which zone it is
      in. Read through useSyncExternalStore with an empty server snapshot, so
@@ -141,9 +174,12 @@ export function SetupForm({
   );
 
 
+  /* CompleteRegistration once per account: only the save that completed
+     setup is counted, under the event id the server sent to Meta with it.
+     Every later save is the settings page and is counted nowhere. */
   useEffect(() => {
     if (!state.ok) return;
-    track("setup_done", { water, lang });
+    if (state.first) track("setup_done", { water, lang }, { eventId: state.eventId });
     router.push(state.next ?? `${lang === "en" ? "" : `/${lang}`}/today`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.ok, lang, router]);
@@ -161,11 +197,22 @@ export function SetupForm({
     if (!file) return;
     setPreview(URL.createObjectURL(file));
     setDropped(false);
+    setTooLarge(false);
+    shrinking.current = shrinkPhoto(file);
+  }
+
+  function dropFile() {
+    setDropped(true);
+    setPreview(null);
+    setTooLarge(false);
+    shrinking.current = null;
+    if (fileRef.current) fileRef.current.value = "";
   }
 
   return (
     <form action={action} className="mt-10">
       <input type="hidden" name="lang" value={lang} />
+      {pack && <input type="hidden" name="pack" value={pack} />}
       {dropped && <input type="hidden" name="removePortrait" value="1" />}
 
       {/* ---------------- the water ---------------- */}
@@ -240,11 +287,7 @@ export function SetupForm({
             {preview && !dropped && (
               <button
                 type="button"
-                onClick={() => {
-                  setDropped(true);
-                  setPreview(null);
-                  if (fileRef.current) fileRef.current.value = "";
-                }}
+                onClick={dropFile}
                 className="label min-h-[44px] text-ink2 underline decoration-rule underline-offset-4"
               >
                 {t.portrait.remove}
@@ -253,8 +296,10 @@ export function SetupForm({
           </div>
         </div>
         <FieldError>
-          {errors.portrait &&
-            t.errors.portrait[errors.portrait as keyof Copy["errors"]["portrait"]]}
+          {tooLarge
+            ? t.errors.portrait.tooLarge
+            : errors.portrait &&
+              t.errors.portrait[errors.portrait as keyof Copy["errors"]["portrait"]]}
         </FieldError>
       </fieldset>
 

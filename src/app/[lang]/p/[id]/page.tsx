@@ -12,6 +12,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { PatraGuest } from "@/components/patra/PatraGuest";
 import { PatraOwner } from "@/components/patra/PatraOwner";
+import { balance } from "@/lib/credits";
 
 /* ---------------------------------------------------------------------------
    /p/[id], the sheet somebody was sent.
@@ -112,6 +113,17 @@ export default async function Page({
   const imageUrl = `${origin}${localePath(lang, `/p/${view.id}/image`)}`;
   const imageSrc = localePath(lang, `/p/${view.id}/image`);
   const alt = `${view.names.join(", ")}, ${view.water}, ${view.keptDate}`;
+  /* The owner's count and hour, read only for the owner: a stranger's page
+     never asks the ledger anything. */
+  const next =
+    isOwner && viewer
+      ? {
+          credits: await balance(db, viewer.id),
+          reminderHour: viewer.reminderOn ? `${String(viewer.reminderHour).padStart(2, "0")}:00` : null,
+          tz: viewer.tz,
+        }
+      : null;
+
   const line = fill(t.shareText, {
     name: view.names[0] ?? "",
     water: view.water,
@@ -123,7 +135,7 @@ export default async function Page({
       <div className="grain" aria-hidden="true" />
       <Header lang={lang} currentPath="/" />
 
-      {isOwner ? (
+      {next ? (
         <PatraOwner
           lang={lang}
           t={t}
@@ -138,6 +150,7 @@ export default async function Page({
           isPublic={sitting.isPublic}
           printable={printableRecord(sitting)}
           auto={query.new === "1"}
+          next={next}
         />
       ) : (
         <PatraGuest lang={lang} t={t} imageSrc={imageSrc} alt={alt} line={line} />

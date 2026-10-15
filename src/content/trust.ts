@@ -99,7 +99,7 @@ const ethicsEn = {
   s5: {
     id: "hands",
     h: "Who handles what",
-    lede: "Five companies touch this product. This is each of them and what it holds.",
+    lede: "These companies touch this product. This is each of them and what it holds.",
     rows: [
       { k: "Payments", v: "Stripe. Card details go to Stripe and never reach us." },
       { k: "Accounts", v: "Clerk. Your email address and your sign-in." },
@@ -173,7 +173,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
   s5: {
     id: "hands",
     h: "किसके हाथ में क्या है",
-    lede: "इस उत्पाद को पाँच कंपनियाँ छूती हैं। यह रही हर एक, और उसके पास क्या रहता है।",
+    lede: "ये कंपनियाँ इस उत्पाद को छूती हैं। यह रही हर एक, और उसके पास क्या रहता है।",
     rows: [
       { k: "भुगतान", v: "Stripe। कार्ड का विवरण Stripe तक जाता है, हम तक कभी नहीं।" },
       { k: "खाते", v: "Clerk। आपका ईमेल पता और आपका प्रवेश।" },
@@ -390,14 +390,6 @@ const faqEn = {
           ],
         },
         {
-          id: "tracking",
-          q: "What tracks me on this site?",
-          a: [
-            "Vercel Web Analytics counts page views. It sets no cookie and does not follow you to other sites. Clerk runs on the sign-in and account pages to keep you signed in. Payment happens on Stripe's own page.",
-            "There is no advertising script and no session recording anywhere on the site.",
-          ],
-        },
-        {
           id: "panchang",
           q: "Why are some timings marked provisional?",
           a: [
@@ -607,14 +599,6 @@ export const faqContent = { en: faqEn, hi: {
           a: [
             "हाँ। आपके खाते के पृष्ठ पर एक बटन है। वह पहले आपका चित्र और आपके पत्र भंडार से हटाता है, फिर आपका खाता उससे जुड़ी हर पंक्ति सहित, फिर आपका प्रवेश।",
             "आपके पत्रों की कड़ियाँ काम करना बंद कर देती हैं, वे भी जो आप पहले भेज चुके हैं। डेटाबेस के बैकअप सीमित समय तक रखे जाते हैं और फिर मिट जाते हैं, और भुगतान के अभिलेख Stripe के पास उतने समय रहते हैं जितना कानून कहता है।",
-          ],
-        },
-        {
-          id: "tracking",
-          q: "इस साइट पर मुझ पर नज़र क्या रखता है?",
-          a: [
-            "Vercel Web Analytics पृष्ठ-दृश्य गिनता है। वह कोई कुकी नहीं रखता और दूसरी साइटों तक आपका पीछा नहीं करता। Clerk प्रवेश और खाते के पृष्ठों पर चलता है ताकि आप प्रवेश में बने रहें। भुगतान Stripe के अपने पृष्ठ पर होता है।",
-            "साइट पर कहीं भी कोई विज्ञापन-स्क्रिप्ट और कोई स्क्रीन-रिकॉर्डिंग नहीं है।",
           ],
         },
         {

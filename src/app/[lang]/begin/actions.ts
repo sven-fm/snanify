@@ -1,111 +1,65 @@
 "use server";
 
 import { checkBotId } from "botid/server";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { currencyForCountry } from "@/lib/currency";
-import { adsAllowed } from "@/lib/meta";
-import { CONSENT_COOKIE } from "@/lib/consent";
-import { requireUser } from "@/lib/auth";
+import { currentUser, requireUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
-import { createCheckout } from "@/lib/stripe";
-import { SITE_ORIGIN, type Lang } from "@/lib/locales";
-import type { TierKey } from "@/content/prices";
+import { localePath, type Lang } from "@/lib/locales";
+import { INTENT_COOKIE, checkoutTarget, origin, payErrorPath } from "@/app/[lang]/begin/checkout";
 
 /* ---------------------------------------------------------------------------
    Buying a pack.
 
    The tier arrives from a form, so it is a string from the open internet and
-   is checked against the three that exist before it reaches Stripe.
+   is checked against the three that exist before it reaches Stripe. The
+   session itself is opened in ./checkout.ts, which also holds the rules on
+   currency and return address.
 
-   THE CURRENCY IS TAKEN FROM THE GEO HEADER AND FROM NOTHING THE BROWSER
-   SENDS. The reader is shown one currency, chosen from their country by
-   src/proxy.ts and written to a cookie for display. That cookie is the
-   browser's to edit, and for a while this action read it first: set
-   `snf-cur=INR` in devtools and sixty mornings cost twenty-five dollars. Now
-   the charge follows `x-vercel-ip-country`, which Vercel writes and the
-   browser cannot. Local development has no geo header and charges in US
-   dollars, which is the default the page prints there too.
+   EVERY PRESS ENDS ON A PAGE. A refusal from BotID or a session Stripe would
+   not open sends the reader back to /begin with `error=pay`, where a short
+   line beside the buttons asks for one more press. The framework's own error
+   page is for bugs, and a buyer should never meet it.
 
-   THE RETURN ADDRESS IS THE SITE'S OWN. `success_url` used to be built from
-   the Host header; in production it is `SITE_ORIGIN`, so a request carrying a
-   forged host can never send a paid buyer somewhere else. Development keeps
-   the local origin so the round trip works on localhost.
-
-   REDIRECT IS THROWN, NOT RETURNED. `redirect()` works by throwing, so it sits
-   outside any try that guards the Stripe call; otherwise the framework's own
-   control flow is caught and reported as a failure to create a session.
+   REDIRECT IS THROWN, NOT RETURNED. `redirect()` works by throwing, so every
+   call here sits outside any try; otherwise the framework's own control flow
+   is caught and reported as a failed payment.
    --------------------------------------------------------------------------- */
-
-/** Where Stripe sends the buyer back to. */
-async function origin(): Promise<string> {
-  if (process.env.NODE_ENV === "production") return SITE_ORIGIN;
-  const head = await headers();
-  const host = head.get("x-forwarded-host") ?? head.get("host") ?? "localhost:3000";
-  return `http://${host}`;
-}
-
-/**
- * Open a Checkout Session for a pack and send the buyer to it. Shared by the
- * Pay button and by /begin's own continuation after a sign-in (see
- * src/components/pages/Begin.tsx), so the two cannot price differently.
- */
-export async function checkoutFor(lang: Lang, tier: TierKey, next: string): Promise<never> {
-  const user = await requireUser(lang, next);
-
-  const head = await headers();
-  const country = head.get("x-vercel-ip-country");
-  const currency = currencyForCountry(country);
-
-  /* What Meta matches the purchase on, kept only where Meta may measure this
-     buyer: a country that lets it, or a yes to the cookie notice. The webhook
-     sends it through the Conversions API. */
-  let meta: { fbp?: string; fbc?: string; ip?: string; ua?: string } | undefined;
-  const jar = await cookies();
-  if (adsAllowed(country) || jar.get(CONSENT_COOKIE)?.value === "yes") {
-    meta = {
-      fbp: jar.get("_fbp")?.value,
-      fbc: jar.get("_fbc")?.value,
-      ip: head.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined,
-      ua: head.get("user-agent") ?? undefined,
-    };
-  }
-
-  const url = await createCheckout({
-    userId: user.id,
-    email: user.email,
-    tier,
-    currency,
-    lang,
-    origin: await origin(),
-    meta,
-  });
-
-  redirect(url);
-}
 
 export async function startCheckout(lang: Lang, formData: FormData): Promise<void> {
   const tier = String(formData.get("tier") ?? "");
-  if (!isTier(tier)) throw new Error(`unknown tier: ${tier}`);
+  if (!isTier(tier)) redirect(localePath(lang, "/begin"));
 
-  /* A script pressing Pay gets nothing; see src/instrumentation-client.ts. */
-  const bot = await checkBotId();
-  if (bot.isBot) throw new Error("pay: refused");
+  /* A script pressing Pay gets nothing; see src/instrumentation-client.ts. A
+     person BotID misjudges gets the line asking for another press. */
+  let refused = false;
+  try {
+    refused = (await checkBotId()).isBot;
+  } catch (error) {
+    console.error("pay: BotID check failed", error);
+  }
+  if (refused) {
+    console.warn("pay: refused by BotID", tier);
+    redirect(payErrorPath(lang, tier));
+  }
 
-  /* The return address after a sign-in carries the intent, and a short-lived
-     cookie confirms it, so the buyer is sent on to Stripe without pressing
-     Pay a second time. `go=1` is honoured by /begin only for a signed-in
-     reader holding the cookie; see Begin.tsx. */
-  const jar = await cookies();
-  jar.set("snf-intent", tier, {
-    path: "/",
-    httpOnly: true,
-    sameSite: "lax",
-    /* Secure follows the scheme, not the build: a production build served
-       over plain http on a laptop would otherwise drop the cookie silently
-       and the continuation could never be tested. */
-    secure: (await origin()).startsWith("https"),
-    maxAge: 60 * 15,
-  });
-  await checkoutFor(lang, tier, `/begin?pack=${tier}&go=1`);
+  /* Signed out between loading the page and pressing Pay: the press is kept
+     in a short-lived cookie, and the sign-in returns to /begin/go, which
+     opens the session without a second press. See go/route.ts. */
+  if (!(await currentUser(lang))) {
+    const jar = await cookies();
+    jar.set(INTENT_COOKIE, tier, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "lax",
+      /* Secure follows the scheme, not the build: a production build served
+         over plain http on a laptop would otherwise drop the cookie silently
+         and the continuation could never be tested. */
+      secure: (await origin()).startsWith("https"),
+      maxAge: 60 * 15,
+    });
+  }
+  const user = await requireUser(lang, `/begin/go?pack=${tier}`);
+
+  redirect(await checkoutTarget(lang, user, tier));
 }

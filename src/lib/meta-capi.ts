@@ -23,23 +23,32 @@ import { META_PIXEL_ID } from "@/lib/meta";
 
    `event_id` is the Stripe session id, so a redelivered webhook is the same
    event to Meta and is counted once.
+
+   CompleteRegistration is sent from here too, by the first save of /setup
+   (src/app/[lang]/(app)/setup/actions.ts), under the same consent rule as the
+   checkout and with an event id the browser's pixel repeats, so Meta keeps
+   one of the two.
    --------------------------------------------------------------------------- */
 
 /** Graph API version. Meta keeps each one for about two years; v26.0 is from 2026. */
 const GRAPH_VERSION = "v26.0";
 
-export type MetaPurchase = {
-  sessionId: string;
+/** Who the event is about: matched by Meta, the email and the account id hashed. */
+type Matching = {
   email: string | null;
   userId: string;
-  /** In the currency's minor unit, as Stripe reports it. */
-  amountMinor: number;
-  currency: string;
-  sourceUrl: string;
   fbp?: string;
   fbc?: string;
   ip?: string;
   ua?: string;
+};
+
+export type MetaPurchase = Matching & {
+  sessionId: string;
+  /** In the currency's minor unit, as Stripe reports it. */
+  amountMinor: number;
+  currency: string;
+  sourceUrl: string;
   /** Unix seconds; the moment the session completed. */
   at: number;
 };
@@ -48,10 +57,8 @@ function hash(value: string): string {
   return createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
 }
 
-export async function sendPurchase(p: MetaPurchase): Promise<void> {
-  const token = process.env.META_CAPI_TOKEN;
-  if (!META_PIXEL_ID || !token) return;
-
+/** What Meta matches an event on, the email and the account id hashed. */
+function userData(p: Matching): Record<string, unknown> {
   const user_data: Record<string, unknown> = {
     external_id: [hash(p.userId)],
   };
@@ -60,24 +67,16 @@ export async function sendPurchase(p: MetaPurchase): Promise<void> {
   if (p.fbc) user_data.fbc = p.fbc;
   if (p.ip) user_data.client_ip_address = p.ip;
   if (p.ua) user_data.client_user_agent = p.ua;
+  return user_data;
+}
 
-  const body: Record<string, unknown> = {
-    data: [
-      {
-        event_name: "Purchase",
-        event_time: p.at,
-        event_id: p.sessionId,
-        action_source: "website",
-        event_source_url: p.sourceUrl,
-        user_data,
-        custom_data: {
-          currency: p.currency.toUpperCase(),
-          value: p.amountMinor / 100,
-        },
-      },
-    ],
-  };
-  /* Set in Events Manager's "Test events" tab to watch a purchase arrive. */
+/** One event to the Graph API: logged and swallowed on failure, five seconds at most. */
+async function post(label: string, event: Record<string, unknown>): Promise<void> {
+  const token = process.env.META_CAPI_TOKEN;
+  if (!META_PIXEL_ID || !token) return;
+
+  const body: Record<string, unknown> = { data: [event] };
+  /* Set in Events Manager's "Test events" tab to watch an event arrive. */
   if (process.env.META_TEST_EVENT_CODE) body.test_event_code = process.env.META_TEST_EVENT_CODE;
 
   try {
@@ -91,9 +90,47 @@ export async function sendPurchase(p: MetaPurchase): Promise<void> {
       },
     );
     if (!res.ok) {
-      console.error("meta capi: purchase refused", p.sessionId, res.status, await res.text());
+      console.error(`meta capi: ${label} refused`, event.event_id, res.status, await res.text());
     }
   } catch (error) {
-    console.error("meta capi: purchase not sent", p.sessionId, error);
+    console.error(`meta capi: ${label} not sent`, event.event_id, error);
   }
+}
+
+export async function sendPurchase(p: MetaPurchase): Promise<void> {
+  await post("purchase", {
+    event_name: "Purchase",
+    event_time: p.at,
+    event_id: p.sessionId,
+    action_source: "website",
+    event_source_url: p.sourceUrl,
+    user_data: userData(p),
+    custom_data: {
+      currency: p.currency.toUpperCase(),
+      value: p.amountMinor / 100,
+    },
+  });
+}
+
+export type MetaRegistration = Matching & {
+  /** The id the browser repeats the event under, so Meta keeps one of the pair. */
+  eventId: string;
+  sourceUrl: string;
+  /** Unix seconds; the moment setup was first saved. */
+  at: number;
+};
+
+/**
+ * CompleteRegistration, sent once per account, on the first save of /setup.
+ * Later saves are the same form used as settings and are never sent.
+ */
+export async function sendRegistration(p: MetaRegistration): Promise<void> {
+  await post("registration", {
+    event_name: "CompleteRegistration",
+    event_time: p.at,
+    event_id: p.eventId,
+    action_source: "website",
+    event_source_url: p.sourceUrl,
+    user_data: userData(p),
+  });
 }

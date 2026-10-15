@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { WaterBand } from "@/components/WaterBand";
 import { Specimen } from "@/components/Specimen";
 import { eq } from "drizzle-orm";
-import { db, profiles } from "@/db";
+import { db, profiles, purchases } from "@/db";
 import { beginContent } from "@/content/begin";
 import { content } from "@/lib/content";
 import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
@@ -15,7 +14,7 @@ import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Price, TaxNote } from "@/components/ui";
-import { checkoutFor, startCheckout } from "@/app/[lang]/begin/actions";
+import { startCheckout } from "@/app/[lang]/begin/actions";
 import { TrackView } from "@/components/site/TrackView";
 import { TrackedSubmit } from "@/components/site/TrackedSubmit";
 
@@ -39,18 +38,21 @@ import { TrackedSubmit } from "@/components/site/TrackedSubmit";
    thing you have already half made converts better than paying for a
    description of it, and a saved profile with no mornings on it is harmless.
 
-   ONE PRESS OF PAY, EVEN WITH A SIGN-IN IN BETWEEN. A stranger who presses
-   Pay is sent to sign in and comes back to `/begin?pack=eleven&go=1`. With a
-   signed-in reader, a pack in the query and the intent cookie the Pay press
-   left behind, this page opens the Checkout Session itself and redirects,
-   so nobody presses the same button twice. The cookie is short-lived and
-   cleared on use, so a bookmark of that URL opens nothing.
+   ONE PRESS OF PAY, EVEN WITH A SIGN-IN IN BETWEEN. A reader whose session
+   lapsed before pressing Pay signs in and returns to /begin/go, a route
+   handler that spends the intent cookie and opens the session itself; see
+   src/app/[lang]/begin/go/route.ts. This page only reads.
+
+   A PRESS THAT CAME BACK UNOPENED arrives as `error=pay`, and a short line
+   above the packs asks for one more. See src/app/[lang]/begin/actions.ts.
+
+   A RETURNING BUYER SKIPS THE SETUP LINE. The three steps belong to the first
+   visit; somebody who has bought before, or is sent from /today or /account
+   with every morning kept (`out=1`), is shown the packs and one line to match.
 
    A SIGNED-IN PERSON WITH MORNINGS IN HAND is told so, and offered the way to
    sit rather than the way to buy again.
    --------------------------------------------------------------------------- */
-
-const INTENT_COOKIE = "snf-intent";
 
 function PayButton({
   lang,
@@ -87,38 +89,41 @@ function PayButton({
 export async function Begin({
   lang,
   pack,
-  go,
   cancelled,
+  error,
+  out,
 }: {
   lang: Lang;
   pack?: string;
-  go?: boolean;
   cancelled?: boolean;
+  /** A Pay press that came back unopened. */
+  error?: boolean;
+  /** Sent from /today or /account with every morning kept. */
+  out?: boolean;
 }) {
   const t = beginContent[lang];
   const tiers = content[lang].pricing.tiers;
   const name = (tier: TierKey) => tiers.find((row) => row.key === tier)!.name;
 
-  const user = await currentUser(lang);
-  if (!user) redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(localePath(lang, "/begin"))}`);
   const chosen: TierKey = pack && isTier(pack) ? pack : DEFAULT_TIER;
+  /* A pack chosen on a price table travels with the reader, through the
+     sign-in and through setup, and comes back raised here. */
+  const here = pack && isTier(pack) ? `${localePath(lang, "/begin")}?pack=${pack}` : localePath(lang, "/begin");
 
-  /* The continuation after a sign-in: see the note at the head of the file. */
-  if (go && user) {
-    const jar = await cookies();
-    if (jar.get(INTENT_COOKIE)?.value === chosen) {
-      jar.delete(INTENT_COOKIE);
-      await checkoutFor(lang, chosen, `/begin?pack=${chosen}`);
-    }
-  }
+  const user = await currentUser(lang);
+  if (!user) redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
 
-  const [credits, profile] = await Promise.all([
+  const [credits, profile, bought] = await Promise.all([
     balance(db, user.id),
     db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
+    db.select({ id: purchases.id }).from(purchases).where(eq(purchases.userId, user.id)).limit(1),
   ]);
 
   const setUp = profile[0]?.completedAt != null;
-  if (!setUp) redirect(localePath(lang, "/setup"));
+  if (!setUp) redirect(pack && isTier(pack) ? `${localePath(lang, "/setup")}?pack=${pack}` : localePath(lang, "/setup"));
+
+  const returning = out || bought.length > 0;
+  const lede = credits > 0 ? t.lede : out ? t.outLine : t.setLine;
 
   return (
     <>
@@ -131,19 +136,21 @@ export async function Begin({
         <div className="rule-double mt-6 max-w-xl" />
         <WaterBand seed="begin" className="mt-5 h-[68px] w-full" />
 
-        {/* The third of the three steps that began on /setup. */}
-        <ol className="mt-8 grid max-w-xl grid-cols-3 gap-2" aria-label={t.title}>
-          {t.steps.map((step, i) => (
-            <li key={step} className={`border-t-2 pt-2 ${i === 2 ? "border-spot" : "border-rule"}`}>
-              <span className={`label ${i === 2 ? "text-spot" : "text-ink2"}`}>{String(i + 1).padStart(2, "0")}</span>
-              <span className={`mt-1 block text-sm ${i === 2 ? "text-ink" : "text-ink2"}`}>{step}</span>
-            </li>
-          ))}
-        </ol>
+        {/* The third of the three steps that began on /setup, for a first visit. */}
+        {!returning && (
+          <ol className="mt-8 grid max-w-xl grid-cols-3 gap-2" aria-label={t.title}>
+            {t.steps.map((step, i) => (
+              <li key={step} className={`border-t-2 pt-2 ${i === 2 ? "border-spot" : "border-rule"}`}>
+                <span className={`label ${i === 2 ? "text-spot" : "text-ink2"}`}>{String(i + 1).padStart(2, "0")}</span>
+                <span className={`mt-1 block text-sm ${i === 2 ? "text-ink" : "text-ink2"}`}>{step}</span>
+              </li>
+            ))}
+          </ol>
+        )}
 
         <div className="mt-6 grid gap-8 sm:grid-cols-[1fr_220px] sm:items-start sm:gap-12">
           <div>
-            <p className="max-w-xl text-[1.02rem] leading-[1.75] text-ink">{credits > 0 ? t.lede : t.setLine}</p>
+            <p className="max-w-xl text-[1.02rem] leading-[1.75] text-ink">{lede}</p>
             <p className="mt-3 max-w-xl text-[0.98rem] leading-[1.7] text-ink2">{t.lede2}</p>
           </div>
           {/* Their own names on it, drawn from today's figure. */}
@@ -153,6 +160,12 @@ export async function Begin({
         {cancelled && (
           <p className="mt-6 border-l-2 border-spot pl-4 text-[0.98rem] text-ink2">
             {t.cancelled}
+          </p>
+        )}
+
+        {error && (
+          <p role="status" className="mt-6 border-l-2 border-spot pl-4 text-[0.98rem] text-ink">
+            {t.payError}
           </p>
         )}
 

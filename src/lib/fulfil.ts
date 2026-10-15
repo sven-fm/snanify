@@ -18,10 +18,13 @@ import type { TierKey } from "@/content/prices";
       written into the session's metadata when it was created, so repricing or
       renaming a pack tomorrow cannot change what somebody paid for yesterday.
 
-   2. THE LEDGER IS WRITTEN FIRST, KEYED TO THE SESSION. Stripe redelivers by
-      design; the unique index on (reason, ref_id) makes the second delivery a
-      no-op. Everything after the booking is skipped on a redelivery, so no
-      duplicate purchase row and no second receipt.
+   2. THE LEDGER ROW AND THE PURCHASE ROW ARE ONE TRANSACTION, KEYED TO THE
+      SESSION. Two callers book the same session: Stripe's webhook, which
+      redelivers by design, and /begin/done, which books on the buyer's return
+      so nobody waits on the webhook. `book` locks the person's row, so the
+      second caller waits for the first to commit, then meets the unique index
+      on (reason, ref_id) and inserts nothing. Exactly one caller sees
+      "booked", and only that one sends the receipt and tells Meta.
 
    3. NOTHING HERE SENDS EMAIL. The caller does that, after this returns, and
       swallows its errors. Somebody who paid keeps their mornings whether or
@@ -43,6 +46,17 @@ function packOf(session: Stripe.Checkout.Session): { tier: TierKey; credits: num
   return { tier, credits };
 }
 
+/**
+ * Whether the money is in. "no_payment_required" is a session a promotion
+ * code took to zero: nothing to collect, and the mornings are still owed.
+ */
+export function isPaid(session: Stripe.Checkout.Session): boolean {
+  if (session.payment_status === "paid") return true;
+  /* Only once the session is complete: a zero total on a session still open
+     is a buyer who applied a code and walked away. */
+  return session.payment_status === "no_payment_required" && session.status === "complete";
+}
+
 export async function fulfilSession(
   db: Db,
   session: Stripe.Checkout.Session,
@@ -52,35 +66,42 @@ export async function fulfilSession(
 
   if (!userId) return { outcome: "ignored", why: "no user on the session" };
   if (!pack) return { outcome: "ignored", why: "no known pack on the session" };
-  if (session.payment_status !== "paid") {
+  if (!isPaid(session)) {
     return { outcome: "ignored", why: `payment_status is ${session.payment_status}` };
   }
 
-  const { booked } = await book(db, {
-    userId,
-    delta: pack.credits,
-    reason: "purchase",
-    refId: session.id,
+  const booked = await db.transaction(async (tx) => {
+    const ledger = await book(tx, {
+      userId,
+      delta: pack.credits,
+      reason: "purchase",
+      refId: session.id,
+    });
+
+    /* Written on both paths. On a redelivery it conflicts and does nothing;
+       after a ledger row written before the two shared a transaction, it
+       fills in the purchase row that write left behind. */
+    await tx
+      .insert(purchases)
+      .values({
+        id: newId(),
+        userId,
+        stripeSessionId: session.id,
+        stripePaymentIntent:
+          typeof session.payment_intent === "string"
+            ? session.payment_intent
+            : (session.payment_intent?.id ?? null),
+        pack: pack.tier,
+        currency: (session.currency ?? "usd").toUpperCase(),
+        amountMinor: session.amount_total ?? 0,
+        credits: pack.credits,
+      })
+      .onConflictDoNothing();
+
+    return ledger.booked;
   });
 
   if (!booked) return { outcome: "already" };
-
-  await db
-    .insert(purchases)
-    .values({
-      id: newId(),
-      userId,
-      stripeSessionId: session.id,
-      stripePaymentIntent:
-        typeof session.payment_intent === "string"
-          ? session.payment_intent
-          : (session.payment_intent?.id ?? null),
-      pack: pack.tier,
-      currency: (session.currency ?? "usd").toUpperCase(),
-      amountMinor: session.amount_total ?? 0,
-      credits: pack.credits,
-    })
-    .onConflictDoNothing();
 
   return {
     outcome: "booked",

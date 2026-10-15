@@ -80,6 +80,7 @@ export const en = {
     lede: "One price, in your own currency. Take the mornings whenever you like.",
     labels: {
       each: "Per morning",
+      choose: "Choose",
     },
     /* The count is the name. The packs once carried coined names with
        Devanagari beside them, three words to learn on the one table where a

@@ -5,6 +5,7 @@ import type { Lang } from "@/lib/locales";
 import type { TierKey } from "@/content/prices";
 import type { FlowBand } from "@/lib/riverdata";
 import { unsubscribeUrl } from "@/lib/unsubscribe";
+import { formatMoney } from "@/lib/mornings";
 
 /* ---------------------------------------------------------------------------
    The two emails this product sends: a receipt, and the morning reminder.
@@ -41,18 +42,9 @@ type Message = {
   headers?: Record<string, string>;
 };
 
-/** Minor units and a currency, as the receipt prints them. */
-function money(amountMinor: number, currency: string): string {
-  const value = amountMinor / 100;
-  try {
-    return new Intl.NumberFormat("en", {
-      style: "currency",
-      currency,
-      maximumFractionDigits: value % 1 === 0 ? 0 : 2,
-    }).format(value);
-  } catch {
-    return `${value} ${currency}`;
-  }
+/** Text set into HTML. An address is the reader's own, but it is still text. */
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 /** One column of paper and ink, and nothing that needs to load. */
@@ -110,32 +102,53 @@ export async function sendAlert(subject: string, text: string): Promise<Sent> {
 }
 
 export type ReceiptInput = {
+  /** The address the receipt goes to, which is the one the account signs in with. */
   to: string;
   lang: Lang;
+  /** Names the pack in the subject and the first line. */
   tier: TierKey;
   credits: number;
   amountMinor: number;
   currency: Currency | string;
 };
 
-/** Sent once, from the webhook, after the credits are booked. */
+/**
+ * Sent once, from the webhook, after the credits are booked. The pack in the
+ * first line, one button to /today, the sign-in address, and /account.
+ */
 export async function sendReceipt(input: ReceiptInput): Promise<Sent> {
   const t = emailContent[input.lang].receipt;
-  const amount = money(input.amountMinor, input.currency);
-  const line = t.line.replace("{credits}", String(input.credits)).replace("{amount}", amount);
+  const amount = formatMoney(input.amountMinor, input.currency, "en-IN");
+  const line = t.line.replace("{amount}", amount);
+  const today = siteUrl(input.lang, "/today");
+  const account = siteUrl(input.lang, "/account");
+  const greeting = t.greeting[input.tier];
+  const signIn = t.signIn.replace("{email}", input.to);
 
-  const text = [t.greeting, "", line, "", t.next, "", `${t.link} ${siteUrl(input.lang, "/today")}`]
-    .join("\n");
+  const text = [
+    greeting,
+    "",
+    line,
+    "",
+    t.next,
+    "",
+    `${t.link} ${today}`,
+    "",
+    signIn,
+    `${t.account} ${account}`,
+  ].join("\n");
 
   const html = wrap(
-    `<p style="margin:0 0 18px;font-size:22px;">${t.greeting}</p>
+    `<p style="margin:0 0 18px;font-size:22px;">${greeting}</p>
      <p style="margin:0 0 14px;">${line}</p>
      <p style="margin:0 0 22px;">${t.next}</p>
-     <p style="margin:0;"><a href="${siteUrl(input.lang, "/today")}" style="background:#b32620;color:#faf6ea;text-decoration:none;padding:12px 20px;display:inline-block;letter-spacing:0.06em;text-transform:uppercase;font-size:13px;">${t.cta}</a></p>`,
+     <p style="margin:0 0 22px;"><a href="${today}" style="background:#b32620;color:#faf6ea;text-decoration:none;padding:12px 20px;display:inline-block;letter-spacing:0.06em;text-transform:uppercase;font-size:13px;">${t.cta}</a></p>
+     <p style="margin:0 0 6px;">${escapeHtml(signIn)}</p>
+     <p style="margin:0;">${t.account} <a href="${account}" style="color:#16130f;">${account.replace(/^https?:\/\//, "")}</a></p>`,
     t.footer,
   );
 
-  return send({ to: input.to, subject: t.subject, text, html });
+  return send({ to: input.to, subject: t.subject[input.tier], text, html });
 }
 
 export type ReminderInput = {

@@ -16,7 +16,8 @@ import { CONSENT_EVENT, metaMayLoad, readAds, readConsent } from "@/lib/consent"
    and a reader the cookie excludes downloads nothing from Meta at all.
 
    ONE PAGEVIEW PER ROUTE. The App Router changes pages without a load, so the
-   pathname is watched and every change after the first is a PageView. The
+   pathname is watched and every change after the first is a PageView, with
+   Meta's own history listener switched off so it is the only one. The
    funnel events (ViewContent, InitiateCheckout, CompleteRegistration) go out
    from src/lib/track.ts; Purchase goes from the Stripe webhook through the
    Conversions API, see src/lib/meta-capi.ts.
@@ -28,6 +29,7 @@ type Fbq = ((...args: unknown[]) => void) & {
   push: unknown;
   loaded: boolean;
   version: string;
+  disablePushState?: boolean;
 };
 
 declare global {
@@ -52,6 +54,11 @@ function load(id: string): void {
   fbq.loaded = true;
   fbq.version = "2.0";
   fbq.queue = [];
+  /* fbevents.js sends its own PageView on every history.pushState unless told
+     not to, and the effect below already sends one per route: left on, each
+     page after the first would be counted twice. Read once, when the script
+     loads, so it is set before the script is injected. */
+  fbq.disablePushState = true;
   window.fbq = fbq;
   window._fbq = fbq;
 

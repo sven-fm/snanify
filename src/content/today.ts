@@ -72,16 +72,15 @@ const en = {
     cta: "Open your Sankalp Patra",
     share: "Send it to family",
     tomorrow: "One morning a day. The next one is tomorrow.",
+    /** In place of `tomorrow` when this was the last morning on the account. */
+    out: "Your mornings are complete. Choose your next ones for tomorrow.",
   },
 
   failed: {
-    title: "Your morning did not save",
-    body: "Your account still has the same number of mornings. Try again.",
-    cta: "Try again",
+    title: "Your morning is waiting",
+    body: "Your account keeps the same number of mornings. Try once more.",
+    cta: "Try once more",
   },
-
-  left: "{n} mornings left",
-  leftOne: "One morning left",
 
   /** The small cross at the corner of the practice. Leaving before the mark spends nothing. */
   leave: "Leave this morning",
@@ -144,16 +143,14 @@ const hi = {
     cta: "अपना संकल्प पत्र खोलिए",
     share: "परिवार को भेजिए",
     tomorrow: "दिन में एक सुबह। अगली कल है।",
+    out: "आपकी सुबहें पूरी हुईं। कल के लिए अपनी अगली सुबहें चुनिए।",
   },
 
   failed: {
-    title: "आपकी सुबह सहेजी नहीं गई",
-    body: "आपके खाते में सुबहें उतनी ही हैं जितनी पहले थीं। फिर कोशिश कीजिए।",
-    cta: "फिर कोशिश कीजिए",
+    title: "आपकी सुबह प्रतीक्षा में है",
+    body: "आपके खाते में सुबहें उतनी ही हैं जितनी पहले थीं। एक बार फिर कोशिश कीजिए।",
+    cta: "एक बार फिर कोशिश कीजिए",
   },
-
-  left: "{n} सुबहें शेष",
-  leftOne: "एक सुबह शेष",
 
   leave: "यह सुबह छोड़िए",
 };

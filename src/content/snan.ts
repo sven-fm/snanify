@@ -114,6 +114,7 @@ type Copy = {
     };
     readonly rows: readonly TariffRow[];
     readonly note: string;
+    readonly choose: string;
     readonly cta: string;
   };
 
@@ -252,6 +253,7 @@ const en: Copy = {
     title: "Prices",
     lede: "One price, in your own currency.",
     heads: { price: "Price", per: "Per morning" },
+    choose: "Choose",
     rows: [
       {
         key: "one",
@@ -409,6 +411,7 @@ const hi: Copy = {
     title: "मूल्य",
     lede: "एक मूल्य, आपकी अपनी मुद्रा में।",
     heads: { price: "मूल्य", per: "प्रति सुबह" },
+    choose: "चुनिए",
     rows: [
       {
         key: "one",

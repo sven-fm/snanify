@@ -2,8 +2,11 @@ import Link from "next/link";
 import { WaterBand } from "@/components/WaterBand";
 import { desc, eq } from "drizzle-orm";
 import { SignOutButton } from "@clerk/nextjs";
-import { db, sittings, profiles } from "@/db";
+import { db, sittings, profiles, purchases } from "@/db";
 import { accountContent } from "@/content/account";
+import { morningsContent } from "@/content/mornings";
+import { asTier, formatDay, formatMoney } from "@/lib/mornings";
+import { sittingToday } from "@/lib/sitting";
 import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
@@ -26,6 +29,11 @@ import { deleteAccount, setReminder } from "@/app/[lang]/(app)/account/actions";
    one a link to its own Sankalp Patra. It is the thing that makes eleven
    mornings feel like a practice rather than eleven purchases, so it is set as
    a ledger and not as cards.
+
+   What was bought sits under the register, the same ruled rows: the pack, the
+   day in the person's own zone, and what it cost in the currency it was paid
+   in. With nothing left the way to the next pack becomes the primary button;
+   with today already kept, the button to sit becomes the line that says so.
    --------------------------------------------------------------------------- */
 
 function formatKept(keptOn: string, lang: Lang): string {
@@ -51,7 +59,7 @@ export async function Account({
   const user = await requireUser(lang, "/account");
   const t = accountContent[lang].account;
 
-  const [credits, kept, profile] = await Promise.all([
+  const [credits, kept, profile, bought] = await Promise.all([
     balance(db, user.id),
     db
       .select({
@@ -64,9 +72,26 @@ export async function Account({
       .orderBy(desc(sittings.keptAt))
       .limit(100),
     db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
+    db
+      .select({
+        id: purchases.id,
+        pack: purchases.pack,
+        credits: purchases.credits,
+        currency: purchases.currency,
+        amountMinor: purchases.amountMinor,
+        createdAt: purchases.createdAt,
+      })
+      .from(purchases)
+      .where(eq(purchases.userId, user.id))
+      .orderBy(desc(purchases.createdAt))
+      .limit(100),
   ]);
 
   const setUp = profile[0]?.completedAt != null;
+  const keptToday = setUp && profile[0] ? await sittingToday(user.id, profile[0].waterSlug, user.tz) : null;
+  const m = morningsContent[lang];
+  const locale = lang === "hi" ? "hi-IN" : "en-IN";
+  const outHref = `${localePath(lang, "/begin")}?out=1`;
 
   return (
     <>
@@ -88,15 +113,29 @@ export async function Account({
                 : t.creditsLine.replace("{n}", String(credits))}
           </p>
 
+          {keptToday && (
+            <p className="mt-4 border-l-2 border-spot pl-3 text-[0.98rem] text-ink" data-kept-today>
+              {t.keptToday}
+            </p>
+          )}
+
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            {credits > 0 && (
+            {credits === 0 ? (
+              <LinkButton href={outHref}>{m.more}</LinkButton>
+            ) : keptToday ? (
+              <LinkButton href={localePath(lang, `/p/${keptToday.id}`)} variant="ghost">
+                {t.keptOpen}
+              </LinkButton>
+            ) : (
               <Link href={localePath(lang, setUp ? "/today" : "/setup")} className="block">
                 <CTA className="w-full sm:w-auto">{setUp ? t.todayCta : t.setupCta}</CTA>
               </Link>
             )}
-            <LinkButton href={localePath(lang, "/begin")} variant="ghost">
-              {t.buyCta}
-            </LinkButton>
+            {credits > 0 && (
+              <LinkButton href={localePath(lang, "/begin")} variant="ghost">
+                {t.buyCta}
+              </LinkButton>
+            )}
           </div>
         </section>
 
@@ -132,6 +171,39 @@ export async function Account({
             </ol>
           )}
         </section>
+
+        {/* ---------------- what was bought ---------------- */}
+        {bought.length > 0 && (
+          <section className="mt-14">
+            <h2 className="display border-b-2 border-rulestrong pb-3 text-xl text-ink">
+              {t.purchasesHeading}
+            </h2>
+            <ol className="mt-1">
+              {bought.map((p) => {
+                const tier = asTier(p.pack);
+                return (
+                  <li
+                    key={p.id}
+                    className="flex min-h-[52px] items-baseline justify-between gap-4 border-b border-rule py-3.5"
+                    data-purchase
+                  >
+                    <span className="min-w-0">
+                      <span className="block text-[0.98rem] text-ink">
+                        {tier ? m.pack[tier] : String(p.credits)}
+                      </span>
+                      <span className="mt-0.5 block text-sm text-ink2 tabular-nums">
+                        {formatDay(p.createdAt, user.tz, locale)}
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-right text-[0.98rem] text-ink tabular-nums">
+                      {formatMoney(p.amountMinor, p.currency, "en-IN")}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        )}
 
         {/* ---------------- the sheet, and the hour ---------------- */}
         <section className="mt-14 grid gap-10 sm:grid-cols-2">
@@ -195,7 +267,7 @@ export async function Account({
         </section>
 
         {/* ---------------- deleting everything, under a fold ---------------- */}
-        <details className="group mt-16 border-t-2 border-rulestrong pt-6">
+        <details className="group mt-16 border-t-2 border-rulestrong pt-6" open={misstyped}>
           <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-ink [&::-webkit-details-marker]:hidden">
             <span className="display text-xl">{t.accountHeading}</span>
             <span aria-hidden="true" className="display text-xl text-ink2 group-open:hidden">+</span>
@@ -203,6 +275,11 @@ export async function Account({
           </summary>
           <section className="settle-panel mt-6">
           <h2 className="display text-lg text-ink">{t.deleteHeading}</h2>
+          {credits > 0 && (
+            <p className="mt-4 max-w-lg border-l-2 border-spot pl-3 text-[0.98rem] leading-[1.7] text-ink">
+              {credits === 1 ? t.deleteCreditsOne : t.deleteCredits.replace("{n}", String(credits))}
+            </p>
+          )}
           <p className="mt-4 max-w-lg text-[0.98rem] leading-[1.7] text-ink2">{t.deleteBody}</p>
 
           <form action={deleteAccount.bind(null, lang)} className="mt-5 max-w-sm">

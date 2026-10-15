@@ -1,4 +1,5 @@
 import sharp from "sharp";
+import { LIMITS } from "@/lib/limits";
 
 /* ---------------------------------------------------------------------------
    A photograph, turned into something that belongs on the sheet.
@@ -30,14 +31,21 @@ import sharp from "sharp";
    HEIC. iPhones shoot HEIC by default, and this build of sharp decodes it.
    Where a build does not, the failure is a clean rejection and the form tells
    the person to save as JPEG.
+
+   WHAT ARRIVES IS ALREADY SMALLER. The form redraws a photograph at 1600
+   pixels on its longest side before sending it (src/lib/shrink-photo.ts), so
+   it fits under the platform's body cap. That still covers the 800 by 1000
+   window below with room to crop, so the press loses nothing it would have
+   kept. The browser
+   is trusted for transport only: every check here runs on what arrives.
    --------------------------------------------------------------------------- */
 
 export const PORTRAIT = {
   /** The window on the sheet, in pixels, at the size the sheet is rendered. */
   width: 800,
   height: 1000,
-  /** What we will accept from a phone. Comfortably above a 48MP HEIC. */
-  maxUploadBytes: 12 * 1024 * 1024,
+  /** What we will accept: the platform's body cap, less room for the form. */
+  maxUploadBytes: LIMITS.portraitBytes,
   /** What we will store. A sheet that has to load ten megabytes is not shared. */
   maxBytes: 400 * 1024,
   /** Above this, the file is a bomb rather than a photograph. 100 megapixels. */

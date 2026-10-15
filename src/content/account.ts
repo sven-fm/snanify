@@ -60,6 +60,12 @@ const en = {
     deletePlaceholder: "delete",
     deleteCta: "Delete my account",
     deleteMisstyped: "Type the word delete to confirm.",
+    /** Above the delete form while mornings remain. Refunds are on request, per /terms. */
+    deleteCreditsOne: "One morning is still on your account. Ask for its refund first, at hello@snanify.com.",
+    deleteCredits: "{n} mornings are still on your account. Ask for their refund first, at hello@snanify.com.",
+    keptToday: "Kept today",
+    keptOpen: "Open today's sheet",
+    purchasesHeading: "What you bought",
   },
 };
 
@@ -110,6 +116,11 @@ const hi = {
     deletePlaceholder: "delete",
     deleteCta: "मेरा खाता मिटाइए",
     deleteMisstyped: "पुष्टि के लिए delete शब्द लिखिए।",
+    deleteCreditsOne: "आपके खाते में अभी एक सुबह है। पहले hello@snanify.com पर लिखकर उसका धन वापस माँग लीजिए।",
+    deleteCredits: "आपके खाते में अभी {n} सुबहें हैं। पहले hello@snanify.com पर लिखकर उनका धन वापस माँग लीजिए।",
+    keptToday: "आज की सुबह रख ली गई",
+    keptOpen: "आज का पत्र खोलिए",
+    purchasesHeading: "आपकी ख़रीद",
   },
 };
 

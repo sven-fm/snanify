@@ -7,6 +7,7 @@ import { GHATS } from "@/content/muhurat";
 import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { requireUser } from "@/lib/auth";
+import { isTier } from "@/lib/packs";
 import { blobUrl } from "@/lib/blob";
 import { LANGS, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
@@ -44,7 +45,7 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ lang: Lang }>;
-  searchParams: Promise<{ bought?: string }>;
+  searchParams: Promise<{ bought?: string; pack?: string }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
   const t = setupContent[lang];
@@ -105,6 +106,7 @@ export default async function Page({
 
         <SetupForm
           lang={lang}
+          pack={query.pack && isTier(query.pack) ? query.pack : undefined}
           t={t}
           waters={waters}
           prayers={prayers}

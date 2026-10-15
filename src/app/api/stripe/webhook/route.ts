@@ -1,14 +1,11 @@
 import { alertOwner } from "@/lib/alert";
 import type Stripe from "stripe";
-import { db } from "@/db";
-import { fulfilSession } from "@/lib/fulfil";
+import { isPaid } from "@/lib/fulfil";
+import { settle } from "@/lib/settle";
 import { stripe } from "@/lib/stripe";
-import { sendReceipt } from "@/lib/email";
-import { sendPurchase } from "@/lib/meta-capi";
-import { localeUrl } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
-   Stripe's webhook. The only place credits are ever bought.
+   Stripe's webhook, the door every paid session is booked through.
 
    THE SIGNATURE IS CHECKED AGAINST THE RAW BODY, ALWAYS. Anyone can POST here.
    Without the check a stranger grants themselves sixty mornings with curl. The
@@ -23,7 +20,14 @@ import { localeUrl } from "@/lib/locales";
    has paid and does not yet have their mornings.
 
    A FAILED EMAIL IS NOT A FAILED SALE. The receipt goes out after the credits
-   are booked and its errors are swallowed.
+   are booked and its errors are swallowed. /begin/done books the same session
+   when the buyer returns first; src/lib/settle.ts makes the two one booking
+   and one receipt.
+
+   THE OWNER HEARS ABOUT WHAT NEEDS A PERSON: a missing secret, a signature
+   that fails, a paid session with nobody or no pack on it. src/lib/alert.ts
+   sends one mail per subject per quarter hour per instance, so a bot posting
+   here all night costs the inbox four mails an hour at most.
 
    The route is under /api, which src/proxy.ts excludes from the locale
    rewrite, so Stripe reaches it unprefixed and unauthenticated.
@@ -33,45 +37,17 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 async function handle(session: Stripe.Checkout.Session): Promise<void> {
-  const result = await fulfilSession(db, session);
+  const result = await settle(session);
 
   if (result.outcome === "ignored") {
     console.warn("stripe webhook: ignored", session.id, result.why);
-    return;
-  }
-
-  if (result.outcome !== "booked" || !result.email) return;
-
-  try {
-    await sendReceipt({
-      to: result.email,
-      lang: session.metadata?.lang === "hi" ? "hi" : "en",
-      tier: result.tier,
-      credits: result.credits,
-      amountMinor: session.amount_total ?? 0,
-      currency: (session.currency ?? "usd").toUpperCase(),
-    });
-  } catch (error) {
-    console.error("stripe webhook: receipt not sent", session.id, error);
-  }
-
-  /* Meta hears about the sale only where it may measure the buyer, which the
-     checkout recorded as `ads`; see src/lib/meta-capi.ts. Never throws. */
-  const m = session.metadata ?? {};
-  if (m.ads === "1") {
-    await sendPurchase({
-      sessionId: session.id,
-      email: result.email,
-      userId: session.client_reference_id ?? m.userId ?? "",
-      amountMinor: session.amount_total ?? 0,
-      currency: session.currency ?? "usd",
-      sourceUrl: localeUrl(m.lang === "hi" ? "hi" : "en", "/begin"),
-      fbp: m.fbp,
-      fbc: m.fbc,
-      ip: m.ip,
-      ua: m.ua,
-      at: session.created,
-    });
+    /* Money taken with nowhere to book it. Somebody has to look. */
+    if (isPaid(session)) {
+      await alertOwner(
+        `stripe webhook: paid session left unbooked (${session.id})`,
+        `session ${session.id}\n${result.why}\nmetadata ${JSON.stringify(session.metadata ?? {})}`,
+      );
+    }
   }
 }
 
@@ -79,6 +55,10 @@ export async function POST(request: Request): Promise<Response> {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!secret) {
     console.error("stripe webhook: STRIPE_WEBHOOK_SECRET is missing");
+    await alertOwner(
+      "stripe webhook: STRIPE_WEBHOOK_SECRET is missing",
+      "Every paid session waits unbooked until the secret is set in Vercel.",
+    );
     return new Response("not configured", { status: 500 });
   }
 
@@ -92,6 +72,7 @@ export async function POST(request: Request): Promise<Response> {
     event = await stripe().webhooks.constructEventAsync(raw, signature, secret);
   } catch (error) {
     console.error("stripe webhook: bad signature", error);
+    await alertOwner("stripe webhook: bad signature", error);
     return new Response("bad signature", { status: 400 });
   }
 

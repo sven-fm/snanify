@@ -342,10 +342,14 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
           <div className="mt-14 grid gap-5 lg:grid-cols-3 lg:items-start">
             {t.pricing.tiers.map((tier) => {
               const hero = tier.key === "eleven";
+              /* The whole line is the press, and it carries the pack to the
+                 picker: sign-in and setup keep it, so the buyer lands on
+                 /begin with this pack already chosen. */
               return (
-                <div
+                <Link
                   key={tier.name}
-                  className={`flex flex-col border-2 border-rulestrong p-6 sm:p-7 ${
+                  href={`${localePath(lang, "/begin")}?pack=${tier.key}`}
+                  className={`impress flex flex-col border-2 border-rulestrong p-6 sm:p-7 ${
                     hero ? "misregister order-first bg-paper lg:order-none lg:-mt-3" : "tint"
                   }`}
                 >
@@ -361,7 +365,11 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   </p>
 
                   <p className="mt-5 text-[0.98rem] leading-[1.7] text-ink2">{tier.body}</p>
-                </div>
+
+                  <CTA variant={hero ? "solid" : "ghost"} className="mt-6 w-full !py-4">
+                    {t.pricing.labels.choose}
+                  </CTA>
+                </Link>
               );
             })}
           </div>

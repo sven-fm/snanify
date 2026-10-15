@@ -25,12 +25,31 @@ import { track, type Event, type Props } from "@/lib/track";
 /** How long to wait for the analytics script before reporting. */
 const SETTLE_MS = 500;
 
-export function TrackView({ event, props }: { event: Event; props?: Props }) {
+export function TrackView({
+  event,
+  props,
+  onceKey,
+}: {
+  event: Event;
+  props?: Props;
+  /** Report once per key in this browser, across reloads and return visits. */
+  onceKey?: string;
+}) {
   const fired = useRef(false);
 
   useEffect(() => {
     if (fired.current) return;
     fired.current = true;
+
+    if (onceKey) {
+      const key = `snf-once:${event}:${onceKey}`;
+      try {
+        if (localStorage.getItem(key)) return;
+        localStorage.setItem(key, "1");
+      } catch {
+        /* Storage refused (a private window): count it, the rarer error. */
+      }
+    }
 
     /* Deliberately not cancelled on unmount. React mounts an effect, tears it
        down and mounts it again in development; a cleanup that cleared this

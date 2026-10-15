@@ -7,10 +7,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
    in fulfil.test.ts. */
 const fulfilSession = vi.fn(async () => ({ outcome: "ignored", why: "stubbed" }));
 const sendReceipt = vi.fn(async () => ({ sent: true }));
+const alertOwner = vi.fn(async () => {});
 
 vi.mock("@/db", () => ({ db: {} }));
-vi.mock("@/lib/fulfil", () => ({ fulfilSession }));
+vi.mock("@/lib/fulfil", async (original) => ({
+  ...(await original<typeof import("@/lib/fulfil")>()),
+  fulfilSession,
+}));
 vi.mock("@/lib/email", () => ({ sendReceipt }));
+vi.mock("@/lib/alert", () => ({ alertOwner }));
 
 const SECRET = "whsec_testsecret";
 
@@ -53,6 +58,7 @@ beforeEach(() => {
   vi.resetModules();
   fulfilSession.mockClear();
   sendReceipt.mockClear();
+  alertOwner.mockClear();
   process.env.STRIPE_WEBHOOK_SECRET = SECRET;
   process.env.STRIPE_SECRET_KEY = "sk_test_dummy";
 });
@@ -167,5 +173,52 @@ describe("the Stripe webhook", () => {
 
     expect(response.status).toBe(500);
     expect(fulfilSession).not.toHaveBeenCalled();
+  });
+
+  it("tells the owner when the secret is missing", async () => {
+    delete process.env.STRIPE_WEBHOOK_SECRET;
+
+    const body = event("checkout.session.completed", PAID);
+    await post(body, "t=1,v1=whatever");
+
+    expect(alertOwner).toHaveBeenCalledOnce();
+  });
+
+  it("tells the owner when a signature fails", async () => {
+    const body = event("checkout.session.completed", PAID);
+    await post(body, signed(body, "whsec_attacker"));
+
+    expect(alertOwner).toHaveBeenCalledOnce();
+  });
+
+  it("tells the owner about a paid session it could not book", async () => {
+    const body = event("checkout.session.completed", PAID);
+    const response = await post(body, signed(body));
+
+    expect(response.status).toBe(200);
+    expect(alertOwner).toHaveBeenCalledOnce();
+  });
+
+  it("stays quiet about a bank payment still on its way", async () => {
+    const body = event("checkout.session.completed", { ...PAID, payment_status: "unpaid" });
+    const response = await post(body, signed(body));
+
+    expect(response.status).toBe(200);
+    expect(alertOwner).not.toHaveBeenCalled();
+  });
+
+  it("sends one receipt for a session it booked", async () => {
+    fulfilSession.mockResolvedValueOnce({
+      outcome: "booked",
+      userId: "user_1",
+      tier: "eleven",
+      credits: 11,
+      email: "reader@example.com",
+    } as never);
+
+    const body = event("checkout.session.completed", PAID);
+    await post(body, signed(body));
+
+    expect(sendReceipt).toHaveBeenCalledOnce();
   });
 });

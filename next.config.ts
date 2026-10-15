@@ -74,13 +74,15 @@ const nextConfig: NextConfig = {
 
   /**
    * The portrait arrives through a server action as multipart form data.
-   * Next caps action bodies at one megabyte unless told otherwise, and a
-   * phone photograph is three to eight, so every real upload was answered
-   * with a 500 before src/lib/portrait.ts saw a byte. The limit here matches
-   * PORTRAIT.maxUploadBytes; the pipeline still rejects anything larger.
+   * Next caps action bodies at one megabyte unless told otherwise, so every
+   * real upload was answered with a 500 before src/lib/portrait.ts saw a
+   * byte. Vercel Functions cap a request body at 4.5 MB whatever this says,
+   * so the limit here is the platform's; the form shrinks a photograph to
+   * well under it (src/lib/shrink-photo.ts) and the pipeline refuses
+   * anything over PORTRAIT.maxUploadBytes.
    */
   experimental: {
-    serverActions: { bodySizeLimit: "12mb" },
+    serverActions: { bodySizeLimit: "4.5mb" },
   },
 
   async headers() {

@@ -25,8 +25,10 @@ const MODULES = [
   "@/content/account",
   "@/content/begin",
   "@/content/email",
+  "@/content/error",
   "@/content/kumbh",
   "@/content/legal",
+  "@/content/mornings",
   "@/content/muhurat",
   "@/content/names",
   "@/content/panchang",
@@ -36,6 +38,7 @@ const MODULES = [
   "@/content/patra-page",
   "@/content/prayers",
   "@/content/prices",
+  "@/content/reminders-off",
   "@/content/rivers",
   "@/content/setup",
   "@/content/snan",
@@ -80,6 +83,9 @@ const PRODUCT = new Set([
   "@/content/account",
   "@/content/setup",
   "@/content/email",
+  "@/content/error",
+  "@/content/mornings",
+  "@/content/reminders-off",
   "@/lib/content",
 ]);
 const SOURCE_TALK = /\b(modelled|modeled|Modelled|Copernicus|GloFAS|Open-Meteo)\b|मॉडल/;

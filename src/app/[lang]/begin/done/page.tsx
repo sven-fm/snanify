@@ -3,27 +3,38 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { db, profiles, purchases } from "@/db";
 import { beginContent } from "@/content/begin";
+import type { TierKey } from "@/content/prices";
+import { alertOwner } from "@/lib/alert";
 import { requireUser } from "@/lib/auth";
+import { balance } from "@/lib/credits";
+import { isTier } from "@/lib/packs";
+import { isPaid } from "@/lib/fulfil";
+import { settle } from "@/lib/settle";
 import { getSession } from "@/lib/stripe";
 import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { LinkButton } from "@/components/ui";
+import { TrackView } from "@/components/site/TrackView";
 
 /* ---------------------------------------------------------------------------
    Where Stripe sends somebody back to.
 
    THE RACE THIS PAGE EXISTS FOR. Stripe redirects the browser and delivers the
-   webhook at the same time, over different connections. The browser usually
-   wins. So this page must not assume the credits are booked, and it must never
-   book them itself: two writers of the same money is how somebody ends up with
-   twenty-two mornings.
+   webhook at the same time, over different connections, and the browser
+   usually wins. So this page books the purchase itself: it asks Stripe for the
+   session, checks it belongs to the person signed in, and hands a paid one to
+   src/lib/settle.ts, the same door the webhook uses. Whichever arrives first
+   books the mornings and sends the receipt; the other finds the ledger row and
+   does nothing. The buyer reads their new balance on the first load.
 
-   Instead it reads. If the purchase row is there, the webhook has landed and
-   the reader goes straight on to set up or to sit. If it is not, the page says
-   Stripe is confirming and refreshes itself a few times. If it still is not,
-   it says the receipt will arrive by email, which is true: the webhook retries
-   for days and the credits land whether or not this tab is still open.
+   A BANK PAYMENT IS PAID LATER. A debit or a voucher completes the checkout
+   with the money still on its way, and Stripe confirms it hours or days later
+   through `async_payment_succeeded`. The page says the bank is confirming and
+   looks again a few times; the webhook books it when it clears.
+
+   THE HEADLINE CLAIMS THE MORNINGS ONLY ONCE THEY ARE BOOKED. Until then it
+   says who is confirming what.
 
    The refresh is a meta tag rather than JavaScript, so it works before
    hydration and on a phone that has already been put back in a pocket.
@@ -31,9 +42,10 @@ import { LinkButton } from "@/components/ui";
 
 const ROUTE = "/begin/done";
 
-/** How long to keep refreshing before falling back to the honest message. */
+/** How long to keep looking before settling on the message that waits. */
 const ATTEMPTS = 6;
 const EVERY_SECONDS = 2;
+const BANK_EVERY_SECONDS = 5;
 
 export const dynamic = "force-dynamic";
 
@@ -48,10 +60,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   return {
-    title: beginContent[lang].done.title,
+    title: beginContent[lang].done.meta,
     robots: { index: false, follow: false },
   };
 }
+
+type State =
+  | { kind: "booked"; tier: TierKey | null }
+  | { kind: "confirming" }
+  | { kind: "bank" };
 
 export default async function Page({
   params,
@@ -62,45 +79,95 @@ export default async function Page({
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
   const t = beginContent[lang].done;
-
-  const user = await requireUser(lang, ROUTE);
   const sessionId = query.session_id;
+
+  /* The session id rides through a sign-in, so a lapsed session still lands
+     back here with its purchase. */
+  const here = sessionId ? `${ROUTE}?session_id=${encodeURIComponent(sessionId)}` : ROUTE;
+  const user = await requireUser(lang, here);
 
   if (!sessionId) redirect(localePath(lang, "/account"));
 
-  const booked = await db
-    .select({ id: purchases.id })
-    .from(purchases)
-    .where(and(eq(purchases.stripeSessionId, sessionId), eq(purchases.userId, user.id)))
-    .limit(1);
-
-  if (booked[0]) {
-    /* Counted where the buyer lands rather than in the webhook, which has no
-       browser to report from. The webhook is still what books the credits. */
-    const profile = await db
-      .select({ completedAt: profiles.completedAt })
-      .from(profiles)
-      .where(eq(profiles.userId, user.id))
-      .limit(1);
-
-    /* A redirect throws, so the event has to be reported by the page the
-       buyer is sent to rather than from here. `?bought=1` carries it. */
-    const next = profile[0]?.completedAt ? "/today" : "/setup";
-    redirect(`${localePath(lang, next)}?bought=1`);
-  }
-
-  /* Not booked yet. Confirm with Stripe that this session is real and paid, so
-     a stranger pasting a session id sees nothing, and so an abandoned checkout
-     does not sit here spinning. */
   const session = await getSession(sessionId);
-  const paid = session?.payment_status === "paid";
+  let state: State;
 
-  if (!session || session.client_reference_id !== user.id) {
-    redirect(localePath(lang, "/account"));
+  if (!session) {
+    /* Stripe unreachable for a moment. A booked purchase still answers. */
+    const row = await db
+      .select({ pack: purchases.pack })
+      .from(purchases)
+      .where(and(eq(purchases.stripeSessionId, sessionId), eq(purchases.userId, user.id)))
+      .limit(1);
+    if (!row[0]) redirect(localePath(lang, "/account"));
+    state = { kind: "booked", tier: isTier(row[0].pack) ? row[0].pack : null };
+  } else {
+    /* A stranger pasting somebody's session id sees nothing of it. */
+    const owner = session.client_reference_id ?? session.metadata?.userId ?? null;
+    if (owner !== user.id) redirect(localePath(lang, "/account"));
+
+    const pack = session.metadata?.pack;
+    const tier = pack && isTier(pack) ? pack : null;
+
+    if (isPaid(session)) {
+      try {
+        const result = await settle(session);
+        if (result.outcome === "ignored") {
+          console.warn("begin/done: ignored", session.id, result.why);
+          await alertOwner(`begin/done: paid session left unbooked (${session.id})`, result.why);
+        }
+        state = result.outcome === "ignored" ? { kind: "confirming" } : { kind: "booked", tier };
+      } catch (error) {
+        /* The webhook retries for days; the page waits on it. */
+        console.error("begin/done: booking failed", session.id, error);
+        await alertOwner("begin/done: booking failed", error);
+        state = { kind: "confirming" };
+      }
+    } else if (session.status === "complete") {
+      state = { kind: "bank" };
+    } else {
+      redirect(`${localePath(lang, "/begin")}?cancelled=1`);
+    }
   }
 
-  if (!paid) redirect(`${localePath(lang, "/begin")}?cancelled=1`);
+  if (state.kind === "booked") {
+    const [left, profile] = await Promise.all([
+      balance(db, user.id),
+      db
+        .select({ completedAt: profiles.completedAt })
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1),
+    ]);
+    const setUp = profile[0]?.completedAt != null;
 
+    return (
+      <>
+        {/* Counted where the buyer lands, once per payment: a refresh or a
+            return visit to this address adds none. */}
+        <TrackView event="purchase" props={{ lang }} onceKey={sessionId} />
+        <div className="grain" aria-hidden="true" />
+        <Header lang={lang} currentPath={ROUTE} />
+
+        <main className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
+          <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
+          <div className="rule-double mt-6" />
+          <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink">
+            {state.tier ? `${t.booked[state.tier]} ` : ""}
+            {left === 1 ? t.haveNowOne : t.haveNow.replace("{n}", String(left))}
+          </p>
+          <div className="mt-8">
+            <LinkButton href={localePath(lang, setUp ? "/today" : "/setup")}>
+              {setUp ? t.toToday : t.toSetup}
+            </LinkButton>
+          </div>
+        </main>
+
+        <Footer lang={lang} />
+      </>
+    );
+  }
+
+  const bank = state.kind === "bank";
   const attempt = Number(query.try ?? "1");
   const again = Number.isFinite(attempt) && attempt < ATTEMPTS;
   const next = `${localePath(lang, ROUTE)}?session_id=${encodeURIComponent(sessionId)}&try=${attempt + 1}`;
@@ -108,18 +175,18 @@ export default async function Page({
   return (
     <>
       {again && (
-        <meta httpEquiv="refresh" content={`${EVERY_SECONDS};url=${next}`} />
+        <meta httpEquiv="refresh" content={`${bank ? BANK_EVERY_SECONDS : EVERY_SECONDS};url=${next}`} />
       )}
       <div className="grain" aria-hidden="true" />
       <Header lang={lang} currentPath={ROUTE} />
 
       <main className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">
-          {again ? t.waiting : t.title}
+          {bank ? t.bank : t.waiting}
         </h1>
         <div className="rule-double mt-6" />
         <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">
-          {again ? t.waitingNote : t.slow}
+          {bank ? t.bankNote : again ? t.waitingNote : t.slow}
         </p>
 
         {!again && (

@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
-   The three limits the setup form and its validator both need.
+   The limits the setup form and its validator both need.
 
    THIS FILE HAS NO IMPORTS, ON PURPOSE. They used to live in
    src/lib/profile-input.ts, which imports the muhurat dataset to check a water
@@ -20,4 +20,11 @@ export const LIMITS = {
   nameChars: 60,
   /** The vow. Two or three sentences, which is what people actually write. */
   sankalpChars: 280,
+  /**
+   * The largest portrait the form sends and src/lib/portrait.ts accepts.
+   * Vercel Functions take a request body of 4.5 MB at most, the other fields
+   * and the multipart framing included, so four leaves the rest room. The
+   * browser shrinks a photograph to well under this before it is sent.
+   */
+  portraitBytes: 4 * 1024 * 1024,
 } as const;

@@ -74,9 +74,12 @@ export type CheckoutRequest = {
 /**
  * A Checkout Session for one pack, and the URL to send the buyer to.
  *
- * `success_url` carries the session id so /begin/done can look the purchase up
- * rather than waiting on the webhook, which may not have arrived yet. The
- * webhook is still what books the credits: the return page only reads.
+ * `success_url` carries the session id so /begin/done can book the purchase
+ * itself rather than wait on the webhook, which may not have arrived yet. Both
+ * go through src/lib/settle.ts, so whichever is first books it once.
+ *
+ * Throws on anything Stripe refuses and on a missing price; the caller,
+ * src/app/[lang]/begin/checkout.ts, turns that into a line on /begin.
  */
 export async function createCheckout(req: CheckoutRequest): Promise<string> {
   const pack = packForTier(req.tier);
@@ -128,7 +131,8 @@ export async function createCheckout(req: CheckoutRequest): Promise<string> {
 export async function getSession(sessionId: string): Promise<Stripe.Checkout.Session | null> {
   try {
     return await stripe().checkout.sessions.retrieve(sessionId);
-  } catch {
+  } catch (error) {
+    console.warn("stripe: session not retrieved", sessionId, error);
     return null;
   }
 }

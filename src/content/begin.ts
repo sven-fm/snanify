@@ -23,6 +23,10 @@ const en = {
   lede: "Pick how many.",
   lede2: "You pay once, and the mornings stay on your account until you use them.",
   cancelled: "The payment was cancelled. Pick a pack when you are ready.",
+  /* Beside the Pay buttons after a press that came back unopened. */
+  payError: "Press Pay once more to open the payment page.",
+  /* For a reader sent from /today or /account with every morning kept. */
+  outLine: "Your mornings are all kept. Choose your next ones.",
   perLabel: "per morning",
   countLabel: "Mornings",
   cta: "Pay {price}",
@@ -41,10 +45,25 @@ const en = {
   toToday: "Sit this morning",
 
   done: {
+    /* The tab title, true before and after the booking. */
+    meta: "Your mornings | Snanify",
     title: "Your mornings are on your account",
+    /* The pack, by its count, once it is booked. */
+    booked: {
+      one: "One morning is on your account.",
+      eleven: "Eleven mornings are on your account.",
+      sixty: "Sixty mornings are on your account.",
+    },
+    haveNow: "You now have {n} mornings to sit.",
+    haveNowOne: "You now have one morning to sit.",
+    toToday: "Sit this morning",
+    toSetup: "Set up your sheet",
     waiting: "Stripe is confirming the payment",
     waitingNote: "This takes a few seconds. The page moves on by itself.",
     slow: "Stripe is still confirming. Your receipt arrives by email, and your mornings land on your account within a few minutes.",
+    /* A bank debit or a voucher: paid, and cleared later by the bank. */
+    bank: "Your bank is confirming the payment",
+    bankNote: "Bank payments take a little longer. Your mornings arrive on your account the moment it clears, with a receipt by email.",
     toAccount: "Open your account",
   },
 };
@@ -61,6 +80,8 @@ const hi = {
   lede: "कितनी चाहिए, यह चुनिए।",
   lede2: "भुगतान एक बार होता है, और सुबहें आपके खाते में तब तक रहती हैं जब तक आप उन्हें लेते हैं।",
   cancelled: "भुगतान रद्द हो गया। जब तैयार हों, एक पैक चुन लीजिए।",
+  payError: "भुगतान पृष्ठ खोलने के लिए भुगतान का बटन एक बार फिर दबाइए।",
+  outLine: "आपकी सभी सुबहें पूरी हुईं। अब अगली सुबहें चुनिए।",
   perLabel: "प्रति सुबह",
   countLabel: "सुबहें",
   cta: "{price} का भुगतान कीजिए",
@@ -78,10 +99,22 @@ const hi = {
   toToday: "आज सुबह बैठिए",
 
   done: {
+    meta: "आपकी सुबहें | Snanify",
     title: "आपकी सुबहें आपके खाते में हैं",
+    booked: {
+      one: "एक सुबह आपके खाते में आ गई है।",
+      eleven: "ग्यारह सुबहें आपके खाते में आ गई हैं।",
+      sixty: "साठ सुबहें आपके खाते में आ गई हैं।",
+    },
+    haveNow: "अब आपके पास बैठने के लिए {n} सुबहें हैं।",
+    haveNowOne: "अब आपके पास बैठने के लिए एक सुबह है।",
+    toToday: "आज सुबह बैठिए",
+    toSetup: "अपना पत्र तय कीजिए",
     waiting: "Stripe भुगतान की पुष्टि कर रहा है",
     waitingNote: "इसमें कुछ ही क्षण लगते हैं। पृष्ठ स्वयं आगे बढ़ जाएगा।",
     slow: "Stripe अभी पुष्टि कर रहा है। आपकी रसीद ईमेल पर आएगी, और कुछ ही मिनट में सुबहें आपके खाते में होंगी।",
+    bank: "आपका बैंक भुगतान की पुष्टि कर रहा है",
+    bankNote: "बैंक से भुगतान में थोड़ा अधिक समय लगता है। भुगतान पूरा होते ही सुबहें आपके खाते में आ जाएँगी, और रसीद ईमेल पर।",
     toAccount: "अपना खाता खोलिए",
   },
 };

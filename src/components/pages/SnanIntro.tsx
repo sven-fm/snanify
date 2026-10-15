@@ -8,7 +8,7 @@ import { Mark } from "@/components/Logo";
 import { PastHero } from "@/components/site/PastHero";
 import { SittingLoop } from "@/components/snan/SittingLoop";
 import { Specimen } from "@/components/Specimen";
-import { buttonClass, Price, Section, TaxNote } from "@/components/ui";
+import { buttonClass, CTA, Price, Section, TaxNote } from "@/components/ui";
 import { snanContent } from "@/content/snan";
 import { PER_SNAN, PRICE } from "@/content/prices";
 import { clock, LIMB_START, SITTING } from "@/lib/sitting-plan";
@@ -275,7 +275,9 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                 key={row.name}
                 className={`border-b border-rule ${row.hero ? "border-l-4 border-l-spot bg-paper" : ""}`}
               >
-                <div className={`py-7 ${row.hero ? "px-4 sm:px-6" : ""}`}>
+                {/* The whole row is the press, and it carries the pack to the
+                    picker through sign-in and setup. */}
+                <Link href={`${begin}?pack=${row.key}`} className={`impress block py-7 ${row.hero ? "px-4 sm:px-6" : ""}`}>
                   <div className="sm:flex sm:items-start sm:justify-between sm:gap-10">
                     <div className="min-w-0">
                       <h3 className="display text-[1.7rem] leading-none sm:text-[2.1rem]">{row.name}</h3>
@@ -297,7 +299,11 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                       <Price prices={PER_SNAN[row.key]} />
                     </dd>
                   </dl>
-                </div>
+
+                  <CTA variant={row.hero ? "solid" : "ghost"} className="mt-6 w-full !py-4 sm:w-auto">
+                    {t.tariff.choose}
+                  </CTA>
+                </Link>
               </li>
             ))}
           </ul>

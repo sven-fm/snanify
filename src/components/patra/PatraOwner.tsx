@@ -3,16 +3,33 @@ import type { Lang } from "@/lib/locales";
 import type { PatraRecord } from "@/content/patra";
 import { ShareButton } from "@/components/patra/ShareButton";
 import { PatraSheetViewer } from "@/components/SankalpPatra";
-import { SubmitButton } from "@/components/ui";
+import { LinkButton, SubmitButton } from "@/components/ui";
+import Link from "next/link";
+import { morningsContent } from "@/content/mornings";
+import { countLine } from "@/lib/mornings";
+import { localePath } from "@/lib/locales";
 import { setPatraPublic } from "@/app/[lang]/p/[id]/actions";
 
 type Copy = (typeof patraPageContent)["en"];
+
+/** What the owner has in hand, for the "next morning" block. */
+export type OwnerNext = {
+  credits: number;
+  /** "05:00", or null when the reminders are off. */
+  reminderHour: string | null;
+  tz: string;
+};
 
 /**
  * The sheet for the person who kept it, straight after the morning. In this
  * order and nothing else: the sheet, the send button, their own words, the
  * controls. What the sheet already prints is not printed again underneath
  * it, and where its figures come from is said on /rivers and /faq, not here.
+ *
+ * Under the sankalp, a short block for what follows: the mornings left, the
+ * hour of the next email, the account. The sitting moves on to this page as
+ * the mark starts, so this is where the count is actually read. With none
+ * left it carries the way to the next pack as the one solid button.
  */
 export function PatraOwner({
   lang,
@@ -28,6 +45,7 @@ export function PatraOwner({
   isPublic,
   printable,
   auto,
+  next,
 }: {
   lang: Lang;
   t: Copy;
@@ -42,7 +60,9 @@ export function PatraOwner({
   isPublic: boolean;
   printable: PatraRecord;
   auto: boolean;
+  next: OwnerNext;
 }) {
+  const m = morningsContent[lang];
   return (
     <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
       {/* Pulled from the press, then the send button settles under it. */}
@@ -70,6 +90,28 @@ export function PatraOwner({
           <p className="mt-4 text-sm text-ink2">{t.privateNote}</p>
         </section>
       )}
+
+      <section className="mt-12 border-t-2 border-rulestrong pt-6" data-owner-next>
+        <h2 className="display text-xl text-ink">{t.next.heading}</h2>
+        <p className="mt-4 text-[1.02rem] text-ink">{countLine(m.left, next.credits)}</p>
+        {/* The cron writes only to somebody with a morning in hand. */}
+        {next.reminderHour && next.credits > 0 && (
+          <p className="mt-2 text-sm leading-relaxed text-ink2">
+            {t.next.reminder.replace("{hour}", next.reminderHour).replace("{tz}", next.tz)}
+          </p>
+        )}
+        {next.credits < 1 && (
+          <LinkButton href={`${localePath(lang, "/begin")}?out=1`} className="mt-5 w-full">
+            {m.more}
+          </LinkButton>
+        )}
+        <Link
+          href={localePath(lang, "/account")}
+          className="impress mt-3 inline-flex min-h-[44px] items-center text-ink underline decoration-rule underline-offset-4 hover:decoration-spot active:text-spot"
+        >
+          {t.next.account}
+        </Link>
+      </section>
 
       <section className="mt-12 border-t border-rule pt-6">
         <h2 className="display text-xl text-ink">{t.ownerHeading}</h2>

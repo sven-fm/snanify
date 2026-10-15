@@ -2,7 +2,7 @@ import type Stripe from "stripe";
 import { beforeEach, describe, expect, it } from "vitest";
 import { fulfilSession } from "@/lib/fulfil";
 import { balance } from "@/lib/credits";
-import { purchases } from "@/db/schema";
+import { creditLedger, purchases } from "@/db/schema";
 import { freshDb, seedUser, type TestDb } from "./helpers/db";
 
 let db: TestDb;
@@ -131,5 +131,53 @@ describe("fulfilSession", () => {
   it("passes the address a receipt should go to", async () => {
     const result = await fulfilSession(db, session());
     expect(result.outcome === "booked" && result.email).toBe("reader@example.com");
+  });
+
+  it("books once when the webhook and the return page arrive together", async () => {
+    /* /begin/done and the webhook hand over the same session at the same
+       moment. One of them books; the other is told it is already done, and
+       only the one that booked sends a receipt. */
+    const results = await Promise.all([
+      fulfilSession(db, session()),
+      fulfilSession(db, session()),
+      fulfilSession(db, session()),
+    ]);
+
+    expect(results.filter((r) => r.outcome === "booked")).toHaveLength(1);
+    expect(results.filter((r) => r.outcome === "already")).toHaveLength(2);
+    expect(await balance(db, userId)).toBe(11);
+    expect(await db.select().from(purchases)).toHaveLength(1);
+  });
+
+  it("fills in a purchase row a half-finished booking left behind", async () => {
+    /* Before the two writes shared a transaction, a crash between them could
+       leave the ledger row alone. The next delivery completes the pair. */
+    await db.insert(creditLedger).values({ userId, delta: 11, reason: "purchase", refId: "cs_test_1" });
+
+    const result = await fulfilSession(db, session());
+
+    expect(result.outcome).toBe("already");
+    expect(await balance(db, userId)).toBe(11);
+    expect(await db.select().from(purchases)).toHaveLength(1);
+  });
+
+  it("books a session a promotion code took to zero", async () => {
+    const result = await fulfilSession(
+      db,
+      session({ payment_status: "no_payment_required", status: "complete", amount_total: 0 }),
+    );
+
+    expect(result.outcome).toBe("booked");
+    expect(await balance(db, userId)).toBe(11);
+  });
+
+  it("leaves a zero-total session alone while it is still open", async () => {
+    const result = await fulfilSession(
+      db,
+      session({ payment_status: "no_payment_required", status: "open", amount_total: 0 }),
+    );
+
+    expect(result.outcome).toBe("ignored");
+    expect(await balance(db, userId)).toBe(0);
   });
 });

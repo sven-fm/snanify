@@ -15,12 +15,13 @@ import { ordinal } from "@/lib/ordinal";
 import { sittingToday } from "@/lib/sitting";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { morningsContent } from "@/content/mornings";
+import { countLine, leftAfterSitting } from "@/lib/mornings";
 import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { LinkButton } from "@/components/ui";
 import { Sitting } from "@/components/snan/Sitting";
-import { TrackView } from "@/components/site/TrackView";
 import { flowContent } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
@@ -64,7 +65,7 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ lang: Lang }>;
-  searchParams: Promise<{ fast?: string; bought?: string }>;
+  searchParams: Promise<{ fast?: string }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
   const t = todayContent[lang];
@@ -93,7 +94,12 @@ export default async function Page({
   const picture = { src: pic.src, alt: pic.alt[lang] };
   const ghat = getGhat(profile.waterSlug);
 
+  /* `/begin?out=1` opens the pack picker on a line for somebody whose
+     mornings are complete, rather than on the first-visit pitch. */
+  const outHref = `${localePath(lang, "/begin")}?out=1`;
+
   if (kept) {
+    const out = credits < 1;
     return (
       <>
         <div className="grain" aria-hidden="true" />
@@ -110,19 +116,30 @@ export default async function Page({
           <h1 className="display mt-8 text-center text-[2rem] leading-[1.2]">{t.already.title}</h1>
           <p className="mt-4 text-center text-[1.05rem] leading-[1.7] text-ink2">{t.already.body}</p>
           <div className="mt-8 flex flex-col gap-3">
-            <LinkButton href={localePath(lang, `/p/${kept.id}?new=1`)}>{t.already.share}</LinkButton>
+            <LinkButton href={localePath(lang, `/p/${kept.id}?new=1`)} variant={out ? "ghost" : "solid"}>
+              {t.already.share}
+            </LinkButton>
             <LinkButton href={localePath(lang, `/p/${kept.id}`)} variant="ghost">
               {t.already.cta}
             </LinkButton>
           </div>
-          <p className="mt-8 text-center text-sm text-ink2">{t.already.tomorrow}</p>
+          {out ? (
+            <div className="mt-8 border-t-2 border-rulestrong pt-5">
+              <p className="text-center text-[1.02rem] leading-[1.6] text-ink">{t.already.out}</p>
+              <LinkButton href={outHref} className="mt-5 w-full">
+                {morningsContent[lang].more}
+              </LinkButton>
+            </div>
+          ) : (
+            <p className="mt-8 text-center text-sm text-ink2">{t.already.tomorrow}</p>
+          )}
         </main>
         <Footer lang={lang} />
       </>
     );
   }
 
-  if (credits < 1) redirect(localePath(lang, "/begin"));
+  if (credits < 1) redirect(outHref);
 
   const snapshot = await getLiveSnapshot();
   const water = snapshot.waters.find((w) => w.slug === profile.waterSlug);
@@ -150,7 +167,6 @@ export default async function Page({
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
       <Header lang={lang} currentPath={ROUTE} />
 
       <main className="pb-16">
@@ -162,7 +178,9 @@ export default async function Page({
           names={names}
           waterSlug={profile.waterSlug}
           picture={picture}
-          left={credits === 1 ? t.leftOne : t.left.replace("{n}", String(credits - 1))}
+          left={countLine(morningsContent[lang].left, leftAfterSitting(credits))}
+          more={leftAfterSitting(credits) < 1 ? { href: outHref, label: morningsContent[lang].more } : null}
+          outHref={outHref}
           leaveHref={localePath(lang, "/account")}
           /* Never outside development: a fast sitting is a testing affordance,
              not a way to hurry the practice. */

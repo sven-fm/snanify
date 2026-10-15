@@ -44,6 +44,14 @@ const en = {
   privateWarning: "People you have already sent the image to keep it. Making it private stops the link.",
   printHeading: "Print version",
   printNote: "A4, with your sankalp on it. This copy is for you.",
+
+  /** The owner's "what comes next", under their sankalp. */
+  next: {
+    heading: "Your next morning",
+    /** {hour} is "05:00", {tz} the IANA zone. */
+    reminder: "Your morning email comes at {hour}, {tz} time.",
+    account: "Your mornings and your register",
+  },
 };
 
 const hi = {
@@ -74,6 +82,12 @@ const hi = {
   privateWarning: "जिन्हें आपने चित्र भेज दिया है, उनके पास वह रहता है। निजी करने से कड़ी बंद होती है।",
   printHeading: "छपाई के लिए",
   printNote: "ए-४, आपके संकल्प के साथ। यह प्रति आपके लिए है।",
+
+  next: {
+    heading: "आपकी अगली सुबह",
+    reminder: "आपका सुबह का ईमेल {hour} बजे आता है, {tz} के समय से।",
+    account: "आपकी सुबहें और आपकी पंजिका",
+  },
 };
 
 export const patraPageContent = { en, hi } satisfies Record<Lang, typeof en>;
