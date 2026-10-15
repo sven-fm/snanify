@@ -281,11 +281,17 @@ Setup is one column, `max-w-md`, under a three-step line whose current step is a
 
 ## Email
 
-`src/lib/email.ts` sets every email in one shell: a 520px table on `#faf6ea` over the
-`#f2ead9` page, Georgia for the type (email clients will not load Eczar reliably), 16px at
-1.7. The call to action is one vermillion block in **sentence case**: "Sit with the Ganga".
-A short mauli thread, drawn as an inline image, sits above the footer. The reminder carries
-today's river state in its first line, because that is the reason to open it.
+`src/lib/email.ts` sets every email in one shell: a 520px column of `#faf6ea` paper on the
+`#f2ead9` page, flat, with no box drawn round it. Georgia sets the type (email clients will
+not load Eczar reliably), 16px at 1.7.
+
+- **One button**, vermillion, bold, in **sentence case**, naming the river where the message
+  knows it: "Sit with the Ganga".
+- **The mauli** sits above the footer, drawn as two borders (3px solid vermillion over 2px
+  dashed haldi), so it needs no image and survives every client that keeps a border.
+- **The reminder leads with the river's state**, as its subject and its first line ("The
+  Ganga is running full this morning"), because that is the reason to open it. One line of
+  invitation follows, then the button. It never mentions a streak, a count or a day missed.
 
 ## The logo
 

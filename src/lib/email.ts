@@ -21,8 +21,8 @@ import { formatMoney } from "@/lib/mornings";
    what to do with `sent`, and for the receipt the answer is nothing, because
    the credits are already booked.
 
-   HTML IS DELIBERATELY PLAIN. One column, the site's colours, a rule, no
-   images and no tracking pixel. Half these readers are on Gmail on Android at
+   HTML IS DELIBERATELY PLAIN. One column, the site's colours, the mauli
+   thread over the footer, no images and no tracking pixel. Half these readers are on Gmail on Android at
    six in the morning, and a layout that survives that is a layout with almost
    nothing in it. Every message also carries a real text/plain part, because
    the text part is what a screen reader and a spam filter read.
@@ -47,13 +47,27 @@ function escapeHtml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-/** One column of paper and ink, and nothing that needs to load. */
+/**
+ * The mauli thread over the footer: a vermillion thread over a dashed haldi
+ * one, as the site draws it, here as two borders rather than an image, so it
+ * needs nothing to load and survives every mail client that keeps a border.
+ */
+const MAULI = `<div style="margin-top:30px;border-top:3px solid #b32620;"></div><div style="margin-top:2px;border-top:2px dashed #e3962b;"></div>`;
+
+/** The one button in a message: vermillion, sentence case, untracked. */
+function button(href: string, label: string): string {
+  return `<a href="${href}" style="background:#b32620;color:#faf6ea;text-decoration:none;padding:13px 22px;display:inline-block;font-size:16px;font-weight:bold;">${label}</a>`;
+}
+
+/** One column of paper and ink, and nothing that needs to load. The sheet is
+    flat paper on the page's own ground, with no box drawn round it. */
 function wrap(bodyHtml: string, footer: string): string {
   return `<!doctype html><html><body style="margin:0;background:#f2ead9;padding:24px 12px;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#faf6ea;border:2px solid #16130f;">
-<tr><td style="padding:28px 24px;font-family:Georgia,'Times New Roman',serif;color:#16130f;font-size:16px;line-height:1.7;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#faf6ea;">
+<tr><td style="padding:30px 26px;font-family:Georgia,'Times New Roman',serif;color:#16130f;font-size:16px;line-height:1.7;">
 ${bodyHtml}
-<div style="border-top:1px solid #c3b697;margin-top:28px;padding-top:14px;font-size:13px;color:#57513f;line-height:1.6;">${footer}</div>
+${MAULI}
+<div style="padding-top:14px;font-size:13px;color:#57513f;line-height:1.6;">${footer}</div>
 </td></tr></table></body></html>`;
 }
 
@@ -142,7 +156,7 @@ export async function sendReceipt(input: ReceiptInput): Promise<Sent> {
     `<p style="margin:0 0 18px;font-size:22px;">${greeting}</p>
      <p style="margin:0 0 14px;">${line}</p>
      <p style="margin:0 0 22px;">${t.next}</p>
-     <p style="margin:0 0 22px;"><a href="${today}" style="background:#b32620;color:#faf6ea;text-decoration:none;padding:12px 20px;display:inline-block;letter-spacing:0.06em;text-transform:uppercase;font-size:13px;">${t.cta}</a></p>
+     <p style="margin:0 0 22px;">${button(today, t.cta)}</p>
      <p style="margin:0 0 6px;">${escapeHtml(signIn)}</p>
      <p style="margin:0;">${t.account} <a href="${account}" style="color:#16130f;">${account.replace(/^https?:\/\//, "")}</a></p>`,
     t.footer,
@@ -170,12 +184,15 @@ export type ReminderInput = {
  */
 export async function sendReminder(input: ReminderInput): Promise<Sent> {
   const t = emailContent[input.lang].reminder;
-  const subject = t.subject.replace("{water}", input.water);
-  const line = t.lines[input.band].replace("{water}", input.water);
+  /* The river's state is the reason to open it, so it is the subject and
+     the first line, and the invitation follows. */
+  const state = t.lines[input.band].replace("{water}", input.water);
+  const subject = state.replace(/[.।]$/, "");
   const off = unsubscribeUrl(input.userId);
 
   const text = [
-    line,
+    state,
+    t.invite,
     "",
     `${t.link} ${siteUrl(input.lang, "/today")}`,
     "",
@@ -184,9 +201,9 @@ export async function sendReminder(input: ReminderInput): Promise<Sent> {
   ].join("\n");
 
   const html = wrap(
-    `<p style="margin:0 0 18px;font-size:22px;">${subject}</p>
-     <p style="margin:0 0 22px;">${line}</p>
-     <p style="margin:0;"><a href="${siteUrl(input.lang, "/today")}" style="background:#b32620;color:#faf6ea;text-decoration:none;padding:12px 20px;display:inline-block;letter-spacing:0.06em;text-transform:uppercase;font-size:13px;">${t.cta}</a></p>`,
+    `<p style="margin:0 0 14px;font-size:24px;line-height:1.3;">${state}</p>
+     <p style="margin:0 0 24px;">${t.invite}</p>
+     <p style="margin:0;">${button(siteUrl(input.lang, "/today"), t.cta.replace("{water}", input.water))}</p>`,
     `<a href="${off}" style="color:#57513f;">${t.stop}</a>. ${t.footer}`,
   );
 

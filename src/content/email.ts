@@ -14,8 +14,10 @@ import type { TierKey } from "@/content/prices";
    says which address the account signs in with, and points to /account. It
    says nothing about tomorrow: a buyer often sits within the minute.
 
-   The reminder says what the river is doing this morning, which is the reason
-   to open it. It never mentions a streak, a count, or a day missed.
+   The reminder leads with what the river is doing this morning, in the
+   subject and the first line, because that is the reason to open it; one
+   line of invitation follows. It never mentions a streak, a count, or a day
+   missed.
    --------------------------------------------------------------------------- */
 
 const en = {
@@ -40,16 +42,17 @@ const en = {
     footer: "Snanify, a digital snan. snanify.com",
   },
   reminder: {
-    subject: "The {water} this morning",
-    /* One sentence per flow band, so the mail never prints a raw band word. */
+    /* One sentence per flow band, so the mail never prints a raw band word.
+       It is the subject too, without its full stop. */
     lines: {
-      slack: "The {water} is running thin this morning. Sit whenever you are ready.",
-      low: "The {water} is running low this morning. Sit whenever you are ready.",
-      usual: "The {water} is running at its usual level this morning. Sit whenever you are ready.",
-      full: "The {water} is running full this morning. Sit whenever you are ready.",
-      spate: "The {water} is in spate this morning. Sit whenever you are ready.",
+      slack: "The {water} is running thin this morning.",
+      low: "The {water} is running low this morning.",
+      usual: "The {water} is running at its usual level this morning.",
+      full: "The {water} is running full this morning.",
+      spate: "The {water} is in spate this morning.",
     } satisfies Record<FlowBand, string>,
-    cta: "Sit this morning",
+    invite: "Your three minutes are ready whenever you are.",
+    cta: "Sit with the {water}",
     link: "Open this morning here:",
     stop: "Stop these reminders",
     footer: "Change the hour on your account page. Snanify, snanify.com",
@@ -77,15 +80,15 @@ const hi = {
     footer: "Snanify, एक डिजिटल स्नान। snanify.com",
   },
   reminder: {
-    subject: "आज सुबह {water}",
     lines: {
-      slack: "{water} आज सुबह बहुत कम बह रही है। जब तैयार हों, बैठिए।",
-      low: "{water} आज सुबह कम बह रही है। जब तैयार हों, बैठिए।",
-      usual: "{water} आज सुबह अपने सामान्य स्तर पर बह रही है। जब तैयार हों, बैठिए।",
-      full: "{water} आज सुबह भरपूर बह रही है। जब तैयार हों, बैठिए।",
-      spate: "{water} आज सुबह उफान पर है। जब तैयार हों, बैठिए।",
+      slack: "{water} आज सुबह बहुत कम बह रही है।",
+      low: "{water} आज सुबह कम बह रही है।",
+      usual: "{water} आज सुबह अपने सामान्य स्तर पर बह रही है।",
+      full: "{water} आज सुबह भरपूर बह रही है।",
+      spate: "{water} आज सुबह उफान पर है।",
     } satisfies Record<FlowBand, string>,
-    cta: "आज सुबह बैठिए",
+    invite: "जब आप तैयार हों, आपके तीन मिनट तैयार हैं।",
+    cta: "{water} के साथ बैठिए",
     link: "आज की सुबह यहाँ खोलिए:",
     stop: "ये सूचनाएँ रोकिए",
     footer: "घड़ी अपने खाते के पृष्ठ पर बदलिए। Snanify, snanify.com",
