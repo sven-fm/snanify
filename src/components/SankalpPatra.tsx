@@ -3,6 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Colophon, Mark, Wordmark } from "@/components/Logo";
+import { Kumkum, Mauli } from "@/components/marks";
 import {
   patraContent,
   SPECIMEN_TEXT,
@@ -69,7 +70,7 @@ const PRINT_CSS = `
   [data-patra-sheet]{
     --paper:#faf6ea; --paper-2:#f2ead9; --paper-3:#e5d9be;
     --ink:#16130f; --ink-2:#57513f;
-    --spot:#b32620; --rule:#c3b697; --rule-strong:#16130f;
+    --spot:#b32620; --haldi:#e3962b; --haldi-2:#f6dcae; --rule:#c3b697; --rule-strong:#16130f;
     background-color:#faf6ea !important; color:#16130f !important;
     box-shadow:none !important;
     break-inside: avoid; page-break-inside: avoid;
@@ -249,7 +250,10 @@ export function PatraSheet({
               </span>
             </div>
 
-            <div className="rule-masthead" style={{ marginTop: u(14) }} />
+            {/* The mauli under the masthead: the sheet's one divider. */}
+            <div style={{ marginTop: u(12), fontSize: u(14) }}>
+              <Mauli />
+            </div>
 
             {/* title */}
             <div className="text-center" style={{ marginTop: u(18) }}>
@@ -263,11 +267,10 @@ export function PatraSheet({
                 className="label text-spot"
                 style={{
                   marginTop: u(9),
-                  fontSize: u(10.5),
-                  letterSpacing: "0.34em",
-                  /* Latin in both editions, so it keeps its inscriptional caps
-                     even where the Hindi rule drops them. */
-                  textTransform: "uppercase",
+                  fontSize: u(12),
+                  /* Latin in both editions, set as written: sentence case,
+                     no tracking, as every label on the site now is. */
+                  letterSpacing: "0.01em",
                 }}
               >
                 {t.titleLatin}
@@ -308,9 +311,15 @@ export function PatraSheet({
             </div>
           )}
 
-          {/* names, gotra, giver, sankalp */}
+          {/* names, gotra, giver, sankalp. The names stand on the warm haldi
+              block the site keeps for anything personal, except on a sheet
+              that remembers somebody: haldi is an auspicious colour, and a
+              remembrance takes none. */}
           <div>
-            <div className="text-center">
+            <div
+              className={`text-center ${data.names.some((n) => n.remembrance) ? "" : "warm"}`}
+              style={{ paddingTop: u(16), paddingBottom: u(18), paddingLeft: u(16), paddingRight: u(16) }}
+            >
               {/* A mixed list keeps the neutral heading; the remembrance label
                   then sits on the individual name it belongs to. Nothing else
                   about the row changes, no imagery, no colour. */}
@@ -378,8 +387,10 @@ export function PatraSheet({
 
             {data.sankalpText && (
               <div className="text-center" style={{ marginTop: u(18) }}>
-                <div className="rule-thin" style={{ marginLeft: u(300), marginRight: u(300) }} />
-                <p className="label text-spot" style={{ marginTop: u(16), fontSize: u(9.5) }}>
+                <div style={{ fontSize: u(16) }}>
+                  <Kumkum className="!py-0" />
+                </div>
+                <p className="label text-spot" style={{ marginTop: u(12), fontSize: u(9.5) }}>
                   {t.sankalpLabel}
                 </p>
                 <p

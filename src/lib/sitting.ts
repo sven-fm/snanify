@@ -1,5 +1,5 @@
 import "server-only";
-import { and, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { db, profiles, sittings, type Sitting } from "@/db";
 import { balance, book, InsufficientCredits } from "@/lib/credits";
 import { newId } from "@/lib/ids";
@@ -201,4 +201,18 @@ export async function sittingToday(
     .limit(1);
 
   return rows[0] ?? null;
+}
+
+/**
+ * How many mornings this person has kept with this water, before today's. The
+ * sitting says "your fourth morning with the Ganga" at the mark, which is the
+ * moment the snan feels finished: warmth about the habit, never a claim about
+ * what it does.
+ */
+export async function keptWith(userId: string, waterSlug: string): Promise<number> {
+  const rows = await db
+    .select({ n: count() })
+    .from(sittings)
+    .where(and(eq(sittings.userId, userId), eq(sittings.waterSlug, waterSlug)));
+  return Number(rows[0]?.n ?? 0);
 }

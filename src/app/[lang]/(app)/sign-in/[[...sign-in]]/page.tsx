@@ -6,6 +6,7 @@ import { accountContent } from "@/content/account";
 import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
 import { TrackView } from "@/components/site/TrackView";
+import { Steps } from "@/components/site/Steps";
 
 /* The sign-in screen sits inside the site rather than on a page of its own,
    because it is the first thing somebody sees after deciding to pay and a bare
@@ -55,14 +56,8 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
           {/* Where this sits, for a visitor who came straight from an ad: the
               same three-step line /setup and /begin carry, none of it done yet. */}
           <p className="text-[0.98rem] leading-[1.7] text-ink">{t.next}</p>
-          <ol className="mt-4 mb-6 grid grid-cols-3 gap-2" aria-label={t.stepsLabel}>
-            {t.steps.map((step, i) => (
-              <li key={step} className="border-t-2 border-rule pt-2">
-                <span className="label text-ink2">{String(i + 1).padStart(2, "0")}</span>
-                <span className="mt-1 block text-sm text-ink2">{step}</span>
-              </li>
-            ))}
-          </ol>
+          {/* All three still ahead: signing in comes before the first. */}
+          <Steps steps={t.steps} here={[]} label={t.stepsLabel} className="mt-4 mb-6" />
 
           <div className="flex justify-center">
             <SignIn

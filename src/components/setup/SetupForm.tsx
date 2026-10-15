@@ -89,7 +89,7 @@ function readZone(): string {
 
 function FieldError({ children }: { children?: string }) {
   if (!children) return null;
-  return <p className="mt-2 border-l-2 border-spot pl-3 text-sm text-spot">{children}</p>;
+  return <p className="mt-2 text-sm font-bold text-spot">{children}</p>;
 }
 
 function Label({ label, hint }: { label: string; hint: string }) {
@@ -216,16 +216,17 @@ export function SetupForm({
       {dropped && <input type="hidden" name="removePortrait" value="1" />}
 
       {/* ---------------- the water ---------------- */}
-      <fieldset className="border-t-2 border-rulestrong pt-6">
+      <fieldset>
         <legend className="sr-only">{t.water.label}</legend>
         <Label label={t.water.label} hint={t.water.hint} />
 
-        <div className="mt-5 grid gap-px bg-rule sm:grid-cols-2">
+        {/* The chosen water stands on the warm ground: it is personal. */}
+        <div className="mt-5 grid gap-2 sm:grid-cols-2">
           {waters.map((w) => (
             <label
               key={w.slug}
-              className={`flex min-h-[64px] cursor-pointer items-baseline justify-between gap-3 bg-paper p-4 transition-colors ${
-                water === w.slug ? "bg-tint text-ink" : "text-ink2"
+              className={`impress flex min-h-[64px] cursor-pointer items-baseline justify-between gap-3 p-4 transition-colors ${
+                water === w.slug ? "bg-haldi2 text-ink" : "bg-paper2 text-ink2"
               }`}
             >
               <span>
@@ -251,12 +252,12 @@ export function SetupForm({
       </fieldset>
 
       {/* ---------------- the photograph ---------------- */}
-      <fieldset className="mt-12 border-t-2 border-rulestrong pt-6">
+      <fieldset className="mt-14">
         <legend className="sr-only">{t.portrait.label}</legend>
         <Label label={t.portrait.label} hint={t.portrait.hint} />
 
         <div className="mt-5 flex items-start gap-5">
-          <div className="h-[120px] w-24 shrink-0 border border-rule bg-tint">
+          <div className="h-[120px] w-24 shrink-0 bg-paper2">
             {preview && !dropped && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -304,7 +305,7 @@ export function SetupForm({
       </fieldset>
 
       {/* ---------------- the names ---------------- */}
-      <fieldset className="mt-12 border-t-2 border-rulestrong pt-6">
+      <fieldset className="mt-14">
         <legend className="sr-only">{t.names.label}</legend>
         <Label label={t.names.label} hint={t.names.hint} />
 
@@ -340,12 +341,12 @@ export function SetupForm({
       </fieldset>
 
       {/* ---------------- the prayer ---------------- */}
-      <fieldset className="mt-12 border-t-2 border-rulestrong pt-6">
+      <fieldset className="mt-14">
         <legend className="sr-only">{t.prayer.label}</legend>
         <Label label={t.prayer.label} hint={t.prayer.hint} />
 
         <div className="mt-5 flex flex-col">
-          <label className="flex min-h-[48px] cursor-pointer items-center gap-3 border-b border-rule py-3">
+          <label className="-mx-3 flex min-h-[48px] cursor-pointer items-center gap-3 px-3 py-3 has-[:checked]:bg-haldi2">
             <input
               type="radio"
               name="prayerId"
@@ -359,7 +360,7 @@ export function SetupForm({
           {offered.map((p) => (
             <label
               key={p.id}
-              className="flex min-h-[48px] cursor-pointer items-start gap-3 border-b border-rule py-3"
+              className="-mx-3 flex min-h-[48px] cursor-pointer items-start gap-3 px-3 py-3 has-[:checked]:bg-haldi2"
             >
               <input
                 type="radio"
@@ -379,7 +380,7 @@ export function SetupForm({
       </fieldset>
 
       {/* ---------------- the sankalp ---------------- */}
-      <fieldset className="mt-12 border-t-2 border-rulestrong pt-6">
+      <fieldset className="mt-14">
         <legend className="sr-only">{t.sankalp.label}</legend>
         <Label label={t.sankalp.label} hint={t.sankalp.hint} />
 
@@ -405,7 +406,7 @@ export function SetupForm({
                   <button
                     type="button"
                     onClick={() => setSankalp(example)}
-                    className="impress min-h-[44px] w-full border border-rule px-4 py-2 text-left text-[0.98rem] leading-[1.6] text-ink hover:border-rulestrong active:bg-paper2"
+                    className="impress min-h-[44px] w-full bg-paper2 px-4 py-2 text-left text-[0.98rem] leading-[1.6] text-ink hover:bg-paper3 active:bg-haldi2"
                   >
                     {example}
                   </button>
@@ -418,18 +419,19 @@ export function SetupForm({
       </fieldset>
 
       {/* ---------------- the hour ---------------- */}
-      <fieldset className="mt-12 border-t-2 border-rulestrong pt-6">
+      <fieldset className="mt-14">
         <legend className="sr-only">{t.reminder.label}</legend>
         <Label label={t.reminder.label} hint={t.reminder.hint} />
 
-        {/* Twenty-four ruled cells rather than a select: the hour is chosen
-            with a thumb, and the chosen cell is tinted like the chosen water. */}
-        <div className="mt-5 grid grid-cols-4 gap-px bg-rule sm:grid-cols-6">
+        {/* Twenty-four cells rather than a select: the hour is chosen with a
+            thumb, and the chosen cell stands on the warm ground like the
+            chosen water. */}
+        <div className="mt-5 grid grid-cols-4 gap-1.5 sm:grid-cols-6">
           {Array.from({ length: 24 }, (_, h) => (
             <label
               key={h}
               className={`flex min-h-[48px] cursor-pointer items-center justify-center tabular-nums transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-[-2px] has-[:focus-visible]:outline-spot ${
-                hour === h ? "bg-tint text-ink" : "bg-paper text-ink2"
+                hour === h ? "bg-haldi2 font-bold text-ink" : "bg-paper2 text-ink2"
               }`}
             >
               <input

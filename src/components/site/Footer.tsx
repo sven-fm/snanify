@@ -2,6 +2,7 @@ import Link from "next/link";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/locales";
 import { navItem, navLabel, type NavKey } from "@/lib/nav";
+import { Mauli } from "@/components/marks";
 import { Mark, Wordmark } from "@/components/Logo";
 
 /**
@@ -27,7 +28,13 @@ export function Footer({ lang }: { lang: Lang }) {
   const t = content[lang];
 
   return (
-    <footer className="border-t-2 border-rulestrong tint">
+    <footer className="tint">
+      {/* The mauli thread: the one divider, between the page and its imprint. */}
+      <div className="bg-paper">
+        <div className="mx-auto max-w-6xl px-5 pb-6 sm:px-8">
+          <Mauli />
+        </div>
+      </div>
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
@@ -35,15 +42,13 @@ export function Footer({ lang }: { lang: Lang }) {
               <Mark className="h-9 w-9 shrink-0 translate-y-[0.14em] text-ink" />
               <Wordmark className="text-[20px] text-ink" />
             </div>
-            <div className="rule-thin mt-5" />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink2">{t.footer.tagline}</p>
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink2">{t.footer.tagline}</p>
           </div>
 
           {COLUMNS.map((col) => {
             return (
               <div key={col.at}>
-                <h2 className="label text-spot">{t.footer.cols[col.at].h}</h2>
-                <div className="rule-thin mt-3" />
+                <h2 className="label text-ink">{t.footer.cols[col.at].h}</h2>
                 <ul className="mt-4 space-y-2.5">
                   {col.keys.map((key) => {
                     const item = navItem(lang, key);
@@ -64,8 +69,7 @@ export function Footer({ lang }: { lang: Lang }) {
           })}
 
           <div>
-            <h2 className="label text-spot">{t.footer.cols[LEGAL].h}</h2>
-            <div className="rule-thin mt-3" />
+            <h2 className="label text-ink">{t.footer.cols[LEGAL].h}</h2>
             {/* Privacy and terms are real pages now. Refunds is answered
                 inside the terms rather than on a page of its own, so it points
                 at that section instead of at a route that does not exist. */}
@@ -84,9 +88,7 @@ export function Footer({ lang }: { lang: Lang }) {
           </div>
         </div>
 
-        <div className="rule-double mt-12" />
-
-        <div className="flex flex-col gap-2 pt-5 text-xs text-ink2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-2 text-xs text-ink2 sm:flex-row sm:items-center sm:justify-between">
           <p>{t.footer.made}</p>
           <p>{t.footer.rights}</p>
         </div>

@@ -64,6 +64,12 @@ const en = {
     writing: "Your morning is being written into your register.",
     done: "Your morning is kept.",
     open: "Open your Sankalp Patra",
+    /** The count of mornings kept with this water, said at the mark. `{nth}`
+        is a word up to tenth, then a figure. */
+    kept: {
+      first: "Your first morning with the {water}.",
+      many: "Your {nth} morning with the {water}.",
+    },
   },
 
   already: {
@@ -135,6 +141,10 @@ const hi = {
     writing: "आपकी सुबह आपकी पंजिका में लिखी जा रही है।",
     done: "आपकी सुबह रख ली गई।",
     open: "अपना संकल्प पत्र खोलिए",
+    kept: {
+      first: "{water} के साथ आपकी पहली सुबह।",
+      many: "{water} के साथ आपकी {nth} सुबह।",
+    },
   },
 
   already: {

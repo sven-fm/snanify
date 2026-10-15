@@ -14,6 +14,8 @@ import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, Price, TaxNote } from "@/components/ui";
+import { Tilak } from "@/components/marks";
+import { Steps } from "@/components/site/Steps";
 import { startCheckout } from "@/app/[lang]/begin/actions";
 import { TrackView } from "@/components/site/TrackView";
 import { TrackedSubmit } from "@/components/site/TrackedSubmit";
@@ -24,8 +26,8 @@ import { TrackedSubmit } from "@/components/site/TrackedSubmit";
    Every "Begin" on the site lands here. It is read by somebody who has already
    decided, so there is no second pitch, no free-tier comparison and no essay
    about the price. Eleven first and large, because it is the pack most people
-   take and the one the whole site prices from; one and sixty as two ruled
-   rows beneath it.
+   take and the one the whole site prices from, on the warm haldi ground; one
+   and sixty as two quieter blocks beneath it.
 
    THE BUTTONS ARE FORMS, NOT LINKS. Creating a Checkout Session is a write: it
    must be a POST, it must be able to sign the person in first, and it must
@@ -132,20 +134,16 @@ export async function Begin({
       <Header lang={lang} currentPath="/begin" />
 
       <main className="mx-auto max-w-5xl px-5 py-10 pb-16 sm:px-8 sm:py-16">
-        <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-        <div className="rule-double mt-6 max-w-xl" />
+        {/* The tilak marks the one headline on the pay step. */}
+        <div className="flex items-start gap-3">
+          <Tilak className="mt-[0.15em] text-[1.6rem] sm:text-[1.9rem]" />
+          <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
+        </div>
         <WaterBand seed="begin" className="mt-5 h-[68px] w-full" />
 
         {/* The third of the three steps that began on /setup, for a first visit. */}
         {!returning && (
-          <ol className="mt-8 grid max-w-xl grid-cols-3 gap-2" aria-label={t.title}>
-            {t.steps.map((step, i) => (
-              <li key={step} className={`border-t-2 pt-2 ${i === 2 ? "border-spot" : "border-rule"}`}>
-                <span className={`label ${i === 2 ? "text-spot" : "text-ink2"}`}>{String(i + 1).padStart(2, "0")}</span>
-                <span className={`mt-1 block text-sm ${i === 2 ? "text-ink" : "text-ink2"}`}>{step}</span>
-              </li>
-            ))}
-          </ol>
+          <Steps steps={t.steps} here={[2]} label={t.title} className="mt-8 max-w-xl" />
         )}
 
         <div className="mt-6 grid gap-8 sm:grid-cols-[1fr_220px] sm:items-start sm:gap-12">
@@ -158,19 +156,19 @@ export async function Begin({
         </div>
 
         {cancelled && (
-          <p className="mt-6 border-l-2 border-spot pl-4 text-[0.98rem] text-ink2">
+          <p className="warm mt-6 px-4 py-3 text-[0.98rem] text-ink">
             {t.cancelled}
           </p>
         )}
 
         {error && (
-          <p role="status" className="mt-6 border-l-2 border-spot pl-4 text-[0.98rem] text-ink">
+          <p role="status" className="warm mt-6 px-4 py-3 text-[0.98rem] text-ink">
             {t.payError}
           </p>
         )}
 
         {credits > 0 && (
-          <div className="mt-8 flex flex-col gap-4 border-2 border-rulestrong p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="warm mt-8 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[1.02rem] text-ink">
               {credits === 1 ? t.haveOne : t.haveCredits.replace("{credits}", String(credits))}
             </p>
@@ -181,7 +179,7 @@ export async function Begin({
         )}
 
         {/* ---------------- eleven, the one to take ---------------- */}
-        <section className="misregister mt-10 border-2 border-rulestrong bg-paper p-5 sm:p-7 lg:grid lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
+        <section className="misregister warm mt-10 p-5 sm:p-7 lg:grid lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
           <div>
             <p className="label text-spot">{t.usual}</p>
             <h2 className="display mt-2 text-[2rem] leading-none sm:text-[2.4rem]">{name("eleven")}</h2>
@@ -196,12 +194,12 @@ export async function Begin({
           <PayButton lang={lang} tier="eleven" t={t} solid className="mt-6 lg:mt-0 lg:w-64" />
         </section>
 
-        {/* ---------------- one and sixty, as ruled rows ---------------- */}
-        <ul className="mt-8 border-t-2 border-rulestrong">
+        {/* ---------------- one and sixty, as two quieter blocks ---------------- */}
+        <ul className="mt-8 space-y-3">
           {(["one", "sixty"] as const).map((tier) => (
             <li
               key={tier}
-              className="grid gap-4 border-b border-rule py-5 sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-8"
+              className="tint grid gap-4 p-5 sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-8"
             >
               <div>
                 <h2 className="display text-[1.4rem] leading-tight">{name(tier)}</h2>

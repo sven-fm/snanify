@@ -67,7 +67,7 @@ export function PatraOwner({
     <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
       {/* Pulled from the press, then the send button settles under it. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull w-full border-2 border-rulestrong" />
+      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull w-full bg-paper2 p-2 sm:p-3" />
 
       <div className="pull mt-6" style={{ animationDelay: "320ms" }}>
         <ShareButton
@@ -84,14 +84,14 @@ export function PatraOwner({
       </div>
 
       {sankalp && (
-        <section className="mt-12 border-t-2 border-rulestrong pt-6">
+        <section className="warm mt-12 p-5 sm:p-6">
           <h2 className="display text-xl text-ink">{t.yours}</h2>
           <p className="display mt-4 text-[1.5rem] leading-[1.45]">{sankalp}</p>
           <p className="mt-4 text-sm text-ink2">{t.privateNote}</p>
         </section>
       )}
 
-      <section className="mt-12 border-t-2 border-rulestrong pt-6" data-owner-next>
+      <section className="mt-14" data-owner-next>
         <h2 className="display text-xl text-ink">{t.next.heading}</h2>
         <p className="mt-4 text-[1.02rem] text-ink">{countLine(m.left, next.credits)}</p>
         {/* The cron writes only to somebody with a morning in hand. */}
@@ -113,7 +113,7 @@ export function PatraOwner({
         </Link>
       </section>
 
-      <section className="mt-12 border-t border-rule pt-6">
+      <section className="mt-14">
         <h2 className="display text-xl text-ink">{t.ownerHeading}</h2>
 
         {!isPublic && <p className="mt-4 text-[0.98rem] text-ink">{t.privateNow}</p>}
@@ -128,7 +128,7 @@ export function PatraOwner({
             Its own viewer handles the phone case, where a fixed-ratio
             document rendered into 366 pixels would set body type at about
             six. */}
-        <h3 className="display mt-10 border-t border-rule pt-5 text-xl text-ink">{t.printHeading}</h3>
+        <h3 className="display mt-12 text-xl text-ink">{t.printHeading}</h3>
         <p className="mt-3 text-sm leading-relaxed text-ink2">{t.printNote}</p>
         <div className="mt-5">
           <PatraSheetViewer lang={lang} data={printable} />

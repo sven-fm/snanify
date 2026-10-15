@@ -150,7 +150,6 @@ export default async function Page({
 
         <main className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
           <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-          <div className="rule-double mt-6" />
           <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink">
             {state.tier ? `${t.booked[state.tier]} ` : ""}
             {left === 1 ? t.haveNowOne : t.haveNow.replace("{n}", String(left))}
@@ -184,7 +183,6 @@ export default async function Page({
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">
           {bank ? t.bank : t.waiting}
         </h1>
-        <div className="rule-double mt-6" />
         <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">
           {bank ? t.bankNote : again ? t.waitingNote : t.slow}
         </p>

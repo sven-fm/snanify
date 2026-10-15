@@ -40,7 +40,7 @@ const en = {
     remove: "Remove it",
   },
   names: {
-    label: "Names on the sheet",
+    label: "Your family's names",
     hint: "Up to five. Your own name first, then your family.",
     placeholder: "Name",
     add: "Add a name",
@@ -64,7 +64,7 @@ const en = {
     ],
   },
   reminder: {
-    label: "Reminder hour",
+    label: "Your morning hour",
     hint: "In your local time. You can change it or stop it on your account page.",
     zone: "Reminders follow the time in {zone}.",
   },
@@ -114,7 +114,7 @@ const hi = {
     remove: "हटाइए",
   },
   names: {
-    label: "पत्र पर नाम",
+    label: "परिवार के नाम",
     hint: "अधिकतम पाँच। पहले अपना नाम, फिर अपने परिवार के।",
     placeholder: "नाम",
     add: "एक नाम जोड़िए",
@@ -137,7 +137,7 @@ const hi = {
     ],
   },
   reminder: {
-    label: "सूचना की घड़ी",
+    label: "आपकी सुबह की घड़ी",
     hint: "आपके स्थानीय समय में। खाते के पृष्ठ पर इसे बदल या रोक सकते हैं।",
     zone: "सूचना {zone} के समय से आती है।",
   },

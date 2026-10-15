@@ -11,8 +11,9 @@ import { MobileCta, ProfileMenu, ProfileRows } from "@/components/site/HeaderCta
 export type NavLink = { href: string; label: string };
 
 /**
- * A printed masthead rather than an app bar: wordmark and edition line over a
- * heavy rule, with the sections set as a ruled row beneath.
+ * A masthead rather than an app bar: wordmark and edition line, with the
+ * sections set in a row beneath on wide screens. No rules: once the page
+ * scrolls, a fold appears under it and it reads as a sheet laid over the page.
  *
  * `currentPath` is the locale-independent route, so the language switch lands
  * on the same page instead of dumping you at home.
@@ -143,15 +144,11 @@ export function Header({
         </div>
       </div>
 
-      {/* heavy-over-hairline, as an almanac sets its masthead */}
-      <div className="rule-masthead" />
-
-      {/* Section row. A locale that serves none of these sections gets no rule
-          and no empty <nav> at all, rather than an eight-pixel grey line under
-          the masthead. */}
+      {/* Section row, wide screens. Set in space, with no rules: the fold under
+          the masthead (globals.css, Paper) is its only edge. */}
       {navLinks.length > 0 && (
-        <nav className="hidden border-b border-rulestrong bg-paper lg:block">
-          <ul className="mx-auto flex max-w-6xl divide-x divide-rule px-5 sm:px-8">
+        <nav className="hidden bg-paper lg:block">
+          <ul className="mx-auto flex max-w-6xl px-5 sm:px-8">
             {navLinks.map((l) => (
               <li key={l.href} className="first:pl-0">
                 <a

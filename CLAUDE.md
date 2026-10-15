@@ -185,8 +185,9 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
 - **Officiants, priests, rites performed for anyone, subscriptions, gifting, tiers of
   service.** The product is the three minutes and the sheet. Anything else is an item in
   `plan.md` argued from revenue, never a quiet addition.
-- Gradients, glows, blurs, rounded corners, soft shadows. The one rounded shape is the phone
-  around the specimen, drawn as SVG. See `DESIGNSYSTEM.md`.
+- Gradients, glows, blurs, soft shadows, rounded boxes. Round marks (the bindu, the sun, the
+  kumkum dots) are SVG; the one rounded frame is the phone around the specimen. Tracked
+  capitals and labels above headings are retired. See `DESIGNSYSTEM.md`.
 - Fabricated statistics presented as fact.
 
 ### Known traps, each of which cost real debugging
@@ -214,7 +215,7 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
 | Path | What it holds |
 | --- | --- |
 | `ARCHITECTURE.md` | Stack, routing, data flow, deployment |
-| `DESIGNSYSTEM.md` | Tokens, type, the four motions, the rules |
+| `DESIGNSYSTEM.md` | Colour, type, the marks, the five motions, voice, the campaign layer |
 | `plan.md` | The work queue: what waits for the owner's eyes, what waits for a go, what is done |
 | `docs/seo/search-console.md` | The Search Console runbook and the hreflang contract |
 | `docs/panchang-check.md` | The occasion dates checked against Drik Panchang |

@@ -15,7 +15,7 @@ import type { Lang } from "@/lib/locales";
    --------------------------------------------------------------------------- */
 
 const en = {
-  share: "Send to family",
+  share: "Send it to the family group",
   shareCopied: "Link copied",
 
   yours: "Your sankalp",
@@ -55,7 +55,7 @@ const en = {
 };
 
 const hi = {
-  share: "परिवार को भेजिए",
+  share: "परिवार के समूह में भेजिए",
   shareCopied: "कड़ी प्रतिलिपि हो गई",
 
   yours: "आपका संकल्प",

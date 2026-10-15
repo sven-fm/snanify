@@ -12,7 +12,7 @@ import { balance } from "@/lib/credits";
 import { requireUser } from "@/lib/auth";
 import { getLiveSnapshot } from "@/lib/riverdata";
 import { ordinal } from "@/lib/ordinal";
-import { sittingToday } from "@/lib/sitting";
+import { keptWith, sittingToday } from "@/lib/sitting";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { morningsContent } from "@/content/mornings";
@@ -88,7 +88,10 @@ export default async function Page({
      at. The first production sitting spent its owner's last credit, the page
      was re-requested during the mark, and the balance gate sent them to the
      pack picker instead of to the sheet they had just made. */
-  const kept = await sittingToday(user.id, profile.waterSlug, user.tz);
+  const [kept, keptBefore] = await Promise.all([
+    sittingToday(user.id, profile.waterSlug, user.tz),
+    keptWith(user.id, profile.waterSlug),
+  ]);
 
   const pic = PICTURES[profile.waterSlug as WaterSlug];
   const picture = { src: pic.src, alt: pic.alt[lang] };
@@ -105,7 +108,7 @@ export default async function Page({
         <div className="grain" aria-hidden="true" />
         <Header lang={lang} currentPath={ROUTE} />
         <main className="mx-auto max-w-md px-5 py-8 sm:py-14">
-          <div className="boxed plate relative aspect-[3/2] overflow-hidden">
+          <div className="plate relative aspect-[3/2] overflow-hidden">
             <div
               role="img"
               aria-label={picture.alt}
@@ -124,7 +127,7 @@ export default async function Page({
             </LinkButton>
           </div>
           {out ? (
-            <div className="mt-8 border-t-2 border-rulestrong pt-5">
+            <div className="warm mt-8 p-5">
               <p className="text-center text-[1.02rem] leading-[1.6] text-ink">{t.already.out}</p>
               <LinkButton href={outHref} className="mt-5 w-full">
                 {morningsContent[lang].more}
@@ -179,6 +182,7 @@ export default async function Page({
           waterSlug={profile.waterSlug}
           picture={picture}
           left={countLine(morningsContent[lang].left, leftAfterSitting(credits))}
+          kept={keptBefore + 1}
           more={leftAfterSitting(credits) < 1 ? { href: outHref, label: morningsContent[lang].more } : null}
           outHref={outHref}
           leaveHref={localePath(lang, "/account")}

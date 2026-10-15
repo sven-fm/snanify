@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * An engraved river at sunset, in perspective.
+ * An engraved river at sunrise, in perspective, with marigold on the water.
  *
  * The geometry is a real pinhole projection rather than a stack of sine waves:
  * a point at depth `d` lands at `y = horizon + C/d`, and the channel's
@@ -51,6 +51,24 @@ const STEPS = 44;
 
 /** Depth units per second. Water moves; it does not race. */
 const FLOW = 0.34;
+
+/**
+ * Marigold petals riding the current, one vermillion among them. Each has a
+ * lateral place in the channel (`sx`, -1 to 1 bank to bank), a phase offset so
+ * they are spread along it, a spin and a tone. Fixed, not random, so the
+ * server and client agree. Kept to the landing's river: see DESIGNSYSTEM.md.
+ */
+const PETALS = [
+  { sx: -0.38, at: 0.08, spin: 0.7, tone: "haldi" },
+  { sx: 0.22, at: 0.23, spin: -0.5, tone: "haldi" },
+  { sx: -0.08, at: 0.41, spin: 0.9, tone: "spot" },
+  { sx: 0.46, at: 0.55, spin: -0.8, tone: "haldi" },
+  { sx: -0.52, at: 0.68, spin: 0.6, tone: "haldi" },
+  { sx: 0.12, at: 0.83, spin: -0.4, tone: "haldi" },
+  { sx: 0.34, at: 0.95, spin: 0.5, tone: "haldi" },
+] as const;
+/** Petals ride a little slower than the ripples, as floating things do. */
+const PETAL_DRIFT = 0.8;
 
 export type RiverVariant = "panorama" | "portrait";
 
@@ -207,6 +225,7 @@ export function RiverFlow({
   variant = "panorama",
   anchorSelector,
   sunAnchorSelector,
+  petals = false,
 }: {
   className?: string;
   variant?: RiverVariant;
@@ -223,6 +242,8 @@ export function RiverFlow({
    * that happen to overlap.
    */
   sunAnchorSelector?: string;
+  /** Petals on the water. The landing's river only. */
+  petals?: boolean;
 }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const rippleRef = useRef<SVGGElement | null>(null);
@@ -233,6 +254,7 @@ export function RiverFlow({
   const skyRectRef = useRef<SVGRectElement | null>(null);
   const horizonRef = useRef<SVGLineElement | null>(null);
   const glitterShapeRef = useRef<SVGPolygonElement | null>(null);
+  const petalRef = useRef<SVGGElement | null>(null);
 
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const skyClip = `sky-${uid}`;
@@ -248,6 +270,7 @@ export function RiverFlow({
     const skyRect = skyRectRef.current;
     const horizonLine = horizonRef.current;
     const glitterShape = glitterShapeRef.current;
+    const petalGroup = petalRef.current;
     if (!svg || !ripples || !glitter || !streams || !banks) return;
 
     const tune = TUNING[variant];
@@ -393,6 +416,34 @@ export function RiverFlow({
         }
       }
 
+      /* Petals ride the same projection as the ripples: stepped in 1/d, so
+         they cross the screen at an even pace, growing as they come near, and
+         placed across the channel by `sx` so they follow its bends. */
+      if (petalGroup) {
+        const unit = g.h / 700;
+        PETALS.forEach((p, i) => {
+          const el = petalGroup.children[i] as SVGPathElement | undefined;
+          if (!el) return;
+          const phase = (p.at + time * FLOW * 0.045 * PETAL_DRIFT) % 1;
+          const inv = 1 / D_FAR + phase * (1 / D_NEAR - 1 / D_FAR);
+          const d = 1 / inv;
+          const nearness = D_NEAR / d;
+          const x = centre(g, d, time) + p.sx * halfWidth(g, d);
+          const y = project(g, d) + 6 * unit * nearness * Math.sin(d * 0.9 - time * 0.85 + p.sx * 3);
+          /* Sized off the band's area rather than its height, so a short
+             phone band still floats a petal a thumb can see: about 14px
+             across at the near edge on a phone, capped on a wide screen. */
+          const size = Math.max(0.6, Math.min(13, (7 * Math.sqrt(g.w * g.h)) / 340) * nearness ** 0.9);
+          const turn = (p.spin * time * 18 + i * 47) % 360;
+          const fade = Math.min(1, phase * 5) ** 1.4 * Math.min(1, (1 - phase) * 12);
+          el.setAttribute(
+            "transform",
+            `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${turn.toFixed(1)}) scale(${size.toFixed(2)} ${(size * 0.62).toFixed(2)})`,
+          );
+          el.setAttribute("opacity", fade.toFixed(3));
+        });
+      }
+
       for (let i = 0; i < STREAMS; i++) {
         /* Interior lines only, so they never sit on top of the banks. */
         const sx = -0.66 + (1.32 * i) / (STREAMS - 1);
@@ -476,7 +527,7 @@ export function RiverFlow({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", redraw);
     };
-  }, [variant, anchorSelector, sunAnchorSelector]);
+  }, [variant, anchorSelector, sunAnchorSelector, petals]);
 
   return (
     <svg
@@ -537,12 +588,26 @@ export function RiverFlow({
         ))}
       </g>
 
-      {/* the same ripples again, in the spot colour, cut to the glitter path */}
-      <g ref={glitterRef} stroke="var(--spot)" strokeWidth="1.8" clipPath={`url(#${glitterClip})`}>
+      {/* the same ripples again, in haldi, cut to the glitter path: the sun's
+          light on the water. The sun itself stays vermillion, the bindu. */}
+      <g ref={glitterRef} stroke="var(--haldi)" strokeWidth="1.8" clipPath={`url(#${glitterClip})`}>
         {Array.from({ length: RIPPLES }, (_, i) => (
           <path key={i} />
         ))}
       </g>
+
+      {petals && (
+        <g ref={petalRef} stroke="none">
+          {PETALS.map((p, i) => (
+            <path
+              key={i}
+              d="M-1 0 C-0.6 -0.7 0.6 -0.7 1 0 C0.6 0.7 -0.6 0.7 -1 0Z"
+              fill={p.tone === "haldi" ? "var(--haldi)" : "var(--spot)"}
+              opacity="0"
+            />
+          ))}
+        </g>
+      )}
     </svg>
   );
 }

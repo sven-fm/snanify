@@ -14,6 +14,7 @@ import { pageMetadata } from "@/lib/seo";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { SetupForm } from "@/components/setup/SetupForm";
+import { Steps } from "@/components/site/Steps";
 import { TrackView } from "@/components/site/TrackView";
 
 /* Filled in once, behind a sign-in, so it renders per request with whatever
@@ -91,18 +92,10 @@ export default async function Page({
 
       <main className="mx-auto max-w-2xl px-5 py-10 pb-16 sm:px-8 sm:py-16">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-        <div className="rule-double mt-6" />
         <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
 
-        {/* Three steps, as a ruled line: the water, the sheet, the hour. */}
-        <ol className="mt-8 grid grid-cols-3 gap-2" aria-label={t.title}>
-          {t.steps.map((step, i) => (
-            <li key={step} className={`border-t-2 pt-2 ${i < 2 ? "border-spot" : "border-rule"}`}>
-              <span className={`label ${i < 2 ? "text-spot" : "text-ink2"}`}>{String(i + 1).padStart(2, "0")}</span>
-              <span className={`mt-1 block text-sm ${i < 2 ? "text-ink" : "text-ink2"}`}>{step}</span>
-            </li>
-          ))}
-        </ol>
+        {/* The three steps: this page is the water and the sheet. */}
+        <Steps steps={t.steps} here={[0, 1]} label={t.title} className="mt-8" />
 
         <SetupForm
           lang={lang}

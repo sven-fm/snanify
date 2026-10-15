@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LIMB_ORDER, SITTING } from "@/lib/sitting-plan";
 import { WaterBand } from "@/components/WaterBand";
+import { Diya } from "@/components/marks";
+import { nthMorning } from "@/lib/mornings";
 import {
   INITIAL,
   STILLNESS_NOTE_SECONDS,
@@ -104,6 +106,7 @@ export function Sitting({
   waterSlug,
   picture,
   left,
+  kept,
   more,
   outHref,
   leaveHref,
@@ -121,6 +124,8 @@ export function Sitting({
   picture: { src: string; alt: string };
   /** "Ten mornings left", shown on the done screen and nowhere earlier. */
   left: string;
+  /** Mornings kept with this water, counting this one. Said at the mark. */
+  kept: number;
   /** The way to the next pack, when this morning is the last on the account. */
   more: { href: string; label: string } | null;
   /** The pack picker's "your mornings are complete" line, for a refused spend. */
@@ -385,7 +390,7 @@ export function Sitting({
                   prove it. */}
               <p className="display mt-7 text-[1.6rem] leading-tight text-spot">{reading.state}</p>
 
-              <dl className="mt-5 border-t-2 border-rulestrong">
+              <dl className="mt-5 space-y-1">
                 <Row k={t.reading.flowLabel} v={reading.flow} />
                 {reading.rank && <Row k={t.reading.rankLabel} v={reading.rank} />}
                 <Row k={t.reading.normalLabel} v={reading.normal} />
@@ -435,6 +440,7 @@ export function Sitting({
               </p>
               {failed && <p className="mt-4 text-ink2">{t.failed.body}</p>}
               {!failed && <MarkLine reduced={reduced} into={into} />}
+              {!failed && <KeptLine t={t} lang={lang} kept={kept} water={reading.water} rise={!reduced} />}
             </div>
           )}
 
@@ -461,7 +467,8 @@ export function Sitting({
                   {t.mark.open}
                 </Link>
               )}
-              {!failed && <p className="mt-8 text-sm text-ink2">{left}</p>}
+              {!failed && <KeptLine t={t} lang={lang} kept={kept} water={reading.water} rise={false} />}
+              {!failed && <p className="mt-3 text-sm text-ink2">{left}</p>}
               {!failed && more && (
                 <Link
                   href={more.href}
@@ -553,7 +560,7 @@ function labelFor(t: Copy, phase: Phase): string {
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-rule py-3">
+    <div className="flex items-baseline justify-between gap-4 py-2">
       <dt className="label text-ink2">{k}</dt>
       <dd className="text-right text-ink">{v}</dd>
     </div>
@@ -617,7 +624,7 @@ function BreathScreen({
       {/* The water, in the spot colour: the one thing on the screen that is
           not ink on paper, because it is the thing itself. Its top edge is
           the waterline, with a faint wash of the same red beneath. */}
-      <div className="relative mt-6 h-[44vh] overflow-hidden border-b border-rule" aria-hidden="true">
+      <div className="relative mt-6 h-[44vh] overflow-hidden" aria-hidden="true">
         <div className="absolute inset-x-0 bottom-0" style={{ height: `${pct}%` }} data-waterline>
           <div className="absolute inset-0" style={{ backgroundColor: "color-mix(in srgb, var(--spot) 9%, transparent)" }} />
           <div className="absolute inset-x-0 top-0 h-[2px] bg-spot" />
@@ -692,9 +699,7 @@ function VowScreen({
           if (e.key === " " || e.key === "Enter") onHold(false);
         }}
         onContextMenu={(e) => e.preventDefault()}
-        className={`hold-box impress relative mt-4 block w-full cursor-pointer touch-none select-none overflow-hidden border-2 bg-paper2 px-6 py-12 text-center ${
-          pressing ? "border-ink" : "border-rulestrong"
-        }`}
+        className="hold-box warm impress relative mt-4 block w-full cursor-pointer touch-none select-none overflow-hidden px-6 py-12 text-center"
         data-holding={pressing ? "1" : undefined}
         aria-label={t.vow.hold}
       >
@@ -705,7 +710,9 @@ function VowScreen({
           data-ink
         />
         <span className="relative display block text-[1.6rem] leading-[1.4]">{sankalp}</span>
-        <span className="label relative mt-8 block text-ink2">
+        {/* The diya, lit while the words are held. */}
+        <Diya className="relative mx-auto mt-7 block text-[1.6rem] text-ink" />
+        <span className="label relative mt-3 block text-ink2">
           {filled >= 1 ? t.vow.done : pressing ? t.vow.holding : t.vow.hold}
         </span>
       </div>
@@ -713,13 +720,81 @@ function VowScreen({
   );
 }
 
-/** One line, writing itself. Under reduced motion it is simply there. */
+/**
+ * One line, writing itself, and three petals settling onto it: the moment
+ * the snan feels finished. Under reduced motion the line and the petals are
+ * simply there.
+ */
 function MarkLine({ reduced, into }: { reduced: boolean; into: number }) {
   const width = reduced ? 100 : Math.min((into / SITTING.mark) * 100, 100);
 
   return (
-    <div className="mx-auto mt-10 h-px w-full max-w-sm bg-rule" aria-hidden="true">
-      <div className="h-px bg-spot" style={{ width: `${width.toFixed(2)}%` }} />
+    <div className="relative mx-auto mt-10 w-full max-w-sm" aria-hidden="true">
+      <div className="h-px bg-rule">
+        <div className="h-px bg-spot" style={{ width: `${width.toFixed(2)}%` }} />
+      </div>
+      {SETTLE.map((p, i) => (
+        <svg
+          key={i}
+          viewBox="0 0 10 6"
+          className={reduced ? "absolute" : "petal-settle absolute"}
+          style={{
+            left: `${p.x}%`,
+            top: "-7px",
+            width: "14px",
+            height: "8.4px",
+            transform: `rotate(${p.turn}deg)`,
+            animationDelay: `${p.delay}s`,
+          }}
+        >
+          <path d="M0 3 C2 0 8 0 10 3 C8 6 2 6 0 3Z" fill={p.tone} />
+        </svg>
+      ))}
     </div>
+  );
+}
+
+/* Where the three petals land on the mark: marigold, vermillion, marigold. */
+const SETTLE = [
+  { x: 30, turn: -18, delay: 1.2, tone: "var(--haldi)" },
+  { x: 48, turn: 12, delay: 1.9, tone: "var(--spot)" },
+  { x: 64, turn: -6, delay: 2.6, tone: "var(--haldi)" },
+];
+
+/**
+ * "Your fourth morning with the Ganga." At the mark the count ticks up from
+ * the morning before; on the done screen it simply stands.
+ */
+function KeptLine({
+  t,
+  lang,
+  kept,
+  water,
+  rise,
+}: {
+  t: Copy;
+  lang: Lang;
+  kept: number;
+  water: string;
+  rise: boolean;
+}) {
+  const [shown, setShown] = useState(rise && kept > 1 ? kept - 1 : kept);
+  useEffect(() => {
+    if (shown === kept) return;
+    const id = setTimeout(() => setShown(kept), 2600);
+    return () => clearTimeout(id);
+  }, [shown, kept]);
+
+  if (kept < 1) return null;
+  const line = (shown === 1 ? t.mark.kept.first : t.mark.kept.many)
+    .replace("{water}", water)
+    .replace("{nth}", nthMorning(shown, lang));
+
+  return (
+    <p className="mt-8 text-[1.05rem] text-ink">
+      <span key={shown} className={shown === kept && rise ? "tick inline-block" : "inline-block"}>
+        {line}
+      </span>
+    </p>
   );
 }

@@ -25,7 +25,7 @@ export function PatraGuest({
   return (
     <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
       {/* The offer first, one line and a button, then the sheet they were sent. */}
-      <div className="mb-6 flex flex-col gap-4 border-2 border-rulestrong p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+      <div className="warm mb-6 flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="text-[0.98rem] leading-[1.6] text-ink">{t.visitTop}</p>
         <Link
           href={localePath(lang, "/begin")}
@@ -35,13 +35,13 @@ export function PatraGuest({
         </Link>
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull w-full border-2 border-rulestrong" />
+      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull w-full bg-paper2 p-2 sm:p-3" />
 
       <p className="pull mt-6 text-center text-[1.02rem] leading-[1.7] text-ink2" style={{ animationDelay: "320ms" }}>
         {line}
       </p>
 
-      <section className="mt-12 border-t-2 border-rulestrong pt-8 text-center">
+      <section className="mt-16 text-center">
         <h2 className="display text-[1.7rem] leading-[1.25]">{t.visitTitle}</h2>
         <p className="mt-4 text-ink2">{t.visitBody}</p>
         <div className="mt-6">

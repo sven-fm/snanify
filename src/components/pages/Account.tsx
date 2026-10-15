@@ -15,6 +15,7 @@ import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CTA, LinkButton, SubmitButton } from "@/components/ui";
+import { Bindu } from "@/components/marks";
 import { deleteAccount, setReminder } from "@/app/[lang]/(app)/account/actions";
 
 /* ---------------------------------------------------------------------------
@@ -25,7 +26,8 @@ import { deleteAccount, setReminder } from "@/app/[lang]/(app)/account/actions";
    have left, what have I kept, what goes on my sheet, and when does the river
    reach me.
 
-   The register is the point. One ruled line per morning, newest first, each
+   The register is the point. One ruled line per morning, newest first (the
+   one place on the page a rule stays, because the dates line up), each
    one a link to its own Sankalp Patra. It is the thing that makes eleven
    mornings feel like a practice rather than eleven purchases, so it is set as
    a ledger and not as cards.
@@ -100,11 +102,10 @@ export async function Account({
 
       <main className="mx-auto max-w-3xl px-5 py-10 pb-24 sm:px-8 sm:py-16 sm:pb-16">
         <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-        <div className="rule-double mt-6" />
         <WaterBand seed="account" className="mt-5 h-[68px] w-full" />
 
         {/* ---------------- what is in hand ---------------- */}
-        <section className="mt-9 border-2 border-rulestrong p-5 sm:p-6">
+        <section className="warm mt-9 p-5 sm:p-6">
           <p className="display text-[1.4rem] leading-[1.3] text-ink">
             {credits === 0
               ? t.creditsZero
@@ -114,7 +115,8 @@ export async function Account({
           </p>
 
           {keptToday && (
-            <p className="mt-4 border-l-2 border-spot pl-3 text-[0.98rem] text-ink" data-kept-today>
+            <p className="mt-4 flex items-center gap-2.5 text-[0.98rem] text-ink" data-kept-today>
+              <Bindu className="shrink-0 text-[1rem]" />
               {t.keptToday}
             </p>
           )}
@@ -141,7 +143,7 @@ export async function Account({
 
         {/* ---------------- the register ---------------- */}
         <section className="mt-14">
-          <h2 className="display border-b-2 border-rulestrong pb-3 text-xl text-ink">
+          <h2 className="display pb-2 text-xl text-ink">
             {t.registerHeading}
           </h2>
 
@@ -175,7 +177,7 @@ export async function Account({
         {/* ---------------- what was bought ---------------- */}
         {bought.length > 0 && (
           <section className="mt-14">
-            <h2 className="display border-b-2 border-rulestrong pb-3 text-xl text-ink">
+            <h2 className="display pb-2 text-xl text-ink">
               {t.purchasesHeading}
             </h2>
             <ol className="mt-1">
@@ -208,7 +210,7 @@ export async function Account({
         {/* ---------------- the sheet, and the hour ---------------- */}
         <section className="mt-14 grid gap-10 sm:grid-cols-2">
           <div>
-            <h2 className="display border-b border-rule pb-3 text-xl text-ink">{t.profileHeading}</h2>
+            <h2 className="display text-xl text-ink">{t.profileHeading}</h2>
             <p className="mt-4 text-[0.98rem] leading-[1.7] text-ink2">
               {setUp && profile[0]
                 ? (profile[0].names as { name: string }[]).map((n) => n.name).join(", ")
@@ -223,9 +225,9 @@ export async function Account({
           </div>
 
           <div>
-            <h2 className="display border-b border-rule pb-3 text-xl text-ink">{t.reminderHeading}</h2>
+            <h2 className="display text-xl text-ink">{t.reminderHeading}</h2>
             {remindersOff && (
-              <p className="mt-4 border-l-2 border-spot pl-3 text-sm text-ink">{t.remindersOff}</p>
+              <p className="warm mt-4 px-3 py-2 text-sm text-ink">{t.remindersOff}</p>
             )}
 
             <form action={setReminder.bind(null, lang)} className="mt-4">
@@ -267,7 +269,7 @@ export async function Account({
         </section>
 
         {/* ---------------- deleting everything, under a fold ---------------- */}
-        <details className="group mt-16 border-t-2 border-rulestrong pt-6" open={misstyped}>
+        <details className="group mt-20" open={misstyped}>
           <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-ink [&::-webkit-details-marker]:hidden">
             <span className="display text-xl">{t.accountHeading}</span>
             <span aria-hidden="true" className="display text-xl text-ink2 group-open:hidden">+</span>
@@ -276,7 +278,7 @@ export async function Account({
           <section className="settle-panel mt-6">
           <h2 className="display text-lg text-ink">{t.deleteHeading}</h2>
           {credits > 0 && (
-            <p className="mt-4 max-w-lg border-l-2 border-spot pl-3 text-[0.98rem] leading-[1.7] text-ink">
+            <p className="tint mt-4 max-w-lg px-4 py-3 text-[0.98rem] leading-[1.7] text-ink">
               {credits === 1 ? t.deleteCreditsOne : t.deleteCredits.replace("{n}", String(credits))}
             </p>
           )}
@@ -291,7 +293,7 @@ export async function Account({
               className="field min-h-[48px] w-full text-[1.02rem] text-ink"
             />
             {misstyped && (
-              <p className="mt-2 border-l-2 border-spot pl-3 text-sm text-spot">
+              <p className="mt-2 text-sm font-bold text-spot">
                 {t.deleteMisstyped}
               </p>
             )}
@@ -302,7 +304,7 @@ export async function Account({
           </section>
         </details>
 
-        <div className="mt-12 border-t border-rule pt-6">
+        <div className="mt-12">
           <SignOutButton redirectUrl={localePath(lang, "/")}>
             <button
               type="button"

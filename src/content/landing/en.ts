@@ -53,10 +53,10 @@ export const en = {
        inside the Instagram browser), with the button. */
     titleA: "A daily snan,",
     titleB: "wherever you live.",
-    lede: "Three minutes each morning with the Ganga, the Yamuna or another sacred river, as it runs today. You breathe with it and make your sankalp. Then you send home a sheet with your family's names on it.",
-    ctaPrimary: "Begin your snan",
-    ctaSecondary: "See how it works",
-    offer: "Eleven mornings for {price}. Take them whenever you like.",
+    lede: "Three minutes with the Ganga, the Yamuna or another sacred river, as it runs this morning. Breathe with it. Make your sankalp. Then send the family a sheet with their names on it.",
+    ctaPrimary: "Begin your first snan",
+    ctaSecondary: "Watch the three minutes",
+    offer: "Eleven mornings for {price}. Start tomorrow.",
     card: {
       /* The live line above the headline and the card's first row take their
          words from src/content/flow.ts: the river's state leads, the figure
@@ -72,15 +72,15 @@ export const en = {
     record: "Six waters, one figure a day, each ranked against every day since 1997.",
   },
   rivers: {
-    title: "Six sacred waters",
-    lede: "Pick the one you grew up near. Each has a page of its own, with today's flow and the ghat's calendar.",
+    title: "Pick your river",
+    lede: "The one you grew up near, or the one your family bathed in. Each has its own page, with today's flow and the ghat's calendar.",
   },
   pricing: {
     title: "Eleven mornings for eleven.",
-    lede: "One price, in your own currency. Take the mornings whenever you like.",
+    lede: "Pay once, in your own currency. Sit them on any mornings you like.",
     labels: {
-      each: "Per morning",
-      choose: "Choose",
+      each: "a morning",
+      choose: "Choose this pack",
     },
     /* The count is the name. The packs once carried coined names with
        Devanagari beside them, three words to learn on the one table where a
@@ -89,17 +89,17 @@ export const en = {
       {
         key: "one",
         name: "One morning",
-        body: "One morning and the sheet it leaves behind.",
+        body: "Try one morning, and send the sheet it leaves.",
       },
       {
         key: "eleven",
         name: "Eleven mornings",
-        body: "One for each morning, paid once. Any eleven days you like. They keep.",
+        body: "Eleven mornings, paid once. Sit them on any eleven days. They keep.",
       },
       {
         key: "sixty",
         name: "Sixty mornings",
-        body: "Five a month for a year, at the lowest price a morning gets.",
+        body: "Five mornings a month for a year, at the lowest price a morning gets.",
       },
     ],
     /* Read by <TaxNote>: one line for US dollars, one for every other currency. */
@@ -107,15 +107,15 @@ export const en = {
       exclusive: "Prices show before US sales tax.",
       inclusive: "Tax included.",
     },
-    cta: "How it works",
+    cta: "Watch the three minutes",
   },
   /* The sheet a stranger sees before paying: drawn from today's figure, for
      a family that does not exist, and labelled as a specimen on its face. */
   /* The band that shows the sheet, straight under the hero: it is the thing
      people pay for, so it comes before the figures and the six waters. */
   sheet: {
-    title: "A sheet to send home, every morning.",
-    lede: "Each morning ends with a Sankalp Patra: your family's names, the river as it ran, the tithi and the hour. It opens ready to send to the family group.",
+    title: "Send this morning home.",
+    lede: "Every snan ends with a Sankalp Patra: your family's names, the river as it ran, the tithi and the hour. It opens ready for the family group.",
   },
   specimen: {
     label: "Specimen",
@@ -124,13 +124,13 @@ export const en = {
   },
   notFound: {
     code: "404",
-    title: "No ghat at this address.",
-    lede: "The river moved, or the link did. The six waters are still where they were.",
+    title: "This ghat has moved.",
+    lede: "The river moved, or the link did. The six waters are where they always were.",
     cta: "Back to the river",
   },
   closing: {
-    title: "Begin tomorrow morning.",
-    lede: "Set it up tonight and sit with the river before sunrise. The sheet is ready to send the moment you finish.",
+    title: "Sit with the river tomorrow.",
+    lede: "Set it up tonight in two minutes. Sit for three in the morning, and the sheet is ready to send before your chai.",
     cta: "Begin your snan",
   },
   bar: {

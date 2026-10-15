@@ -1,4 +1,5 @@
 import type { TierKey } from "@/content/prices";
+import { ordinal } from "@/lib/ordinal";
 
 /* ---------------------------------------------------------------------------
    The shape of a count, and the few sums made on it.
@@ -55,4 +56,15 @@ export function formatDay(at: Date, tz: string, locale: string): string {
   } catch {
     return new Intl.DateTimeFormat(locale, { ...options, timeZone: "Asia/Kolkata" }).format(at);
   }
+}
+
+const EN_NTH = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
+/* Feminine, because सुबह is: पहली सुबह, दूसरी सुबह. */
+const HI_NTH = ["पहली", "दूसरी", "तीसरी", "चौथी", "पाँचवीं", "छठी", "सातवीं", "आठवीं", "नौवीं", "दसवीं"];
+
+/** "fourth", "twelfth" as "12th": the word up to ten, then the figure. */
+export function nthMorning(n: number, lang: string): string {
+  const words = lang === "hi" ? HI_NTH : EN_NTH;
+  if (n >= 1 && n <= words.length) return words[n - 1];
+  return lang === "hi" ? `${n}वीं` : ordinal(n, "en");
 }

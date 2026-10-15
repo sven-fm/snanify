@@ -4,6 +4,7 @@ import { RIVERS } from "@/content/rivers";
 import { localePath, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { Mark } from "@/components/Logo";
+import { Bindu, Diya, Mauli, Tilak } from "@/components/marks";
 import { RiverFlow } from "@/components/RiverFlow";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -26,12 +27,12 @@ import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
  * round. The rules that produced this layout, so they survive the next edit:
  *
  *  · Nothing may scroll horizontally. There is not a single `min-w-` table on
- *    this page; the tariff and the six waters are ruled rows that stack on a
- *    phone and become columns from `sm` upward.
+ *    this page; the packs and the six waters stack on a phone and become
+ *    columns from `sm` upward.
  *  · The hero is bottom-aligned inside `86svh` so the headline sits high and the
  *    two buttons land under the thumb rather than under the masthead. `svh`, not
  *    `vh`, because mobile browser chrome makes `vh` overshoot.
- *  · A ruled bar is fixed to the bottom edge on small screens carrying the hero
+ *  · A bar is fixed to the bottom edge on small screens carrying the hero
  *    SKU and its price. It is the thumb-reachable primary action for the whole
  *    page; the spacer at the very bottom keeps it off the imprint.
  *  · Every tappable thing clears 44px. Buttons carry `!py-4` on the phone.
@@ -44,8 +45,9 @@ import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
  * markers on a list that is not a sequence, half the headline in red, a row of
  * three big figures with small captions, and a labelled box explaining "what
  * you are buying, exactly". Each of those is a default, and together they made
- * the page read as a template. The small caps voice now appears only where it
- * does a job: as the column head of a ruled data row, and on a button.
+ * the page read as a template. Tracked capitals are gone altogether, and so are
+ * the rules between sections: space, ground colour and the marks (tilak,
+ * mauli, bindu) carry the structure now. See DESIGNSYSTEM.md.
  *
  * The river SVG is confined to a band beneath the headline on a phone: full
  * bleed at that size would put the sun through the type and paints far more
@@ -104,11 +106,12 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             the horizon lands under the headline, but on a tall desktop display
             an uncapped 86svh is a thousand pixels of empty paper above the
             first word, which read as a broken page. */}
-        <section className="relative flex min-h-[92svh] flex-col overflow-hidden border-b-2 border-rulestrong sm:min-h-[min(86svh,56rem)] sm:justify-end">
+        <section className="relative flex min-h-[92svh] flex-col overflow-hidden sm:min-h-[min(86svh,56rem)] sm:justify-end">
           {/* Wide: a full-bleed panorama behind the type, its channel kept
               narrow and far right so the left column stays clean paper. */}
           <RiverFlow
             variant="panorama"
+            petals
             anchorSelector="[data-horizon-anchor]"
             sunAnchorSelector="[data-sun-anchor]"
             className="absolute inset-0 hidden h-full w-full text-ink sm:block"
@@ -116,11 +119,11 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
           <div className="relative mx-auto w-full max-w-6xl px-5 pt-6 pb-16 sm:px-8 sm:pt-28 sm:pb-16">
             <div className="flex flex-col">
-              {/* The one live fact, as a sentence in body type. The filled
-                  square is the site's mark for a figure that is live, and it
-                  is the only ornament this line gets. */}
+              {/* The one live fact, as a sentence in body type. The bindu
+                  marks a figure that is live, and it is the only ornament this
+                  line gets. */}
               <p className="ink-in order-1 flex max-w-xl items-baseline gap-2.5 text-sm leading-snug text-ink2 sm:text-[0.95rem]">
-                <span className="mt-[0.05em] h-2 w-2 shrink-0 self-center bg-spot" aria-hidden="true" />
+                <Bindu className="shrink-0 self-center text-[1rem]" />
                 <span>{live.line}</span>
               </p>
 
@@ -133,9 +136,15 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   and holds together at any measure and in any script. */}
               <h1
                 data-horizon-anchor
-                className="ink-in display order-2 mt-4 text-[2.5rem] leading-[1.04] sm:mt-7 sm:text-[4.6rem] lg:text-[7rem]"
+                className="ink-in display relative order-2 mt-4 text-[2.5rem] leading-[1.04] sm:mt-7 sm:text-[4.6rem] lg:text-[7rem]"
                 style={{ animationDelay: "80ms" }}
               >
+                {/* The tilak, hung in the gutter beside the first line. Sized in
+                    rem rather than off the headline, because the gutter is a
+                    fixed width and the headline triples in size. */}
+                <span className="absolute top-[0.1em] -left-[15px] text-[1.35rem] leading-none sm:-left-[22px] sm:text-[1.6rem] lg:text-[2.2rem]">
+                  <Tilak />
+                </span>
                 <span
                   data-sun-anchor
                   aria-hidden="true"
@@ -174,6 +183,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
               <div className="relative order-5 -mx-5 mt-9 h-[30svh] max-h-[320px] min-h-[210px] sm:hidden">
                 <RiverFlow
                   variant="portrait"
+                  petals
                   className="absolute inset-0 h-full w-full text-ink"
                 />
               </div>
@@ -191,7 +201,10 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 style={{ animationDelay: "240ms" }}
               >
                 <Link href={localePath(lang, "/begin")} className="block" data-hero-cta>
-                  <CTA className="w-full !py-4 sm:w-auto">{t.hero.ctaPrimary}</CTA>
+                  <CTA className="w-full !py-4 sm:w-auto">
+                    {t.hero.ctaPrimary}
+                    <Diya className="text-[1.1rem]" />
+                  </CTA>
                 </Link>
                 <Link
                   href={localePath(lang, "/snan")}
@@ -253,16 +266,18 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             headline: the day's entry, printed on paper laid over the water.
             The river's own name is the heading; a label above it saying
             "the river, now" was saying what the rows already say.         */}
-        <section className="tint border-b-2 border-rulestrong">
-          <div className="mx-auto grid max-w-6xl gap-5 px-5 py-10 sm:px-8 sm:py-12 lg:grid-cols-[minmax(0,42rem)_1fr] lg:gap-12">
-            <div className="boxed bg-paper p-5 sm:p-7">
+        <section className="tint">
+          <div className="mx-auto grid max-w-6xl gap-5 px-5 py-14 sm:px-8 sm:py-16 lg:grid-cols-[minmax(0,42rem)_1fr] lg:gap-12">
+            <div>
               <h2 className="display text-[1.7rem] leading-tight sm:text-3xl">{live.title}</h2>
 
-              <dl className="mt-4 border-t border-rule">
+              {/* Set in space rather than ruled: four short pairs read across
+                  without a line under each. */}
+              <dl className="mt-5 space-y-3">
                 {live.rows.map((r) => (
                   <div
                     key={r.k}
-                    className="grid grid-cols-[7rem_1fr] items-baseline gap-4 border-b border-rule py-3 last:border-b-0 sm:grid-cols-[9rem_1fr]"
+                    className="grid grid-cols-[7rem_1fr] items-baseline gap-4 sm:grid-cols-[9rem_1fr]"
                   >
                     <dt className="label text-ink2">{r.k}</dt>
                     <dd className="text-sm leading-snug text-ink sm:text-right">{r.v}</dd>
@@ -294,16 +309,16 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.rivers.lede}</p>
               </div>
 
-              {/* A register, not a card grid, and unnumbered: six waters are a
-                  choice, not a sequence. */}
-              <ul className="mt-10 border-t-2 border-rulestrong">
+              {/* A list, not a card grid, and unnumbered: six waters are a
+                  choice, not a sequence. Space between them, no rules. */}
+              <ul className="mt-8">
             {RIVERS.map((r) => (
               <li key={r.slug}>
                 <Link
                   href={localePath(lang, `/rivers/${r.slug}`)}
-                  className="group impress grid gap-y-1 border-b border-rule py-5 hover:bg-paper3 active:bg-paper3 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline sm:gap-x-8"
+                  className="group impress -mx-3 grid gap-y-1 px-3 py-4 hover:bg-paper3 active:bg-paper3 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline sm:gap-x-8"
                 >
-                  <span className="display text-2xl text-ink">{waterName(r, "river", lang)}</span>
+                  <span className="display text-2xl text-ink group-active:text-spot">{waterName(r, "river", lang)}</span>
                   <span className="text-sm text-ink2">
                     {waterName(r, "ghat", lang)}, {waterName(r, "city", lang)}
                   </span>
@@ -324,7 +339,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
             Every per-morning figure is arithmetic on the price above it and is
             documented in src/content/prices.ts. The middle line is the one to
-            take, so it stands on the paper3 ground. Keep it in the middle: on
+            take, so it stands on the warm haldi ground. Keep it in the middle: on
             a phone these are three stacked rows and the middle row is where
             the eye lands.                                                  */}
         <Section id="prices">
@@ -333,13 +348,16 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.pricing.lede}</p>
           </div>
 
-          {/* the three lines: stacked ruled rows on a phone, three columns
-              from lg, hairlines drawn by the gap over an inked ground */}
+          {/* The mauli: the one divider, laid over the packs. */}
+          <Mauli className="mt-10 text-[1rem]" />
+
+          {/* The three packs: stacked on a phone, three columns from lg. Flat
+              blocks with no border; eleven on the warm haldi ground. */}
           {/* Eleven first on a phone and raised with the second impression;
               from lg the three sit side by side with eleven in the middle,
               where the eye lands. The count is the name, so each line needs
               only its price, its per-morning figure and one sentence. */}
-          <div className="mt-14 grid gap-5 lg:grid-cols-3 lg:items-start">
+          <div className="mt-10 grid gap-5 lg:grid-cols-3 lg:items-start">
             {t.pricing.tiers.map((tier) => {
               const hero = tier.key === "eleven";
               /* The whole line is the press, and it carries the pack to the
@@ -349,8 +367,8 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 <Link
                   key={tier.name}
                   href={`${localePath(lang, "/begin")}?pack=${tier.key}`}
-                  className={`impress flex flex-col border-2 border-rulestrong p-6 sm:p-7 ${
-                    hero ? "misregister order-first bg-paper lg:order-none lg:-mt-3" : "tint"
+                  className={`impress flex flex-col p-6 sm:p-7 ${
+                    hero ? "misregister warm order-first lg:order-none lg:-mt-3" : "tint"
                   }`}
                 >
                   <h3 className="display text-[1.7rem] leading-tight sm:text-2xl">{tier.name}</h3>
@@ -390,10 +408,9 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
         </Section>
 
         {/* ------------------------------------------------ colophon ------ */}
-        <section className="border-t-2 border-rulestrong">
+        <section>
           <div className="mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-24">
             <Mark className="mx-auto h-12 w-12 text-ink" />
-            <div className="rule-double mt-8" />
             <h2 className="display mt-8 text-[2rem] leading-tight sm:text-[3.2rem]">
               {t.closing.title}
             </h2>
@@ -412,13 +429,14 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
       {/* ------------------------------------------------ thumb rail ----
           The phone's primary action, kept at the bottom edge where the thumb
           is, carrying the hero SKU and its price in the reader's currency. Set
-          as a ruled bar on paper, not a floating pill. Hidden from `sm` up,
+          as a bar on paper, edged by the same fold as the masthead, not a
+          floating pill. Hidden from `sm` up,
           where the buttons in the flow are already reachable.             */}
       <aside
         aria-label={t.bar.label}
         data-until-scrolled="rail"
-        className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-rulestrong bg-paper sm:hidden"
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        className="fixed inset-x-0 bottom-0 z-40 bg-paper sm:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)", boxShadow: "0 -1px 0 0 var(--paper-3)" }}
       >
         <div className="flex items-center justify-between gap-4 px-5 py-2.5">
           <div className="min-w-0">

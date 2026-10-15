@@ -3,13 +3,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------------------
-   Snanify, printed panchang.
+   Snanify, a morning at the ghat, set in type.
 
-   The whole system is a two-colour letterpress almanac: ink and one spot
-   vermillion on newsprint. There are NO gradients, NO glows, NO blurs, NO
-   rounded corners and NO soft shadows anywhere in this file. If something needs
-   emphasis it gets a heavier rule, a tint block, or the spot colour. That is
-   the entire vocabulary.
+   Paper, ink and two inks with two jobs: vermillion acts (the button, the
+   bindu, the sun), haldi warms (the glitter, petals, the diya, anything
+   personal). Colour is flat: gradients, glows, blurs and soft shadows stay
+   out of this file, and boxes stay square. Round things are SVG marks.
+   DESIGNSYSTEM.md is the reference.
    --------------------------------------------------------------------------- */
 
 :root {
@@ -21,6 +21,8 @@
   --ink: #16130f;
   --ink-2: #57513f;
   --spot: #b32620;
+  --haldi: #e3962b;
+  --haldi-2: #f6dcae;
   --rule: #c3b697;
   --rule-strong: #16130f;
 
@@ -37,6 +39,8 @@
   --ink: #ece3cf;
   --ink-2: #99917f;
   --spot: #e04a40;
+  --haldi: #f0a83c;
+  --haldi-2: #2a2116;
   --rule: #35302a;
   --rule-strong: #ece3cf;
 
@@ -50,6 +54,8 @@
   --color-ink: var(--ink);
   --color-ink2: var(--ink-2);
   --color-spot: var(--spot);
+  --color-haldi: var(--haldi);
+  --color-haldi2: var(--haldi-2);
   --color-rule: var(--rule);
   --color-rulestrong: var(--rule-strong);
 
@@ -71,7 +77,7 @@
   *::before,
   *::after {
     border-color: var(--rule);
-    /* Nothing in an almanac is rounded. */
+    /* Boxes are square. Round marks are drawn as SVG. */
     border-radius: 0 !important;
   }
 
@@ -203,16 +209,12 @@ html[data-js]:not([data-past-hero]) [data-until-scrolled="rail"] {
 
 /* --- Paper ------------------------------------------------------------------
    Depth without a shadow. The masthead is a sheet laid over the page: once
-   the page has scrolled, a hairline of the deeper tint appears under its
-   rule, the fold. A tint block carries a hairline plate edge inset from its
-   border. Night headings step up one weight, because light ink on dark paper
-   spreads less than dark ink on light.                                        */
+   the page has scrolled, a hairline of the deeper tint appears under it, the
+   fold. Blocks are flat colour with no edge. Night headings step up one
+   weight, because light ink on dark paper spreads less than dark ink on
+   light.                                                                      */
 html[data-scrolled] header[data-masthead] {
   box-shadow: 0 1px 0 0 var(--paper-3);
-}
-.tint {
-  outline: 1px solid var(--paper-3);
-  outline-offset: -5px;
 }
 .dark .display {
   font-weight: 700;
@@ -303,22 +305,19 @@ html:not([data-script="latin"]) .display {
   letter-spacing: 0;
 }
 
-/* Column headings and label rows, the almanac's small voice. */
+/* The small voice: a button's words and a data heading. Sentence case, no
+   tracking. Tracked capitals were retired as the commonest tell of a
+   generated page; the words are set as they are written. */
 @utility label {
   font-family: var(--font-body);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.66rem;
+  letter-spacing: 0;
+  font-size: 0.8125rem;
   line-height: 1.4;
 }
 
-/* No Indic script has a capital form, so uppercasing does nothing, and the
-   tracking that makes Latin small caps read pulls the conjuncts apart. */
 html:not([data-script="latin"]) .label {
-  text-transform: none;
-  letter-spacing: 0.04em;
-  font-size: 0.78rem;
+  font-size: 0.875rem;
 }
 
 /* The masthead wordmark stays Latin in Eczar in every locale, so the brand is
@@ -405,15 +404,17 @@ html:not([data-script="latin"]) i {
   border-top: 1px solid var(--rule);
 }
 
-@utility rule-heavy {
-  border-top: 2px solid var(--rule-strong);
-}
-
 /* --- Blocks -------------------------------------------------------------- */
 
-/* A tint block, the only "fill" in the system. */
+/* A cool tint block, the ground for reference data. */
 @utility tint {
   background-color: var(--paper-2);
+}
+
+/* A warm block in haldi, the ground for anything personal: the family's
+   names, today's sheet, a morning kept. */
+@utility warm {
+  background-color: var(--haldi-2);
 }
 
 /* Hard-ruled box. No radius, no shadow, just ink. */
@@ -493,50 +494,6 @@ html:not([data-script="latin"]) i {
   .sheet-in {
     opacity: 1;
   }
-}
-
-/* --- Compatibility shims -------------------------------------------------
-   The page components were written against the previous palette. These map the
-   old token names onto the new ones so every page keeps rendering while it is
-   restyled, rather than going blank. Remove once no file references them.
-   ------------------------------------------------------------------------- */
-
-@theme inline {
-  --color-bg: var(--paper);
-  --color-bg2: var(--paper-2);
-  --color-bg3: var(--paper-3);
-  --color-gold: var(--spot);
-  --color-gold2: var(--spot);
-  --color-teal: var(--ink-2);
-  --color-sindoor: var(--spot);
-  --color-line: var(--rule);
-}
-
-/* Old atmosphere utilities, now inert, the almanac has no glow. */
-@utility halo {
-  display: none;
-}
-
-@utility inscription {
-  font-family: var(--font-body);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-}
-
-html:not([data-script="latin"]) .inscription {
-  text-transform: none;
-  letter-spacing: 0.04em;
-}
-
-@utility rule-fade {
-  height: 1px;
-  background: var(--rule);
-}
-
-@utility rise-in {
-  opacity: 0;
-  animation: ink-in 0.45s steps(6, end) forwards;
 }
 
 /* --- One price, in the reader's own money --------------------------------- */
@@ -630,15 +587,15 @@ html[data-js] [data-in] .grow {
   animation: tick 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
-/* The vow's box asks to be pressed: its rule breathes between the light and
-   the strong rule until a thumb lands, then holds still. */
-@keyframes rule-breathe {
-  0% { border-color: var(--rule); }
-  50% { border-color: var(--rule-strong); }
-  100% { border-color: var(--rule); }
+/* The vow's warm block asks to be pressed: its ground breathes a shade
+   deeper toward the haldi and back until a thumb lands, then holds still. */
+@keyframes warm-breathe {
+  0% { background-color: var(--haldi-2); }
+  50% { background-color: color-mix(in srgb, var(--haldi-2) 72%, var(--haldi)); }
+  100% { background-color: var(--haldi-2); }
 }
 .hold-box:not([data-holding]) {
-  animation: rule-breathe 2.4s ease-in-out infinite;
+  animation: warm-breathe 2.4s ease-in-out infinite;
 }
 
 /* The waterline breathes at the river's own amplitude: four seconds in, six
@@ -832,4 +789,50 @@ html:not([data-js]) .ink-picture-lazy {
   .loop-screen[style*="--i: 0"] { opacity: 1; }
   .loop-out { opacity: 0; }
   .loop-ink { width: 60%; }
+}
+
+/* --- Flicker ---------------------------------------------------------------
+   A diya flame breathing from its base. The flame on the primary button and
+   the one in the sitting; nowhere else. */
+@keyframes flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); }
+  35% { transform: scaleY(0.84) scaleX(1.06); }
+  70% { transform: scaleY(0.94) scaleX(0.97); }
+}
+.flicker {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flicker 1.4s ease-in-out infinite;
+}
+
+/* Petals ride the water: a slow drift across, at the river's own pace, with
+   a small bob. Part of `flow`. `--d` sets the duration, `--delay` the
+   offset, `--x` how far a petal travels. */
+@keyframes petal-drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(calc(var(--x, 120px) * 0.5), -3px) rotate(18deg); }
+  100% { transform: translate(var(--x, 120px), 0) rotate(36deg); }
+}
+.petal {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: petal-drift var(--d, 18s) linear var(--delay, 0s) infinite alternate;
+}
+
+/* Three petals settle onto the mark at the end of a sitting: they fall a
+   little, turning, and come to rest. They stay where they land. */
+@keyframes petal-settle {
+  from { opacity: 0; translate: 0 -46px; rotate: -40deg; }
+  to { opacity: 1; translate: 0 0; rotate: 0deg; }
+}
+.petal-settle {
+  animation: petal-settle 2.2s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flicker,
+  .petal,
+  .petal-settle {
+    animation: none;
+  }
 }

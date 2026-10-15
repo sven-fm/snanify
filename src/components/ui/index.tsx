@@ -5,26 +5,35 @@ import type { Lang } from "@/lib/locales";
 import type { Prices, TierKey } from "@/content/prices";
 import { PRICE } from "@/content/prices";
 
-/* Shared primitives, cut for the printed panchang. Everything here is flat:
-   solid fills, hard rules, one spot colour. No radius, no soft shadow. */
+/* Shared primitives. Everything here is flat: solid fills, square boxes,
+   vermillion for the action. See DESIGNSYSTEM.md. */
 
+/**
+ * A section of a page. Space divides one section from the next, never a rule.
+ * `ground` changes the rhythm: paper, the cool tint for reference data, the
+ * warm haldi block for anything personal. `tinted` is the older spelling of
+ * `ground="tint"`.
+ */
 export function Section({
   id,
   tinted = false,
+  ground,
   children,
   className = "",
 }: {
   id?: string;
   tinted?: boolean;
+  ground?: "paper" | "tint" | "warm";
   children: React.ReactNode;
   className?: string;
 }) {
+  const fill = ground ?? (tinted ? "tint" : "paper");
   return (
     <section
       id={id}
-      className={`scroll-mt-16 border-t-2 border-rulestrong ${tinted ? "tint" : ""} ${className}`}
+      className={`scroll-mt-16 ${fill === "paper" ? "" : fill} ${className}`}
     >
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">{children}</div>
+      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">{children}</div>
     </section>
   );
 }
@@ -117,28 +126,6 @@ export function LinkButton({
 }
 
 /**
- * A ruled block. `featured` gets the misregistered second impression rather
- * than a glow, the two-colour press slipping by a few points.
- */
-export function Card({
-  children,
-  className = "",
-  featured = false,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  featured?: boolean;
-}) {
-  return (
-    <div
-      className={`boxed p-7 ${featured ? "misregister border-2" : ""} ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
-
-/**
  * A boxed label. The square only fills with the spot colour when something is
  * genuinely live, it must never decorate a static line.
  */
@@ -154,29 +141,6 @@ export function StatusBadge({
       <span className={`h-2 w-2 ${live ? "bg-spot" : "border border-ink2"}`} />
       {children}
     </p>
-  );
-}
-
-/**
- * A two-column ruled data row, the almanac's basic unit.
- * Used wherever the old design would have reached for a card.
- */
-export function DataRow({
-  term,
-  children,
-  className = "",
-}: {
-  term: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`grid grid-cols-1 gap-1 border-b border-rule py-3 sm:grid-cols-[11rem_1fr] sm:gap-6 ${className}`}
-    >
-      <dt className="label pt-1 text-ink2">{term}</dt>
-      <dd className="text-ink">{children}</dd>
-    </div>
   );
 }
 

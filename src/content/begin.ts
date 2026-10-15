@@ -33,7 +33,7 @@ const en = {
   opening: "Opening Stripe",
   /* One line under each pack, written for this page's one job. */
   blurb: {
-    one: "To see what it is like.",
+    one: "Try one morning first.",
     eleven: "One for each morning. Any eleven days you like.",
     sixty: "Five a month for a year.",
   },
@@ -47,7 +47,7 @@ const en = {
   done: {
     /* The tab title, true before and after the booking. */
     meta: "Your mornings | Snanify",
-    title: "Your mornings are on your account",
+    title: "Your mornings are ready",
     /* The pack, by its count, once it is booked. */
     booked: {
       one: "One morning is on your account.",
@@ -87,7 +87,7 @@ const hi = {
   cta: "{price} का भुगतान कीजिए",
   opening: "Stripe खुल रहा है",
   blurb: {
-    one: "यह देखने के लिए कि यह कैसा है।",
+    one: "पहले एक सुबह आज़माइए।",
     eleven: "हर सुबह के लिए एक। कोई भी ग्यारह दिन।",
     sixty: "महीने में पाँच, पूरे वर्ष।",
   },
@@ -100,7 +100,7 @@ const hi = {
 
   done: {
     meta: "आपकी सुबहें | Snanify",
-    title: "आपकी सुबहें आपके खाते में हैं",
+    title: "आपकी सुबहें तैयार हैं",
     booked: {
       one: "एक सुबह आपके खाते में आ गई है।",
       eleven: "ग्यारह सुबहें आपके खाते में आ गई हैं।",

@@ -21,19 +21,37 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
 
 ## Waiting for your go
 
-1. **The hydration flake. P2.** React error 418 on 13 of 72 loads in the ten minutes
+1. **The design system, rolled out. P1.** `DESIGNSYSTEM.md` was rewritten on 15 October 2026:
+   haldi beside vermillion, puja marks in place of rules and tracked capitals, petals and a
+   diya, an action voice, and a campaign layer (matchbox, signboard, calendar art). Phases,
+   each its own commit, each checked at 390px by day and night in both editions:
+   1. *Foundation.* Done 15 October. `--haldi`, `--haldi-2`, `.warm`, `flicker` in `globals.css`;
+      `src/components/marks/` (Tilak, Kumkum, Mauli, Bindu, Diya, Petals); `Section` loses its
+      top rule; `.label` goes to sentence case; `Card`, `DataRow`, the legacy colour aliases
+      and the masthead, double and heavy rules are deleted once unused.
+   2. *Landing.* Done 15 October, with the footer's mauli. Haldi glitter and petals on the river (the river stays the hero), a tilak on
+      the headline, packs on a warm block under a mauli, the river list unboxed, copy in the
+      new voice in en and hi.
+   3. *The buyer's path.* Done 15 October, with sign-in's step line and a kept-morning count at the mark; the signed-in screens still want a look on a real account. `/begin`, `/setup`, `/today` (diya at the hold, petals and the kept
+      count at the mark), `/p/[id]` and `patra-image.ts` (its hex tokens), `/account`.
+   4. *Reference pages.* `/live`, `/rivers`, `/muhurat`, `/panchang`, `/kumbh`, `/faq`,
+      `/about`: rules only in timing tables, labels out.
+   5. *Email.* Sentence-case button, the mauli above the footer, the river's state first.
+   6. *Campaigns.* Matchbox, signboard and calendar-art templates in `ads/src/`; the link
+      card in `src/lib/site-card.ts` in matchbox.
+2. **The hydration flake. P2.** React error 418 on 13 of 72 loads in the ten minutes
    after a production deploy, 0 of 118 afterwards, HTML byte-identical, none on a cold
    preview. A transient of the deploy, not the markup. `scripts/hydration-probe.mjs`
    measures it. Next step if it matters: a preview with `<Analytics />` swapped for
    `@vercel/analytics/react`, probed in its first ten minutes.
-2. **A voice of its own for each indexed city. P1.** A "Snan in <City>" section for the
+3. **A voice of its own for each indexed city. P1.** A "Snan in <City>" section for the
    thirty cities in `INDEXABLE_CITIES`, en and hi, 150 to 250 words each: local mandirs
    and community centres (name and neighbourhood), the water people use, the DST shift
    against IST, the festivals kept there. Only facts that can be sourced. Gate:
    `npm run seo:similarity` at or below 0.5 on every pair (twelve pairs are above it
    today; Brampton and Mississauga at 0.78). Then, once more than sixty of the seventy
    routes are indexed, the next twenty cities, each with its content first.
-3. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
+4. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
    profile exists.
 
 ## After launch, argued from data

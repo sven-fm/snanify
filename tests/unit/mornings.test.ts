@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { asTier, countLine, countOf, formatDay, formatMoney, leftAfterSitting } from "@/lib/mornings";
+import { asTier, countLine, countOf, formatDay, formatMoney, leftAfterSitting, nthMorning } from "@/lib/mornings";
 import { morningsContent } from "@/content/mornings";
 
 describe("mornings left after a sitting", () => {
@@ -44,5 +44,20 @@ describe("purchase rows, for a reader", () => {
     expect(formatDay(at, "America/Toronto", "en-IN")).toBe("15 Oct 2026");
     expect(formatDay(at, "Asia/Kolkata", "en-IN")).toBe("16 Oct 2026");
     expect(formatDay(at, "Not/AZone", "en-IN")).toBe("16 Oct 2026");
+  });
+});
+
+describe("the morning kept, counted", () => {
+  it("says the word up to tenth, then the figure", () => {
+    expect(nthMorning(1, "en")).toBe("first");
+    expect(nthMorning(4, "en")).toBe("fourth");
+    expect(nthMorning(11, "en")).toBe("11th");
+    expect(nthMorning(22, "en")).toBe("22nd");
+  });
+
+  it("takes the feminine in Hindi, for सुबह", () => {
+    expect(nthMorning(2, "hi")).toBe("दूसरी");
+    expect(nthMorning(6, "hi")).toBe("छठी");
+    expect(nthMorning(14, "hi")).toBe("14वीं");
   });
 });

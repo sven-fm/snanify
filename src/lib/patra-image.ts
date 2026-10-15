@@ -37,10 +37,40 @@ const INK = "#16130f";
 const INK_2 = "#57513f";
 const RULE = "#c3b697";
 const SPOT = "#b32620";
+/* The day tokens from globals.css, as hex, because this file has no
+   stylesheet. Change a token there and change it here in the same commit. */
+const HALDI = "#e3962b";
+const HALDI_2 = "#f6dcae";
 
 const M = 64;
 const RIGHT = PATRA_SIZE.width - M;
 const INNER = RIGHT - M;
+
+/**
+ * The mauli thread: a vermillion thread with a dashed haldi thread twisted
+ * along it. The one divider, as on the site; see src/components/marks.
+ */
+function mauli(x: number, y: number, w: number): string {
+  const at = (f: number) => (x + w * f).toFixed(1);
+  const curve = (dy: number) => {
+    const mid = y + dy;
+    return `M${x} ${mid} C${at(0.25)} ${mid - 7} ${at(0.25)} ${mid + 7} ${at(0.5)} ${mid} S${at(0.75)} ${mid - 7} ${at(1)} ${mid}`;
+  };
+  return (
+    `<path d="${curve(0)}" fill="none" stroke="${SPOT}" stroke-width="3" />` +
+    `<path d="${curve(2)}" fill="none" stroke="${HALDI}" stroke-width="2" stroke-dasharray="5 5" />`
+  );
+}
+
+/** The tilak: a vermillion stroke ending in a bindu, beside the names. */
+function tilak(x: number, y: number, h: number): string {
+  const w = Math.max(5, h * 0.07);
+  const r = w * 1.05;
+  return (
+    `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${(h - r * 2.6).toFixed(1)}" fill="${SPOT}" />` +
+    `<circle cx="${(x + w / 2).toFixed(1)}" cy="${(y + h - r).toFixed(1)}" r="${r.toFixed(1)}" fill="${SPOT}" />`
+  );
+}
 
 function rule(y: number, strong = false): string {
   return `<rect x="${M}" y="${y}" width="${INNER}" height="${strong ? 2.5 : 1}" fill="${strong ? INK : RULE}" />`;
@@ -111,15 +141,15 @@ function ghatPlate(slug: string, w: number, h: number): Promise<string | null> {
   return made;
 }
 
+/** The sheet's own name, in its edition, in sentence case. */
+function sheetTitle(view: PatraView): string {
+  if (view.locale === "hi") return view.specimen ? "संकल्प पत्र, नमूना" : "संकल्प पत्र";
+  return view.specimen ? "Sankalp Patra, specimen" : "Sankalp Patra";
+}
+
 /** One ruled row of the register. */
 async function row(k: string, v: string, y: number): Promise<string> {
-  const key = await typeset(k.toUpperCase(), {
-    size: 21,
-    x: M,
-    y,
-    fill: INK_2,
-    tracking: 0.06,
-  });
+  const key = await typeset(k, { size: 22, x: M, y, fill: INK_2 });
   const value = await typeset(v, { size: 25, x: RIGHT, y, fill: INK, anchor: "end" });
 
   return key.svg + value.svg + rule(y + 16);
@@ -133,12 +163,11 @@ export async function patraSvg(view: PatraView): Promise<string> {
 
   /* --- masthead --------------------------------------------------------- */
   parts.push(
-    (await typeset(view.specimen ? "SANKALP PATRA, SPECIMEN" : "SANKALP PATRA", { size: 23, x: M, y: 84, fill: SPOT, tracking: 0.26 })).svg,
+    (await typeset(sheetTitle(view), { size: 26, x: M, y: 84, weight: 600, fill: SPOT })).svg,
   );
   parts.push(
     (await typeset(view.keptDate, { size: 23, x: RIGHT, y: 84, fill: INK_2, anchor: "end" })).svg,
   );
-  parts.push(rule(108, true));
 
   /* --- the names, which are the reason the sheet exists ----------------- */
   let y = 176;
@@ -226,7 +255,7 @@ export async function patraSvg(view: PatraView): Promise<string> {
     }
   }
 
-  parts.push(rule(footTop - 26, true));
+  parts.push(mauli(M, footTop - 30, INNER));
 
   let rowY = footTop + 8;
   for (const [k, v] of rows) {
@@ -282,12 +311,12 @@ export async function patraCardSvg(view: PatraView): Promise<string> {
   );
 
   parts.push(
-    (await typeset("SANKALP PATRA", { size: 24, x: m, y: 90, fill: SPOT, tracking: 0.26 })).svg,
+    (await typeset(sheetTitle({ ...view, specimen: false }), { size: 28, x: m, y: 90, weight: 600, fill: SPOT })).svg,
   );
   parts.push(
     (await typeset(view.keptDate, { size: 24, x: right, y: 90, fill: INK_2, anchor: "end" })).svg,
   );
-  parts.push(`<rect x="${m}" y="116" width="${right - m}" height="2.5" fill="${INK}" />`);
+  parts.push(tilak(m - 34, 146, 92));
 
   let y = 200;
   for (const name of view.names.slice(0, 3)) {
@@ -358,10 +387,8 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   );
 
   /* --- masthead --------------------------------------------------------- */
-  parts.push((await typeset(view.specimen ? "SANKALP PATRA, SPECIMEN" : "SANKALP PATRA", { size: 26, x: MM, y: 118, fill: SPOT, tracking: 0.26 })).svg);
-  parts.push((await typeset(view.keptDate, { size: 26, x: R, y: 118, fill: INK_2, anchor: "end" })).svg);
-  parts.push(`<rect x="${MM}" y="142" width="${IN}" height="3" fill="${INK}" />`);
-  parts.push(`<rect x="${MM}" y="149" width="${IN}" height="1" fill="${INK}" />`);
+  parts.push((await typeset(sheetTitle(view), { size: 32, x: MM, y: 122, weight: 600, fill: SPOT })).svg);
+  parts.push((await typeset(view.keptDate, { size: 26, x: R, y: 122, fill: INK_2, anchor: "end" })).svg);
 
   /* --- the ghat --------------------------------------------------------- */
   /* The plate alone. A band of engraved water used to sit under it, and with
@@ -376,21 +403,26 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   } else {
     parts.push(band(view, MM, artTop, IN, artH));
   }
-  parts.push(`<rect x="${MM}" y="${artTop}" width="${IN}" height="${artH}" fill="none" stroke="${INK}" stroke-width="2" />`);
 
-  /* --- the names, and the portrait beside them --------------------------- */
-  let y = artTop + artH + 96;
+  /* --- the names, on the warm block, with the tilak beside them ----------- */
+  /* The names are the reason the sheet exists, so they stand on the haldi
+     ground the site keeps for anything personal. The block is drawn once the
+     names are set and its height is known, and slotted in beneath them. */
+  const blockTop = artTop + artH + 36;
+  const pad = 44;
   const names = view.names.slice(0, 5);
   const nameSize = names.length > 3 ? 50 : names.length > 2 ? 56 : 66;
-  const portraitW = 280;
-  const portraitH = 350;
-  const nameX = view.portraitUrl ? MM + portraitW + 40 : MM;
-  const nameMax = R - nameX;
+  const portraitW = 260;
+  const portraitH = 325;
+  const innerX = MM + pad + 12;
+  const nameX = view.portraitUrl ? innerX + portraitW + 36 : innerX;
+  const nameMax = R - pad - nameX;
+  const blockAt = parts.length;
+  let y = blockTop + pad + nameSize * 0.8;
 
   if (view.portraitUrl) {
     parts.push(
-      `<image href="${view.portraitUrl}" x="${MM}" y="${y - 52}" width="${portraitW}" height="${portraitH}" preserveAspectRatio="xMidYMid slice" />` +
-        `<rect x="${MM}" y="${y - 52}" width="${portraitW}" height="${portraitH}" fill="none" stroke="${RULE}" />`,
+      `<image href="${view.portraitUrl}" x="${innerX}" y="${blockTop + pad}" width="${portraitW}" height="${portraitH}" preserveAspectRatio="xMidYMid slice" />`,
     );
   }
 
@@ -401,19 +433,26 @@ export async function mementoSvg(view: PatraView): Promise<string> {
       namesBottom += nameSize * 1.22;
     }
   }
-  const placeY = Math.max(namesBottom + 8, view.portraitUrl ? y - 52 + portraitH + 44 : 0);
-  parts.push((await typeset(`${view.water}, ${view.ghat}, ${view.city}`, { size: 30, x: MM, y: placeY, fill: INK_2 })).svg);
-  y = placeY + 70;
+  const placeY = Math.max(namesBottom + 8, view.portraitUrl ? blockTop + pad + portraitH + 44 : 0);
+  const placeX = view.portraitUrl ? innerX : nameX;
+  parts.push((await typeset(`${view.water}, ${view.ghat}, ${view.city}`, { size: 30, x: placeX, y: placeY, fill: INK_2 })).svg);
+  const blockBottom = placeY + pad - 4;
+  parts.splice(
+    blockAt,
+    0,
+    `<rect x="${MM}" y="${blockTop}" width="${IN}" height="${(blockBottom - blockTop).toFixed(1)}" fill="${HALDI_2}" />` +
+      tilak(MM + 22, blockTop + pad - 6, nameSize * 1.6),
+  );
+  y = blockBottom + 72;
 
   /* --- the figures, before the prayer, so they are never squeezed out ---- */
   const footTop = H - MM - 62;
   const figuresTop = footTop - 168;
-  parts.push(`<rect x="${MM}" y="${figuresTop}" width="${IN}" height="2" fill="${INK}" />`);
   /* The river's state leads in words and the figures follow as its proof:
      "Running full" on the left, the flow on the right, the rank under it. */
-  parts.push((await typeset(view.locale === "hi" ? "आज" : "TODAY", { size: 20, x: MM, y: figuresTop + 40, fill: INK_2, tracking: 0.08 })).svg);
+  parts.push((await typeset(view.locale === "hi" ? "आज" : "Today", { size: 22, x: MM, y: figuresTop + 40, fill: INK_2 })).svg);
   parts.push((await typeset(view.state, { size: 46, x: MM, y: figuresTop + 100, weight: 600, fill: INK })).svg);
-  parts.push((await typeset("FLOW", { size: 20, x: R, y: figuresTop + 40, fill: INK_2, tracking: 0.08, anchor: "end" })).svg);
+  parts.push((await typeset(view.locale === "hi" ? "प्रवाह" : "Flow", { size: 22, x: R, y: figuresTop + 40, fill: INK_2, anchor: "end" })).svg);
   parts.push((await typeset(view.flow, { size: 34, x: R, y: figuresTop + 100, weight: 600, fill: INK, anchor: "end" })).svg);
   if (view.rank) {
     parts.push((await typeset(`${ordinal(Number(view.rank))} percentile since 1997`, { size: 22, x: R, y: figuresTop + 136, fill: INK_2, anchor: "end" })).svg);
@@ -450,7 +489,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   parts.push((await typeset(view.specimen ? "snanify.com" : `snanify.com/p/${view.id}`, { size: 20, x: MM, y: footTop + 14, fill: INK_2 })).svg);
   /* Where to get one: the sheet travels into family groups on its own, and
      the address is the only way back. In the sheet's own edition. */
-  parts.push(`<rect x="${MM}" y="${footTop + 34}" width="${IN}" height="1" fill="${RULE}" />`);
+  parts.push(mauli(MM, footTop + 34, IN));
   parts.push(
     (
       await typeset(view.locale === "hi" ? "अपनी सुबह, snanify.com पर" : "Your own morning, at snanify.com", {

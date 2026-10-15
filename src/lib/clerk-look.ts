@@ -36,19 +36,17 @@ import type { Lang } from "@/lib/locales";
 const BODY = "var(--font-body)";
 const DISPLAY = "var(--font-display)";
 
-/* The `label` utility from globals.css: Martel 700 caps, wide tracking, and
-   in Devanagari plain case with the tracking closed up. */
+/* The `label` utility from globals.css: Martel 700, sentence case, untracked,
+   a touch larger in Devanagari. */
 const LABEL = {
   fontFamily: BODY,
   fontWeight: 700,
-  textTransform: "uppercase" as const,
-  letterSpacing: "0.16em",
-  fontSize: "0.66rem",
+  textTransform: "none" as const,
+  letterSpacing: "0",
+  fontSize: "0.8125rem",
   lineHeight: 1.4,
   'html:not([data-script="latin"]) &': {
-    textTransform: "none" as const,
-    letterSpacing: "0.04em",
-    fontSize: "0.78rem",
+    fontSize: "0.875rem",
   },
 };
 
