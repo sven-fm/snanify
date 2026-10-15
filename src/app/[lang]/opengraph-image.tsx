@@ -8,7 +8,8 @@ import { DEFAULT_LANG, parseLang } from "@/lib/locales";
 
    The card is drawn in src/lib/site-card.ts, but the hash in its URL follows
    this file alone. When the drawing changes, change this file too, so Facebook
-   and WhatsApp fetch the new card instead of the one they cached. */
+   and WhatsApp fetch the new card instead of the one they cached. Last
+   changed for the matchbox card, 15 October 2026. */
 
 export const runtime = "nodejs";
 export const alt = "Snanify, the river comes to you";

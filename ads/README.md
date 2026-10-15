@@ -12,9 +12,13 @@ no sentence tells the reader who they are (religion, origin), and nothing is eng
 | `out/static-kartik-…` | "Kartik with the Ganga": the four-by-five sheet. A second static, held back for week two |
 | `out/video-kartik-{en,hi}-{diaspora,india}.mp4` | The 9:16 video, cut from a real sitting recorded on an iPhone |
 | `out/patra-*.png` | The specimen Patra, today's real figure, the Sharma family, 06:12 in New York |
-| `src/*` | Everything that made them: `render-patra.ts`, `render-statics.mjs`, `render-cards.mjs`, `cut-video.sh`, `copy.mjs` |
+| `src/*` | Everything that made them: `render-patra.ts`, `render-statics.mjs`, `render-cards.mjs`, `render-campaign.mjs`, `campaign.html`, `cut-video.sh`, `copy.mjs` |
+| `out/campaign-{matchbox,signboard,calendar}-{en,hi}-{diaspora,india}-{45,916}.png` | The campaign layer in bazaar print (DESIGNSYSTEM.md, Campaigns): matchbox and signboard for the price story and scroll-stopping ads, calendar art for Kartik and the festival posts |
 
 Re-render after a copy change: `node ads/src/render-statics.mjs && node ads/src/render-cards.mjs`.
+The campaign layer: `node ads/src/render-campaign.mjs` (or with one style: `matchbox`,
+`signboard`, `calendar`). Its words are `CAMPAIGN` and `SEAL` in `copy.mjs`; a festival day is a
+new `calendar` entry with its own dates.
 `render-patra.ts` needs the repo briefly as an ES module (harfbuzzjs uses top-level await).
 
 ## The structure

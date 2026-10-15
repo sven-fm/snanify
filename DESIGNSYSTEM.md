@@ -385,7 +385,11 @@ no em dashes, no coined names. This is how the voice sounds inside them.
 ## Campaigns
 
 Ads, the share card, Facebook and Instagram posts, festival takeovers. Built in `ads/`
-(`ads/README.md`), rendered to PNG and video. **Campaign print never appears in setup, the
+(`ads/README.md`), rendered to PNG and video. The three styles are one template,
+`ads/src/campaign.html`, rendered by `ads/src/render-campaign.mjs` from `CAMPAIGN` and `SEAL`
+in `ads/src/copy.mjs`. The site's own link card (`src/lib/site-card.ts`, what a chat app shows
+for snanify.com) is a matchbox label; the Sankalp Patra's card stays in the everyday style,
+because it is a person's own morning. **Campaign print never appears in setup, the
 sitting, the Patra or the account.** It may appear on a festival landing section, framed as
 that day's notice.
 

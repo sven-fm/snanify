@@ -1,7 +1,6 @@
 import "server-only";
 import { Resvg } from "@resvg/resvg-js";
-import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
-import { measure, typeset, wrap } from "@/lib/typeset";
+import { typeset, wrap } from "@/lib/typeset";
 import { withSamvat } from "@/lib/occasions";
 import { content } from "@/lib/content";
 import type { Lang } from "@/lib/locales";
@@ -9,79 +8,105 @@ import type { Lang } from "@/lib/locales";
 /* ---------------------------------------------------------------------------
    The card a chat app unfurls when somebody pastes the site's link.
 
-   Set the same way as the Sankalp Patra's own card in src/lib/patra-image.ts:
-   paper, one spot colour, Eczar shaped to outlines by HarfBuzz so the Hindi
-   edition spells itself correctly, and the engraved water along the foot. It
-   replaced a navy card with a gradient and a glow, which every WhatsApp
-   preview of the site was still showing.
-
-   The band is drawn from a fixed seed. It is decoration here, not a record,
-   so it must never look like a particular morning's engraving.
+   It is set in the campaign layer's matchbox style (DESIGNSYSTEM.md,
+   Campaigns), because a link preview is a poster in a feed, not a page of
+   the site: a matchbox label on the left, a yellow ground in a black frame
+   with an inner red rule, a rayed sun over three bars of water, and the
+   label's name in capitals; the site's headline on the right, and the
+   address on a black bar. Every letter is Eczar shaped to outlines by
+   HarfBuzz, as on the Sankalp Patra, so the Hindi edition spells itself
+   correctly.
    --------------------------------------------------------------------------- */
 
 export const SITE_CARD_SIZE = { width: 1200, height: 630 };
 
-const PAPER = "#faf6ea";
-const INK = "#16130f";
-const INK_2 = "#57513f";
-const SPOT = "#b32620";
+const GROUND = "#efe2c2";
+const YELLOW = "#f2c230";
+const RED = "#c8251d";
+const BLACK = "#1a1410";
 
-const BAND_SEED = "5ab1f0c4d9e3a72b6c8e1d4f9a0b3c5d7e2f4a6b8c0d1e3f5a7b9c2d4e6f8a1b";
+/** The label's own words, per edition. Capitals in Latin, as a label is
+    painted; Devanagari has no case. */
+const LABEL: Record<Lang, { brand: string; name: [string, string]; tagline: string; tracking: number }> = {
+  en: { brand: "SANKALP BRAND", name: ["DAILY", "SNAN"], tagline: "Three minutes, six rivers", tracking: 0.2 },
+  hi: { brand: "संकल्प छाप", name: ["रोज़ का", "स्नान"], tagline: "तीन मिनट, छह नदियाँ", tracking: 0 },
+};
 
-/** The seal from src/components/Logo.tsx, as plain SVG at a given box. */
-function mark(x: number, y: number, box: number): string {
-  const s = box / 48;
+/** The emblem: the seal's idea re-cut for a label. A rayed sun set into
+    three bars of water, centred on `cx`, its waterline at `wy`. */
+function emblem(cx: number, wy: number): string {
+  const r = 58;
+  const cy = wy - 6;
+  const rays: string[] = [];
+  for (let i = 0; i < 16; i++) {
+    const a = (i / 16) * Math.PI * 2;
+    if (Math.sin(a) > -0.2) continue;
+    const pt = (rad: number, t: number) =>
+      `${(cx + rad * Math.cos(t)).toFixed(2)},${(cy + rad * Math.sin(t)).toFixed(2)}`;
+    rays.push(`<polygon points="${pt(r + 12, a - 0.09)} ${pt(r + 36, a)} ${pt(r + 12, a + 0.09)}" fill="${BLACK}" />`);
+  }
   return (
-    `<g transform="translate(${x} ${y}) scale(${s.toFixed(3)})">` +
-    `<defs><clipPath id="seal"><circle cx="24" cy="24" r="20" /></clipPath></defs>` +
-    `<circle cx="24" cy="24" r="23.2" fill="none" stroke="${INK}" stroke-width="1" />` +
-    `<circle cx="24" cy="24" r="20" fill="none" stroke="${INK}" stroke-width="2" />` +
-    `<g clip-path="url(#seal)">` +
-    `<circle cx="24" cy="17.6" r="6.2" fill="${SPOT}" />` +
-    `<g fill="${INK}"><rect x="14" y="27.4" width="20" height="2.2" /><rect x="9" y="32" width="30" height="2.2" /><rect x="3" y="36.6" width="42" height="2.2" /></g>` +
-    `</g></g>`
+    rays.join("") +
+    `<clipPath id="sky"><rect x="${cx - 120}" y="${wy - 140}" width="240" height="140" /></clipPath>` +
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${RED}" clip-path="url(#sky)" />` +
+    `<rect x="${cx - 62}" y="${wy + 8}" width="124" height="11" fill="${BLACK}" />` +
+    `<rect x="${cx - 94}" y="${wy + 30}" width="188" height="11" fill="${BLACK}" />` +
+    `<rect x="${cx - 132}" y="${wy + 52}" width="264" height="11" fill="${BLACK}" />`
   );
 }
 
 export async function siteCardSvg(lang: Lang): Promise<string> {
   const t = content[lang];
+  const l = LABEL[lang];
   const { width, height } = SITE_CARD_SIZE;
-  const m = 72;
-  const right = width - m;
-  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${PAPER}" />`];
+  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${GROUND}" />`];
 
-  /* the water along the foot */
+  /* --- the label ---------------------------------------------------------- */
+  const lx = 56;
+  const ly = 56;
+  const lw = 470;
+  const lh = height - 112;
+  const cx = lx + lw / 2;
   parts.push(
-    `<svg x="0" y="${height - 230}" width="${width}" height="230" viewBox="0 0 1000 300" preserveAspectRatio="none">` +
-      engrave({ seed: BAND_SEED, percentile: 62, width: 1000, height: 300 })
-        .lines.map(
-          (d, i, all) =>
-            `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${strokeWidth(i, all.length)}" stroke-opacity="${strokeOpacity(i, all.length) * 0.7}" />`,
-        )
-        .join("") +
-      `</svg>`,
+    `<rect x="${lx}" y="${ly}" width="${lw}" height="${lh}" fill="${YELLOW}" stroke="${BLACK}" stroke-width="10" />` +
+      `<rect x="${lx + 18}" y="${ly + 18}" width="${lw - 36}" height="${lh - 36}" fill="none" stroke="${RED}" stroke-width="4" />`,
   );
+  parts.push((await typeset(l.brand, { size: 22, x: cx, y: ly + 74, weight: 600, fill: RED, anchor: "middle", tracking: l.tracking })).svg);
+  parts.push(emblem(cx, ly + 200));
+  parts.push((await typeset(l.name[0], { size: 72, x: cx, y: ly + 352, weight: 600, fill: BLACK, anchor: "middle" })).svg);
+  parts.push((await typeset(l.name[1], { size: 72, x: cx, y: ly + 428, weight: 600, fill: BLACK, anchor: "middle" })).svg);
+  parts.push((await typeset(l.tagline, { size: 24, x: cx, y: ly + lh - 44, fill: BLACK, anchor: "middle" })).svg);
 
-  /* masthead: the seal and the name, over a strong rule */
-  parts.push(mark(m, 56, 52));
-  parts.push((await typeset("Snanify", { size: 40, x: m + 68, y: 96, weight: 600, fill: INK })).svg);
-  parts.push(
-    (await typeset(withSamvat(t.edition, lang), { size: 22, x: right, y: 94, fill: INK_2, anchor: "end" })).svg,
-  );
-  parts.push(`<rect x="${m}" y="124" width="${right - m}" height="2.5" fill="${INK}" />`);
+  /* --- the headline, the share line and the address ------------------------- */
+  const x = lx + lw + 56;
+  const right = width - 56;
+  const measureWidth = right - x;
 
-  /* the headline, one colour, one line, set smaller when 78 would run past the margin */
-  const title = `${t.hero.titleA} ${t.hero.titleB}`;
-  const natural = await measure(title, { size: 78, weight: 600 });
-  const titleSize = Math.min(78, Math.floor((78 * (right - m)) / natural));
-  parts.push((await typeset(title, { size: titleSize, x: m, y: 236, weight: 600, fill: INK })).svg);
+  /* The logotype: the root heavy, the suffix light. */
+  const root = await typeset("Snan", { size: 44, x, y: 110, weight: 600, fill: BLACK });
+  parts.push(root.svg);
+  parts.push((await typeset("ify", { size: 44, x: x + root.width, y: 110, fill: BLACK })).svg);
+  parts.push((await typeset(withSamvat(t.edition, lang), { size: 22, x: right, y: 108, fill: RED, anchor: "end" })).svg);
 
-  /* the one line under it */
-  let y = 300;
-  for (const line of await wrap(t.share, { size: 30, maxWidth: right - m - 160 })) {
-    parts.push((await typeset(line, { size: 30, x: m, y, fill: INK_2 })).svg);
-    y += 44;
+  /* The headline in its own two halves, one to a line, so it breaks at the
+     comma in both editions rather than wherever the measure runs out. */
+  let y = 210;
+  for (const half of [t.hero.titleA, t.hero.titleB]) {
+    for (const line of await wrap(half, { size: 56, weight: 600, maxWidth: measureWidth })) {
+      parts.push((await typeset(line, { size: 56, x, y, weight: 600, fill: BLACK })).svg);
+      y += lang === "hi" ? 74 : 64;
+    }
   }
+  y += 10;
+  for (const line of await wrap(t.share, { size: 25, maxWidth: measureWidth })) {
+    if (y > height - 160) break;
+    parts.push((await typeset(line, { size: 25, x, y, fill: BLACK, opacity: 0.78 })).svg);
+    y += 38;
+  }
+
+  const barY = height - 56 - 92;
+  parts.push(`<rect x="${x}" y="${barY}" width="${measureWidth}" height="92" fill="${BLACK}" />`);
+  parts.push((await typeset("snanify.com", { size: 44, x: x + measureWidth / 2, y: barY + 62, weight: 600, fill: YELLOW, anchor: "middle" })).svg);
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
@@ -93,7 +118,7 @@ export async function siteCardSvg(lang: Lang): Promise<string> {
 export async function renderSiteCard(lang: Lang): Promise<Buffer> {
   const resvg = new Resvg(await siteCardSvg(lang), {
     font: { loadSystemFonts: false },
-    background: PAPER,
+    background: GROUND,
     fitTo: { mode: "width", value: SITE_CARD_SIZE.width },
   });
   return Buffer.from(resvg.render().asPng());

@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;600;700;800&family=Martel+Sans:wght@400;700;800&display=block" rel="stylesheet">
+<style>
+  /* The campaign layer: bazaar print, for ads, the share card and festival
+     posts, and never inside the product (DESIGNSYSTEM.md, Campaigns). Three
+     styles, chosen by `style` in the hash and filled by render-campaign.mjs.
+     Colour is flat and full-bleed; capitals are allowed in display lettering,
+     as a signboard or a label is painted; gradients, glows, blurs and soft
+     shadows stay out, as everywhere. Every stripe and scene is SVG. */
+  * { margin: 0; box-sizing: border-box; }
+  body { width: var(--w); height: var(--h); overflow: hidden; font-family: "Martel Sans", sans-serif; }
+  #root { height: 100%; position: relative; }
+  .d { font-family: "Eczar", serif; font-synthesis: none; }
+  .frame { width: 100%; height: 100%; display: flex; flex-direction: column; padding: var(--pad-top) 72px var(--pad-bottom); }
+  .grow { flex: 1; min-height: 24px; }
+  [lang="hi"] .caps { text-transform: none !important; letter-spacing: 0 !important; }
+  [lang="hi"] .d { line-height: 1.3 !important; }
+  /* Stacked Devanagari on the signboard: tight enough to read as one sign,
+     open enough for the matras. */
+  [lang="hi"] .signboard .big { line-height: 1.08 !important; }
+  /* A longer figure, such as ₹501, steps down to stay inside its seal. */
+  .signboard .seal .big2.long { font-size: 70px; }
+  .short.signboard .seal .big2.long { font-size: 56px; }
+  .matchbox .price .big.long { font-size: 76px; }
+  .short.matchbox .price .big.long { font-size: 62px; }
+
+  /* --- matchbox ---------------------------------------------------------- */
+  .matchbox { background: #efe2c2; color: #1a1410; }
+  .matchbox .mark { font-size: 44px; font-weight: 700; }
+  .matchbox .mark b { font-weight: 700; }
+  .matchbox .mark span { font-weight: 400; }
+  .matchbox .label { margin-top: 36px; background: #f2c230; border: 9px solid #1a1410; padding: 16px; }
+  .matchbox .inner { border: 4px solid #c8251d; padding: 34px 28px 38px; text-align: center; }
+  .matchbox .brand { font-weight: 800; font-size: 28px; letter-spacing: 0.22em; text-transform: uppercase; color: #c8251d; }
+  .matchbox .emblem { display: block; margin: 18px auto 10px; width: 400px; height: 300px; }
+  .matchbox .name { font-weight: 800; font-size: 132px; line-height: 0.92; text-transform: uppercase; letter-spacing: 0.01em; }
+  .matchbox .tagline { margin-top: 18px; font-weight: 700; font-size: 32px; }
+  .matchbox .hook { margin-top: 44px; font-weight: 700; font-size: 66px; line-height: 1.04; }
+  .matchbox .row { display: flex; gap: 22px; align-items: stretch; margin-top: 36px; }
+  .matchbox .price { background: #c8251d; color: #f2c230; padding: 18px 30px; text-align: center; }
+  .matchbox .price .big { font-weight: 800; font-size: 96px; line-height: 1; }
+  .matchbox .price .small { font-weight: 700; font-size: 26px; margin-top: 6px; }
+  .matchbox .go { flex: 1; background: #1a1410; color: #f2c230; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 52px; }
+
+  /* 4:5 is 570px shorter than 9:16: the label and the type step down. */
+  .short.matchbox .label { margin-top: 26px; padding: 12px; }
+  .short.matchbox .inner { padding: 22px 24px 26px; }
+  .short.matchbox .emblem { width: 300px; height: 225px; margin: 10px auto 4px; }
+  .short.matchbox .name { font-size: 104px; }
+  .short.matchbox .hook { font-size: 56px; margin-top: 30px; }
+  .short.matchbox .price .big { font-size: 76px; }
+  .short.matchbox .go { font-size: 44px; }
+  .short.signboard .big { font-size: 200px; margin-top: 18px; }
+  .short.signboard .line { font-size: 50px; }
+  .short.signboard .panel { padding: 26px 30px; margin-top: 28px; }
+  .short.signboard .panel .hook { font-size: 58px; }
+  .short.signboard .panel .sub { font-size: 28px; }
+  .short.signboard .row { margin-top: 28px; }
+  .short.signboard .seal { width: 200px; height: 200px; }
+  .short.signboard .seal .big2 { font-size: 76px; }
+  .short.signboard .seal .small { font-size: 21px; max-width: 160px; }
+  .short.calendar .title { font-size: 92px; margin-top: 22px; }
+  .short.calendar .dates { font-size: 36px; }
+  .short.calendar .line { font-size: 30px; margin-top: 10px; }
+  .short.calendar .go { font-size: 40px; padding: 14px 0; margin-top: 20px; }
+  .short.calendar .offer { font-size: 30px; margin-top: 10px; }
+
+  /* --- signboard --------------------------------------------------------- */
+  .signboard { background: #f6c518; color: #141210; position: relative; }
+  .signboard .stripes { position: absolute; left: 0; right: 0; height: 56px; }
+  .signboard .stripes.top { top: 0; }
+  .signboard .stripes.bottom { bottom: 0; }
+  .signboard .mark { font-size: 44px; font-weight: 700; }
+  .signboard .big { font-weight: 800; font-size: 250px; line-height: 0.86; text-transform: uppercase; letter-spacing: -0.01em; margin-top: 30px; }
+  .signboard .big .r { color: #d1261c; display: block; }
+  .signboard .line { font-weight: 700; font-size: 60px; margin-top: 14px; }
+  .signboard .panel { background: #141210; color: #f6c518; padding: 34px 36px; margin-top: 44px; }
+  .signboard .panel .hook { font-weight: 700; font-size: 70px; line-height: 1.02; }
+  .signboard .panel .sub { font-size: 32px; line-height: 1.5; margin-top: 14px; color: #f6e7b0; }
+  .signboard .row { display: flex; align-items: center; gap: 34px; margin-top: 40px; }
+  .signboard .seal { width: 250px; height: 250px; border-radius: 50%; background: #d1261c; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex: none; }
+  .signboard .seal .big2 { font-weight: 800; font-size: 96px; line-height: 0.95; }
+  .signboard .seal .small { font-weight: 700; font-size: 24px; line-height: 1.25; max-width: 190px; margin-top: 6px; }
+  .signboard .go { font-weight: 800; font-size: 64px; }
+
+  /* --- calendar art ------------------------------------------------------ */
+  .calendar { background: #7a1a14; color: #f6e3b4; }
+  /* The double frame runs to the edges; its content keeps clear of the
+     Stories safe zones. */
+  .calendar .frame { padding: 30px; }
+  .calendar .border { flex: 1; border: 9px double #e2a93b; padding: calc(var(--pad-top) - 30px) 44px calc(var(--pad-bottom) - 30px); display: flex; flex-direction: column; text-align: center; min-height: 0; }
+  .calendar .orn { display: block; margin: 0 auto; width: 420px; height: 30px; }
+  .calendar .samvat { font-weight: 600; font-size: 36px; color: #e2a93b; margin-top: 10px; }
+  .calendar .scene { display: block; width: 100%; margin-top: 26px; border: 5px solid #e2a93b; flex: 1; min-height: 0; }
+  .calendar .title { font-weight: 800; font-size: 118px; line-height: 1; margin-top: 34px; }
+  .calendar .dates { font-weight: 600; font-size: 42px; color: #f0c97a; margin-top: 12px; }
+  .calendar .line { font-size: 34px; line-height: 1.45; margin-top: 18px; }
+  .calendar .go { background: #e2a93b; color: #4a0f0b; font-weight: 700; font-size: 48px; padding: 18px 0; margin-top: 30px; }
+  .calendar .offer { font-weight: 700; font-size: 34px; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  const p = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+  document.documentElement.lang = p.lang;
+  const s = document.body.style;
+  s.setProperty("--w", p.w + "px");
+  s.setProperty("--h", p.h + "px");
+  /* Stories keep their top 250px and bottom 330px clear of Meta's own chrome. */
+  s.setProperty("--pad-top", p.h > 1500 ? "250px" : "84px");
+  s.setProperty("--pad-bottom", p.h > 1500 ? "330px" : "72px");
+  const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const wordmark = `<div class="mark d"><b>Snan</b><span>ify</span></div>`;
+
+  /* The matchbox emblem: the logo's idea, re-cut as a label. A rayed sun over
+     three bars of water, the lowest running past the frame. */
+  function emblem() {
+    const rays = [];
+    for (let i = 0; i < 16; i++) {
+      const a = (i / 16) * Math.PI * 2;
+      const r1 = 112, r2 = 146, w = 0.09;
+      const pt = (r, t) => `${(200 + r * Math.cos(t)).toFixed(2)},${(140 + r * Math.sin(t)).toFixed(2)}`;
+      if (Math.sin(a) < 0.25) rays.push(`<polygon points="${pt(r1, a - w)} ${pt(r2, a)} ${pt(r1, a + w)}" fill="#1a1410"/>`);
+    }
+    return `<svg class="emblem" viewBox="0 0 400 300">${rays.join("")}
+      <clipPath id="sky"><rect x="0" y="0" width="400" height="176"/></clipPath>
+      <circle cx="200" cy="140" r="96" fill="#c8251d" clip-path="url(#sky)"/>
+      <rect x="110" y="190" width="180" height="16" fill="#1a1410"/>
+      <rect x="70" y="224" width="260" height="16" fill="#1a1410"/>
+      <rect x="20" y="258" width="360" height="16" fill="#1a1410"/></svg>`;
+  }
+
+  /* Hazard stripes, drawn as polygons so nothing is a gradient. */
+  function stripes(cls) {
+    const polys = [];
+    for (let x = -60; x < p.w + 60; x += 80) polys.push(`<polygon points="${x},0 ${x + 40},0 ${x + 96},56 ${x + 56},56" fill="#d1261c"/>`);
+    return `<svg class="stripes ${cls}" viewBox="0 0 ${p.w} 56" preserveAspectRatio="none" width="${p.w}" height="56">${polys.join("")}</svg>`;
+  }
+
+  /* The calendar's painted scene: a ghat at dawn. Saffron sky, the sun
+     setting into peacock water, steps on the left with a lit diya, and
+     marigold on the water. Flat colour only. */
+  function scene() {
+    const ripples = [];
+    for (let i = 0; i < 9; i++) {
+      const y = 330 + i * i * 4.2 + i * 8;
+      const x = 260 + ((i * 97) % 300);
+      ripples.push(`<rect x="${x}" y="${y.toFixed(1)}" width="${60 + i * 26}" height="${3 + i * 0.6}" fill="#f6e3b4" opacity="0.8"/>`);
+    }
+    const petals = [[420, 400], [610, 452], [520, 520], [760, 560], [330, 590]]
+      .map(([x, y], i) => `<ellipse cx="${x}" cy="${y}" rx="11" ry="6.5" fill="${i === 2 ? "#d9481f" : "#f0b648"}" transform="rotate(${i * 37} ${x} ${y})"/>`).join("");
+    return `<svg class="scene" viewBox="0 0 960 680" preserveAspectRatio="xMidYMid slice">
+      <rect width="960" height="680" fill="#f0b648"/>
+      <circle cx="600" cy="300" r="128" fill="#d9481f"/>
+      <circle cx="600" cy="300" r="160" fill="none" stroke="#7a1a14" stroke-width="4" stroke-dasharray="4 12"/>
+      <rect y="300" width="960" height="380" fill="#1d5a6a"/>
+      <rect x="520" y="320" width="160" height="5" fill="#f0b648"/><rect x="540" y="340" width="120" height="5" fill="#f0b648"/><rect x="560" y="362" width="80" height="5" fill="#f0b648"/>
+      ${ripples.join("")}
+      <polygon points="0,250 150,250 150,330 220,330 220,410 290,410 290,500 360,500 360,680 0,680" fill="#4a0f0b"/>
+      <rect x="0" y="240" width="160" height="10" fill="#e2a93b"/>
+      <path d="M190 312 C198 296 202 290 205 280 C208 290 212 296 220 312 Z" fill="#f6e3b4"/>
+      <path d="M178 314 H232 L224 330 H186 Z" fill="#e2a93b"/>
+      ${petals}
+    </svg>`;
+  }
+
+  const root = document.getElementById("root");
+  if (p.style === "matchbox") {
+    document.body.className = "matchbox" + (p.h < 1500 ? " short" : "");
+    root.innerHTML = `<div class="frame">${wordmark}
+      <div class="label"><div class="inner">
+        <div class="brand caps">${esc(p.brand)}</div>
+        ${emblem()}
+        <div class="name d caps">${esc(p.name)}</div>
+        <div class="tagline">${esc(p.tagline)}</div>
+      </div></div>
+      <div class="grow"></div>
+      <div class="hook d">${esc(p.hook)}</div>
+      <div class="row">
+        <div class="price d"><div class="big${p.seal.big.length > 2 ? " long" : ""}">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div>
+        <div class="go d">snanify.com</div>
+      </div></div>`;
+  } else if (p.style === "signboard") {
+    document.body.className = "signboard" + (p.h < 1500 ? " short" : "");
+    root.innerHTML = `${stripes("top")}<div class="frame">${wordmark}
+      <div class="big d caps"><span class="r">${esc(p.top)}</span>${esc(p.bottom)}</div>
+      <div class="line d">${esc(p.line)}</div>
+      <div class="grow"></div>
+      <div class="panel"><div class="hook d">${esc(p.hook)}</div><div class="sub">${esc(p.sub)}</div></div>
+      <div class="row">
+        <div class="seal d"><div class="big2${p.seal.big.length > 2 ? " long" : ""}">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div>
+        <div class="go d">snanify.com</div>
+      </div></div>${stripes("bottom")}`;
+  } else {
+    document.body.className = "calendar" + (p.h < 1500 ? " short" : "");
+    root.innerHTML = `<div class="frame"><div class="border">
+      <svg class="orn" viewBox="0 0 420 30"><g fill="#e2a93b"><circle cx="210" cy="15" r="10"/><rect x="150" y="13" width="40" height="4"/><rect x="230" y="13" width="40" height="4"/><circle cx="130" cy="15" r="5"/><circle cx="290" cy="15" r="5"/><circle cx="104" cy="15" r="3"/><circle cx="316" cy="15" r="3"/></g></svg>
+      <div class="samvat d">${esc(p.samvat)}</div>
+      ${scene()}
+      <div class="title d">${esc(p.title)}</div>
+      <div class="dates d">${esc(p.dates)}</div>
+      <div class="line">${esc(p.line)}</div>
+      <div class="offer d">${esc(p.offer)}</div>
+      <div class="go d">snanify.com</div>
+    </div></div>`;
+  }
+  document.fonts.ready.then(() => { document.body.dataset.ready = "1"; });
+</script>
+</body>
+</html>

@@ -63,3 +63,66 @@ export const VIDEO = {
     end: { k: "कार्तिक स्नान, 27 अक्टूबर से 24 नवंबर", h: "हर सुबह, तीन मिनट गंगा के साथ।" },
   },
 };
+
+/* The campaign layer: bazaar print, kept off the site (DESIGNSYSTEM.md,
+   Campaigns). Matchbox and signboard are for scroll-stopping ads and the
+   price story; calendar art is for festival days. Same two rules as every
+   word above. `seal` is the price as a label: the figure, and what it buys. */
+export const SEAL = {
+  diaspora: {
+    en: { big: "11", small: "mornings for eleven" },
+    hi: { big: "11", small: "सुबहें, ग्यारह में" },
+  },
+  india: {
+    en: { big: "₹501", small: "for eleven mornings" },
+    hi: { big: "₹501", small: "में ग्यारह सुबहें" },
+  },
+};
+
+export const CAMPAIGN = {
+  matchbox: {
+    en: {
+      brand: "Sankalp brand",
+      name: "Ganga snan",
+      tagline: "Three minutes, six rivers",
+      hook: "Strike a morning. Sit with the Ganga.",
+    },
+    hi: {
+      brand: "संकल्प छाप",
+      name: "गंगा स्नान",
+      tagline: "तीन मिनट, छह नदियाँ",
+      hook: "एक सुबह जलाइए। गंगा के साथ बैठिए।",
+    },
+  },
+  signboard: {
+    en: {
+      top: "Ganga",
+      bottom: "snan",
+      line: "wherever you live",
+      hook: "Send the Ganga home.",
+      sub: "Three minutes each morning. Then a sheet with the family's names, straight to WhatsApp.",
+    },
+    hi: {
+      top: "गंगा",
+      bottom: "स्नान",
+      line: "आप जहाँ भी हों",
+      hook: "गंगा घर भेजिए।",
+      sub: "हर सुबह तीन मिनट। फिर परिवार के नामों वाला पत्र, सीधे WhatsApp पर।",
+    },
+  },
+  /* Kartik 2026. A festival day gets its own entry here, with its own dates. */
+  calendar: {
+    en: {
+      samvat: "Samvat 2083",
+      title: "Kartik snan",
+      dates: "27 October to 24 November",
+      line: "Three minutes with the Ganga each morning, wherever you live.",
+    },
+    hi: {
+      samvat: "संवत् 2083",
+      title: "कार्तिक स्नान",
+      dates: "27 अक्टूबर से 24 नवंबर",
+      line: "हर सुबह तीन मिनट गंगा के साथ, आप जहाँ भी हों।",
+    },
+  },
+};

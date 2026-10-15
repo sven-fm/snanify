@@ -37,7 +37,7 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
    4. *Reference pages.* Done 15 October, with the consent banner, menus and sign-up, and `/snan` in the new voice. `/live`, `/rivers`, `/muhurat`, `/panchang`, `/kumbh`, `/faq`,
       `/about`: rules only in timing tables, labels out.
    5. *Email.* Done 15 October. Sentence-case button, the mauli above the footer, the river's state first.
-   6. *Campaigns.* Matchbox, signboard and calendar-art templates in `ads/src/`; the link
+   6. *Campaigns.* Done 15 October. Matchbox, signboard and calendar-art templates in `ads/src/`; the link
       card in `src/lib/site-card.ts` in matchbox.
 2. **The hydration flake. P2.** React error 418 on 13 of 72 loads in the ten minutes
    after a production deploy, 0 of 118 afterwards, HTML byte-identical, none on a cold
