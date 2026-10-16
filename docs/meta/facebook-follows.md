@@ -53,6 +53,11 @@ Sangam abroad, Kannada koota
 | 2026-10-15 | Page | Sri Venkateswara Temple, Helensburgh, NSW | https://www.facebook.com/SVTSydney | 9.4K followers |
 | 2026-10-15 | Page | Sri Veeramakaliamman Temple, Singapore | https://www.facebook.com/sriveeramakaliammantemple | 100K followers |
 | 2026-10-15 | Group | Chhath Puja group | https://www.facebook.com/groups/862624264680659 | 34.4K members, active within minutes |
+| 2026-10-16 | Page | Bharati Tamil Sangam (Bay Area, Hindu Dharmic traditions) | https://www.facebook.com/BharatiTamilSangam | 6.7K followers |
+| 2026-10-16 | Page | Hindu Temple Dubai | https://www.facebook.com/HinduTempleDubai | 13K followers |
+| 2026-10-16 | Page | BAPS Shri Swaminarayan Mandir, Toronto, ON, Canada | https://www.facebook.com/bapstoronto | 3.3K followers |
+| 2026-10-16 | Group | Australian Hindus | https://www.facebook.com/groups/australianhindus/ | 2.6K members, 388 posts last month |
+| 2026-10-16 | Group | International Hindu Temples Around The World | https://www.facebook.com/groups/358530304922398/ | 4.1K members, 144 posts last month |
 
 ## Needs Sven
 
@@ -85,6 +90,10 @@ Looked at and left, so the task does not look again.
 | 2026-10-15 | Shri Shiva Vishnu Temple - Melbourne | https://www.facebook.com/ShivaVishnuTempleMelbourne | Last post January 2021 |
 | 2026-10-15 | Gujarati Samaj Usa | https://www.facebook.com/groups/gujaratisamajusa/ | Clothing and shopping promotions |
 | 2026-10-15 | Chhath puja 2025🚩 | https://www.facebook.com/groups/790184252102739/ | Phone-screen live streams and promo posters |
+| 2026-10-16 | Indians in UK - stay connected | https://www.facebook.com/groups/539668678816980/ | Brand promotions and AI content |
+| 2026-10-16 | Marathi Mandal Sacramento (MMSac) | https://www.facebook.com/marathimandalsacramento | Last post August 2025 |
+| 2026-10-16 | Indian Community Center of San Antonio | https://www.facebook.com/groups/1113341805352478/ | Jewellery ads and flatmate posts |
+| 2026-10-16 | छठ पूजा (Chhath Puja) | https://www.facebook.com/groups/chathpuja/ | Viral hashtag posts and AI images, off topic |
 
 ## Runs
 
@@ -93,3 +102,4 @@ Looked at and left, so the task does not look again.
 | 2026-10-13 | 5 (2 groups, 3 Pages) | Terms: Ganga aarti, Har Ki Pauri, Haridwar, Prayagraj Sangam, Kumbh Mela, Mathura Vrindavan, Ujjain Mahakal, Nashik Ram Kund, Talakaveri, Kartik maas, Ekadashi vrat, Hindu panchang, Chhath puja USA. Next run starts at Hindu temple New Jersey. Acted as Snanify throughout; both groups joined at once with no questions. Pages search mostly returns dormant fan pages, creators and astrology sellers; the official institution Pages and the groups are the better finds. No warnings. |
 | 2026-10-14 | 5 (2 groups, 3 Pages) | Terms: Hindu temple New Jersey, Hindu temple Houston, Hindu temple Toronto (groups), Neasden Mandir, Hindu temple London (groups). Next run starts at Hindu Council UK. Acted as Snanify throughout; both groups joined at once with no questions. Temple Page searches are crowded with small priest-for-hire Pages; the official temple Pages are easy to tell apart. No warnings. |
 | 2026-10-15 | 4 (1 group, 3 Pages) | Terms: Hindu Council UK, Indians in Dubai (groups), Indians in Abu Dhabi, Indians in Qatar (groups), Indians in Sydney (groups), Indians in Melbourne (searched as Hindu Melbourne), Indians in Singapore, Indians in Canada (searched as Hindus in Canada), Bihari community abroad, Gujarati samaj, plus Chhath Puja from the calendar list. Next run starts at Indians in UK. Acted as Snanify throughout. Generic diaspora groups are nearly all classifieds (rooms, jobs, ads), so the Pages came from naming each city's main temple directly (BAPS Abu Dhabi, SVT Sydney, Veeramakaliamman Singapore). Joining the private Indians in Sydney group created a pending request before its questions showed; the task cancelled the dialog and withdrew the request (confirmed after reload). Stopped at 4 rather than join a weak fifth. No warnings. |
+| 2026-10-16 | 5 (2 groups, 3 Pages) | Terms: Indians in UK (groups), Marathi mandal abroad, Tamil Sangam abroad, Kannada koota (Pages), Indian community USA (groups). That finishes the list; beyond it the run searched Kartik Purnima (groups, all under 100 members), Hindu Temple Dubai, BAPS Mandir Toronto, Chhath Puja UK (groups), Hindu temple Canada, Hindu temple Sydney and Mandir UK (groups). The list is used up: the next run should start over with new terms, or Sven can add some. Acted as Snanify throughout; both groups joined at once with no questions. The Chrome extension now names Browser 1 (same deviceId) "SvenBook". Hindus in Sydney (private, 6.6K) showed a Visit button rather than Join and was left alone. No warnings. |
