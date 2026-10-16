@@ -1,0 +1,2482 @@
+{
+ "2026-10-17": {
+  "ganga-haridwar": {
+   "sunrise": "06:20",
+   "brahma": "04:39–05:29",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:01",
+   "brahma": "04:22–05:11",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:20",
+   "brahma": "04:40–05:30",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:30",
+   "brahma": "04:51–05:40",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:24",
+   "brahma": "04:45–05:34",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:18",
+   "brahma": "04:40–05:29",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "new-york": {
+   "date": "2026-10-17",
+   "sunrise": "07:09",
+   "brahma": "05:25–06:17",
+   "tithi": "shukla Saptami"
+  },
+  "london": {
+   "date": "2026-10-17",
+   "sunrise": "07:27",
+   "brahma": "05:40–06:34",
+   "tithi": "shukla Saptami"
+  },
+  "toronto": {
+   "date": "2026-10-17",
+   "sunrise": "07:34",
+   "brahma": "05:49–06:42",
+   "tithi": "shukla Saptami"
+  },
+  "dubai": {
+   "date": "2026-10-17",
+   "sunrise": "06:18",
+   "brahma": "04:38–05:28",
+   "tithi": "shukla Saptami"
+  },
+  "houston": {
+   "date": "2026-10-17",
+   "sunrise": "07:24",
+   "brahma": "05:43–06:34",
+   "tithi": "shukla Saptami"
+  },
+  "sydney": {
+   "date": "2026-10-17",
+   "sunrise": "06:11",
+   "brahma": "04:43–05:27",
+   "tithi": "shukla Shashthi"
+  },
+  "singapore": {
+   "date": "2026-10-17",
+   "sunrise": "06:47",
+   "brahma": "05:12–06:00",
+   "tithi": "shukla Shashthi"
+  },
+  "edison": {
+   "date": "2026-10-17",
+   "sunrise": "07:10",
+   "brahma": "05:27–06:19",
+   "tithi": "shukla Saptami"
+  }
+ },
+ "2026-10-18": {
+  "ganga-haridwar": {
+   "sunrise": "06:20",
+   "brahma": "04:39–05:30",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:02",
+   "brahma": "04:22–05:12",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:20",
+   "brahma": "04:40–05:30",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:30",
+   "brahma": "04:51–05:41",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:25",
+   "brahma": "04:45–05:35",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:18",
+   "brahma": "04:40–05:29",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "new-york": {
+   "date": "2026-10-18",
+   "sunrise": "07:10",
+   "brahma": "05:26–06:18",
+   "tithi": "shukla Ashtami"
+  },
+  "london": {
+   "date": "2026-10-18",
+   "sunrise": "07:29",
+   "brahma": "05:41–06:35",
+   "tithi": "shukla Ashtami"
+  },
+  "toronto": {
+   "date": "2026-10-18",
+   "sunrise": "07:35",
+   "brahma": "05:50–06:43",
+   "tithi": "shukla Ashtami"
+  },
+  "dubai": {
+   "date": "2026-10-18",
+   "sunrise": "06:18",
+   "brahma": "04:38–05:28",
+   "tithi": "shukla Saptami"
+  },
+  "houston": {
+   "date": "2026-10-18",
+   "sunrise": "07:25",
+   "brahma": "05:44–06:34",
+   "tithi": "shukla Ashtami"
+  },
+  "sydney": {
+   "date": "2026-10-18",
+   "sunrise": "06:10",
+   "brahma": "04:42–05:26",
+   "tithi": "shukla Saptami"
+  },
+  "singapore": {
+   "date": "2026-10-18",
+   "sunrise": "06:47",
+   "brahma": "05:12–05:59",
+   "tithi": "shukla Saptami"
+  },
+  "edison": {
+   "date": "2026-10-18",
+   "sunrise": "07:11",
+   "brahma": "05:28–06:20",
+   "tithi": "shukla Ashtami"
+  }
+ },
+ "2026-10-19": {
+  "ganga-haridwar": {
+   "sunrise": "06:21",
+   "brahma": "04:40–05:31",
+   "tithi": "shukla Ashtami (अष्टमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:02",
+   "brahma": "04:22–05:12",
+   "tithi": "shukla Ashtami (अष्टमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:21",
+   "brahma": "04:40–05:31",
+   "tithi": "shukla Ashtami (अष्टमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:30",
+   "brahma": "04:51–05:41",
+   "tithi": "shukla Ashtami (अष्टमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:25",
+   "brahma": "04:45–05:35",
+   "tithi": "shukla Ashtami (अष्टमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:18",
+   "brahma": "04:40–05:29",
+   "tithi": "shukla Ashtami (अष्टमी)"
+  },
+  "new-york": {
+   "date": "2026-10-19",
+   "sunrise": "07:11",
+   "brahma": "05:27–06:19",
+   "tithi": "shukla Navami"
+  },
+  "london": {
+   "date": "2026-10-19",
+   "sunrise": "07:31",
+   "brahma": "05:42–06:37",
+   "tithi": "shukla Navami"
+  },
+  "toronto": {
+   "date": "2026-10-19",
+   "sunrise": "07:36",
+   "brahma": "05:51–06:44",
+   "tithi": "shukla Navami"
+  },
+  "dubai": {
+   "date": "2026-10-19",
+   "sunrise": "06:19",
+   "brahma": "04:39–05:29",
+   "tithi": "shukla Ashtami"
+  },
+  "houston": {
+   "date": "2026-10-19",
+   "sunrise": "07:25",
+   "brahma": "05:44–06:35",
+   "tithi": "shukla Navami"
+  },
+  "sydney": {
+   "date": "2026-10-19",
+   "sunrise": "06:09",
+   "brahma": "04:41–05:25",
+   "tithi": "shukla Ashtami"
+  },
+  "singapore": {
+   "date": "2026-10-19",
+   "sunrise": "06:47",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Ashtami"
+  },
+  "edison": {
+   "date": "2026-10-19",
+   "sunrise": "07:13",
+   "brahma": "05:28–06:20",
+   "tithi": "shukla Navami"
+  }
+ },
+ "2026-10-20": {
+  "ganga-haridwar": {
+   "sunrise": "06:22",
+   "brahma": "04:40–05:31",
+   "tithi": "shukla Navami (नवमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:03",
+   "brahma": "04:23–05:13",
+   "tithi": "shukla Navami (नवमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:22",
+   "brahma": "04:41–05:31",
+   "tithi": "shukla Navami (नवमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:31",
+   "brahma": "04:52–05:41",
+   "tithi": "shukla Navami (नवमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:25",
+   "brahma": "04:46–05:36",
+   "tithi": "shukla Navami (नवमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:18",
+   "brahma": "04:41–05:29",
+   "tithi": "shukla Navami (नवमी)"
+  },
+  "new-york": {
+   "date": "2026-10-20",
+   "sunrise": "07:12",
+   "brahma": "05:28–06:20",
+   "tithi": "shukla Dashami"
+  },
+  "london": {
+   "date": "2026-10-20",
+   "sunrise": "07:32",
+   "brahma": "05:44–06:38",
+   "tithi": "shukla Navami"
+  },
+  "toronto": {
+   "date": "2026-10-20",
+   "sunrise": "07:38",
+   "brahma": "05:52–06:45",
+   "tithi": "shukla Dashami"
+  },
+  "dubai": {
+   "date": "2026-10-20",
+   "sunrise": "06:19",
+   "brahma": "04:39–05:29",
+   "tithi": "shukla Navami"
+  },
+  "houston": {
+   "date": "2026-10-20",
+   "sunrise": "07:26",
+   "brahma": "05:45–06:35",
+   "tithi": "shukla Dashami"
+  },
+  "sydney": {
+   "date": "2026-10-20",
+   "sunrise": "06:08",
+   "brahma": "04:40–05:24",
+   "tithi": "shukla Navami"
+  },
+  "singapore": {
+   "date": "2026-10-20",
+   "sunrise": "06:47",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Navami"
+  },
+  "edison": {
+   "date": "2026-10-20",
+   "sunrise": "07:14",
+   "brahma": "05:29–06:21",
+   "tithi": "shukla Dashami"
+  }
+ },
+ "2026-10-21": {
+  "ganga-haridwar": {
+   "sunrise": "06:22",
+   "brahma": "04:41–05:32",
+   "tithi": "shukla Dashami (दशमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:03",
+   "brahma": "04:23–05:13",
+   "tithi": "shukla Dashami (दशमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:22",
+   "brahma": "04:41–05:32",
+   "tithi": "shukla Dashami (दशमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:31",
+   "brahma": "04:52–05:41",
+   "tithi": "shukla Dashami (दशमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:26",
+   "brahma": "04:46–05:36",
+   "tithi": "shukla Dashami (दशमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:18",
+   "brahma": "04:41–05:29",
+   "tithi": "shukla Dashami (दशमी)"
+  },
+  "new-york": {
+   "date": "2026-10-21",
+   "sunrise": "07:13",
+   "brahma": "05:28–06:21",
+   "tithi": "shukla Ekadashi"
+  },
+  "london": {
+   "date": "2026-10-21",
+   "sunrise": "07:34",
+   "brahma": "05:45–06:40",
+   "tithi": "shukla Dashami"
+  },
+  "toronto": {
+   "date": "2026-10-21",
+   "sunrise": "07:39",
+   "brahma": "05:53–06:46",
+   "tithi": "shukla Ekadashi"
+  },
+  "dubai": {
+   "date": "2026-10-21",
+   "sunrise": "06:20",
+   "brahma": "04:39–05:29",
+   "tithi": "shukla Dashami"
+  },
+  "houston": {
+   "date": "2026-10-21",
+   "sunrise": "07:27",
+   "brahma": "05:45–06:36",
+   "tithi": "shukla Ekadashi"
+  },
+  "sydney": {
+   "date": "2026-10-21",
+   "sunrise": "06:07",
+   "brahma": "04:39–05:23",
+   "tithi": "shukla Dashami"
+  },
+  "singapore": {
+   "date": "2026-10-21",
+   "sunrise": "06:47",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Dashami"
+  },
+  "edison": {
+   "date": "2026-10-21",
+   "sunrise": "07:15",
+   "brahma": "05:30–06:22",
+   "tithi": "shukla Ekadashi"
+  }
+ },
+ "2026-10-22": {
+  "ganga-haridwar": {
+   "sunrise": "06:23",
+   "brahma": "04:41–05:32",
+   "tithi": "shukla Ekadashi (एकादशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:04",
+   "brahma": "04:23–05:14",
+   "tithi": "shukla Ekadashi (एकादशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:23",
+   "brahma": "04:41–05:32",
+   "tithi": "shukla Ekadashi (एकादशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:31",
+   "brahma": "04:52–05:42",
+   "tithi": "shukla Ekadashi (एकादशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:26",
+   "brahma": "04:46–05:36",
+   "tithi": "shukla Ekadashi (एकादशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:18",
+   "brahma": "04:41–05:30",
+   "tithi": "shukla Ekadashi (एकादशी)"
+  },
+  "new-york": {
+   "date": "2026-10-22",
+   "sunrise": "07:15",
+   "brahma": "05:29–06:22",
+   "tithi": "shukla Dwadashi"
+  },
+  "london": {
+   "date": "2026-10-22",
+   "sunrise": "07:36",
+   "brahma": "05:46–06:41",
+   "tithi": "shukla Ekadashi"
+  },
+  "toronto": {
+   "date": "2026-10-22",
+   "sunrise": "07:40",
+   "brahma": "05:54–06:47",
+   "tithi": "shukla Dwadashi"
+  },
+  "dubai": {
+   "date": "2026-10-22",
+   "sunrise": "06:20",
+   "brahma": "04:40–05:30",
+   "tithi": "shukla Ekadashi"
+  },
+  "houston": {
+   "date": "2026-10-22",
+   "sunrise": "07:27",
+   "brahma": "05:46–06:36",
+   "tithi": "shukla Dwadashi"
+  },
+  "sydney": {
+   "date": "2026-10-22",
+   "sunrise": "06:05",
+   "brahma": "04:38–05:22",
+   "tithi": "shukla Ekadashi"
+  },
+  "singapore": {
+   "date": "2026-10-22",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Ekadashi"
+  },
+  "edison": {
+   "date": "2026-10-22",
+   "sunrise": "07:16",
+   "brahma": "05:31–06:23",
+   "tithi": "shukla Dwadashi"
+  }
+ },
+ "2026-10-23": {
+  "ganga-haridwar": {
+   "sunrise": "06:24",
+   "brahma": "04:42–05:33",
+   "tithi": "shukla Dwadashi (द्वादशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:04",
+   "brahma": "04:24–05:14",
+   "tithi": "shukla Dwadashi (द्वादशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:23",
+   "brahma": "04:42–05:33",
+   "tithi": "shukla Dwadashi (द्वादशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:32",
+   "brahma": "04:52–05:42",
+   "tithi": "shukla Dwadashi (द्वादशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:27",
+   "brahma": "04:47–05:37",
+   "tithi": "shukla Dwadashi (द्वादशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:19",
+   "brahma": "04:41–05:30",
+   "tithi": "shukla Dwadashi (द्वादशी)"
+  },
+  "new-york": {
+   "date": "2026-10-23",
+   "sunrise": "07:16",
+   "brahma": "05:30–06:23",
+   "tithi": "shukla Trayodashi"
+  },
+  "london": {
+   "date": "2026-10-23",
+   "sunrise": "07:38",
+   "brahma": "05:47–06:43",
+   "tithi": "shukla Dwadashi"
+  },
+  "toronto": {
+   "date": "2026-10-23",
+   "sunrise": "07:41",
+   "brahma": "05:55–06:48",
+   "tithi": "shukla Trayodashi"
+  },
+  "dubai": {
+   "date": "2026-10-23",
+   "sunrise": "06:21",
+   "brahma": "04:40–05:30",
+   "tithi": "shukla Dwadashi"
+  },
+  "houston": {
+   "date": "2026-10-23",
+   "sunrise": "07:28",
+   "brahma": "05:46–06:37",
+   "tithi": "shukla Trayodashi"
+  },
+  "sydney": {
+   "date": "2026-10-23",
+   "sunrise": "06:04",
+   "brahma": "04:38–05:21",
+   "tithi": "shukla Dwadashi"
+  },
+  "singapore": {
+   "date": "2026-10-23",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Dwadashi"
+  },
+  "edison": {
+   "date": "2026-10-23",
+   "sunrise": "07:17",
+   "brahma": "05:31–06:24",
+   "tithi": "shukla Trayodashi"
+  }
+ },
+ "2026-10-24": {
+  "ganga-haridwar": {
+   "sunrise": "06:25",
+   "brahma": "04:42–05:33",
+   "tithi": "shukla Trayodashi (त्रयोदशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:05",
+   "brahma": "04:24–05:14",
+   "tithi": "shukla Trayodashi (त्रयोदशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:24",
+   "brahma": "04:42–05:33",
+   "tithi": "shukla Trayodashi (त्रयोदशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:32",
+   "brahma": "04:53–05:42",
+   "tithi": "shukla Trayodashi (त्रयोदशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:27",
+   "brahma": "04:47–05:37",
+   "tithi": "shukla Trayodashi (त्रयोदशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:19",
+   "brahma": "04:41–05:30",
+   "tithi": "shukla Trayodashi (त्रयोदशी)"
+  },
+  "new-york": {
+   "date": "2026-10-24",
+   "sunrise": "07:17",
+   "brahma": "05:31–06:24",
+   "tithi": "shukla Chaturdashi"
+  },
+  "london": {
+   "date": "2026-10-24",
+   "sunrise": "07:39",
+   "brahma": "05:49–06:44",
+   "tithi": "shukla Trayodashi"
+  },
+  "toronto": {
+   "date": "2026-10-24",
+   "sunrise": "07:43",
+   "brahma": "05:55–06:49",
+   "tithi": "shukla Chaturdashi"
+  },
+  "dubai": {
+   "date": "2026-10-24",
+   "sunrise": "06:21",
+   "brahma": "04:40–05:31",
+   "tithi": "shukla Trayodashi"
+  },
+  "houston": {
+   "date": "2026-10-24",
+   "sunrise": "07:29",
+   "brahma": "05:46–06:38",
+   "tithi": "shukla Chaturdashi"
+  },
+  "sydney": {
+   "date": "2026-10-24",
+   "sunrise": "06:03",
+   "brahma": "04:37–05:20",
+   "tithi": "shukla Trayodashi"
+  },
+  "singapore": {
+   "date": "2026-10-24",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Trayodashi"
+  },
+  "edison": {
+   "date": "2026-10-24",
+   "sunrise": "07:18",
+   "brahma": "05:32–06:25",
+   "tithi": "shukla Chaturdashi"
+  }
+ },
+ "2026-10-25": {
+  "ganga-haridwar": {
+   "sunrise": "06:25",
+   "brahma": "04:43–05:34",
+   "tithi": "shukla Chaturdashi (चतुर्दशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:06",
+   "brahma": "04:24–05:15",
+   "tithi": "shukla Chaturdashi (चतुर्दशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:25",
+   "brahma": "04:43–05:34",
+   "tithi": "shukla Chaturdashi (चतुर्दशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:33",
+   "brahma": "04:53–05:43",
+   "tithi": "shukla Chaturdashi (चतुर्दशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:28",
+   "brahma": "04:47–05:37",
+   "tithi": "shukla Chaturdashi (चतुर्दशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:19",
+   "brahma": "04:41–05:30",
+   "tithi": "shukla Chaturdashi (चतुर्दशी)"
+  },
+  "new-york": {
+   "date": "2026-10-25",
+   "sunrise": "07:18",
+   "brahma": "05:32–06:25",
+   "tithi": "shukla Purnima"
+  },
+  "london": {
+   "date": "2026-10-25",
+   "sunrise": "06:41",
+   "brahma": "04:50–05:45",
+   "tithi": "shukla Purnima"
+  },
+  "toronto": {
+   "date": "2026-10-25",
+   "sunrise": "07:44",
+   "brahma": "05:56–06:50",
+   "tithi": "shukla Purnima"
+  },
+  "dubai": {
+   "date": "2026-10-25",
+   "sunrise": "06:22",
+   "brahma": "04:41–05:31",
+   "tithi": "shukla Chaturdashi"
+  },
+  "houston": {
+   "date": "2026-10-25",
+   "sunrise": "07:30",
+   "brahma": "05:47–06:38",
+   "tithi": "shukla Purnima"
+  },
+  "sydney": {
+   "date": "2026-10-25",
+   "sunrise": "06:02",
+   "brahma": "04:36–05:19",
+   "tithi": "shukla Chaturdashi"
+  },
+  "singapore": {
+   "date": "2026-10-25",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:58",
+   "tithi": "shukla Chaturdashi"
+  },
+  "edison": {
+   "date": "2026-10-25",
+   "sunrise": "07:19",
+   "brahma": "05:33–06:26",
+   "tithi": "shukla Purnima"
+  }
+ },
+ "2026-10-26": {
+  "ganga-haridwar": {
+   "sunrise": "06:26",
+   "brahma": "04:43–05:35",
+   "tithi": "shukla Purnima (पूर्णिमा)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:06",
+   "brahma": "04:25–05:15",
+   "tithi": "shukla Purnima (पूर्णिमा)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:25",
+   "brahma": "04:43–05:34",
+   "tithi": "shukla Purnima (पूर्णिमा)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:33",
+   "brahma": "04:53–05:43",
+   "tithi": "shukla Purnima (पूर्णिमा)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:28",
+   "brahma": "04:47–05:38",
+   "tithi": "shukla Purnima (पूर्णिमा)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:19",
+   "brahma": "04:41–05:30",
+   "tithi": "shukla Purnima (पूर्णिमा)"
+  },
+  "new-york": {
+   "date": "2026-10-26",
+   "sunrise": "07:19",
+   "brahma": "05:32–06:26",
+   "tithi": "krishna Pratipada"
+  },
+  "london": {
+   "date": "2026-10-26",
+   "sunrise": "06:43",
+   "brahma": "04:51–05:47",
+   "tithi": "krishna Pratipada"
+  },
+  "toronto": {
+   "date": "2026-10-26",
+   "sunrise": "07:45",
+   "brahma": "05:57–06:51",
+   "tithi": "krishna Pratipada"
+  },
+  "dubai": {
+   "date": "2026-10-26",
+   "sunrise": "06:22",
+   "brahma": "04:41–05:32",
+   "tithi": "shukla Purnima"
+  },
+  "houston": {
+   "date": "2026-10-26",
+   "sunrise": "07:30",
+   "brahma": "05:47–06:39",
+   "tithi": "krishna Pratipada"
+  },
+  "sydney": {
+   "date": "2026-10-26",
+   "sunrise": "06:01",
+   "brahma": "04:35–05:18",
+   "tithi": "shukla Purnima"
+  },
+  "singapore": {
+   "date": "2026-10-26",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:58",
+   "tithi": "shukla Purnima"
+  },
+  "edison": {
+   "date": "2026-10-26",
+   "sunrise": "07:20",
+   "brahma": "05:34–06:27",
+   "tithi": "krishna Pratipada"
+  }
+ },
+ "2026-10-27": {
+  "ganga-haridwar": {
+   "sunrise": "06:27",
+   "brahma": "04:44–05:35",
+   "tithi": "krishna Pratipada (प्रतिपदा)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:07",
+   "brahma": "04:25–05:16",
+   "tithi": "krishna Pratipada (प्रतिपदा)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:26",
+   "brahma": "04:44–05:35",
+   "tithi": "krishna Pratipada (प्रतिपदा)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:33",
+   "brahma": "04:53–05:43",
+   "tithi": "krishna Pratipada (प्रतिपदा)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:29",
+   "brahma": "04:48–05:38",
+   "tithi": "krishna Pratipada (प्रतिपदा)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:19",
+   "brahma": "04:41–05:30",
+   "tithi": "krishna Pratipada (प्रतिपदा)"
+  },
+  "new-york": {
+   "date": "2026-10-27",
+   "sunrise": "07:20",
+   "brahma": "05:33–06:27",
+   "tithi": "krishna Dwitiya"
+  },
+  "london": {
+   "date": "2026-10-27",
+   "sunrise": "06:45",
+   "brahma": "04:52–05:48",
+   "tithi": "krishna Dwitiya"
+  },
+  "toronto": {
+   "date": "2026-10-27",
+   "sunrise": "07:46",
+   "brahma": "05:58–06:52",
+   "tithi": "krishna Dwitiya"
+  },
+  "dubai": {
+   "date": "2026-10-27",
+   "sunrise": "06:23",
+   "brahma": "04:41–05:32",
+   "tithi": "krishna Dwitiya"
+  },
+  "houston": {
+   "date": "2026-10-27",
+   "sunrise": "07:31",
+   "brahma": "05:48–06:39",
+   "tithi": "krishna Dwitiya"
+  },
+  "sydney": {
+   "date": "2026-10-27",
+   "sunrise": "06:00",
+   "brahma": "04:34–05:17",
+   "tithi": "krishna Pratipada"
+  },
+  "singapore": {
+   "date": "2026-10-27",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:58",
+   "tithi": "krishna Pratipada"
+  },
+  "edison": {
+   "date": "2026-10-27",
+   "sunrise": "07:21",
+   "brahma": "05:35–06:28",
+   "tithi": "krishna Dwitiya"
+  }
+ },
+ "2026-10-28": {
+  "ganga-haridwar": {
+   "sunrise": "06:27",
+   "brahma": "04:44–05:36",
+   "tithi": "krishna Tritiya (तृतीया)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:07",
+   "brahma": "04:26–05:16",
+   "tithi": "krishna Tritiya (तृतीया)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:26",
+   "brahma": "04:44–05:35",
+   "tithi": "krishna Tritiya (तृतीया)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:34",
+   "brahma": "04:54–05:44",
+   "tithi": "krishna Tritiya (तृतीया)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:29",
+   "brahma": "04:48–05:39",
+   "tithi": "krishna Tritiya (तृतीया)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:20",
+   "brahma": "04:41–05:30",
+   "tithi": "krishna Tritiya (तृतीया)"
+  },
+  "new-york": {
+   "date": "2026-10-28",
+   "sunrise": "07:21",
+   "brahma": "05:34–06:28",
+   "tithi": "krishna Tritiya"
+  },
+  "london": {
+   "date": "2026-10-28",
+   "sunrise": "06:46",
+   "brahma": "04:54–05:50",
+   "tithi": "krishna Tritiya"
+  },
+  "toronto": {
+   "date": "2026-10-28",
+   "sunrise": "07:48",
+   "brahma": "05:59–06:53",
+   "tithi": "krishna Tritiya"
+  },
+  "dubai": {
+   "date": "2026-10-28",
+   "sunrise": "06:24",
+   "brahma": "04:42–05:33",
+   "tithi": "krishna Tritiya"
+  },
+  "houston": {
+   "date": "2026-10-28",
+   "sunrise": "07:32",
+   "brahma": "05:48–06:40",
+   "tithi": "krishna Tritiya"
+  },
+  "sydney": {
+   "date": "2026-10-28",
+   "sunrise": "05:59",
+   "brahma": "04:33–05:16",
+   "tithi": "krishna Dwitiya"
+  },
+  "singapore": {
+   "date": "2026-10-28",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Tritiya"
+  },
+  "edison": {
+   "date": "2026-10-28",
+   "sunrise": "07:23",
+   "brahma": "05:35–06:29",
+   "tithi": "krishna Tritiya"
+  }
+ },
+ "2026-10-29": {
+  "ganga-haridwar": {
+   "sunrise": "06:28",
+   "brahma": "04:45–05:36",
+   "tithi": "krishna Chaturthi (चतुर्थी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:08",
+   "brahma": "04:26–05:17",
+   "tithi": "krishna Chaturthi (चतुर्थी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:27",
+   "brahma": "04:45–05:36",
+   "tithi": "krishna Chaturthi (चतुर्थी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:34",
+   "brahma": "04:54–05:44",
+   "tithi": "krishna Chaturthi (चतुर्थी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:30",
+   "brahma": "04:49–05:39",
+   "tithi": "krishna Chaturthi (चतुर्थी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:20",
+   "brahma": "04:41–05:31",
+   "tithi": "krishna Chaturthi (चतुर्थी)"
+  },
+  "new-york": {
+   "date": "2026-10-29",
+   "sunrise": "07:22",
+   "brahma": "05:35–06:29",
+   "tithi": "krishna Chaturthi"
+  },
+  "london": {
+   "date": "2026-10-29",
+   "sunrise": "06:48",
+   "brahma": "04:55–05:52",
+   "tithi": "krishna Chaturthi"
+  },
+  "toronto": {
+   "date": "2026-10-29",
+   "sunrise": "07:49",
+   "brahma": "06:00–06:55",
+   "tithi": "krishna Chaturthi"
+  },
+  "dubai": {
+   "date": "2026-10-29",
+   "sunrise": "06:24",
+   "brahma": "04:42–05:33",
+   "tithi": "krishna Chaturthi"
+  },
+  "houston": {
+   "date": "2026-10-29",
+   "sunrise": "07:32",
+   "brahma": "05:49–06:41",
+   "tithi": "krishna Chaturthi"
+  },
+  "sydney": {
+   "date": "2026-10-29",
+   "sunrise": "05:58",
+   "brahma": "04:33–05:15",
+   "tithi": "krishna Tritiya"
+  },
+  "singapore": {
+   "date": "2026-10-29",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Chaturthi"
+  },
+  "edison": {
+   "date": "2026-10-29",
+   "sunrise": "07:24",
+   "brahma": "05:36–06:30",
+   "tithi": "krishna Chaturthi"
+  }
+ },
+ "2026-10-30": {
+  "ganga-haridwar": {
+   "sunrise": "06:29",
+   "brahma": "04:45–05:37",
+   "tithi": "krishna Panchami (पंचमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:08",
+   "brahma": "04:26–05:17",
+   "tithi": "krishna Panchami (पंचमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:28",
+   "brahma": "04:45–05:36",
+   "tithi": "krishna Panchami (पंचमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:35",
+   "brahma": "04:54–05:45",
+   "tithi": "krishna Panchami (पंचमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:30",
+   "brahma": "04:49–05:40",
+   "tithi": "krishna Panchami (पंचमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:20",
+   "brahma": "04:42–05:31",
+   "tithi": "krishna Panchami (पंचमी)"
+  },
+  "new-york": {
+   "date": "2026-10-30",
+   "sunrise": "07:24",
+   "brahma": "05:36–06:30",
+   "tithi": "krishna Panchami"
+  },
+  "london": {
+   "date": "2026-10-30",
+   "sunrise": "06:50",
+   "brahma": "04:56–05:53",
+   "tithi": "krishna Panchami"
+  },
+  "toronto": {
+   "date": "2026-10-30",
+   "sunrise": "07:50",
+   "brahma": "06:01–06:56",
+   "tithi": "krishna Panchami"
+  },
+  "dubai": {
+   "date": "2026-10-30",
+   "sunrise": "06:25",
+   "brahma": "04:43–05:34",
+   "tithi": "krishna Panchami"
+  },
+  "houston": {
+   "date": "2026-10-30",
+   "sunrise": "07:33",
+   "brahma": "05:49–06:41",
+   "tithi": "krishna Panchami"
+  },
+  "sydney": {
+   "date": "2026-10-30",
+   "sunrise": "05:57",
+   "brahma": "04:32–05:14",
+   "tithi": "krishna Panchami"
+  },
+  "singapore": {
+   "date": "2026-10-30",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Panchami"
+  },
+  "edison": {
+   "date": "2026-10-30",
+   "sunrise": "07:25",
+   "brahma": "05:37–06:31",
+   "tithi": "krishna Panchami"
+  }
+ },
+ "2026-10-31": {
+  "ganga-haridwar": {
+   "sunrise": "06:30",
+   "brahma": "04:46–05:38",
+   "tithi": "krishna Shashthi (षष्ठी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:09",
+   "brahma": "04:27–05:18",
+   "tithi": "krishna Shashthi (षष्ठी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:28",
+   "brahma": "04:45–05:37",
+   "tithi": "krishna Shashthi (षष्ठी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:35",
+   "brahma": "04:55–05:45",
+   "tithi": "krishna Shashthi (षष्ठी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:31",
+   "brahma": "04:49–05:40",
+   "tithi": "krishna Shashthi (षष्ठी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:20",
+   "brahma": "04:42–05:31",
+   "tithi": "krishna Shashthi (षष्ठी)"
+  },
+  "new-york": {
+   "date": "2026-10-31",
+   "sunrise": "07:25",
+   "brahma": "05:37–06:31",
+   "tithi": "krishna Shashthi"
+  },
+  "london": {
+   "date": "2026-10-31",
+   "sunrise": "06:52",
+   "brahma": "04:57–05:55",
+   "tithi": "krishna Shashthi"
+  },
+  "toronto": {
+   "date": "2026-10-31",
+   "sunrise": "07:52",
+   "brahma": "06:02–06:57",
+   "tithi": "krishna Saptami"
+  },
+  "dubai": {
+   "date": "2026-10-31",
+   "sunrise": "06:25",
+   "brahma": "04:43–05:34",
+   "tithi": "krishna Shashthi"
+  },
+  "houston": {
+   "date": "2026-10-31",
+   "sunrise": "07:34",
+   "brahma": "05:50–06:42",
+   "tithi": "krishna Saptami"
+  },
+  "sydney": {
+   "date": "2026-10-31",
+   "sunrise": "05:56",
+   "brahma": "04:31–05:13",
+   "tithi": "krishna Shashthi"
+  },
+  "singapore": {
+   "date": "2026-10-31",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Shashthi"
+  },
+  "edison": {
+   "date": "2026-10-31",
+   "sunrise": "07:26",
+   "brahma": "05:38–06:32",
+   "tithi": "krishna Shashthi"
+  }
+ },
+ "2026-11-01": {
+  "ganga-haridwar": {
+   "sunrise": "06:30",
+   "brahma": "04:46–05:38",
+   "tithi": "krishna Saptami (सप्तमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:10",
+   "brahma": "04:27–05:18",
+   "tithi": "krishna Saptami (सप्तमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:29",
+   "brahma": "04:46–05:38",
+   "tithi": "krishna Saptami (सप्तमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:36",
+   "brahma": "04:55–05:45",
+   "tithi": "krishna Saptami (सप्तमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:31",
+   "brahma": "04:50–05:41",
+   "tithi": "krishna Saptami (सप्तमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:20",
+   "brahma": "04:42–05:31",
+   "tithi": "krishna Saptami (सप्तमी)"
+  },
+  "new-york": {
+   "date": "2026-11-01",
+   "sunrise": "06:26",
+   "brahma": "04:37–05:32",
+   "tithi": "krishna Ashtami"
+  },
+  "london": {
+   "date": "2026-11-01",
+   "sunrise": "06:53",
+   "brahma": "04:59–05:56",
+   "tithi": "krishna Saptami"
+  },
+  "toronto": {
+   "date": "2026-11-01",
+   "sunrise": "06:53",
+   "brahma": "05:03–05:58",
+   "tithi": "krishna Ashtami"
+  },
+  "dubai": {
+   "date": "2026-11-01",
+   "sunrise": "06:26",
+   "brahma": "04:44–05:35",
+   "tithi": "krishna Saptami"
+  },
+  "houston": {
+   "date": "2026-11-01",
+   "sunrise": "06:35",
+   "brahma": "04:51–05:43",
+   "tithi": "krishna Ashtami"
+  },
+  "sydney": {
+   "date": "2026-11-01",
+   "sunrise": "05:55",
+   "brahma": "04:30–05:13",
+   "tithi": "krishna Saptami"
+  },
+  "singapore": {
+   "date": "2026-11-01",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Saptami"
+  },
+  "edison": {
+   "date": "2026-11-01",
+   "sunrise": "06:27",
+   "brahma": "04:39–05:33",
+   "tithi": "krishna Ashtami"
+  }
+ },
+ "2026-11-02": {
+  "ganga-haridwar": {
+   "sunrise": "06:31",
+   "brahma": "04:47–05:39",
+   "tithi": "krishna Ashtami (अष्टमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:10",
+   "brahma": "04:28–05:19",
+   "tithi": "krishna Ashtami (अष्टमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:30",
+   "brahma": "04:46–05:38",
+   "tithi": "krishna Ashtami (अष्टमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:36",
+   "brahma": "04:55–05:46",
+   "tithi": "krishna Ashtami (अष्टमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:32",
+   "brahma": "04:50–05:41",
+   "tithi": "krishna Ashtami (अष्टमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:21",
+   "brahma": "04:42–05:31",
+   "tithi": "krishna Ashtami (अष्टमी)"
+  },
+  "new-york": {
+   "date": "2026-11-02",
+   "sunrise": "06:27",
+   "brahma": "04:38–05:33",
+   "tithi": "krishna Navami"
+  },
+  "london": {
+   "date": "2026-11-02",
+   "sunrise": "06:55",
+   "brahma": "05:00–05:58",
+   "tithi": "krishna Ashtami"
+  },
+  "toronto": {
+   "date": "2026-11-02",
+   "sunrise": "06:54",
+   "brahma": "05:04–05:59",
+   "tithi": "krishna Navami"
+  },
+  "dubai": {
+   "date": "2026-11-02",
+   "sunrise": "06:27",
+   "brahma": "04:44–05:35",
+   "tithi": "krishna Ashtami"
+  },
+  "houston": {
+   "date": "2026-11-02",
+   "sunrise": "06:35",
+   "brahma": "04:51–05:43",
+   "tithi": "krishna Navami"
+  },
+  "sydney": {
+   "date": "2026-11-02",
+   "sunrise": "05:54",
+   "brahma": "04:30–05:12",
+   "tithi": "krishna Ashtami"
+  },
+  "singapore": {
+   "date": "2026-11-02",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Ashtami"
+  },
+  "edison": {
+   "date": "2026-11-02",
+   "sunrise": "06:28",
+   "brahma": "04:40–05:34",
+   "tithi": "krishna Navami"
+  }
+ },
+ "2026-11-03": {
+  "ganga-haridwar": {
+   "sunrise": "06:32",
+   "brahma": "04:47–05:40",
+   "tithi": "krishna Navami (नवमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:11",
+   "brahma": "04:28–05:20",
+   "tithi": "krishna Navami (नवमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:31",
+   "brahma": "04:47–05:39",
+   "tithi": "krishna Navami (नवमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:37",
+   "brahma": "04:56–05:46",
+   "tithi": "krishna Navami (नवमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:33",
+   "brahma": "04:51–05:42",
+   "tithi": "krishna Navami (नवमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:21",
+   "brahma": "04:42–05:32",
+   "tithi": "krishna Navami (नवमी)"
+  },
+  "new-york": {
+   "date": "2026-11-03",
+   "sunrise": "06:28",
+   "brahma": "04:39–05:34",
+   "tithi": "krishna Dashami"
+  },
+  "london": {
+   "date": "2026-11-03",
+   "sunrise": "06:57",
+   "brahma": "05:01–05:59",
+   "tithi": "krishna Dashami"
+  },
+  "toronto": {
+   "date": "2026-11-03",
+   "sunrise": "06:56",
+   "brahma": "05:05–06:00",
+   "tithi": "krishna Dashami"
+  },
+  "dubai": {
+   "date": "2026-11-03",
+   "sunrise": "06:27",
+   "brahma": "04:44–05:36",
+   "tithi": "krishna Navami"
+  },
+  "houston": {
+   "date": "2026-11-03",
+   "sunrise": "06:36",
+   "brahma": "04:52–05:44",
+   "tithi": "krishna Dashami"
+  },
+  "sydney": {
+   "date": "2026-11-03",
+   "sunrise": "05:53",
+   "brahma": "04:29–05:11",
+   "tithi": "krishna Navami"
+  },
+  "singapore": {
+   "date": "2026-11-03",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Navami"
+  },
+  "edison": {
+   "date": "2026-11-03",
+   "sunrise": "06:30",
+   "brahma": "04:40–05:35",
+   "tithi": "krishna Dashami"
+  }
+ },
+ "2026-11-04": {
+  "ganga-haridwar": {
+   "sunrise": "06:33",
+   "brahma": "04:48–05:40",
+   "tithi": "krishna Dashami (दशमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:12",
+   "brahma": "04:29–05:20",
+   "tithi": "krishna Dashami (दशमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:31",
+   "brahma": "04:47–05:39",
+   "tithi": "krishna Dashami (दशमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:37",
+   "brahma": "04:56–05:47",
+   "tithi": "krishna Dashami (दशमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:33",
+   "brahma": "04:51–05:42",
+   "tithi": "krishna Dashami (दशमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:21",
+   "brahma": "04:43–05:32",
+   "tithi": "krishna Dashami (दशमी)"
+  },
+  "new-york": {
+   "date": "2026-11-04",
+   "sunrise": "06:29",
+   "brahma": "04:40–05:35",
+   "tithi": "krishna Ekadashi"
+  },
+  "london": {
+   "date": "2026-11-04",
+   "sunrise": "06:59",
+   "brahma": "05:03–06:01",
+   "tithi": "krishna Ekadashi"
+  },
+  "toronto": {
+   "date": "2026-11-04",
+   "sunrise": "06:57",
+   "brahma": "05:06–06:01",
+   "tithi": "krishna Ekadashi"
+  },
+  "dubai": {
+   "date": "2026-11-04",
+   "sunrise": "06:28",
+   "brahma": "04:45–05:36",
+   "tithi": "krishna Dashami"
+  },
+  "houston": {
+   "date": "2026-11-04",
+   "sunrise": "06:37",
+   "brahma": "04:52–05:45",
+   "tithi": "krishna Ekadashi"
+  },
+  "sydney": {
+   "date": "2026-11-04",
+   "sunrise": "05:52",
+   "brahma": "04:28–05:10",
+   "tithi": "krishna Dashami"
+  },
+  "singapore": {
+   "date": "2026-11-04",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Dashami"
+  },
+  "edison": {
+   "date": "2026-11-04",
+   "sunrise": "06:31",
+   "brahma": "04:41–05:36",
+   "tithi": "krishna Ekadashi"
+  }
+ },
+ "2026-11-05": {
+  "ganga-haridwar": {
+   "sunrise": "06:33",
+   "brahma": "04:49–05:41",
+   "tithi": "krishna Ekadashi (एकादशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:12",
+   "brahma": "04:29–05:21",
+   "tithi": "krishna Ekadashi (एकादशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:32",
+   "brahma": "04:48–05:40",
+   "tithi": "krishna Ekadashi (एकादशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:38",
+   "brahma": "04:56–05:47",
+   "tithi": "krishna Ekadashi (एकादशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:34",
+   "brahma": "04:51–05:43",
+   "tithi": "krishna Ekadashi (एकादशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:22",
+   "brahma": "04:43–05:32",
+   "tithi": "krishna Ekadashi (एकादशी)"
+  },
+  "new-york": {
+   "date": "2026-11-05",
+   "sunrise": "06:31",
+   "brahma": "04:41–05:36",
+   "tithi": "krishna Dwadashi"
+  },
+  "london": {
+   "date": "2026-11-05",
+   "sunrise": "07:00",
+   "brahma": "05:04–06:02",
+   "tithi": "krishna Dwadashi"
+  },
+  "toronto": {
+   "date": "2026-11-05",
+   "sunrise": "06:58",
+   "brahma": "05:07–06:02",
+   "tithi": "krishna Dwadashi"
+  },
+  "dubai": {
+   "date": "2026-11-05",
+   "sunrise": "06:28",
+   "brahma": "04:45–05:37",
+   "tithi": "krishna Ekadashi"
+  },
+  "houston": {
+   "date": "2026-11-05",
+   "sunrise": "06:38",
+   "brahma": "04:53–05:45",
+   "tithi": "krishna Dwadashi"
+  },
+  "sydney": {
+   "date": "2026-11-05",
+   "sunrise": "05:51",
+   "brahma": "04:28–05:09",
+   "tithi": "krishna Ekadashi"
+  },
+  "singapore": {
+   "date": "2026-11-05",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Ekadashi"
+  },
+  "edison": {
+   "date": "2026-11-05",
+   "sunrise": "06:32",
+   "brahma": "04:42–05:37",
+   "tithi": "krishna Dwadashi"
+  }
+ },
+ "2026-11-06": {
+  "ganga-haridwar": {
+   "sunrise": "06:34",
+   "brahma": "04:49–05:42",
+   "tithi": "krishna Dwadashi (द्वादशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:13",
+   "brahma": "04:30–05:21",
+   "tithi": "krishna Dwadashi (द्वादशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:33",
+   "brahma": "04:49–05:41",
+   "tithi": "krishna Dwadashi (द्वादशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:38",
+   "brahma": "04:57–05:47",
+   "tithi": "krishna Dwadashi (द्वादशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:34",
+   "brahma": "04:52–05:43",
+   "tithi": "krishna Dwadashi (द्वादशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:22",
+   "brahma": "04:43–05:32",
+   "tithi": "krishna Dwadashi (द्वादशी)"
+  },
+  "new-york": {
+   "date": "2026-11-06",
+   "sunrise": "06:32",
+   "brahma": "04:42–05:37",
+   "tithi": "krishna Trayodashi"
+  },
+  "london": {
+   "date": "2026-11-06",
+   "sunrise": "07:02",
+   "brahma": "05:05–06:04",
+   "tithi": "krishna Trayodashi"
+  },
+  "toronto": {
+   "date": "2026-11-06",
+   "sunrise": "06:59",
+   "brahma": "05:08–06:04",
+   "tithi": "krishna Trayodashi"
+  },
+  "dubai": {
+   "date": "2026-11-06",
+   "sunrise": "06:29",
+   "brahma": "04:46–05:37",
+   "tithi": "krishna Dwadashi"
+  },
+  "houston": {
+   "date": "2026-11-06",
+   "sunrise": "06:38",
+   "brahma": "04:53–05:46",
+   "tithi": "krishna Trayodashi"
+  },
+  "sydney": {
+   "date": "2026-11-06",
+   "sunrise": "05:50",
+   "brahma": "04:27–05:09",
+   "tithi": "krishna Dwadashi"
+  },
+  "singapore": {
+   "date": "2026-11-06",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Dwadashi"
+  },
+  "edison": {
+   "date": "2026-11-06",
+   "sunrise": "06:33",
+   "brahma": "04:43–05:38",
+   "tithi": "krishna Trayodashi"
+  }
+ },
+ "2026-11-07": {
+  "ganga-haridwar": {
+   "sunrise": "06:35",
+   "brahma": "04:50–05:42",
+   "tithi": "krishna Trayodashi (त्रयोदशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:14",
+   "brahma": "04:30–05:22",
+   "tithi": "krishna Trayodashi (त्रयोदशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:33",
+   "brahma": "04:49–05:41",
+   "tithi": "krishna Trayodashi (त्रयोदशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:39",
+   "brahma": "04:57–05:48",
+   "tithi": "krishna Trayodashi (त्रयोदशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:35",
+   "brahma": "04:52–05:44",
+   "tithi": "krishna Trayodashi (त्रयोदशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:22",
+   "brahma": "04:43–05:33",
+   "tithi": "krishna Trayodashi (त्रयोदशी)"
+  },
+  "new-york": {
+   "date": "2026-11-07",
+   "sunrise": "06:33",
+   "brahma": "04:43–05:38",
+   "tithi": "krishna Chaturdashi"
+  },
+  "london": {
+   "date": "2026-11-07",
+   "sunrise": "07:04",
+   "brahma": "05:07–06:05",
+   "tithi": "krishna Chaturdashi"
+  },
+  "toronto": {
+   "date": "2026-11-07",
+   "sunrise": "07:01",
+   "brahma": "05:09–06:05",
+   "tithi": "krishna Chaturdashi"
+  },
+  "dubai": {
+   "date": "2026-11-07",
+   "sunrise": "06:30",
+   "brahma": "04:46–05:38",
+   "tithi": "krishna Trayodashi"
+  },
+  "houston": {
+   "date": "2026-11-07",
+   "sunrise": "06:39",
+   "brahma": "04:54–05:47",
+   "tithi": "krishna Chaturdashi"
+  },
+  "sydney": {
+   "date": "2026-11-07",
+   "sunrise": "05:49",
+   "brahma": "04:26–05:08",
+   "tithi": "krishna Trayodashi"
+  },
+  "singapore": {
+   "date": "2026-11-07",
+   "sunrise": "06:46",
+   "brahma": "05:10–05:58",
+   "tithi": "krishna Trayodashi"
+  },
+  "edison": {
+   "date": "2026-11-07",
+   "sunrise": "06:34",
+   "brahma": "04:44–05:39",
+   "tithi": "krishna Chaturdashi"
+  }
+ },
+ "2026-11-08": {
+  "ganga-haridwar": {
+   "sunrise": "06:36",
+   "brahma": "04:50–05:43",
+   "tithi": "krishna Chaturdashi (चतुर्दशी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:14",
+   "brahma": "04:31–05:22",
+   "tithi": "krishna Chaturdashi (चतुर्दशी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:34",
+   "brahma": "04:50–05:42",
+   "tithi": "krishna Chaturdashi (चतुर्दशी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:39",
+   "brahma": "04:57–05:48",
+   "tithi": "krishna Chaturdashi (चतुर्दशी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:36",
+   "brahma": "04:53–05:44",
+   "tithi": "krishna Chaturdashi (चतुर्दशी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:23",
+   "brahma": "04:44–05:33",
+   "tithi": "krishna Chaturdashi (चतुर्दशी)"
+  },
+  "new-york": {
+   "date": "2026-11-08",
+   "sunrise": "06:34",
+   "brahma": "04:43–05:39",
+   "tithi": "krishna Amavasya"
+  },
+  "london": {
+   "date": "2026-11-08",
+   "sunrise": "07:06",
+   "brahma": "05:08–06:07",
+   "tithi": "krishna Amavasya"
+  },
+  "toronto": {
+   "date": "2026-11-08",
+   "sunrise": "07:02",
+   "brahma": "05:10–06:06",
+   "tithi": "krishna Amavasya"
+  },
+  "dubai": {
+   "date": "2026-11-08",
+   "sunrise": "06:30",
+   "brahma": "04:47–05:39",
+   "tithi": "krishna Chaturdashi"
+  },
+  "houston": {
+   "date": "2026-11-08",
+   "sunrise": "06:40",
+   "brahma": "04:55–05:47",
+   "tithi": "krishna Amavasya"
+  },
+  "sydney": {
+   "date": "2026-11-08",
+   "sunrise": "05:48",
+   "brahma": "04:26–05:07",
+   "tithi": "krishna Chaturdashi"
+  },
+  "singapore": {
+   "date": "2026-11-08",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:58",
+   "tithi": "krishna Chaturdashi"
+  },
+  "edison": {
+   "date": "2026-11-08",
+   "sunrise": "06:35",
+   "brahma": "04:45–05:40",
+   "tithi": "krishna Amavasya"
+  }
+ },
+ "2026-11-09": {
+  "ganga-haridwar": {
+   "sunrise": "06:37",
+   "brahma": "04:51–05:44",
+   "tithi": "krishna Amavasya (अमावस्या)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:15",
+   "brahma": "04:31–05:23",
+   "tithi": "krishna Amavasya (अमावस्या)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:35",
+   "brahma": "04:50–05:42",
+   "tithi": "krishna Amavasya (अमावस्या)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:40",
+   "brahma": "04:58–05:49",
+   "tithi": "krishna Amavasya (अमावस्या)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:36",
+   "brahma": "04:53–05:45",
+   "tithi": "krishna Amavasya (अमावस्या)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:23",
+   "brahma": "04:44–05:33",
+   "tithi": "krishna Amavasya (अमावस्या)"
+  },
+  "new-york": {
+   "date": "2026-11-09",
+   "sunrise": "06:35",
+   "brahma": "04:44–05:40",
+   "tithi": "shukla Pratipada"
+  },
+  "london": {
+   "date": "2026-11-09",
+   "sunrise": "07:08",
+   "brahma": "05:09–06:08",
+   "tithi": "shukla Pratipada"
+  },
+  "toronto": {
+   "date": "2026-11-09",
+   "sunrise": "07:03",
+   "brahma": "05:11–06:07",
+   "tithi": "shukla Pratipada"
+  },
+  "dubai": {
+   "date": "2026-11-09",
+   "sunrise": "06:31",
+   "brahma": "04:47–05:39",
+   "tithi": "krishna Amavasya"
+  },
+  "houston": {
+   "date": "2026-11-09",
+   "sunrise": "06:41",
+   "brahma": "04:55–05:48",
+   "tithi": "shukla Pratipada"
+  },
+  "sydney": {
+   "date": "2026-11-09",
+   "sunrise": "05:48",
+   "brahma": "04:25–05:06",
+   "tithi": "krishna Amavasya"
+  },
+  "singapore": {
+   "date": "2026-11-09",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:58",
+   "tithi": "krishna Amavasya"
+  },
+  "edison": {
+   "date": "2026-11-09",
+   "sunrise": "06:37",
+   "brahma": "04:46–05:41",
+   "tithi": "shukla Pratipada"
+  }
+ },
+ "2026-11-10": {
+  "ganga-haridwar": {
+   "sunrise": "06:37",
+   "brahma": "04:52–05:45",
+   "tithi": "shukla Pratipada (प्रतिपदा)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:16",
+   "brahma": "04:32–05:24",
+   "tithi": "shukla Pratipada (प्रतिपदा)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:36",
+   "brahma": "04:51–05:43",
+   "tithi": "shukla Pratipada (प्रतिपदा)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:40",
+   "brahma": "04:58–05:49",
+   "tithi": "shukla Pratipada (प्रतिपदा)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:37",
+   "brahma": "04:54–05:45",
+   "tithi": "shukla Pratipada (प्रतिपदा)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:23",
+   "brahma": "04:44–05:34",
+   "tithi": "shukla Pratipada (प्रतिपदा)"
+  },
+  "new-york": {
+   "date": "2026-11-10",
+   "sunrise": "06:37",
+   "brahma": "04:45–05:41",
+   "tithi": "shukla Dwitiya"
+  },
+  "london": {
+   "date": "2026-11-10",
+   "sunrise": "07:09",
+   "brahma": "05:10–06:10",
+   "tithi": "shukla Pratipada"
+  },
+  "toronto": {
+   "date": "2026-11-10",
+   "sunrise": "07:05",
+   "brahma": "05:12–06:08",
+   "tithi": "shukla Dwitiya"
+  },
+  "dubai": {
+   "date": "2026-11-10",
+   "sunrise": "06:32",
+   "brahma": "04:48–05:40",
+   "tithi": "shukla Pratipada"
+  },
+  "houston": {
+   "date": "2026-11-10",
+   "sunrise": "06:42",
+   "brahma": "04:56–05:49",
+   "tithi": "shukla Dwitiya"
+  },
+  "sydney": {
+   "date": "2026-11-10",
+   "sunrise": "05:47",
+   "brahma": "04:25–05:06",
+   "tithi": "shukla Pratipada"
+  },
+  "singapore": {
+   "date": "2026-11-10",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:58",
+   "tithi": "shukla Pratipada"
+  },
+  "edison": {
+   "date": "2026-11-10",
+   "sunrise": "06:38",
+   "brahma": "04:47–05:42",
+   "tithi": "shukla Dwitiya"
+  }
+ },
+ "2026-11-11": {
+  "ganga-haridwar": {
+   "sunrise": "06:38",
+   "brahma": "04:52–05:45",
+   "tithi": "shukla Dwitiya (द्वितीया)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:16",
+   "brahma": "04:32–05:24",
+   "tithi": "shukla Dwitiya (द्वितीया)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:36",
+   "brahma": "04:51–05:44",
+   "tithi": "shukla Dwitiya (द्वितीया)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:41",
+   "brahma": "04:59–05:50",
+   "tithi": "shukla Dwitiya (द्वितीया)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:37",
+   "brahma": "04:54–05:46",
+   "tithi": "shukla Dwitiya (द्वितीया)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:24",
+   "brahma": "04:44–05:34",
+   "tithi": "shukla Dwitiya (द्वितीया)"
+  },
+  "new-york": {
+   "date": "2026-11-11",
+   "sunrise": "06:38",
+   "brahma": "04:46–05:42",
+   "tithi": "shukla Tritiya"
+  },
+  "london": {
+   "date": "2026-11-11",
+   "sunrise": "07:11",
+   "brahma": "05:12–06:11",
+   "tithi": "shukla Dwitiya"
+  },
+  "toronto": {
+   "date": "2026-11-11",
+   "sunrise": "07:06",
+   "brahma": "05:13–06:09",
+   "tithi": "shukla Tritiya"
+  },
+  "dubai": {
+   "date": "2026-11-11",
+   "sunrise": "06:32",
+   "brahma": "04:48–05:40",
+   "tithi": "shukla Dwitiya"
+  },
+  "houston": {
+   "date": "2026-11-11",
+   "sunrise": "06:42",
+   "brahma": "04:56–05:49",
+   "tithi": "shukla Tritiya"
+  },
+  "sydney": {
+   "date": "2026-11-11",
+   "sunrise": "05:46",
+   "brahma": "04:24–05:05",
+   "tithi": "shukla Dwitiya"
+  },
+  "singapore": {
+   "date": "2026-11-11",
+   "sunrise": "06:46",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Dwitiya"
+  },
+  "edison": {
+   "date": "2026-11-11",
+   "sunrise": "06:39",
+   "brahma": "04:47–05:43",
+   "tithi": "shukla Tritiya"
+  }
+ },
+ "2026-11-12": {
+  "ganga-haridwar": {
+   "sunrise": "06:39",
+   "brahma": "04:53–05:46",
+   "tithi": "shukla Tritiya (तृतीया)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:17",
+   "brahma": "04:33–05:25",
+   "tithi": "shukla Tritiya (तृतीया)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:37",
+   "brahma": "04:52–05:44",
+   "tithi": "shukla Tritiya (तृतीया)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:41",
+   "brahma": "04:59–05:50",
+   "tithi": "shukla Tritiya (तृतीया)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:38",
+   "brahma": "04:55–05:46",
+   "tithi": "shukla Tritiya (तृतीया)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:24",
+   "brahma": "04:45–05:34",
+   "tithi": "shukla Tritiya (तृतीया)"
+  },
+  "new-york": {
+   "date": "2026-11-12",
+   "sunrise": "06:39",
+   "brahma": "04:47–05:43",
+   "tithi": "shukla Tritiya"
+  },
+  "london": {
+   "date": "2026-11-12",
+   "sunrise": "07:13",
+   "brahma": "05:13–06:13",
+   "tithi": "shukla Tritiya"
+  },
+  "toronto": {
+   "date": "2026-11-12",
+   "sunrise": "07:07",
+   "brahma": "05:14–06:10",
+   "tithi": "shukla Tritiya"
+  },
+  "dubai": {
+   "date": "2026-11-12",
+   "sunrise": "06:33",
+   "brahma": "04:49–05:41",
+   "tithi": "shukla Tritiya"
+  },
+  "houston": {
+   "date": "2026-11-12",
+   "sunrise": "06:43",
+   "brahma": "04:57–05:50",
+   "tithi": "shukla Chaturthi"
+  },
+  "sydney": {
+   "date": "2026-11-12",
+   "sunrise": "05:45",
+   "brahma": "04:24–05:04",
+   "tithi": "shukla Tritiya"
+  },
+  "singapore": {
+   "date": "2026-11-12",
+   "sunrise": "06:47",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Tritiya"
+  },
+  "edison": {
+   "date": "2026-11-12",
+   "sunrise": "06:40",
+   "brahma": "04:48–05:44",
+   "tithi": "shukla Tritiya"
+  }
+ },
+ "2026-11-13": {
+  "ganga-haridwar": {
+   "sunrise": "06:40",
+   "brahma": "04:54–05:47",
+   "tithi": "shukla Chaturthi (चतुर्थी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:18",
+   "brahma": "04:33–05:25",
+   "tithi": "shukla Chaturthi (चतुर्थी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:38",
+   "brahma": "04:52–05:45",
+   "tithi": "shukla Chaturthi (चतुर्थी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:42",
+   "brahma": "05:00–05:51",
+   "tithi": "shukla Chaturthi (चतुर्थी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:39",
+   "brahma": "04:55–05:47",
+   "tithi": "shukla Chaturthi (चतुर्थी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:24",
+   "brahma": "04:45–05:35",
+   "tithi": "shukla Chaturthi (चतुर्थी)"
+  },
+  "new-york": {
+   "date": "2026-11-13",
+   "sunrise": "06:40",
+   "brahma": "04:48–05:44",
+   "tithi": "shukla Chaturthi"
+  },
+  "london": {
+   "date": "2026-11-13",
+   "sunrise": "07:15",
+   "brahma": "05:14–06:14",
+   "tithi": "shukla Chaturthi"
+  },
+  "toronto": {
+   "date": "2026-11-13",
+   "sunrise": "07:09",
+   "brahma": "05:15–06:12",
+   "tithi": "shukla Chaturthi"
+  },
+  "dubai": {
+   "date": "2026-11-13",
+   "sunrise": "06:34",
+   "brahma": "04:49–05:42",
+   "tithi": "shukla Chaturthi"
+  },
+  "houston": {
+   "date": "2026-11-13",
+   "sunrise": "06:44",
+   "brahma": "04:58–05:51",
+   "tithi": "shukla Chaturthi"
+  },
+  "sydney": {
+   "date": "2026-11-13",
+   "sunrise": "05:45",
+   "brahma": "04:23–05:04",
+   "tithi": "shukla Chaturthi"
+  },
+  "singapore": {
+   "date": "2026-11-13",
+   "sunrise": "06:47",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Chaturthi"
+  },
+  "edison": {
+   "date": "2026-11-13",
+   "sunrise": "06:41",
+   "brahma": "04:49–05:45",
+   "tithi": "shukla Chaturthi"
+  }
+ },
+ "2026-11-14": {
+  "ganga-haridwar": {
+   "sunrise": "06:41",
+   "brahma": "04:54–05:47",
+   "tithi": "shukla Panchami (पंचमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:18",
+   "brahma": "04:34–05:26",
+   "tithi": "shukla Panchami (पंचमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:39",
+   "brahma": "04:53–05:46",
+   "tithi": "shukla Panchami (पंचमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:42",
+   "brahma": "05:00–05:51",
+   "tithi": "shukla Panchami (पंचमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:39",
+   "brahma": "04:56–05:47",
+   "tithi": "shukla Panchami (पंचमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:25",
+   "brahma": "04:45–05:35",
+   "tithi": "shukla Panchami (पंचमी)"
+  },
+  "new-york": {
+   "date": "2026-11-14",
+   "sunrise": "06:41",
+   "brahma": "04:49–05:45",
+   "tithi": "shukla Panchami"
+  },
+  "london": {
+   "date": "2026-11-14",
+   "sunrise": "07:16",
+   "brahma": "05:16–06:16",
+   "tithi": "shukla Panchami"
+  },
+  "toronto": {
+   "date": "2026-11-14",
+   "sunrise": "07:10",
+   "brahma": "05:16–06:13",
+   "tithi": "shukla Panchami"
+  },
+  "dubai": {
+   "date": "2026-11-14",
+   "sunrise": "06:34",
+   "brahma": "04:50–05:42",
+   "tithi": "shukla Panchami"
+  },
+  "houston": {
+   "date": "2026-11-14",
+   "sunrise": "06:45",
+   "brahma": "04:58–05:52",
+   "tithi": "shukla Panchami"
+  },
+  "sydney": {
+   "date": "2026-11-14",
+   "sunrise": "05:44",
+   "brahma": "04:23–05:03",
+   "tithi": "shukla Panchami"
+  },
+  "singapore": {
+   "date": "2026-11-14",
+   "sunrise": "06:47",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Panchami"
+  },
+  "edison": {
+   "date": "2026-11-14",
+   "sunrise": "06:42",
+   "brahma": "04:50–05:46",
+   "tithi": "shukla Panchami"
+  }
+ },
+ "2026-11-15": {
+  "ganga-haridwar": {
+   "sunrise": "06:42",
+   "brahma": "04:55–05:48",
+   "tithi": "shukla Shashthi (षष्ठी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:19",
+   "brahma": "04:34–05:27",
+   "tithi": "shukla Shashthi (षष्ठी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:39",
+   "brahma": "04:54–05:46",
+   "tithi": "shukla Shashthi (षष्ठी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:43",
+   "brahma": "05:01–05:52",
+   "tithi": "shukla Shashthi (षष्ठी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:40",
+   "brahma": "04:56–05:48",
+   "tithi": "shukla Shashthi (षष्ठी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:25",
+   "brahma": "04:46–05:35",
+   "tithi": "shukla Shashthi (षष्ठी)"
+  },
+  "new-york": {
+   "date": "2026-11-15",
+   "sunrise": "06:42",
+   "brahma": "04:50–05:46",
+   "tithi": "shukla Shashthi"
+  },
+  "london": {
+   "date": "2026-11-15",
+   "sunrise": "07:18",
+   "brahma": "05:17–06:17",
+   "tithi": "shukla Shashthi"
+  },
+  "toronto": {
+   "date": "2026-11-15",
+   "sunrise": "07:11",
+   "brahma": "05:17–06:14",
+   "tithi": "shukla Shashthi"
+  },
+  "dubai": {
+   "date": "2026-11-15",
+   "sunrise": "06:35",
+   "brahma": "04:51–05:43",
+   "tithi": "shukla Shashthi"
+  },
+  "houston": {
+   "date": "2026-11-15",
+   "sunrise": "06:46",
+   "brahma": "04:59–05:52",
+   "tithi": "shukla Shashthi"
+  },
+  "sydney": {
+   "date": "2026-11-15",
+   "sunrise": "05:43",
+   "brahma": "04:22–05:03",
+   "tithi": "shukla Shashthi"
+  },
+  "singapore": {
+   "date": "2026-11-15",
+   "sunrise": "06:47",
+   "brahma": "05:11–05:59",
+   "tithi": "shukla Shashthi"
+  },
+  "edison": {
+   "date": "2026-11-15",
+   "sunrise": "06:44",
+   "brahma": "04:51–05:47",
+   "tithi": "shukla Shashthi"
+  }
+ },
+ "2026-11-16": {
+  "ganga-haridwar": {
+   "sunrise": "06:42",
+   "brahma": "04:55–05:49",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "triveni-prayagraj": {
+   "sunrise": "06:20",
+   "brahma": "04:35–05:27",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "yamuna-mathura": {
+   "sunrise": "06:40",
+   "brahma": "04:54–05:47",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "godavari-nashik": {
+   "sunrise": "06:44",
+   "brahma": "05:01–05:52",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "shipra-ujjain": {
+   "sunrise": "06:41",
+   "brahma": "04:57–05:49",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "kaveri-talakaveri": {
+   "sunrise": "06:26",
+   "brahma": "04:46–05:36",
+   "tithi": "shukla Saptami (सप्तमी)"
+  },
+  "new-york": {
+   "date": "2026-11-16",
+   "sunrise": "06:44",
+   "brahma": "04:51–05:47",
+   "tithi": "shukla Saptami"
+  },
+  "london": {
+   "date": "2026-11-16",
+   "sunrise": "07:20",
+   "brahma": "05:18–06:19",
+   "tithi": "shukla Saptami"
+  },
+  "toronto": {
+   "date": "2026-11-16",
+   "sunrise": "07:13",
+   "brahma": "05:18–06:15",
+   "tithi": "shukla Saptami"
+  },
+  "dubai": {
+   "date": "2026-11-16",
+   "sunrise": "06:36",
+   "brahma": "04:51–05:43",
+   "tithi": "shukla Saptami"
+  },
+  "houston": {
+   "date": "2026-11-16",
+   "sunrise": "06:47",
+   "brahma": "05:00–05:53",
+   "tithi": "shukla Saptami"
+  },
+  "sydney": {
+   "date": "2026-11-16",
+   "sunrise": "05:43",
+   "brahma": "04:22–05:02",
+   "tithi": "shukla Shashthi"
+  },
+  "singapore": {
+   "date": "2026-11-16",
+   "sunrise": "06:47",
+   "brahma": "05:12–05:59",
+   "tithi": "shukla Saptami"
+  },
+  "edison": {
+   "date": "2026-11-16",
+   "sunrise": "06:45",
+   "brahma": "04:52–05:48",
+   "tithi": "shukla Saptami"
+  }
+ }
+}

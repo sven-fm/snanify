@@ -1,0 +1,619 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@600;700;800&family=Martel+Sans:wght@400;700;800&display=block" rel="stylesheet">
+<style>
+  /* The daily Facebook post in campaign print (DESIGNSYSTEM.md, Campaigns):
+     B1 calendar art, B2 the matchbox label, B4 the painted signboard. One
+     frame, 1080 x 1350. Every moving part is a pure function of time, set by
+     frame(t), so render.mjs can step it frame by frame into an MP4 and a
+     static post is simply its last frame. Flat colour, hard offsets, SVG
+     marks; the bans on gradients, glows, blurs and soft shadows hold. */
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body { font-family: "Martel Sans", sans-serif; }
+  #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+  .d { font-family: "Eczar", serif; font-synthesis: none; }
+  .caps { text-transform: uppercase; }
+  [lang="hi"] .caps { text-transform: none; letter-spacing: 0 !important; }
+  .col { position: relative; height: 100%; display: flex; flex-direction: column; }
+  .grow { flex: 1; min-height: 12px; }
+  svg.abs { position: absolute; inset: 0; }
+  .lines > span { display: block; white-space: nowrap; }
+  .nowrap { white-space: nowrap; }
+
+  /* --- B1, calendar art ---------------------------------------------------- */
+  .cal { background: #7a1a14; color: #f6e3b4; }
+  .cal .frame { position: absolute; inset: 26px; border: 10px double #e2a93b; pointer-events: none; z-index: 3; }
+  .cal .col { padding: 74px 70px 74px; text-align: center; }
+  .cal .sash { position: absolute; top: 92px; right: -160px; width: 620px; transform: rotate(45deg); background: #e2a93b; color: #4a0f0b; font-weight: 800; font-size: 32px; padding: 14px 0; text-align: center; letter-spacing: 0.04em; box-shadow: 0 8px 0 #4a0f0b; z-index: 4; }
+  [lang="hi"] .cal .sash { font-size: 30px; padding: 10px 0 8px; }
+  .cal .kicker { font-weight: 700; font-size: 34px; color: #e2a93b; }
+  .cal .scene { position: relative; flex: 1; min-height: 0; margin-top: 18px; border: 7px solid #e2a93b; overflow: hidden; background: #f0b648; }
+  .cal .scene svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .cal .scene img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cal .credit { position: absolute; right: 0; bottom: 0; background: #7a1a14; color: #f0c97a; font-size: 17px; padding: 6px 12px 3px; }
+  .cal .title { font-weight: 800; line-height: 0.95; margin-top: 26px; text-shadow: 8px 8px 0 #e2a93b; letter-spacing: -0.01em; }
+  [lang="hi"] .cal .title { line-height: 1.3; margin-top: 18px; }
+  .cal .sub { font-weight: 700; font-size: 44px; line-height: 1.15; color: #f0c97a; margin-top: 14px; }
+  [lang="hi"] .cal .sub { line-height: 1.4; font-size: 40px; }
+  .cal .line { font-size: 29px; line-height: 1.45; margin: 10px auto 0; max-width: 880px; }
+  [lang="hi"] .cal .line { line-height: 1.7; font-size: 28px; }
+  .cal .rows { margin-top: 16px; text-align: left; }
+  .cal .row { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; border-top: 3px solid #a3412a; padding: 9px 4px 5px; }
+  .cal .row:last-child { border-bottom: 3px solid #a3412a; }
+  .cal .row .k { font-weight: 700; font-size: 27px; color: #f0c97a; }
+  .cal .row .v { font-family: "Eczar", serif; font-weight: 800; font-size: 33px; white-space: nowrap; }
+  [lang="hi"] .cal .row .k { font-size: 26px; }
+  .cal .cta { margin-top: 22px; background: #f6e3b4; color: #7a1a14; display: flex; justify-content: center; align-items: baseline; gap: 26px; padding: 18px 20px 14px; box-shadow: 10px 10px 0 #e2a93b; }
+  .cal .cta .go { font-weight: 800; font-size: 54px; line-height: 1; white-space: nowrap; }
+  [lang="hi"] .cal .cta .go { line-height: 1.3; font-size: 50px; }
+  .cal .cta .url { font-weight: 800; font-size: 32px; white-space: nowrap; }
+
+  /* --- B2, the matchbox label ------------------------------------------------ */
+  .mb { background: #c8251d; color: #f2c230; }
+  .mb .col { padding: 84px 72px 0; }
+  .mb .head { display: flex; justify-content: space-between; align-items: baseline; font-size: 40px; font-weight: 800; }
+  .mb .head .k { font-size: 30px; }
+  .mb .hook { font-weight: 800; line-height: 0.96; margin-top: 16px; text-shadow: 9px 9px 0 #1a1410; letter-spacing: -0.01em; }
+  [lang="hi"] .mb .hook { line-height: 1.3; }
+  .mb .label { position: relative; margin: 74px auto 0; width: 820px; background: #f2c230; border: 12px solid #1a1410; padding: 13px; box-shadow: 24px 24px 0 #1a1410; color: #1a1410; transform-origin: 50% 50%; }
+  .mb .inner { border: 5px solid #c8251d; padding: 16px 24px 22px; text-align: center; }
+  .mb .row { display: flex; justify-content: space-between; font-weight: 800; font-size: 25px; letter-spacing: 0.18em; color: #c8251d; }
+  [lang="hi"] .mb .row { letter-spacing: 0; font-size: 27px; }
+  .mb .emblem { display: block; margin: 6px auto 0; width: 330px; height: 236px; }
+  .mb .name { font-weight: 800; line-height: 0.92; }
+  [lang="hi"] .mb .name { line-height: 1.3; }
+  .mb .tag { margin-top: 10px; font-weight: 700; font-size: 30px; line-height: 1.3; }
+  .mb .stamp { position: absolute; right: -70px; top: -96px; width: 240px; height: 240px; }
+  .mb .stamp .t, .sb .burst .t { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .mb .stamp .t { color: #f2c230; }
+  .mb .stamp .big { font-weight: 800; font-size: var(--seal); line-height: 0.9; }
+  .mb .stamp .small { font-weight: 800; font-size: 21px; line-height: 1.15; max-width: 160px; margin-top: 4px; }
+  .mb .side { position: relative; margin: 0 -72px; height: 168px; background: #5b3420; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 72px; }
+  .mb .side .go { position: relative; font-weight: 800; color: #f2c230; text-shadow: 6px 6px 0 #1a1410; white-space: nowrap; }
+  .mb .side .url { position: relative; font-weight: 800; font-size: 36px; color: #f2c230; white-space: nowrap; }
+
+  /* --- B4, the painted signboard --------------------------------------------- */
+  .sb { background: #f6c518; color: #141210; }
+  .sb .col { padding: 96px 100px 92px; }
+  .sb .frame { position: absolute; inset: 44px; border: 10px solid #141210; }
+  .sb .head { display: flex; justify-content: space-between; align-items: baseline; font-size: 40px; font-weight: 800; }
+  .sb .head .k { font-size: 30px; color: #d1261c; }
+  .sb .words { position: relative; margin-top: 8px; font-weight: 800; line-height: 0.86; letter-spacing: -0.02em; }
+  .sb .w1, .sb .w2 { display: block; width: max-content; white-space: nowrap; transform-origin: 0 60%; }
+  .sb .w1 { color: #d1261c; }
+  .sb .w2 { color: #141210; }
+  [lang="hi"] .sb .words { line-height: 1.16; }
+  .sb .burst { position: absolute; right: -36px; top: 150px; width: 290px; height: 290px; }
+  .sb .burst .t { color: #fff; }
+  .sb .burst .big { font-weight: 800; font-size: var(--seal); line-height: 0.9; }
+  .sb .burst .small { font-weight: 800; font-size: 24px; line-height: 1.15; max-width: 190px; margin-top: 6px; }
+  .sb .band { margin: 34px -100px 0; background: #141210; color: #f6c518; padding: 20px 100px 16px; font-weight: 800; font-size: 42px; line-height: 1.15; letter-spacing: 0.01em; transform-origin: 0 50%; }
+  [lang="hi"] .sb .band { line-height: 1.4; font-size: 40px; }
+  .sb .rows { margin-top: 34px; }
+  .sb .row { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; border-top: 4px solid #141210; padding: 10px 0 6px; }
+  .sb .rows.many .row { padding: 6px 0 2px; }
+  .sb .rows.many .row .v { font-size: 34px; }
+  .sb .row:last-child { border-bottom: 4px solid #141210; }
+  .sb .row .k { font-weight: 800; font-size: 28px; }
+  .sb .row .v { font-family: "Eczar", serif; font-weight: 800; font-size: 38px; color: #d1261c; white-space: nowrap; }
+  .sb .body { margin-top: 30px; font-weight: 700; font-size: 40px; line-height: 1.4; }
+  .sb .words + .grow + .body, .sb .band + .grow + .body { margin-top: 0; }
+  [lang="hi"] .sb .body { line-height: 1.65; }
+  .sb .cta { background: #d1261c; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px 34px 18px; box-shadow: 12px 12px 0 #141210; }
+  .sb .cta .go { font-weight: 800; line-height: 1; white-space: nowrap; }
+  [lang="hi"] .sb .cta .go { line-height: 1.3; }
+  .sb .cta .url { font-weight: 800; font-size: 36px; white-space: nowrap; }
+  .sb .okp { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 26px; font-weight: 800; font-size: 54px; color: #d1261c; text-shadow: 5px 5px 0 #141210; letter-spacing: 0.04em; }
+  .sb .okp .fl { transform-origin: 50% 70%; }
+  /* The breath: a tank of water that rises for four seconds and falls for six. */
+  .sb .tank { position: relative; margin-top: 40px; flex: 6; min-height: 0; border: 10px solid #141210; background: #f6e3b4; overflow: hidden; box-shadow: 12px 12px 0 #d1261c; }
+  .sb .tank svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sb .tank .say { position: absolute; left: 0; right: 0; top: 26px; text-align: center; font-weight: 800; font-size: 64px; color: #141210; }
+  /* The Patra in a phone, beside the hook. */
+  .sb .main { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 30px; margin-top: 18px; align-items: start; flex: 1; min-height: 0; }
+  .sb .phone { position: relative; width: 360px; aspect-ratio: 1080 / 2020; }
+  .sb .phone svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sb .phone img { position: absolute; left: 4.6%; top: 6.93%; width: 90.8%; height: auto; max-height: 86.2%; object-fit: cover; object-position: top; }
+  .sb .hook { font-weight: 800; line-height: 0.94; text-shadow: 7px 7px 0 #d1261c; letter-spacing: -0.01em; }
+  [lang="hi"] .sb .hook { line-height: 1.28; }
+  .sb .hook .r { color: #d1261c; text-shadow: 7px 7px 0 #141210; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  const p = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+  document.documentElement.lang = p.lang;
+  document.body.dataset.script = p.lang === "hi" ? "deva" : "latn";
+  const hi = p.lang === "hi";
+  const W = 1080, H = 1350;
+  const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const lines = (t) => String(t).split("|").map((l) => `<span>${esc(l)}</span>`).join("");
+  const mark = (fill) => `<span class="d" style="color:${fill}"><b>Snan</b><span style="font-weight:400">ify</span></span>`;
+  const f2 = (n) => n.toFixed(2);
+  document.body.style.setProperty("--seal", ((p.seal && String(p.seal.big).length > 3) ? 58 : (p.seal && String(p.seal.big).length > 2) ? 74 : 108) + "px");
+
+  /* --- time ------------------------------------------------------------- */
+  const anims = [];
+  const on = (fn) => anims.push(fn);
+  const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+  const span = (t, a, b) => clamp((t - a) / (b - a));
+  const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+  const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const outBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => [...document.querySelectorAll(sel)];
+  const mix = (a, b, x) => a + (b - a) * x;
+  const hex = (a, b, x) => {
+    const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
+    const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
+    return "#" + pa.map((v, i) => Math.round(mix(v, pb[i], x)).toString(16).padStart(2, "0")).join("");
+  };
+  window.frame = (t) => { for (const fn of anims) fn(t); };
+  window.DURATION = p.dur || 8;
+
+  /* --- shared marks -------------------------------------------------------- */
+  function burst(n, fill, stroke) {
+    const pts = [];
+    for (let i = 0; i < n * 2; i++) {
+      const a = (i / (n * 2)) * Math.PI * 2 - Math.PI / 2;
+      const r = i % 2 ? 128 : 160;
+      pts.push(`${f2(165 + r * Math.cos(a))},${f2(165 + r * Math.sin(a))}`);
+    }
+    return `<svg viewBox="0 0 330 330" width="100%" height="100%"><polygon points="${pts.join(" ")}" fill="${fill}" stroke="${stroke}" stroke-width="7" stroke-linejoin="miter"/></svg>`;
+  }
+  const diyaPath = (x, y, s, id) => `<g transform="translate(${f2(x)} ${f2(y)}) scale(${s})">
+      <g class="flame" data-id="${id}"><path d="M0 -26 C7 -14 9 -7 0 0 C-9 -7 -7 -14 0 -26Z" fill="#f6c518"/><path d="M0 -17 C3 -11 4 -7 0 -3 C-4 -7 -3 -11 0 -17Z" fill="#d9481f"/></g>
+      <path d="M-18 2 H18 L12 12 H-12 Z" fill="#141210"/><path d="M-18 2 H18 L15 6 H-15 Z" fill="#c8251d"/></g>`;
+  /* Flames flicker on a seeded rhythm; a flame with a light-up time stays dark before it. */
+  function flicker(root, lightAt = () => 0) {
+    const flames = [...root.querySelectorAll(".flame")];
+    on((t) => flames.forEach((f, i) => {
+      const lit = t >= lightAt(i);
+      const age = t - lightAt(i);
+      const s = lit ? clamp(age / 0.25) * (1 + 0.12 * Math.sin(t * 11 + i * 1.7) + 0.06 * Math.sin(t * 23 + i)) : 0;
+      f.setAttribute("transform", `scale(${f2(0.85 + 0.15 * Math.sin(t * 7 + i * 2.3) * (lit ? 1 : 0))} ${f2(s)})`);
+    }));
+  }
+
+  /* --- fitting: shrink type until every line fits its box ----------------- */
+  function fitLines(el, max, min = 40) {
+    let size = max;
+    el.style.fontSize = size + "px";
+    const spans = el.querySelectorAll("span");
+    const wide = () => [...spans].some((s) => s.scrollWidth > el.clientWidth + 1);
+    while (size > min && wide()) { size -= 2; el.style.fontSize = size + "px"; }
+    return size;
+  }
+  function fitBox(el, max, maxH, min = 30) {
+    let size = max;
+    el.style.fontSize = size + "px";
+    while (size > min && (el.scrollHeight > maxH || el.scrollWidth > el.clientWidth + 1)) { size -= 2; el.style.fontSize = size + "px"; }
+    return size;
+  }
+  function fitWidth(el, max, room, min = 26) {
+    let size = max;
+    el.style.fontSize = size + "px";
+    while (size > min && el.scrollWidth > room) { size -= 2; el.style.fontSize = size + "px"; }
+  }
+
+  /* =========================================================================
+     B1 scenes, each a flat painting in the calendar palette, 960 x 760, with
+     its moving parts registered on the clock.
+     ========================================================================= */
+  const SKY = "#f0b648", SUN = "#d9481f", WATER = "#1d5a6a", MAROON = "#7a1a14", DEEP = "#4a0f0b", CREAM = "#f6e3b4", GOLD = "#e2a93b";
+  const steps = (fill) => `<polygon points="0,270 150,270 150,350 220,350 220,440 290,440 290,540 360,540 360,760 0,760" fill="${fill}"/><rect x="0" y="258" width="160" height="12" fill="${GOLD}"/>`;
+  function ripples(color, n = 10, x0 = 250) {
+    let s = "";
+    for (let i = 0; i < n; i++) {
+      const y = 360 + i * i * 3.6 + i * 9;
+      s += `<rect class="rip" data-x="${x0 + ((i * 97) % 330)}" data-i="${i}" x="${x0 + ((i * 97) % 330)}" y="${f2(y)}" width="${70 + i * 28}" height="${f2(3 + i * 0.7)}" fill="${color}"/>`;
+    }
+    return s;
+  }
+  function moveRipples(svg, speed = 1) {
+    const rs = [...svg.querySelectorAll(".rip")];
+    on((t) => rs.forEach((r) => {
+      const i = Number(r.dataset.i);
+      r.setAttribute("x", f2(Number(r.dataset.x) + Math.sin(t * 0.9 * speed + i * 1.3) * (14 + i * 3)));
+    }));
+  }
+
+  const SCENES = {
+    /* Dawn at the ghat: the sun climbs out of the river. */
+    dawn(svg) {
+      svg.innerHTML = `<rect width="960" height="760" fill="${SKY}"/>
+        <clipPath id="above"><rect width="960" height="330"/></clipPath>
+        <g clip-path="url(#above)"><circle id="sun" cx="600" cy="520" r="190" fill="${SUN}"/></g>
+        <circle id="halo" cx="600" cy="330" r="228" fill="none" stroke="${MAROON}" stroke-width="6" stroke-dasharray="6 16"/>
+        <rect y="330" width="960" height="430" fill="${WATER}"/>
+        <g id="glint"><rect x="500" y="350" width="200" height="7" fill="${SKY}"/><rect x="530" y="374" width="140" height="7" fill="${SKY}"/><rect x="560" y="398" width="80" height="7" fill="${SKY}"/></g>
+        ${ripples(CREAM)}
+        ${steps(DEEP)}
+        ${diyaPath(190, 334, 1.6, 0)}`;
+      const sun = svg.querySelector("#sun"), halo = svg.querySelector("#halo"), glint = svg.querySelector("#glint");
+      on((t) => {
+        const k = outCubic(span(t, 0, 3.6));
+        sun.setAttribute("cy", f2(mix(560, 330, k)));
+        halo.setAttribute("cy", f2(mix(560, 330, k)));
+        halo.setAttribute("transform", `rotate(${f2(t * 6)} 600 ${f2(mix(560, 330, k))})`);
+        glint.setAttribute("transform", `translate(0 0) scale(1 ${f2(k)})`);
+        glint.setAttribute("transform-origin", "600 350");
+      });
+      moveRipples(svg); flicker(svg);
+    },
+    /* The evening arghya: the sun goes down into the river. */
+    sunset(svg) {
+      svg.innerHTML = `<rect id="sky" width="960" height="760" fill="${SKY}"/>
+        <clipPath id="above"><rect width="960" height="330"/></clipPath>
+        <g clip-path="url(#above)"><circle id="sun" cx="560" cy="250" r="170" fill="${SUN}"/></g>
+        <rect y="330" width="960" height="430" fill="${WATER}"/>
+        <g id="glint"><rect x="440" y="350" width="240" height="8" fill="${SUN}"/><rect x="480" y="376" width="160" height="8" fill="${SUN}"/><rect x="520" y="402" width="80" height="8" fill="${SUN}"/></g>
+        ${ripples(CREAM, 9)}
+        ${steps(DEEP)}
+        <g transform="translate(70 238)"><path d="M0 0 Q60 34 120 0 Z" fill="${GOLD}" stroke="${DEEP}" stroke-width="4"/><circle cx="36" cy="-6" r="12" fill="${SUN}"/><circle cx="62" cy="-10" r="13" fill="#f6c518"/><circle cx="86" cy="-5" r="11" fill="${MAROON}"/></g>
+        ${diyaPath(190, 334, 1.6, 0)}`;
+      const sun = svg.querySelector("#sun"), sky = svg.querySelector("#sky"), glint = svg.querySelector("#glint");
+      on((t) => {
+        const k = inOut(span(t, 0, (window.DURATION || 8) - 0.5));
+        sun.setAttribute("cy", f2(mix(230, 400, k)));
+        sky.setAttribute("fill", hex(SKY, "#e07a3a", k));
+        glint.setAttribute("opacity", f2(1 - k * 0.6));
+      });
+      moveRipples(svg, 0.7); flicker(svg);
+    },
+    /* Sharad Purnima: the full moon rises over the Yamuna, kheer on the step. */
+    moon(svg) {
+      let stars = "";
+      for (let i = 0; i < 26; i++) stars += `<rect class="star" data-i="${i}" x="${(i * 173) % 940 + 10}" y="${(i * 61) % 280 + 10}" width="6" height="6" fill="${CREAM}" transform="rotate(45 ${(i * 173) % 940 + 13} ${(i * 61) % 280 + 13})"/>`;
+      svg.innerHTML = `<rect width="960" height="760" fill="#14303a"/>${stars}
+        <clipPath id="above"><rect width="960" height="330"/></clipPath>
+        <g clip-path="url(#above)"><circle id="moon" cx="610" cy="480" r="150" fill="${CREAM}"/></g>
+        <circle id="halo" cx="610" cy="200" r="186" fill="none" stroke="${GOLD}" stroke-width="5" stroke-dasharray="4 14"/>
+        <rect y="330" width="960" height="430" fill="${WATER}"/>
+        <g id="glint"><rect x="530" y="350" width="160" height="7" fill="${CREAM}"/><rect x="555" y="376" width="110" height="7" fill="${CREAM}"/><rect x="580" y="402" width="60" height="7" fill="${CREAM}"/><rect x="595" y="428" width="30" height="7" fill="${CREAM}"/></g>
+        ${ripples("#8fb3a8", 9)}
+        ${steps(DEEP)}
+        <g transform="translate(66 236)"><path d="M0 0 H86 Q80 30 43 32 Q6 30 0 0Z" fill="${GOLD}" stroke="${CREAM}" stroke-width="3"/><ellipse cx="43" cy="1" rx="40" ry="7" fill="#fff8e6"/></g>
+        ${diyaPath(190, 334, 1.6, 0)}`;
+      const moon = svg.querySelector("#moon"), halo = svg.querySelector("#halo"), glint = svg.querySelector("#glint");
+      const st = [...svg.querySelectorAll(".star")];
+      on((t) => {
+        const k = outCubic(span(t, 0, 4.5));
+        const cy = mix(480, 190, k);
+        moon.setAttribute("cy", f2(cy));
+        halo.setAttribute("cy", f2(cy));
+        halo.setAttribute("opacity", f2(span(t, 3, 4.5)));
+        halo.setAttribute("transform", `rotate(${f2(t * 5)} 610 ${f2(cy)})`);
+        glint.setAttribute("opacity", f2(k));
+        st.forEach((s, i) => s.setAttribute("opacity", f2(0.35 + 0.65 * Math.abs(Math.sin(t * 1.3 + i * 0.9)))));
+      });
+      moveRipples(svg, 0.6); flicker(svg);
+    },
+    /* The dark moon: lamps set out on the water one after another. */
+    newmoon(svg) {
+      let lamps = "";
+      const spots = [[420, 420], [560, 470], [700, 430], [480, 560], [640, 600], [810, 520], [380, 660], [760, 680], [880, 610]];
+      spots.forEach(([x, y], i) => { lamps += `<g class="float" data-i="${i}" data-x="${x}" data-y="${y}">${diyaPath(0, 0, 1.15 + (y - 400) / 700, i + 1)}</g>`; });
+      svg.innerHTML = `<rect width="960" height="760" fill="#2a0d0a"/>
+        <circle cx="620" cy="190" r="110" fill="#2a0d0a" stroke="#7a3a24" stroke-width="5"/>
+        <rect y="330" width="960" height="430" fill="#12343d"/>
+        ${ripples("#2c5b66", 9)}
+        ${lamps}
+        ${steps(DEEP)}
+        ${[[60, 262], [110, 262], [180, 342], [250, 432], [320, 532]].map(([x, y], i) => diyaPath(x, y, 1.3, 20 + i)).join("")}`;
+      const fl = [...svg.querySelectorAll(".float")];
+      on((t) => fl.forEach((g, i) => {
+        const x = Number(g.dataset.x) + t * 9 + Math.sin(t + i) * 6, y = Number(g.dataset.y) + Math.sin(t * 1.6 + i * 2) * 4;
+        g.setAttribute("transform", `translate(${f2(x)} ${f2(y)})`);
+      }));
+      moveRipples(svg, 0.5);
+      flicker(svg, (i) => (i < 9 ? 0.4 + i * 0.45 : 0.1 + (i - 9) * 0.25));
+    },
+    /* Lamps along the steps at dusk, lit one by one. */
+    lamps(svg) {
+      let row = "";
+      const pts = [[40, 262], [100, 262], [170, 342], [240, 432], [310, 532], [400, 610], [500, 650], [600, 690], [700, 650], [800, 610], [890, 570]];
+      svg.innerHTML = `<rect width="960" height="760" fill="#e07a3a"/>
+        <clipPath id="above"><rect width="960" height="330"/></clipPath>
+        <g clip-path="url(#above)"><circle cx="700" cy="350" r="120" fill="${SUN}"/></g>
+        <rect y="330" width="960" height="430" fill="${WATER}"/>
+        ${ripples(CREAM, 7, 460)}
+        ${steps(DEEP)}
+        ${pts.slice(0, 5).map(([x, y], i) => diyaPath(x, y, 1.4, i)).join("")}
+        ${pts.slice(5).map(([x, y], i) => `<g class="float" data-i="${i}" data-x="${x}" data-y="${y - 160}">${diyaPath(0, 0, 1.2, 5 + i)}</g>`).join("")}`;
+      const fl = [...svg.querySelectorAll(".float")];
+      on((t) => fl.forEach((g, i) => g.setAttribute("transform", `translate(${f2(Number(g.dataset.x) + t * 7)} ${f2(Number(g.dataset.y) + Math.sin(t * 1.5 + i) * 4)})`)));
+      moveRipples(svg, 0.6);
+      flicker(svg, (i) => 0.3 + i * 0.4);
+    },
+    /* Talakaveri: the spring wells up in its tank, rings spreading. */
+    spring(svg) {
+      svg.innerHTML = `<rect width="960" height="760" fill="${SKY}"/>
+        <circle cx="760" cy="150" r="80" fill="${SUN}"/>
+        <polygon points="0,330 180,170 330,300 470,150 640,320 800,210 960,330 960,760 0,760" fill="${DEEP}"/>
+        <polygon points="120,420 840,420 900,700 60,700" fill="${GOLD}"/>
+        <polygon points="170,450 790,450 835,670 125,670" fill="${MAROON}"/>
+        <polygon points="220,480 740,480 770,640 190,640" fill="${GOLD}"/>
+        <clipPath id="tank"><polygon points="250,500 710,500 735,622 225,622"/></clipPath>
+        <polygon points="250,500 710,500 735,622 225,622" fill="${DEEP}"/>
+        <g clip-path="url(#tank)"><rect id="lvl" x="200" y="622" width="560" height="140" fill="${WATER}"/>
+          ${[0, 1, 2, 3].map((i) => `<ellipse class="ring" data-i="${i}" cx="480" cy="580" rx="10" ry="3" fill="none" stroke="${CREAM}" stroke-width="5"/>`).join("")}</g>
+        ${diyaPath(150, 412, 1.5, 0)}${diyaPath(810, 412, 1.5, 1)}`;
+      const lvl = svg.querySelector("#lvl"), rings = [...svg.querySelectorAll(".ring")];
+      on((t) => {
+        const k = inOut(span(t, 0.3, 4));
+        const top = mix(622, 520, k);
+        lvl.setAttribute("y", f2(top));
+        rings.forEach((r, i) => {
+          const ph = ((t * 0.5 + i / 4) % 1);
+          r.setAttribute("cy", f2(top + 34));
+          r.setAttribute("rx", f2(10 + ph * 250));
+          r.setAttribute("ry", f2(3 + ph * 34));
+          r.setAttribute("opacity", f2((1 - ph) * k));
+        });
+      });
+      flicker(svg);
+    },
+    /* The Sangam: the darker, slower Yamuna beside the paler, quicker Ganga. */
+    sangam(svg) {
+      let bars = "";
+      for (let i = 0; i < 9; i++) bars += `<rect class="yb" data-i="${i}" x="0" y="${352 + i * 24}" width="${90 + (i * 37) % 110}" height="6" fill="#2b6f7e"/>`;
+      for (let i = 0; i < 9; i++) bars += `<rect class="gb" data-i="${i}" x="0" y="${574 + i * 20}" width="${100 + (i * 53) % 130}" height="6" fill="${CREAM}"/>`;
+      svg.innerHTML = `<rect width="960" height="760" fill="${SKY}"/>
+        <circle cx="300" cy="250" r="130" fill="${SUN}"/>
+        <rect y="330" width="960" height="230" fill="#123e4a"/>
+        <rect y="560" width="960" height="200" fill="#6fa6a6"/>
+        <rect y="556" width="960" height="8" fill="${GOLD}"/>
+        ${bars}
+        <g id="boat"><path d="M0 0 H150 L125 26 H25 Z" fill="${DEEP}"/><rect x="70" y="-70" width="6" height="70" fill="${DEEP}"/><path d="M76 -66 L130 -10 H76 Z" fill="${CREAM}"/></g>
+        <polygon points="0,300 120,300 120,330 0,330" fill="${DEEP}"/>`;
+      const yb = [...svg.querySelectorAll(".yb")], gb = [...svg.querySelectorAll(".gb")], boat = svg.querySelector("#boat");
+      on((t) => {
+        yb.forEach((b, i) => b.setAttribute("x", f2(((i * 211 + t * 40) % 1160) - 160)));
+        gb.forEach((b, i) => b.setAttribute("x", f2(((i * 167 + t * 110) % 1200) - 200)));
+        boat.setAttribute("transform", `translate(${f2(560 + Math.sin(t * 0.6) * 20)} ${f2(530 + Math.sin(t * 1.8) * 4)})`);
+      });
+    },
+  };
+
+  /* =========================================================================
+     B2 emblems for the matchbox label, 420 x 300.
+     ========================================================================= */
+  function emblem(kind) {
+    const BLACK = "#1a1410", RED = "#c8251d";
+    const water = `<rect x="120" y="202" width="180" height="17" fill="${BLACK}"/><rect x="74" y="236" width="272" height="17" fill="${BLACK}"/><rect x="18" y="270" width="384" height="17" fill="${BLACK}"/>`;
+    const rays = (r1, r2, cy = 150) => {
+      let s = "";
+      for (let i = 0; i < 18; i++) {
+        const a = (i / 18) * Math.PI * 2;
+        const pt = (r, q) => `${f2(210 + r * Math.cos(q))},${f2(cy + r * Math.sin(q))}`;
+        s += `<polygon points="${pt(r1, a - 0.08)} ${pt(r2, a)} ${pt(r1, a + 0.08)}" fill="${BLACK}"/>`;
+      }
+      return `<clipPath id="raysky"><rect width="420" height="188"/></clipPath><g clip-path="url(#raysky)"><g id="rays">${s}</g></g>`;
+    };
+    if (kind === "moon") return `<svg class="emblem" viewBox="0 0 420 300">${rays(112, 150)}<clipPath id="sky"><rect width="420" height="188"/></clipPath><circle cx="210" cy="140" r="92" fill="#fff8e6" stroke="${BLACK}" stroke-width="7" clip-path="url(#sky)"/>${water}</svg>`;
+    if (kind === "lamp") return `<svg class="emblem" viewBox="0 0 420 300">${rays(104, 146, 120)}<g transform="translate(210 210) scale(5.4)"><g class="flame"><path d="M0 -26 C7 -14 9 -7 0 0 C-9 -7 -7 -14 0 -26Z" fill="${RED}"/><path d="M0 -17 C3 -11 4 -7 0 -3 C-4 -7 -3 -11 0 -17Z" fill="#f2c230"/></g><path d="M-18 2 H18 L12 12 H-12 Z" fill="${BLACK}"/></g><rect x="18" y="282" width="384" height="12" fill="${BLACK}"/></svg>`;
+    if (kind === "two") return `<svg class="emblem" viewBox="0 0 420 300">${rays(118, 160)}<clipPath id="sky"><rect width="420" height="188"/></clipPath><circle cx="210" cy="150" r="102" fill="${RED}" clip-path="url(#sky)"/>
+      <path id="wv1" d="M18 214 Q70 200 120 214 T220 214 T320 214 T420 214" fill="none" stroke="${BLACK}" stroke-width="16"/>
+      <path id="wv2" d="M18 248 Q70 234 120 248 T220 248 T320 248 T420 248" fill="none" stroke="${RED}" stroke-width="16"/>
+      <rect x="18" y="272" width="384" height="17" fill="${BLACK}"/></svg>`;
+    if (kind === "spring") return `<svg class="emblem" viewBox="0 0 420 300">${rays(118, 160)}<clipPath id="sky"><rect width="420" height="188"/></clipPath><circle cx="210" cy="150" r="102" fill="${RED}" clip-path="url(#sky)"/>
+      ${[0, 1, 2].map((i) => `<ellipse class="ering" data-i="${i}" cx="210" cy="246" rx="40" ry="10" fill="none" stroke="${BLACK}" stroke-width="10"/>`).join("")}</svg>`;
+    return `<svg class="emblem" viewBox="0 0 420 300">${rays(118, 160)}<clipPath id="sky"><rect width="420" height="188"/></clipPath><circle cx="210" cy="150" r="102" fill="${RED}" clip-path="url(#sky)"/>${water}</svg>`;
+  }
+
+  function grit() {
+    let dots = "";
+    for (let i = 0; i < 240; i++) dots += `<circle cx="${((i * 137.5) % W).toFixed(1)}" cy="${((i * 71.3) % 168).toFixed(1)}" r="${(1.6 + (i % 3)).toFixed(1)}" fill="#3e2214"/>`;
+    return `<svg class="abs" viewBox="0 0 ${W} 168" width="100%" height="100%" preserveAspectRatio="none">${dots}</svg>`;
+  }
+
+  /* Hazard stripes round all four edges, each edge a group that marches. */
+  function truckBorder() {
+    const b = 44, top = [], bot = [], left = [], right = [];
+    for (let x = -b * 4; x < W + b * 4; x += 72) {
+      top.push(`<polygon points="${x},0 ${x + 36},0 ${x + 36 + b},${b} ${x + b},${b}" fill="#d1261c"/>`);
+      bot.push(`<polygon points="${x},${H - b} ${x + 36},${H - b} ${x + 36 + b},${H} ${x + b},${H}" fill="#d1261c"/>`);
+    }
+    for (let y = -b * 4; y < H + b * 4; y += 72) {
+      left.push(`<polygon points="0,${y} ${b},${y + b} ${b},${y + b + 36} 0,${y + 36}" fill="#d1261c"/>`);
+      right.push(`<polygon points="${W - b},${y} ${W},${y + b} ${W},${y + b + 36} ${W - b},${y + 36}" fill="#d1261c"/>`);
+    }
+    return `<svg class="abs" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+      <clipPath id="ct"><rect width="${W}" height="${b}"/></clipPath><clipPath id="cb"><rect y="${H - b}" width="${W}" height="${b}"/></clipPath>
+      <clipPath id="cl"><rect y="${b}" width="${b}" height="${H - 2 * b}"/></clipPath><clipPath id="cr"><rect x="${W - b}" y="${b}" width="${b}" height="${H - 2 * b}"/></clipPath>
+      <g clip-path="url(#ct)"><g id="st-t">${top.join("")}</g></g><g clip-path="url(#cb)"><g id="st-b">${bot.join("")}</g></g>
+      <g clip-path="url(#cl)"><g id="st-l">${left.join("")}</g></g><g clip-path="url(#cr)"><g id="st-r">${right.join("")}</g></g></svg>`;
+  }
+  const smallDiya = (w) => `<svg viewBox="0 0 40 52" width="${w}" height="${f2(w * 52 / 40)}"><g transform="translate(20 34)">${diyaPath(0, 0, 1, 0).replace(/^<g[^>]*>/, "<g>")}</g></svg>`;
+
+  /* =========================================================================
+     Build
+     ========================================================================= */
+  function build() {
+  const root = document.getElementById("root");
+
+  if (p.style === "calendar") {
+    document.body.className = "cal";
+    const rows = p.rows ? `<div class="rows">${p.rows.map(([k, v]) => `<div class="row"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`).join("")}</div>` : "";
+    const scene = p.img
+      ? `<div class="scene"><img src="${p.img}">${p.credit ? `<div class="credit">${esc(p.credit)}</div>` : ""}</div>`
+      : `<div class="scene"><svg viewBox="0 0 960 760" preserveAspectRatio="xMidYMid slice"></svg></div>`;
+    root.innerHTML = `<div class="frame"></div>${p.sash ? `<div class="sash d caps">${esc(p.sash)}</div>` : ""}<div class="col">
+      <div class="kicker d">${esc(p.kicker)}</div>
+      ${scene}
+      <div class="title d caps lines">${lines(p.title)}</div>
+      ${p.sub ? `<div class="sub d">${esc(p.sub)}</div>` : ""}
+      ${p.line ? `<div class="line">${esc(p.line)}</div>` : ""}
+      ${rows}
+      <div class="cta d"><span class="go caps">${esc(p.cta)}</span><span class="url">snanify.com</span></div>
+    </div>`;
+    if (!p.img) SCENES[p.scene || "dawn"]($(".scene svg"));
+    if ($(".cal .sash") && p.sash.length > 12) $(".cal .sash").style.fontSize = (hi ? 26 : 25) + "px";
+    fitLines($(".cal .title"), p.titleSize || (hi ? 124 : 140), 50);
+    fitWidth($(".cal .cta .go"), hi ? 50 : 54, 900 - $(".cal .cta .url").offsetWidth - 70);
+    /* Motion: the sash slides in, the title drops onto its gold offset. */
+    const sash = $(".cal .sash"), title = $(".cal .title"), cta = $(".cal .cta");
+    const after = [...document.querySelectorAll(".cal .sub, .cal .line, .cal .row")];
+    on((t) => {
+      if (sash) sash.style.transform = `translate(${f2((1 - outCubic(span(t, 0.6, 1.3))) * 500)}px, ${f2(-(1 - outCubic(span(t, 0.6, 1.3))) * 500)}px) rotate(45deg)`;
+      const k = span(t, 0.9, 1.5);
+      title.style.opacity = f2(clamp(k * 3));
+      title.style.transform = `translateY(${f2((1 - outBack(k)) * -60)}px)`;
+      title.style.textShadow = `${f2(8 * outCubic(k))}px ${f2(8 * outCubic(k))}px 0 #e2a93b`;
+      after.forEach((el, i) => {
+        const a = outCubic(span(t, 1.5 + i * 0.18, 2.0 + i * 0.18));
+        el.style.opacity = f2(a);
+        el.style.transform = `translateY(${f2((1 - a) * 24)}px)`;
+      });
+      const c = span(t, 2.3 + after.length * 0.18, 2.8 + after.length * 0.18);
+      cta.style.transform = `scale(${f2(c < 1 ? 0.6 + 0.4 * outBack(c) : 1 + 0.015 * Math.sin((t - 3) * 3))})`;
+      cta.style.opacity = f2(clamp(c * 4));
+    });
+  }
+
+  else if (p.style === "matchbox") {
+    document.body.className = "mb";
+    root.innerHTML = `<div class="col">
+      <div class="head">${mark("#f2c230")}<span class="k d caps">${esc(p.kicker || "")}</span></div>
+      <div class="hook d caps lines">${lines(p.hook)}</div>
+      <div class="label">
+        <div class="stamp">${burst(12, "#1a1410", "#f2c230")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>
+        <div class="inner">
+          <div class="row d caps"><span>${esc(p.brand)}</span><span>${esc(p.number)}</span></div>
+          ${emblem(p.emblem)}
+          <div class="name d caps lines">${lines(p.name)}</div>
+          <div class="tag">${esc(p.tagline)}</div>
+        </div>
+      </div>
+      <div class="grow"></div>
+      <div class="side">${grit()}<span class="go d caps">${esc(p.cta)} →</span><span class="url d">snanify.com</span></div>
+    </div>`;
+    fitLines($(".mb .hook"), p.hookSize || (hi ? 100 : 118), 44);
+    fitLines($(".mb .name"), p.nameSize || (hi ? 116 : 138), 50);
+    fitWidth($(".mb .side .go"), hi ? 64 : 72, 936 - $(".mb .side .url").offsetWidth - 24);
+    /* If the label runs past the box side, the emblem steps down. */
+    const fits = () => $(".mb .label").getBoundingClientRect().bottom + 40 < $(".mb .side").getBoundingClientRect().top;
+    let ew = 330;
+    while (!fits() && ew > 170) { ew -= 20; $(".mb .emblem").style.width = ew + "px"; $(".mb .emblem").style.height = f2(ew * 300 / 420) + "px"; }
+    const label = $(".mb .label"), stamp = $(".mb .stamp"), hook = $(".mb .hook"), side = $(".mb .side"), rays = $("#rays");
+    const w1 = $("#wv1"), w2 = $("#wv2"), er = [...document.querySelectorAll(".ering")];
+    flicker(label);
+    on((t) => {
+      const h = outCubic(span(t, 0, 0.5));
+      hook.style.opacity = f2(h);
+      hook.style.transform = `translateX(${f2((1 - h) * -80)}px)`;
+      const k = span(t, 0.4, 1.3);
+      label.style.transform = `translateY(${f2((1 - outBack(k)) * -1100)}px) rotate(${f2(mix(14, -4, outBack(k)))}deg)`;
+      label.style.boxShadow = `${f2(24 * outCubic(span(t, 1.0, 1.4)))}px ${f2(24 * outCubic(span(t, 1.0, 1.4)))}px 0 #1a1410`;
+      const s = span(t, 1.4, 1.75);
+      stamp.style.opacity = f2(clamp(s * 5));
+      stamp.style.transform = `rotate(${f2(14 + 4 * Math.sin(t * 1.4))}deg) scale(${f2(s < 1 ? mix(2.6, 1, outCubic(s)) : 1)})`;
+      const g = outCubic(span(t, 1.8, 2.3));
+      side.style.transform = `translateY(${f2((1 - g) * 168)}px)`;
+      if (rays) rays.setAttribute("transform", `rotate(${f2(t * 9)} 210 150)`);
+      if (w1) { w1.setAttribute("transform", `translate(${f2(-((t * 40) % 200))} 0)`); w2.setAttribute("transform", `translate(${f2(-((t * 90) % 200))} 0)`); }
+      er.forEach((r, i) => { const ph = (t * 0.45 + i / 3) % 1; r.setAttribute("rx", f2(20 + ph * 170)); r.setAttribute("ry", f2(5 + ph * 34)); r.setAttribute("opacity", f2(1 - ph)); });
+    });
+  }
+
+  else {
+    document.body.className = "sb";
+    const rows = p.rows ? `<div class="rows${p.rows.length > 4 ? " many" : ""}">${p.rows.map(([k, v]) => `<div class="row"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`).join("")}</div>` : "";
+    const sealHtml = p.seal ? `<div class="burst">${burst(16, "#d1261c", "#141210")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>` : "";
+    let middle;
+    if (p.phone) {
+      const hook = esc(p.hook).replace(/\*(.+?)\*/g, '<span class="r">$1</span>');
+      middle = `<div class="main"><div><div class="hook d caps">${hook}</div>${p.body ? `<div class="body">${esc(p.body)}</div>` : ""}</div>
+        <div class="phone"><svg viewBox="0 0 1080 2020" preserveAspectRatio="none"><rect x="6" y="6" width="1068" height="2008" rx="120" fill="#141210"/><rect x="50" y="140" width="980" height="1742" fill="#f2ead9"/><rect x="430" y="60" width="220" height="34" rx="17" fill="#2b2620"/></svg><img src="${p.phone}"></div></div>`;
+    } else {
+      middle = `<div class="words d caps"><span class="w1">${esc(p.top)}</span><span class="w2">${esc(p.bottom)}</span>${sealHtml}</div>
+      ${p.band ? `<div class="band d caps">${esc(p.band)}</div>` : ""}
+      ${p.breath ? `<div class="tank"><svg viewBox="0 0 860 400" preserveAspectRatio="none"><rect id="water" x="0" y="400" width="860" height="400" fill="#1d5a6a"/><path id="wave" fill="#1d5a6a"/>${[0, 1, 2, 3].map((i) => `<rect class="eng" data-i="${i}" x="0" y="0" width="160" height="7" fill="#f6e3b4"/>`).join("")}</svg><div class="say d caps"></div></div>` : ""}
+      <div class="grow"></div>
+      ${rows}
+      ${p.body ? `<div class="body">${esc(p.body)}</div>` : ""}`;
+    }
+    root.innerHTML = `${truckBorder()}<div class="frame"></div><div class="col">
+      <div class="head">${mark("#141210")}<span class="k d caps">${esc(p.kicker || "")}</span></div>
+      ${middle}
+      <div class="grow"></div>
+      <div class="cta d"><span class="go caps">${esc(p.cta)} →</span><span class="url">snanify.com</span></div>
+      ${p.okp === false ? "" : `<div class="okp d"><span class="fl">${smallDiya(36)}</span><span>${esc(p.okp || "SNAN OK PLEASE")}</span><span class="fl">${smallDiya(36)}</span></div>`}
+    </div>`;
+    const words = $(".sb .words");
+    if (words) {
+      const room = 880 - (p.seal ? 0 : 0);
+      const sizeA = (() => { const el = $(".sb .w1"); let s = p.giant || (hi ? 200 : 228); el.style.fontSize = s + "px"; while (s > 80 && el.scrollWidth > room) { s -= 4; el.style.fontSize = s + "px"; } return s; })();
+      const sizeB = (() => { const el = $(".sb .w2"); let s = p.giant || (hi ? 200 : 228); el.style.fontSize = s + "px"; while (s > 80 && el.scrollWidth > (p.seal ? room - 290 : room)) { s -= 4; el.style.fontSize = s + "px"; } return s; })();
+      const s = Math.min(sizeA, sizeB);
+      $(".sb .w1").style.fontSize = s + "px"; $(".sb .w2").style.fontSize = s + "px";
+      if (p.seal) { const top = s * 0.86 * 0.62; $(".sb .burst").style.top = f2(top) + "px"; words.style.minHeight = f2(top + 262) + "px"; }
+    }
+    if ($(".sb .hook")) fitBox($(".sb .hook"), hi ? 92 : 104, p.body ? 470 : 700, 50);
+    fitWidth($(".sb .cta .go"), hi ? 60 : 68, 880 - 68 - $(".sb .cta .url").offsetWidth - 20);
+    /* Motion: the stripes march, the words punch in on a slipping press, the
+       seal spins down, the band slides under, the rows follow. */
+    const tt = $("#st-t"), tb = $("#st-b"), tl = $("#st-l"), tr = $("#st-r");
+    const w1 = $(".sb .w1"), w2 = $(".sb .w2"), seal = $(".sb .burst"), band = $(".sb .band"), cta = $(".sb .cta");
+    const rowsEls = [...document.querySelectorAll(".sb .row, .sb .body, .sb .hook, .sb .phone")];
+    flicker(document.querySelector(".sb .okp") || document.body);
+    on((t) => {
+      const off = (t * 40) % 72;
+      tt.setAttribute("transform", `translate(${f2(off)} 0)`); tb.setAttribute("transform", `translate(${f2(-off)} 0)`);
+      tl.setAttribute("transform", `translate(0 ${f2(-off)})`); tr.setAttribute("transform", `translate(0 ${f2(off)})`);
+      const punch = (el, a, shadow) => {
+        if (!el) return;
+        const k = span(t, a, a + 0.35);
+        el.style.opacity = f2(clamp(k * 4));
+        el.style.transform = `scale(${f2(mix(1.5, 1, outCubic(k)))})`;
+        const o = f2(12 * outCubic(span(t, a + 0.2, a + 0.5)));
+        el.style.textShadow = `${o}px ${o}px 0 ${shadow}`;
+      };
+      punch(w1, 0.15, "#141210"); punch(w2, 0.5, "#d1261c");
+      if (seal) {
+        const k = span(t, 0.95, 1.5);
+        seal.style.opacity = f2(clamp(k * 4));
+        seal.style.transform = `rotate(${f2(k < 1 ? mix(-200, 12, outBack(k)) : 12 + 3 * Math.sin((t - 1.5) * 2))}deg) scale(${f2(outBack(k))})`;
+      }
+      if (band) { const k = outCubic(span(t, 1.3, 1.8)); band.style.transform = `translateX(${f2((1 - k) * -1200)}px) rotate(-2.5deg)`; }
+      rowsEls.forEach((el, i) => { const a = outCubic(span(t, 0.3 + (p.phone ? 0 : 1.6) + i * 0.16, 0.8 + (p.phone ? 0 : 1.6) + i * 0.16)); el.style.opacity = f2(a); el.style.transform = `translateY(${f2((1 - a) * 30)}px)`; });
+      const c = span(t, 2.6, 3.0);
+      cta.style.opacity = f2(clamp(c * 4));
+      cta.style.transform = `scale(${f2(c < 1 ? 0.6 + 0.4 * outBack(c) : 1 + 0.018 * Math.sin((t - 3) * 3.2))})`;
+    });
+    if (p.breath) {
+      /* Four seconds in, six out, from the first second; the engraved lines ride the surface. */
+      const water = $("#water"), wave = $("#wave"), say = $(".sb .tank .say"), eng = [...document.querySelectorAll(".eng")];
+      on((t) => {
+        const c = Math.max(0, t - 1) % 10;
+        const lvl = c < 4 ? inOut(c / 4) : 1 - inOut((c - 4) / 6);
+        const y = mix(330, 120, lvl);
+        water.setAttribute("y", f2(y));
+        let d = `M0 ${f2(y)}`;
+        for (let x = 0; x <= 860; x += 20) d += ` L${x} ${f2(y - 10 * Math.sin(x / 70 + t * 2.2))}`;
+        wave.setAttribute("d", d + ` L860 ${f2(y + 2)} L0 ${f2(y + 2)}Z`);
+        eng.forEach((e, i) => { e.setAttribute("x", f2(((i * 230 + t * 30) % 1020) - 160)); e.setAttribute("y", f2(y + 40 + i * 44)); });
+        const lbl = t < 1 ? "" : c < 4 ? `${p.breath.in} ${Math.floor(c) + 1}` : `${p.breath.out} ${Math.floor(c - 4) + 1}`;
+        say.textContent = lbl;
+      });
+    }
+  }
+
+  }
+
+  /* Type is measured to fit, so every face loads before anything is built. */
+  const faces = ["800 40px Eczar", "700 40px Eczar", "400 40px 'Martel Sans'", "700 40px 'Martel Sans'", "800 40px 'Martel Sans'"];
+  Promise.all(faces.flatMap((f) => [document.fonts.load(f, "Snan"), document.fonts.load(f, "गंगा")])).then(() => document.fonts.ready).then(() => {
+    build();
+    window.frame(p.still ?? window.DURATION);
+    document.body.dataset.ready = "1";
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-19",
+  "day": "Mon",
+  "lang": "en",
+  "style": "B4",
+  "motion": true,
+  "theme": "River: the Ganga's daily figure, ranked against every day since 1997",
+  "cta": "soft",
+  "path": "/live",
+  "card": {
+    "style": "signboard",
+    "dur": 7,
+    "kicker": "Mon 19 Oct",
+    "top": "Since",
+    "bottom": "1997",
+    "seal": {
+      "big": "29",
+      "small": "years of river"
+    },
+    "band": "Today's Ganga, ranked against every day since 1997.",
+    "body": "One number each morning, from Har Ki Pauri. Read it, then breathe with it.",
+    "cta": "See today's Ganga"
+  },
+  "text": "\nThe Ganga at Har Ki Pauri gets one number each morning: its flow today, in cubic metres a second.\n\nSnanify ranks that number against every day in the same week of the year since 1997. One glance tells you where this morning stands in almost thirty years of the river: running full, running low, or near its usual.\n\nRead it at dawn, then breathe with it. The water on your screen rises and falls at the river's own amplitude.\n\nSee today's Ganga and sit with it:"
+}

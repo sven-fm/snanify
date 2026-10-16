@@ -137,3 +137,12 @@ Suggested ads per ad set: one per style (Signboard, Matchbox, Kartik calendar), 
 for Feed and 9:16 for Stories and Reels, English and Hindi as separate ads as before, the call to
 action "Sign up" or "See details", landing on `/` (it now says Start your snan now).
 
+
+## The daily posts, 17 October to 15 November 2026
+
+`ads/social/`: thirty Facebook posts, one a day, in the campaign print (B1 calendar art, B2
+matchbox, B4 signboard), half of them moving. `calendar.mjs` holds every word and card;
+`social.html` is the template, with each moving part a function of time; `render.mjs` steps it
+into `posts/<date>/video.mp4` (30 fps, 4:5, with `poster.png`) or `card.png`, beside
+`post.txt`, the post as it goes up. `check.mjs` holds the words to the copy rules;
+`make-doc.mjs` writes `docs/meta/facebook-calendar.md`, which the daily task publishes from.

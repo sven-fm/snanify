@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-27",
+  "day": "Tue",
+  "lang": "en",
+  "style": "B1",
+  "motion": true,
+  "theme": "Date: Kartik snan, day 1",
+  "cta": "front",
+  "path": "/",
+  "card": {
+    "style": "calendar",
+    "scene": "dawn",
+    "dur": 8,
+    "sash": "Day 1 of 29",
+    "kicker": "Tuesday 27 October",
+    "title": "Kartik|snan",
+    "sub": "The first morning is today",
+    "rows": [
+      [
+        "Sunrise, Har Ki Pauri",
+        "06:27 IST"
+      ],
+      [
+        "Brahma muhurat, New York",
+        "05:33 to 06:27"
+      ],
+      [
+        "Brahma muhurat, London",
+        "04:52 to 05:48"
+      ]
+    ],
+    "cta": "Sit your first morning"
+  },
+  "text": "\nKartik snan begins this morning.\n\nFor 29 mornings, to the full moon of 24 November, Har Ki Pauri keeps the month as a daily discipline: a bath before dawn, lamps in the evening, a lighter table.\n\nKeep it with the Ganga from wherever you wake. Three minutes: today's flow at Har Ki Pauri, a breath with the river, your sankalp. Then the family gets a Sankalp Patra with their names on it.\n\nSit your first Kartik morning now:"
+}

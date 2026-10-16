@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-15",
+  "day": "Sun",
+  "lang": "en",
+  "style": "B4",
+  "motion": true,
+  "theme": "Date: Chhath, the sandhya arghya tonight and the usha arghya at dawn (Kartik day 20)",
+  "cta": "front",
+  "path": "/",
+  "card": {
+    "style": "signboard",
+    "dur": 7,
+    "kicker": "Sun 15 Nov",
+    "top": "Chhath",
+    "bottom": "today",
+    "seal": {
+      "big": "20",
+      "small": "of 29 Kartik mornings"
+    },
+    "band": "Arghya at sunset. Arghya again at dawn.",
+    "rows": [
+      [
+        "Sunset, New York",
+        "16:37"
+      ],
+      [
+        "Sunset, London",
+        "16:11"
+      ],
+      [
+        "Sunrise tomorrow, New York",
+        "06:44"
+      ]
+    ],
+    "cta": "Sit with the Ganga",
+    "okp": false
+  },
+  "text": "\nToday is Chhath. This evening, families stand in the water and offer arghya to the setting sun. Tomorrow at dawn they offer it to the rising one.\n\nSunset today: 16:37 in New York, 16:11 in London. Sunrise tomorrow in New York: 06:44.\n\nKeep the dawn with the river. After the usha arghya, sit three minutes with the Ganga and send the family a Sankalp Patra with their names, the tithi and the hour in IST.\n\nSit with the Ganga this morning, and again at tomorrow's dawn:"
+}

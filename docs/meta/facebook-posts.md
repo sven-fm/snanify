@@ -5,6 +5,11 @@ New York, give or take a quarter hour, so it is waiting when the diaspora wakes.
 task `snanify-facebook-posts` writes it, renders the card, schedules it and logs it here. Edit
 this file to steer it: the task reads it every morning.
 
+**17 October to 15 November 2026 is made.** `docs/meta/facebook-calendar.md` holds thirty
+ready posts (words, card or video, link) from `ads/social/calendar.mjs`, in the campaign
+print: B1 calendar art, B2 the matchbox, B4 the signboard. On those dates the task publishes
+the prepared post as it is; the weekday themes below are for the days after.
+
 ## The rules every post is written under
 
 The two rules from `CLAUDE.md` hold here too:
@@ -70,3 +75,4 @@ tradition (third person), its hour at the ghat, and the river that morning. Duri
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | 05:00 | A ghat: Ganga at Har Ki Pauri (Wednesday; scheduled on 13 Oct after 05:00 had passed) | Where the Ganga leaves the mountains | ads/posts/2026-10-14/card.png | https://www.snanify.com/rivers/ganga-haridwar?utm_source=facebook&utm_medium=organic&utm_campaign=daily |
 | 2026-10-15 | 04:45 | The calendar: Kaveri Sankramana, Sat 17 Oct, 19:58 IST (Thursday) | The Kaveri rises at its source | ads/posts/2026-10-15/card.png | https://www.snanify.com/muhurat/tula-sankramana-2026?utm_source=facebook&utm_medium=organic&utm_campaign=daily |
+| 2026-10-16 | 05:10 | The Sankalp Patra: today's specimen, Ganga at Har Ki Pauri, running full, 732 m³/s, 86th percentile (Friday; Tula Sankranti tomorrow is mentioned in one line, the occasion post itself falls to Saturday) | Today's Sankalp Patra, as it came off the press | ads/posts/2026-10-16/specimen.png | https://www.snanify.com/?utm_source=facebook&utm_medium=organic&utm_campaign=daily |

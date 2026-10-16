@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-12",
+  "day": "Thu",
+  "lang": "en",
+  "style": "B1",
+  "motion": false,
+  "theme": "Calendar: Chhath, the four days (Kartik day 17)",
+  "cta": "front",
+  "path": "/muhurat/chhath-2026",
+  "card": {
+    "style": "calendar",
+    "scene": "sunset",
+    "sash": "Begins tomorrow",
+    "kicker": "Thursday 12 November",
+    "title": "Chhath",
+    "sub": "Four days at the water",
+    "rows": [
+      [
+        "Nahay Khay",
+        "Fri 13 Nov"
+      ],
+      [
+        "Kharna",
+        "Sat 14 Nov"
+      ],
+      [
+        "Sandhya arghya, at sunset",
+        "Sun 15 Nov"
+      ],
+      [
+        "Usha arghya, at sunrise",
+        "Mon 16 Nov"
+      ]
+    ],
+    "cta": "Sit with the Ganga"
+  },
+  "text": "\nChhath begins tomorrow.\n\nIt is the one great festival kept standing in the water: an offering to the setting sun on the evening of Shashthi, a night of vigil, and an offering to the rising sun the next morning.\n\nNahay Khay, Friday 13 November. Kharna, Saturday 14. Sandhya arghya at sunset, Sunday 15. Usha arghya at sunrise, Monday 16.\n\nDay 17 of Kartik. Keep the four mornings with the river:"
+}

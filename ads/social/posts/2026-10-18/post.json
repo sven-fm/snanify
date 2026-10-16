@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-18",
+  "day": "Sun",
+  "lang": "en",
+  "style": "B2",
+  "motion": false,
+  "theme": "Practice: the sankalp, with the three example sankalps from setup",
+  "cta": "soft",
+  "path": "/snan",
+  "card": {
+    "style": "matchbox",
+    "kicker": "The practice",
+    "hook": "Say it in|your own words.",
+    "brand": "Sankalp brand",
+    "number": "No. 02",
+    "emblem": "sun",
+    "name": "Sankalp",
+    "tagline": "Eleven seconds, under your thumb",
+    "seal": {
+      "big": "11",
+      "small": "seconds"
+    },
+    "cta": "Write yours"
+  },
+  "text": "\nEvery snan holds a sankalp: one intention, in your own words.\n\nWrite it once, when you set up. Each morning it comes back to you, and you hold it under your thumb for eleven seconds while the ink fills. Then a minute of stillness.\n\nTake one of these as it is, or write your own:\nFor my mother, every morning this month.\nFor the family, near and far, and a steady mind.\nFor my father, who first took me to the river.\n\nWrite yours and sit this morning:"
+}
