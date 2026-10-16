@@ -90,6 +90,38 @@
   .cal .cta { margin-top: 22px; background: #f6e3b4; color: #7a1a14; display: flex; justify-content: center; align-items: baseline; gap: 26px; padding: 18px 0; box-shadow: 10px 10px 0 #e2a93b; }
   .cal .cta .go { font-weight: 800; font-size: 60px; line-height: 1; }
   .cal .cta .url { font-weight: 800; font-size: 34px; }
+
+  /* --- the original ads, rebuilt loud --------------------------------------
+     home: "Send the Ganga home", the Patra in a phone, on the signboard.
+     kartik: the four-by-five sheet framed in calendar art.
+     frame and end: the video's caption overlay and its end card. */
+  .home .main { display: grid; grid-template-columns: minmax(0, 1fr) var(--phone); gap: 34px; margin-top: 22px; align-items: start; }
+  .home .hook { font-weight: 800; font-size: var(--homehook); line-height: 0.92; letter-spacing: -0.01em; text-shadow: 8px 8px 0 #d1261c; }
+  .home .hook .r { color: #d1261c; text-shadow: 8px 8px 0 #141210; }
+  [lang="hi"] .home .hook { line-height: 1.22; }
+  .home .sub { font-size: 32px; line-height: 1.4; margin-top: 30px; font-weight: 700; }
+  .home .phone { position: relative; width: var(--phone); aspect-ratio: 1080 / 2020; }
+  .home .phone svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .home .phone img { position: absolute; left: 4.6%; top: 6.93%; width: 90.8%; height: auto; }
+  .home .pburst { position: absolute; left: -112px; bottom: 40px; width: 230px; height: 230px; transform: rotate(-10deg); z-index: 2; }
+  /* 9:16 stacks: the hook across the full measure, then a bigger phone. */
+  .tallhome .main { grid-template-columns: 1fr; justify-items: center; gap: 30px; }
+  .tallhome .main > div:first-child { justify-self: stretch; }
+  .tallhome .hook { font-size: calc(var(--homehook) * 1.22); }
+  .home .pburst .t { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; }
+  .home .pburst .big { font-weight: 800; font-size: calc(var(--seal) * 0.78); line-height: 0.9; }
+  .home .pburst .small { font-weight: 800; font-size: 19px; line-height: 1.15; max-width: 140px; margin-top: 4px; }
+  .kartik .sheetbox { flex: 1; min-height: 0; margin-top: 22px; border: 7px solid #e2a93b; background: #4a0f0b; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .kartik .sheetbox img { max-height: 100%; max-width: 100%; display: block; }
+  .vframe { background: transparent !important; }
+  .vframe .kick { position: absolute; left: 72px; right: 72px; top: 190px; font-weight: 800; font-size: 34px; color: #d1261c; letter-spacing: 0.06em; }
+  .vframe .vcap { position: absolute; left: 72px; right: 72px; top: 296px; height: 266px; display: flex; align-items: flex-end; font-weight: 800; font-size: 86px; line-height: 0.98; color: #141210; text-shadow: 6px 6px 0 #d1261c; letter-spacing: -0.01em; }
+  [lang="hi"] .vframe .vcap { font-size: 74px; line-height: 1.28; }
+  .endcard .col { justify-content: flex-start; }
+  .endcard .vband { margin: 40px -104px 0; background: #141210; color: #f6c518; transform: rotate(-2.5deg); padding: 22px 104px; font-weight: 800; font-size: 50px; line-height: 1.12; }
+  .endcard .cta { margin-top: 48px; }
+  .endcard .ph { position: absolute; left: 230px; top: 1180px; width: 620px; height: 800px; border: 20px solid #141210; border-bottom: 0; border-radius: 48px 48px 0 0; overflow: hidden; background: #f2ead9; z-index: 1; }
+  .endcard .ph img { width: 100%; display: block; }
 </style>
 </head>
 <body>
@@ -109,7 +141,9 @@
   s.setProperty("--hook", (hi ? 104 : 126) + "px");
   s.setProperty("--name", (hi ? 128 : 150) + "px");
   s.setProperty("--title", (hi ? 128 : 150) + "px");
-  s.setProperty("--seal", (p.seal.big.length > 2 ? 66 : 112) + "px");
+  s.setProperty("--seal", (p.seal && p.seal.big.length > 2 ? 66 : 112) + "px");
+  s.setProperty("--phone", (tall ? 470 : 380) + "px");
+  s.setProperty("--homehook", (hi ? 100 : 116) + "px");
   const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
   const mark = (fill) => `<span class="d" style="color:${fill}"><b>Snan</b><span style="font-weight:400">ify</span></span>`;
 
@@ -189,8 +223,62 @@
     </svg>`;
   }
 
+  const redGanga = (t) => esc(t).replace(/(Ganga|गंगा)/, '<span class="r">$1</span>');
+  const sealHtml = (cls) => p.seal ? `<div class="${cls}">${burst(16, "#d1261c", "#141210")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>` : "";
+  const phone = (img) => `<div class="phone"><svg viewBox="0 0 1080 2020" preserveAspectRatio="none"><rect x="6" y="6" width="1068" height="2008" rx="120" fill="#141210"/><rect x="50" y="140" width="980" height="1742" fill="#f2ead9"/><rect x="430" y="60" width="220" height="34" rx="17" fill="#2b2620"/></svg><img src="${img}">${sealHtml("pburst")}</div>`;
+
   const root = document.getElementById("root");
-  if (p.style === "signboard") {
+  if (p.style === "home") {
+    document.body.className = "sb home" + (tall ? " tallhome" : "") + (p.cta.length > 10 ? " long" : "");
+    root.innerHTML = `${truckBorder()}<div class="frame"></div><div class="col">
+      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#d1261c">${esc(p.kicker)}</span></div>
+      <div class="main">
+        <div><div class="hook d caps">${redGanga(p.hook)}</div></div>
+        ${phone(p.img)}
+      </div>
+      <div class="grow"></div>
+      <div class="cta d"><span class="go caps">${esc(p.cta)} →</span><span class="url">snanify.com</span></div>
+    </div>`;
+  } else if (p.style === "kartik") {
+    document.body.className = "cal kartik";
+    root.innerHTML = `<div class="frame"></div><div class="sash d caps">${esc(p.sash)}</div><div class="col">
+      <div class="samvat d">${esc(p.samvat)}</div>
+      <div class="title d caps" style="margin-top:12px">${esc(p.title)}</div>
+      <div class="sub d">${esc(p.hook)}</div>
+      <div class="sheetbox"><img src="${p.img}"></div>
+      <div class="offer d">${esc(p.offer)}</div>
+      <div class="cta d"><span class="go caps">${esc(p.cta)}</span><span class="url">snanify.com</span></div>
+    </div>`;
+  } else if (p.style === "frame") {
+    /* The video overlay: the signboard everywhere but the phone's screen
+       (868 x 1330 at 106, 590, shared with cut-video.sh), stripes down the
+       edges, the caption above the phone inside the 4:5 crop (y 285 to
+       1635), the kicker above it the part a feed may lose. */
+    document.body.className = "vframe";
+    const stripes = [];
+    for (let y = -88; y < 1920 + 88; y += 72) {
+      stripes.push(`<polygon points="0,${y} 44,${y + 44} 44,${y + 80} 0,${y + 36}" fill="#d1261c"/>`);
+      stripes.push(`<polygon points="1036,${y} 1080,${y + 44} 1080,${y + 80} 1036,${y + 36}" fill="#d1261c"/>`);
+    }
+    for (let x = -88; x < 1080 + 88; x += 72) stripes.push(`<polygon points="${x},0 ${x + 36},0 ${x + 80},44 ${x + 44},44" fill="#d1261c"/>`);
+    root.innerHTML = `<svg class="abs" width="1080" height="1920" viewBox="0 0 1080 1920">
+        <path fill-rule="evenodd" fill="#f6c518" d="M0 0H1080V1920H0Z M106 590V1920H974V590Z"/>
+        ${stripes.join("")}
+        <rect x="94" y="578" width="892" height="1420" rx="60" fill="none" stroke="#141210" stroke-width="24"/>
+      </svg>
+      <div class="kick d caps">${esc(p.k)}</div>
+      <div class="vcap d caps">${esc(p.t)}</div>`;
+  } else if (p.style === "end") {
+    document.body.className = "sb endcard" + (p.cta.length > 10 ? " long" : "");
+    root.innerHTML = `${truckBorder()}<div class="frame"></div><div class="col">
+      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#d1261c">${esc(p.k)}</span></div>
+      <div class="words d caps"><span class="w1">${esc(p.top)}</span><span class="w2">${esc(p.bottom)}</span>
+        ${sealHtml("burst")}
+      </div>
+      <div class="vband d caps">${esc(p.headline)}</div>
+      <div class="cta d"><span class="go caps">${esc(p.cta)} →</span><span class="url">snanify.com</span></div>
+    </div>${p.img ? `<div class="ph"><img src="${p.img}"></div>` : ""}`;
+  } else if (p.style === "signboard") {
     document.body.className = "sb" + (p.cta.length > 10 ? " long" : "");
     root.innerHTML = `${truckBorder()}<div class="frame"></div><div class="col">
       <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#d1261c">${esc(p.samvat)}</span></div>

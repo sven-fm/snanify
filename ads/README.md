@@ -8,14 +8,16 @@ no sentence tells the reader who they are (religion, origin), and nothing is eng
 
 | File | What |
 | --- | --- |
-| `out/static-home-{en,hi}-{diaspora,india}-{45,916}.png` | "Send the Ganga home": the Patra in a phone. 4:5 for Feed, 9:16 for Stories and Reels |
-| `out/static-kartik-…` | "Kartik with the Ganga": the four-by-five sheet. A second static, held back for week two |
-| `out/video-kartik-{en,hi}-{diaspora,india}.mp4` | The 9:16 video, cut from a real sitting recorded on an iPhone |
+| `out/static-home-{en,hi}-{diaspora,india}-{45,916}.png` | "Send the Ganga home", loud: truck-art signboard, the hook in giant capitals with GANGA in red, the Patra in a phone with a price burst, Start now. 4:5 for Feed (hook beside the phone), 9:16 for Stories and Reels (hook above it) |
+| `out/static-kartik-…` | "Kartik with the Ganga", loud: calendar art, KARTIK SNAN with a gold offset, the "Starts 27 October" sash, the four-by-five sheet framed in gold, Start now. A second static, held back for week two |
+| `out/video-kartik-{en,hi}-{diaspora,india}.mp4` | The 9:16 video, cut from a real sitting recorded on an iPhone (13 October, so the app inside the phone is the earlier design): the recording plays in a phone on the loud signboard, five captions in black capitals with a red offset, then the end card (GANGA SNAN, the price burst, Start now, the owner's Patra rising in a phone). `upload/kartik-*-v2.mp4` is the same file; `upload/kartik-*-45.mp4` the 4:5 cut, `crop=1080:1350:0:285` |
 | `out/patra-*.png` | The specimen Patra, today's real figure, the Sharma family, 06:12 in New York |
-| `src/*` | Everything that made them: `render-patra.ts`, `render-statics.mjs`, `render-cards.mjs`, `render-campaign.mjs`, `campaign.html`, `cut-video.sh`, `copy.mjs` |
+| `src/*` | Everything that made them: `render-patra.ts`, `render-statics.mjs` and `render-cards.mjs` (both through `loud.html`), `render-loud.mjs`, `render-campaign.mjs`, `campaign.html`, `cut-video.sh`, `copy.mjs` |
 | `out/campaign-{matchbox,signboard,calendar}-{en,hi}-{diaspora,india}-{45,916}.png` | The campaign layer in bazaar print (DESIGNSYSTEM.md, Campaigns): matchbox and signboard for the price story and scroll-stopping ads, calendar art for Kartik and the festival posts |
 
-Re-render after a copy change: `node ads/src/render-statics.mjs && node ads/src/render-cards.mjs`.
+Re-render after a copy change: `node ads/src/render-statics.mjs && node ads/src/render-cards.mjs`, then
+the videos: `ads/src/cut-video.sh ads/in/sitting.mp4 <en|hi> <diaspora|india> 0 3.2 7 31 ads/in/patra-sven-ganga.png`
+for each of the four, and the 4:5 cuts with `ffmpeg -i <video> -vf crop=1080:1350:0:285`.
 The campaign layer: `node ads/src/render-campaign.mjs` (or with one style: `matchbox`,
 `signboard`, `calendar`). Its words are `CAMPAIGN` and `SEAL` in `copy.mjs`; a festival day is a
 new `calendar` entry with its own dates.
