@@ -111,9 +111,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
               narrow and far right so the left column stays clean paper. */}
           <RiverFlow
             variant="panorama"
-            petals
             anchorSelector="[data-horizon-anchor]"
-            sunAnchorSelector="[data-sun-anchor]"
             className="absolute inset-0 hidden h-full w-full text-ink sm:block"
           />
 
@@ -127,13 +125,8 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 <span>{live.line}</span>
               </p>
 
-              {/* The headline runs the full measure and the sun is set into it
-                  rather than beside it: the float below carries a circular
-                  `shape-outside`, so the first line runs full width and every
-                  line after it wraps around the disc. The sun is not drawn here;
-                  RiverFlow finds this element and paints itself onto it, which
-                  is why the whole composition is sized in `em` off the headline
-                  and holds together at any measure and in any script. */}
+              {/* The headline runs the full measure. The sun sits on the
+                  river's own horizon, in RiverFlow. */}
               <h1
                 data-horizon-anchor
                 className="ink-in display relative order-2 mt-4 text-[2.5rem] leading-[1.04] sm:mt-7 sm:text-[4.6rem] lg:text-[7rem]"
@@ -145,30 +138,9 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                 <span className="absolute top-[0.1em] -left-[15px] text-[1.35rem] leading-none sm:-left-[22px] sm:text-[1.6rem] lg:text-[2.2rem]">
                   <Tilak />
                 </span>
-                <span
-                  data-sun-anchor
-                  aria-hidden="true"
-                  className="float-right hidden aspect-square w-[1.75em] sm:block"
-                  style={{
-                    /* One line down, so the first row keeps the full measure. */
-                    marginTop: "calc(1lh + 0.35em)",
-                    /* The lower half hangs out of the headline: an h1 that is a
-                       flex item contains its floats, so without this the disc
-                       adds its full height to the block and opens a hole under
-                       the last line. Pulling half of it back also puts the
-                       headline's bottom edge, and therefore the waterline
-                       anchored to it, straight through the sun's centre, which
-                       is what makes it read as setting into the water rather
-                       than floating above it. */
-                    marginBottom: "-0.875em",
-                    marginRight: "1.2em",
-                    shapeOutside: "circle(50%) border-box",
-                    shapeMargin: "0.28em",
-                  }}
-                />
                 {/* One colour for the whole headline. The second half used to
                     be set in the sindoor, which is the commonest tell of a
-                    generated page. The sun carries the vermilion up here. */}
+                    generated page. The river's sun carries the vermilion. */}
                 {t.hero.titleA} {t.hero.titleB}
               </h1>
 
@@ -183,7 +155,6 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
               <div className="relative order-5 -mx-5 mt-9 h-[30svh] max-h-[320px] min-h-[210px] sm:hidden">
                 <RiverFlow
                   variant="portrait"
-                  petals
                   className="absolute inset-0 h-full w-full text-ink"
                 />
               </div>

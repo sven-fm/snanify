@@ -1,7 +1,9 @@
 "use client";
 
 /**
- * An engraved river at sunrise, in perspective, with marigold on the water.
+ * An engraved river at sunrise, in perspective, in the palette: teal ripples,
+ * a sindoor sun sitting on the horizon and cut by it, and the sun's path on
+ * the water in marigold.
  *
  * The geometry is a real pinhole projection rather than a stack of sine waves:
  * a point at depth `d` lands at `y = horizon + C/d`, and the channel's
@@ -20,16 +22,20 @@
  * from a crop.
  *
  * TWO VARIANTS, because a 1440x600 band and a 390x300 band are not the same
- * picture. `panorama` keeps a narrow channel far to the right so the headline
- * and lede sit on clean paper. `portrait` swings the vanishing point hard right
- * and the near edge hard left, which is what puts perspective back into a box
- * that is nearly as tall as it is wide.
+ * picture. `panorama` keeps a narrow channel far to the right. `portrait`
+ * swings the vanishing point hard right and the near edge hard left, which is
+ * what puts perspective back into a box that is nearly as tall as it is wide.
+ * In design system v3 the river sits below the press, on its own band.
  *
- * THE HORIZON IS ANCHORED, NOT GUESSED. `anchorSelector` names an element whose
- * bottom edge the waterline sits under, so the masthead and headline are always
- * above the horizon whatever the viewport does and however the headline wraps.
- * That last part is load bearing: the same headline is four words in English,
- * three in Hindi.
+ * THE HORIZON CAN BE ANCHORED. `anchorSelector` names an element whose bottom
+ * edge the waterline sits under, so whatever sits above it stays on sky however
+ * it wraps. Without one the waterline is the variant's fraction of the box.
+ *
+ * THE SUN SITS ON THE HORIZON, CUT BY IT. `placeSun` hands the vanishing point
+ * and the waterline to `horizonSun` (src/lib/river-geometry.ts, shared with the
+ * kit, the Patra image and the email), and the sky clip hides the lower part
+ * behind the water. The river runs to the sun: the vanishing point is the
+ * sun's centre, so the channel and the glitter converge on one point.
  *
  * Architecture follows the terrain motif in trainingzones: each frame the paths
  * are recomputed and written straight to the `d` attribute through a group ref,
@@ -39,6 +45,30 @@
  */
 
 import { useEffect, useId, useRef } from "react";
+import type { PaletteKey } from "@/lib/palette";
+import { horizonSun } from "@/lib/river-geometry";
+
+/**
+ * The river's inks, by palette name. Drawn as `var(--name)` so the night
+ * edition follows the theme; tests/unit/palette.test.ts keeps the tokens and
+ * `PALETTE` in step.
+ */
+export const RIVER_INK = { ripples: "teal", glitter: "marigold", sun: "sindoor" } as const satisfies Record<
+  string,
+  PaletteKey
+>;
+const ink = (key: PaletteKey) => `var(--${key})`;
+
+/**
+ * The sun for one frame: on the horizon over the vanishing point, its lower
+ * part below `clipBelow` (the waterline), its whole dome under the top edge.
+ */
+export function placeSun({ sunX, horizon, sunR }: { sunX: number; horizon: number; sunR: number }) {
+  /* horizonSun lifts the centre 0.35r above the line, so the dome's top is
+     1.35r above it; a sun taller than the sky would come out squared off. */
+  const r = Math.max(1, Math.min(sunR, (horizon * 0.98) / 1.35));
+  return horizonSun({ cx: sunX, horizonY: horizon, r });
+}
 
 /** Depth range of the channel, in arbitrary units. Screen y is horizon + C/d. */
 const D_NEAR = 1;
@@ -52,23 +82,6 @@ const STEPS = 44;
 /** Depth units per second. Water moves; it does not race. */
 const FLOW = 0.34;
 
-/**
- * Marigold petals riding the current, one vermillion among them. Each has a
- * lateral place in the channel (`sx`, -1 to 1 bank to bank), a phase offset so
- * they are spread along it, a spin and a tone. Fixed, not random, so the
- * server and client agree. Kept to the landing's river: see DESIGNSYSTEM.md.
- */
-const PETALS = [
-  { sx: -0.38, at: 0.08, spin: 0.7, tone: "haldi" },
-  { sx: 0.22, at: 0.23, spin: -0.5, tone: "haldi" },
-  { sx: -0.08, at: 0.41, spin: 0.9, tone: "sindoor" },
-  { sx: 0.46, at: 0.55, spin: -0.8, tone: "haldi" },
-  { sx: -0.52, at: 0.68, spin: 0.6, tone: "haldi" },
-  { sx: 0.12, at: 0.83, spin: -0.4, tone: "haldi" },
-  { sx: 0.34, at: 0.95, spin: 0.5, tone: "haldi" },
-] as const;
-/** Petals ride a little slower than the ripples, as floating things do. */
-const PETAL_DRIFT = 0.8;
 
 export type RiverVariant = "panorama" | "portrait";
 
@@ -93,18 +106,16 @@ type Tuning = {
   halfW: number;
   /** How far the channel wanders off its axis, as a fraction of width. */
   meander: number;
+  /** The sun's radius, as a fraction of width. */
   sunR: number;
-  /** How far the sun sits above the waterline, as a fraction of its radius. */
-  sunLift: number;
   /** Width of the reflection where it meets the horizon and the near edge. */
   glitterFar: number;
   glitterNear: number;
 };
 
 const TUNING: Record<RiverVariant, Tuning> = {
-  /* Wide, and there is type on top of it. The channel is kept narrow and far
-     right so the left column stays clean paper, and the waterline is anchored
-     under the headline rule rather than through the headline itself. */
+  /* Wide. The channel is kept narrow and far right so a left column set
+     beside it stays clean paper. */
   panorama: {
     horizon: 0.5,
     horizonMin: 0.3,
@@ -115,11 +126,10 @@ const TUNING: Record<RiverVariant, Tuning> = {
     halfW: 0.55,
     meander: 0.062,
     sunR: 0.062,
-    sunLift: 0.4,
     glitterFar: 0.015,
     glitterNear: 0.11,
   },
-  /* Tall and narrow, standing alone under the headline with nothing over it.
+  /* Tall and narrow, standing alone below the press with nothing over it.
      The vanishing point goes hard right and the near edge hard left: that swing
      is the only thing that reads as depth in a box this shape, and without it
      the channel collapses into the symmetric wedge this replaced. */
@@ -132,10 +142,9 @@ const TUNING: Record<RiverVariant, Tuning> = {
     nearX: 0.2,
     halfW: 0.78,
     meander: 0.05,
-    /* Small enough that the whole dome clears the band's top edge: the sky is
-       only `horizon` tall here, and a sun taller than it gets squared off. */
-    sunR: 0.1,
-    sunLift: 0.3,
+    /* About the approved mockup's 46px disc on a 390 phone. placeSun keeps
+       the dome under the band's top edge however short the sky is. */
+    sunR: 0.06,
     glitterFar: 0.03,
     glitterNear: 0.3,
   },
@@ -152,11 +161,9 @@ type Geometry = {
   near: number;
   halfW: number;
   meander: number;
-  /** Sun centre and radius. `vanish` always equals `sunX`: the river runs to
-   *  the sun, so the glitter path and the channel share one point. */
-  sunX: number;
-  sunY: number;
-  sunR: number;
+  /** The sun from placeSun. `vanish` always equals its `cx`: the river runs
+   *  to the sun, so the glitter path and the channel share one point. */
+  sun: ReturnType<typeof placeSun>;
 };
 
 const project = (g: Geometry, d: number) => g.horizon + g.c / d;
@@ -224,8 +231,6 @@ export function RiverFlow({
   className = "",
   variant = "panorama",
   anchorSelector,
-  sunAnchorSelector,
-  petals = false,
 }: {
   className?: string;
   variant?: RiverVariant;
@@ -235,15 +240,6 @@ export function RiverFlow({
    * not serialisable across that boundary.
    */
   anchorSelector?: string;
-  /**
-   * CSS selector for a circular `shape-outside` float in the headline. When
-   * given, the sun is painted onto exactly that circle and the vanishing point
-   * follows it, so the type and the river are one composition rather than two
-   * that happen to overlap.
-   */
-  sunAnchorSelector?: string;
-  /** Petals on the water. The landing's river only. */
-  petals?: boolean;
 }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const rippleRef = useRef<SVGGElement | null>(null);
@@ -254,7 +250,6 @@ export function RiverFlow({
   const skyRectRef = useRef<SVGRectElement | null>(null);
   const horizonRef = useRef<SVGLineElement | null>(null);
   const glitterShapeRef = useRef<SVGPolygonElement | null>(null);
-  const petalRef = useRef<SVGGElement | null>(null);
 
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const skyClip = `sky-${uid}`;
@@ -270,7 +265,6 @@ export function RiverFlow({
     const skyRect = skyRectRef.current;
     const horizonLine = horizonRef.current;
     const glitterShape = glitterShapeRef.current;
-    const petalGroup = petalRef.current;
     if (!svg || !ripples || !glitter || !streams || !banks) return;
 
     const tune = TUNING[variant];
@@ -306,46 +300,19 @@ export function RiverFlow({
       }
       horizon = Math.min(Math.max(horizon, tune.horizonMin * h), tune.horizonMax * h);
 
-      /* The sun is normally derived from the frame. When a sun anchor is given
-         it is derived from the TYPE instead: the headline floats a circular
-         `shape-outside` and the disc is painted onto exactly that circle, so
-         the words wrap around the real sun rather than around an approximation
-         of where it might be. The vanishing point follows it, which keeps the
-         channel and the reflection converging on the same point. */
-      let sunX = tune.vanishX * w;
-      let sunR = tune.sunR * w;
-      let sunY = horizon - sunR * tune.sunLift;
-
-      if (sunAnchorSelector) {
-        const anchor = document.querySelector(sunAnchorSelector);
-        if (anchor) {
-          const a = anchor.getBoundingClientRect();
-          /* Zero-sized when the float is `display:none`, which is what the
-             portrait breakpoint does; fall through to the tuned values. */
-          if (a.width > 4) {
-            sunR = a.width / 2;
-            sunX = a.left + sunR - box.left;
-            sunY = a.top + a.height / 2 - box.top;
-          }
-        }
-      }
-
-      /* The dome is clipped at the waterline, so it must also fit under the top
-         edge or it comes out squared off. */
-      sunR = Math.min(sunR, Math.max(sunY, 1) * 0.98);
+      /* The sun sits on the waterline over the vanishing point, cut by it. */
+      const sun = placeSun({ sunX: tune.vanishX * w, horizon, sunR: tune.sunR * w });
 
       return {
         w,
         h,
         horizon,
         c: h - horizon,
-        vanish: sunX,
+        vanish: sun.cx,
         near: tune.nearX * w,
         halfW: tune.halfW * w,
         meander: tune.meander * w,
-        sunX,
-        sunY,
-        sunR,
+        sun,
       };
     }
 
@@ -361,10 +328,12 @@ export function RiverFlow({
       svg!.setAttribute("viewBox", `0 0 ${g.w.toFixed(1)} ${g.h.toFixed(1)}`);
 
       skyRect?.setAttribute("width", g.w.toFixed(1));
-      skyRect?.setAttribute("height", g.horizon.toFixed(1));
-      sun?.setAttribute("cx", g.sunX.toFixed(1));
-      sun?.setAttribute("cy", g.sunY.toFixed(1));
-      sun?.setAttribute("r", g.sunR.toFixed(1));
+      /* The sky ends at the waterline, so the sun's lower part is hidden
+         behind the water: it sits on the horizon, cut by it. */
+      skyRect?.setAttribute("height", g.sun.clipBelow.toFixed(2));
+      sun?.setAttribute("cx", g.sun.cx.toFixed(2));
+      sun?.setAttribute("cy", g.sun.cy.toFixed(2));
+      sun?.setAttribute("r", g.sun.r.toFixed(2));
 
       /* Line weights are in CSS pixels now that the viewBox is, so they have to
          be scaled by hand or a tall desktop band would engrave the same
@@ -416,34 +385,6 @@ export function RiverFlow({
         }
       }
 
-      /* Petals ride the same projection as the ripples: stepped in 1/d, so
-         they cross the screen at an even pace, growing as they come near, and
-         placed across the channel by `sx` so they follow its bends. */
-      if (petalGroup) {
-        const unit = g.h / 700;
-        PETALS.forEach((p, i) => {
-          const el = petalGroup.children[i] as SVGPathElement | undefined;
-          if (!el) return;
-          const phase = (p.at + time * FLOW * 0.045 * PETAL_DRIFT) % 1;
-          const inv = 1 / D_FAR + phase * (1 / D_NEAR - 1 / D_FAR);
-          const d = 1 / inv;
-          const nearness = D_NEAR / d;
-          const x = centre(g, d, time) + p.sx * halfWidth(g, d);
-          const y = project(g, d) + 6 * unit * nearness * Math.sin(d * 0.9 - time * 0.85 + p.sx * 3);
-          /* Sized off the band's area rather than its height, so a short
-             phone band still floats a petal a thumb can see: about 14px
-             across at the near edge on a phone, capped on a wide screen. */
-          const size = Math.max(0.6, Math.min(13, (7 * Math.sqrt(g.w * g.h)) / 340) * nearness ** 0.9);
-          const turn = (p.spin * time * 18 + i * 47) % 360;
-          const fade = Math.min(1, phase * 5) ** 1.4 * Math.min(1, (1 - phase) * 12);
-          el.setAttribute(
-            "transform",
-            `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${turn.toFixed(1)}) scale(${size.toFixed(2)} ${(size * 0.62).toFixed(2)})`,
-          );
-          el.setAttribute("opacity", fade.toFixed(3));
-        });
-      }
-
       for (let i = 0; i < STREAMS; i++) {
         /* Interior lines only, so they never sit on top of the banks. */
         const sx = -0.66 + (1.32 * i) / (STREAMS - 1);
@@ -465,10 +406,8 @@ export function RiverFlow({
     window.addEventListener("resize", redraw, { passive: true });
     const ro = new ResizeObserver(redraw);
     ro.observe(svg);
-    for (const sel of [anchorSelector, sunAnchorSelector]) {
-      const el = sel ? document.querySelector(sel) : null;
-      if (el) ro.observe(el);
-    }
+    const anchorEl = anchorSelector ? document.querySelector(anchorSelector) : null;
+    if (anchorEl) ro.observe(anchorEl);
     document.fonts?.ready.then(redraw).catch(() => {});
 
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -527,7 +466,7 @@ export function RiverFlow({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", redraw);
     };
-  }, [variant, anchorSelector, sunAnchorSelector, petals]);
+  }, [variant, anchorSelector]);
 
   return (
     <svg
@@ -541,7 +480,7 @@ export function RiverFlow({
       fill="none"
     >
       <defs>
-        {/* the sun is cut off by the waterline, so it reads as setting into it */}
+        {/* the sky ends at the waterline: the sun sits on it, cut by it */}
         <clipPath id={skyClip}>
           <rect ref={skyRectRef} x="0" y="0" width="1200" height="232" />
         </clipPath>
@@ -552,62 +491,54 @@ export function RiverFlow({
       </defs>
 
       <g clipPath={`url(#${skyClip})`}>
-        {/* the bindu at full size */}
-        <circle ref={sunRef} cx="0" cy="0" r="0" fill="var(--sindoor)" opacity="0.92" />
+        {/* the bindu at full size, on the horizon */}
+        <circle ref={sunRef} cx="0" cy="0" r="0" fill={ink(RIVER_INK.sun)} />
       </g>
 
-      {/* the far bank, where water meets sky */}
+      {/* the far bank, where water meets sky: a thin ink line */}
       <line
         ref={horizonRef}
         x1="0"
         y1="0"
         x2="0"
         y2="0"
-        stroke="currentColor"
+        stroke="var(--ink)"
         strokeWidth="1.5"
-        opacity="0.45"
+        opacity="0.8"
       />
 
       {/* the banks, which is what makes it a river and not a plane */}
-      <g ref={bankRef} stroke="currentColor" strokeWidth="1.3" opacity="0.34">
+      <g ref={bankRef} stroke={ink(RIVER_INK.ripples)} strokeWidth="1.3" opacity="0.34">
         <path />
         <path />
       </g>
 
       {/* a few interior streamlines, kept faint so it never reads as a grid */}
-      <g ref={streamRef} stroke="currentColor" strokeWidth="1" opacity="0.1">
+      <g ref={streamRef} stroke={ink(RIVER_INK.ripples)} strokeWidth="1" opacity="0.1">
         {Array.from({ length: STREAMS }, (_, i) => (
           <path key={i} />
         ))}
       </g>
 
       {/* transverse ripples travelling toward the reader */}
-      <g ref={rippleRef} stroke="currentColor" strokeWidth="1.15">
+      <g ref={rippleRef} stroke={ink(RIVER_INK.ripples)} strokeWidth="1.15">
         {Array.from({ length: RIPPLES }, (_, i) => (
           <path key={i} />
         ))}
       </g>
 
-      {/* the same ripples again, in haldi, cut to the glitter path: the sun's
-          light on the water. The sun itself stays vermillion, the bindu. */}
-      <g ref={glitterRef} stroke="var(--haldi)" strokeWidth="1.8" clipPath={`url(#${glitterClip})`}>
+      {/* the same ripples again, in marigold, cut to the glitter path: the
+          sun's path on the water. The sun itself stays sindoor, the bindu. */}
+      <g
+        ref={glitterRef}
+        stroke={ink(RIVER_INK.glitter)}
+        strokeWidth="1.8"
+        clipPath={`url(#${glitterClip})`}
+      >
         {Array.from({ length: RIPPLES }, (_, i) => (
           <path key={i} />
         ))}
       </g>
-
-      {petals && (
-        <g ref={petalRef} stroke="none">
-          {PETALS.map((p, i) => (
-            <path
-              key={i}
-              d="M-1 0 C-0.6 -0.7 0.6 -0.7 1 0 C0.6 0.7 -0.6 0.7 -1 0Z"
-              fill={p.tone === "haldi" ? "var(--haldi)" : "var(--sindoor)"}
-              opacity="0"
-            />
-          ))}
-        </g>
-      )}
     </svg>
   );
 }

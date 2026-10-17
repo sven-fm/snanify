@@ -1,3 +1,4 @@
+import { RiverStrip } from "@/components/kit";
 import { engrave } from "@/lib/engraving";
 
 /** One weight for every line of a flowing band; see the note in WaterBand. */
@@ -5,7 +6,15 @@ export const UNIFORM_WIDTH = 1.5;
 export const UNIFORM_OPACITY = 0.42;
 
 /* ---------------------------------------------------------------------------
-   A band of engraved water that never stops moving.
+   The water band, which in design system v3 is the strip: a page's band is
+   `RiverStrip` from the kit, teal waves fading into paper, and every caller
+   keeps its own className for the box. Spec 5.6.
+
+   The sitting's two screen-filling waters (`faint` behind the practice, the
+   sindoor breath) keep the engraved drawing below until the sitting is
+   rebuilt on the kit's river (design-v3 Task 12).
+
+   The engraved drawing: a band of water that never stops moving.
 
    The same lines the Sankalp Patra carries, drawn from a seed so a page's
    water is the same water each visit, flowing steadily downward. The drawing
@@ -48,6 +57,7 @@ export function WaterBand({
   /** The ink by default; the sindoor for the breath, where the water is the thing itself. */
   color?: "ink" | "sindoor";
 }) {
+  if (!faint && color === "ink") return <RiverStrip className={className} />;
   const drawn = engrave({ seed: seedFor(seed), percentile, width: 1000, height: 300, flat: true });
   /* Every line at one weight. The engraver weights its lines from faint at
      the back to heavy at the front, which is right for a sheet and wrong for
