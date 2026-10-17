@@ -1,7 +1,15 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+/* sitting.ts imports the database client, which refuses to load without a
+   DATABASE_URL. The morning number is pure, so the client is stubbed. */
+vi.mock("@/db", () => ({ db: {}, profiles: {}, sittings: {} }));
+
 import { riverSlice, seedDay, seedFigure, skySlice } from "@/lib/patra-record";
 import type { WaterState } from "@/lib/riverdata";
 import type { SkyReading } from "@/lib/sky";
+import type { Sitting } from "@/db/schema";
+import { morningNumber } from "@/lib/sitting";
+import { IMAGE_VERSION } from "@/lib/patra-image";
+import { patraView } from "@/lib/patra-view";
 
 /* A water in the modelled arm: the flood model published a figure for today. */
 function modelled(over: Record<string, unknown> = {}): WaterState {
@@ -110,5 +118,47 @@ describe("what the seed stands on", () => {
     /* Otherwise a sheet standing on the median would have no day in its seed
        and every such sheet for one water would hash alike. */
     expect(seedDay(riverSlice(normal()), "2026-09-07")).toBe("2026-09-07");
+  });
+});
+
+function sittingRow(over: Partial<Sitting> = {}): Sitting {
+  return {
+    id: "abc",
+    userId: "u1",
+    waterSlug: "ganga",
+    keptAt: new Date("2026-09-08T00:42:00Z"),
+    keptTz: "America/Toronto",
+    keptOn: "2026-09-07",
+    locale: "en",
+    river: riverSlice(modelled()),
+    sky: skySlice(sky, modelled()),
+    seed: "0".repeat(64),
+    names: [{ name: "Rekha Sharma" }],
+    prayerId: null,
+    portraitKey: null,
+    sankalpText: "",
+    imageKey: null,
+    distanceKm: null,
+    morningNo: null,
+    imageVersion: null,
+    isPublic: true,
+    createdAt: new Date("2026-09-08T00:42:00Z"),
+    ...over,
+  } as Sitting;
+}
+
+describe("the morning number", () => {
+  it("counts the mornings before this one, plus one", () => {
+    expect(morningNumber(0)).toBe(1);
+    expect(morningNumber(6)).toBe(7);
+  });
+
+  it("reaches the view, and is null for rows minted before it existed", () => {
+    expect(patraView(sittingRow({ morningNo: 7 })).morning).toBe(7);
+    expect(patraView(sittingRow({ morningNo: null })).morning).toBeNull();
+  });
+
+  it("names the image version new mints carry", () => {
+    expect(IMAGE_VERSION).toBe(3);
   });
 });

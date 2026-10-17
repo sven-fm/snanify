@@ -69,6 +69,9 @@ export type PatraView = {
   seedShort: string;
   percentile: number | null;
 
+  /** The person's nth morning across every water, or null on rows from before it was counted. */
+  morning: number | null;
+
   /** "3,880 km away", in the edition, or null when the morning carried no fix. */
   distance: string | null;
 
@@ -153,6 +156,8 @@ export function patraView(sitting: Sitting, edition?: Lang): PatraView {
     seed: sitting.seed,
     seedShort: shortSeed(sitting.seed),
     percentile: river.percentile,
+
+    morning: sitting.morningNo ?? null,
 
     distance:
       sitting.distanceKm === null || sitting.distanceKm === undefined

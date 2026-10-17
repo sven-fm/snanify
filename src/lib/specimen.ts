@@ -78,6 +78,8 @@ export async function specimenView(
     portraitKey: null,
     sankalpText: "",
     imageKey: null,
+    morningNo: null,
+    imageVersion: null,
     isPublic: true,
     createdAt: kept,
     /* New York to the ghat, to the nearest ten kilometres, as a real morning would carry it.

@@ -11,6 +11,9 @@ import { PALETTE } from "@/lib/palette";
 import { typeset, wrap } from "@/lib/typeset";
 import type { PatraView } from "@/lib/patra-view";
 
+/** The renderer new mints are stamped with. Rows with a null version keep rendering the original way. */
+export const IMAGE_VERSION = 3;
+
 /* ---------------------------------------------------------------------------
    The Sankalp Patra as a picture, 1080 by 1350.
 

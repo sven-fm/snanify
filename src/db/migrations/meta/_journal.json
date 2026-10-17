@@ -15,6 +15,13 @@
       "when": 1789585194506,
       "tag": "0001_distance-km",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792280713795,
+      "tag": "0002_v3-morning-image",
+      "breakpoints": true
     }
   ]
 }
