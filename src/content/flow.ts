@@ -38,6 +38,14 @@ const en = {
     full: "Running full",
     spate: "In spate",
   } satisfies Record<FlowBand, string>,
+  /** The state against the same time of year, one plain sentence under the gauge. */
+  plain: {
+    slack: "Much lower than usual for this time of year.",
+    low: "Lower than usual for this time of year.",
+    usual: "About as usual for this time of year.",
+    full: "Fuller than usual for this time of year.",
+    spate: "Much fuller than usual for this time of year.",
+  } satisfies Record<FlowBand, string>,
   /** One sentence, {river} and {city} filled at render. */
   line: {
     slack: "The {river} at {city} is running thin this morning.",
@@ -69,6 +77,13 @@ const hi: typeof en = {
     usual: "सामान्य बहाव",
     full: "भरी धार",
     spate: "उफान पर",
+  },
+  plain: {
+    slack: "इस समय के हिसाब से सामान्य से बहुत कम।",
+    low: "इस समय के हिसाब से सामान्य से कम।",
+    usual: "इस समय के हिसाब से लगभग सामान्य।",
+    full: "इस समय के हिसाब से सामान्य से भरी।",
+    spate: "इस समय के हिसाब से सामान्य से बहुत भरी।",
   },
   line: {
     slack: "{city} में {river} आज सुबह पतली धार में बह रही हैं।",
