@@ -38,28 +38,37 @@ export function Section({
   );
 }
 
-const buttonBase =
-  "label impress inline-flex items-center justify-center gap-2 px-6 py-3.5 select-none";
-
-/* Every variant has a pressed state as well as a hover, because a phone has
-   no hover: the press is the only feedback a thumb ever gets. `impress` in
-   globals.css moves the plate; these set its ink. */
+/* The press (globals.css): every primary action is the top of a solid ink
+   box and sinks flush under the thumb, which is the only feedback a phone
+   gives. One block per screen; a secondary action is a plain underlined
+   link, never a second block. */
 const buttonVariants = {
-  /* The press impression: solid sindoor, inverted type. */
-  solid: "bg-sindoor text-paper hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
-  /* A ruled box that fills with ink on hover and on press. Opaque, not
-     transparent: the hero sits this button on top of the river, and ripples
-     reading through the type made the label almost unreadable. */
-  ghost:
-    "border border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
+  /* Sindoor face, white type, an arrow at the right. */
+  solid: "press",
+  /* Marigold face, ink type: "Send it to the family", and nothing else. */
+  share: "press press-share",
+  /* A plain ink-underlined link. */
   quiet:
-    "text-ink underline decoration-sindoor decoration-2 hover:text-sindoor active:text-sindoor px-0 py-1",
+    "inline-flex min-h-[44px] items-center gap-2 font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor disabled:opacity-60",
+  /** @deprecated The ruled ghost box is retired in v3: it reads as the quiet link until its surface task removes the call (Task 20 deletes this key). */
+  ghost:
+    "inline-flex min-h-[44px] items-center gap-2 font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor disabled:opacity-60",
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;
 
 export function buttonClass(variant: ButtonVariant = "solid", className = "") {
-  return `${buttonBase} ${buttonVariants[variant]} ${className}`;
+  return `${buttonVariants[variant]} ${className}`.trim();
+}
+
+/** The arrow at the right of a primary press. */
+function Arrow({ variant, arrow }: { variant: ButtonVariant; arrow?: boolean }) {
+  if (!(arrow ?? variant === "solid")) return null;
+  return (
+    <span aria-hidden="true" className="shrink-0">
+      →
+    </span>
+  );
 }
 
 /**
@@ -73,13 +82,21 @@ export function buttonClass(variant: ButtonVariant = "solid", className = "") {
 export function CTA({
   children,
   variant = "solid",
+  arrow,
   className = "",
 }: {
   children: React.ReactNode;
   variant?: ButtonVariant;
+  /** The arrow at the right; on by default for the solid press. */
+  arrow?: boolean;
   className?: string;
 }) {
-  return <span className={buttonClass(variant, className)}>{children}</span>;
+  return (
+    <span className={buttonClass(variant, className)}>
+      <span>{children}</span>
+      <Arrow variant={variant} arrow={arrow} />
+    </span>
+  );
 }
 
 /**
@@ -90,16 +107,19 @@ export function CTA({
 export function SubmitButton({
   children,
   variant = "solid",
+  arrow,
   className = "",
   ...rest
 }: {
   children: React.ReactNode;
   variant?: ButtonVariant;
+  arrow?: boolean;
   className?: string;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className">) {
   return (
     <button type="submit" className={buttonClass(variant, className)} {...rest}>
-      {children}
+      <span>{children}</span>
+      <Arrow variant={variant} arrow={arrow} />
     </button>
   );
 }
@@ -109,6 +129,7 @@ export function LinkButton({
   hrefLang,
   children,
   variant = "solid",
+  arrow,
   className = "",
 }: {
   href: string;
@@ -116,11 +137,13 @@ export function LinkButton({
   hrefLang?: string;
   children: React.ReactNode;
   variant?: ButtonVariant;
+  arrow?: boolean;
   className?: string;
 }) {
   return (
     <Link href={href} hrefLang={hrefLang} className={buttonClass(variant, className)}>
-      {children}
+      <span>{children}</span>
+      <Arrow variant={variant} arrow={arrow} />
     </Link>
   );
 }

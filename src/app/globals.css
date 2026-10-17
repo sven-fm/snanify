@@ -149,29 +149,163 @@
   }
 }
 
-/* --- The impression ---------------------------------------------------------
-   A control is a plate. Under the thumb it lands: one pixel down and one
-   right, the ink darkening at once, and it lifts back on release over 120ms.
-   Every button, link-button, summary and the vow box carries `impress`; the
-   colour of the pressed state is set per variant in src/components/ui.
-   A second impression (`misregister`) registers with the first as it lands:
-   its four-pixel offset closes to one.                                      */
-@utility impress {
-  transition-property: transform, background-color, color, border-color, box-shadow, opacity;
-  transition-duration: 120ms;
-  transition-timing-function: ease-out;
+/* --- The press ---------------------------------------------------------------
+   Every primary button and every tappable block is the top of a solid box.
+   Its side walls are `--wall`, stacked one pixel at a time so the corners
+   connect: a box, not a floating shadow. Under the thumb it sinks the depth
+   of its walls in 70ms and the walls collapse, flush with the page; it rises
+   back in 120ms. Night keeps the geometry: the walls go to #000 and the
+   border to the light ink, so the edge still reads. `sink` in the motion
+   table. See src/components/ui.                                             */
+:root {
+  --sink-down: 70ms;
+  --sink-up: 120ms;
+  /* Ink on marigold stays dark at night: marigold is the same in both
+     editions, and light ink on it would vanish. */
+  --on-marigold: #141210;
 }
-.impress:active,
-a:active > .impress,
-label:active > .impress {
-  transform: translate(1px, 1px);
-  transition-duration: 0ms;
+@layer components {
+  .press {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.875rem 1rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3;
+    text-align: left;
+    color: #fff;
+    background-color: var(--sindoor);
+    border: 2px solid var(--ink);
+    box-shadow: 1px 1px 0 var(--wall), 2px 2px 0 var(--wall), 3px 3px 0 var(--wall), 4px 4px 0 var(--wall), 5px 5px 0 var(--wall), 6px 6px 0 var(--wall);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+      transform var(--sink-up) ease-out,
+      box-shadow var(--sink-up) ease-out;
+  }
+  .press:active {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+    transition-duration: var(--sink-down);
+  }
+  a:active > .press,
+  label:active > .press {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+    transition-duration: var(--sink-down);
+  }
+  .press:disabled,
+  .press[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: default;
+  }
+  .press:disabled:active {
+    transform: none;
+    box-shadow: 1px 1px 0 var(--wall), 2px 2px 0 var(--wall), 3px 3px 0 var(--wall), 4px 4px 0 var(--wall), 5px 5px 0 var(--wall), 6px 6px 0 var(--wall);
+  }
+  /* The one marigold button in the product: send it to the family. */
+  .press-share {
+    color: var(--on-marigold);
+    background-color: var(--marigold);
+  }
+  /* Setup's choices: smaller blocks on 3px walls. The chosen one stays sunk,
+     with a sindoor face. */
+  .press-choice {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.625rem 0.875rem;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 1px 1px 0 var(--wall), 2px 2px 0 var(--wall), 3px 3px 0 var(--wall);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+      transform var(--sink-up) ease-out,
+      box-shadow var(--sink-up) ease-out;
+  }
+  .press-choice:active,
+  .press-choice[data-chosen],
+  .press-choice[aria-pressed="true"],
+  .press-choice[aria-checked="true"],
+  .press-choice:has(input:checked) {
+    transform: translate(3px, 3px);
+    box-shadow: none;
+    transition-duration: var(--sink-down);
+  }
+  .press-choice[data-chosen],
+  .press-choice[aria-pressed="true"],
+  .press-choice[aria-checked="true"],
+  .press-choice:has(input:checked) {
+    color: #fff;
+    background-color: var(--sindoor);
+  }
+
+  /* --- The kit's motions -----------------------------------------------------
+     `flow`: each wave line drifts sideways by one period at its own pace, and
+     the sun's path shimmers. `breathe`: the waves' vertical scale, four
+     seconds up and six down. `stamp`: the morning seal lands, from 1.15 and
+     -14deg to its rest in 180ms, stepped. Transform and opacity only. The
+     river pauses off screen: InView drops `data-in` when it leaves.          */
+  @keyframes flow {
+    from { transform: translateX(0); }
+    to { transform: translateX(var(--shift, -40px)); }
+  }
+  .flow-line {
+    animation: flow var(--drift, 9s) linear infinite;
+  }
+  @keyframes flow-glint {
+    from { opacity: 0.7; transform: translateX(var(--glint-from, -1px)); }
+    to { opacity: 1; transform: translateX(var(--glint-to, 1px)); }
+  }
+  .flow-glint {
+    animation: flow-glint var(--glint, 4s) ease-in-out infinite alternate;
+  }
+  @keyframes breathe {
+    0% { transform: scaleY(0.8); }
+    40% { transform: scaleY(1.2); }
+    100% { transform: scaleY(0.8); }
+  }
+  .breathe-waves {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation: breathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  @keyframes stamp {
+    from { opacity: 0; transform: scale(1.15) rotate(-14deg); }
+    to { opacity: 1; transform: rotate(var(--seal-turn, 0deg)); }
+  }
+  .stamp {
+    animation: stamp 180ms steps(3, end) both;
+  }
+  html[data-js] [data-armed]:not([data-in]) .flow-line,
+  html[data-js] [data-armed]:not([data-in]) .flow-glint,
+  html[data-js] [data-armed]:not([data-in]) .breathe-waves {
+    animation-play-state: paused;
+  }
 }
-.misregister:active,
-a:active > .misregister {
-  box-shadow: 1px 1px 0 0 var(--sindoor);
-  transform: translate(3px, 3px);
-  transition-duration: 0ms;
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sink-down: 0ms;
+    --sink-up: 0ms;
+  }
+  .flow-line,
+  .flow-glint,
+  .breathe-waves,
+  .stamp {
+    animation: none;
+  }
 }
 
 /* --- Settle -----------------------------------------------------------------
@@ -437,12 +571,6 @@ html:not([data-script="latin"]) i {
   border: 1px solid var(--rule-strong);
 }
 
-/* Registration offset: a second impression sitting slightly off, the way a
-   two-colour press misaligns. Used sparingly, never as a drop shadow. */
-@utility misregister {
-  box-shadow: 4px 4px 0 0 var(--sindoor);
-}
-
 /* Paper grain. The one texture the system keeps, because paper has tooth. */
 @utility grain {
   position: fixed;
@@ -577,19 +705,19 @@ html[data-js] [data-in] .grow {
    it tiles, is stacked twice and slides down by one copy, so the loop has no
    seam. Thirty seconds per copy, which on a band this tall is a slow river
    rather than a scroll. */
-@keyframes flow {
+@keyframes legacy-flow {
   from { transform: translateY(0); }
   to { transform: translateY(50%); }
 }
 .flow {
-  animation: flow 30s linear infinite;
+  animation: legacy-flow 30s linear infinite;
   will-change: transform;
 }
 /* The same water, eight times slower: behind the practice, where the reading
    speed made the owner dizzy. Four minutes per copy is a river seen from a
    ghat, not from a boat. */
 .flow-slow {
-  animation: flow 240s linear infinite;
+  animation: legacy-flow 240s linear infinite;
   will-change: transform;
 }
 
@@ -615,13 +743,13 @@ html[data-js] [data-in] .grow {
 
 /* The waterline breathes at the river's own amplitude: four seconds in, six
    out, as the sitting does. `--amp` is set from the percentile. */
-@keyframes breathe {
+@keyframes legacy-breathe {
   0% { transform: translateY(0); }
   40% { transform: translateY(calc(var(--amp, 6px) * -1)); }
   100% { transform: translateY(0); }
 }
 .breathe {
-  animation: breathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  animation: legacy-breathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   will-change: transform;
 }
 
@@ -804,6 +932,23 @@ html:not([data-js]) .ink-picture-lazy {
   .loop-screen[style*="--i: 0"] { opacity: 1; }
   .loop-out { opacity: 0; }
   .loop-ink { width: 60%; }
+}
+
+/* --- Legacy, deleted in Task 20 ----------------------------------------------
+   Retired by v3 and kept only so the surfaces that still carry them work
+   until their own task replaces them: `impress` (the old 1px plate, replaced
+   by the press), the diya's `flicker` and the petals. The old `.flow` and
+   `.breathe` above (on `legacy-flow` and `legacy-breathe`) go with them.     */
+@utility impress {
+  transition-property: transform, background-color, color, border-color, box-shadow, opacity;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
+}
+.impress:active,
+a:active > .impress,
+label:active > .impress {
+  transform: translate(1px, 1px);
+  transition-duration: 0ms;
 }
 
 /* --- Flicker ---------------------------------------------------------------

@@ -64,9 +64,10 @@ export function sunPath(
     const n = t < 0.3 ? 1 : t < 0.7 ? 2 : 3;
     const w = total / (2 * n - 1);
     const left = centre - total / 2;
-    const h = row.stroke * 3.6;
+    /* Each dash is centred on its wave line, as the mockup draws it. */
+    const h = r2(row.stroke * 3.6);
     for (let d = 0; d < n; d++) {
-      out.push({ x: r2(left + d * 2 * w), y: r2(row.y), w: r2(w), h: r2(h) });
+      out.push({ x: r2(left + d * 2 * w), y: r2(row.y - h / 2), w: r2(w), h });
     }
   });
   return out;

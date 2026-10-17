@@ -18,6 +18,14 @@ describe("river geometry", () => {
     expect(last.x).toBeLessThan(first.x);
     expect(last.w * 3).toBeGreaterThan(first.w);
   });
+  it("centres each dash on its wave line", () => {
+    const dashes = sunPath(rows, { sunX: 300, width: 390 });
+    for (const d of dashes) {
+      const centre = d.y + d.h / 2;
+      expect(rows.some((r) => Math.abs(r.y - centre) <= 0.01)).toBe(true);
+    }
+    expect(dashes[dashes.length - 1].y).toBeLessThan(rows[rows.length - 1].y);
+  });
   it("cuts the sun at the horizon", () => {
     const s = horizonSun({ cx: 300, horizonY: 6, r: 20 });
     expect(s.cy).toBeLessThan(6);

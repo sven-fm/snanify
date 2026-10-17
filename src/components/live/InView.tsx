@@ -13,17 +13,22 @@ import { useEffect, useRef, useState } from "react";
  * under `html[data-js]`, which the head script stamps before first paint, so
  * without JavaScript the reader sees everything at once, and under reduced
  * motion the stylesheet shows it all regardless.
+ *
+ * `live` keeps watching instead: `data-in` comes and goes with the block, so
+ * the river in src/components/kit pauses its motion while it is off screen.
  */
 export function InView({
   children,
   className = "",
   as: Tag = "div",
   margin = "0px 0px -10% 0px",
+  live = false,
 }: {
   children: React.ReactNode;
   className?: string;
   as?: "div" | "section" | "ul" | "li";
   margin?: string;
+  live?: boolean;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
@@ -37,7 +42,9 @@ export function InView({
     }
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) {
+        if (live) {
+          setShown(!!entry?.isIntersecting);
+        } else if (entry?.isIntersecting) {
           setShown(true);
           io.disconnect();
         }
@@ -46,7 +53,7 @@ export function InView({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [margin]);
+  }, [margin, live]);
 
   const Comp = Tag as "div";
   return (
