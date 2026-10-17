@@ -89,7 +89,7 @@ function readZone(): string {
 
 function FieldError({ children }: { children?: string }) {
   if (!children) return null;
-  return <p className="mt-2 text-sm font-bold text-spot">{children}</p>;
+  return <p className="mt-2 text-sm font-bold text-sindoor">{children}</p>;
 }
 
 function Label({ label, hint }: { label: string; hint: string }) {
@@ -220,13 +220,13 @@ export function SetupForm({
         <legend className="sr-only">{t.water.label}</legend>
         <Label label={t.water.label} hint={t.water.hint} />
 
-        {/* The chosen water stands on the warm ground: it is personal. */}
+        {/* The chosen water stands on the tinted ground: it is personal. */}
         <div className="mt-5 grid gap-2 sm:grid-cols-2">
           {waters.map((w) => (
             <label
               key={w.slug}
               className={`impress flex min-h-[64px] cursor-pointer items-baseline justify-between gap-3 p-4 transition-colors ${
-                water === w.slug ? "bg-haldi2 text-ink" : "bg-paper2 text-ink2"
+                water === w.slug ? "bg-paper2 text-ink" : "bg-paper2 text-ink2"
               }`}
             >
               <span>
@@ -332,7 +332,7 @@ export function SetupForm({
           <button
             type="button"
             onClick={() => setNames([...names, ""])}
-            className="mt-3 min-h-[44px] text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-spot"
+            className="mt-3 min-h-[44px] text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-sindoor"
           >
             {t.names.add}
           </button>
@@ -346,7 +346,7 @@ export function SetupForm({
         <Label label={t.prayer.label} hint={t.prayer.hint} />
 
         <div className="mt-5 flex flex-col">
-          <label className="-mx-3 flex min-h-[48px] cursor-pointer items-center gap-3 px-3 py-3 has-[:checked]:bg-haldi2">
+          <label className="-mx-3 flex min-h-[48px] cursor-pointer items-center gap-3 px-3 py-3 has-[:checked]:bg-paper2">
             <input
               type="radio"
               name="prayerId"
@@ -360,7 +360,7 @@ export function SetupForm({
           {offered.map((p) => (
             <label
               key={p.id}
-              className="-mx-3 flex min-h-[48px] cursor-pointer items-start gap-3 px-3 py-3 has-[:checked]:bg-haldi2"
+              className="-mx-3 flex min-h-[48px] cursor-pointer items-start gap-3 px-3 py-3 has-[:checked]:bg-paper2"
             >
               <input
                 type="radio"
@@ -406,7 +406,7 @@ export function SetupForm({
                   <button
                     type="button"
                     onClick={() => setSankalp(example)}
-                    className="impress min-h-[44px] w-full bg-paper2 px-4 py-2 text-left text-[0.98rem] leading-[1.6] text-ink hover:bg-paper3 active:bg-haldi2"
+                    className="impress min-h-[44px] w-full bg-paper2 px-4 py-2 text-left text-[0.98rem] leading-[1.6] text-ink hover:bg-paper3 active:bg-paper2"
                   >
                     {example}
                   </button>
@@ -424,14 +424,14 @@ export function SetupForm({
         <Label label={t.reminder.label} hint={t.reminder.hint} />
 
         {/* Twenty-four cells rather than a select: the hour is chosen with a
-            thumb, and the chosen cell stands on the warm ground like the
+            thumb, and the chosen cell stands on the tinted ground like the
             chosen water. */}
         <div className="mt-5 grid grid-cols-4 gap-1.5 sm:grid-cols-6">
           {Array.from({ length: 24 }, (_, h) => (
             <label
               key={h}
-              className={`flex min-h-[48px] cursor-pointer items-center justify-center tabular-nums transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-[-2px] has-[:focus-visible]:outline-spot ${
-                hour === h ? "bg-haldi2 font-bold text-ink" : "bg-paper2 text-ink2"
+              className={`flex min-h-[48px] cursor-pointer items-center justify-center tabular-nums transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-[-2px] has-[:focus-visible]:outline-sindoor ${
+                hour === h ? "bg-paper2 font-bold text-ink" : "bg-paper2 text-ink2"
               }`}
             >
               <input

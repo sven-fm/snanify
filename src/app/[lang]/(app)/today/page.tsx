@@ -127,7 +127,7 @@ export default async function Page({
             </LinkButton>
           </div>
           {out ? (
-            <div className="warm mt-8 p-5">
+            <div className="bg-paper2 mt-8 p-5">
               <p className="text-center text-[1.02rem] leading-[1.6] text-ink">{t.already.out}</p>
               <LinkButton href={outHref} className="mt-5 w-full">
                 {morningsContent[lang].more}

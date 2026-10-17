@@ -106,7 +106,7 @@ export function MobileCta({
     return (
       <Link
         href={begin}
-        className="label impress flex min-h-[44px] items-center whitespace-nowrap bg-spot px-3 text-paper hover:bg-ink active:bg-ink sm:hidden"
+        className="label impress flex min-h-[44px] items-center whitespace-nowrap bg-sindoor px-3 text-paper hover:bg-ink active:bg-ink sm:hidden"
         data-mobile-cta
         data-until-scrolled={afterHero ? "" : undefined}
       >
@@ -133,7 +133,7 @@ export function MobileCta({
         <ul className="mx-auto max-w-6xl px-5">
           {rows.map((r) => (
             <li key={r.href} className="border-b border-rule last:border-b-0">
-              <Link href={r.href} className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-spot">
+              <Link href={r.href} className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-sindoor">
                 {r.label}
               </Link>
             </li>
@@ -152,7 +152,7 @@ export function ProfileRows({ rows }: { rows: ProfileRow[] }) {
     <>
       {rows.map((r, i) => (
         <li key={r.href} className={`border-b border-rule ${i === 0 ? "border-t-2 border-t-rulestrong" : ""}`} data-profile-row>
-          <Link href={r.href} className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-spot">
+          <Link href={r.href} className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-sindoor">
             {r.label}
           </Link>
         </li>

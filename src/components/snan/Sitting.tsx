@@ -312,7 +312,7 @@ export function Sitting({
             track("sitting_start", { water: waterSlug, lang });
             dispatch({ type: "start" });
           }}
-          className="label impress mt-8 min-h-[56px] w-full bg-spot px-8 text-paper hover:bg-ink active:bg-ink"
+          className="label impress mt-8 min-h-[56px] w-full bg-sindoor px-8 text-paper hover:bg-ink active:bg-ink"
         >
           {t.begin.cta}
         </button>
@@ -388,7 +388,7 @@ export function Sitting({
 
               {/* How the river is running, in words, before the figures that
                   prove it. */}
-              <p className="display mt-7 text-[1.6rem] leading-tight text-spot">{reading.state}</p>
+              <p className="display mt-7 text-[1.6rem] leading-tight text-sindoor">{reading.state}</p>
 
               <dl className="mt-5 space-y-1">
                 <Row k={t.reading.flowLabel} v={reading.flow} />
@@ -455,7 +455,7 @@ export function Sitting({
                     setOutcome({ failed: false, patraId: null });
                     dispatch({ type: "retry" });
                   }}
-                  className="label impress mt-8 min-h-[48px] w-full bg-spot px-6 text-paper active:bg-ink"
+                  className="label impress mt-8 min-h-[48px] w-full bg-sindoor px-6 text-paper active:bg-ink"
                 >
                   {t.failed.cta}
                 </button>
@@ -463,7 +463,7 @@ export function Sitting({
               {/* The page moves on by itself; this is for the browser that did
                   not, and for the person who wants to press something. */}
               {patraHref && (
-                <Link href={patraHref} className="label impress mt-8 flex min-h-[56px] items-center justify-center bg-spot px-6 text-paper active:bg-ink">
+                <Link href={patraHref} className="label impress mt-8 flex min-h-[56px] items-center justify-center bg-sindoor px-6 text-paper active:bg-ink">
                   {t.mark.open}
                 </Link>
               )}
@@ -621,14 +621,14 @@ function BreathScreen({
         </p>
       </div>
 
-      {/* The water, in the spot colour: the one thing on the screen that is
+      {/* The water, in the sindoor: the one thing on the screen that is
           not ink on paper, because it is the thing itself. Its top edge is
           the waterline, with a faint wash of the same red beneath. */}
       <div className="relative mt-6 h-[44vh] overflow-hidden" aria-hidden="true">
         <div className="absolute inset-x-0 bottom-0" style={{ height: `${pct}%` }} data-waterline>
-          <div className="absolute inset-0" style={{ backgroundColor: "color-mix(in srgb, var(--spot) 9%, transparent)" }} />
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-spot" />
-          <WaterBand seed={`${waterSlug}-breath`} percentile={78} color="spot" className="absolute inset-0 h-full w-full" />
+          <div className="absolute inset-0" style={{ backgroundColor: "color-mix(in srgb, var(--sindoor) 9%, transparent)" }} />
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-sindoor" />
+          <WaterBand seed={`${waterSlug}-breath`} percentile={78} color="sindoor" className="absolute inset-0 h-full w-full" />
         </div>
       </div>
 
@@ -699,13 +699,13 @@ function VowScreen({
           if (e.key === " " || e.key === "Enter") onHold(false);
         }}
         onContextMenu={(e) => e.preventDefault()}
-        className="hold-box warm impress relative mt-4 block w-full cursor-pointer touch-none select-none overflow-hidden px-6 py-12 text-center"
+        className="hold-box bg-paper2 impress relative mt-4 block w-full cursor-pointer touch-none select-none overflow-hidden px-6 py-12 text-center"
         data-holding={pressing ? "1" : undefined}
         aria-label={t.vow.hold}
       >
         <span
           className="absolute inset-x-0 bottom-0"
-          style={{ height: `${pct}%`, backgroundColor: "color-mix(in srgb, var(--spot) 28%, transparent)" }}
+          style={{ height: `${pct}%`, backgroundColor: "color-mix(in srgb, var(--sindoor) 28%, transparent)" }}
           aria-hidden="true"
           data-ink
         />
@@ -731,7 +731,7 @@ function MarkLine({ reduced, into }: { reduced: boolean; into: number }) {
   return (
     <div className="relative mx-auto mt-10 w-full max-w-sm" aria-hidden="true">
       <div className="h-px bg-rule">
-        <div className="h-px bg-spot" style={{ width: `${width.toFixed(2)}%` }} />
+        <div className="h-px bg-sindoor" style={{ width: `${width.toFixed(2)}%` }} />
       </div>
       {SETTLE.map((p, i) => (
         <svg
@@ -757,7 +757,7 @@ function MarkLine({ reduced, into }: { reduced: boolean; into: number }) {
 /* Where the three petals land on the mark: marigold, vermillion, marigold. */
 const SETTLE = [
   { x: 30, turn: -18, delay: 1.2, tone: "var(--haldi)" },
-  { x: 48, turn: 12, delay: 1.9, tone: "var(--spot)" },
+  { x: 48, turn: 12, delay: 1.9, tone: "var(--sindoor)" },
   { x: 64, turn: -6, delay: 2.6, tone: "var(--haldi)" },
 ];
 

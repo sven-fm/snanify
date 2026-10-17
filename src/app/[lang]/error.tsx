@@ -53,7 +53,7 @@ export default function ErrorPage({
           </div>
           <a
             href={localePath(lang, "/account")}
-            className="impress mt-5 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-spot"
+            className="impress mt-5 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-sindoor"
           >
             {t.account}
           </a>

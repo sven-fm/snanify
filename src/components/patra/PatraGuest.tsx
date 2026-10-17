@@ -25,11 +25,11 @@ export function PatraGuest({
   return (
     <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
       {/* The offer first, one line and a button, then the sheet they were sent. */}
-      <div className="warm mb-6 flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+      <div className="bg-paper2 mb-6 flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="text-[0.98rem] leading-[1.6] text-ink">{t.visitTop}</p>
         <Link
           href={localePath(lang, "/begin")}
-          className="label impress inline-flex min-h-[48px] shrink-0 items-center justify-center bg-spot px-6 text-paper hover:bg-ink active:bg-ink"
+          className="label impress inline-flex min-h-[48px] shrink-0 items-center justify-center bg-sindoor px-6 text-paper hover:bg-ink active:bg-ink"
         >
           {t.visitCta}
         </Link>
@@ -47,7 +47,7 @@ export function PatraGuest({
         <div className="mt-6">
           <Link
             href={localePath(lang, "/begin")}
-            className="label impress inline-flex min-h-[56px] items-center justify-center bg-spot px-8 text-paper hover:bg-ink active:bg-ink"
+            className="label impress inline-flex min-h-[56px] items-center justify-center bg-sindoor px-8 text-paper hover:bg-ink active:bg-ink"
           >
             {t.visitCta}
           </Link>

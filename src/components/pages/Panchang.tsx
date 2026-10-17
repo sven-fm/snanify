@@ -13,7 +13,7 @@ import { RIVERS } from "@/content/rivers";
 import { MUHURAT } from "@/content/muhurat";
 
 /* ---------------------------------------------------------------------------
-   /panchang: the directory. A masthead, the shraddha guide in one warm block, the
+   /panchang: the directory. A masthead, the shraddha guide in one tinted block, the
    three hundred cities behind a filter, the six ghats, and the way onward.
    The explainers live on /panchang/shraddha, where the reader who needs them
    will finish them.
@@ -78,13 +78,13 @@ export function Panchang({ lang }: { lang: Lang }) {
 
         {/* ---------------- the shraddha guide ---------------- */}
         <Section id="shraddha" tinted>
-          <div className="warm p-6 sm:p-8 [&>*]:max-w-3xl">
+          <div className="bg-paper2 p-6 sm:p-8 [&>*]:max-w-3xl">
             <p className="label text-ink2">{t.guide.kicker}</p>
             <h2 className="display mt-3 text-[2.1rem] leading-tight sm:text-[2.9rem]">{t.guide.title}</h2>
             <p className="mt-4 leading-relaxed text-ink2">{t.guide.lede}</p>
             <Link
               href={localePath(lang, "/panchang/shraddha")}
-              className="label impress mt-8 inline-flex min-h-[48px] items-center bg-spot px-7 text-paper hover:bg-ink active:bg-ink"
+              className="label impress mt-8 inline-flex min-h-[48px] items-center bg-sindoor px-7 text-paper hover:bg-ink active:bg-ink"
             >
               {t.guide.cta}
             </Link>
@@ -102,7 +102,7 @@ export function Panchang({ lang }: { lang: Lang }) {
               <li key={g.slug} className="border-b border-rule">
                 <Link
                   href={localePath(lang, `/rivers/${g.slug}`)}
-                  className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
+                  className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-sindoor"
                 >
                   <span className="display text-[1.1rem]">{g.river[lang]}</span>
                   <span className="text-right text-sm text-ink2">
@@ -114,7 +114,7 @@ export function Panchang({ lang }: { lang: Lang }) {
           </ul>
           <Link
             href={localePath(lang, "/live")}
-            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
           >
             {t.ghats.live}
           </Link>
@@ -133,7 +133,7 @@ export function Panchang({ lang }: { lang: Lang }) {
                 <li key={l.href}>
                   <Link
                     href={localePath(lang, l.href)}
-                    className="impress flex min-h-[56px] items-center py-4 text-ink active:text-spot"
+                    className="impress flex min-h-[56px] items-center py-4 text-ink active:text-sindoor"
                   >
                     <span className="display text-xl underline decoration-rule decoration-1 underline-offset-4">{l.label}</span>
                   </Link>

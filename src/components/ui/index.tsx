@@ -11,9 +11,8 @@ import { Bindu } from "@/components/marks";
 
 /**
  * A section of a page. Space divides one section from the next, never a rule.
- * `ground` changes the rhythm: paper, the cool tint for reference data, the
- * warm haldi block for anything personal. `tinted` is the older spelling of
- * `ground="tint"`.
+ * `ground` changes the rhythm: paper, or the tint for reference data.
+ * `tinted` is the older spelling of `ground="tint"`.
  */
 export function Section({
   id,
@@ -24,7 +23,7 @@ export function Section({
 }: {
   id?: string;
   tinted?: boolean;
-  ground?: "paper" | "tint" | "warm";
+  ground?: "paper" | "tint";
   children: React.ReactNode;
   className?: string;
 }) {
@@ -46,15 +45,15 @@ const buttonBase =
    no hover: the press is the only feedback a thumb ever gets. `impress` in
    globals.css moves the plate; these set its ink. */
 const buttonVariants = {
-  /* The press impression: solid spot colour, inverted type. */
-  solid: "bg-spot text-paper hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
+  /* The press impression: solid sindoor, inverted type. */
+  solid: "bg-sindoor text-paper hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
   /* A ruled box that fills with ink on hover and on press. Opaque, not
      transparent: the hero sits this button on top of the river, and ripples
      reading through the type made the label almost unreadable. */
   ghost:
     "border border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
   quiet:
-    "text-ink underline decoration-spot decoration-2 hover:text-spot active:text-spot px-0 py-1",
+    "text-ink underline decoration-sindoor decoration-2 hover:text-sindoor active:text-sindoor px-0 py-1",
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;
@@ -140,7 +139,7 @@ export function StatusBadge({
 }) {
   return (
     <p className="label inline-flex min-h-[44px] items-center gap-2.5 text-ink">
-      <Bindu tone={live ? "spot" : "faint"} className="shrink-0 text-[1.1rem]" />
+      <Bindu tone={live ? "sindoor" : "faint"} className="shrink-0 text-[1.1rem]" />
       {children}
     </p>
   );

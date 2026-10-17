@@ -73,9 +73,9 @@ export function SittingLoop({ lang }: { lang: Lang }) {
             </dl>
           </div>
 
-          {/* 2. the breath: the water rising and falling in the spot colour */}
+          {/* 2. the breath: the water rising and falling in the sindoor */}
           <div className="loop-screen absolute inset-0" style={{ ["--i" as string]: 1 }}>
-            <div className="loop-water absolute inset-x-0 bottom-0 bg-spot opacity-90" aria-hidden="true" />
+            <div className="loop-water absolute inset-x-0 bottom-0 bg-sindoor opacity-90" aria-hidden="true" />
             <p className="display absolute inset-x-4 top-24 text-[1.15rem] leading-tight">
               <span className="loop-in">{t.breath.in}</span>
               <span className="loop-out">{t.breath.out}</span>
@@ -89,7 +89,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
               {lang === "hi" ? "आपके अपने शब्द, आपके अँगूठे के नीचे।" : "Your own words, under your thumb."}
             </p>
             <div className="mt-5 h-px w-full bg-rule">
-              <div className="loop-ink h-px bg-spot" />
+              <div className="loop-ink h-px bg-sindoor" />
             </div>
             <p className="mt-3 text-[0.65rem] text-ink2">{t.vow.hold}</p>
           </div>
@@ -106,7 +106,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
           <div className="loop-screen absolute inset-x-4 top-1/2 -translate-y-1/2 text-center" style={{ ["--i" as string]: 4 }}>
             <p className="display text-[1rem] leading-[1.3]">{t.mark.writing}</p>
             <div className="mx-auto mt-5 h-px w-4/5 bg-rule">
-              <div className="loop-ink h-px bg-spot" />
+              <div className="loop-ink h-px bg-sindoor" />
             </div>
           </div>
         </div>

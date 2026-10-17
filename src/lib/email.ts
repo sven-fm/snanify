@@ -6,6 +6,9 @@ import type { TierKey } from "@/content/prices";
 import type { FlowBand } from "@/lib/riverdata";
 import { unsubscribeUrl } from "@/lib/unsubscribe";
 import { formatMoney } from "@/lib/mornings";
+import { PALETTE } from "@/lib/palette";
+
+const P = PALETTE.day;
 
 /* ---------------------------------------------------------------------------
    The two emails this product sends: a receipt, and the morning reminder.
@@ -52,22 +55,22 @@ function escapeHtml(text: string): string {
  * one, as the site draws it, here as two borders rather than an image, so it
  * needs nothing to load and survives every mail client that keeps a border.
  */
-const MAULI = `<div style="margin-top:30px;border-top:3px solid #b32620;"></div><div style="margin-top:2px;border-top:2px dashed #e3962b;"></div>`;
+const MAULI = `<div style="margin-top:30px;border-top:3px solid ${P.sindoor};"></div><div style="margin-top:2px;border-top:2px dashed ${P.haldi};"></div>`;
 
 /** The one button in a message: vermillion, sentence case, untracked. */
 function button(href: string, label: string): string {
-  return `<a href="${href}" style="background:#b32620;color:#faf6ea;text-decoration:none;padding:13px 22px;display:inline-block;font-size:16px;font-weight:bold;">${label}</a>`;
+  return `<a href="${href}" style="background:${P.sindoor};color:${P.paper};text-decoration:none;padding:13px 22px;display:inline-block;font-size:16px;font-weight:bold;">${label}</a>`;
 }
 
 /** One column of paper and ink, and nothing that needs to load. The sheet is
     flat paper on the page's own ground, with no box drawn round it. */
 function wrap(bodyHtml: string, footer: string): string {
-  return `<!doctype html><html><body style="margin:0;background:#f2ead9;padding:24px 12px;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#faf6ea;">
-<tr><td style="padding:30px 26px;font-family:Georgia,'Times New Roman',serif;color:#16130f;font-size:16px;line-height:1.7;">
+  return `<!doctype html><html><body style="margin:0;background:${P.paper2};padding:24px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:${P.paper};">
+<tr><td style="padding:30px 26px;font-family:Georgia,'Times New Roman',serif;color:${P.ink};font-size:16px;line-height:1.7;">
 ${bodyHtml}
 ${MAULI}
-<div style="padding-top:14px;font-size:13px;color:#57513f;line-height:1.6;">${footer}</div>
+<div style="padding-top:14px;font-size:13px;color:${P.ink2};line-height:1.6;">${footer}</div>
 </td></tr></table></body></html>`;
 }
 
@@ -158,7 +161,7 @@ export async function sendReceipt(input: ReceiptInput): Promise<Sent> {
      <p style="margin:0 0 22px;">${t.next}</p>
      <p style="margin:0 0 22px;">${button(today, t.cta)}</p>
      <p style="margin:0 0 6px;">${escapeHtml(signIn)}</p>
-     <p style="margin:0;">${t.account} <a href="${account}" style="color:#16130f;">${account.replace(/^https?:\/\//, "")}</a></p>`,
+     <p style="margin:0;">${t.account} <a href="${account}" style="color:${P.ink};">${account.replace(/^https?:\/\//, "")}</a></p>`,
     t.footer,
   );
 
@@ -204,7 +207,7 @@ export async function sendReminder(input: ReminderInput): Promise<Sent> {
     `<p style="margin:0 0 14px;font-size:24px;line-height:1.3;">${state}</p>
      <p style="margin:0 0 24px;">${t.invite}</p>
      <p style="margin:0;">${button(siteUrl(input.lang, "/today"), t.cta.replace("{water}", input.water))}</p>`,
-    `<a href="${off}" style="color:#57513f;">${t.stop}</a>. ${t.footer}`,
+    `<a href="${off}" style="color:${P.ink2};">${t.stop}</a>. ${t.footer}`,
   );
 
   return send({

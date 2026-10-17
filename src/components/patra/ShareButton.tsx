@@ -92,7 +92,7 @@ export function ShareButton({
       type="button"
       onClick={send}
       disabled={busy}
-      className="label min-h-[56px] w-full bg-spot px-8 text-paper transition-colors hover:bg-ink disabled:opacity-60"
+      className="label min-h-[56px] w-full bg-sindoor px-8 text-paper transition-colors hover:bg-ink disabled:opacity-60"
     >
       {copied ? copiedLabel : label}
     </button>

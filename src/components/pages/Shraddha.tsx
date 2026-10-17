@@ -41,7 +41,7 @@ function LinkRow({ href, lang, title, sub }: { href: string; lang: Lang; title: 
     <li className="border-b border-rule">
       <Link
         href={localePath(lang, href)}
-        className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
+        className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-sindoor"
       >
         <span className="display text-[1.1rem]">{title}</span>
         {sub && <span className="text-right text-sm text-ink2">{sub}</span>}
@@ -114,7 +114,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
                 <tbody>
                   {SHRADDHA_LADDER.map((d) => (
                     <tr key={d.n} className="border-b border-rule align-top">
-                      <td className="display py-5 pr-4 text-xl text-spot">
+                      <td className="display py-5 pr-4 text-xl text-sindoor">
                         {numeral(d.n, lang)}
                       </td>
                       <th scope="row" className="py-5 pr-4 text-left font-normal">
@@ -316,7 +316,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
             <ol className="mt-12 grid gap-4 md:grid-cols-2">
               {t.finding.steps.map((s) => (
                 <li key={s.n} className="tint p-7">
-                  <span className="display block text-2xl text-spot">{s.n}</span>
+                  <span className="display block text-2xl text-sindoor">{s.n}</span>
                   <h3 className="display mt-3 text-2xl">{s.t}</h3>
                   <p className="mt-3 text-sm leading-[1.75] text-ink2">{s.d}</p>
                 </li>
@@ -340,7 +340,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
             </ul>
             <Link
               href={localePath(lang, "/panchang#cities")}
-              className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+              className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
             >
               {g.cityAll}
             </Link>
@@ -359,7 +359,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
                     href={localePath(lang, `/muhurat/${o.slug}`)}
                     className="group grid gap-x-8 gap-y-1 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[16rem_1fr]"
                   >
-                    <span className="display text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
+                    <span className="display text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-sindoor">
                       {o.name[lang]}
                     </span>
                     <span className="text-sm leading-[1.7] text-ink2">{o.line[lang]}</span>
@@ -395,7 +395,7 @@ export function Shraddha({ lang }: { lang: Lang }) {
                 <li key={l.href}>
                   <Link
                     href={localePath(lang, l.href)}
-                    className="impress flex min-h-[56px] items-center py-4 text-ink active:text-spot"
+                    className="impress flex min-h-[56px] items-center py-4 text-ink active:text-sindoor"
                   >
                     <span className="display text-xl underline decoration-rule decoration-1 underline-offset-4">{l.label}</span>
                   </Link>

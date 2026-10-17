@@ -37,7 +37,7 @@ function WaterMotif({ form, className = "" }: { form: WaterForm; className?: str
         {/* the third, held in faith rather than seen */}
         <path d="M8 104 H188" strokeWidth="1" strokeDasharray="3 9" />
         {/* the meeting itself */}
-        <rect x="190" y="100" width="12" height="12" fill="var(--spot)" stroke="none" />
+        <rect x="190" y="100" width="12" height="12" fill="var(--sindoor)" stroke="none" />
       </svg>
     );
   }
@@ -52,7 +52,7 @@ function WaterMotif({ form, className = "" }: { form: WaterForm; className?: str
         <rect x="136" y="76" width="48" height="48" strokeWidth="1" />
         <path d="M244 100 H312" strokeWidth="2" />
         {/* the spring */}
-        <circle cx="160" cy="100" r="9" fill="var(--spot)" stroke="none" />
+        <circle cx="160" cy="100" r="9" fill="var(--sindoor)" stroke="none" />
       </svg>
     );
   }
@@ -65,7 +65,7 @@ function WaterMotif({ form, className = "" }: { form: WaterForm; className?: str
       <path d="M180 158 H304" strokeWidth="1" />
       <path d="M150 176 H304" strokeWidth="1" />
       {/* the waterline, where the lowest step meets the river */}
-      <rect x="204" y="126" width="12" height="12" fill="var(--spot)" stroke="none" />
+      <rect x="204" y="126" width="12" height="12" fill="var(--sindoor)" stroke="none" />
     </svg>
   );
 }
@@ -115,7 +115,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
           <div className="mx-auto max-w-6xl px-5 pt-6 pb-16 sm:px-8 sm:pt-8 sm:pb-20">
             <Link
               href={riversHref}
-              className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule underline-offset-4 transition-colors hover:text-spot hover:decoration-spot"
+              className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule underline-offset-4 transition-colors hover:text-sindoor hover:decoration-sindoor"
             >
               {t.back}
             </Link>
@@ -193,7 +193,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
         {ghat.caution && (
           <section>
             <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
-              <div className="warm max-w-3xl px-5 py-6 sm:px-7 sm:py-7">
+              <div className="bg-paper2 max-w-3xl px-5 py-6 sm:px-7 sm:py-7">
                 <h2 className="display text-xl text-ink">{t.caution.label}</h2>
                 <p className="mt-3 leading-[1.75] text-ink">{ghat.caution[lang]}</p>
               </div>

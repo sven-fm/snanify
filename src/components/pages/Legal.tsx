@@ -43,7 +43,7 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
         {sections.map((section, index) => (
           <section key={section.h} className="mt-16">
             <div className="flex items-baseline gap-4">
-              <span className="display text-[1.2rem] leading-none text-spot tabular-nums">
+              <span className="display text-[1.2rem] leading-none text-sindoor tabular-nums">
                 {String(index + 1).padStart(2, "0")}
               </span>
             </div>

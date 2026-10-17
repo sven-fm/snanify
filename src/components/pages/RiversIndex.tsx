@@ -132,7 +132,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
 
                   <div className="flex flex-col items-start gap-3 md:items-end md:text-right">
                     <span className="text-sm text-ink2 md:max-w-[12rem]">{t.formLabels[r.form]}</span>
-                    <span className="text-sm text-ink underline decoration-spot decoration-2 underline-offset-4">
+                    <span className="text-sm text-ink underline decoration-sindoor decoration-2 underline-offset-4">
                       {t.index.read}
                     </span>
                   </div>

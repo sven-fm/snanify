@@ -69,9 +69,9 @@ const PRINT_CSS = `
   [data-patra-page]{ padding:0 !important; margin:0 !important; }
   [data-patra-sheet]{
     --paper:#faf6ea; --paper-2:#f2ead9; --paper-3:#e5d9be;
-    --ink:#16130f; --ink-2:#57513f;
-    --spot:#b32620; --haldi:#e3962b; --haldi-2:#f6dcae; --rule:#c3b697; --rule-strong:#16130f;
-    background-color:#faf6ea !important; color:#16130f !important;
+    --ink:#141210; --ink-2:#57513f;
+    --sindoor:#c8251d; --haldi:#e3962b; --rule:#c3b697; --rule-strong:#141210;
+    background-color:#faf6ea !important; color:#141210 !important;
     box-shadow:none !important;
     break-inside: avoid; page-break-inside: avoid;
   }
@@ -109,7 +109,7 @@ function CellLabel({
   spot?: boolean;
 }) {
   return (
-    <p className={`label ${spot ? "text-spot" : "text-ink2"}`} style={{ fontSize: u(9.5) }}>
+    <p className={`label ${spot ? "text-sindoor" : "text-ink2"}`} style={{ fontSize: u(9.5) }}>
       {children}
     </p>
   );
@@ -159,7 +159,7 @@ export function PatraSheet({
      Devanagari even on an English page, so the face is pinned rather than
      inherited from a locale that may not carry the script. */
   const deva = "var(--font-eczar), Georgia, serif";
-  const ringColour = specimen ? "var(--spot)" : "var(--rule)";
+  const ringColour = specimen ? "var(--sindoor)" : "var(--rule)";
 
   const allRemembrance =
     data.names.length > 0 && data.names.every((n) => n.remembrance);
@@ -205,7 +205,7 @@ export function PatraSheet({
                 <text
                   x="0"
                   y="30"
-                  fill="var(--spot)"
+                  fill="var(--sindoor)"
                   opacity="0.13"
                   style={{
                     fontFamily: deva,
@@ -264,7 +264,7 @@ export function PatraSheet({
                 संकल्प पत्र
               </p>
               <p
-                className="label text-spot"
+                className="label text-sindoor"
                 style={{
                   marginTop: u(9),
                   fontSize: u(12),
@@ -286,11 +286,11 @@ export function PatraSheet({
 
               {specimen && (
                 <p
-                  className="label text-spot"
+                  className="label text-sindoor"
                   style={{
                     marginTop: u(13),
                     display: "inline-block",
-                    border: "1px solid var(--spot)",
+                    border: "1px solid var(--sindoor)",
                     paddingLeft: u(14),
                     paddingRight: u(14),
                     paddingTop: u(5),
@@ -311,13 +311,13 @@ export function PatraSheet({
             </div>
           )}
 
-          {/* names, gotra, giver, sankalp. The names stand on the warm haldi
+          {/* names, gotra, giver, sankalp. The names stand on the tinted
               block the site keeps for anything personal, except on a sheet
               that remembers somebody: haldi is an auspicious colour, and a
               remembrance takes none. */}
           <div>
             <div
-              className={`text-center ${data.names.some((n) => n.remembrance) ? "" : "warm"}`}
+              className={`text-center ${data.names.some((n) => n.remembrance) ? "" : "bg-paper2"}`}
               style={{ paddingTop: u(16), paddingBottom: u(18), paddingLeft: u(16), paddingRight: u(16) }}
             >
               {/* A mixed list keeps the neutral heading; the remembrance label
@@ -390,7 +390,7 @@ export function PatraSheet({
                 <div style={{ fontSize: u(16) }}>
                   <Kumkum className="!py-0" />
                 </div>
-                <p className="label text-spot" style={{ marginTop: u(12), fontSize: u(9.5) }}>
+                <p className="label text-sindoor" style={{ marginTop: u(12), fontSize: u(9.5) }}>
                   {t.sankalpLabel}
                 </p>
                 <p
@@ -510,11 +510,11 @@ export function PatraSheet({
 
             {specimen && (
               <p
-                className="border-l-2 text-spot"
+                className="border-l-2 text-sindoor"
                 style={{
                   marginTop: u(13),
                   paddingLeft: u(12),
-                  borderColor: "var(--spot)",
+                  borderColor: "var(--sindoor)",
                   fontSize: u(11.5),
                   lineHeight: 1.5,
                 }}

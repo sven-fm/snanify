@@ -104,7 +104,7 @@ export function Faq({ lang }: { lang: Lang }) {
                     <li key={g.id}>
                       <a
                         href={`#${g.id}`}
-                        className="block py-2.5 text-[0.9rem] leading-snug text-ink transition-colors hover:text-spot"
+                        className="block py-2.5 text-[0.9rem] leading-snug text-ink transition-colors hover:text-sindoor"
                       >
                         {g.title}
                       </a>
@@ -153,12 +153,12 @@ export function Faq({ lang }: { lang: Lang }) {
                             id={item.id}
                             className="group scroll-mt-20 border-b border-rule"
                           >
-                            <summary className="grid min-h-[56px] cursor-pointer list-none grid-cols-[minmax(0,1fr)_0.75rem] items-start gap-x-4 py-4 transition-colors hover:text-spot [&::-webkit-details-marker]:hidden">
-                              <h3 className="display text-[1.1rem] leading-snug text-ink transition-colors group-hover:text-spot sm:text-[1.25rem]">
+                            <summary className="grid min-h-[56px] cursor-pointer list-none grid-cols-[minmax(0,1fr)_0.75rem] items-start gap-x-4 py-4 transition-colors hover:text-sindoor [&::-webkit-details-marker]:hidden">
+                              <h3 className="display text-[1.1rem] leading-snug text-ink transition-colors group-hover:text-sindoor sm:text-[1.25rem]">
                                 {item.q}
                               </h3>
                               <span
-                                className="relative mt-1.5 h-3 w-3 shrink-0 text-ink2 transition-colors group-hover:text-spot"
+                                className="relative mt-1.5 h-3 w-3 shrink-0 text-ink2 transition-colors group-hover:text-sindoor"
                                 aria-hidden="true"
                               >
                                 <span className="absolute top-1/2 left-0 h-px w-3 -translate-y-1/2 bg-current" />
@@ -179,7 +179,7 @@ export function Faq({ lang }: { lang: Lang }) {
                                 <p className="mt-5">
                                   <Link
                                     href={to.startsWith("#") ? to : localePath(lang, to)}
-                                    className="inline-flex min-h-[44px] items-center text-[0.98rem] text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
+                                    className="inline-flex min-h-[44px] items-center text-[0.98rem] text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-sindoor"
                                   >
                                     {t.moreLabel}
                                   </Link>
@@ -241,7 +241,7 @@ export function Faq({ lang }: { lang: Lang }) {
                 <p className="mt-8">
                   <a
                     href={`mailto:${ETHICS_MAIL}`}
-                    className="inline-flex min-h-[44px] flex-wrap items-center gap-x-3 gap-y-1 border-b-2 border-spot pb-1 text-[1.02rem] text-spot transition-colors hover:border-rulestrong hover:text-ink"
+                    className="inline-flex min-h-[44px] flex-wrap items-center gap-x-3 gap-y-1 border-b-2 border-sindoor pb-1 text-[1.02rem] text-sindoor transition-colors hover:border-rulestrong hover:text-ink"
                   >
                     <span>{t.closing.mailLabel}</span>
                     <span className="break-all text-ink2">{ETHICS_MAIL}</span>
@@ -259,7 +259,7 @@ export function Faq({ lang }: { lang: Lang }) {
       <aside aria-label={t.ctaLabel} className="fixed inset-x-0 bottom-0 z-40 bg-paper sm:hidden">
         <a
           href={cta}
-          className="label flex min-h-[3.75rem] items-center justify-center bg-spot px-5 text-paper"
+          className="label flex min-h-[3.75rem] items-center justify-center bg-sindoor px-5 text-paper"
         >
           {t.ctaLabel}
         </a>

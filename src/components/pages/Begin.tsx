@@ -26,7 +26,7 @@ import { TrackedSubmit } from "@/components/site/TrackedSubmit";
    Every "Begin" on the site lands here. It is read by somebody who has already
    decided, so there is no second pitch, no free-tier comparison and no essay
    about the price. Eleven first and large, because it is the pack most people
-   take and the one the whole site prices from, on the warm haldi ground; one
+   take and the one the whole site prices from, on the tinted ground; one
    and sixty as two quieter blocks beneath it.
 
    THE BUTTONS ARE FORMS, NOT LINKS. Creating a Checkout Session is a write: it
@@ -156,19 +156,19 @@ export async function Begin({
         </div>
 
         {cancelled && (
-          <p className="warm mt-6 px-4 py-3 text-[0.98rem] text-ink">
+          <p className="bg-paper2 mt-6 px-4 py-3 text-[0.98rem] text-ink">
             {t.cancelled}
           </p>
         )}
 
         {error && (
-          <p role="status" className="warm mt-6 px-4 py-3 text-[0.98rem] text-ink">
+          <p role="status" className="bg-paper2 mt-6 px-4 py-3 text-[0.98rem] text-ink">
             {t.payError}
           </p>
         )}
 
         {credits > 0 && (
-          <div className="warm mt-8 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="bg-paper2 mt-8 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[1.02rem] text-ink">
               {credits === 1 ? t.haveOne : t.haveCredits.replace("{credits}", String(credits))}
             </p>
@@ -179,9 +179,9 @@ export async function Begin({
         )}
 
         {/* ---------------- eleven, the one to take ---------------- */}
-        <section className="misregister warm mt-10 p-5 sm:p-7 lg:grid lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
+        <section className="misregister bg-paper2 mt-10 p-5 sm:p-7 lg:grid lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
           <div>
-            <p className="label text-spot">{t.usual}</p>
+            <p className="label text-sindoor">{t.usual}</p>
             <h2 className="display mt-2 text-[2rem] leading-none sm:text-[2.4rem]">{name("eleven")}</h2>
             <p className="display mt-5 text-[3.4rem] leading-none text-ink sm:text-[4rem]">
               <Price prices={PRICE.eleven} />

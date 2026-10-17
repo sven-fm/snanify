@@ -7,6 +7,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { SITE_ORIGIN } from "@/lib/locales";
 import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
+import { PALETTE } from "@/lib/palette";
 import { typeset, wrap } from "@/lib/typeset";
 import type { PatraView } from "@/lib/patra-view";
 
@@ -31,16 +32,14 @@ import type { PatraView } from "@/lib/patra-view";
 
 export const PATRA_SIZE = { width: 1080, height: 1350 };
 
-const PAPER = "#faf6ea";
-const PAPER_2 = "#f2ead9";
-const INK = "#16130f";
-const INK_2 = "#57513f";
-const RULE = "#c3b697";
-const SPOT = "#b32620";
-/* The day tokens from globals.css, as hex, because this file has no
-   stylesheet. Change a token there and change it here in the same commit. */
-const HALDI = "#e3962b";
-const HALDI_2 = "#f6dcae";
+const { day } = PALETTE;
+const PAPER = day.paper;
+const PAPER_2 = day.paper2;
+const INK = day.ink;
+const INK_2 = day.ink2;
+const RULE = day.rule;
+const SINDOOR = day.sindoor;
+const HALDI = day.haldi;
 
 const M = 64;
 const RIGHT = PATRA_SIZE.width - M;
@@ -57,7 +56,7 @@ function mauli(x: number, y: number, w: number): string {
     return `M${x} ${mid} C${at(0.25)} ${mid - 7} ${at(0.25)} ${mid + 7} ${at(0.5)} ${mid} S${at(0.75)} ${mid - 7} ${at(1)} ${mid}`;
   };
   return (
-    `<path d="${curve(0)}" fill="none" stroke="${SPOT}" stroke-width="3" />` +
+    `<path d="${curve(0)}" fill="none" stroke="${SINDOOR}" stroke-width="3" />` +
     `<path d="${curve(2)}" fill="none" stroke="${HALDI}" stroke-width="2" stroke-dasharray="5 5" />`
   );
 }
@@ -67,8 +66,8 @@ function tilak(x: number, y: number, h: number): string {
   const w = Math.max(5, h * 0.07);
   const r = w * 1.05;
   return (
-    `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${(h - r * 2.6).toFixed(1)}" fill="${SPOT}" />` +
-    `<circle cx="${(x + w / 2).toFixed(1)}" cy="${(y + h - r).toFixed(1)}" r="${r.toFixed(1)}" fill="${SPOT}" />`
+    `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${(h - r * 2.6).toFixed(1)}" fill="${SINDOOR}" />` +
+    `<circle cx="${(x + w / 2).toFixed(1)}" cy="${(y + h - r).toFixed(1)}" r="${r.toFixed(1)}" fill="${SINDOOR}" />`
   );
 }
 
@@ -163,7 +162,7 @@ export async function patraSvg(view: PatraView): Promise<string> {
 
   /* --- masthead --------------------------------------------------------- */
   parts.push(
-    (await typeset(sheetTitle(view), { size: 26, x: M, y: 84, weight: 600, fill: SPOT })).svg,
+    (await typeset(sheetTitle(view), { size: 26, x: M, y: 84, weight: 600, fill: SINDOOR })).svg,
   );
   parts.push(
     (await typeset(view.keptDate, { size: 23, x: RIGHT, y: 84, fill: INK_2, anchor: "end" })).svg,
@@ -311,7 +310,7 @@ export async function patraCardSvg(view: PatraView): Promise<string> {
   );
 
   parts.push(
-    (await typeset(sheetTitle({ ...view, specimen: false }), { size: 28, x: m, y: 90, weight: 600, fill: SPOT })).svg,
+    (await typeset(sheetTitle({ ...view, specimen: false }), { size: 28, x: m, y: 90, weight: 600, fill: SINDOOR })).svg,
   );
   parts.push(
     (await typeset(view.keptDate, { size: 24, x: right, y: 90, fill: INK_2, anchor: "end" })).svg,
@@ -387,7 +386,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   );
 
   /* --- masthead --------------------------------------------------------- */
-  parts.push((await typeset(sheetTitle(view), { size: 32, x: MM, y: 122, weight: 600, fill: SPOT })).svg);
+  parts.push((await typeset(sheetTitle(view), { size: 32, x: MM, y: 122, weight: 600, fill: SINDOOR })).svg);
   parts.push((await typeset(view.keptDate, { size: 26, x: R, y: 122, fill: INK_2, anchor: "end" })).svg);
 
   /* --- the ghat --------------------------------------------------------- */
@@ -404,7 +403,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
     parts.push(band(view, MM, artTop, IN, artH));
   }
 
-  /* --- the names, on the warm block, with the tilak beside them ----------- */
+  /* --- the names, on the tinted block, with the tilak beside them ----------- */
   /* The names are the reason the sheet exists, so they stand on the haldi
      ground the site keeps for anything personal. The block is drawn once the
      names are set and its height is known, and slotted in beneath them. */
@@ -440,7 +439,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
   parts.splice(
     blockAt,
     0,
-    `<rect x="${MM}" y="${blockTop}" width="${IN}" height="${(blockBottom - blockTop).toFixed(1)}" fill="${HALDI_2}" />` +
+    `<rect x="${MM}" y="${blockTop}" width="${IN}" height="${(blockBottom - blockTop).toFixed(1)}" fill="${PAPER_2}" />` +
       tilak(MM + 22, blockTop + pad - 6, nameSize * 1.6),
   );
   y = blockBottom + 72;
@@ -496,7 +495,7 @@ export async function mementoSvg(view: PatraView): Promise<string> {
         size: 22,
         x: W / 2,
         y: footTop + 66,
-        fill: SPOT,
+        fill: SINDOOR,
         anchor: "middle",
       })
     ).svg,

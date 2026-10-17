@@ -6,7 +6,7 @@ import type { Lang } from "@/lib/locales";
    Sign-in is the first screen after somebody decides to pay. A default purple
    SaaS card dropped into the middle of a letterpress almanac is the worst
    possible place to break the spell, so the widget takes the paper, the ink,
-   the spot colour and the square corners.
+   the sindoor and the square corners.
 
    THE HEADING IS OVERRIDDEN ON PURPOSE. Clerk titles its card with the
    application's name in the Clerk dashboard, which for a marketplace-
@@ -24,7 +24,7 @@ import type { Lang } from "@/lib/locales";
 
 /* THE TOKENS, AS CSS VARIABLES. Clerk derives its hover and border shades
    with color-mix(), which takes a var() as readily as a hex, so the card reads
-   the same --paper, --ink and --spot as the page around it. The night edition
+   the same --paper, --ink and --sindoor as the page around it. The night edition
    is the .dark class on <html> redefining those tokens, so one appearance
    serves both editions and the card turns with the page, with no re-render.
 
@@ -62,7 +62,7 @@ const FLAT = "none !important";
 
 export const clerkAppearance = {
   variables: {
-    colorPrimary: "var(--spot)",
+    colorPrimary: "var(--sindoor)",
     colorPrimaryForeground: "var(--paper)",
     colorBackground: "var(--paper)",
     colorForeground: "var(--ink)",
@@ -72,8 +72,8 @@ export const clerkAppearance = {
     colorBorder: "var(--rule)",
     colorInput: "var(--paper)",
     colorInputForeground: "var(--ink)",
-    colorDanger: "var(--spot)",
-    colorRing: "var(--spot)",
+    colorDanger: "var(--sindoor)",
+    colorRing: "var(--sindoor)",
     colorShadow: "transparent",
     borderRadius: "0",
     fontFamily: BODY,
@@ -107,7 +107,7 @@ export const clerkAppearance = {
       border: "0",
       boxShadow: FLAT,
       backgroundImage: FLAT,
-      backgroundColor: "var(--spot)",
+      backgroundColor: "var(--sindoor)",
       color: "var(--paper)",
       "&::before, &::after": { display: "none !important" },
       "&:hover, &:focus, &:active": {
@@ -115,7 +115,7 @@ export const clerkAppearance = {
         color: "var(--paper)",
         boxShadow: FLAT,
       },
-      "&:focus-visible": { outline: "2px solid var(--spot)", outlineOffset: "2px" },
+      "&:focus-visible": { outline: "2px solid var(--sindoor)", outlineOffset: "2px" },
     },
 
     /* The site's ruled secondary button. It tints rather than inverts on
@@ -128,7 +128,7 @@ export const clerkAppearance = {
       border: "1px solid var(--rule-strong) !important",
       backgroundColor: "transparent",
       "&:hover, &:focus, &:active": { backgroundColor: "var(--paper-2) !important", boxShadow: FLAT },
-      "&:focus-visible": { outline: "2px solid var(--spot)", outlineOffset: "2px" },
+      "&:focus-visible": { outline: "2px solid var(--sindoor)", outlineOffset: "2px" },
     },
     socialButtonsBlockButtonText: { color: "var(--ink)", fontWeight: 600 },
 
@@ -151,22 +151,22 @@ export const clerkAppearance = {
       transition: "border-color 120ms ease-out",
       "&:hover": { boxShadow: FLAT },
       "&:focus, &:focus-visible": {
-        borderBottomColor: "var(--spot) !important",
+        borderBottomColor: "var(--sindoor) !important",
         boxShadow: FLAT,
         outline: "none",
       },
       "&::placeholder": { color: "var(--ink-2)", opacity: 0.7 },
     },
 
-    formResendCodeLink: { color: "var(--spot)" },
-    identityPreviewEditButton: { color: "var(--spot)" },
+    formResendCodeLink: { color: "var(--sindoor)" },
+    identityPreviewEditButton: { color: "var(--sindoor)" },
     footerActionLink: {
       color: "var(--ink)",
       textDecoration: "underline",
-      textDecorationColor: "var(--spot)",
+      textDecorationColor: "var(--sindoor)",
       textDecorationThickness: "2px",
       textUnderlineOffset: "3px",
-      "&:hover, &:active": { color: "var(--spot)" },
+      "&:hover, &:active": { color: "var(--sindoor)" },
     },
     footerActionText: { color: "var(--ink-2)" },
     /* The band under the card that carries Clerk's own line. It sits on the

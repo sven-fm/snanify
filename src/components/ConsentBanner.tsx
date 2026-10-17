@@ -56,7 +56,7 @@ export function ConsentBanner({ lang }: { lang: Lang }) {
           {t.text}{" "}
           <a
             href={localePath(lang, "/privacy")}
-            className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot active:text-spot"
+            className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-sindoor active:text-sindoor"
           >
             {t.more}
           </a>

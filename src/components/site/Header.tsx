@@ -108,7 +108,7 @@ export function Header({
                       <li key={l.href} className="border-b border-rule">
                         <a
                           href={l.href}
-                          className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-spot"
+                          className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-sindoor"
                         >
                           {l.label}
                         </a>
@@ -123,7 +123,7 @@ export function Header({
                   <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
                     <a
                       href={ctaTo ?? ctaHref(lang)}
-                      className="label impress flex min-h-[48px] items-center justify-center bg-spot text-paper hover:bg-ink active:bg-ink"
+                      className="label impress flex min-h-[48px] items-center justify-center bg-sindoor text-paper hover:bg-ink active:bg-ink"
                     >
                       {t.nav.cta}
                     </a>
@@ -136,7 +136,7 @@ export function Header({
             <a
               href={ctaTo ?? ctaHref(lang)}
               data-until-scrolled={ctaAfterHero ? "" : undefined}
-              className="label impress hidden min-h-[44px] items-center bg-spot px-4 text-paper hover:bg-ink active:bg-ink sm:inline-flex"
+              className="label impress hidden min-h-[44px] items-center bg-sindoor px-4 text-paper hover:bg-ink active:bg-ink sm:inline-flex"
             >
               {t.nav.cta}
             </a>

@@ -56,8 +56,8 @@ function deva(value: string, lang: Lang): string {
 export function ProvisionalBadge({ lang, short = false }: { lang: Lang; short?: boolean }) {
   const c = muhuratIndexContent[lang].provenance;
   return (
-    <span className="label inline-flex items-center gap-2 border border-spot px-2.5 py-1.5 text-spot">
-      <span className="h-1.5 w-1.5 shrink-0 border border-spot" aria-hidden="true" />
+    <span className="label inline-flex items-center gap-2 border border-sindoor px-2.5 py-1.5 text-sindoor">
+      <span className="h-1.5 w-1.5 shrink-0 border border-sindoor" aria-hidden="true" />
       {short ? c.badgeShort : c.badge}
     </span>
   );
@@ -81,7 +81,7 @@ function Heading({ title, lede }: { title: string; lede?: string }) {
    shows.
 
    Cut in two colours like the rest of the forme: tint blocks for the bands,
-   hairlines for the structure, the spot colour only on the window edges.   */
+   hairlines for the structure, the sindoor only on the window edges.   */
 
 const T0 = 4; // the diagram spans 04:00 to 20:00
 const SPAN = 16;
@@ -118,7 +118,7 @@ function DayDiagram({ lang }: { lang: Lang }) {
           stroke="var(--rule)"
           strokeWidth="1"
         />
-        <circle cx={x(12)} cy="70" r="5" fill="var(--spot)" />
+        <circle cx={x(12)} cy="70" r="5" fill="var(--sindoor)" />
 
         {/* the four windows */}
         {BANDS.map((b) => (
@@ -130,8 +130,8 @@ function DayDiagram({ lang }: { lang: Lang }) {
               height="146"
               fill="var(--paper-3)"
             />
-            <rect x={x(b.from)} y="24" width="1.5" height="146" fill="var(--spot)" />
-            <rect x={x(b.to)} y="24" width="1.5" height="146" fill="var(--spot)" />
+            <rect x={x(b.from)} y="24" width="1.5" height="146" fill="var(--sindoor)" />
+            <rect x={x(b.to)} y="24" width="1.5" height="146" fill="var(--sindoor)" />
             <text
               x={(x(b.from) + x(b.to)) / 2}
               y="192"
@@ -203,7 +203,7 @@ function OccasionRow({
         {/* the occasion */}
         <div>
           {/* h4: the month above it is the h3 of this group. */}
-          <h4 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot sm:text-[1.6rem]">
+          <h4 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-sindoor sm:text-[1.6rem]">
             {occasionName(occasion, lang)}
           </h4>
           <p className="mt-1.5 text-sm leading-[1.7] text-ink2">{occasion.line[lang]}</p>
@@ -355,7 +355,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
                   href={localePath(lang, `/muhurat/${o.slug}`)}
                   className="group grid gap-y-1.5 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[14rem_1fr_11rem] sm:items-baseline sm:gap-x-8"
                 >
-                  <h3 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
+                  <h3 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-sindoor">
                     {occasionName(o, lang)}
                   </h3>
                   <span className="text-sm leading-[1.7] text-ink2">{o.line[lang]}</span>
@@ -505,7 +505,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
           />
           <Link
             href={localePath(lang, "/panchang")}
-            className="impress mt-10 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+            className="impress mt-10 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
           >
             {t.clock.cityLink}
           </Link>

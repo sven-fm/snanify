@@ -163,7 +163,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                 className="scroll-mt-20 py-9 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-14"
               >
                 <div className="flex items-baseline gap-4 lg:sticky lg:top-24 lg:block lg:self-start">
-                  <span className="display text-[2.2rem] leading-none text-spot tabular-nums">
+                  <span className="display text-[2.2rem] leading-none text-sindoor tabular-nums">
                     {numeral(i + 1, lang)}
                   </span>
                   {/* Phone: the clock and the length on one line beside the
@@ -277,7 +277,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
             {t.tariff.rows.map((row) => (
               <li
                 key={row.name}
-                className={row.hero ? "warm" : undefined}
+                className={row.hero ? "bg-paper2" : undefined}
               >
                 {/* The whole row is the press, and it carries the pack to the
                     picker through sign-in and setup. */}
@@ -291,7 +291,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
                     {/* One price, in the reader's own currency. */}
                     <dl className="mt-5 pt-2 sm:mt-0 sm:shrink-0 sm:pt-0 sm:text-right">
                       <dt className="label text-ink2">{t.tariff.heads.price}</dt>
-                      <dd className="display mt-1.5 text-[2.4rem] leading-none text-spot tabular-nums">
+                      <dd className="display mt-1.5 text-[2.4rem] leading-none text-sindoor tabular-nums">
                         <Price prices={PRICE[row.key]} />
                       </dd>
                     </dl>
@@ -349,7 +349,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
       <aside
         aria-label={t.sticky.name}
         data-until-scrolled="rail"
-        className="warm fixed inset-x-0 bottom-0 z-50 lg:hidden"
+        className="bg-paper2 fixed inset-x-0 bottom-0 z-50 lg:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <div className="flex items-center justify-between gap-4 px-4 py-2.5">

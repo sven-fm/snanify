@@ -38,7 +38,7 @@ export default function GlobalError({
               <button
                 type="button"
                 onClick={() => reset()}
-                className="label impress min-h-[44px] bg-spot px-6 py-3.5 text-paper active:bg-ink"
+                className="label impress min-h-[44px] bg-sindoor px-6 py-3.5 text-paper active:bg-ink"
               >
                 {t.retry}
               </button>

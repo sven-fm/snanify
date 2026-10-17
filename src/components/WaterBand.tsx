@@ -45,8 +45,8 @@ export function WaterBand({
   /** Eight times slower: for behind a practice, where motion at reading
       speed made the owner dizzy. */
   slow?: boolean;
-  /** The ink by default; the spot colour for the breath, where the water is the thing itself. */
-  color?: "ink" | "spot";
+  /** The ink by default; the sindoor for the breath, where the water is the thing itself. */
+  color?: "ink" | "sindoor";
 }) {
   const drawn = engrave({ seed: seedFor(seed), percentile, width: 1000, height: 300, flat: true });
   /* Every line at one weight. The engraver weights its lines from faint at
@@ -83,7 +83,7 @@ export function WaterBand({
         viewBox="0 0 1000 600"
         preserveAspectRatio="none"
         className={`${slow ? "flow-slow" : "flow"} absolute left-[-4%] top-[-100%] h-[200%] w-[108%] ${
-          faint ? "text-ink2 opacity-30" : color === "spot" ? "text-spot" : "text-ink"
+          faint ? "text-ink2 opacity-30" : color === "sindoor" ? "text-sindoor" : "text-ink"
         }`}
       >
         <g>{lines}</g>

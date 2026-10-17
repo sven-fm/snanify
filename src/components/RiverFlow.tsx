@@ -61,7 +61,7 @@ const FLOW = 0.34;
 const PETALS = [
   { sx: -0.38, at: 0.08, spin: 0.7, tone: "haldi" },
   { sx: 0.22, at: 0.23, spin: -0.5, tone: "haldi" },
-  { sx: -0.08, at: 0.41, spin: 0.9, tone: "spot" },
+  { sx: -0.08, at: 0.41, spin: 0.9, tone: "sindoor" },
   { sx: 0.46, at: 0.55, spin: -0.8, tone: "haldi" },
   { sx: -0.52, at: 0.68, spin: 0.6, tone: "haldi" },
   { sx: 0.12, at: 0.83, spin: -0.4, tone: "haldi" },
@@ -553,7 +553,7 @@ export function RiverFlow({
 
       <g clipPath={`url(#${skyClip})`}>
         {/* the bindu at full size */}
-        <circle ref={sunRef} cx="0" cy="0" r="0" fill="var(--spot)" opacity="0.92" />
+        <circle ref={sunRef} cx="0" cy="0" r="0" fill="var(--sindoor)" opacity="0.92" />
       </g>
 
       {/* the far bank, where water meets sky */}
@@ -602,7 +602,7 @@ export function RiverFlow({
             <path
               key={i}
               d="M-1 0 C-0.6 -0.7 0.6 -0.7 1 0 C0.6 0.7 -0.6 0.7 -1 0Z"
-              fill={p.tone === "haldi" ? "var(--haldi)" : "var(--spot)"}
+              fill={p.tone === "haldi" ? "var(--haldi)" : "var(--sindoor)"}
               opacity="0"
             />
           ))}

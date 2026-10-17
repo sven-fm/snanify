@@ -84,7 +84,7 @@ export function PatraOwner({
       </div>
 
       {sankalp && (
-        <section className="warm mt-12 p-5 sm:p-6">
+        <section className="bg-paper2 mt-12 p-5 sm:p-6">
           <h2 className="display text-xl text-ink">{t.yours}</h2>
           <p className="display mt-4 text-[1.5rem] leading-[1.45]">{sankalp}</p>
           <p className="mt-4 text-sm text-ink2">{t.privateNote}</p>
@@ -107,7 +107,7 @@ export function PatraOwner({
         )}
         <Link
           href={localePath(lang, "/account")}
-          className="impress mt-3 inline-flex min-h-[44px] items-center text-ink underline decoration-rule underline-offset-4 hover:decoration-spot active:text-spot"
+          className="impress mt-3 inline-flex min-h-[44px] items-center text-ink underline decoration-rule underline-offset-4 hover:decoration-sindoor active:text-sindoor"
         >
           {t.next.account}
         </Link>

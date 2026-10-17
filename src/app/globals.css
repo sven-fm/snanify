@@ -18,13 +18,22 @@
   --paper: #f2ead9;
   --paper-2: #eae0c9;
   --paper-3: #ded1b4;
-  --ink: #16130f;
+  --ink: #141210;
   --ink-2: #57513f;
-  --spot: #b32620;
+  --sindoor: #c8251d;
+  --marigold: #f2c230;
   --haldi: #e3962b;
-  --haldi-2: #f6dcae;
+  --teal: #1d5a6a;
+  --maroon: #7a1a14;
   --rule: #c3b697;
-  --rule-strong: #16130f;
+  --rule-strong: #141210;
+  --wall: #141210;
+
+  --gauge-1: #f2ead9;
+  --gauge-2: #e8dcc0;
+  --gauge-3: #c9d7d2;
+  --gauge-4: #7fa3a6;
+  --gauge-5: #1d5a6a;
 
   --grain: 0.05;
 }
@@ -38,11 +47,20 @@
   --paper-3: #24211a;
   --ink: #ece3cf;
   --ink-2: #99917f;
-  --spot: #e04a40;
+  --sindoor: #e04a40;
+  --marigold: #f2c230;
   --haldi: #f0a83c;
-  --haldi-2: #2a2116;
+  --teal: #5c9aa5;
+  --maroon: #a8352b;
   --rule: #35302a;
   --rule-strong: #ece3cf;
+  --wall: #000000;
+
+  --gauge-1: #1a1814;
+  --gauge-2: #2a2a22;
+  --gauge-3: #24393c;
+  --gauge-4: #3d6b72;
+  --gauge-5: #5c9aa5;
 
   --grain: 0.07;
 }
@@ -53,11 +71,14 @@
   --color-paper3: var(--paper-3);
   --color-ink: var(--ink);
   --color-ink2: var(--ink-2);
-  --color-spot: var(--spot);
+  --color-sindoor: var(--sindoor);
+  --color-marigold: var(--marigold);
   --color-haldi: var(--haldi);
-  --color-haldi2: var(--haldi-2);
+  --color-teal: var(--teal);
+  --color-maroon: var(--maroon);
   --color-rule: var(--rule);
   --color-rulestrong: var(--rule-strong);
+  --color-wall: var(--wall);
 
   /* Eczar carries Devanagari and Latin in one voice, no borrowed second face.
      Martel Sans does the same for text and tabular data. The ten other locales
@@ -98,12 +119,12 @@
   }
 
   ::selection {
-    background: var(--spot);
+    background: var(--sindoor);
     color: var(--paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--spot);
+    outline: 2px solid var(--sindoor);
     outline-offset: 2px;
   }
 
@@ -148,7 +169,7 @@ label:active > .impress {
 }
 .misregister:active,
 a:active > .misregister {
-  box-shadow: 1px 1px 0 0 var(--spot);
+  box-shadow: 1px 1px 0 0 var(--sindoor);
   transform: translate(3px, 3px);
   transition-duration: 0ms;
 }
@@ -221,7 +242,7 @@ html[data-scrolled] header[data-masthead] {
 }
 
 /* --- Form marks ---------------------------------------------------------------
-   A radio or a checkbox is a ruled square that fills with the spot colour,
+   A radio or a checkbox is a ruled square that fills with the sindoor,
    not the platform's blue circle. Inputs sit on a 2px rule rather than in a
    box, and the rule turns spot when the field has focus.                    */
 input[type="radio"],
@@ -245,7 +266,7 @@ input[type="checkbox"]::before {
   content: "";
   width: 0.55rem;
   height: 0.55rem;
-  background-color: var(--spot);
+  background-color: var(--sindoor);
   transform: scale(0);
   transition: transform 120ms cubic-bezier(0.2, 0.8, 0.3, 1);
 }
@@ -255,7 +276,7 @@ input[type="checkbox"]:checked::before {
 }
 input[type="radio"]:checked,
 input[type="checkbox"]:checked {
-  border-color: var(--spot);
+  border-color: var(--sindoor);
 }
 @utility field {
   border: 0;
@@ -267,7 +288,7 @@ input[type="checkbox"]:checked {
   transition: border-color 120ms ease-out;
 }
 .field:focus {
-  border-bottom-color: var(--spot);
+  border-bottom-color: var(--sindoor);
 }
 .field::placeholder {
   color: var(--ink-2);
@@ -411,12 +432,6 @@ html:not([data-script="latin"]) i {
   background-color: var(--paper-2);
 }
 
-/* A warm block in haldi, the ground for anything personal: the family's
-   names, today's sheet, a morning kept. */
-@utility warm {
-  background-color: var(--haldi-2);
-}
-
 /* Hard-ruled box. No radius, no shadow, just ink. */
 @utility boxed {
   border: 1px solid var(--rule-strong);
@@ -425,7 +440,7 @@ html:not([data-script="latin"]) i {
 /* Registration offset: a second impression sitting slightly off, the way a
    two-colour press misaligns. Used sparingly, never as a drop shadow. */
 @utility misregister {
-  box-shadow: 4px 4px 0 0 var(--spot);
+  box-shadow: 4px 4px 0 0 var(--sindoor);
 }
 
 /* Paper grain. The one texture the system keeps, because paper has tooth. */
@@ -587,12 +602,12 @@ html[data-js] [data-in] .grow {
   animation: tick 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
-/* The vow's warm block asks to be pressed: its ground breathes a shade
-   deeper toward the haldi and back until a thumb lands, then holds still. */
+/* The vow's block asks to be pressed: its ground breathes a shade
+   deeper and back until a thumb lands, then holds still. */
 @keyframes warm-breathe {
-  0% { background-color: var(--haldi-2); }
-  50% { background-color: color-mix(in srgb, var(--haldi-2) 72%, var(--haldi)); }
-  100% { background-color: var(--haldi-2); }
+  0% { background-color: var(--paper-2); }
+  50% { background-color: color-mix(in srgb, var(--paper-2) 72%, var(--paper-3)); }
+  100% { background-color: var(--paper-2); }
 }
 .hold-box:not([data-holding]) {
   animation: warm-breathe 2.4s ease-in-out infinite;
@@ -746,7 +761,7 @@ html:not([data-js]) .ink-picture-lazy {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--spot);
+  background: var(--sindoor);
   transform-origin: left;
   transform: scaleX(0);
   animation: loop-seg 10s linear infinite;

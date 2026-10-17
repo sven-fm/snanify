@@ -59,7 +59,7 @@ function FounderBlock({ f }: { f: Founder }) {
             <a
               href={l.href}
               rel="noopener"
-              className="impress flex min-h-[44px] items-center justify-between gap-4 py-2 text-[0.98rem] text-ink transition-colors hover:text-spot active:text-spot"
+              className="impress flex min-h-[44px] items-center justify-between gap-4 py-2 text-[0.98rem] text-ink transition-colors hover:text-sindoor active:text-sindoor"
             >
               <span>{l.label}</span>
               <span aria-hidden="true" className="text-ink2">
@@ -133,7 +133,7 @@ export function About({ lang }: { lang: Lang }) {
               <p className="mt-6">
                 <a
                   href={`mailto:${ETHICS_MAIL}`}
-                  className="inline-flex min-h-[44px] flex-wrap items-center gap-x-3 gap-y-1 border-b-2 border-spot pb-1 text-[1.02rem] text-spot transition-colors hover:border-rulestrong hover:text-ink"
+                  className="inline-flex min-h-[44px] flex-wrap items-center gap-x-3 gap-y-1 border-b-2 border-sindoor pb-1 text-[1.02rem] text-sindoor transition-colors hover:border-rulestrong hover:text-ink"
                 >
                   <span>{t.write.mailLabel}</span>
                   <span className="break-all text-ink2">{ETHICS_MAIL}</span>
@@ -160,7 +160,7 @@ export function About({ lang }: { lang: Lang }) {
 
       {/* ---------------- thumb rail, phones only ---------------- */}
       <aside aria-label={t.closing.cta} className="fixed inset-x-0 bottom-0 z-40 bg-paper sm:hidden">
-        <a href={begin} className="label flex min-h-[3.75rem] items-center justify-center bg-spot px-5 text-paper">
+        <a href={begin} className="label flex min-h-[3.75rem] items-center justify-center bg-sindoor px-5 text-paper">
           {t.closing.cta}
         </a>
       </aside>

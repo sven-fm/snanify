@@ -16,7 +16,7 @@ export function Tilak({ className = "" }: MarkProps) {
     <svg
       aria-hidden="true"
       viewBox="0 0 8 64"
-      className={`h-[2.2em] w-[0.28em] shrink-0 text-spot ${className}`}
+      className={`h-[2.2em] w-[0.28em] shrink-0 text-sindoor ${className}`}
     >
       <rect x="2" y="0" width="4" height="50" fill="currentColor" />
       <circle cx="4" cy="58.5" r="4" fill="currentColor" />
@@ -28,7 +28,7 @@ export function Tilak({ className = "" }: MarkProps) {
  *  movements of a long page. Centred by default. */
 export function Kumkum({ className = "" }: MarkProps) {
   return (
-    <div aria-hidden="true" className={`flex justify-center py-2 text-spot ${className}`}>
+    <div aria-hidden="true" className={`flex justify-center py-2 text-sindoor ${className}`}>
       <svg viewBox="0 0 40 10" className="h-[0.6em] w-[2.4em]">
         <circle cx="8" cy="5" r="2.4" fill="currentColor" />
         <circle cx="20" cy="5" r="3.4" fill="currentColor" />
@@ -54,7 +54,7 @@ export function Mauli({ className = "" }: MarkProps) {
       <path
         d="M0 6 C25 2 50 10 100 6 S175 2 200 6"
         fill="none"
-        stroke="var(--spot)"
+        stroke="var(--sindoor)"
         strokeWidth="2"
         vectorEffect="non-scaling-stroke"
       />
@@ -73,10 +73,10 @@ export function Mauli({ className = "" }: MarkProps) {
 /** One vermillion dot: the selected radio, the current step. `faint` is the
  *  step still ahead. A prop rather than a colour class, because two text
  *  colours on one element resolve by stylesheet order, not by class order. */
-export function Bindu({ className = "", tone = "spot" }: MarkProps & { tone?: "spot" | "faint" }) {
+export function Bindu({ className = "", tone = "sindoor" }: MarkProps & { tone?: "sindoor" | "faint" }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 10 10" className={`h-[0.5em] w-[0.5em] ${className}`}>
-      <circle cx="5" cy="5" r="5" fill={tone === "spot" ? "var(--spot)" : "var(--rule)"} />
+      <circle cx="5" cy="5" r="5" fill={tone === "sindoor" ? "var(--sindoor)" : "var(--rule)"} />
     </svg>
   );
 }
@@ -101,7 +101,7 @@ type Petal = {
   y: number;
   /** Width in px. */
   size: number;
-  tone: "haldi" | "spot";
+  tone: "haldi" | "sindoor";
   /** Seconds for one pass. */
   d: number;
   delay: number;
@@ -112,7 +112,7 @@ type Petal = {
 const PETALS: Petal[] = [
   { x: 8, y: 34, size: 9, tone: "haldi", d: 19, delay: -4 },
   { x: 22, y: 62, size: 7, tone: "haldi", d: 23, delay: -11 },
-  { x: 41, y: 48, size: 8, tone: "spot", d: 21, delay: -7 },
+  { x: 41, y: 48, size: 8, tone: "sindoor", d: 21, delay: -7 },
   { x: 58, y: 78, size: 10, tone: "haldi", d: 17, delay: -2 },
   { x: 74, y: 56, size: 7, tone: "haldi", d: 25, delay: -15 },
 ];
@@ -152,7 +152,7 @@ export function Petals({
         >
           <path
             d="M0 3 C2 0 8 0 10 3 C8 6 2 6 0 3Z"
-            fill={p.tone === "haldi" ? "var(--haldi)" : "var(--spot)"}
+            fill={p.tone === "haldi" ? "var(--haldi)" : "var(--sindoor)"}
           />
         </svg>
       ))}

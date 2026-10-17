@@ -1,5 +1,6 @@
 import "server-only";
 import { Resvg } from "@resvg/resvg-js";
+import { PALETTE } from "@/lib/palette";
 import { typeset, wrap } from "@/lib/typeset";
 import { withSamvat } from "@/lib/occasions";
 import { content } from "@/lib/content";
@@ -20,10 +21,10 @@ import type { Lang } from "@/lib/locales";
 
 export const SITE_CARD_SIZE = { width: 1200, height: 630 };
 
-const GROUND = "#efe2c2";
-const YELLOW = "#f2c230";
-const RED = "#c8251d";
-const BLACK = "#1a1410";
+const GROUND = PALETTE.day.paper;
+const YELLOW = PALETTE.day.marigold;
+const RED = PALETTE.day.sindoor;
+const BLACK = PALETTE.day.ink;
 
 /** The label's own words, per edition. Capitals in Latin, as a label is
     painted; Devanagari has no case. */

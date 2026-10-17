@@ -64,7 +64,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
           <div className="mx-auto max-w-6xl px-5 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-20">
             <Link
               href={localePath(lang, "/muhurat")}
-              className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
+              className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-sindoor"
             >
               {t.nav.back}
             </Link>
@@ -232,7 +232,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
             {d.clockNote}{" "}
             <Link
               href={`${localePath(lang, "/muhurat")}#clock`}
-              className="inline-flex min-h-11 items-center text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
+              className="inline-flex min-h-11 items-center text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-sindoor"
             >
               {d.clockLink}
             </Link>
@@ -294,7 +294,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                   className="impress tint group block p-6 transition-colors hover:bg-paper3"
                 >
                   <p className="text-sm text-ink2">{d.prev}</p>
-                  <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
+                  <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-sindoor">
                     {prev.name[lang]}
                   </p>
                 </Link>
@@ -308,7 +308,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                   className="impress tint group block p-6 transition-colors hover:bg-paper3 sm:text-right"
                 >
                   <p className="text-sm text-ink2">{d.next}</p>
-                  <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
+                  <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-sindoor">
                     {next.name[lang]}
                   </p>
                 </Link>

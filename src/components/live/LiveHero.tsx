@@ -123,7 +123,7 @@ function Dial({ percentile, label }: { percentile: number | null; label: string 
         <path
           d={arc(band[0], band[1])}
           fill="none"
-          stroke="var(--spot)"
+          stroke="var(--sindoor)"
           strokeWidth="3.5"
           style={{ transition: "d 0.6s" }}
         />
@@ -138,7 +138,7 @@ function Dial({ percentile, label }: { percentile: number | null; label: string 
         }}
       >
         <g className="quiver" style={{ transformOrigin: `${CX}px ${CY}px` }}>
-          <line x1={CX} y1={CY} x2={CX} y2={CY - R + 14} stroke="var(--spot)" strokeWidth="2.5" />
+          <line x1={CX} y1={CY} x2={CX} y2={CY - R + 14} stroke="var(--sindoor)" strokeWidth="2.5" />
           <line x1={CX} y1={CY} x2={CX} y2={CY + 8} stroke="currentColor" strokeWidth="2.5" />
         </g>
       </g>
@@ -308,7 +308,7 @@ export function LiveHero({
               {w.sentence}
             </p>
             <p className="mt-2 flex items-center gap-2 text-sm text-ink2">
-              <span aria-hidden="true" className="text-[0.8rem] leading-none text-spot">
+              <span aria-hidden="true" className="text-[0.8rem] leading-none text-sindoor">
                 {w.caret}
               </span>
               {w.trend}
@@ -366,7 +366,7 @@ export function LiveHero({
 
             <a
               href={w.href}
-              className="mt-5 inline-flex min-h-[44px] items-center self-start text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
+              className="mt-5 inline-flex min-h-[44px] items-center self-start text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-sindoor"
             >
               {labels.open}
             </a>

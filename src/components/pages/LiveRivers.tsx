@@ -158,7 +158,7 @@ function Scale({ value, label }: { value: number; label: string }) {
           />
         ))}
         <span
-          className="absolute top-0 h-full w-[3px] bg-spot"
+          className="absolute top-0 h-full w-[3px] bg-sindoor"
           style={{ left: `calc(${value}% - 1.5px)` }}
           aria-hidden="true"
         />
@@ -409,7 +409,7 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
 
         {read && (
           <p className="mt-4 flex items-center gap-2.5 text-sm text-ink2">
-            <span aria-hidden="true" className="text-[0.8rem] leading-none text-spot">
+            <span aria-hidden="true" className="text-[0.8rem] leading-none text-sindoor">
               {CARET[read.trend]}
             </span>
             {read.deltaPct === null
@@ -639,7 +639,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                         and the six of them are a usable index on a phone. */}
                     <a
                       href={`#${water.slug}`}
-                      className="flex min-h-[56px] items-center gap-4 py-3 transition-colors hover:text-spot"
+                      className="flex min-h-[56px] items-center gap-4 py-3 transition-colors hover:text-sindoor"
                     >
                       <span className="min-w-0 flex-1">
                         <span className="display block truncate text-[1.15rem] leading-tight text-ink">
@@ -652,7 +652,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                           {band ? t.bandWords[band] : t.feed.normalLabel}
                         </span>
                         {trend && (
-                          <span aria-hidden="true" className="text-[0.8rem] leading-none text-spot">
+                          <span aria-hidden="true" className="text-[0.8rem] leading-none text-sindoor">
                             {CARET[trend]}
                           </span>
                         )}
@@ -693,7 +693,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 const pic = PICTURES[water.slug];
                 return (
                   <li key={water.slug}>
-                    <a href={pic.page} className="underline decoration-rule underline-offset-4 hover:decoration-spot">
+                    <a href={pic.page} className="underline decoration-rule underline-offset-4 hover:decoration-sindoor">
                       {fill(t.pictures.credit, { subject: pic.subject[lang], author: pic.author, license: pic.license })}
                     </a>
                   </li>
@@ -719,7 +719,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <a
                   href={SOURCES.discharge.modelHref}
                   rel="noopener noreferrer external"
-                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
+                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-sindoor"
                 >
                   Copernicus EMS
                 </a>
@@ -728,7 +728,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <a
                   href={SOURCES.discharge.href}
                   rel="noopener noreferrer external"
-                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
+                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-sindoor"
                 >
                   Open-Meteo
                 </a>
@@ -737,7 +737,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <a
                   href={SOURCES.registry.href}
                   rel="noopener noreferrer external"
-                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
+                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-sindoor"
                 >
                   {SOURCES.registry.shortName}
                 </a>
@@ -771,7 +771,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                 <li key={path}>
                   <Link
                     href={localePath(lang, path)}
-                    className="display flex min-h-[56px] items-center py-3 text-xl text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
+                    className="display flex min-h-[56px] items-center py-3 text-xl text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-sindoor"
                   >
                     {label}
                   </Link>
@@ -786,10 +786,10 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
 
       {/* The primary action, put where a thumb reaches on a 390px screen.
           Hidden above lg, where the masthead's own button is in reach. */}
-      <aside aria-label={t.close.title} className="warm fixed inset-x-0 bottom-0 z-50 px-5 py-3 lg:hidden">
+      <aside aria-label={t.close.title} className="bg-paper2 fixed inset-x-0 bottom-0 z-50 px-5 py-3 lg:hidden">
         <a
           href={cta}
-          className="label flex min-h-[48px] items-center justify-center bg-spot px-6 text-paper transition-colors hover:bg-ink"
+          className="label flex min-h-[48px] items-center justify-center bg-sindoor px-6 text-paper transition-colors hover:bg-ink"
         >
           {site.nav.cta}
         </a>

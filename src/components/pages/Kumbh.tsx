@@ -21,7 +21,7 @@ import {
    Rules held in the markup as well as in the copy:
 
    · Nothing here counts down, fills up or runs out. There is no timer, no seat
-     counter and no urgency colour. The only spot colour on a date is the mark
+     counter and no urgency colour. The only sindoor on a date is the mark
      that says which kind of day it is.
    · Every date renders beside the provisional badge, in the table, on the
      calendar plates and in the standing entry, because a date without its
@@ -133,13 +133,13 @@ function MonthPlate({
               className={[
                 "flex aspect-square items-center justify-center border-r border-b border-rule text-sm",
                 "[&:nth-child(7n)]:border-r-0 [&:nth-last-child(-n+7)]:border-b-0",
-                bathing ? "bg-spot font-bold text-paper" : "text-ink2",
+                bathing ? "bg-sindoor font-bold text-paper" : "text-ink2",
               ].join(" ")}
             >
               {/* The opening is ruled rather than filled. Drawn as an inner box
                   so it cannot fight the grid's own hairlines for the border. */}
               {mark && !bathing ? (
-                <span className="flex h-7 w-7 items-center justify-center border-2 border-spot text-ink">
+                <span className="flex h-7 w-7 items-center justify-center border-2 border-sindoor text-ink">
                   {figure}
                 </span>
               ) : (
@@ -306,7 +306,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
                       <span className="display text-lg text-ink">
                         {formatDate(e.date, lang, c.months)}
                       </span>
-                      <span className="mt-1.5 block text-sm text-spot">{c.kinds[e.kind]}</span>
+                      <span className="mt-1.5 block text-sm text-sindoor">{c.kinds[e.kind]}</span>
                       {/* Read off the record rather than assumed: a row whose
                           date were ever sourced would stop printing this. */}
                       {e.confidence === "provisional" && (
@@ -352,11 +352,11 @@ export function Kumbh({ lang }: { lang: Lang }) {
 
           <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-ink2">
             <span className="inline-flex items-center gap-2.5">
-              <span className="h-3 w-3 bg-spot" aria-hidden="true" />
+              <span className="h-3 w-3 bg-sindoor" aria-hidden="true" />
               {c.legend.amrit}
             </span>
             <span className="inline-flex items-center gap-2.5">
-              <span className="h-3 w-3 border-2 border-spot" aria-hidden="true" />
+              <span className="h-3 w-3 border-2 border-sindoor" aria-hidden="true" />
               {c.legend.open}
             </span>
             <span>{c.plateCaption}</span>
@@ -413,7 +413,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
                   href={s.href}
                   rel="noopener noreferrer nofollow"
                   target="_blank"
-                  className="text-[0.98rem] leading-[1.6] text-ink underline decoration-spot decoration-1 transition-colors hover:text-spot"
+                  className="text-[0.98rem] leading-[1.6] text-ink underline decoration-sindoor decoration-1 transition-colors hover:text-sindoor"
                 >
                   {s.label[lang]}
                 </a>
@@ -474,8 +474,8 @@ export function Kumbh({ lang }: { lang: Lang }) {
 function ProvisionalMark({ lang, short = false }: { lang: Lang; short?: boolean }) {
   const p = kumbhContent[lang].provenance;
   return (
-    <span className="inline-flex items-center gap-2 text-sm text-spot">
-      <span className="h-1.5 w-1.5 shrink-0 border border-spot" aria-hidden="true" />
+    <span className="inline-flex items-center gap-2 text-sm text-sindoor">
+      <span className="h-1.5 w-1.5 shrink-0 border border-sindoor" aria-hidden="true" />
       {short ? p.badgeShort : p.badge}
     </span>
   );

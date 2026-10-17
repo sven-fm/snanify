@@ -105,7 +105,7 @@ export async function Account({
         <WaterBand seed="account" className="mt-5 h-[68px] w-full" />
 
         {/* ---------------- what is in hand ---------------- */}
-        <section className="warm mt-9 p-5 sm:p-6">
+        <section className="bg-paper2 mt-9 p-5 sm:p-6">
           <p className="display text-[1.4rem] leading-[1.3] text-ink">
             {credits === 0
               ? t.creditsZero
@@ -157,14 +157,14 @@ export async function Account({
                   <li key={s.id} className="border-b border-rule">
                     <Link
                       href={localePath(lang, `/p/${s.id}`)}
-                      className="impress flex min-h-[52px] items-baseline justify-between gap-4 py-3.5 hover:text-spot active:text-spot"
+                      className="impress flex min-h-[52px] items-baseline justify-between gap-4 py-3.5 hover:text-sindoor active:text-sindoor"
                     >
                       <span className="text-[0.98rem] text-ink2 tabular-nums">
                         {formatKept(s.keptOn, lang)}
                       </span>
                       <span className="flex items-baseline gap-3 text-right text-[0.98rem] text-ink">
                         {ghat ? waterName(ghat, "river", lang) : s.waterSlug}
-                        <span aria-hidden="true" className="text-spot">→</span>
+                        <span aria-hidden="true" className="text-sindoor">→</span>
                       </span>
                     </Link>
                   </li>
@@ -218,7 +218,7 @@ export async function Account({
             </p>
             <Link
               href={localePath(lang, "/setup")}
-              className="mt-4 inline-flex min-h-[44px] items-center text-ink underline decoration-rule underline-offset-4 hover:decoration-spot"
+              className="mt-4 inline-flex min-h-[44px] items-center text-ink underline decoration-rule underline-offset-4 hover:decoration-sindoor"
             >
               {t.profileCta}
             </Link>
@@ -227,7 +227,7 @@ export async function Account({
           <div>
             <h2 className="display text-xl text-ink">{t.reminderHeading}</h2>
             {remindersOff && (
-              <p className="warm mt-4 px-3 py-2 text-sm text-ink">{t.remindersOff}</p>
+              <p className="bg-paper2 mt-4 px-3 py-2 text-sm text-ink">{t.remindersOff}</p>
             )}
 
             <form action={setReminder.bind(null, lang)} className="mt-4">
@@ -261,7 +261,7 @@ export async function Account({
             </form>
             <a
               href={localePath(lang, "/account/reminder.ics")}
-              className="impress mt-4 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-spot active:text-spot"
+              className="impress mt-4 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-sindoor active:text-sindoor"
             >
               {t.calendar}
             </a>
@@ -293,7 +293,7 @@ export async function Account({
               className="field min-h-[48px] w-full text-[1.02rem] text-ink"
             />
             {misstyped && (
-              <p className="mt-2 text-sm font-bold text-spot">
+              <p className="mt-2 text-sm font-bold text-sindoor">
                 {t.deleteMisstyped}
               </p>
             )}
@@ -308,7 +308,7 @@ export async function Account({
           <SignOutButton redirectUrl={localePath(lang, "/")}>
             <button
               type="button"
-              className="min-h-[44px] text-ink2 underline decoration-rule underline-offset-4 transition-colors hover:text-spot"
+              className="min-h-[44px] text-ink2 underline decoration-rule underline-offset-4 transition-colors hover:text-sindoor"
             >
               {t.signOut}
             </button>

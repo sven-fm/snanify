@@ -56,7 +56,7 @@ export function Footer({ lang }: { lang: Lang }) {
                       <li key={key}>
                         <a
                           href={item.href}
-                          className="impress text-sm text-ink2 underline decoration-rule decoration-1 hover:text-spot hover:decoration-spot active:text-spot"
+                          className="impress text-sm text-ink2 underline decoration-rule decoration-1 hover:text-sindoor hover:decoration-sindoor active:text-sindoor"
                         >
                           {navLabel(lang, key)}
                         </a>
@@ -78,7 +78,7 @@ export function Footer({ lang }: { lang: Lang }) {
                 <li key={label}>
                   <Link
                     href={localePath(lang, LEGAL_ROUTES[i] ?? "/terms")}
-                    className="impress text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 hover:text-spot active:text-spot"
+                    className="impress text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 hover:text-sindoor active:text-sindoor"
                   >
                     {label}
                   </Link>

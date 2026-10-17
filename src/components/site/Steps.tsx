@@ -23,7 +23,7 @@ export function Steps({
         const on = here.includes(i);
         return (
           <li key={step} className="flex items-center gap-2 whitespace-nowrap" aria-current={on ? "step" : undefined}>
-            <Bindu tone={on ? "spot" : "faint"} className="shrink-0 text-[1.1rem]" />
+            <Bindu tone={on ? "sindoor" : "faint"} className="shrink-0 text-[1.1rem]" />
             <span className={`text-sm ${on ? "font-bold text-ink" : "text-ink2"}`}>{step}</span>
           </li>
         );

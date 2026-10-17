@@ -72,7 +72,7 @@ function Run({ cities, lang, region }: { cities: readonly FinderCity[]; lang: La
           {i > 0 && <span className="text-ink2">, </span>}
           <Link
             href={localePath(lang, `/panchang/${c.slug}`)}
-            className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+            className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
           >
             {c.name}
           </Link>
@@ -87,7 +87,7 @@ function Row({ city, lang, sub }: { city: FinderCity; lang: Lang; sub?: string }
     <li className="border-b border-rule">
       <Link
         href={localePath(lang, `/panchang/${city.slug}`)}
-        className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-spot"
+        className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-sindoor"
       >
         <span className="display text-[1.1rem]">{city.name}</span>
         {sub && <span className="text-right text-sm text-ink2">{sub}</span>}
@@ -116,7 +116,7 @@ export function CityFinder({ lang, groups, t }: { lang: Lang; groups: readonly F
           placeholder={t.placeholder}
           autoComplete="off"
           enterKeyHint="search"
-          className="mt-3 block min-h-[48px] w-full border-2 border-rulestrong bg-paper px-4 text-[1.05rem] text-ink placeholder:text-ink2 focus:border-spot focus:outline-none"
+          className="mt-3 block min-h-[48px] w-full border-2 border-rulestrong bg-paper px-4 text-[1.05rem] text-ink placeholder:text-ink2 focus:border-sindoor focus:outline-none"
         />
         <span className="mt-2 block text-sm text-ink2" aria-live="polite">
           {q
@@ -139,7 +139,7 @@ export function CityFinder({ lang, groups, t }: { lang: Lang; groups: readonly F
           <button
             type="button"
             onClick={() => setQuery("")}
-            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
           >
             {t.clear}
           </button>

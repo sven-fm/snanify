@@ -167,7 +167,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   }}
                 />
                 {/* One colour for the whole headline. The second half used to
-                    be set in the spot colour, which is the commonest tell of a
+                    be set in the sindoor, which is the commonest tell of a
                     generated page. The sun carries the vermilion up here. */}
                 {t.hero.titleA} {t.hero.titleB}
               </h1>
@@ -276,7 +276,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
               <Link
                 href={localePath(lang, "/rivers")}
-                className="mt-4 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
+                className="mt-4 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-sindoor"
               >
                 {t.hero.card.link}
               </Link>
@@ -307,7 +307,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   href={localePath(lang, `/rivers/${r.slug}`)}
                   className="group impress -mx-3 grid gap-y-1 px-3 py-4 hover:bg-paper3 active:bg-paper3 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline sm:gap-x-8"
                 >
-                  <span className="display text-2xl text-ink group-active:text-spot">{waterName(r, "river", lang)}</span>
+                  <span className="display text-2xl text-ink group-active:text-sindoor">{waterName(r, "river", lang)}</span>
                   <span className="text-sm text-ink2">
                     {waterName(r, "ghat", lang)}, {waterName(r, "city", lang)}
                   </span>
@@ -328,7 +328,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
 
             Every per-morning figure is arithmetic on the price above it and is
             documented in src/content/prices.ts. The middle line is the one to
-            take, so it stands on the warm haldi ground. Keep it in the middle: on
+            take, so it stands on the tinted ground. Keep it in the middle: on
             a phone these are three stacked rows and the middle row is where
             the eye lands.                                                  */}
         <Section id="prices">
@@ -341,7 +341,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
           <Mauli className="mt-10 text-[1rem]" />
 
           {/* The three packs: stacked on a phone, three columns from lg. Flat
-              blocks with no border; eleven on the warm haldi ground. */}
+              blocks with no border; eleven on the tinted ground. */}
           {/* Eleven first on a phone and raised with the second impression;
               from lg the three sit side by side with eleven in the middle,
               where the eye lands. The count is the name, so each line needs
@@ -357,7 +357,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
                   key={tier.name}
                   href={`${localePath(lang, "/begin")}?pack=${tier.key}`}
                   className={`impress flex flex-col p-6 sm:p-7 ${
-                    hero ? "misregister warm order-first lg:order-none lg:-mt-3" : "tint"
+                    hero ? "misregister bg-paper2 order-first lg:order-none lg:-mt-3" : "tint"
                   }`}
                 >
                   <h3 className="display text-[1.7rem] leading-tight sm:text-2xl">{tier.name}</h3>
@@ -426,7 +426,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
           </div>
           <Link
             href={localePath(lang, "/begin")}
-            className="label impress flex min-h-[48px] shrink-0 items-center bg-spot px-7 text-paper hover:bg-ink active:bg-ink"
+            className="label impress flex min-h-[48px] shrink-0 items-center bg-sindoor px-7 text-paper hover:bg-ink active:bg-ink"
           >
             {t.bar.cta}
           </Link>

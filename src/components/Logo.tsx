@@ -26,7 +26,7 @@ export function Mark({ className = "" }: { className?: string }) {
 
       <g clipPath={`url(#${clip})`}>
         {/* the bindu, the one spot of colour */}
-        <circle cx="24" cy="17.6" r="6.2" fill="var(--spot)" />
+        <circle cx="24" cy="17.6" r="6.2" fill="var(--sindoor)" />
 
         {/* flat water rules, widening as they come forward */}
         <g fill="currentColor">
@@ -46,7 +46,7 @@ export function Mark({ className = "" }: { className?: string }) {
  * Sanskrit root heavy and the English suffix light, so the eye reads SNAN first
  * and the word has ascenders and a descender to be recognised by rather than
  * the even grey of letter-spaced caps. And the dot of the i is the bindu, in
- * the spot colour, so the seal's one idea recurs inside the word instead of
+ * the sindoor, so the seal's one idea recurs inside the word instead of
  * standing next to it.
  *
  * The dot is drawn, not typed. Two reasons it has to be:
@@ -84,7 +84,7 @@ export function Wordmark({
           <span className="wordmark-i">
             {"ı"}
             <svg viewBox="0 0 10 10" className="wordmark-bindu" aria-hidden="true">
-              <circle cx="5" cy="5" r="5" fill="var(--spot)" />
+              <circle cx="5" cy="5" r="5" fill="var(--sindoor)" />
             </svg>
           </span>
           fy
@@ -145,7 +145,7 @@ export function Colophon({ className = "" }: { className?: string }) {
       </g>
 
       <g clipPath={`url(#${clip})`}>
-        <circle cx="100" cy="72" r="25" fill="var(--spot)" />
+        <circle cx="100" cy="72" r="25" fill="var(--sindoor)" />
         <g fill="currentColor">
           <rect x="59" y="112" width="82" height="8" />
           <rect x="38" y="132" width="124" height="8" />
