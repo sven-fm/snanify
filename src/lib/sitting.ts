@@ -9,7 +9,7 @@ import { getLiveSnapshot, istDate, type WaterState } from "@/lib/riverdata";
 import { readSky } from "@/lib/sky";
 import { getGhat } from "@/content/rivers";
 import { asInstant } from "@/content/muhurat";
-import { IMAGE_VERSION } from "@/lib/patra-image";
+import { IMAGE_VERSION } from "@/lib/patra-version";
 import { riverSlice, seedDay, seedFigure, skySlice } from "@/lib/patra-record";
 import type { Lang } from "@/lib/locales";
 
@@ -143,14 +143,17 @@ export async function mintSitting({
 
   try {
     await db.transaction(async (tx) => {
-      /* Counted in the same transaction as the insert, across every water. */
+      await book(tx, { userId, delta: -1, reason: "sitting", refId: id });
+
+      /* Counted AFTER book(), which takes the per-user row lock. Under the lock
+         this sees every morning another transaction of the same person has
+         committed, so two concurrent mints cannot read the same count. Do not
+         move it above the book. */
       const prior = await tx
         .select({ n: count() })
         .from(sittings)
         .where(eq(sittings.userId, userId));
       morning = morningNumber(Number(prior[0]?.n ?? 0));
-
-      await book(tx, { userId, delta: -1, reason: "sitting", refId: id });
 
       await tx.insert(sittings).values({
         id,

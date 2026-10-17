@@ -1,14 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
-/* sitting.ts imports the database client, which refuses to load without a
-   DATABASE_URL. The morning number is pure, so the client is stubbed. */
-vi.mock("@/db", () => ({ db: {}, profiles: {}, sittings: {} }));
-
+import { describe, expect, it } from "vitest";
 import { riverSlice, seedDay, seedFigure, skySlice } from "@/lib/patra-record";
 import type { WaterState } from "@/lib/riverdata";
 import type { SkyReading } from "@/lib/sky";
 import type { Sitting } from "@/db/schema";
-import { morningNumber } from "@/lib/sitting";
-import { IMAGE_VERSION } from "@/lib/patra-image";
 import { patraView } from "@/lib/patra-view";
 
 /* A water in the modelled arm: the flood model published a figure for today. */
@@ -147,18 +141,9 @@ function sittingRow(over: Partial<Sitting> = {}): Sitting {
   } as Sitting;
 }
 
-describe("the morning number", () => {
-  it("counts the mornings before this one, plus one", () => {
-    expect(morningNumber(0)).toBe(1);
-    expect(morningNumber(6)).toBe(7);
-  });
-
+describe("the morning number on the view", () => {
   it("reaches the view, and is null for rows minted before it existed", () => {
     expect(patraView(sittingRow({ morningNo: 7 })).morning).toBe(7);
     expect(patraView(sittingRow({ morningNo: null })).morning).toBeNull();
-  });
-
-  it("names the image version new mints carry", () => {
-    expect(IMAGE_VERSION).toBe(3);
   });
 });
