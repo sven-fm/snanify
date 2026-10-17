@@ -21,10 +21,11 @@ import { localeDef, type Lang } from "@/lib/locales";
    all fail the build with "Unexpected spread". Both calls are written out in
    full for that reason.
 
-   THREE WEIGHTS, BECAUSE THE DESIGN USES THREE. globals.css asks for 400, 600
-   and 700 and nothing else. Both families were loaded at five weights each,
-   which is ten faces covering Latin and Devanagari: most of a phone's opening
-   connection budget spent on cuts that never render. Adding a weight here
+   THE WEIGHTS THE DESIGN USES, AND NO MORE. globals.css asks for 400, 600
+   and 700, and the Latin Eczar adds 800 for the wordmark (spec 6.9). Both
+   families were once loaded at five weights each, which is ten faces covering
+   Latin and Devanagari: most of a phone's opening connection budget spent on
+   cuts that never render. Adding a weight here
    without a rule that uses it costs every reader about thirty kilobytes.
 
    ADDING A SCRIPT means a face pair here, a `Script` member in
@@ -35,7 +36,7 @@ import { localeDef, type Lang } from "@/lib/locales";
 
 const eczarLatin = Eczar({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "600", "700", "800"],
   variable: "--font-eczar",
   display: "swap",
 });

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
+    "icons": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/icons.mjs",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "indexnow": "node scripts/indexnow.mjs",

@@ -168,22 +168,22 @@ export const siteMetadata: Metadata = {
    * Three files, because three different consumers ask three different ways.
    *
    *  · icon.svg     modern browsers, and the one that has to survive a 16px tab.
-   *                 It is therefore the small-size cut of the Bindu Ripple: one
-   *                 strong ring instead of the double rule, two water rules
-   *                 instead of three, a slightly larger bindu. At 16px the
-   *                 double hairline aliased to a grey smudge and the three
-   *                 2.2-unit rules merged into one, which is why this exists.
+   *                 It is therefore the small cut of the horizon sun: a thicker
+   *                 ring, a larger sun, two water bands instead of three, which
+   *                 at 16px would merge into one. It carries the night colours
+   *                 under prefers-color-scheme, which a tab follows.
    *  · favicon.ico  16, 32 and 48, from the same small cut. Browsers request
    *                 /favicon.ico whatever the markup says, and Google's favicon
    *                 crawler strongly prefers it. Its absence is why a stale icon
    *                 could persist in a tab and in search results no matter what
    *                 `rel="icon"` pointed at.
-   *  · apple-touch  180px, OPAQUE, and the full three-rule mark. iOS composites
+   *  · apple-touch  180px, OPAQUE, and the full three-band mark. iOS composites
    *                 any transparency to black and masks the corners itself, so
-   *                 this one keeps the full-bleed paper ground; it is also shown
-   *                 large enough for the double rule to read.
+   *                 this one keeps the full-bleed paper ground.
    *
-   * Regenerate with the note in DESIGNSYSTEM.md if the seal ever changes.
+   * The home-screen icons (192 and 512) are in src/app/manifest.ts.
+   * All of them are written by `npm run icons` (scripts/icons.mjs) from the
+   * one drawing in src/lib/logo-svg.ts. Regenerate when the mark changes.
    */
   icons: {
     icon: [

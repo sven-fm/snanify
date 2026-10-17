@@ -4,6 +4,7 @@ import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
 import { withSamvat } from "@/lib/occasions";
 import { Logo } from "@/components/Logo";
+import { RiverStrip } from "@/components/kit";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
 import { MobileCta, ProfileMenu, ProfileRows } from "@/components/site/HeaderCta";
@@ -14,6 +15,12 @@ export type NavLink = { href: string; label: string };
  * A masthead rather than an app bar: wordmark and edition line, with the
  * sections set in a row beneath on wide screens. No rules: once the page
  * scrolls, a fold appears under it and it reads as a sheet laid over the page.
+ *
+ * It sits on the river strip (spec 5.6), the same on every page: teal waves
+ * behind the bar, fading downward into paper. The logo and the controls stand
+ * on their own paper ground so no ripple reads through the type. The strip
+ * runs its full 74px past the bar at the top of the page and is trimmed to the
+ * bar once the page scrolls (`[data-strip]` in globals.css).
  *
  * `currentPath` is the locale-independent route, so the language switch lands
  * on the same page instead of dumping you at home.
@@ -53,14 +60,21 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-50 bg-paper" data-masthead>
+      {/* Behind the bar's content and above its paper: the header is its
+          own stacking context, so -z-10 paints over the header's ground and
+          under everything in flow, and the menu panel keeps positioning
+          against the header itself. */}
+      <div data-strip className="absolute inset-x-0 top-0 -z-10 h-[74px] overflow-hidden">
+        <RiverStrip />
+      </div>
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* masthead row */}
         <div className="flex h-14 items-center justify-between gap-3 sm:gap-4">
-          <Link href={localePath(lang, "/")} className="shrink-0">
+          <Link href={localePath(lang, "/")} className="-ml-1.5 shrink-0 bg-paper px-1.5 py-1">
             <Logo />
           </Link>
 
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="-mr-1.5 flex items-center gap-2 bg-paper px-1.5 py-1 sm:gap-4">
             {/* The almanac's edition line. Vikram Samvat runs ~57 years ahead
                 of CE; each locale sets it in its own numerals. */}
             <span className="label hidden text-ink2 lg:inline">{edition}</span>

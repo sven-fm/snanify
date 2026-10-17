@@ -371,6 +371,12 @@ html[data-js]:not([data-past-hero]) [data-until-scrolled="rail"] {
 html[data-scrolled] header[data-masthead] {
   box-shadow: 0 1px 0 0 var(--paper-3);
 }
+/* The strip runs its full 74px past the bar at the top of the page; once the
+   page scrolls under the masthead, the strip is trimmed to the bar so the
+   waves never lie over the text below. */
+html[data-scrolled] header[data-masthead] [data-strip] {
+  height: 100%;
+}
 .dark .display {
   font-weight: 700;
 }
@@ -476,39 +482,32 @@ html:not([data-script="latin"]) .label {
 }
 
 /* The masthead wordmark stays Latin in Eczar in every locale, so the brand is
-   one mark and not twelve. This is the one place that names a family.
+   one mark in both editions. This is the one place that names a family.
 
-   It is set as a LOGOTYPE, not as a label. The 800 caps it used to carry closed
-   the counters of a high-contrast face and the near-zero tracking flattened the
-   word into an even grey. It is now mixed case in two weights: the Sanskrit root
-   heavy, the English suffix light, with the dot of the i inked in the spot
-   colour so the seal's bindu recurs inside the word.
+   It is set as a LOGOTYPE in one heavy weight (spec 6.9): Eczar 800, the
+   display capitals' weight, in mixed case so it stays a name, at -0.015em.
+   The dot of the i is inked in the sindoor so the mark's sun recurs inside
+   the word.
 
    line-height: 1 IS LOAD-BEARING. The bindu is positioned in em from the box
-   bottom, and that offset (0.826em) is the sum of the dot's foot above the
-   baseline (0.587em, measured off Eczar) and the baseline's height above the box
-   bottom, which is only 0.2388em while the line box is exactly one em. Change
-   the leading and the dot drifts off the stem. */
+   bottom, and that offset (0.789em) is the sum of the dot's foot above the
+   baseline (0.543em, measured off Eczar 800) and the baseline's height above
+   the box bottom, which is 0.2455em only while the line box is exactly one em.
+   Change the leading and the dot drifts off the stem.
+
+   Measured 17 October 2026 off the live face in the browser: the dotted i set
+   at 1000px on a canvas, its tittle's inked box read at half coverage, and the
+   baseline read from a zero-height inline-block in a .wordmark box. Re-measure
+   the same way if the weight, the tracking or the face ever changes. */
 @utility wordmark {
   font-family: var(--font-eczar), Georgia, serif;
-  font-weight: 400;
+  font-weight: 800;
+  letter-spacing: -0.015em;
   line-height: 1;
   font-feature-settings: "kern" 1;
   /* Eczar ships no italic and nothing above 800, so a synthesised cut is a
      defect rather than emphasis. */
   font-synthesis: none;
-}
-
-/* Snan, the root. */
-@utility wordmark-root {
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-/* ify, the suffix, opened a touch to carry the lighter weight. */
-@utility wordmark-suffix {
-  font-weight: 400;
-  letter-spacing: 0.015em;
 }
 
 /* The dotless i (U+0131) that the bindu sits over. */
@@ -517,16 +516,17 @@ html:not([data-script="latin"]) .label {
   display: inline-block;
 }
 
-/* The bindu, measured into Eczar's own tittle box at weight 400:
-   0.152em across, foot 0.587em above the baseline, centred at 46.1% of the
-   glyph's advance. An SVG circle rather than a rounded span, because the base
-   layer sets border-radius: 0 !important and would print a square. */
+/* The bindu, measured into Eczar 800's own tittle box: 0.237em across, foot
+   0.543em above the baseline, centred 0.1795em into the glyph, which is 53.6%
+   of the dotless i's box (its 0.35em advance less the -0.015em tracking).
+   An SVG circle rather than a rounded span, because the base layer sets
+   border-radius: 0 !important and would print a square. */
 @utility wordmark-bindu {
   position: absolute;
-  left: 46.1%;
-  bottom: 0.826em;
-  width: 0.152em;
-  height: 0.152em;
+  left: 53.6%;
+  bottom: 0.789em;
+  width: 0.237em;
+  height: 0.237em;
   transform: translateX(-50%);
 }
 
