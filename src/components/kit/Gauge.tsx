@@ -47,8 +47,10 @@ export function Gauge({
       ) : null}
       <div
         className={heading && today ? "relative mt-5" : "relative mt-2.5"}
-        role="img"
-        aria-label={today ? t.state[today] : t.word.usual}
+        /* A quiet feed claims nothing about today: the strip is then decoration. */
+        role={today ? "img" : undefined}
+        aria-label={today ? t.state[today] : undefined}
+        aria-hidden={today ? undefined : true}
       >
         <div className="flex h-[14px]" style={{ border: "2px solid var(--ink)" }}>
           {model.segments.map((s, i) => (

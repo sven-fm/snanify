@@ -42,17 +42,18 @@ export function Section({
    box and sinks flush under the thumb, which is the only feedback a phone
    gives. One block per screen; a secondary action is a plain underlined
    link, never a second block. */
+const quiet =
+  "inline-flex min-h-[44px] items-center gap-2 font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor disabled:opacity-60";
+
 const buttonVariants = {
   /* Sindoor face, white type, an arrow at the right. */
   solid: "press",
   /* Marigold face, ink type: "Send it to the family", and nothing else. */
   share: "press press-share",
   /* A plain ink-underlined link. */
-  quiet:
-    "inline-flex min-h-[44px] items-center gap-2 font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor disabled:opacity-60",
+  quiet,
   /** @deprecated The ruled ghost box is retired in v3: it reads as the quiet link until its surface task removes the call (Task 20 deletes this key). */
-  ghost:
-    "inline-flex min-h-[44px] items-center gap-2 font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor disabled:opacity-60",
+  ghost: quiet,
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;

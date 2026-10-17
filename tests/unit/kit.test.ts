@@ -16,6 +16,11 @@ describe("the kit", () => {
     expect(css).toMatch(/\.press:active\s*\{[^}]*translate\(6px,\s*6px\)/);
   });
 
+  it("the primary press is a 56px thumb target, a choice 44px", () => {
+    expect(css).toMatch(/\.press\s*\{[^}]*min-height:\s*56px/);
+    expect(css).toMatch(/\.press-choice\s*\{[^}]*min-height:\s*44px/);
+  });
+
   it("the share press is marigold, the quiet one is a link", () => {
     expect(buttonClass("share")).toContain("press-share");
     expect(buttonClass("quiet")).not.toMatch(/\bpress\b/);
@@ -38,6 +43,13 @@ describe("the kit", () => {
 
   it("the gauge draws no dot when the feed is quiet", () => {
     expect(html(Gauge({ percentile: null, band: null, lang: "en" }))).not.toContain("data-today");
+  });
+
+  it("the gauge claims nothing about today when the feed is quiet", () => {
+    const out = html(Gauge({ percentile: null, band: null, lang: "en" }));
+    expect(out).not.toContain("aria-label");
+    expect(out).not.toContain('role="img"');
+    expect(out).not.toContain("Running as usual");
   });
 
   it("the gauge puts today at its percentile, over five fills", () => {
