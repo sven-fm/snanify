@@ -5,6 +5,8 @@ import { typeset, wrap } from "@/lib/typeset";
 import { withSamvat } from "@/lib/occasions";
 import { content } from "@/lib/content";
 import type { Lang } from "@/lib/locales";
+import { getGhat } from "@/content/rivers";
+import { waterName } from "@/content/names";
 
 /* ---------------------------------------------------------------------------
    The card a chat app unfurls when somebody pastes the site's link.
@@ -89,10 +91,13 @@ export async function siteCardSvg(lang: Lang): Promise<string> {
   parts.push((await typeset("ify", { size: 44, x: x + root.width, y: 110, fill: BLACK })).svg);
   parts.push((await typeset(withSamvat(t.edition, lang), { size: 22, x: right, y: 108, fill: RED, anchor: "end" })).svg);
 
-  /* The headline in its own two halves, one to a line, so it breaks at the
-     comma in both editions rather than wherever the measure runs out. */
+  /* The headline in its own two sentences, one to a line, so it breaks at the
+     full stop in both editions rather than wherever the measure runs out. The
+     river is the landing's hero water, the Ganga at Haridwar. */
+  const ganga = getGhat("ganga-haridwar");
+  const headline = t.hero.title.replace("{river}", ganga ? waterName(ganga, "river", lang) : "Ganga");
   let y = 210;
-  for (const half of [t.hero.titleA, t.hero.titleB]) {
+  for (const half of headline.split(/(?<=[.।])\s+/)) {
     for (const line of await wrap(half, { size: 56, weight: 600, maxWidth: measureWidth })) {
       parts.push((await typeset(line, { size: 56, x, y, weight: 600, fill: BLACK })).svg);
       y += lang === "hi" ? 74 : 64;

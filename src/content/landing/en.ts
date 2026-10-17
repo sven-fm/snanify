@@ -6,17 +6,13 @@
    The copy rules are in CLAUDE.md: plain sentences, a noun and a verb, one
    idea each, and never a negative construction.
 
-   FIGURES. `hero.record` carries the three figures the owner asked to keep on
-   the page, written as a sentence a reader could check: six waters in
-   rivers.ts, forty-eight refreshes a day (the page revalidates every thirty
-   minutes), and a record that runs back to 1997, which is where the flood
-   model's reanalysis starts. The river line and the card are built in
-   src/app/[lang]/page.tsx from the same snapshot /live uses; only templates
-   live here, and a figure never goes in this file.
+   FIGURES. The reading is built in src/app/[lang]/page.tsx from the same
+   snapshot /live uses; only templates live here, and a figure never goes in
+   this file.
 
    PRICES ARE NOT IN THIS FILE. One price, in the reader's own currency, out of
    src/content/prices.ts; see src/lib/currency.ts for how that currency is
-   chosen. `{price}` in hero.offer is filled at render.
+   chosen. The price seal and the packs render it through <Price>.
    --------------------------------------------------------------------------- */
 
 export const en = {
@@ -47,28 +43,20 @@ export const en = {
   },
   edition: "Samvat {samvat}",
   hero: {
-    /* The headline says what this is, for a reader who arrived from an ad and
-       has never heard the name. The lede says what happens, in four short
-       sentences, and all of it sits above the fold at 390 x 700 (a phone
-       inside the Instagram browser), with the button. */
-    titleA: "A daily snan,",
-    titleB: "wherever you live.",
-    lede: "Three minutes with the Ganga, the Yamuna or another sacred river, as it runs this morning. Breathe with it. Make your sankalp. Then send the family a sheet with their names on it.",
+    /* The owner's words (spec 6.1), all of it above the fold at 390 x 660 (a
+       phone inside the Instagram browser), the press included. {river} is the
+       landing's hero water, set in sindoor at render. */
+    title: "Your {river} snan. From home.",
+    band: "Takes just 3 minutes. Then share it with your family.",
+    pitch: "Breathe with the river as it runs this morning. Make your sankalp.",
+    push: "Do your first snan today!",
     ctaPrimary: "Start your snan now",
-    offer: "Eleven mornings for {price}. Your first one today.",
     card: {
-      /* The live line above the headline and the card's first row take their
-         words from src/content/flow.ts: the river's state leads, the figure
-         proves it. */
-      today: "Today",
-      flow: "Flow",
-      ranked: "Ranked",
+      /* The reading under the river: the state and the gauge lead, the
+         figure proves it (src/content/flow.ts). */
       muhurat: "Next muhurat",
-      percentile: "{n} percentile since 1997",
-      median: "Seasonal median, 1997 to 2025",
       link: "See all six waters",
     },
-    record: "Six waters, one figure a day, each ranked against every day since 1997.",
   },
   rivers: {
     title: "Pick your river",
@@ -125,15 +113,6 @@ export const en = {
     title: "This ghat has moved.",
     lede: "The river moved, or the link did. The six waters are where they always were.",
     cta: "Back to the river",
-  },
-  closing: {
-    title: "Sit with your river today.",
-    lede: "Set it up in two minutes and sit for three. The sheet is ready to send the moment you finish.",
-    cta: "Start your snan now",
-  },
-  bar: {
-    label: "Eleven mornings",
-    cta: "Start now",
   },
   footer: {
     tagline: "A digital snan for Indians everywhere.",

@@ -48,7 +48,6 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
   const t = content[lang].hero.card;
   const ghat = getGhat(water.slug);
   const river = ghat ? waterName(ghat, "river", lang) : water.slug;
-  const city = ghat ? waterName(ghat, "city", lang) : "";
   const place = ghat ? waterName(ghat, "ghat", lang) : "";
 
   const d = water.discharge;
@@ -57,42 +56,27 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
      model's own published value, so its digits are Latin in both editions. */
   const flow = `${NUMBER.format(d.cumecs)} ${liveContent[lang].flow.unit}`;
 
-  /* The state leads and the figures prove it (src/content/flow.ts): a reader
-     takes in "Running full" at a glance, and the flow and its rank sit under
-     it for anyone who wants to check. */
+  /* The gauge leads and the figure proves it (src/content/flow.ts): a reader
+     takes in "Running full" at a glance, and the flow and its rank sit in one
+     small row under the strip for anyone who wants to check. A quiet feed
+     draws no dot and says it stands on the season's usual level. */
   const words = flowContent[lang];
-  const rows: { k: string; v: string }[] = [
-    {
-      k: t.today,
-      v: d.kind === "modelled" ? words.state[d.percentile.band] : words.stateMedian,
-    },
-    { k: t.flow, v: flow },
-  ];
-
-  if (d.kind === "modelled") {
-    rows.push({
-      k: t.ranked,
-      v: t.percentile.replace("{n}", ordinal(Math.round(d.percentile.value), lang)),
-    });
-  } else {
-    /* The feed was quiet, so the card stands on the seasonal median and says
-       so rather than implying a reading nobody published. */
-    rows.push({ k: t.ranked, v: t.median });
-  }
+  const modelled = d.kind === "modelled";
+  const figure = modelled
+    ? words.proof
+        .replace("{flow}", flow)
+        .replace("{n}", ordinal(Math.round(d.percentile.value), lang))
+    : `${flow}, ${words.stateMedian}`;
 
   const next = water.next ?? water.current;
-  if (next) rows.push({ k: t.muhurat, v: `${windowOpens(next.startsAt)} IST` });
-
-  /* One plain sentence above the headline, in words: how the river is
-     running, never the raw figure, which waits in the card below. */
-  const line = (d.kind === "modelled" ? words.line[d.percentile.band] : words.lineMedian)
-    .replace("{river}", river)
-    .replace("{city}", city);
 
   return {
-    line,
+    river,
     title: place ? `${river}, ${place}` : river,
-    rows,
+    percentile: modelled ? d.percentile.value : null,
+    band: modelled ? d.percentile.band : null,
+    figure,
+    muhurat: next ? `${t.muhurat} ${windowOpens(next.startsAt)} IST` : null,
   };
 }
 
