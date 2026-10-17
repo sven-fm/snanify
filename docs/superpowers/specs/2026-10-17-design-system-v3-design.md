@@ -355,12 +355,49 @@ the marigold press to send today's sheet if one exists. **[my call]**
   site) above the footer, replacing the mauli border. **[my call]**
 - It still never mentions a streak, a count or a day missed.
 
-### 6.9 The link card, the logo, the favicon
+### 6.9 The logo, the wordmark, and everywhere they go
 
-- `site-card.ts` (what chat apps show for snanify.com) leaves the matchbox: paper, the
-  capitals headline, the full river with the sun. Bump `SITE_CARD_VERSION`. **[my call]**
-- The logo and favicon keep their drawing; their red becomes `#c8251d`. Regenerate the three
-  favicon files.
+The owner chose these on 17 October (`docs/design/v3-mockups/logo-final.html`).
+
+**The mark: the horizon sun.** The idea stays (the sun over the water, the bindu over the
+river); the drawing becomes the v3 river. A single ink ring (2.4 units on a 48 grid) on
+paper; inside it, a sindoor sun whose lower part is cut off by an ink horizon line through
+the circle's middle; below it, three teal water bands widening toward the viewer. **No
+marigold path in the mark** (the owner: "distracting"). The double ring and the flat ink
+rules of the old seal go.
+
+- **Small cut** (16 and 32px, the tab): a thicker ring (3.6 units), a larger sun, two thick
+  water bands instead of three.
+- **Night:** ring and horizon in `--ink` night `#ece3cf`, paper `#12110e`, water `#5c9aa5`,
+  sun `#e04a40`.
+
+**The wordmark: one heavy weight, the bindu kept.** "Snanify" all in Eczar 800 at
+`-0.015em`, matching the display capitals' weight but in mixed case so it stays a name. The
+dot of the dotless `ı` (U+0131) is the sindoor bindu, an SVG circle, as today; the
+load-bearing rules for its placement (`line-height: 1` on `.wordmark`, the 0.826em rise,
+`aria-hidden` lettering with an `sr-only` name) carry over, re-measured for weight 800. The
+two-weight "Snan" / "ify" split goes.
+
+**The rollout** (every place the logo or its red appears, in the cutover release):
+
+- `src/components/Logo.tsx`: `<Mark />`, `<Wordmark />`, `<Logo />`, `<Colophon />` redrawn.
+  The `Colophon`'s 30-tick dial goes; it becomes the large mark with the wordmark under it.
+- The header (on the strip, 5.6) and the footer.
+- `public/icon.svg` (small cut), `public/favicon.ico` (16, 32, 48 from the small cut),
+  `public/apple-touch-icon.png` (180px, full mark on an opaque paper square, because iOS
+  composites transparency to black). Regenerate from `Logo.tsx` with `sharp` and PIL;
+  `src/lib/seo.ts` keeps declaring all three. Add a 512px PNG and a web manifest entry for
+  Android's home screen. **[my call]**
+- The Patra (image and HTML), the specimen, `/p/[id]`.
+- The link cards: `site-card.ts` leaves the matchbox for paper, the capitals headline and the
+  full river with the sun; bump `SITE_CARD_VERSION` and `ROUTE_SHA256` as the og test
+  requires. `patraCardSvg` takes the new mark.
+- `opengraph-image` routes for every page.
+- `email.ts`: the mark and wordmark as a hosted PNG in the header (mail clients will not
+  load Eczar). **[my call]**
+- Every template in `ads/src/` that draws the logo or the wordmark.
+- The Facebook Page avatar and the Meta ad account's profile image are the owner's to swap,
+  from a 1024px PNG the build exports. **[my call]**
 
 ### 6.10 The ads
 
@@ -373,13 +410,22 @@ Swapping the creatives running in Meta is a separate step the owner approves on 
 ### 6.11 Mobile first
 
 The owner, again: "very important: mobile-first". Over 90% of readers are on a phone, at 6
-a.m., in bed. Every surface in this document is designed at **390 × 844 first** and every
-mockup is drawn at that size; desktop is the adaptation.
+a.m., in bed. Every surface in this document is designed at **390 wide first**, and every mockup is
+drawn at that size; desktop is the adaptation.
 
-- **The fold is a contract.** On the landing, everything in 6.1 items 1 to 5 sits above 844
-  at 390 wide, in both locales (Hindi runs taller: check it). Test in the Instagram and
-  Facebook in-app browsers too, whose chrome leaves about 390 × 700; there the press may
-  fall just below, and the band is what gives way first.
+Why 390, by the numbers: what matters is the CSS viewport, not the screen's pixels (a
+1170-pixel iPhone lays out at 390). In the US, StatCounter's August 2026 mobile and tablet
+data puts 414 × 896 first (about 20%), 390 × 844 second (about 11%) and 393 × 852 next
+(about 5%); testing guides put nearly all US phone traffic between 360 and 430 wide. The
+UK, Canada and Australia lean further toward iPhone. So: **design at 390, nothing breaks
+at 360, and it still looks right at 430.** Once v3 is live, the site's own analytics
+replace these tables.
+
+- **The fold is a contract, measured where the ads land.** Readers arrive from Meta ads
+  inside the Instagram and Facebook in-app browsers, whose bars leave about 390 × 660 to
+  700 of visible page. On the landing, everything in 6.1 items 1 to 5, the press included,
+  sits above **660 at 390 wide**, in both locales (Hindi runs taller: check it), and above
+  **640 at 360 wide**. If something must give, the band shortens first.
 - **The press is thumb-sized**: at least 56px tall for the primary press, 44px for any other
   tap target, full column width on a phone.
 - **The kit scales in `em`/`rem`** from the 390 layout; the seal, the band and the label
