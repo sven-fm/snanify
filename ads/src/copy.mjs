@@ -42,25 +42,84 @@ export const STATICS = {
 /* The video: five captions over the sitting, then the end card. Each caption
    names what is on screen at that moment. */
 export const VIDEO = {
+  /* PLAIN (17 October 2026): one literal line per segment, so a thumb gets it
+     in the first second. The segments are the start screen, the reading, the
+     breath, the sankalp hold, and the Patra. */
   en: {
     captions: [
-      "Far from the Ganga this Kartik?",
-      "Today's flow at Har Ki Pauri.",
-      "Breathe with the river.",
-      "Hold your sankalp.",
-      "Then send it home.",
+      "Digital Ganga snan.",
+      "From home.",
+      "3 minutes.",
+      "Make your sankalp.",
+      "Send it to the family.",
     ],
-    end: { k: "Kartik snan, 27 Oct to 24 Nov", h: "Three minutes with the Ganga, every morning." },
+    end: {
+      k: "Kartik snan, 27 Oct to 24 Nov",
+      a: "Digital Ganga snan.",
+      b: "From home.",
+      sub: "3 minutes. Then send it to the family.",
+      cta: "Start now",
+    },
   },
   hi: {
     captions: [
-      "इस कार्तिक गंगा से दूर हैं?",
-      "हर की पौड़ी पर आज का प्रवाह।",
-      "नदी के साथ साँस लीजिए।",
-      "अपना संकल्प थामिए।",
-      "फिर घर भेजिए।",
+      "डिजिटल गंगा स्नान।",
+      "घर से।",
+      "3 मिनट।",
+      "अपना संकल्प कीजिए।",
+      "परिवार को भेजिए।",
     ],
-    end: { k: "कार्तिक स्नान, 27 अक्टूबर से 24 नवंबर", h: "हर सुबह, तीन मिनट गंगा के साथ।" },
+    end: {
+      k: "कार्तिक स्नान, 27 अक्टूबर से 24 नवंबर",
+      a: "डिजिटल गंगा स्नान।",
+      b: "घर से।",
+      sub: "3 मिनट। फिर परिवार को भेजिए।",
+      cta: "अभी शुरू कीजिए",
+    },
+  },
+};
+
+/* PLAIN, the third Kartik set (17 October 2026). "Dumb is trump": the ad says
+   the thing literally in three seconds. Do a digital Ganga snan from home,
+   then send it to the family. One idea per ad, huge type, a real screen.
+   What goes to the family is the Sankalp Patra (names, river, date); the
+   sankalp text itself stays private, so no line promises to share it. */
+export const PLAIN = {
+  home: {
+    en: { a: "Digital Ganga snan.", b: "From home.", sub: "3 minutes on your phone." },
+    hi: { a: "डिजिटल गंगा स्नान।", b: "घर से।", sub: "फ़ोन पर 3 मिनट।" },
+  },
+  send: {
+    en: { a: "Do your snan.", b: "Send it to the family.", chat: "Family", caption: "Ganga snan this morning" },
+    hi: { a: "स्नान कीजिए।", b: "परिवार को भेजिए।", chat: "परिवार", caption: "आज सुबह गंगा स्नान" },
+  },
+  steps: {
+    en: { title: "Ganga snan from home", steps: ["Pick your river", "Sit 3 minutes", "Send to family"] },
+    hi: { title: "घर से गंगा स्नान", steps: ["नदी चुनिए", "तीन मिनट बैठिए", "परिवार को भेजिए"] },
+  },
+  cta: { en: "Start now", hi: "अभी शुरू कीजिए" },
+};
+
+/* The words in Ads Manager for the plain set. {offer} takes the market's
+   line from OFFER. */
+export const PLAIN_TEXT = {
+  en: {
+    primary: [
+      "Do a digital Ganga snan from home. 3 minutes on your phone. Then send it to the family. Start now.",
+      "Kartik snan from home. 3 minutes with the Ganga, then send it to the family group. {offer}",
+      "Ganga snan from home: pick your river, sit 3 minutes, send it to the family. Start now.",
+    ],
+    headlines: ["Digital Ganga snan, from home", "3 minutes. Then send it home.", "Start your snan now"],
+    description: "Kartik snan, 27 Oct to 24 Nov",
+  },
+  hi: {
+    primary: [
+      "घर से डिजिटल गंगा स्नान कीजिए। फ़ोन पर 3 मिनट। फिर परिवार को भेजिए। अभी शुरू कीजिए।",
+      "घर से कार्तिक स्नान। गंगा के साथ 3 मिनट, फिर परिवार के समूह में भेजिए। {offer}",
+      "घर से गंगा स्नान: नदी चुनिए, 3 मिनट बैठिए, परिवार को भेजिए। अभी शुरू कीजिए।",
+    ],
+    headlines: ["घर से डिजिटल गंगा स्नान", "3 मिनट। फिर घर भेजिए।", "अभी स्नान शुरू कीजिए"],
+    description: "कार्तिक स्नान, 27 अक्टूबर से 24 नवंबर",
   },
 };
 

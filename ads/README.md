@@ -146,3 +146,44 @@ matchbox, B4 signboard), half of them moving. `calendar.mjs` holds every word an
 into `posts/<date>/video.mp4` (30 fps, 4:5, with `poster.png`) or `card.png`, beside
 `post.txt`, the post as it goes up. `check.mjs` holds the words to the copy rules;
 `make-doc.mjs` writes `docs/meta/facebook-calendar.md`, which the daily task publishes from.
+
+## PLAIN, the third Kartik set (17 October 2026)
+
+"Dumb is trump": a thumb that is not stopping to think gets the whole idea in three seconds. Do
+a digital Ganga snan from home, then send it to the family. One idea per ad, solid yellow, black
+type with the key words in red, one red Start now. No jokes to decode. What goes to the family is
+the Sankalp Patra (names, river, date); the sankalp text stays private, so no line promises to
+share it. The copy avoids the word WhatsApp, which may be what set off Meta's "WhatsApp number
+required" error on 16 October.
+
+| File | What |
+| --- | --- |
+| `out/plain-home-{en,hi}-{diaspora,india}-{45,916}.png` | DIGITAL GANGA SNAN. FROM HOME. 3 minutes on your phone. The real start screen in a phone |
+| `out/plain-send-…` | DO YOUR SNAN. SEND IT TO THE FAMILY. The Patra arriving in a chat called Family (no app logo, no invented replies) |
+| `out/plain-steps-…` | GANGA SNAN FROM HOME, then 1 Pick your river, 2 Sit 3 minutes, 3 Send to family |
+| `out/video-kartik-…`, `upload/kartik-*` | The video recut with one literal caption per segment (Digital Ganga snan. / From home. / 3 minutes. / Make your sankalp. / Send it to the family.) and a plain end card |
+
+Re-render: `node ads/src/render-plain.mjs` (images), `node ads/src/render-cards.mjs` (video
+captions and end cards, through `plain.html`), then cut the videos as above. Words: `PLAIN`,
+`PLAIN_TEXT` and `VIDEO` in `src/copy.mjs`.
+
+### Ads Manager copy, English
+
+1. Do a digital Ganga snan from home. 3 minutes on your phone. Then send it to the family. Start now.
+2. Kartik snan from home. 3 minutes with the Ganga, then send it to the family group. Eleven mornings for eleven.
+3. Ganga snan from home: pick your river, sit 3 minutes, send it to the family. Start now.
+
+Headlines: Digital Ganga snan, from home; 3 minutes. Then send it home.; Start your snan now
+
+Description: Kartik snan, 27 Oct to 24 Nov. India: "Eleven mornings for ₹501." in 2.
+
+### Ads Manager copy, Hindi
+
+1. घर से डिजिटल गंगा स्नान कीजिए। फ़ोन पर 3 मिनट। फिर परिवार को भेजिए। अभी शुरू कीजिए।
+2. घर से कार्तिक स्नान। गंगा के साथ 3 मिनट, फिर परिवार के समूह में भेजिए। ग्यारह सुबहें, ग्यारह में।
+3. घर से गंगा स्नान: नदी चुनिए, 3 मिनट बैठिए, परिवार को भेजिए। अभी शुरू कीजिए।
+
+Headlines: घर से डिजिटल गंगा स्नान; 3 मिनट। फिर घर भेजिए।; अभी स्नान शुरू कीजिए
+
+Description: कार्तिक स्नान, 27 अक्टूबर से 24 नवंबर. India: "ग्यारह सुबहें ₹501 में।" in 2. A native reader checks the Hindi.
+
