@@ -500,7 +500,22 @@ These lines in `CLAUDE.md` and `DESIGNSYSTEM.md` change with this work:
   family at two volumes.
 - `plan.md` gets the build as its next item.
 
-## 9. What is left to the builder
+## 9. How it ships
+
+The owner's decision: **one branch, a Vercel preview, his review, then one cutover.**
+
+- All v3 work lands on a branch (`design-v3`), never on `main` until the cutover. Production
+  stays on today's design throughout, with the Meta ads pointing at it.
+- Every push builds a Vercel preview. The owner reviews there, on his phone, surface by
+  surface; the draft Hindi is reviewed in the same pass.
+- If the Preview environment's variables point at the production database (as
+  `.env.local` does), a sitting on the preview writes real rows and mints a real v3 Patra.
+  Before the review, the preview gets its own database branch (Neon) or the owner sits
+  only with a test account. **[my call: the builder raises this before the first preview sitting]**
+- The cutover is one merge to `main` once the owner says go, followed by the ad re-renders
+  (6.10, files only) and the `DESIGNSYSTEM.md` / `CLAUDE.md` rewrite in the same release.
+
+## 10. What is left to the builder
 
 - Exact pixel values beyond those given; the wave geometry's constants within the rules in
   5.6; how `RiverFlow` is refactored to place the sun on the horizon.
