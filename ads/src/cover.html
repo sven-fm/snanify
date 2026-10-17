@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;600;700;800&family=Martel+Sans:wght@400;700;800&display=block" rel="stylesheet">
+<style>
+  /* The Facebook Page cover, 1640 x 624, in the campaign signboard
+     (DESIGNSYSTEM.md, Campaigns): chrome yellow, red and black lettering,
+     hazard stripes, a round red price seal. Rendered by render-cover.mjs.
+
+     Where things sit is decided by Facebook, not by taste:
+     - phones crop the sides to the middle 1110px (x 265 to 1375);
+     - the desktop Page sets the profile picture over the bottom centre;
+     - the phone app sets it over the bottom left.
+     So everything that must be read sits in the top two thirds of the middle,
+     and the bottom 170px carries only the stripes. */
+  * { margin: 0; box-sizing: border-box; }
+  body { width: 1640px; height: 624px; overflow: hidden; background: #f6c518; color: #141210; font-family: "Martel Sans", sans-serif; position: relative; }
+  .d { font-family: "Eczar", serif; font-synthesis: none; }
+  .stripes { position: absolute; left: 0; width: 1640px; height: 44px; }
+  .stripes.top { top: 0; }
+  .stripes.bottom { bottom: 0; }
+  .head { position: absolute; left: 0; right: 0; top: 66px; text-align: center; }
+  .kick { font-weight: 800; font-size: 44px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .kick .sun { display: inline-block; width: 64px; height: 40px; vertical-align: -4px; margin: 0 18px; }
+  .big { font-weight: 800; font-size: 138px; line-height: 0.9; text-transform: uppercase; letter-spacing: -0.01em; margin-top: 6px; }
+  .big .r { color: #d1261c; }
+  .line { font-weight: 700; font-size: 32px; margin-top: 16px; }
+  .act { position: absolute; left: 0; right: 0; top: 352px; display: flex; justify-content: center; }
+  .go { background: #141210; color: #f6c518; font-weight: 800; font-size: 40px; padding: 16px 28px; white-space: nowrap; }
+  .go small { font-weight: 700; font-size: 30px; margin-left: 12px; }
+  .seal { position: absolute; left: 1128px; top: 362px; transform: rotate(-10deg); width: 160px; height: 160px; border: 5px solid #141210; border-radius: 50%; background: #d1261c; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex: none; }
+  .seal .n { font-weight: 800; font-size: 76px; line-height: 0.9; }
+  .seal .s { font-weight: 700; font-size: 19px; line-height: 1.2; max-width: 130px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  const p = JSON.parse(decodeURIComponent(location.hash.slice(1) || "{}"));
+  const t = Object.assign({
+    kick: "The home of the",
+    top: "Digital", bottom: "Snan",
+    line: "Three minutes with the Ganga every morning, wherever you live.",
+    go: "START NOW", site: "snanify.com",
+    sealN: "11", sealS: "mornings for eleven",
+  }, p);
+  const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+  /* Hazard stripes as polygons, as on the signboard ads. */
+  function stripes(cls) {
+    const polys = [];
+    for (let x = -60; x < 1700; x += 72) polys.push(`<polygon points="${x},0 ${x + 36},0 ${x + 80},44 ${x + 44},44" fill="#d1261c"/>`);
+    return `<svg class="stripes ${cls}" viewBox="0 0 1640 44" width="1640" height="44">${polys.join("")}</svg>`;
+  }
+  /* A small rayed sun over the water, the matchbox emblem cut down to a mark. */
+  function sun() {
+    const rays = [];
+    for (let i = 0; i < 9; i++) {
+      const a = Math.PI + (i / 8) * Math.PI;
+      const pt = (r, d) => `${(32 + r * Math.cos(a + d)).toFixed(2)},${(26 + r * Math.sin(a + d)).toFixed(2)}`;
+      rays.push(`<polygon points="${pt(15, -0.12)} ${pt(24, 0)} ${pt(15, 0.12)}" fill="#141210"/>`);
+    }
+    return `<svg class="sun" viewBox="0 0 64 40">${rays.join("")}<clipPath id="c"><rect width="64" height="27"/></clipPath><circle cx="32" cy="26" r="12" fill="#d1261c" clip-path="url(#c)"/><rect x="18" y="30" width="28" height="3.5" fill="#141210"/><rect x="10" y="36" width="44" height="3.5" fill="#141210"/></svg>`;
+  }
+
+  document.getElementById("root").innerHTML = `${stripes("top")}
+    <div class="head">
+      <div class="kick d">${sun()}${esc(t.kick)}${sun()}</div>
+      <div class="big d"><span class="r">${esc(t.top)}</span> ${esc(t.bottom)}</div>
+      <div class="line d">${esc(t.line)}</div>
+    </div>
+    <div class="act"><div class="go d">${esc(t.go)} →<small>${esc(t.site)}</small></div></div>
+    <div class="seal d"><div class="n">${esc(t.sealN)}</div><div class="s">${esc(t.sealS)}</div></div>
+    ${stripes("bottom")}`;
+  document.fonts.ready.then(() => { document.body.dataset.ready = "1"; });
+</script>
+</body>
+</html>
