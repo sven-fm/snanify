@@ -1,0 +1,86 @@
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@600;700;800&family=Martel+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  .s { --paper:#f2ead9; --ink:#141210; --red:#c8251d; --mari:#f2c230; --haldi:#e3962b; --maroon:#7a1a14; --teal:#1d5a6a; }
+  .tile { background:var(--paper); color:var(--ink); padding:18px; min-height:190px; display:flex; flex-direction:column; justify-content:center; gap:12px; font-family:"Martel Sans",sans-serif; }
+  .d { font-family:Eczar,serif; font-synthesis:none; }
+  .cta { background:var(--red); color:#fff; font:700 15px "Martel Sans",sans-serif; padding:13px 14px; display:flex; justify-content:space-between; }
+  .shadow { box-shadow:5px 5px 0 var(--ink); }
+  .pressed { box-shadow:none; transform:translate(5px,5px); }
+  .pack { border:3px solid var(--ink); background:var(--mari); padding:10px 12px; display:flex; justify-content:space-between; align-items:center; }
+  .pack .n { font:800 19px/1 Eczar,serif; } .pack .p { font:800 22px Eczar,serif; color:var(--red); }
+  .seal { width:84px; height:84px; border-radius:50%; background:var(--red); color:var(--mari); display:flex; align-items:center; justify-content:center; text-align:center; font:800 14px/1.05 Eczar,serif; transform:rotate(-8deg); flex:none; outline:3px dashed var(--mari); outline-offset:-8px; }
+  .stripe { height:12px; background:repeating-linear-gradient(-45deg, var(--red) 0 8px, var(--mari) 8px 16px); }
+  .caps { text-transform:uppercase; }
+  .band { background:var(--ink); color:var(--mari); font:800 14px "Martel Sans",sans-serif; padding:8px 14px; transform:rotate(-2deg); margin:0 -18px; }
+  .dbl { border:6px double var(--haldi); padding:10px; background:var(--maroon); }
+  .label { background:var(--mari); border:5px solid var(--ink); padding:6px; }
+  .label .in { border:2px solid var(--red); padding:10px; text-align:center; }
+  .small { font-size:12px; opacity:.7; }
+</style>
+<div class="s">
+<h2>Beyond colour: which ad pieces belong on the site?</h2>
+<p class="subtitle">All shown on the calm paper of option A. Pick any that feel right (multi-select). Each one comes straight from B1, B2 or B4.</p>
+
+<div class="cards" data-multiselect>
+  <div class="card" data-choice="shadow" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile">
+      <div class="cta shadow"><span>Start your snan now</span><span>→</span></div>
+      <div class="cta pressed" style="opacity:.9"><span>…and pressed</span><span>→</span></div>
+    </div></div>
+    <div class="card-body"><h3>1. Hard ink shadow</h3><p>From the signboard. Buttons and packs sit on a solid 5px ink shadow and sink into it when tapped. Gives every action a physical press on a phone.</p></div>
+  </div>
+
+  <div class="card" data-choice="seal" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile" style="flex-direction:row;align-items:center">
+      <div class="seal">11<br>for<br>€11</div>
+      <div class="d" style="font-weight:800;font-size:22px;line-height:1.05">Eleven mornings.<br><span class="small" style="font-family:'Martel Sans';font-weight:400">Your first one today.</span></div>
+    </div></div>
+    <div class="card-body"><h3>2. The price seal</h3><p>From the signboard and matchbox. A tilted sindoor stamp carries the eleven-for-eleven hook on the landing, /begin and the email.</p></div>
+  </div>
+
+  <div class="card" data-choice="label" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile">
+      <div class="label shadow"><div class="in">
+        <div style="font:800 11px 'Martel Sans';letter-spacing:.18em;color:var(--red)">SNANIFY · KARTIK</div>
+        <div class="d" style="font-weight:800;font-size:26px;line-height:1">Eleven mornings</div>
+        <div class="d" style="font-weight:800;font-size:22px;color:var(--red)">€11</div>
+      </div></div>
+    </div></div>
+    <div class="card-body"><h3>3. Matchbox label packs</h3><p>From B2. Each pack on /begin becomes a little matchbox label: marigold, ink border, a sindoor rule inside. The packs become objects you pick up.</p></div>
+  </div>
+
+  <div class="card" data-choice="stripe" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile" style="padding:0;justify-content:space-between">
+      <div style="padding:18px 18px 0" class="d"><b style="font-size:20px">The six waters</b><div class="small" style="font-family:'Martel Sans'">Ganga · Yamuna · Narmada · Godavari · Kaveri · Saraswati</div></div>
+      <div class="stripe"></div>
+      <div style="padding:0 18px 18px" class="small">footer · snanify.com</div>
+    </div></div>
+    <div class="card-body"><h3>4. The truck stripe hem</h3><p>From the signboard border. A thin sindoor and marigold hem closes the page above the footer, and edges the Patra share block. Never more than one per screen.</p></div>
+  </div>
+
+  <div class="card" data-choice="caps" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile">
+      <div class="d caps" style="font-weight:800;font-size:34px;line-height:.95">Digital <span style="color:var(--red)">Ganga</span> snan.<br>From home.</div>
+    </div></div>
+    <div class="card-body"><h3>5. Signboard headline</h3><p>From the ads. Capitals, tight leading, the river's name in sindoor. The current site headline is sentence case and calmer.</p></div>
+  </div>
+
+  <div class="card" data-choice="band" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile" style="overflow:hidden">
+      <div class="d" style="font-weight:800;font-size:24px;line-height:1">A daily snan, wherever you live.</div>
+      <div class="band">3 minutes. Then send it to the family.</div>
+    </div></div>
+    <div class="card-body"><h3>6. The tilted ink band</h3><p>From the signboard. One rotated black strip with marigold words, under the hero or on the Patra page, saying the one thing to do.</p></div>
+  </div>
+
+  <div class="card" data-choice="calendar" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile">
+      <div class="dbl" style="color:#f6e3b4;text-align:center">
+        <div class="d" style="font-weight:800;font-size:22px">Kartik snan</div>
+        <div style="color:var(--haldi);font-size:13px">27 Oct to 24 Nov · Samvat 2083</div>
+      </div>
+    </div></div>
+    <div class="card-body"><h3>7. Calendar-art festival frame</h3><p>From B1. Only on festival days: a maroon panel with a double haldi border names the occasion on the landing, /muhurat and the Patra. Gone the rest of the year.</p></div>
+  </div>
+</div>
+</div>

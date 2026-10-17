@@ -62,3 +62,4 @@ _*.tmp.config.ts
 
 # ads: the raw phone recording the video ads are cut from (270 MB, over GitHub's limit)
 /ads/in/*.mp4
+.superpowers/

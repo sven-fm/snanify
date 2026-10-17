@@ -1,0 +1,92 @@
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@600;700;800&family=Martel+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+ .s { --paper:#f2ead9; --ink:#141210; --red:#c8251d; --mari:#f2c230; --haldi:#e3962b; --teal:#1d5a6a; --rule:#c3b697; }
+ .grid { display:flex; flex-wrap:wrap; gap:22px; justify-content:center; background:#e8e2d6; padding:22px 10px; }
+ .col { display:flex; flex-direction:column; gap:8px; width:260px; }
+ .col p { margin:0; font-size:12px; line-height:1.45; color:#2b2722; }
+ .ph { width:260px; height:563px; box-sizing:content-box; border:8px solid #141210; border-radius:28px; overflow:hidden; position:relative; background:var(--paper); color:var(--ink); font-family:"Martel Sans",sans-serif; display:flex; flex-direction:column; }
+ .d { font-family:Eczar,serif; font-synthesis:none; }
+ .top { padding:14px 16px 0; display:flex; gap:10px; align-items:flex-start; position:relative; z-index:3; }
+ .bar { flex:1; display:flex; gap:3px; padding-top:8px; } .bar i { flex:1; height:3px; background:#c3b69799; } .bar i.on { background:var(--ink); } .bar i.half { background:linear-gradient(90deg,var(--ink) 50%, #c3b69799 50%); }
+ .x { width:30px; height:30px; border:1.5px solid var(--ink); display:grid; place-items:center; font-size:13px; }
+ .part { font-size:11px; color:#57513f; padding:6px 16px 0; position:relative; z-index:3; }
+ .body { flex:1; padding:0 16px; display:flex; flex-direction:column; justify-content:center; position:relative; z-index:3; }
+ .caps { text-transform:uppercase; font-family:Eczar,serif; font-weight:800; line-height:.95; letter-spacing:-.01em; }
+ .riv { position:relative; flex:none; } .riv .sun { position:absolute; right:30px; top:-34px; width:40px; height:40px; border-radius:50%; }
+ .riv .hz { position:absolute; left:0; right:0; top:6px; border-top:1.5px solid; } .riv .w { position:absolute; left:0; right:0; top:8px; bottom:0; overflow:hidden; }
+ .row { display:flex; justify-content:space-between; font-size:12px; border-top:1px solid var(--rule); padding:6px 0; }
+ .seal { width:66px; height:66px; border-radius:50%; background:var(--red); color:var(--mari); display:flex; align-items:center; justify-content:center; text-align:center; font:800 11px/1.05 Eczar,serif; transform:rotate(-8deg); flex:none; outline:2px dashed var(--mari); outline-offset:-6px; }
+ .blk { border:2px solid var(--ink); box-shadow:1px 1px 0 var(--ink),2px 2px 0 var(--ink),3px 3px 0 var(--ink),4px 4px 0 var(--ink),5px 5px 0 var(--ink); cursor:pointer; user-select:none; transition:transform 70ms, box-shadow 70ms; }
+ .blk:active, .blk.down { transform:translate(5px,5px); box-shadow:none; }
+ .btn { display:flex; justify-content:space-between; font:700 14px "Martel Sans",sans-serif; padding:13px 14px; background:var(--red); color:#fff; }
+ .band { background:var(--ink); color:var(--mari); font:800 12px/1.3 "Martel Sans",sans-serif; padding:7px 16px; transform:rotate(-2deg); margin:0 -16px; }
+ /* breath: 4s up, 6s down */
+ .breathe .w svg { transform-origin:50% 0; animation:br 10s ease-in-out infinite; }
+ @keyframes br { 0% { transform:scaleY(.75); } 40% { transform:scaleY(1.25); } 100% { transform:scaleY(.75); } }
+ .inout { animation:io 10s infinite; } @keyframes io { 0%,39% { opacity:1; } 40%,100% { opacity:0; } }
+ .outin { animation:oi 10s infinite; } @keyframes oi { 0%,39% { opacity:0; } 40%,100% { opacity:1; } }
+ /* the vow: hold, the block sinks, sindoor ink fills over 11s */
+ .hold { position:relative; overflow:hidden; background:var(--paper); color:var(--ink); font:700 14px "Martel Sans",sans-serif; padding:14px; text-align:center; }
+ .hold .fill { position:absolute; inset:0; background:var(--red); transform-origin:0 50%; transform:scaleX(0); }
+ .hold:active .fill { animation:fill 11s linear forwards; } .hold:active span { color:#fff; }
+ @keyframes fill { to { transform:scaleX(1); } }
+ .hold span { position:relative; }
+ .dark { background:#0b0a08 !important; color:#8a836f; }
+ .dark .x { border-color:#3a3530; color:#6f685a; } .dark .bar i { background:#2a2620; } .dark .bar i.on { background:#6f685a; } .dark .bar i.half { background:linear-gradient(90deg,#6f685a 50%,#2a2620 50%); }
+ .label { background:var(--mari); border:3px solid var(--ink); padding:4px; } .label .in { border:1.5px solid var(--red); padding:8px; text-align:center; }
+ .write { height:2px; background:var(--ink); transform-origin:0 50%; animation:wr 3s ease-out infinite; } @keyframes wr { 0% { transform:scaleX(0); } 70%,100% { transform:scaleX(1); } }
+</style>
+<div class="s">
+<h2>The reading, for normal people</h2>
+<p class="subtitle">All three say only what the published figure supports. The rank is against the same week of every year since 1997, so the words say "for this time of year". 797 m³/s is 797,000 litres a second, about 8 lakh; the usual for this week is 474 m³/s, about 5 lakh. The exact figure stays on /live and in small print for anyone who checks.</p>
+<div class="cards">
+ <div class="card" data-choice="gauge" onclick="toggleSelect(this)"><div class="card-image" style="display:flex;justify-content:center;padding:14px 0;background:#e8e2d6"><div class="col"><div class="ph">
+  <div class="top"><div class="bar"><i class="half"></i><i></i><i></i><i></i><i></i></div><div class="x">✕</div></div>
+  <div class="part">The reading</div>
+  <div class="body">
+    <div class="caps" style="font-size:30px"><span style="color:var(--red)">Ganga</span></div>
+    <div style="font-size:12px;color:#57513f;margin-top:4px">Har Ki Pauri, Haridwar</div>
+    
+    <div class="d" style="font-weight:800;font-size:26px;line-height:1.05;margin-top:16px">Running full.</div>
+    <div style="font-size:13px;margin-top:6px">Fuller than usual for this time of year.</div>
+    <div style="margin-top:18px;position:relative">
+      <div style="display:flex;height:14px;border:2px solid var(--ink)">
+        <i style="flex:1;background:#f2ead9"></i><i style="flex:2;background:#e8dcc0"></i><i style="flex:4;background:#c9d7d2"></i><i style="flex:2;background:#7fa3a6"></i><i style="flex:1;background:#1d5a6a"></i>
+      </div>
+      <div style="position:absolute;left:50%;top:-6px;height:26px;border-left:2px dashed var(--ink)"></div>
+      <div style="position:absolute;left:84%;top:-10px;width:16px;height:16px;border-radius:50%;background:var(--red);border:2px solid var(--ink);transform:translateX(-50%)"></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:#57513f;margin-top:6px"><span>Thin</span><span>Usual</span><span>In spate</span></div>
+    </div>
+  </div>
+  <div class="riv" style="height:120px"><div class="sun" style="background:#c8251d"></div><div class="hz" style="border-color:#141210"></div></div>
+</div><p></p></div></div><div class="card-body"><h3>A. The gauge</h3><p>A strip from thin to in spate, the dashed line is usual, the sindoor dot is today. Read in one glance, no numbers.</p></div></div>
+ <div class="card" data-choice="litres" onclick="toggleSelect(this)"><div class="card-image" style="display:flex;justify-content:center;padding:14px 0;background:#e8e2d6"><div class="col"><div class="ph">
+  <div class="top"><div class="bar"><i class="half"></i><i></i><i></i><i></i><i></i></div><div class="x">✕</div></div>
+  <div class="part">The reading</div>
+  <div class="body">
+    <div class="caps" style="font-size:30px"><span style="color:var(--red)">Ganga</span></div>
+    <div style="font-size:12px;color:#57513f;margin-top:4px">Har Ki Pauri, Haridwar</div>
+    
+    <div class="d" style="font-weight:800;font-size:26px;line-height:1.05;margin-top:16px">Running full.</div>
+    <div style="margin-top:16px;display:flex;align-items:baseline;gap:8px"><span class="d" style="font-weight:800;font-size:40px;line-height:1;color:var(--teal)">8 lakh</span></div>
+    <div style="font-size:13px">litres of water flow down the Ganga every second.</div>
+    <div style="font-size:13px;margin-top:10px;color:#57513f">This time of year it is usually about 5 lakh.</div>
+  </div>
+  <div class="riv" style="height:120px"><div class="sun" style="background:#c8251d"></div><div class="hz" style="border-color:#141210"></div></div>
+</div><p></p></div></div><div class="card-body"><h3>B. Lakh litres</h3><p>The flow as something you can picture: litres flowing down the river each second, in lakh (millions for the English edition abroad is an option). Concrete and a little awe-inspiring.</p></div></div>
+ <div class="card" data-choice="times" onclick="toggleSelect(this)"><div class="card-image" style="display:flex;justify-content:center;padding:14px 0;background:#e8e2d6"><div class="col"><div class="ph">
+  <div class="top"><div class="bar"><i class="half"></i><i></i><i></i><i></i><i></i></div><div class="x">✕</div></div>
+  <div class="part">The reading</div>
+  <div class="body">
+    <div class="caps" style="font-size:30px"><span style="color:var(--red)">Ganga</span></div>
+    <div style="font-size:12px;color:#57513f;margin-top:4px">Har Ki Pauri, Haridwar</div>
+    
+    <div style="display:flex;gap:12px;align-items:center;margin-top:16px">
+      <div class="seal" style="font-size:13px">1.7×<br>usual</div>
+      <div><div class="d" style="font-weight:800;font-size:24px;line-height:1.05">Running full.</div>
+      <div style="font-size:12px;margin-top:4px">Almost twice as much water as usual for this time of year.</div></div>
+    </div>
+  </div>
+  <div class="riv" style="height:120px"><div class="sun" style="background:#c8251d"></div><div class="hz" style="border-color:#141210"></div></div>
+</div><p></p></div></div><div class="card-body"><h3>C. Times usual</h3><p>The seal carries one number everyone gets: how many times its usual water the river carries today.</p></div></div>
+</div></div>

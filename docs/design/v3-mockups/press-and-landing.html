@@ -1,0 +1,94 @@
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@600;700;800&family=Martel+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  .s { --paper:#f2ead9; --ink:#141210; --red:#c8251d; --mari:#f2c230; --haldi:#e3962b; --teal:#1d5a6a; }
+  .d { font-family:Eczar,serif; font-synthesis:none; }
+  .tile { background:var(--paper); color:var(--ink); padding:26px 22px 30px; display:flex; flex-direction:column; gap:22px; }
+  .lbl { font:400 12px "Martel Sans",sans-serif; color:#57513f; }
+  .btn { display:flex; justify-content:space-between; font:700 15px "Martel Sans",sans-serif; padding:13px 14px; cursor:pointer; user-select:none; transition:transform 70ms, box-shadow 70ms; }
+  /* V1: extruded block. Stacked 1px steps so the side walls connect at the corners: a solid box, not a floating shadow. */
+  .v1 { background:var(--red); color:#fff; border:2px solid var(--ink);
+        box-shadow:1px 1px 0 var(--ink),2px 2px 0 var(--ink),3px 3px 0 var(--ink),4px 4px 0 var(--ink),5px 5px 0 var(--ink),6px 6px 0 var(--ink); }
+  .v1:active { transform:translate(6px,6px); box-shadow:none; }
+  /* V2: a well. An ink frame is cut into the page; the button sits proud of it and drops flush. */
+  .well { background:var(--ink); padding:0; }
+  .v2 { background:var(--red); color:#fff; border:2px solid var(--ink); transform:translate(-6px,-6px); }
+  .v2:active { transform:translate(0,0); }
+  /* V3: block with a marigold side wall, as the ad's offset type does. */
+  .v3 { background:var(--red); color:#fff; border:2px solid var(--ink);
+        box-shadow:1px 1px 0 var(--ink),2px 2px 0 var(--mari),3px 3px 0 var(--mari),4px 4px 0 var(--mari),5px 5px 0 var(--mari),6px 6px 0 var(--ink),7px 7px 0 var(--ink); }
+  .v3:active { transform:translate(7px,7px); box-shadow:none; }
+
+  .phone { width:320px; height:900px; overflow:hidden; border:10px solid #141210; border-radius:34px; background:var(--paper); color:var(--ink); font-family:"Martel Sans",sans-serif; }
+  .in { padding:16px 20px; }
+  .hd { display:flex; justify-content:space-between; align-items:center; font:800 19px Eczar,serif; }
+  .hd .m { width:30px; height:30px; border:2px solid var(--ink); }
+  .live { font-size:12px; margin-top:16px; display:flex; gap:7px; align-items:baseline; color:#57513f; }
+  .live b { width:7px; height:7px; border-radius:50%; background:var(--red); flex:none; }
+  h1 { font-family:Eczar,serif; font-weight:800; text-transform:uppercase; font-size:38px; line-height:.95; margin:12px 0 0; letter-spacing:-.01em; }
+  .band { background:var(--ink); color:var(--mari); font:800 14px "Martel Sans",sans-serif; padding:8px 20px; transform:rotate(-2deg); margin:16px -20px 0; }
+  .copy { font-size:13px; line-height:1.55; margin-top:16px; }
+  .seal { width:78px; height:78px; border-radius:50%; background:var(--red); color:var(--mari); display:flex; align-items:center; justify-content:center; text-align:center; font:800 13px/1.05 Eczar,serif; transform:rotate(-8deg); flex:none; outline:2px dashed var(--mari); outline-offset:-7px; }
+  .river { height:130px; margin:20px -20px 0; background:repeating-linear-gradient(180deg, transparent 0 7px, #c3b69788 7px 8px); position:relative; }
+  .river .sun { position:absolute; right:44px; top:-26px; width:52px; height:52px; border-radius:50%; background:var(--red); }
+  .river .glint { position:absolute; left:42%; top:0; bottom:0; width:60px; background:repeating-linear-gradient(180deg, transparent 0 7px, var(--haldi) 7px 8px); }
+  .reading { display:flex; justify-content:space-between; font-size:12px; border-top:1px solid #c3b697; padding:8px 0; }
+  .label { background:var(--mari); border:3px solid var(--ink); padding:5px; box-shadow:1px 1px 0 var(--ink),2px 2px 0 var(--ink),3px 3px 0 var(--ink),4px 4px 0 var(--ink),5px 5px 0 var(--ink),6px 6px 0 var(--ink); }
+  .label .inn { border:2px solid var(--red); padding:9px; text-align:center; }
+  .pk { display:flex; justify-content:space-between; align-items:baseline; padding:10px 2px; border-top:1px solid #c3b697; font-size:14px; }
+  .pk b { font-family:Eczar,serif; font-size:18px; }
+</style>
+<div class="s">
+<h2>The press, as a full box</h2>
+<p class="subtitle">Tap and hold each one. All three are solid blocks with connected walls, so the button visibly travels down into its own depth.</p>
+
+<div class="cards">
+  <div class="card" data-choice="block" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile">
+      <div class="btn v1"><span>Start your snan now</span><span>→</span></div>
+      <div class="lbl">Ink block: the button is the top of a solid ink box and sinks flush.</div>
+    </div></div>
+    <div class="card-body"><h3>1. Ink block</h3><p>Closest to the signboard CTA. Black walls, quiet enough for paper.</p></div>
+  </div>
+  <div class="card" data-choice="well" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile">
+      <div class="well"><div class="btn v2"><span>Start your snan now</span><span>→</span></div></div>
+      <div class="lbl">Well: an ink slot is cut into the page; the button drops into it.</div>
+    </div></div>
+    <div class="card-body"><h3>2. Ink well</h3><p>Reads as a key in a socket. The hole is always visible behind it.</p></div>
+  </div>
+  <div class="card" data-choice="marigold-wall" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="tile">
+      <div class="btn v3"><span>Start your snan now</span><span>→</span></div>
+      <div class="lbl">Marigold walls with an ink edge, like the ad's offset lettering.</div>
+    </div></div>
+    <div class="card-body"><h3>3. Marigold wall</h3><p>Brings the yellow onto every button. Louder; the most "ad".</p></div>
+  </div>
+</div>
+
+<h2 style="margin-top:34px">The quiet landing, put together</h2>
+<p class="subtitle">Paper base. Capitals headline with the river in sindoor (5), the tilted band (6), the price seal (2), the ink-block press (1), the river as it is today, and one matchbox label (3) for the eleven pack only. Tap the button.</p>
+<div style="display:flex;justify-content:center;background:#e8e2d6;padding:20px 0">
+  <div class="phone"><div class="in">
+    <div class="hd"><span>Snanify</span><span class="m"></span></div>
+    <div class="live"><b></b>The Ganga at Haridwar is running full this morning.</div>
+    <h1>A daily <span style="color:var(--red)">Ganga</span> snan. From home.</h1>
+    <div class="band">3 minutes. Then send it to the family.</div>
+    <div style="display:flex;gap:14px;align-items:center;margin-top:18px">
+      <div class="seal">11<br>for<br>€11</div>
+      <div class="copy" style="margin:0">Breathe with the river as it runs this morning. Make your sankalp. Your first one today.</div>
+    </div>
+    <div class="btn v1" style="margin-top:18px"><span>Start your snan now</span><span>→</span></div>
+    <div class="river"><div class="sun"></div><div class="glint"></div></div>
+    <div class="reading"><span>Flow today</span><b>797 m³/s</b></div>
+    <div class="reading"><span>Against every day since 1997</span><b>86th percentile</b></div>
+    <div class="d" style="font-weight:800;font-size:22px;margin-top:22px">Eleven mornings for eleven.</div>
+    <div class="label" style="margin-top:12px"><div class="inn">
+      <div style="font:800 10px 'Martel Sans';letter-spacing:.18em;color:var(--red)">KARTIK · 27 OCT TO 24 NOV</div>
+      <div class="d" style="font-weight:800;font-size:24px;line-height:1.05">Eleven mornings</div>
+      <div class="d" style="font-weight:800;font-size:20px;color:var(--red)">€11</div>
+    </div></div>
+    <div class="pk" style="margin-top:14px"><span>One morning</span><b>€2</b></div>
+    <div class="pk"><span>Sixty mornings</span><b>€45</b></div>
+  </div></div>
+</div>
+</div>
