@@ -3,45 +3,25 @@ import { localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { RiverFlow } from "@/components/RiverFlow";
-import { Mark } from "@/components/Logo";
-import { Tilak } from "@/components/marks";
 import { PastHero } from "@/components/site/PastHero";
 import { SittingLoop } from "@/components/snan/SittingLoop";
 import { Specimen } from "@/components/Specimen";
-import { buttonClass, CTA, Price, Section, TaxNote } from "@/components/ui";
+import { Band, Label, RiverHorizon, Seal } from "@/components/kit";
+import { buttonClass, CTA, Price, TaxNote } from "@/components/ui";
 import { snanContent } from "@/content/snan";
 import { PER_SNAN, PRICE } from "@/content/prices";
 import { clock, LIMB_START, SITTING } from "@/lib/sitting-plan";
 
 /**
- * /snan, the page where somebody decides to pay.
+ * /snan, the landing's sibling (spec 6.2).
  *
- * Built for a 390px phone first, read in bed, in the dark, one thumb. Every
- * consequence of that is deliberate:
+ * 390px first. A capitals headline with the river word in sindoor, the band,
+ * the price seal and the short pitch, then the one press. The five parts follow
+ * as a list with their clocks and lengths from src/lib/sitting-plan.ts.
  *
- *  - One column at every width. The only multi-column layouts appear at `lg`
- *    and they are the clock rail beside each part and the tariff's price pair.
- *    Nothing scrolls sideways at 390px.
- *  - Body copy is 1.05rem at 1.85 leading. Nothing readable is set below
- *    0.9rem; the small caps `label` face is a column head or a button, never
- *    prose and never a heading's eyebrow.
- *  - Every interactive element carries `min-h-[44px]`.
- *  - The primary action lives in a fixed bar at the bottom edge, inside the
- *    thumb arc, on phones only. Desktop keeps the masthead CTA. The bar is
- *    plain CSS with no observers, and it carries no countdown, no scarcity and
- *    no urgency, because there is none.
- *  - The tariff is a stack of rows set apart by space, not a table.
- *
- * WHAT WAS TAKEN OFF THIS PAGE, and must stay off: the caps eyebrow with a
- * red dash above every heading, the fade-and-rise on every section, numbered
- * markers on the questions, half the headline in red, the "what is actually
- * true" box, the pull quote, the specimen almanac with figures from a gauge
- * this product does not read, and the register with a ninety-second
- * stillness. The five parts keep their order marks because they are a
- * sequence, and their clocks and lengths come from src/lib/sitting-plan.ts.
- *
- * The claims are the constraint. No rite is asserted anywhere on this page.
+ * One press above the parts (the hero's). The eleven pack carries the only
+ * other press, far below, as on the landing; every other action is a quiet
+ * link. The masthead's Begin waits for the hero press to scroll off (PastHero).
  */
 
 /** Devanagari numerals in the Hindi edition, as a printed panchang sets them. */
@@ -55,9 +35,14 @@ function numeral(n: number, lang: Lang): string {
 
 const ROUTE = "/snan";
 
+const H2 = "display text-[1.75rem] leading-[1.12] sm:text-[2.25rem]";
+const W700 = { fontWeight: 700 } as const;
+
 export function SnanIntro({ lang }: { lang: Lang }) {
   const t = snanContent[lang];
+  const hi = lang === "hi";
   const begin = localePath(lang, "/begin");
+  const [lead, tail] = t.hero.title.split("{river}");
 
   const length = (id: keyof typeof SITTING) =>
     t.form.seconds.replace("{n}", digits(String(SITTING[id]), lang));
@@ -68,268 +53,216 @@ export function SnanIntro({ lang }: { lang: Lang }) {
       <div className="grain" aria-hidden="true" />
 
       <PastHero />
-      <Header lang={lang} currentPath={ROUTE} ctaTo="#tariff" ctaAfterHero />
+      <Header lang={lang} currentPath={ROUTE} ctaAfterHero />
 
       <main>
         {/* ------------------------------------------------ masthead ------ */}
-        {/* The river is anchored under the headline at an invisible horizon,
-            as the landing anchors it under the headline: everything above the
-            horizon is on sky, and the lede and the offer sit on a paper slip
-            below it. */}
-        <section className="relative overflow-hidden">
-          {/* Phone: a band under the type. The panorama tuning's small sun
-              stays inside the band; the portrait one rose into the offer line. */}
-          <RiverFlow
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[34%] w-full text-ink lg:hidden"
-          />
-          {/* Wide: the full panorama behind the type, horizon on the anchor. */}
-          <RiverFlow
-            variant="panorama"
-            anchorSelector="[data-snan-horizon]"
-            className="pointer-events-none absolute inset-0 hidden h-full w-full text-ink lg:block"
-          />
+        <section className="overflow-x-clip">
+          <div className="mx-auto max-w-md px-5 lg:max-w-3xl lg:px-8">
+            <h1
+              className={`display pt-5 text-ink sm:pt-10 ${
+                hi
+                  ? "text-[2.25rem] sm:text-[2.6rem]"
+                  : "text-[2.35rem] uppercase min-[380px]:text-[2.5rem] sm:text-[2.85rem]"
+              }`}
+              style={{ fontWeight: 800, lineHeight: hi ? 1.22 : 0.95, letterSpacing: hi ? 0 : "-0.01em" }}
+            >
+              {lead}
+              <span className="text-sindoor">{t.hero.riverWord}</span>
+              {tail}
+            </h1>
 
-          <div className="relative mx-auto max-w-6xl px-5 pt-10 pb-14 sm:px-8 sm:pt-16 sm:pb-20">
-            {/* The tilak marks the one headline on the page. */}
-            <div className="flex items-start gap-3">
-              <Tilak className="mt-[0.15em] text-[1.6rem] sm:text-[1.9rem]" />
-              <h1 className="ink-in display min-w-0 max-w-4xl text-[2.5rem] leading-[1.06] sm:text-[3.8rem] lg:text-[5rem]">
-                {t.hero.title}
-              </h1>
+            <Band className="mt-4">{t.hero.band}</Band>
+
+            <div className="mt-5 flex items-center gap-4">
+              <Seal kind="price" prices={PRICE.eleven} lang={lang} />
+              <p className="text-[0.9375rem] leading-[1.45] text-ink">{t.hero.offer}</p>
             </div>
 
-            {/* The horizon anchor: an empty line the panorama's waterline sits on. */}
-            <div data-snan-horizon className="mt-7 h-1 max-w-xl" />
+            <Link href={begin} className="mt-5 flex" data-hero-cta data-hero-press>
+              <CTA className="w-full">{t.hero.ctaPrimary}</CTA>
+            </Link>
 
-            <div
-              className="ink-in mt-6 max-w-2xl lg:bg-paper lg:px-4 lg:py-3"
-              style={{ animationDelay: "140ms" }}
-            >
-              <p className="text-[1.05rem] leading-[1.85] text-ink2">{t.hero.lede}</p>
-              <p className="mt-4 text-[1rem] leading-[1.8] text-ink">
-                {t.hero.offer.split("{price}")[0]}
-                <Price prices={PRICE.eleven} className="display text-[1.15rem]" />
-                {t.hero.offer.split("{price}")[1]}
-              </p>
-            </div>
+            <p className="mt-8 leading-[1.6] text-ink2">{t.hero.lede}</p>
 
-            {/* Paper behind the block on a phone: the band's sun rises behind
-                the buttons there, and a flex gap shows its container's ground. */}
-            <div
-              className="ink-in mt-9 flex flex-col gap-3 bg-paper sm:flex-row sm:flex-wrap sm:items-center lg:bg-transparent"
-              style={{ animationDelay: "260ms" }}
-            >
-              <Link href={begin} className={buttonClass("solid", "min-h-[52px] w-full sm:w-auto")} data-hero-cta>
-                {t.hero.ctaPrimary}
-              </Link>
-              <a href="#form" className={buttonClass("ghost", "min-h-[52px] w-full sm:w-auto")}>
-                {t.hero.ctaSecondary}
-              </a>
+            <div className="-mx-5 mt-10 lg:mx-0">
+              <RiverHorizon height={156} />
             </div>
           </div>
         </section>
 
-        {/* ------------------------------------------------ the form ------ */}
-        <Section id="form">
-          <div className="max-w-3xl">
-            <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.form.title}</h2>
-            <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.form.lede}</p>
-          </div>
+        {/* ------------------------------------------------ the five parts */}
+        <section id="form" className="scroll-mt-16">
+          <div className="mx-auto max-w-md px-5 py-14 lg:max-w-3xl lg:px-8">
+            <h2 className={H2} style={W700}>
+              {t.form.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2">{t.form.lede}</p>
 
-          {/* The sitting itself, looped in a phone, beside the five parts at a glance. */}
-          <div className="mt-10 grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start lg:gap-14">
-          <SittingLoop lang={lang} />
-          <ul>
-            {t.form.limbs.map((l) => (
-              <li
-                key={`glance-${l.id}`}
-                className="flex items-baseline justify-between gap-4 border-b border-rule py-3 lg:py-4"
-              >
-                <span className="display text-[1.25rem] text-ink">{l.title}</span>
-                <span className="text-sm text-ink2 tabular-nums">
-                  {startsAt(l.id)}, {length(l.id)}
-                </span>
-              </li>
-            ))}
-          </ul>
-          </div>
+            <div className="mt-8 flex justify-center">
+              <SittingLoop lang={lang} />
+            </div>
 
-          {/* The long version. Numbered, because the parts run in this order. */}
-          <ol className="mt-14">
-            {t.form.limbs.map((l, i) => (
-              <li
-                key={l.id}
-                id={l.id}
-                className="scroll-mt-20 py-9 lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-14"
-              >
-                <div className="flex items-baseline gap-4 lg:sticky lg:top-24 lg:block lg:self-start">
-                  <span className="display text-[2.2rem] leading-none text-sindoor tabular-nums">
-                    {numeral(i + 1, lang)}
-                  </span>
-                  {/* Phone: the clock and the length on one line beside the
-                      number. Wide: a two-row column with its heads. */}
-                  <span className="text-sm text-ink2 tabular-nums lg:hidden">
-                    {startsAt(l.id)}, {length(l.id)}
-                  </span>
-                  <dl className="mt-5 hidden text-sm lg:block">
-                    <dt className="label text-ink2">{t.form.clockHead}</dt>
-                    <dd className="mt-1 text-ink tabular-nums">{startsAt(l.id)}</dd>
-                    <dt className="label mt-3 text-ink2">{t.form.lengthHead}</dt>
-                    <dd className="mt-1 text-ink tabular-nums">{length(l.id)}</dd>
-                  </dl>
-                </div>
-
-                <div className="mt-6 lg:mt-0">
-                  <h3 className="display text-[1.75rem] leading-[1.25] sm:text-[2.1rem]">{l.title}</h3>
+            <ol id="parts" className="mt-10 border-b border-rule">
+              {t.form.limbs.map((l, i) => (
+                <li key={l.id} id={l.id} className="scroll-mt-20 border-t border-rule py-6">
+                  <div className="flex items-baseline gap-4">
+                    <span className="display text-[1.5rem] leading-none text-sindoor tabular-nums" style={W700}>
+                      {numeral(i + 1, lang)}
+                    </span>
+                    <h3 className="display min-w-0 flex-1 text-[1.375rem] leading-[1.25]" style={W700}>
+                      {l.title}
+                    </h3>
+                    <span className="shrink-0 text-sm text-ink2 tabular-nums">
+                      {startsAt(l.id)}, {length(l.id)}
+                    </span>
+                  </div>
                   {l.body.map((p) => (
-                    <p key={p} className="mt-5 max-w-[38rem] text-[1.05rem] leading-[1.85] text-ink2">
+                    <p key={p} className="mt-3 text-[0.9375rem] leading-[1.6] text-ink2">
                       {p}
                     </p>
                   ))}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Section>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-        {/* ------------------------------------------------ the stillness --
-            The one reverse block on the site: ink ground, paper type, which is
-            what a press does when it wants a page to stop you. It is also
-            literally what the part does. */}
+        {/* ------------------------------------------------ the stillness -- */}
         <section id="stillness" className="bg-ink text-paper">
-          <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-            <h2 className="display max-w-3xl text-[2rem] leading-[1.14] sm:text-[2.9rem]">
+          <div className="mx-auto max-w-md px-5 py-16 lg:max-w-3xl lg:px-8">
+            <h2 className={H2} style={W700}>
               {t.still.title}
             </h2>
-
-            <p className="mt-10 max-w-2xl text-[1.05rem] leading-[1.85]">{t.still.body}</p>
-
-            <div className="mt-10 max-w-xl px-5 py-10 text-center sm:px-8 sm:py-14">
-              <p className="display text-[1.3rem] leading-[1.5] sm:text-[1.7rem]">{t.still.instruction}</p>
-            </div>
-
-            <p className="mt-7 max-w-2xl text-[0.98rem] leading-[1.8]">{t.still.note}</p>
+            <p className="mt-4 leading-[1.6]">{t.still.body}</p>
+            <p className="display mt-8 text-[1.5rem] leading-[1.3]" style={W700}>
+              {t.still.instruction}
+            </p>
+            <p className="mt-6 text-sm leading-[1.6]">{t.still.note}</p>
           </div>
         </section>
 
         {/* ------------------------------------------------ the sheet ----- */}
-        <Section id="patra" tinted>
-          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start lg:gap-20">
-            <div>
-              <div className="max-w-3xl">
-                <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.patra.title}</h2>
-                <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.patra.lede}</p>
-              </div>
+        <section id="patra" className="tint scroll-mt-16">
+          <div className="mx-auto max-w-md px-5 py-16 lg:max-w-3xl lg:px-8">
+            <h2 className={H2} style={W700}>
+              {t.patra.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2">{t.patra.lede}</p>
 
-          <dl className="mt-10">
-            {t.patra.carries.map((row) => (
-              <div
-                key={row.k}
-                className="py-5 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-10"
-              >
-                <dt className="display text-[1.3rem] leading-none text-ink">{row.k}</dt>
-                <dd className="mt-2 max-w-[38rem] text-[1.02rem] leading-[1.85] text-ink2 sm:mt-0">
-                  {row.v}
-                </dd>
-              </div>
-            ))}
-          </dl>
+            <Specimen lang={lang} className="mt-8" />
 
-          <div className="mt-12 max-w-3xl">
-            <h3 className="display text-[1.6rem] leading-[1.25] sm:text-[2rem]">{t.patra.engravingTitle}</h3>
+            <dl className="mt-10 border-b border-rule">
+              {t.patra.carries.map((row) => (
+                <div key={row.k} className="border-t border-rule py-4">
+                  <dt className="display text-[1.125rem]" style={W700}>
+                    {row.k}
+                  </dt>
+                  <dd className="mt-1 text-[0.9375rem] leading-[1.6] text-ink2">{row.v}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <h3 className="display mt-10 text-[1.375rem] leading-[1.25]" style={W700}>
+              {t.patra.engravingTitle}
+            </h3>
             {t.patra.engravingBody.map((p) => (
-              <p key={p} className="mt-5 text-[1.02rem] leading-[1.85] text-ink2">
+              <p key={p} className="mt-3 text-[0.9375rem] leading-[1.6] text-ink2">
                 {p}
               </p>
             ))}
           </div>
-            </div>
+        </section>
 
-            <Specimen lang={lang} className="lg:sticky lg:top-28" />
+        {/* ------------------------------------------------ questions ----- */}
+        <section id="questions" className="scroll-mt-16">
+          <div className="mx-auto max-w-md px-5 py-16 lg:max-w-3xl lg:px-8">
+            <h2 className={H2} style={W700}>
+              {t.before.title}
+            </h2>
+            <ul className="mt-6 border-b border-rule">
+              {t.before.items.map((item) => (
+                <li key={item.q} className="border-t border-rule py-5">
+                  <h3 className="display text-[1.25rem] leading-[1.3]" style={W700}>
+                    {item.q}
+                  </h3>
+                  <p className="mt-2 text-[0.9375rem] leading-[1.6] text-ink2">{item.a}</p>
+                </li>
+              ))}
+            </ul>
           </div>
-        </Section>
+        </section>
 
-        {/* ------------------------------------------------ before you pay */}
-        <Section id="questions">
-          <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.before.title}</h2>
+        {/* ------------------------------------------------ the packs ------ */}
+        <section id="tariff" className="tint scroll-mt-16">
+          <div className="mx-auto max-w-md px-5 py-16 lg:max-w-3xl lg:px-8">
+            <h2 className={H2} style={W700}>
+              {t.tariff.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2">{t.tariff.lede}</p>
 
-          <ul className="mt-10">
-            {t.before.items.map((item) => (
-              <li key={item.q} className="py-7">
-                <h3 className="display text-[1.4rem] leading-[1.3] sm:text-[1.7rem]">{item.q}</h3>
-                <p className="mt-4 max-w-[40rem] text-[1.05rem] leading-[1.85] text-ink2">{item.a}</p>
-              </li>
-            ))}
-          </ul>
-        </Section>
+            {t.tariff.rows
+              .filter((row) => row.hero)
+              .map((row) => (
+                <div key={row.key} className="mt-8">
+                  <Link href={`${begin}?pack=${row.key}`} className="block">
+                    <Label
+                      kicker={
+                        <>
+                          <Price prices={PER_SNAN[row.key]} /> {t.tariff.heads.per}
+                        </>
+                      }
+                      title={row.name}
+                      price={PRICE[row.key]}
+                    />
+                  </Link>
+                  <p className="mt-4 text-[0.9375rem] leading-[1.6] text-ink2">{row.body}</p>
+                  <Link href={`${begin}?pack=${row.key}`} className="mt-5 flex">
+                    <CTA className="w-full">{t.tariff.choose}</CTA>
+                  </Link>
+                </div>
+              ))}
 
-        {/* ------------------------------------------------ the tariff -----
-            A price list set as rows apart by space, so it stacks on a phone
-            instead of becoming a horizontal scroller. The hero row stands on
-            the haldi ground; nothing here counts down or runs out. */}
-        <Section id="tariff" tinted>
-          <div className="max-w-3xl">
-            <h2 className="display text-[2rem] leading-[1.14] sm:text-[2.8rem]">{t.tariff.title}</h2>
-            <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.85] text-ink2">{t.tariff.lede}</p>
+            <ul className="mt-10 border-b border-rule">
+              {t.tariff.rows
+                .filter((row) => !row.hero)
+                .map((row) => (
+                  <li key={row.key} className="border-t border-rule">
+                    <Link
+                      href={`${begin}?pack=${row.key}`}
+                      className="group block min-h-[56px] py-4 active:bg-paper2"
+                    >
+                      <span className="flex items-baseline justify-between gap-4">
+                        <span className="display text-[1.375rem] text-ink group-active:text-sindoor" style={W700}>
+                          {row.name}
+                        </span>
+                        <span className="display text-[1.375rem] text-ink tabular-nums" style={W700}>
+                          <Price prices={PRICE[row.key]} />
+                        </span>
+                      </span>
+                      <span className="mt-1 block text-sm leading-[1.55] text-ink2">
+                        <Price prices={PER_SNAN[row.key]} /> {t.tariff.heads.per}
+                      </span>
+                      <span className="mt-1 block text-sm leading-[1.55] text-ink2">{row.body}</span>
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+
+            <p className="mt-6 text-sm leading-[1.6] text-ink2">
+              <TaxNote lang={lang} /> {t.tariff.note}
+            </p>
           </div>
+        </section>
 
-          <ul className="mt-11 space-y-4">
-            {t.tariff.rows.map((row) => (
-              <li
-                key={row.name}
-                className={row.hero ? "bg-paper2" : undefined}
-              >
-                {/* The whole row is the press, and it carries the pack to the
-                    picker through sign-in and setup. */}
-                <Link href={`${begin}?pack=${row.key}`} className={`impress block py-7 ${row.hero ? "px-4 sm:px-6" : ""}`}>
-                  <div className="sm:flex sm:items-start sm:justify-between sm:gap-10">
-                    <div className="min-w-0">
-                      <h3 className="display text-[1.7rem] leading-none sm:text-[2.1rem]">{row.name}</h3>
-                      <p className="mt-3 max-w-[40rem] text-[1.02rem] leading-[1.85] text-ink2">{row.body}</p>
-                    </div>
-
-                    {/* One price, in the reader's own currency. */}
-                    <dl className="mt-5 pt-2 sm:mt-0 sm:shrink-0 sm:pt-0 sm:text-right">
-                      <dt className="label text-ink2">{t.tariff.heads.price}</dt>
-                      <dd className="display mt-1.5 text-[2.4rem] leading-none text-sindoor tabular-nums">
-                        <Price prices={PRICE[row.key]} />
-                      </dd>
-                    </dl>
-                  </div>
-
-                  <dl className="mt-6 flex items-baseline gap-3 pt-2">
-                    <dt className="label shrink-0 text-ink2">{t.tariff.heads.per}</dt>
-                    <dd className="text-[1.05rem] leading-none text-ink tabular-nums">
-                      <Price prices={PER_SNAN[row.key]} />
-                    </dd>
-                  </dl>
-
-                  <CTA variant={row.hero ? "solid" : "ghost"} className="mt-6 w-full !py-4 sm:w-auto">
-                    {t.tariff.choose}
-                  </CTA>
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <p className="mt-6 max-w-3xl text-[0.98rem] leading-[1.8] text-ink2">
-            <TaxNote lang={lang} /> {t.tariff.note}
-          </p>
-
-          <div className="mt-8">
-            <Link href={begin} className={buttonClass("solid", "min-h-[52px] w-full sm:w-auto")}>
-              {t.tariff.cta}
-            </Link>
-          </div>
-        </Section>
-
-        {/* ------------------------------------------------ colophon ------ */}
+        {/* ------------------------------------------------ closing ------- */}
         <section>
-          <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
-            <Mark className="mx-auto h-12 w-12 text-ink" />
-            <h2 className="display mt-10 text-[1.9rem] leading-[1.2] sm:text-[2.9rem]">{t.closing.title}</h2>
-            <p className="mx-auto mt-6 max-w-lg text-[1.05rem] leading-[1.85] text-ink2">{t.closing.body}</p>
-            <Link href={begin} className={buttonClass("solid", "mt-9 min-h-[52px] w-full sm:w-auto")}>
+          <div className="mx-auto max-w-md px-5 py-16 lg:max-w-3xl lg:px-8">
+            <h2 className={H2} style={W700}>
+              {t.closing.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2">{t.closing.body}</p>
+            <Link href={begin} className={buttonClass("quiet", "mt-3")}>
               {t.closing.cta}
             </Link>
           </div>
@@ -337,33 +270,6 @@ export function SnanIntro({ lang }: { lang: Lang }) {
       </main>
 
       <Footer lang={lang} />
-
-      {/* The footer's own ground continued behind the fixed bar, so the last
-          line of the page is never sitting underneath it. */}
-      <div aria-hidden="true" className="tint h-24 lg:hidden" />
-
-      {/* ------------------------------------------------ thumb rail -----
-          Phones only, pinned to the bottom edge inside the thumb arc, and
-          padded past the home indicator. No JavaScript, no timer, no offer
-          that expires. */}
-      <aside
-        aria-label={t.sticky.name}
-        data-until-scrolled="rail"
-        className="bg-paper2 fixed inset-x-0 bottom-0 z-50 lg:hidden"
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-      >
-        <div className="flex items-center justify-between gap-4 px-4 py-2.5">
-          <div className="min-w-0">
-            <p className="truncate text-xs text-ink2">{t.sticky.name}</p>
-            <p className="display mt-0.5 text-lg leading-tight text-ink tabular-nums">
-              <Price prices={PRICE.eleven} />
-            </p>
-          </div>
-          <Link href={begin} className={buttonClass("solid", "min-h-[44px] shrink-0 px-5 py-2.5")}>
-            {t.sticky.cta}
-          </Link>
-        </div>
-      </aside>
     </>
   );
 }

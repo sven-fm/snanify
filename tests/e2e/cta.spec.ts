@@ -30,3 +30,21 @@ for (const path of PAGES) {
     }
   });
 }
+
+/* /snan (spec 6.2): one press above the five parts, and no second button that
+   walks through them. */
+for (const path of ["/snan", "/hi/snan"]) {
+  test(`${path} has one press above the five parts and no walk-through link`, async ({ page }) => {
+    await page.goto(path);
+    const above = await page.evaluate(() => {
+      const list = document.querySelector("#parts");
+      if (!list) return -1;
+      return [...document.querySelectorAll("main .press")].filter(
+        (el) => el.compareDocumentPosition(list) & Node.DOCUMENT_POSITION_FOLLOWING,
+      ).length;
+    });
+    expect(above).toBe(1);
+    expect(await page.locator('main a[href="#form"], main a[href="#parts-long"]').count()).toBe(0);
+    await expect(page.getByText("Walk through the five parts")).toHaveCount(0);
+  });
+}

@@ -63,16 +63,13 @@ type Copy = {
   readonly crumbs: { readonly home: string; readonly here: string };
 
   readonly hero: {
+    /** "Three minutes with your {river}.": the river word is set in sindoor. */
     readonly title: string;
+    readonly riverWord: string;
+    readonly band: string;
     readonly lede: string;
     readonly offer: string;
     readonly ctaPrimary: string;
-    readonly ctaSecondary: string;
-  };
-
-  readonly sticky: {
-    readonly name: string;
-    readonly cta: string;
   };
 
   readonly form: {
@@ -115,7 +112,6 @@ type Copy = {
     readonly rows: readonly TariffRow[];
     readonly note: string;
     readonly choose: string;
-    readonly cta: string;
   };
 
   readonly closing: {
@@ -137,16 +133,12 @@ const en: Copy = {
   crumbs: { home: "Home", here: "The snan" },
 
   hero: {
-    title: "Three minutes with your river.",
-    lede: "Pick the river you grew up near. Each morning it shows you how it runs today, and you sit with it for three minutes. Then you send the family a Sankalp Patra with their names on it.",
-    offer: "Eleven mornings for {price}. Your first one today.",
+    title: "Three minutes with your {river}.",
+    riverWord: "river",
+    band: "Takes just 3 minutes. Then share it with your family.",
+    lede: "Pick the river you grew up near. Each morning it shows you how it runs today. Sit with it, breathe, and make your sankalp.",
+    offer: "Eleven mornings. Your first one today.",
     ctaPrimary: "Start your snan now",
-    ctaSecondary: "Walk through the five parts",
-  },
-
-  sticky: {
-    name: "Eleven mornings",
-    cta: "Begin",
   },
 
   form: {
@@ -207,8 +199,8 @@ const en: Copy = {
   },
 
   patra: {
-    title: "Your Sankalp Patra, ready to send",
-    lede: "Every snan ends in one sheet with your family's names on it. Keep it, and send it to the family group.",
+    title: "Your family's names, at the river.",
+    lede: "Every morning, one sheet to send. Keep it, and send it to the family group.",
     carries: [
       { k: "Names", v: "Your name and up to five more from your household." },
       { k: "Portrait", v: "Your photograph, if you add one." },
@@ -273,7 +265,6 @@ const en: Copy = {
       },
     ],
     note: "Your mornings keep until you sit them.",
-    cta: "Start your snan now",
   },
 
   closing: {
@@ -295,16 +286,12 @@ const hi: Copy = {
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
 
   hero: {
-    title: "अपनी नदी के साथ तीन मिनट।",
-    lede: "वह नदी चुनिए जिसके पास आप बड़े हुए। हर सुबह वह दिखाती है कि आज कैसे बह रही है, और आप उसके साथ तीन मिनट बैठते हैं। फिर परिवार को उनके नामों वाला संकल्प पत्र भेजिए।",
-    offer: "ग्यारह सुबहें {price} में। पहली आज ही।",
+    title: "अपनी {river} के साथ तीन मिनट।",
+    riverWord: "नदी",
+    band: "बस 3 मिनट। फिर परिवार को भेजिए।",
+    lede: "वह नदी चुनिए जिसके पास आप बड़े हुए। हर सुबह वह दिखाती है कि आज कैसे बह रही है। उसके साथ बैठिए, साँस लीजिए और अपना संकल्प कीजिए।",
+    offer: "ग्यारह सुबहें। पहली आज ही।",
     ctaPrimary: "अभी अपना स्नान आरंभ कीजिए",
-    ctaSecondary: "पाँचों अंग देखिए",
-  },
-
-  sticky: {
-    name: "ग्यारह सुबहें",
-    cta: "आरंभ",
   },
 
   form: {
@@ -365,8 +352,8 @@ const hi: Copy = {
   },
 
   patra: {
-    title: "आपका संकल्प पत्र, भेजने को तैयार",
-    lede: "हर स्नान एक पत्र पर पूरा होता है, जिस पर आपके परिवार के नाम हैं। उसे रखिए, और परिवार के समूह में भेजिए।",
+    title: "आपके परिवार के नाम, नदी के साथ।",
+    lede: "हर सुबह, भेजने के लिए एक पत्र। उसे रखिए, और परिवार के समूह में भेजिए।",
     carries: [
       { k: "नाम", v: "आपका नाम और आपके घर के पाँच और नाम।" },
       { k: "चित्र", v: "आपका चित्र, यदि आप जोड़ें।" },
@@ -431,7 +418,6 @@ const hi: Copy = {
       },
     ],
     note: "आपकी सुबहें तब तक रखी रहती हैं जब तक आप बैठें।",
-    cta: "अभी अपना स्नान आरंभ कीजिए",
   },
 
   closing: {
