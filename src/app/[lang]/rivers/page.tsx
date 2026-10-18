@@ -13,6 +13,7 @@ import { riversIndexContent } from "@/content/rivers-index";
 import { langParams, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { navLabel } from "@/lib/nav";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 
 /**
@@ -37,6 +38,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.meta.title,
     description: t.meta.description,
   });

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { localePath } from "@/lib/i18n";
-import { ctaHref } from "@/lib/nav";
+import { ctaHref, snanHereHref } from "@/lib/nav";
 import type { Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { H2, H3, QUIET, RefClose, RefHead, W700 } from "@/components/site/Reference";
+import { H2, H3, QUIET, RefClose, RefHead, RowLink, W700 } from "@/components/site/Reference";
 import { RIVERS } from "@/content/rivers";
 import { riversIndexContent } from "@/content/rivers-index";
 
@@ -15,8 +15,13 @@ import { riversIndexContent } from "@/content/rivers-index";
    name in sindoor, the other five as ruled rows, the four things found at
    every water, how to choose, and the one press at the end.
 
-   Space divides the sections; hairlines stay between rows. Every link but
-   the closing press is a quiet underlined link.
+   Space divides the sections; hairlines stay between rows.
+
+   "Do your snan here" starts Begin with that water chosen for a new sheet.
+   On every water here it is a boxed row (RowLink), not a press, because six
+   presses on rows of about 300px at 390 would put two or three on one screen. Each river's own
+   page carries it as the press. The one press here is the close: Begin with
+   no water chosen.
    --------------------------------------------------------------------------- */
 
 export function RiversIndex({ lang }: { lang: Lang }) {
@@ -51,7 +56,10 @@ export function RiversIndex({ lang }: { lang: Lang }) {
             <p className="mt-4 leading-[1.7] text-ink2">{first.standfirst[lang]}</p>
             <p className="mt-4 text-sm leading-[1.7] text-ink2">{first.sacred[lang][0]}</p>
             <p className="mt-2 text-sm text-ink2">{t.formLabels[first.form]}</p>
-            <Link href={localePath(lang, `/rivers/${first.slug}`)} className={`${QUIET} mt-3`}>
+            <RowLink href={snanHereHref(lang, first.slug)} className="mt-6 sm:max-w-sm">
+              {t.here}
+            </RowLink>
+            <Link href={localePath(lang, `/rivers/${first.slug}`)} className={`${QUIET} mt-2`}>
               {t.lead.read}
             </Link>
           </div>
@@ -68,8 +76,8 @@ export function RiversIndex({ lang }: { lang: Lang }) {
             {/* A register, unnumbered: five waters are a choice, not a sequence. */}
             <ul className="mt-8 border-t border-rule">
               {rest.map((r) => (
-                <li key={r.slug} className="border-b border-rule">
-                  <Link href={localePath(lang, `/rivers/${r.slug}`)} className="group block py-6">
+                <li key={r.slug} className="border-b border-rule py-6">
+                  <Link href={localePath(lang, `/rivers/${r.slug}`)} className="group block">
                     <h3 className="display text-[1.5rem] leading-[1.15] text-ink group-active:text-sindoor" style={W700}>
                       {waterName(r, "river", lang)}
                     </h3>
@@ -83,6 +91,9 @@ export function RiversIndex({ lang }: { lang: Lang }) {
                       </span>
                     </p>
                   </Link>
+                  <RowLink href={snanHereHref(lang, r.slug)} className="mt-4 sm:max-w-sm">
+                    {t.here}
+                  </RowLink>
                 </li>
               ))}
             </ul>

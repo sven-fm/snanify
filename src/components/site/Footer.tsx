@@ -11,8 +11,8 @@ import { RiverHorizon } from "@/components/kit";
  * have to be kept in step with it. The indices are the three columns as they
  * are written in src/content/landing/en.ts: service, company, legal.
  */
-/* In the order `t.footer.cols[LEGAL].links` sets them: privacy, terms, refunds. */
-const LEGAL_ROUTES = ["/privacy", "/terms", "/terms#refunds"];
+/* In the order `t.footer.cols[LEGAL].links` sets them: privacy, terms. */
+const LEGAL_ROUTES = ["/privacy", "/terms"];
 
 const PRACTICE = 0;
 const REFERENCE = 1;
@@ -26,16 +26,19 @@ const COLUMNS: { at: number; keys: NavKey[] }[] = [
 /**
  * The imprint: everything the almanac prints at the back. Every page closes on
  * the full river (spec 5.6), the sun sitting on its horizon, and the imprint
- * opens under the water.
+ * opens under the water. `river={false}` leaves the water out: /today has
+ * its own river under the ready screen's press, and two read as a mistake.
  */
-export function Footer({ lang }: { lang: Lang }) {
+export function Footer({ lang, river = true }: { lang: Lang; river?: boolean }) {
   const t = content[lang];
 
   return (
     <footer className="tint">
-      <div className="bg-paper">
-        <RiverHorizon height={120} />
-      </div>
+      {river ? (
+        <div className="bg-paper">
+          <RiverHorizon height={120} />
+        </div>
+      ) : null}
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
@@ -71,9 +74,6 @@ export function Footer({ lang }: { lang: Lang }) {
 
           <div>
             <h2 className="label text-ink">{t.footer.cols[LEGAL].h}</h2>
-            {/* Privacy and terms are real pages now. Refunds is answered
-                inside the terms rather than on a page of its own, so it points
-                at that section instead of at a route that does not exist. */}
             <ul className="mt-4 space-y-2.5">
               {t.footer.cols[LEGAL].links.map((label, i) => (
                 <li key={label}>

@@ -47,7 +47,7 @@ const en = {
         h: "What we make",
         body: [
           "One row for each morning you keep: the date, the water, the river's published figure that day, the sky computed for that instant, and a seed.",
-          "A record of what you bought, in which currency, and a ledger of the mornings added and spent. That ledger is how a question about a missing morning gets answered, and how a refund is made.",
+          "A record of what you bought, in which currency, and a ledger of the mornings added and spent. That ledger is how a question about a missing morning gets answered.",
         ],
       },
       {
@@ -112,7 +112,7 @@ const en = {
   terms: {
     meta: {
       title: "Terms | Snanify",
-      description: "What you are buying, what it costs, and how a refund works.",
+      description: "What you are buying, what it costs, and how a purchase works.",
     },
     title: "What you are buying",
     head: { title: "What you are {accent}.", accent: "buying" },
@@ -135,10 +135,10 @@ const en = {
         ],
       },
       {
-        h: "Refunds",
+        h: "Every purchase is final",
         body: [
-          "Any mornings you have not used are refunded in full, on request, without being asked why. Write to hello@snanify.com.",
-          "A morning you have already sat is used and is not refundable.",
+          "A pack is yours once it is paid, and its mornings stay on your account until you sit them. Questions about a purchase go to hello@snanify.com.",
+          "Your statutory rights as a consumer stay as they are.",
         ],
       },
       {
@@ -169,6 +169,16 @@ const en = {
           "If these terms change, the version and date at the top change with them, and the mornings you have already bought keep the terms they were bought under.",
           "Write to hello@snanify.com about anything here.",
         ],
+      },
+      {
+        /** The anchor every picture on the site links to (src/content/live/pictures.ts). */
+        id: "image-credits",
+        h: "Image credits",
+        body: [
+          "The pictures of the six waters are photographs from Wikimedia Commons, reduced to five tones of ink for this site. Each one is credited here with its photographer and its licence. The ink versions of the CC BY-SA photographs are shared under the same licence.",
+        ],
+        /** The credit line under each picture's name, filled from pictures.ts. */
+        credit: "Photograph by {author}, {license}.",
       },
     ],
   },
@@ -201,7 +211,7 @@ const hi = {
         h: "जो हम बनाते हैं",
         body: [
           "हर निभाई हुई सुबह के लिए एक पंक्ति: दिनांक, जल, उस दिन नदी का प्रकाशित अंक, उस क्षण का गणना किया आकाश, और एक बीज।",
-          "आपने क्या खरीदा और किस मुद्रा में, इसका अभिलेख, तथा जोड़ी और खर्च हुई सुबहों की एक पंजिका। किसी छूटी हुई सुबह का उत्तर उसी पंजिका से मिलता है, और वापसी भी वहीं से होती है।",
+          "आपने क्या खरीदा और किस मुद्रा में, इसका अभिलेख, तथा जोड़ी और खर्च हुई सुबहों की एक पंजिका। किसी छूटी हुई सुबह का उत्तर उसी पंजिका से मिलता है।",
         ],
       },
       {
@@ -266,7 +276,7 @@ const hi = {
   terms: {
     meta: {
       title: "शर्तें | Snanify",
-      description: "आप क्या खरीद रहे हैं, उसका मूल्य क्या है, और वापसी कैसे होती है।",
+      description: "आप क्या खरीद रहे हैं, उसका मूल्य क्या है, और खरीद कैसे होती है।",
     },
     title: "आप क्या खरीद रहे हैं",
     head: { title: "आप क्या {accent}", accent: "खरीद रहे हैं" },
@@ -289,10 +299,10 @@ const hi = {
         ],
       },
       {
-        h: "वापसी",
+        h: "हर खरीद अंतिम है",
         body: [
-          "जो सुबहें आपने ली नहीं, वे कहने भर से पूरी लौटा दी जाती हैं, बिना कारण पूछे। hello@snanify.com पर लिखिए।",
-          "जो सुबह आप बैठ चुके, वह ली जा चुकी है और लौटाई नहीं जाती।",
+          "भुगतान होते ही पैक आपका है, और उसकी सुबहें तब तक आपके खाते में रहती हैं जब तक आप उन्हें बैठ नहीं लेते। किसी खरीद के बारे में प्रश्न hello@snanify.com पर लिखिए।",
+          "उपभोक्ता के रूप में आपके वैधानिक अधिकार यथावत रहते हैं।",
         ],
       },
       {
@@ -323,6 +333,14 @@ const hi = {
           "ये शर्तें बदलें तो ऊपर का संस्करण और तिथि भी बदलते हैं, और जो सुबहें आप पहले खरीद चुके हैं, वे उन्हीं शर्तों पर रहती हैं जिन पर खरीदी गईं।",
           "इनमें से किसी बात पर hello@snanify.com पर लिखिए।",
         ],
+      },
+      {
+        id: "image-credits",
+        h: "चित्र-श्रेय",
+        body: [
+          "छह जलों के चित्र Wikimedia Commons के छायाचित्र हैं, जिन्हें इस साइट के लिए स्याही के पाँच रंगों में छापा गया है। हर चित्र का श्रेय यहाँ उसके छायाकार और उसके लाइसेंस के साथ है। CC BY-SA छायाचित्रों के स्याही वाले रूप उसी लाइसेंस के अंतर्गत साझा हैं।",
+        ],
+        credit: "छायाचित्र: {author}, {license}।",
       },
     ],
   },

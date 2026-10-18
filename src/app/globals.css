@@ -300,6 +300,17 @@
   .stamp {
     animation: stamp 180ms steps(3, end) both;
   }
+  /* `pulse`: a sindoor ring swells from the gauge's dot to twice its size and
+     fades, so the eye goes to today's place on the strip. The dot stays put. */
+  @keyframes pulse-ring {
+    0% { opacity: 0.55; transform: scale(1); }
+    70%, 100% { opacity: 0; transform: scale(2.1); }
+  }
+  .pulse-ring {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: pulse-ring 1.6s cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+  }
   html[data-js] [data-armed]:not([data-in]) .flow-line,
   html[data-js] [data-armed]:not([data-in]) .flow-glint,
   html[data-js] [data-armed]:not([data-in]) .breathe-waves {
@@ -315,8 +326,12 @@
   .flow-line,
   .flow-glint,
   .breathe-waves,
-  .stamp {
+  .stamp,
+  .pulse-ring {
     animation: none;
+  }
+  .pulse-ring {
+    opacity: 0;
   }
 }
 
@@ -713,15 +728,6 @@ html[data-js] [data-in] .grow {
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 45ms);
 }
 
-/* A counter's new second settles in: a touch below and faint, then in place. */
-@keyframes tick {
-  from { opacity: 0.35; transform: translateY(0.12em); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.tick {
-  animation: tick 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) both;
-}
-
 /* The plate a photograph is printed on. By day it is the tint; by night it
    is the day's paper, so the ink picture masked over it stays a positive:
    the mask over cream ink on a dark page came out as a photographic
@@ -776,9 +782,6 @@ html:not([data-js]) .ink-picture-lazy {
     opacity: 1;
     transform: none;
     transition: none;
-  }
-  .tick {
-    animation: none;
   }
 }
 

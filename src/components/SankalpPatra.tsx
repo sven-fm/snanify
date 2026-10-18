@@ -7,6 +7,7 @@ import { devaFontClass } from "@/lib/fonts";
 import { GAUGE_FILLS, PALETTE, PRINT_PAPER } from "@/lib/palette";
 import type { PatraView } from "@/lib/patra-view";
 import type { FlowBand } from "@/lib/riverdata";
+import { PRINT_FALLBACK_MM, PRINT_WIDTH_VAR } from "@/lib/patra-print";
 
 /* ---------------------------------------------------------------------------
    The Sankalp Patra as a page (spec 6.5).
@@ -20,10 +21,12 @@ import type { FlowBand } from "@/lib/riverdata";
    width (`u()`), so the page and the picture keep one geometry and the sheet
    scales as one block from a phone to a print.
 
-   THE OWNER'S COPY CARRIES THE SANKALP. Given a `PatraRecord` (only
-   `printableRecord()` makes one) the person's own words print in Eczar 700
-   under the names. Given a bare `PatraView`, the type every shared surface is
-   built from, there is nothing to print: the field does not exist.
+   THE OWNER'S COPY CARRIES THE SANKALP, UNDER THE SHEET. Given a
+   `PatraRecord` (only `printableRecord()` makes one) the person's own words
+   stand in Eczar 700 below the sheet, outside it, so the sheet itself is the
+   one that was sent and the words are the owner's alone. Given a bare
+   `PatraView`, the type every shared surface is built from, there is nothing
+   to print: the field does not exist.
 
    ALWAYS THE DAY SHEET. The sheet is paper in every edition, as the image is,
    so it pins the day palette on itself; printed, the paper lightens to
@@ -59,19 +62,25 @@ const DAY_TOKENS = {
 } as CSSProperties;
 
 /**
- * Print: the sheet alone, on lighter paper, on one A4 page. Everything that
- * neither holds the sheet nor sits inside it is taken out of the flow, so no
- * blank pages follow it; 120mm wide leaves room for a long sankalp.
+ * Print: the sheet and the sankalp under it, on lighter paper, on ONE page of
+ * A4 or of US Letter, whichever the printer holds. `size: portrait` leaves the
+ * paper to the printer. The column's width is measured for the shorter paper
+ * just before the print (src/lib/patra-print.ts, set by the Print link), with
+ * a fallback that fits the tallest sheet; tests/e2e/patra-print.spec.ts counts
+ * the pages of both. Everything that neither holds the sheet nor sits inside
+ * it is taken out of the flow, so no blank pages follow it.
  */
 const PRINT_CSS = `
 [data-patra-sheet]{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 @media print{
-  @page{ size: A4 portrait; margin: 10mm; }
+  @page{ size: portrait; margin: 10mm; }
   html, body{ background:${PRINT_PAPER} !important; }
   body *:not(:has([data-patra-print])):not([data-patra-print]):not([data-patra-print] *){ display:none !important; }
-  body *:has([data-patra-print]){ margin:0 !important; padding:0 !important; border:0 !important; min-height:0 !important; max-width:none !important; }
-  [data-patra-print]{ width:120mm !important; margin:0 auto !important; }
+  body *:has([data-patra-print]){ margin:0 !important; padding:0 !important; border:0 !important; min-height:0 !important; max-width:none !important; animation:none !important; opacity:1 !important; transform:none !important; }
+  [data-patra-print]{ width:var(${PRINT_WIDTH_VAR}, ${PRINT_FALLBACK_MM}mm) !important; margin:0 auto !important; }
   [data-patra-sheet]{ --paper:${PRINT_PAPER}; background-color:${PRINT_PAPER} !important; break-inside:avoid; page-break-inside:avoid; }
+  [data-patra-sankalp]{ color:${day.ink} !important; break-inside:avoid; page-break-inside:avoid; }
+  [data-patra-sankalp] [data-patra-note]{ color:${day.ink2} !important; }
 }
 `;
 
@@ -314,6 +323,8 @@ export function PatraSheet({ data, className = "" }: PatraSheetProps) {
                 alt=""
                 className="absolute object-cover"
                 style={{
+                  /* Centred both ways, as the image's xMidYMid slice. */
+                  objectPosition: "50% 50%",
                   left: u(pad),
                   top: u(pad),
                   width: u(mountW - 2 * pad),
@@ -364,17 +375,6 @@ export function PatraSheet({ data, className = "" }: PatraSheetProps) {
           {after}
         </p>
 
-        {/* the owner's own words, under the names; only their copy has them */}
-        {sankalp ? (
-          <p
-            data-sankalp=""
-            style={display(48, 700, { marginTop: u(48), lineHeight: hasDeva(sankalp) ? 1.5 : 1.3 })}
-          >
-            <span className="sr-only">{t.sankalpAria}: </span>
-            {sankalp}
-          </p>
-        ) : null}
-
         {/* the prayer, as written */}
         {data.prayer ? (
           <div lang="sa" style={{ marginTop: u(64), fontFamily: SERIF, fontSize: u(46), lineHeight: 1.5 }}>
@@ -415,6 +415,19 @@ export function PatraSheet({ data, className = "" }: PatraSheetProps) {
           <p style={sans(32, { fontWeight: 700, lineHeight: 1.35 })}>snanify.com</p>
         </div>
       </article>
+
+      {/* the owner's own words, under the sheet; only their copy has them */}
+      {sankalp ? (
+        <div data-patra-sankalp="" lang={lang} className="text-ink" style={{ marginTop: u(56), paddingInline: u(M) }}>
+          <p data-sankalp="" style={display(48, 700, { lineHeight: hasDeva(sankalp) ? 1.5 : 1.3 })}>
+            <span className="sr-only">{t.sankalpAria}: </span>
+            {sankalp}
+          </p>
+          <p data-patra-note="" className="text-ink2" style={sans(30, { marginTop: u(16), lineHeight: 1.35 })}>
+            {t.sankalpNote}
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }

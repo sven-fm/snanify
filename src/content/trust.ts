@@ -114,7 +114,7 @@ const ethicsEn = {
 
   closing: {
     title: "Begin tomorrow morning.",
-    body: "Set it up tonight. Eleven mornings, paid once, in your own currency.",
+    body: "Set it up tonight. Eleven mornings, paid once, no subscription.",
     cta: "Begin",
   },
 };
@@ -188,7 +188,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
 
   closing: {
     title: "कल सुबह शुरू कीजिए।",
-    body: "आज रात तैयारी कर लीजिए। ग्यारह सुबहें, एक बार भुगतान, आपकी अपनी मुद्रा में।",
+    body: "आज रात तैयारी कर लीजिए। ग्यारह सुबहें, एक बार भुगतान, कोई सदस्यता नहीं।",
     cta: "शुरू कीजिए",
   },
 } } satisfies Record<Lang, typeof ethicsEn>;
@@ -325,14 +325,6 @@ const faqEn = {
           q: "Why eleven?",
           a: [
             "Shagun comes in elevens: 11, 51, 101, 501. The extra one carries the gift past the round number and onward. Eleven mornings keep the same custom, and so does their price.",
-          ],
-        },
-        {
-          id: "refund",
-          q: "Can I get a refund?",
-          a: [
-            "Yes. Mornings you have not used are refunded in full on request. Write to hello@snanify.com.",
-            "A morning you have already sat is used and is not refunded. If the site failed you during a sitting, write to us and we refund that morning.",
           ],
         },
         {
@@ -539,14 +531,6 @@ export const faqContent = { en: faqEn, hi: {
           q: "ग्यारह ही क्यों?",
           a: [
             "शगुन ग्यारह की रीति से दिया जाता है: 11, 51, 101, 501। ऊपर का एक शगुन को गोल अंक से आगे बढ़ाता है। ग्यारह सुबहें इसी रीति पर हैं, और उनका मूल्य भी।",
-          ],
-        },
-        {
-          id: "refund",
-          q: "क्या राशि वापस मिल सकती है?",
-          a: [
-            "हाँ। जो सुबहें आपने नहीं लीं, वे कहने पर पूरी लौटा दी जाती हैं। hello@snanify.com पर लिखिए।",
-            "जो सुबह आप बैठ चुके, वह ली जा चुकी है और लौटाई नहीं जाती। यदि बैठक के दौरान साइट ने साथ छोड़ दिया हो, तो हमें लिखिए, हम वह सुबह लौटा देते हैं।",
           ],
         },
         {

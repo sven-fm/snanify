@@ -32,7 +32,9 @@ disclaimers nobody asked for, and never argues against the product in its own vo
 mechanic, a hard rule on every page:
 
 > **No negative constructions.** If a sentence is built on "no", "nobody", "nothing" or
-> "there is no", rewrite it until it is built on a noun and a verb. Active voice.
+> "there is no", rewrite it until it is built on a noun and a verb. Active voice. The one
+> exception is a negative that removes a buyer's fear in two words ("no subscription",
+> "no password"): that sells.
 
 "Nobody stands in the water for you" becomes "the practice is yours". Keep sentences short:
 this is read at six in the morning, on a phone, by many readers whose English is a third
@@ -65,14 +67,14 @@ stops and says so.
 | What is paid | The snan. One price, three packs (1, 11, 60), the Sankalp Patra included. Free forever: `/live`, `/panchang`, `/muhurat`, `/rivers`. |
 | Prices | The table below. Every price outside the US is tax-inclusive; US dollars show before sales tax. Eleven mornings cost eleven in every currency: that is the hook. |
 | Pack names | The count is the name: "One morning", "Eleven mornings", "Sixty mornings". No coined names, no Devanagari beside them. |
-| The order | Begin, sign in, set up the sheet, pay, sit. The sheet is made before the packs are shown, and the packs are shown beside a specimen with the buyer's own names on it. |
+| The order | Begin, sign in, set up the sheet, pay, sit. The sheet is made before the packs are shown, and the first purchase is made beside a specimen with the buyer's own names on it. A top-up (the menu's "Buy mornings", or a buyer back at zero) shows the three packs alone, eleven preselected. Someone signed in with mornings in hand goes to `/account`, never to a sales page. |
 | Locales | English and Hindi. The brand stays Latin, "Snanify", in every edition. |
-| On the Patra | Portrait (optional), up to five household names, one chosen prayer, the day's river figure and rank, the tithi, the distance to the water, the time in the person's zone and in IST. The sankalp text is on the owner's copy only. |
+| On the Patra | Portrait (optional), up to five household names, one chosen prayer, the day's river figure and rank, the tithi, the distance to the water, the time in the person's zone and in IST, the morning badge from the second morning, the river at the foot. One sheet on `/p/[id]`; the sankalp text sits under it for the owner only. |
 | Sitting | Three minutes: reading 15s, breath 45s, sankalp hold 11s, stillness 60s, mark 20s. Next leaves the reading, the breath and the stillness early; nothing lengthens. |
 | Cadence | One Patra per completed morning. |
 | Sign-in | Clerk: Google and email link, on one combined screen. No phone OTP, no password. |
 | Setup | All six fields (water, photograph, names, prayer, sankalp, hour), under a three-step line whose third step is the packs, with example sankalps to take as they are. |
-| Data | GloFAS modelled discharge through Open-Meteo, one value a day. Named on `/rivers`, `/live`, `/faq` and in the structured data; shown plainly on every product surface. Never called "measured". |
+| Data | GloFAS modelled discharge through Open-Meteo, one value a day. Named on `/rivers`, `/live`, `/faq` and in the structured data; shown plainly on every product surface, the gauge first and the exact figure beside it. Never called "measured". |
 
 Why, in one line each: two processors is two webhooks, two reconciliations and an Indian
 company, and the diaspora is the paying audience on day one. The sitting is the value, and a
@@ -208,8 +210,9 @@ locales (`tests/e2e/fold.spec.ts`). Tables become stacked ruled rows.
 - **`font-synthesis: none` on `.display`**; Eczar ships no italic, and a faked one is the tell.
 - **Indic scripts need their own leading**; the type layer keys off `data-script`, not `lang`.
 - **next/font options must be literal**; a spread fails the build.
-- **`opengraph-image` is excluded from the proxy matcher**; the English one lives at
-  `/en/opengraph-image` and scrapers do not follow redirects.
+- **`opengraph-image` is excluded from the proxy matcher**; the link cards live at
+  `/opengraph-image/<lang>/...`, outside `/en/` (robots.txt disallows it), the old
+  `/en/opengraph-image` is a rewrite, and scrapers do not follow redirects.
 - **The band overhangs its column**; its section clips it (`overflow-x: clip`), or the page
   scrolls sideways at 390.
 - **Marigold stays the same at night**; ink on it is `--on-marigold`, never `--ink`.
@@ -229,7 +232,7 @@ locales (`tests/e2e/fold.spec.ts`). Tables become stacked ruled rows.
 | Path | What it holds |
 | --- | --- |
 | `ARCHITECTURE.md` | Stack, routing, data flow, deployment |
-| `DESIGNSYSTEM.md` | Design system v3: the palette, type, the kit (press, seal, band, label, gauge, river), the logo, every surface, the six motions, voice, mobile first, the campaign layer |
+| `DESIGNSYSTEM.md` | Design system v3: the palette, type, the kit (press, seal, band, label, gauge, river), the logo, every surface, the eight motions, voice, mobile first, the campaign layer |
 | `docs/superpowers/specs/2026-10-17-design-system-v3-design.md` | The v3 spec, with the owner's choices and the designer's calls |
 | `docs/design/v3-mockups/` | The approved v3 mockups and the surface checks |
 | `plan.md` | The work queue: what waits for the owner's eyes, what waits for a go, what is done |

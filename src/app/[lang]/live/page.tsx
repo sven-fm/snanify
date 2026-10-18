@@ -16,6 +16,7 @@ import { getGhat } from "@/content/rivers";
 import { langParams, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { ARCHIVE, REVALIDATE_SECONDS, SOURCES, getLiveSnapshot } from "@/lib/riverdata";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 
 /**
@@ -58,6 +59,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.meta.title,
     description: t.meta.description,
   });
@@ -74,7 +76,9 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
      a stated temporal coverage and a named creator. Two rules govern it, and
      they are the rules the visible copy is written under:
 
-     1. Nothing is asserted here that is not asserted on the page. The creator
+     1. Nothing is asserted here that is not asserted on this page or on the
+        river page it links. Each place carries that page's url: the reach
+        and the grid cell print there, under the river's reading. The creator
         is Copernicus EMS, not us, because we ran no model. The licence is the
         one the upstream data actually carries.
      2. `dateModified` is the newest model day, never the build time. A crawler
@@ -114,6 +118,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
       return {
         "@type": "Place",
         name: ghat ? `${waterName(ghat, "river", lang)}, ${waterName(ghat, "city", lang)}` : water.slug,
+        url: publicUrl(lang, `/rivers/${water.slug}`),
         description: t.reaches[water.slug],
         geo: {
           "@type": "GeoCoordinates",

@@ -61,7 +61,8 @@ export function Header({
   const profileRows = [
     { href: localePath(lang, "/account"), label: t.nav.account },
     { href: localePath(lang, "/setup"), label: t.nav.snanSettings },
-    { href: localePath(lang, "/begin"), label: t.nav.buy },
+    /* `buy=1`: the packs alone, eleven chosen, whatever is in hand. */
+    { href: `${localePath(lang, "/begin")}?buy=1`, label: t.nav.buy },
     { href: localePath(lang, "/sign-out"), label: t.nav.signOut },
   ];
 

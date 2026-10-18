@@ -21,6 +21,7 @@ export function Gauge({
   lang,
   figure,
   heading = true,
+  pulse = false,
   className = "",
 }: {
   percentile: number | null;
@@ -30,6 +31,8 @@ export function Gauge({
   figure?: string;
   /** The state and its plain sentence above the strip. */
   heading?: boolean;
+  /** A sindoor ring swells from the dot and fades (`pulse`), so the eye goes to today. The sitting's reading only. */
+  pulse?: boolean;
   className?: string;
 }) {
   const model = gaugeModel(percentile);
@@ -73,14 +76,16 @@ export function Gauge({
             viewBox="0 0 18 18"
             width="18"
             height="18"
-            className="absolute"
+            className="absolute overflow-visible"
             style={{ left: pct(model.dot), top: -2, transform: "translateX(-50%)" }}
+            data-pulse={pulse ? "" : undefined}
           >
+            {pulse ? <circle className="pulse-ring" cx="9" cy="9" r="8" fill="var(--sindoor)" /> : null}
             <circle cx="9" cy="9" r="8" fill="var(--sindoor)" stroke="var(--ink)" strokeWidth="2" />
           </svg>
         ) : null}
         <div className="mt-1.5 grid grid-cols-3 text-[0.6875rem] leading-[1.4] text-ink2" aria-hidden="true">
-          <span>{t.word.slack}</span>
+          <span className="text-left">{t.word.slack}</span>
           <span className="text-center">{t.word.usual}</span>
           <span className="text-right">{t.word.spate}</span>
         </div>

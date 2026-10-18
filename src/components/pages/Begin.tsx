@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { db, profiles, purchases } from "@/db";
 import { balance } from "@/lib/credits";
 import { currentUser } from "@/lib/auth";
-import { DEFAULT_TIER, isTier } from "@/lib/packs";
+import { beginRoute, carryQuery, withQuery } from "@/lib/begin-path";
 import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -31,59 +31,72 @@ import { BeginView } from "@/components/pages/BeginView";
    A PRESS THAT CAME BACK UNOPENED arrives as `error=pay`, and a short line
    above the packs asks for one more. See src/app/[lang]/begin/actions.ts.
 
-   A RETURNING BUYER SKIPS THE SETUP LINE. The three steps belong to the first
-   visit; somebody who has bought before, or is sent from /today or /account
-   with every morning kept (`out=1`), is shown the packs and one line to match.
-
-   A SIGNED-IN PERSON WITH MORNINGS IN HAND is told so, and offered the way to
-   sit rather than the way to buy again.
+   WHO SEES WHAT is decided in src/lib/begin-path.ts. Somebody with mornings
+   in hand goes to /account, where the press is today's sitting. A first
+   purchase is made beside the specimen. Everyone else here to buy (the menu's
+   `buy=1`, a returning buyer at zero, `out=1`) sees the three packs alone.
    --------------------------------------------------------------------------- */
 
 export async function Begin({
   lang,
   pack,
+  buy,
   cancelled,
   error,
   out,
+  water,
 }: {
   lang: Lang;
   pack?: string;
+  /** A water chosen on /rivers, carried on to /setup for a new sheet. */
+  water?: string;
+  /** From the menu's "Buy mornings": the packs alone, whatever is in hand. */
+  buy?: boolean;
   cancelled?: boolean;
   /** A Pay press that came back unopened. */
   error?: boolean;
   /** Sent from /today or /account with every morning kept. */
   out?: boolean;
 }) {
-  const chosen = pack && isTier(pack) ? pack : DEFAULT_TIER;
-  /* A pack chosen on a price table travels with the reader, through the
-     sign-in and through setup, and comes back here. The page always raises
-     eleven beside the specimen (BeginView); the chosen pack is only counted,
-     on the begin_view event. */
-  const here = pack && isTier(pack) ? `${localePath(lang, "/begin")}?pack=${pack}` : localePath(lang, "/begin");
+  const query = { pack, buy, out, cancelled, error };
+  /* What the reader came with travels through the sign-in and comes back:
+     carryQuery owns the pack and the water, and the menu's "Buy mornings"
+     rides along on the way back to this page only. */
+  const carried = carryQuery({ pack, water });
+  const back = new URLSearchParams(carried);
+  if (buy) back.set("buy", "1");
+  const here = withQuery(localePath(lang, "/begin"), back);
 
+  /* One place decides (src/lib/begin-path.ts); this only reads for it. */
   const user = await currentUser(lang);
-  if (!user) redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
+  const [credits, profile, bought] = user
+    ? await Promise.all([
+        balance(db, user.id),
+        db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
+        db.select({ id: purchases.id }).from(purchases).where(eq(purchases.userId, user.id)).limit(1),
+      ])
+    : [0, [], []];
 
-  const [credits, profile, bought] = await Promise.all([
-    balance(db, user.id),
-    db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
-    db.select({ id: purchases.id }).from(purchases).where(eq(purchases.userId, user.id)).limit(1),
-  ]);
-
-  const setUp = profile[0]?.completedAt != null;
-  if (!setUp) redirect(pack && isTier(pack) ? `${localePath(lang, "/setup")}?pack=${pack}` : localePath(lang, "/setup"));
-
-  const returning = out || bought.length > 0;
+  const route = beginRoute(
+    user
+      ? { signedIn: true, setUp: profile[0]?.completedAt != null, credits, bought: bought.length > 0 }
+      : { signedIn: false },
+    query,
+  );
+  if (route.to === "sign-in") redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
+  if (route.to === "setup") redirect(withQuery(localePath(lang, "/setup"), carried));
+  if (route.to === "account") redirect(localePath(lang, "/account"));
 
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <TrackView event="begin_view" props={{ pack: chosen, lang }} />
+      <TrackView event="begin_view" props={{ pack: route.pack, lang }} />
       <Header lang={lang} currentPath="/begin" hideCta />
       <BeginView
         lang={lang}
         credits={credits}
-        returning={returning}
+        packsOnly={route.to === "packs"}
+        pack={route.pack}
         out={out}
         cancelled={cancelled}
         error={error}

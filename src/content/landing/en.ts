@@ -66,7 +66,7 @@ export const en = {
     title: "Eleven mornings for eleven.",
     /* For rupee readers: eleven mornings cost ₹501, so the line names it. */
     titleInr: "Eleven mornings for {price:eleven}.",
-    lede: "Pay once, in your own currency. Sit them on any mornings you like.",
+    lede: "Pay once, no subscription. Sit on any morning you like.",
     labels: {
       each: "a morning",
       choose: "Choose this pack",
@@ -83,7 +83,7 @@ export const en = {
       {
         key: "eleven",
         name: "Eleven mornings",
-        body: "Eleven mornings, paid once. Sit them on any eleven days. They keep.",
+        body: "Eleven mornings, paid once. Sit on any morning you like. They keep.",
       },
       {
         key: "sixty",
@@ -122,7 +122,7 @@ export const en = {
     cols: [
       { h: "Practice", links: ["Begin", "The snan"] },
       { h: "Reference", links: ["Panchang", "The rivers now", "Sacred waters", "Muhurat", "Questions"] },
-      { h: "Legal", links: ["Privacy", "Terms", "Refunds"] },
+      { h: "Legal", links: ["Privacy", "Terms"] },
     ],
     made: "Prayagraj and Berlin",
     rights: "© 2026 Snanify",

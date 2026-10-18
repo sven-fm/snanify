@@ -6,3 +6,4 @@ export { Band } from "./Band";
 export { Label } from "./Label";
 export { Gauge } from "./Gauge";
 export { RiverHorizon, RiverStrip } from "./River";
+export { Phone, PHONE_STATUS_OVER, PHONE_GEOMETRY } from "./Phone";

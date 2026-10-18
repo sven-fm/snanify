@@ -85,32 +85,41 @@ export type PageMetaArgs = {
   title: string;
   description: string;
   ogType?: "website" | "article";
-  /** A page's own preview image. Left out, the page carries the site card. */
-  images?: string[];
+  /**
+   * A page's own preview image: a URL, or a card with its size from
+   * `pageCard` (src/lib/page-cards.ts). Left out, the page carries the site card.
+   */
+  images?: (string | PreviewImage)[];
 };
 
+/** A preview image with its size, so a chat app can lay out the card first. */
+export type PreviewImage = { url: string; width: number; height: number; type: string; alt: string };
+
 /**
- * The query on the site card's URL, which is Next's content hash of
- * src/app/[lang]/opengraph-image.tsx as the homepage emits it. Every page
- * names the card by the same URL, so Facebook and WhatsApp fetch and cache one
- * image per edition. Edit that file and the homepage's query moves:
- * tests/unit/og-image.test.ts then fails until this value matches again.
+ * The query on the homepage card's URL, per edition: the hash
+ * src/lib/page-cards.ts gives the homepage's card. It lives here as a literal
+ * because page-cards reads the copy, and the copy reads this file. Change the
+ * landing's headline, its share line or the drawing and that hash moves:
+ * tests/unit/og-image.test.ts then fails, naming the value to put here.
  */
-export const SITE_CARD_VERSION = "7d5fa4fbace400e1";
+export const SITE_CARD_VERSION: Record<Lang, string> = { en: "c1161381", hi: "fee3cf22" };
 
 /**
  * The site card for an edition, absolute, with its size so a chat app can lay
- * out the preview before the image arrives.
+ * out the preview before the image arrives: the homepage's card, at
+ * /opengraph-image/<lang> (src/app/opengraph-image/[lang]/[[...page]]), which
+ * every page without a card of its own carries too. It is not under /en/, so
+ * neither the proxy's /en/* redirect nor robots.txt's /en/ rule stands
+ * between a scraper and it.
  *
  * Next merges metadata one key deep: a page that sets `openGraph` replaces the
- * layout's whole object, and with it the image Next adds for the file at
- * src/app/[lang]/opengraph-image.tsx. Every page sets `openGraph` here, so the
- * card is named here too. A segment with its own image file (p/[id]) still
- * wins, since Next applies a segment's files over its metadata object.
+ * layout's whole object. Every page sets `openGraph` here, so the card is
+ * named here too. A segment with its own image file (p/[id]) still wins,
+ * since Next applies a segment's files over its metadata object.
  */
-export function siteCard(lang: Lang) {
+export function siteCard(lang: Lang): PreviewImage {
   return {
-    url: `${SITE_ORIGIN}/${lang}/opengraph-image?${SITE_CARD_VERSION}`,
+    url: `${SITE_ORIGIN}/opengraph-image/${lang}?v=${SITE_CARD_VERSION[lang]}`,
     width: 1200,
     height: 630,
     type: "image/png",

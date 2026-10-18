@@ -890,6 +890,8 @@ type OfferItem = { key: string; name: string; body: string };
 
 type RiverDetailCopy = {
   back: string;
+  /** The press: Begin, with this water chosen for a new sheet. */
+  here: string;
   /** The capitals headline, `{accent}` the river in sindoor, `{place}` its city. */
   head: { title: string; now: string; close: string };
   facts: {
@@ -916,7 +918,6 @@ type RiverDetailCopy = {
     title: string;
     lede: string;
     items: OfferItem[];
-    cta: string;
     muhurat: string;
   };
   tradition: {
@@ -930,12 +931,13 @@ type RiverDetailCopy = {
     provisional: string;
   };
   keeper: { title: string };
-  onward: { title: string; cta: string; all: string };
+  onward: { title: string; all: string };
 };
 
 export const riverDetailContent = {
   en: {
     back: "All six waters",
+    here: "Do your snan here",
     head: { title: "The {accent} at {place}.", now: "This morning", close: "Three minutes with the {river}, tomorrow morning." },
     facts: {
       river: "River",
@@ -967,7 +969,7 @@ export const riverDetailContent = {
         "River discharge: Copernicus Emergency Management Service, GloFAS, served by Open-Meteo, CC BY 4.0.",
         "Sun and weather: Open-Meteo, CC BY 4.0.",
       ],
-      cta: "See this water live",
+      cta: "All six rivers this morning",
     },
     offer: {
       title: "What you find here",
@@ -994,7 +996,6 @@ export const riverDetailContent = {
           body: "Three minutes with this water at the state it is in, at an hour the panchang names, with your own sankalp in your own words.",
         },
       ],
-      cta: "Begin your snan",
       muhurat: "The muhurat calendar",
     },
     tradition: {
@@ -1013,13 +1014,13 @@ export const riverDetailContent = {
     keeper: { title: "Who looks after this water" },
     onward: {
       title: "Read another water",
-      cta: "Begin your snan",
       all: "All six waters",
     },
   },
 
   hi: {
     back: "सभी छह जल",
+    here: "यहाँ स्नान कीजिए",
     head: { title: "{place} में {accent}", now: "आज सुबह", close: "कल सुबह, {river} के साथ तीन मिनट।" },
     facts: {
       river: "नदी",
@@ -1051,7 +1052,7 @@ export const riverDetailContent = {
         "नदी-प्रवाह: Copernicus Emergency Management Service, GloFAS, Open-Meteo के माध्यम से, CC BY 4.0.",
         "सूर्य एवं मौसम: Open-Meteo, CC BY 4.0.",
       ],
-      cta: "यह जल सजीव देखिए",
+      cta: "आज सुबह की छहों नदियाँ",
     },
     offer: {
       title: "यहाँ आपको क्या मिलता है",
@@ -1078,7 +1079,6 @@ export const riverDetailContent = {
           body: "इस जल के साथ तीन मिनट, उस अवस्था में जिसमें यह इस समय है, पंचांग की बताई घड़ी पर, आपके अपने शब्दों में आपका अपना संकल्प।",
         },
       ],
-      cta: "अपना स्नान शुरू कीजिए",
       muhurat: "मुहूर्त पंचांग",
     },
     tradition: {
@@ -1097,7 +1097,6 @@ export const riverDetailContent = {
     keeper: { title: "इस जल की देखरेख कौन करता है" },
     onward: {
       title: "कोई और जल पढ़िए",
-      cta: "अपना स्नान शुरू कीजिए",
       all: "सभी छह जल",
     },
   },

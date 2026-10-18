@@ -6,19 +6,21 @@ import { redirect } from "next/navigation";
 import { clerkClient } from "@clerk/nextjs/server";
 import { db, profiles, sittings, users } from "@/db";
 import { requireUser } from "@/lib/auth";
-import { remove } from "@/lib/blob";
+import { remove, removePortraits } from "@/lib/blob";
 import { localePath, type Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    What somebody can do to their own account.
 
-   DELETION IS REAL AND IT IS IN THE RIGHT ORDER. The files go first, because a
-   blob whose row is gone is a file nobody can find to delete afterwards. Then
-   the Clerk account, so the person cannot sign in again halfway through and
-   be given a fresh, empty row. Then our rows, which cascade from `users`. If
-   the last step fails the rows are orphaned rather than the login, and an
-   orphan is found by a sweep; a login with no rows is a person who has lost
-   their mornings.
+   DELETION IS REAL AND IT IS IN THE ORDER /privacy STATES. The files go
+   first, because a blob whose row is gone is a file nobody can find to delete
+   afterwards. Then our rows, which cascade from `users`. Then the sign-in.
+   That order is the safe one when a step fails: if the rows cannot be
+   deleted, the person can still sign in and press the button again; if the
+   sign-in cannot be deleted after the rows are gone, what is left is a login
+   with no personal data behind it, and the button works again from a fresh,
+   empty account. The other order could strand the email, the names and the
+   sankalp under an id nobody can sign in as to retry.
 
    The one thing deliberately left behind is the purchase and ledger history,
    which cascade with the user. That is a decision worth naming: a business
@@ -74,13 +76,19 @@ export async function deleteAccount(lang: Lang, formData: FormData): Promise<voi
   }
 
   for (const key of keys) await remove(key);
-
-  const clerk = await clerkClient();
-  await clerk.users.deleteUser(user.id);
+  /* A replaced portrait is kept for the Patras made with it, and one chosen
+     and replaced before any sitting is on no row at all: the store is listed
+     under the person's own prefix so every one of them goes. */
+  await removePortraits(user.id);
 
   /* Everything else cascades from here: profile, purchases, ledger, sittings.
      Stripe keeps the payment record, as /privacy says. */
   await db.delete(users).where(eq(users.id, user.id));
 
-  redirect(localePath(lang, "/"));
+  const clerk = await clerkClient();
+  await clerk.users.deleteUser(user.id);
+
+  /* Through /sign-out, not straight to /: the session cookie still verifies
+     for about a minute, and the landing would send it on to /account. */
+  redirect(localePath(lang, "/sign-out"));
 }

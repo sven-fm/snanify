@@ -1,6 +1,7 @@
 import type { patraPageContent } from "@/content/patra-page";
 import { LinkButton } from "@/components/ui";
 import { localePath, type Lang } from "@/lib/locales";
+import { CreditsLink } from "@/components/live/CreditsLink";
 
 type Copy = (typeof patraPageContent)["en"];
 
@@ -29,6 +30,9 @@ export function PatraGuest({
 
       <p className="pull mt-5 text-center text-[1rem] leading-[1.6] text-ink2" style={{ animationDelay: "320ms" }}>
         {line}
+      </p>
+      <p className="mt-2 text-center">
+        <CreditsLink lang={lang} />
       </p>
 
       <section className="mt-12 text-center">

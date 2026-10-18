@@ -13,6 +13,7 @@ import {
 import { snanContent } from "@/content/snan";
 import { LANGS, type Lang } from "@/lib/locales";
 import { SOURCES } from "@/lib/riverdata";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 import { currencyForLang, PRICE } from "@/content/prices";
 import { PACKS } from "@/lib/packs";
@@ -36,6 +37,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.title,
     description: t.description,
     ogType: "article",

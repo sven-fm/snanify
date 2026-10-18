@@ -85,7 +85,13 @@ export const clerkAppearance = {
   },
   elements: {
     rootBox: { width: "100%" },
-    cardBox: { width: "100%", borderRadius: "0", border: "0", boxShadow: FLAT },
+    /* NOTHING CLIPS. Clerk's cardBox hides its overflow and pulls the card out
+       by a pixel each side to tuck its own border. With the card's side padding
+       gone, that clip cut the press's ink walls off on the right and the
+       "Last used" badge (which Clerk hangs 10px past the Google button's edge)
+       mid-word, and the card sat a pixel wide of the column. The box shows its
+       overflow and the card sits square in the column. */
+    cardBox: { width: "100%", borderRadius: "0", border: "0", boxShadow: FLAT, overflow: "visible" },
     /* The card is the page: paper on paper, no frame, so the press is the one
        block on the screen. */
     card: {
@@ -93,6 +99,8 @@ export const clerkAppearance = {
       boxShadow: FLAT,
       border: "0",
       backgroundColor: "var(--paper)",
+      margin: "0",
+      width: "100%",
       paddingLeft: "0",
       paddingRight: "0",
     },
@@ -142,6 +150,26 @@ export const clerkAppearance = {
       "&:focus-visible": { outline: "2px solid var(--sindoor)", outlineOffset: "2px" },
     },
     socialButtonsBlockButtonText: { color: "var(--ink)", fontWeight: 700 },
+    /* "Last used", on the Google button's top edge: inside the box rather than
+       hung past its right side, square, in the label's ink on paper. */
+    lastAuthenticationStrategyBadge: {
+      ...LABEL,
+      fontSize: "0.75rem",
+      /* Devanagari needs room above and below for its matras. */
+      lineHeight: 1.6,
+      right: "0.75rem",
+      insetInlineEnd: "0.75rem",
+      transform: "translate(0, -50%) !important",
+      height: "auto",
+      paddingTop: "1px",
+      paddingBottom: "1px",
+      paddingInline: "0.375rem",
+      borderRadius: "0",
+      border: "2px solid var(--ink)",
+      background: "var(--paper)",
+      boxShadow: FLAT,
+      color: "var(--ink)",
+    },
 
     dividerLine: { backgroundColor: "var(--ink-2)" },
     dividerText: { color: "var(--ink-2)" },
@@ -213,6 +241,7 @@ const STRINGS = {
     formFieldLabel__emailAddress: "Email address",
     formFieldInputPlaceholder__emailAddress: "you@example.com",
     backButton: "Back",
+    lastAuthenticationStrategy: "Last used",
   },
   hi: {
     signIn: {
@@ -239,6 +268,7 @@ const STRINGS = {
     formFieldLabel__emailAddress: "ईमेल पता",
     formFieldInputPlaceholder__emailAddress: "aap@example.com",
     backButton: "वापस",
+    lastAuthenticationStrategy: "पिछली बार यही",
   },
 } satisfies Record<Lang, object>;
 

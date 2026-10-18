@@ -65,10 +65,7 @@ export function Panchang({ lang }: { lang: Lang }) {
         {/* ---------------- the cities ---------------- */}
         <section id="cities" className="scroll-mt-16">
           <div className="mx-auto max-w-6xl px-5 pb-14 sm:px-8">
-            <p className="max-w-2xl leading-[1.6] text-ink2">{t.cities.lede}</p>
-            <div className="mt-8">
-              <CityFinder lang={lang} groups={groups} t={t.finder} />
-            </div>
+            <CityFinder lang={lang} groups={groups} t={t.finder} />
           </div>
         </section>
 
@@ -93,7 +90,6 @@ export function Panchang({ lang }: { lang: Lang }) {
             <h2 className={H2} style={W700}>
               {t.ghats.title}
             </h2>
-            <p className="mt-3 max-w-2xl leading-[1.6] text-ink2">{t.ghats.lede}</p>
             <ul className="mt-6 border-t border-rule sm:grid sm:grid-cols-2 sm:gap-x-8 sm:border-t-0 lg:grid-cols-3">
               {RIVERS.map((g) => (
                 <PlaceRow

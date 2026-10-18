@@ -4,9 +4,9 @@ import type { Lang } from "@/lib/locales";
    /p/[id], the Sankalp Patra.
 
    Two readers, two pages. The person who kept the morning, arriving straight
-   from it, gets the sheet, the marigold press that sends it, a link to save
-   it, their next morning, the controls, and their own copy with their
-   sankalp on it. Whoever they send it to, arriving cold in a family group,
+   from it, gets the sheet with their sankalp under it, the marigold press
+   that sends it, links to save it and to print it, their next morning and
+   the controls. Whoever they send it to, arriving cold in a family group,
    gets the sheet, one line saying what it is, and one press to start their
    own snan. Where the figures come from is said on /rivers and /faq.
 
@@ -28,9 +28,6 @@ const en = {
   metaTitle: "{name}, {water}, {date}",
   metaDescription: "A Sankalp Patra kept with the {water} at {ghat}, {city}, on {date}. Your own morning, at snanify.com.",
 
-  /** Shown once, straight after a morning: the icon is how this gets opened at six. */
-  homeScreen: "Add Snanify to your home screen. Tomorrow it opens at your hour.",
-
   privateTitle: "This sheet is private",
   privateBody: "The person who kept it has made it private.",
 
@@ -39,9 +36,8 @@ const en = {
   makePublic: "Make it shareable",
   privateNow: "Only you can open this link now.",
   privateWarning: "People you have already sent the image to keep it. Making it private stops the link.",
-  printHeading: "Your copy",
-  printNote: "Your sankalp stands under the names. This copy stays with you.",
-  print: "Print your copy",
+  /** The quiet link under the press: the sheet and the sankalp, on one page. */
+  print: "Print the sheet",
 
   /** The owner's "what comes next". */
   next: {
@@ -65,8 +61,6 @@ const hi = {
   metaTitle: "{name}, {water}, {date}",
   metaDescription: "{date} को {ghat}, {city} पर {water} के साथ रखा गया एक संकल्प पत्र। अपनी सुबह, snanify.com पर।",
 
-  homeScreen: "Snanify को अपनी होम स्क्रीन पर जोड़िए। कल यह आपकी घड़ी पर खुलेगा।",
-
   privateTitle: "यह पत्र निजी है",
   privateBody: "जिन्होंने इसे रखा, उन्होंने इसे निजी कर दिया है।",
 
@@ -75,9 +69,7 @@ const hi = {
   makePublic: "इसे साझा योग्य कीजिए",
   privateNow: "अब यह कड़ी केवल आप खोल सकते हैं।",
   privateWarning: "जिन्हें आपने चित्र भेज दिया है, उनके पास वह रहता है। निजी करने से कड़ी बंद होती है।",
-  printHeading: "आपकी प्रति",
-  printNote: "नामों के नीचे आपका संकल्प है। यह प्रति आपके पास रहती है।",
-  print: "अपनी प्रति छापिए",
+  print: "पत्र छापिए",
 
   next: {
     heading: "आपकी अगली सुबह",

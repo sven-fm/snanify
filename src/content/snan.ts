@@ -244,7 +244,7 @@ const en: Copy = {
   tariff: {
     title: "Eleven mornings for eleven.",
     titleInr: "Eleven mornings for {price:eleven}.",
-    lede: "Pay once, in your own currency. Sit them on any mornings you like.",
+    lede: "Pay once, no subscription. Sit on any morning you like.",
     heads: { price: "Price", per: "Per morning" },
     choose: "Choose this pack",
     rows: [
@@ -397,7 +397,7 @@ const hi: Copy = {
   tariff: {
     title: "ग्यारह सुबहें, ग्यारह में।",
     titleInr: "ग्यारह सुबहें {price:eleven} में।",
-    lede: "एक बार भुगतान, आपकी अपनी मुद्रा में। जिस सुबह चाहें, बैठिए।",
+    lede: "एक बार भुगतान, कोई सदस्यता नहीं। किसी भी सुबह बैठिए।",
     heads: { price: "मूल्य", per: "प्रति सुबह" },
     choose: "यह पैक चुनिए",
     rows: [

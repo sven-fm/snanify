@@ -94,6 +94,19 @@ const PRODUCT = new Set([
 const OFF_LIMITS =
   /holy (dip|water)|punya(?! kaal)|on your behalf|as good as being there|measured at the ghat|passes the ghat|most people/i;
 
+/** Refunds are the terms' business (/terms, read by @/content/legal) and
+    nobody else's: the owner's direction of 18 October 2026. */
+const REFUND = /refund|रिफ़ंड|रिफंड|धन वापस|राशि वापस|लौटा दी जाती|(?<!घर-)वापसी/i;
+
+/** Where "refund" may be written raw: the terms and privacy copy, and the code
+    that books a refund Stripe reports (the ledger reason, the credit back). */
+const REFUND_HOME = [
+  "src/content/legal.ts",
+  "src/lib/credits.ts",
+  "src/db/schema.ts",
+  "src/app/api/stripe/",
+];
+
 const SOURCE_TALK = /\b(modelled|modeled|Modelled|Copernicus|GloFAS|Open-Meteo)\b|मॉडल/;
 
 type Slip = { at: string; text: string; rule: string };
@@ -106,6 +119,7 @@ function walkStrings(value: unknown, at: string, out: Slip[]): void {
     if (/\bmeasured\b/i.test(value)) out.push({ at, text: value, rule: "measured, for a modelled figure" });
     // `tier` is an enum value ("punya" names a weight class), never printed.
     if (!at.endsWith(".tier") && OFF_LIMITS.test(value)) out.push({ at, text: value, rule: "off limits (spec 7.2)" });
+    if (at.split(".")[0] !== "@/content/legal" && REFUND.test(value)) out.push({ at, text: value, rule: "refund talk outside /terms" });
     if (PRODUCT.has(at.split(".")[0]) && SOURCE_TALK.test(value)) {
       out.push({ at, text: value, rule: "source talk on a product surface" });
     }
@@ -180,6 +194,27 @@ describe("the copy rules", () => {
     walkStrings(json, "content/data/muhurat.json", slips);
 
     expect(slips.map((s) => `${s.rule}: ${s.at}: ${s.text.slice(0, 80)}`)).toEqual([]);
+  });
+
+  it("keeps refund talk on /terms: every source file, the emails and public/*.txt", () => {
+    const pub = path.join(ROOT, "public");
+    const files = [
+      ...sourceFiles(SRC).filter((f) => /\.tsx?$/.test(f)),
+      ...readdirSync(pub)
+        .filter((n) => n.endsWith(".txt"))
+        .map((n) => path.join(pub, n)),
+    ];
+    const offenders = files
+      .map((f) => path.relative(ROOT, f))
+      .filter((rel) => !REFUND_HOME.some((home) => rel.startsWith(home)))
+      .filter((rel) => REFUND.test(readFileSync(path.join(ROOT, rel), "utf8")));
+    expect(offenders).toEqual([]);
+  });
+
+  it("tells a refund from a homecoming", () => {
+    expect(REFUND.test("कुशल घर-वापसी से जोड़ती है")).toBe(false);
+    expect(REFUND.test("वापसी कैसे होती है")).toBe(true);
+    expect(REFUND.test("Unused mornings are refunded on request.")).toBe(true);
   });
 
   it("keeps the marketing pages short and free of the generated tics", async () => {

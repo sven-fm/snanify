@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { withBotId } from "botid/next/config";
+import { LANGS } from "./src/lib/locales";
 
 /* ---------------------------------------------------------------------------
    Security headers, on every response.
@@ -83,6 +84,23 @@ const nextConfig: NextConfig = {
    */
   experimental: {
     serverActions: { bodySizeLimit: "4.5mb" },
+  },
+
+  /**
+   * The homepage's card moved from /<lang>/opengraph-image to
+   * /opengraph-image/<lang> (src/lib/page-cards.ts), out from under robots.txt's
+   * /en/ rule, which X's crawler honours for images. Facebook and WhatsApp
+   * cached the old address on links already shared, so it keeps answering
+   * with the same card: a rewrite, never a redirect, since scrapers do not
+   * reliably follow one for an og:image. Before the filesystem, so the
+   * `[lang]` catch-all never sees the path. src/proxy.ts skips both.
+   */
+  async rewrites() {
+    return {
+      beforeFiles: [{ source: `/:lang(${LANGS.join("|")})/opengraph-image`, destination: "/opengraph-image/:lang" }],
+      afterFiles: [],
+      fallback: [],
+    };
   },
 
   async headers() {

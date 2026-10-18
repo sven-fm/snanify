@@ -49,7 +49,10 @@ shadow.
 ```
 
 Round things are SVG: the bindu, the sun, the seal. The **phone** around the specimen and
-the looped sitting is the one rounded frame, cut with `clip-path: inset(0 round …)`.
+the looped sitting is the one rounded frame, cut with `clip-path: inset(0 round …)`. It is one
+component, `src/components/kit/Phone.tsx`, drawn like a current iPhone: corners 15% of the
+width, a thin bezel inside a hairline ink-2 band, a small island in a status bar, and the
+content (nine by sixteen) below the status bar, so the island covers nothing.
 
 ## Colour
 
@@ -289,8 +292,10 @@ kit stays off it.
 Below the fold: the full river with the sun; the reading as a gauge with the small figure
 row under it; the specimen sheet in the phone; the six waters as a list; the packs, eleven
 on the label, one and sixty as plain rows; the footer. The page opens on the headline: no
-live sentence above it, no long lede, no second button. Desktop centres the 390 composition
-at `max-w-md` beside the specimen phone from `lg` up.
+live sentence above it, no long lede, no second button. From `lg` up the landing stays one
+centred column, scaled up, never two: larger capitals, the band the full width of the window,
+the seal and the pitch, the press; then the river as a full-width panorama, the reading, and
+the specimen phone centred in its own section.
 
 ### `/snan`
 
@@ -322,11 +327,11 @@ the foot of every part except the stillness, which gets the night river.
 
 | Part | Screen |
 | --- | --- |
-| Ready | Capitals "Your {River}, this morning.", the ghat and the distance in ink-2, the band "Three minutes. Phone on silent.", the river, the press "Begin →" |
-| The reading, 15s | The river's name in sindoor capitals, the ghat, the state word, the plain sentence, the gauge, and one small ink-2 row with the exact figure and rank ("797 m³/s · 86th percentile since 1997") |
-| The breath, 45s | The river takes half the screen; its waves' vertical scale rises over 4s and falls over 6s, at the river's own amplitude (a thin river barely stirs, one in spate swells). "In" / "Out" in capitals, Out in teal |
+| Ready | Capitals "Your {River}, this morning.", the ghat and the distance in ink-2, the band "Take three minutes. Put your phone on silent.", the river, the press "Begin →". The page footer leaves its river out here, so the ready screen has one river |
+| The reading, 15s | The river's name in sindoor capitals, the ghat, the state word, the plain sentence, the gauge with its dot pulsing (`pulse`), so the eye knows where to look, and one small ink-2 row with the exact figure and rank ("797 m³/s · 86th percentile since 1997") |
+| The breath, 45s | The river takes half the screen; its waves' vertical scale rises over 4s and falls over 6s, at the river's own amplitude (a thin river barely stirs, one in spate swells). "Breathe in" / "Breathe out" in capitals, Out in teal, with the seconds of that half under it, 4..1 and 6..1, each number fading away across its second (`count`) |
 | The sankalp, 11s | The household's names small in ink-2, the person's own words in Eczar 700, the hold filling with sindoor |
-| The stillness, 60s | Near black `#0b0a08`, "Be still with the river.", the seconds in dim ink, the night river, Next |
+| The stillness, 60s | Near black `#0b0a08`, "Be still with the river.", the seconds in dim ink, each cross-fading into the next (`count`), the night river, Next |
 | The mark, 20s | "Snan done." in capitals, one line writing itself, the morning badge stamping in from the second morning, the marigold press "Send it to the family →" |
 
 The story bar and the leave cross stay. From Begin on, the sitting sells nothing: no band, no
@@ -345,9 +350,14 @@ Two renderings of one design, from the owner's final cut in
   serve and people share. `patraSvg` and `renderPatraSheet` make the 1080 × 1350 sheet for
   the ad renderer, in the same order with a shorter river. `patraCardSvg` is the 1200 × 630
   link card.
-- `src/components/SankalpPatra.tsx`, HTML, for `/p/[id]`, the specimen and print: the same
-  layout as the memento, plus the person's own sankalp in Eczar 700 under the names on the
-  owner's copy. Print CSS swaps to `#faf6ea`.
+- `src/components/SankalpPatra.tsx`, HTML, the one sheet on the owner's `/p/[id]`: the same
+  layout as the memento, with the person's own sankalp in Eczar 700 under the sheet, outside
+  it, on the owner's copy only. Print CSS swaps to `#faf6ea` and holds the sheet and the
+  sankalp on one page of A4 or US Letter.
+- **The portrait is cut from the middle.** `src/lib/portrait.ts` crops an upload to the 4 : 5
+  window centred across, never by saliency: sharp's "attention" crop centres a side-lit face
+  on its lit cheek and leaves the head off to one side. A photograph taller than 4 : 5 keeps
+  more of its top (the window starts 30% into the excess), where a head sits.
 
 From top to foot:
 
@@ -420,9 +430,18 @@ the marigold press to send today's sheet when one exists.
 
 ### Link cards
 
-`src/lib/site-card.ts` (what a chat app shows for snanify.com) is paper, the capitals
-headline and the full river with the sun. When it changes, bump `SITE_CARD_VERSION` in
-`src/lib/seo.ts` and `ROUTE_SHA256` in `tests/unit/og-image.test.ts`. `patraCardSvg`
+`src/lib/site-card.ts` draws every page's card: paper, the logo and the samvat, the
+page's own headline in capitals with its accent in sindoor, the page's one plain sentence
+in small sans (Hindi in Noto Serif Devanagari, so conjuncts stack), and the full river with
+the sun. `src/lib/page-cards.ts` says what each card says, and every card is served at
+`/opengraph-image/<lang>` (the homepage) or `/opengraph-image/<lang>/<page>` (`/snan`,
+`/rivers`, each river, `/live`, `/panchang`, `/muhurat`, `/kumbh`, `/faq`, `/about`); the old
+`/<lang>/opengraph-image` is a rewrite to the homepage's card. A long headline steps down
+from 86 to 76 to 66 until it and the plain line stand clear of the river; a headline that
+takes one line grows to fill the measure (up to 124) and sits in the middle of the paper.
+When the drawing changes, bump `CARD_DRAWING` in `src/lib/page-cards.ts`, `DRAWING_SHA256`
+in `tests/unit/page-cards.test.ts` and `SITE_CARD_VERSION` in `src/lib/seo.ts` (the tests
+name each value). `patraCardSvg`
 carries the names, the river's state and the gauge, and the river with the sun; no
 portrait, no badge.
 
@@ -447,8 +466,8 @@ delivery learning.
 
 ## Motion
 
-Six motions, named, and nothing else. Transform and opacity only. All stop under
-`prefers-reduced-motion`.
+Eight motions, named, and nothing else. Transform and opacity only. All stop under
+`prefers-reduced-motion`. `pulse` and `count` came from the owner's notes of 18 October 2026.
 
 | Name | What | Where |
 | --- | --- | --- |
@@ -458,6 +477,8 @@ Six motions, named, and nothing else. Transform and opacity only. All stop under
 | `flow` | Each wave line drifts sideways by one period at its own pace (`.flow-line`); the sun's path shimmers (`.flow-glint`) | The strip, the full river |
 | `breathe` | The waves' vertical scale, 4s up and 6s down, at the river's own amplitude (`.breathe-waves`), scrubbed by the sitting's clock | The breath only |
 | `stamp` | The seal lands from scale 1.15 and -14° to its rest in 180ms, stepped (`.stamp`) | The morning badge at the mark |
+| `pulse` | A sindoor ring swells from the gauge's dot and fades, once every 1.6s (`.pulse-ring`); the dot itself stays put | The reading's gauge only |
+| `count` | A countdown numeral's opacity, scrubbed by the sitting's clock (`src/lib/countdown.ts`): a breath number fades away across its second, a stillness number cross-fades into the next. No timer of its own. Under reduced motion the plain numbers stand at full ink | The breath, the stillness |
 
 `flicker`, the petal drift, the old `impress` plate and the old flowing bands are retired.
 Only numerals, bars and pictures reveal on scroll (`.reveal`, `.grow`, `.ink-picture-lazy`

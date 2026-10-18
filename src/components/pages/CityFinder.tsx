@@ -34,7 +34,6 @@ export interface FinderGroup {
 export interface FinderCopy {
   readonly label: string;
   readonly placeholder: string;
-  readonly hint: string;
   readonly matches: string;
   readonly match: string;
   readonly empty: string;
@@ -116,18 +115,20 @@ export function CityFinder({ lang, groups, t }: { lang: Lang; groups: readonly F
           placeholder={t.placeholder}
           autoComplete="off"
           enterKeyHint="search"
+          aria-describedby="city-count"
           className="mt-3 block min-h-[48px] w-full border-2 border-rulestrong bg-paper px-4 text-[1.05rem] text-ink placeholder:text-ink2 focus:border-sindoor focus:outline-none"
         />
-        <span className="mt-2 block text-sm text-ink2" aria-live="polite">
+      </label>
+      {/* Outside the label, so the count describes the box rather than naming it. */}
+      <p id="city-count" className="mt-2 max-w-xl text-sm text-ink2" aria-live="polite">
           {q
             ? found.length === 0
               ? t.empty
               : found.length === 1
                 ? t.match
                 : t.matches.replace("{n}", String(found.length))
-            : t.hint}
-        </span>
-      </label>
+            : null}
+      </p>
 
       {q ? (
         <>

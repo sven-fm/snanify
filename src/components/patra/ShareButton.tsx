@@ -23,6 +23,15 @@ import { track } from "@/lib/track";
    two seconds after a sixty-second silence is asking them to lose the impulse.
    `navigator.share` needs a gesture in most browsers, so this is attempted and
    allowed to fail quietly rather than promised.
+
+   THE FILE IS FETCHED WHEN THE PRESS IS ABOUT TO BE USED, NEVER ON LOAD: when
+   a pointer comes over it, a finger lands on it or it takes focus, and, where
+   the page asks for it (`fetchInView`, the owner's sheet), when the press
+   scrolls into view. /account carries this press too and must not pull a
+   megabyte on every visit. A share sheet opened after a slow fetch has lost
+   the gesture that allowed it on iOS, so a press whose file is not in hand
+   yet shares the link at once, inside the gesture, and the file is ready for
+   the next press.
    --------------------------------------------------------------------------- */
 
 export function ShareButton({
@@ -34,6 +43,7 @@ export function ShareButton({
   water,
   lang,
   auto = false,
+  fetchInView = false,
 }: {
   url: string;
   imageUrl: string;
@@ -44,21 +54,41 @@ export function ShareButton({
   water: string;
   lang: string;
   auto?: boolean;
+  /** Start fetching the image once the press is on screen. */
+  fetchInView?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
   const tried = useRef(false);
+  const pending = useRef<Promise<File | null> | null>(null);
+  const ready = useRef<File | null>(null);
+  const button = useRef<HTMLButtonElement>(null);
 
-  async function send() {
+  /** Start the fetch once; a failed one may start again on the next try. */
+  function prepare(): Promise<File | null> {
+    pending.current ??= sheetFile(imageUrl).then((file) => {
+      ready.current = file;
+      if (!file) pending.current = null;
+      return file;
+    });
+    return pending.current;
+  }
+
+  /** `gesture`: a press, whose share must open before the gesture expires. */
+  async function send(gesture: boolean) {
     if (busy) return;
     setBusy(true);
     track("share_open", { water, lang });
 
     try {
-      const file = await sheetFile(imageUrl);
+      let sheet = ready.current;
+      if (!sheet) {
+        const fetching = prepare();
+        if (!gesture) sheet = await fetching;
+      }
 
-      if (file && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], text, url });
+      if (sheet && navigator.canShare?.({ files: [sheet] })) {
+        await navigator.share({ files: [sheet], text, url });
         track("share_done", { water, lang, how: "files" });
         return;
       }
@@ -69,29 +99,55 @@ export function ShareButton({
         return;
       }
 
-      await navigator.clipboard.writeText(`${text} ${url}`);
-      track("share_done", { water, lang, how: "copied" });
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2500);
-    } catch {
+      await copyLink();
+    } catch (error) {
       /* A cancelled share sheet throws AbortError, which is somebody changing
-         their mind and not an error worth showing them. */
+         their mind. A refused one (NotAllowedError) still leaves them the
+         link, copied. */
+      if (gesture && error instanceof DOMException && error.name === "NotAllowedError") {
+        await copyLink().catch(() => {});
+      }
     } finally {
       setBusy(false);
     }
   }
 
+  async function copyLink() {
+    await navigator.clipboard.writeText(`${text} ${url}`);
+    track("share_done", { water, lang, how: "copied" });
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2500);
+  }
+
+  useEffect(() => {
+    const el = button.current;
+    if (!fetchInView || !el || typeof IntersectionObserver === "undefined") return;
+    const seen = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        seen.disconnect();
+        void prepare();
+      }
+    });
+    seen.observe(el);
+    return () => seen.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchInView, imageUrl]);
+
   useEffect(() => {
     if (!auto || tried.current) return;
     tried.current = true;
-    void send();
+    void send(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auto]);
 
   return (
     <button
+      ref={button}
       type="button"
-      onClick={send}
+      onClick={() => void send(true)}
+      onPointerEnter={() => void prepare()}
+      onPointerDown={() => void prepare()}
+      onFocus={() => void prepare()}
       disabled={busy}
       /* The marigold press: the one marigold button in the product. */
       className={buttonClass("share", "w-full")}

@@ -178,6 +178,32 @@ describe("the HTML sheet: the owner's copy and the guest's page", () => {
     expect(out).toContain("snanify.com");
   });
 
+  it("sets the sankalp under the sheet, outside it, inside what prints", () => {
+    const out = html(React.createElement(PatraSheet, { data: printableRecord(row()) }));
+    const sheetEnd = out.indexOf("</article>");
+    expect(out.indexOf("data-sankalp")).toBeGreaterThan(sheetEnd);
+    expect(out.indexOf(SANKALP)).toBeGreaterThan(sheetEnd);
+    expect(out.indexOf("data-patra-print")).toBeLessThan(sheetEnd);
+    expect(out).toContain("It stays with you.");
+  });
+
+  it("centres the photograph in its mount, as the image does", () => {
+    const out = html(
+      React.createElement(PatraSheet, {
+        data: { ...patraView(row()), portraitUrl: "https://example.com/p.jpg" },
+      }),
+    );
+    const img = out.match(/<img src="https:\/\/example.com\/p.jpg"[^>]*>/)![0];
+    expect(img).toContain("object-cover");
+    expect(img).toContain("object-position:50% 50%");
+    /* The pad is the same on every side: left equals top, and the width is the
+       mount's less two pads (288 tall, 240 wide, 12 pad, in 1080ths). */
+    const cq = (k: string) => img.match(new RegExp(`${k}:([\\d.]+)cqw`))![1];
+    expect(cq("left")).toBe(cq("top"));
+    expect(Number(cq("width"))).toBeCloseTo(((240 - 24) / 1080) * 100, 3);
+    expect(Number(cq("height"))).toBeCloseTo(((288 - 24) / 1080) * 100, 3);
+  });
+
   it("never carries the sankalp for a guest of the same sitting", () => {
     const sitting = row();
     const sheet = html(React.createElement(PatraSheet, { data: patraView(sitting) }));

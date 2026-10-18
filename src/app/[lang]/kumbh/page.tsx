@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Kumbh } from "@/components/pages/Kumbh";
 import { KUMBH_ROUTE, kumbhContent } from "@/content/kumbh";
 import { LANGS, type Lang } from "@/lib/locales";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 import {
   StructuredData,
@@ -35,6 +36,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.title,
     description: t.description,
     ogType: "article",

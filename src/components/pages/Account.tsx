@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { desc, eq } from "drizzle-orm";
 import { SignOutButton } from "@clerk/nextjs";
 import { db, profiles, purchases } from "@/db";
@@ -11,6 +12,7 @@ import { patraView } from "@/lib/patra-view";
 import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
+import { accountForwardsToSetup } from "@/lib/begin-path";
 import { requireUser } from "@/lib/auth";
 import { localePath, SITE_ORIGIN, type Lang } from "@/lib/locales";
 import { headers } from "next/headers";
@@ -70,6 +72,12 @@ export async function Account({
   ]);
 
   const setUp = profile[0]?.completedAt != null;
+  /* Somebody signed in with nothing here yet (no sheet, no morning, nothing
+     bought) has one thing to do, and it is on /setup. The landing sends every
+     signed-in visitor here (src/proxy.ts), so this is where they move on. */
+  if (accountForwardsToSetup({ setUp, kept: kept.length, bought: bought.length, credits })) {
+    redirect(localePath(lang, "/setup"));
+  }
   const sitToday = setUp && profile[0] ? await sittingToday(user.id, profile[0].waterSlug, user.tz) : null;
   const m = morningsContent[lang];
   const locale = lang === "hi" ? "hi-IN" : "en-IN";

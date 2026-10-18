@@ -5,9 +5,26 @@ import type { WaterSlug } from "@/lib/riverdata";
    sight, printed as ink on the paper. Each is a photograph from Wikimedia
    Commons under a licence that allows this use with credit, reduced to five
    tones of ink in public/waters/<slug>.webp (the mask, not the photograph).
-   The credit line prints on the page beside the data sources, because a
-   picture is a source too.
+   The credits print together in "Image credits" at the end of /terms
+   (src/components/pages/Legal.tsx), and every place a picture appears links
+   there, which is the reach the CC licences ask for.
    --------------------------------------------------------------------------- */
+
+/** Where the credits print: the last section of the terms. */
+export const CREDITS_PATH = "/terms#image-credits";
+
+/** The link under a picture, to its credit. */
+export const IMAGE_CREDITS = { en: "Image credits", hi: "चित्र-श्रेय" } as const;
+
+/** The licence deeds the credits link to. */
+export const LICENSE_HREF = {
+  "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/",
+  "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "CC BY 3.0": "https://creativecommons.org/licenses/by/3.0/",
+} as const;
+
+/** A licence the credits can link to. A new one is a row above, or a compile error. */
+export type License = keyof typeof LICENSE_HREF;
 
 export interface Picture {
   readonly src: string;
@@ -20,7 +37,7 @@ export interface Picture {
   readonly alt: { readonly en: string; readonly hi: string };
   readonly subject: { readonly en: string; readonly hi: string };
   readonly author: string;
-  readonly license: string;
+  readonly license: License;
   readonly page: string;
 }
 

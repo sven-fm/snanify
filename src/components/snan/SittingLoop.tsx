@@ -1,6 +1,6 @@
 import { todayContent } from "@/content/today";
 import { snanContent } from "@/content/snan";
-import { Gauge } from "@/components/kit";
+import { Gauge, Phone, PHONE_STATUS_OVER } from "@/components/kit";
 import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
@@ -11,41 +11,22 @@ import type { Lang } from "@/lib/locales";
    page is prerendered. Reduced motion shows the first screen alone.
    --------------------------------------------------------------------------- */
 
-const BEZEL = 3;
-const SCREEN_W = 84;
-const SCREEN_H = (SCREEN_W * 1920) / 1080;
-const FRAME_W = SCREEN_W + BEZEL * 2;
-const FRAME_H = SCREEN_H + BEZEL * 2;
-const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(3)}%`;
-
 export function SittingLoop({ lang }: { lang: Lang }) {
   const t = todayContent[lang];
   const limbs = snanContent[lang].form.limbs;
   const names = limbs.map((l) => l.title);
 
   return (
-    <figure className="loop pull" aria-label={names.join(", ")}>
-      <div
-        className="relative mx-auto w-full max-w-[280px] bg-ink"
-        style={{ aspectRatio: `${FRAME_W} / ${FRAME_H}`, clipPath: "inset(0 round 1.4rem)" }}
-      >
-        <div
-          className="absolute overflow-hidden bg-paper text-ink"
-          style={{
-            left: pct(BEZEL, FRAME_W),
-            top: pct(BEZEL, FRAME_H),
-            width: pct(SCREEN_W, FRAME_W),
-            height: pct(SCREEN_H, FRAME_H),
-            clipPath: "inset(0 round 0.8rem)",
-          }}
-        >
+    <figure className="loop pull w-full" aria-label={names.join(", ")}>
+      <Phone className="max-w-[280px]">
+        <div className="absolute inset-0">
           {/* the story bar: five segments, each filling in its own two seconds */}
-          <div className="loop-bar absolute inset-x-4 top-9 flex gap-1" aria-hidden="true">
+          <div className="loop-bar absolute inset-x-4 top-3 flex gap-1" aria-hidden="true">
             {names.map((n, i) => (
               <span key={n} className="loop-seg h-[3px] flex-1 bg-rule" style={{ ["--i" as string]: i }} />
             ))}
           </div>
-          <p className="loop-name absolute inset-x-4 top-12 text-[0.65rem] text-ink2" aria-hidden="true">
+          <p className="loop-name absolute inset-x-4 top-6 text-[0.65rem] text-ink2" aria-hidden="true">
             {names.map((n, i) => (
               <span key={n} className="loop-screen absolute left-0" style={{ ["--i" as string]: i }}>
                 {n}
@@ -54,7 +35,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
           </p>
 
           {/* 1. the reading: the river, and the gauge with no day on it */}
-          <div className="loop-screen absolute inset-x-4 top-24" style={{ ["--i" as string]: 0 }}>
+          <div className="loop-screen absolute inset-x-4 top-16" style={{ ["--i" as string]: 0 }}>
             <p
               className={`display text-[1.3rem] text-sindoor ${lang === "hi" ? "" : "uppercase"}`}
               style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95 }}
@@ -69,7 +50,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
           <div className="loop-screen absolute inset-0" style={{ ["--i" as string]: 1 }}>
             <div className="loop-water absolute inset-x-0 bottom-0 bg-teal opacity-90" aria-hidden="true" />
             <p
-              className={`display absolute inset-x-4 top-24 text-[1.3rem] ${lang === "hi" ? "" : "uppercase"}`}
+              className={`display absolute inset-x-4 top-16 text-[1.3rem] ${lang === "hi" ? "" : "uppercase"}`}
               style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95 }}
             >
               <span className="loop-in">{t.breath.in}</span>
@@ -78,7 +59,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
           </div>
 
           {/* 3. the sankalp, the ink filling under a thumb */}
-          <div className="loop-screen absolute inset-x-4 top-24" style={{ ["--i" as string]: 2 }}>
+          <div className="loop-screen absolute inset-x-4 top-16" style={{ ["--i" as string]: 2 }}>
             <p className="text-[0.65rem] text-ink2">{t.vow.label}</p>
             <p className="display mt-2 text-[1rem] leading-[1.35]">
               {lang === "hi" ? "आपके अपने शब्द, आपके अँगूठे के नीचे।" : "Your own words, under your thumb."}
@@ -90,7 +71,10 @@ export function SittingLoop({ lang }: { lang: Lang }) {
           </div>
 
           {/* 4. the stillness, dark */}
-          <div className="loop-screen absolute inset-0 bg-[#0b0a08] text-[#8a836f]" style={{ ["--i" as string]: 3 }}>
+          <div
+            className="loop-screen absolute inset-x-0 bottom-0 bg-[#0b0a08] text-[#8a836f]"
+            style={{ ["--i" as string]: 3, top: `calc(-${PHONE_STATUS_OVER} - 2px)` }}
+          >
             <p className="display absolute inset-x-4 top-1/2 -translate-y-1/2 text-center text-[1rem] leading-[1.3] text-[#b5ad99]">
               {t.stillness.line}
               <span className="display mt-3 block text-[2.2rem] leading-none text-[#6f685a] tabular-nums">60</span>
@@ -110,12 +94,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
             </div>
           </div>
         </div>
-        <div
-          aria-hidden="true"
-          className="absolute bg-ink"
-          style={{ left: pct(28, FRAME_W), top: pct(BEZEL + 2.2, FRAME_H), width: pct(34, FRAME_W), height: pct(5, FRAME_H), clipPath: "inset(0 round 999px)" }}
-        />
-      </div>
+      </Phone>
     </figure>
   );
 }

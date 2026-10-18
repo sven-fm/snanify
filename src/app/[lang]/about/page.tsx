@@ -12,6 +12,7 @@ import {
 } from "@/components/StructuredData";
 import { ABOUT_ROUTE, aboutContent, FOUNDERS } from "@/content/about";
 import { langParams, type Lang } from "@/lib/locales";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -29,6 +30,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ABOUT_ROUTE,
+    images: cardImages(lang, ABOUT_ROUTE),
     title: t.meta.title,
     description: t.meta.description,
   });

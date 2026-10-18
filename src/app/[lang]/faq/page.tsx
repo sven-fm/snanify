@@ -11,6 +11,7 @@ import {
 import { LANGS, type Lang } from "@/lib/locales";
 import { navLabel } from "@/lib/nav";
 import { faqContent } from "@/content/trust";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 
 /**
@@ -35,6 +36,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.meta.title,
     description: t.meta.description,
     ogType: "article",

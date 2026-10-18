@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { config } from "@/proxy";
+import { config, fixtureNotFound } from "@/proxy";
 
 /* ---------------------------------------------------------------------------
    The proxy leaves BotID's paths alone.
@@ -55,5 +55,13 @@ describe("the proxy matcher", () => {
     for (const path of ["/", "/rivers", "/hi/live", "/begin", "/setup", "/wp-login.php"]) {
       expect(matches(path), path).toBe(true);
     }
+  });
+
+  it("answers the /p/specimen fixture with the site's 404 in production, before Clerk", () => {
+    expect(fixtureNotFound("/p/specimen", "production")).toBe("/en/fixture-not-served");
+    expect(fixtureNotFound("/hi/p/specimen", "production")).toBe("/hi/fixture-not-served");
+    expect(fixtureNotFound("/p/specimen", "development")).toBeUndefined();
+    expect(fixtureNotFound("/p/0123456789abcdef", "production")).toBeUndefined();
+    expect(fixtureNotFound("/specimen", "production")).toBeUndefined();
   });
 });

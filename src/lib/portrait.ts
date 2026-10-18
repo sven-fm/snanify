@@ -58,6 +58,9 @@ export const PORTRAIT = {
   tones: [0, 64, 128, 191, 255],
 } as const;
 
+/** How far into a tall photograph's excess height the window starts. */
+export const TALL_TOP = 0.3;
+
 /** "#f2ead9" as [242, 234, 217]. */
 function hex(colour: string): [number, number, number] {
   const n = parseInt(colour.slice(1), 16);
@@ -123,15 +126,36 @@ export async function processPortrait(input: Buffer, crop?: Crop): Promise<Proce
       x + w <= width &&
       y + h <= height;
     if (!inside) throw new PortraitRejected("badCrop");
-    pipeline = pipeline.extract({ left: x, top: y, width: w, height: h });
   }
+
+  /* THE WINDOW. Across, it is cut from the middle (below). Down, a photograph
+     taller than the 4 : 5 window keeps more of its top than its bottom: in a
+     phone portrait the head sits in the upper third, and an even cut takes
+     the forehead. The window starts 30% of the way into the excess. */
+  const turned = (meta.orientation ?? 1) >= 5;
+  let region = crop
+    ? { left: crop.x, top: crop.y, width: crop.width, height: crop.height }
+    : { left: 0, top: 0, width: turned ? height : width, height: turned ? width : height };
+  const tall = region.height * PORTRAIT.width > region.width * PORTRAIT.height;
+  if (tall) {
+    const h = Math.round((region.width * PORTRAIT.height) / PORTRAIT.width);
+    region = { ...region, top: region.top + Math.round((region.height - h) * TALL_TOP), height: h };
+  }
+  if (crop || tall) pipeline = pipeline.extract(region);
 
   /* Pressed the way the six river plates were: the photograph reduced to
      five tones of ink on the paper, so a face and a ghat sit on one sheet as
      one kind of picture. Luminance is read after a light lift and a sharpen,
-     then each pixel takes the nearest of the five tones. */
+     then each pixel takes the nearest of the five tones.
+
+     THE WINDOW IS CUT FROM THE MIDDLE. sharp's "attention" strategy centres
+     the crop on the most salient region, and in a side-lit portrait that is
+     the lit cheek, not the head: the owner's own photograph came out with
+     the head 45px left of centre in the 800 wide window, and the sheet
+     showed it shifted left in the frame. The middle of a photograph is where
+     its subject was framed, so the middle is what the window keeps across. */
   const { data, info } = await pipeline
-    .resize(PORTRAIT.width, PORTRAIT.height, { fit: "cover", position: "attention" })
+    .resize(PORTRAIT.width, PORTRAIT.height, { fit: "cover", position: "centre" })
     .flatten({ background: PORTRAIT.paper })
     .grayscale()
     .linear(1.12, -8)

@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { todayContent } from "@/content/today";
 import { getGhat } from "@/content/rivers";
 import { PICTURES } from "@/content/live/pictures";
+import { CreditsLink } from "@/components/live/CreditsLink";
 import type { WaterSlug } from "@/lib/riverdata";
 import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
@@ -112,8 +113,9 @@ export default async function Page({
               style={{ ["--picture" as string]: `url(${pic.src})` }}
             />
           </div>
+          <CreditsLink lang={lang} />
           <h1
-            className={`display mt-8 text-[2.35rem] ${lang === "hi" ? "" : "uppercase"}`}
+            className={`display mt-4 text-[2.35rem] ${lang === "hi" ? "" : "uppercase"}`}
             style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95, letterSpacing: lang === "hi" ? 0 : "-0.01em" }}
           >
             {t.already.title}
@@ -138,7 +140,7 @@ export default async function Page({
             <p className="mt-8 text-sm text-ink2">{t.already.tomorrow}</p>
           )}
         </main>
-        <Footer lang={lang} />
+        <Footer lang={lang} river={false} />
       </>
     );
   }
@@ -194,7 +196,9 @@ export default async function Page({
         />
       </main>
 
-      <Footer lang={lang} />
+      {/* The ready screen carries its own river above Begin; the footer's
+          would put a second one under it. */}
+      <Footer lang={lang} river={false} />
     </>
   );
 }

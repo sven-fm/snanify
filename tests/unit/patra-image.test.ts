@@ -78,6 +78,24 @@ describe("the Sankalp Patra image, v3", () => {
     expect(s).toContain("data-today");
   });
 
+  it("centres the photograph in its mount and turns the print about its own centre", async () => {
+    for (const render of [mementoSvg, patraSvg]) {
+      const s = await render({ ...SPECIMEN_VIEW, morning: 7, portraitUrl: PORTRAIT });
+      const group = s.match(/<g data-portrait="" transform="rotate\(3 ([\d.]+) ([\d.]+)\)">([\s\S]*?)<\/g>/)!;
+      const [, px, py, body] = group;
+      const box = (re: RegExp) => body.match(re)!.slice(1, 5).map(Number);
+      const num = '="([\\d.]+)"';
+      const [mx, my, mw, mh] = box(new RegExp(`<rect x${num} y${num} width${num} height${num} fill="${"#"}[0-9a-f]{6}" />(?=<image)`, "i"));
+      const image = body.match(/<image [^>]*>/)![0];
+      const [ix, iy, iw, ih] = ["x", "y", "width", "height"].map((k) => Number(image.match(new RegExp(` ${k}="([\\d.]+)"`))![1]));
+      expect(image).toContain('preserveAspectRatio="xMidYMid slice"');
+      expect(Math.abs(ix + iw / 2 - (mx + mw / 2))).toBeLessThanOrEqual(0.02);
+      expect(Math.abs(iy + ih / 2 - (my + mh / 2))).toBeLessThanOrEqual(0.02);
+      expect(Math.abs(+px - (mx + mw / 2))).toBeLessThanOrEqual(0.02);
+      expect(Math.abs(+py - (my + mh / 2))).toBeLessThanOrEqual(0.02);
+    }
+  });
+
   it("adapts the same layout to the four by five sheet", async () => {
     const s = await patraSvg({ ...SPECIMEN_VIEW, names: FIVE_LONG, morning: 7, portraitUrl: PORTRAIT });
     expect(s).toContain('height="1350"');

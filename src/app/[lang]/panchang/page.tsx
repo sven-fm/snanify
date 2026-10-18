@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { LANGS, type Lang } from "@/lib/locales";
 import { Panchang } from "@/components/pages/Panchang";
 import { panchangContent } from "@/content/panchang";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 import { navLabel } from "@/lib/nav";
 import { CITIES } from "@/content/cities";
@@ -37,6 +38,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.title.replace("{year}", String(new Date().getFullYear())),
     description: t.description,
     ogType: "article",

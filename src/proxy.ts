@@ -108,6 +108,55 @@ function route(req: NextRequest) {
 const withClerk = clerkMiddleware(async (_auth, req) => route(req));
 
 /**
+ * THE LANDING, FOR SOMEBODY SIGNED IN, IS THEIR ACCOUNT. A signed-in visitor
+ * on `/` or `/hi` is sent on with a 307 to /account, where the register and
+ * the one press for this morning are; /account forwards somebody who has not
+ * set up yet to /setup. The landing itself stays a static page.
+ *
+ * ONLY A POSSIBLE SESSION PAYS FOR CLERK. A stranger, and every crawler, has
+ * no Clerk cookie and goes straight to the rewrite, so the landing keeps the
+ * fast first paint the comment on APP_PATH is about. A cookie that says a
+ * session may exist (`__session*`, or a `__client_uat*` that is not "0") runs
+ * Clerk's middleware, which verifies it before anything is redirected.
+ */
+export function isLanding(pathname: string): boolean {
+  const bare = pathname.replace(/\/$/, "") || "/";
+  return bare === "/" || [...PREFIXES].some((p) => bare === `/${p}`);
+}
+
+export function mightBeSignedIn(cookies: { name: string; value: string }[]): boolean {
+  return cookies.some(
+    ({ name, value }) =>
+      (/^__session(?:_|$)/.test(name) && value !== "") || (/^__client_uat(?:_|$)/.test(name) && value !== "" && value !== "0"),
+  );
+}
+
+const landingWithClerk = clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
+  if (!userId) return route(req);
+  const first = req.nextUrl.pathname.split("/")[1];
+  const prefix = PREFIXES.has(first) ? `/${first}` : "";
+  /* The ad's fbclid and utm_* ride along. */
+  const to = new URL(`${prefix}/account`, req.url);
+  to.search = req.nextUrl.search;
+  return NextResponse.redirect(to, 307);
+});
+
+/**
+ * THE LANDING NEVER DEPENDS ON CLERK. A missing key, a JWKS fetch that fails
+ * on a cold start or an outage throws out of Clerk's middleware; the reader
+ * then gets the landing, as a stranger would, rather than a 500.
+ */
+async function landing(req: NextRequest, event: NextFetchEvent) {
+  try {
+    return await landingWithClerk(req, event);
+  } catch (error) {
+    console.error("landing: clerk", error);
+    return route(req);
+  }
+}
+
+/**
  * Only the signed-in routes pass through Clerk. On a marketing page Clerk has
  * nothing to read, and on a development instance its middleware answered a
  * first visit with a round trip to clerk.accounts.dev and back, 1.6 seconds
@@ -116,8 +165,30 @@ const withClerk = clerkMiddleware(async (_auth, req) => route(req));
  */
 const APP_PATH = /^\/(?:[a-z]{2}\/)?(?:begin|setup|today|account|p|specimen|sign-in|sign-up|sign-out)(?:\/|$)/;
 
+/**
+ * /p/specimen is a development fixture: the owner's sheet on a tall page, for
+ * tests/e2e/patra-print.spec.ts. In production it is the site's own 404,
+ * answered here by the catch-all, so a probe never reaches Clerk or the
+ * page's function. The page keeps its own production check as well.
+ */
+const DEV_FIXTURE = /^\/(?:([a-z]{2})\/)?p\/specimen(?:\/|$)/;
+
+/** Where a production request for a development fixture goes; undefined for every other path. */
+export function fixtureNotFound(pathname: string, env = process.env.NODE_ENV): string | undefined {
+  if (env !== "production") return undefined;
+  const match = DEV_FIXTURE.exec(pathname);
+  if (!match) return undefined;
+  const lang = match[1] && (PREFIXES.has(match[1]) || match[1] === DEFAULT_LANG) ? match[1] : DEFAULT_LANG;
+  return `/${lang}/fixture-not-served`;
+}
+
 export function proxy(req: NextRequest, event: NextFetchEvent) {
-  return APP_PATH.test(req.nextUrl.pathname) ? withClerk(req, event) : route(req);
+  const { pathname } = req.nextUrl;
+  const gone = fixtureNotFound(pathname);
+  if (gone) return NextResponse.rewrite(new URL(gone, req.url));
+  if (APP_PATH.test(pathname)) return withClerk(req, event);
+  if (isLanding(pathname) && mightBeSignedIn(req.cookies.getAll())) return landing(req, event);
+  return route(req);
 }
 
 export const config = {
@@ -129,11 +200,13 @@ export const config = {
    * path with a dot, which let `/foo.png` reach `[lang]/page.tsx` with a
    * locale of "foo.png" and answer 500 to every bot probe.
    *
-   * `opengraph-image` is load bearing. It lives at `[lang]/opengraph-image`, so
-   * Next writes the English one as `/en/opengraph-image`, which the redirect
-   * above would otherwise 308 to a path that does not exist and mangle the
-   * cache-busting query while doing it. Scrapers do not reliably follow a
-   * redirect for an `og:image`, so the card would simply come out blank.
+   * `opengraph-image` is load bearing. The link cards live at
+   * `/opengraph-image/<lang>/...`, and the homepage's old address,
+   * `/en/opengraph-image`, is a rewrite to its card in next.config.ts; caught
+   * here, the `/en/*` redirect would 308 it to a path that does not exist and
+   * mangle the cache-busting query while doing it. Scrapers do not reliably
+   * follow a redirect for an `og:image`, so the card would come out blank.
+   * `/en/p/<id>/opengraph-image` (the Patra's card) needs the same.
    *
    * `email/` holds the two images every reminder loads by absolute URL, and
    * `brand-1024.png` the Facebook avatar: files in public/ that a locale

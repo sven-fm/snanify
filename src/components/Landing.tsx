@@ -38,8 +38,11 @@ import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
  * specimen sheet in its phone, the six waters as a list, the packs (eleven on
  * the label, one and sixty as plain rows), and the footer.
  *
- * From `lg` up the hero keeps its 390 composition at `max-w-md`, with the
- * specimen phone beside it (spec 6.11). Desktop adds nothing the phone lacks.
+ * From `lg` up the page stays ONE centred column, scaled up, never two: the
+ * capitals larger, the band running the full width of the window, the seal
+ * and the pitch, the press; then the river as a full-width panorama, the
+ * reading under it, and the specimen phone centred in its own section.
+ * Desktop uses its width for the river and the type, not a second column.
  *
  * One press per screen: the hero's. The masthead's Begin waits for it to
  * scroll off (PastHero). The eleven pack carries the only other press, far
@@ -97,88 +100,105 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
         {/* The band overhangs the column and its turn lifts the corners, so
             the section clips sideways; the page never scrolls at 390. */}
         <section className="overflow-x-clip">
-          <div className="mx-auto max-w-md px-5 lg:grid lg:max-w-6xl lg:grid-cols-[minmax(0,28rem)_minmax(0,1fr)] lg:gap-x-20 lg:px-8">
-            <div className="lg:col-start-1 lg:row-start-1">
-              {/* -------------------------------------- above the fold ---
-                  Capitals in Latin; Devanagari has no case and takes its
-                  own leading, set inline because the script rule for
-                  .display sits outside the utility layer. */}
-              <h1
-                className={`display pt-5 text-ink sm:pt-10 ${
-                  hi
-                    ? "text-[2.25rem] sm:text-[2.6rem]"
-                    : "text-[2.35rem] uppercase min-[380px]:text-[2.5rem] sm:text-[2.85rem]"
-                }`}
-                style={{ fontWeight: 800, lineHeight: hi ? 1.22 : 0.95, letterSpacing: hi ? 0 : "-0.01em" }}
-              >
-                {lead}
-                <span className="text-sindoor">{live.river}</span>
-                {tail}
-              </h1>
-
-              <Band className="mt-4">{t.hero.band}</Band>
-
-              <div className="mt-5 flex items-center gap-4">
-                <Seal kind="price" prices={PRICE.eleven} lang={lang} />
-                <p className="text-[0.9375rem] leading-[1.45] text-ink">
-                  {t.hero.pitch} <strong style={{ fontWeight: 800 }}>{t.hero.push}</strong>
-                </p>
-              </div>
-
-              {/* The press, full column width and thumb-sized. data-hero-cta
-                  lets the masthead's Begin wait for it to scroll off;
-                  data-hero-press is what the fold test measures. */}
-              <Link href={localePath(lang, "/begin")} className="mt-5 flex" data-hero-cta data-hero-press>
-                <CTA className="w-full">{t.hero.ctaPrimary}</CTA>
-              </Link>
-
-              {/* ------------------------------------------ the river ----
-                  The full river, the sun cut by its horizon, full bleed
-                  through the column's gutter on a phone. */}
-              <div className="-mx-5 mt-14 lg:mx-0">
-                <RiverHorizon height={156} />
-              </div>
-
-              {/* ----------------------------------------- the reading ---
-                  The state, one plain sentence and the gauge lead; the
-                  exact figure sits under it in one small row. */}
-              <div className="mt-6 pb-14">
-                <h2 className={`${H2} text-sindoor`} style={W700}>
-                  {live.title}
-                </h2>
-                <Gauge
-                  className="mt-4"
-                  percentile={live.percentile}
-                  band={live.band}
-                  lang={lang}
-                  figure={live.figure}
-                />
-                {live.muhurat ? (
-                  <p className="tabular mt-1 text-[0.75rem] leading-[1.4] text-ink2">{live.muhurat}</p>
-                ) : null}
-                <Link
-                  href={localePath(lang, "/rivers")}
-                  className="mt-3 inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor"
-                >
-                  {t.hero.card.link}
-                </Link>
-              </div>
-            </div>
-
-            {/* ------------------------------------------- the sheet -----
-                What people pay for: a sheet with a family's names on it,
-                inside a phone, because that is where it is opened. Under the
-                reading on a phone; beside the hero from lg. */}
-            <div
-              id="sheet"
-              className="scroll-mt-16 pb-16 lg:col-start-2 lg:row-start-1 lg:self-center lg:pt-10 lg:pb-0"
+          <div className="mx-auto max-w-md px-5 lg:max-w-4xl lg:px-8 lg:text-center">
+            {/* -------------------------------------- above the fold ---
+                Capitals in Latin; Devanagari has no case and takes its
+                own leading, set inline because the script rule for
+                .display sits outside the utility layer. */}
+            <h1
+              className={`display pt-5 text-ink sm:pt-10 lg:pt-16 ${
+                hi
+                  ? "text-[2.25rem] sm:text-[2.6rem] lg:text-[4.25rem]"
+                  : "text-[2.35rem] uppercase min-[380px]:text-[2.5rem] sm:text-[2.85rem] lg:text-[5.25rem]"
+              }`}
+              style={{ fontWeight: 800, lineHeight: hi ? 1.22 : 0.95, letterSpacing: hi ? 0 : "-0.01em" }}
             >
-              <h2 className={H2} style={W700}>
-                {t.sheet.title}
-              </h2>
-              <p className="mt-3 leading-[1.6] text-ink2">{t.sheet.lede}</p>
-              <Specimen lang={lang} className="mt-8" />
+              {lead}
+              <span className="text-sindoor">{live.river}</span>
+              {tail}
+            </h1>
+
+            {/* On a phone the band overhangs the gutter; from lg it runs the
+                full width of the window (the bleed is half of what the
+                column leaves), and the section clips its turned corners. */}
+            <Band
+              className="mt-4 [--band-bleed:1.25rem] lg:mt-8 lg:py-3 lg:text-[1.375rem] lg:[--band-bleed:calc((100vw_-_100%)/2)]"
+              bleed="var(--band-bleed)"
+            >
+              {t.hero.band}
+            </Band>
+
+            <div className="mt-5 flex items-center gap-4 lg:mt-12 lg:justify-center lg:gap-8">
+              <div className="shrink-0 lg:scale-[1.35]">
+                <Seal kind="price" prices={PRICE.eleven} lang={lang} />
+              </div>
+              <p className="text-[0.9375rem] leading-[1.45] text-ink lg:max-w-md lg:text-left lg:text-[1.25rem]">
+                {t.hero.pitch} <strong style={{ fontWeight: 800 }}>{t.hero.push}</strong>
+              </p>
             </div>
+
+            {/* The press, full column width and thumb-sized. data-hero-cta
+                lets the masthead's Begin wait for it to scroll off;
+                data-hero-press is what the fold test measures. */}
+            <Link
+              href={localePath(lang, "/begin")}
+              className="mt-5 flex lg:mx-auto lg:mt-12 lg:max-w-md"
+              data-hero-cta
+              data-hero-press
+            >
+              <CTA className="w-full">{t.hero.ctaPrimary}</CTA>
+            </Link>
+          </div>
+
+          {/* ------------------------------------------ the river ----
+              The full river, the sun cut by its horizon: full bleed on a
+              phone, a panorama the width of the window from lg. */}
+          <div className="mx-auto mt-14 max-w-md lg:mt-24 lg:max-w-none">
+            <div className="lg:hidden">
+              <RiverHorizon height={156} />
+            </div>
+            <div className="hidden lg:block">
+              <RiverHorizon height={280} />
+            </div>
+          </div>
+
+          {/* ----------------------------------------- the reading ---
+              The state, one plain sentence and the gauge lead; the
+              exact figure sits under it in one small row. */}
+          <div className="mx-auto max-w-md px-5 pt-6 pb-14 lg:max-w-2xl lg:px-8 lg:pt-12 lg:pb-24 lg:text-center">
+            <h2 className={`${H2} text-sindoor lg:text-[3rem]`} style={W700}>
+              {live.title}
+            </h2>
+            <Gauge
+              className="mt-4 lg:mt-8"
+              percentile={live.percentile}
+              band={live.band}
+              lang={lang}
+              figure={live.figure}
+            />
+            {live.muhurat ? (
+              <p className="tabular mt-1 text-[0.75rem] leading-[1.4] text-ink2">{live.muhurat}</p>
+            ) : null}
+            <Link
+              href={localePath(lang, "/rivers")}
+              className="mt-3 inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor"
+            >
+              {t.hero.card.link}
+            </Link>
+          </div>
+        </section>
+
+        {/* ------------------------------------------- the sheet ---------
+            What people pay for: a sheet with a family's names on it, inside
+            a phone, because that is where it is opened. Its own section,
+            centred, larger from lg. */}
+        <section id="sheet" className="scroll-mt-16">
+          <div className="mx-auto max-w-md px-5 pb-16 lg:max-w-3xl lg:px-8 lg:pt-8 lg:pb-28 lg:text-center">
+            <h2 className={`${H2} lg:text-[3rem]`} style={W700}>
+              {t.sheet.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2 lg:mx-auto lg:max-w-xl lg:text-[1.125rem]">{t.sheet.lede}</p>
+            <Specimen lang={lang} className="mt-8 lg:mt-12" phoneClassName="max-w-[280px] lg:max-w-[340px]" />
           </div>
         </section>
 
@@ -218,11 +238,11 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
             is arithmetic on the price above it, in src/content/prices.ts.
             Each one carries its pack to /begin. */}
         <section id="prices" className="scroll-mt-16">
-          <div className="mx-auto max-w-md px-5 py-16 lg:px-8">
-            <h2 className={H2} style={W700}>
+          <div className="mx-auto max-w-md px-5 py-16 lg:px-8 lg:py-24">
+            <h2 className={`${H2} lg:text-center`} style={W700}>
               <CurrencyLine other={t.pricing.title} inr={t.pricing.titleInr} />
             </h2>
-            <p className="mt-3 leading-[1.6] text-ink2">{t.pricing.lede}</p>
+            <p className="mt-3 leading-[1.6] text-ink2 lg:text-center">{t.pricing.lede}</p>
 
             {t.pricing.tiers
               .filter((tier) => tier.key === "eleven")

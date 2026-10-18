@@ -31,6 +31,39 @@ export const W700 = { fontWeight: 700 } as const;
 export const QUIET =
   "inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor";
 
+/**
+ * The second action that must read as tappable (the owner, 18 October 2026:
+ * "make sure people understand it is clickable"): a full-width 56px row in a
+ * 2px ink rule, the label in bold, an arrow at the right, and a 2px sink when
+ * pressed. Square, on the paper, no wall: it is not a press, so the page's
+ * one sindoor press stays the only one. /live opens each river's page with
+ * it; /rivers starts "Do your snan here" with it. Render the label and an
+ * arrow span inside (`RowLink` does).
+ */
+export const QUIET_ROW =
+  "flex min-h-[56px] w-full items-center justify-between gap-4 border-2 border-ink bg-paper px-4 font-bold text-ink transition-transform duration-75 active:translate-y-[2px] active:border-sindoor active:text-sindoor [-webkit-tap-highlight-color:transparent]";
+
+/** A QUIET_ROW link: the bold label, and the arrow at the right. */
+export function RowLink({
+  href,
+  children,
+  className = "",
+  ...rest
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+} & Record<`data-${string}`, string | boolean>) {
+  return (
+    <Link href={href} className={`${QUIET_ROW} ${className}`} {...rest}>
+      <span>{children}</span>
+      <span aria-hidden="true" className="shrink-0 text-[1.25rem] leading-none">
+        →
+      </span>
+    </Link>
+  );
+}
+
 /** Data tables: hairline rules on the paper-2 tint, where columns line up. */
 export const TABLE_GROUND = "bg-paper2 px-4 sm:px-6";
 

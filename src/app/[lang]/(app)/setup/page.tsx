@@ -8,6 +8,8 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { requireUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
+import { carryQuery, initialWater, withQuery } from "@/lib/begin-path";
+import { autosaveAllowed } from "@/lib/autosave";
 import { blobUrl } from "@/lib/blob";
 import { LANGS, type Lang } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
@@ -46,12 +48,14 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ lang: Lang }>;
-  searchParams: Promise<{ bought?: string; pack?: string }>;
+  searchParams: Promise<{ bought?: string; pack?: string; water?: string }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
   const t = setupContent[lang];
 
-  const user = await requireUser(lang, ROUTE);
+  /* A pack or a water chosen before the sign-in comes back with it. */
+  const carried = carryQuery(query);
+  const user = await requireUser(lang, withQuery(ROUTE, carried));
 
   const existing = await db
     .select()
@@ -91,7 +95,7 @@ export default async function Page({
       <Header lang={lang} currentPath={ROUTE} hideCta />
 
       {/* One column at max-w-md (spec 6.3): the step line, the headline in
-          capitals, one short lede, then the six fields. No band, no seal. */}
+          capitals, then the six fields. No lede, no band, no seal. */}
       <main className="mx-auto max-w-md px-5 pt-6 pb-16 sm:pt-10">
         {/* The three steps: this page is the water and the sheet. */}
         <Steps steps={t.steps} here={[0, 1]} label={t.title} className="mb-5" />
@@ -102,7 +106,6 @@ export default async function Page({
         >
           {t.title}
         </h1>
-        <p className="mt-4 text-[0.9375rem] leading-[1.6] text-ink2">{t.lede}</p>
 
         <SetupForm
           lang={lang}
@@ -110,8 +113,12 @@ export default async function Page({
           t={t}
           waters={waters}
           prayers={prayers}
+          /* A completed sheet saves each change; a first setup saves on the press. */
+          autosave={autosaveAllowed(profile?.completedAt)}
           initial={{
-            waterSlug: profile?.waterSlug ?? waters[0].slug,
+            /* A water chosen on /rivers ("Do your snan here") is the first
+               choice on a new sheet; a saved sheet keeps its own. */
+            waterSlug: initialWater(profile?.waterSlug, carried.get("water"), waters[0].slug),
             names,
             prayerId: profile?.prayerId ?? "",
             sankalpText: profile?.sankalpText ?? "",
