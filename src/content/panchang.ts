@@ -322,13 +322,9 @@ export const panchangContent = {
       ],
       closing: "If your family already keeps a day, keep it. This page is for households that lost the thread.",
     },
-    cities: {
-      lede: "The United States, Canada and the United Kingdom first, then the rest by country.",
-    },
     finder: {
       label: "Find your city",
-      placeholder: "Type a city, a state or a country",
-      hint: "300 cities in 48 countries. Start typing.",
+      placeholder: "Type a major city, state or country",
       matches: "{n} cities match",
       match: "One city matches",
       empty: "Try a shorter spelling, or pick a country below.",
@@ -336,7 +332,6 @@ export const panchangContent = {
     },
     ghats: {
       title: "The six waters",
-      lede: "The IST hour on every city page is read at one of these ghats.",
       live: "All six rivers now",
     },
     guide: {
@@ -518,13 +513,9 @@ export const panchangContent = {
       ],
       closing: "यदि आपका परिवार पहले से कोई दिन मानता है, तो वही मानिए। यह पृष्ठ उन घरों के लिए है जिनसे यह सूत्र छूट गया।",
     },
-    cities: {
-      lede: "पहले अमेरिका, कनाडा और यूनाइटेड किंगडम, फिर शेष देश के अनुसार।",
-    },
     finder: {
       label: "अपना शहर खोजिए",
-      placeholder: "शहर, राज्य या देश लिखिए",
-      hint: "48 देशों के 300 शहर। लिखना शुरू कीजिए।",
+      placeholder: "कोई बड़ा शहर, राज्य या देश लिखिए",
       matches: "{n} शहर मिले",
       match: "एक शहर मिला",
       empty: "छोटी वर्तनी आज़माइए, या नीचे से देश चुनिए।",
@@ -532,7 +523,6 @@ export const panchangContent = {
     },
     ghats: {
       title: "छह जल",
-      lede: "हर शहर के पृष्ठ पर IST का समय इन्हीं छह घाटों में से एक पर पढ़ा जाता है।",
       live: "छहों नदियाँ अभी",
     },
     guide: {

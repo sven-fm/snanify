@@ -34,7 +34,6 @@ export interface FinderGroup {
 export interface FinderCopy {
   readonly label: string;
   readonly placeholder: string;
-  readonly hint: string;
   readonly matches: string;
   readonly match: string;
   readonly empty: string;
@@ -125,7 +124,7 @@ export function CityFinder({ lang, groups, t }: { lang: Lang; groups: readonly F
               : found.length === 1
                 ? t.match
                 : t.matches.replace("{n}", String(found.length))
-            : t.hint}
+            : null}
         </span>
       </label>
 
