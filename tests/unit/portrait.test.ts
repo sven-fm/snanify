@@ -121,4 +121,47 @@ describe("processPortrait", () => {
     const meta = await sharp(out.buffer).metadata();
     expect(meta.exif).toBeUndefined();
   });
+
+  it("keeps the middle of a wide photograph, so a side-lit face stays centred", async () => {
+    /* A studio portrait in miniature: a dark ground, a mid-grey head in the
+       middle of a wide frame, and its lit cheek, the brightest and busiest
+       patch, to the right of centre. The salient patch is what sharp's
+       "attention" crop centres on; the window must centre the head instead. */
+    const w = 1600;
+    const h = 1000;
+    const headW = 500;
+    const head = await sharp({ create: { width: headW, height: 700, channels: 3, background: "#606060" } })
+      .png()
+      .toBuffer();
+    /* The cheek: a warm checker, all edges and skin, the bait for "attention". */
+    const cheek = Buffer.alloc(200 * 400 * 3);
+    for (let p = 0; p < 200 * 400; p += 1) {
+      const v = ((p % 200) + Math.floor(p / 200)) % 2 ? 255 : 150;
+      cheek[p * 3] = v;
+      cheek[p * 3 + 1] = (v * 0.75) | 0;
+      cheek[p * 3 + 2] = (v * 0.55) | 0;
+    }
+    const lit = await sharp(cheek, { raw: { width: 200, height: 400, channels: 3 } }).png().toBuffer();
+    const left = (w - headW) / 2;
+    const wide = await sharp({ create: { width: w, height: h, channels: 3, background: "#050505" } })
+      .composite([
+        { input: head, left, top: 150 },
+        { input: lit, left: left + headW - 210, top: 300 },
+      ])
+      .png()
+      .toBuffer();
+
+    const out = await processPortrait(wide);
+    const { data, info } = await sharp(out.buffer).grayscale().raw().toBuffer({ resolveWithObject: true });
+
+    /* The head is every column lighter than the ground, on a row above the
+       cheek. Under "attention" it lands 50px left of centre. */
+    const row = 250;
+    const lighter: number[] = [];
+    for (let x = 0; x < info.width; x += 1) {
+      if (data[row * info.width + x] > 40) lighter.push(x);
+    }
+    const centre = (lighter[0] + lighter[lighter.length - 1]) / 2;
+    expect(Math.abs(centre - info.width / 2)).toBeLessThanOrEqual(4);
+  });
 });

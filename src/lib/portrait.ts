@@ -129,9 +129,16 @@ export async function processPortrait(input: Buffer, crop?: Crop): Promise<Proce
   /* Pressed the way the six river plates were: the photograph reduced to
      five tones of ink on the paper, so a face and a ghat sit on one sheet as
      one kind of picture. Luminance is read after a light lift and a sharpen,
-     then each pixel takes the nearest of the five tones. */
+     then each pixel takes the nearest of the five tones.
+
+     THE WINDOW IS CUT FROM THE MIDDLE. sharp's "attention" strategy centres
+     the crop on the most salient region, and in a side-lit portrait that is
+     the lit cheek, not the head: the owner's own photograph came out with
+     the head 45px left of centre in the 800 wide window, and the sheet
+     showed it shifted left in the frame. The middle of a photograph is where
+     its subject was framed, so the middle is what the window keeps. */
   const { data, info } = await pipeline
-    .resize(PORTRAIT.width, PORTRAIT.height, { fit: "cover", position: "attention" })
+    .resize(PORTRAIT.width, PORTRAIT.height, { fit: "cover", position: "centre" })
     .flatten({ background: PORTRAIT.paper })
     .grayscale()
     .linear(1.12, -8)
