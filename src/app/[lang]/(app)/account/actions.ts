@@ -88,5 +88,7 @@ export async function deleteAccount(lang: Lang, formData: FormData): Promise<voi
   const clerk = await clerkClient();
   await clerk.users.deleteUser(user.id);
 
-  redirect(localePath(lang, "/"));
+  /* Through /sign-out, not straight to /: the session cookie still verifies
+     for about a minute, and the landing would send it on to /account. */
+  redirect(localePath(lang, "/sign-out"));
 }
