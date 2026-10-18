@@ -96,7 +96,7 @@ export type PageMetaArgs = {
  * image per edition. Edit that file and the homepage's query moves:
  * tests/unit/og-image.test.ts then fails until this value matches again.
  */
-export const SITE_CARD_VERSION = "a987b99edfbb9131";
+export const SITE_CARD_VERSION = "7d5fa4fbace400e1";
 
 /**
  * The site card for an edition, absolute, with its size so a chat app can lay

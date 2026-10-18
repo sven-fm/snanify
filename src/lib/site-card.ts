@@ -10,6 +10,7 @@ import { waterName } from "@/content/names";
 import { HERO_WATER } from "@/lib/hero-water";
 import { closingRiver } from "@/lib/engraving";
 import { markSvg } from "@/lib/logo-svg";
+import { wordmarkSvg } from "@/lib/wordmark-svg";
 
 /* ---------------------------------------------------------------------------
    The card a chat app unfurls when somebody pastes the site's link.
@@ -42,9 +43,7 @@ export async function siteCardSvg(lang: Lang): Promise<string> {
   const mark = markSvg({ size: 56, day: { paper: PAPER, ink: INK, sun: SINDOOR, water: PALETTE.day.teal }, id: "card-mark" })
     .replace("<svg ", `<svg x="${MARGIN}" y="40" `);
   parts.push(mark);
-  const root = await typeset("Snan", { size: 44, x: MARGIN + 72, y: 84, weight: 800, fill: INK });
-  parts.push(root.svg);
-  parts.push((await typeset("ify", { size: 44, x: MARGIN + 72 + root.width, y: 84, weight: 700, fill: INK })).svg);
+  parts.push((await wordmarkSvg({ size: 44, x: MARGIN + 72, y: 84, ink: INK, bindu: SINDOOR })).svg);
   parts.push((await typeset(withSamvat(t.edition, lang), { size: 22, x: width - MARGIN, y: 80, family: "sans", fill: PALETTE.day.ink2, anchor: "end" })).svg);
 
   /* --- the headline, one sentence to a line -------------------------------- */
