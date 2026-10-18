@@ -24,6 +24,12 @@ export const en = {
       "Six sacred waters with today's flow ranked against 1997 to 2025: the Ganga at Haridwar, the Sangam, the Yamuna, the Godavari, the Shipra and the Kaveri.",
   },
   title: "Six sacred waters",
+  /** The capitals headline: `{accent}` is set in sindoor. */
+  head: {
+    title: "Six {accent}.",
+    accent: "sacred waters",
+    plain: "Read about each one, then choose the river you grew up near.",
+  },
   lede: "Each has a modelled flow every day, a sunrise and a calendar. These pages describe the places and help you choose one.",
   lead: { read: "Read about this water" },
   index: {
@@ -59,11 +65,11 @@ export const en = {
   },
   choosing: {
     title: "Which water to choose",
-    lede: "Most people pick the river they grew up near. If you are choosing fresh, this helps.",
+    lede: "Start with the river you grew up near. Choosing fresh? These four help.",
     rows: [
       {
         key: "first",
-        label: "If you have not sat before",
+        label: "For your first snan",
         body: "The Ganga at Har Ki Pauri, or the Shipra at Ram Ghat. Both are working bathing ghats with a daily evening aarti, and both carry figures that move with the season.",
       },
       {
@@ -84,8 +90,8 @@ export const en = {
     ],
   },
   closing: {
-    title: "Read about a water, then choose.",
-    lede: "Each page says what the place is, what it is kept for, who looks after it, and how its figure is read.",
+    title: "Choose your water. Sit with it tomorrow.",
+    lede: "Three minutes, at the hour the panchang names, with the river as it runs that morning.",
     cta: "Begin your snan",
   },
   formLabels: {

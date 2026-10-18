@@ -202,7 +202,10 @@ const faqEn = {
       "What happens during the snan, where the river figures come from, what it costs, and what we hold about you. Plain answers.",
   },
   title: "Questions",
-  lede: "About the snan, the river figures, prices and your data. If yours is missing, write to us.",
+  lede: "Read about the snan, the river figures, prices and your data.",
+  /** The capitals headline: `{accent}` is set in sindoor. */
+  head: { title: "Questions about the {accent}.", accent: "snan" },
+  snanTitle: "Your river, tomorrow morning.",
   indexLabel: "Sections",
   moreLabel: "Read more",
   ctaLabel: "Begin your snan",
@@ -414,10 +417,12 @@ export const faqContent = { en: faqEn, hi: {
       "स्नान के दौरान क्या होता है, नदी के अंक कहाँ से आते हैं, मूल्य क्या है, और हम आपके विषय में क्या रखते हैं। हर प्रश्न का सीधा उत्तर।",
   },
   title: "प्रश्न",
-  lede: "स्नान, नदी के अंक, मूल्य और आपकी जानकारी के विषय में। आपका प्रश्न यहाँ न हो, तो हमें लिखिए।",
+  lede: "स्नान, नदी के अंकों, मूल्य और आपकी जानकारी के बारे में पढ़िए।",
+  head: { title: "{accent} के बारे में प्रश्न", accent: "स्नान" },
+  snanTitle: "कल सुबह, आपकी नदी।",
   indexLabel: "खंड",
   moreLabel: "और पढ़िए",
-  ctaLabel: "अपना स्नान आरंभ कीजिए",
+  ctaLabel: "अपना स्नान शुरू कीजिए",
 
   groups: [
     {

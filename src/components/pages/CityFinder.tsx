@@ -72,7 +72,7 @@ function Run({ cities, lang, region }: { cities: readonly FinderCity[]; lang: La
           {i > 0 && <span className="text-ink2">, </span>}
           <Link
             href={localePath(lang, `/panchang/${c.slug}`)}
-            className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
+            className="text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
           >
             {c.name}
           </Link>
@@ -87,7 +87,7 @@ function Row({ city, lang, sub }: { city: FinderCity; lang: Lang; sub?: string }
     <li className="border-b border-rule">
       <Link
         href={localePath(lang, `/panchang/${city.slug}`)}
-        className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-sindoor"
+        className="flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-sindoor"
       >
         <span className="display text-[1.1rem]">{city.name}</span>
         {sub && <span className="text-right text-sm text-ink2">{sub}</span>}
@@ -139,7 +139,7 @@ export function CityFinder({ lang, groups, t }: { lang: Lang; groups: readonly F
           <button
             type="button"
             onClick={() => setQuery("")}
-            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
+            className="mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
           >
             {t.clear}
           </button>

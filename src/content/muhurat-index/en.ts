@@ -36,9 +36,11 @@ export const en = {
   nav: { back: "All occasions" },
   hero: {
     title: "The muhurat calendar",
-    lede: "The occasions of the twelve months ahead, the windows of the day they are kept in, and how much is known about when each one falls.",
+    lede: "Every occasion of the next twelve months, and the hours of the day to keep it.",
     asOf: "Twelve months from {date}",
   },
+  /** The capitals headline: `{accent}` is set in sindoor. */
+  head: { title: "The {accent} calendar.", accent: "muhurat" },
   provenance: {
     badge: "Computed here, checked against Drik Panchang",
     badgeShort: "Computed, checked",
@@ -118,6 +120,7 @@ export const en = {
     lede: "Every occasion here is kept at one of the six waters. Start with the one you grew up near.",
     primary: "The six waters",
     secondary: "The occasion list",
+    snan: "Begin your snan",
   },
   tiers: {
     nitya: "A daily observance",

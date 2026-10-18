@@ -1,25 +1,21 @@
 import Link from "next/link";
-import { WaterBand } from "@/components/WaterBand";
 import { localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
-import { Colophon, Mark } from "@/components/Logo";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Section } from "@/components/ui";
+import { H2, H3, QUIET, RefClose, RefHead, W700 } from "@/components/site/Reference";
 import { RIVERS } from "@/content/rivers";
 import { riversIndexContent } from "@/content/rivers-index";
 
 /* ---------------------------------------------------------------------------
-   /rivers. A register of six places and a page of advice on choosing one.
+   /rivers, in v3 (spec 6.6). A register of six places and a page of advice
+   on choosing one: the capitals headline, the first water set large with its
+   name in sindoor, the other five as ruled rows, the four things found at
+   every water, how to choose, and the one press at the end.
 
-   WHAT WAS TAKEN OFF THIS PAGE, and must stay off: the caps label with a red
-   dash above every heading, the fade-and-rise on every section, the numbered
-   markers on a list that is a choice rather than a sequence, the boxed badge
-   at the top, the middle dots between ghat and city, the red notice about
-   "what Snanify does at these six places" and the two-column "this is / this
-   is not" block. Each was a default, and together they made the page read as
-   a template. The small caps voice appears only on a button.
+   Space divides the sections; hairlines stay between rows. Every link but
+   the closing press is a quiet underlined link.
    --------------------------------------------------------------------------- */
 
 export function RiversIndex({ lang }: { lang: Lang }) {
@@ -39,165 +35,105 @@ export function RiversIndex({ lang }: { lang: Lang }) {
       <Header lang={lang} currentPath="/rivers" />
 
       <main>
-        {/* ------------------------------------------------ front page --- */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20">
-            <h1 className="ink-in display max-w-4xl text-[2.7rem] sm:text-6xl lg:text-[4.6rem]">
-              {t.title}
-            </h1>
-
-            <p
-              className="ink-in mt-8 max-w-2xl text-[1.05rem] leading-[1.75] text-ink2"
-              style={{ animationDelay: "120ms" }}
-            >
-              {t.lede}
-            </p>
-
-            {/* The water itself, set across the page with space around it. */}
-            <div className="mt-12 py-5">
-              <WaterBand seed="rivers" className="h-20 w-full sm:h-24" />
-            </div>
-          </div>
-        </section>
+        <RefHead lang={lang} title={t.head.title} accent={t.head.accent} plain={t.head.plain} />
 
         {/* ------------------------------------------- the lead water --- */}
-        <section className="tint">
-          <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-            <div className="grid items-start gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16">
-              <div>
-                <div>
-                  <h2 className="display text-4xl sm:text-5xl lg:text-6xl">
-                    {waterName(first, "river", lang)}
-                  </h2>
-                  <p className="mt-3 text-sm text-ink2">{place(first)}</p>
-                </div>
-                <p
-                  className="display mt-8 max-w-xl text-xl leading-[1.45] text-ink sm:text-2xl">
-                  {first.epithet[lang]}
-                </p>
-
-                <p className="mt-5 max-w-xl leading-[1.75] text-ink2">
-                  {first.standfirst[lang]}
-                </p>
-
-                <p
-                  className="mt-4 max-w-xl text-sm leading-[1.75] text-ink2">
-                  {first.sacred[lang][0]}
-                </p>
-
-                <div className="mt-9 flex flex-wrap items-center gap-5">
-                  <Link href={localePath(lang, `/rivers/${first.slug}`)}>
-                    <CTA>{t.lead.read}</CTA>
-                  </Link>
-                  <span className="text-sm text-ink2">{t.formLabels[first.form]}</span>
-                </div>
-              </div>
-
-              <div className="mx-auto w-full max-w-xs lg:max-w-none">
-                <Colophon className="mx-auto w-full max-w-[18rem] text-ink" />
-              </div>
-            </div>
+        <section>
+          <div className="mx-auto max-w-3xl px-5 pb-14 sm:px-8">
+            <h2 className="display text-[2rem] leading-[1.05] text-sindoor sm:text-[2.6rem]" style={{ fontWeight: 800 }}>
+              {waterName(first, "river", lang)}
+            </h2>
+            <p className="mt-2 text-sm text-ink2">{place(first)}</p>
+            <p className="display mt-6 text-[1.25rem] leading-[1.4] text-ink" style={W700}>
+              {first.epithet[lang]}
+            </p>
+            <p className="mt-4 leading-[1.7] text-ink2">{first.standfirst[lang]}</p>
+            <p className="mt-4 text-sm leading-[1.7] text-ink2">{first.sacred[lang][0]}</p>
+            <p className="mt-2 text-sm text-ink2">{t.formLabels[first.form]}</p>
+            <Link href={localePath(lang, `/rivers/${first.slug}`)} className={`${QUIET} mt-3`}>
+              {t.lead.read}
+            </Link>
           </div>
         </section>
 
         {/* -------------------------------------------- the other five -- */}
-        <Section id="index">
-          <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.index.title}</h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.index.lede}</p>
-          </div>
+        <section id="index" className="scroll-mt-16">
+          <div className="mx-auto max-w-3xl px-5 py-14 sm:px-8">
+            <h2 className={H2} style={W700}>
+              {t.index.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2">{t.index.lede}</p>
 
-          {/* A register, unnumbered: five waters are a choice, not a sequence. */}
-          <ul className="mt-10">
-            {rest.map((r) => (
-              <li key={r.slug}>
-                <Link
-                  href={localePath(lang, `/rivers/${r.slug}`)}
-                  className="impress -mx-3 grid gap-y-4 px-3 py-8 transition-colors hover:bg-paper3 active:bg-paper3 md:grid-cols-[1fr_14rem] md:gap-x-8 md:py-10"
-                >
-                  <div>
-                    <h3 className="display text-3xl text-ink sm:text-4xl">
+            {/* A register, unnumbered: five waters are a choice, not a sequence. */}
+            <ul className="mt-8 border-t border-rule">
+              {rest.map((r) => (
+                <li key={r.slug} className="border-b border-rule">
+                  <Link href={localePath(lang, `/rivers/${r.slug}`)} className="group block py-6">
+                    <h3 className="display text-[1.5rem] leading-[1.15] text-ink group-active:text-sindoor" style={W700}>
                       {waterName(r, "river", lang)}
                     </h3>
-                    <p className="mt-2 text-sm text-ink2">{place(r)}</p>
-                    <p
-                      className="display mt-5 max-w-xl text-lg leading-[1.45] text-ink">
-                      {r.epithet[lang]}
+                    <p className="mt-1 text-sm text-ink2">{place(r)}</p>
+                    <p className="mt-3 text-[0.9375rem] leading-[1.6] text-ink">{r.epithet[lang]}</p>
+                    <p className="mt-2 text-sm leading-[1.7] text-ink2">{r.standfirst[lang]}</p>
+                    <p className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
+                      <span className="text-ink2">{t.formLabels[r.form]}</span>
+                      <span className="font-bold text-ink underline decoration-ink decoration-2 underline-offset-4">
+                        {t.index.read}
+                      </span>
                     </p>
-                    <p
-                      className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2">
-                      {r.standfirst[lang]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col items-start gap-3 md:items-end md:text-right">
-                    <span className="text-sm text-ink2 md:max-w-[12rem]">{t.formLabels[r.form]}</span>
-                    <span className="text-sm text-ink underline decoration-sindoor decoration-2 underline-offset-4">
-                      {t.index.read}
-                    </span>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        {/* ------------------------------------------------- offer ------
-            The four things at every one of the six, as rows set apart by space: at 390px
-            the name sits on its own line and the body runs full width under
-            it, so nothing is set in a column narrower than the text needs. */}
-        <Section id="offer" tinted>
-          <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.offer.title}</h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.offer.lede}</p>
-          </div>
-
-          <ul className="mt-10">
-            {t.offer.items.map((item) => (
-              <li
-                key={item.key}
-                className="grid gap-y-2 py-6 md:grid-cols-[15rem_1fr] md:gap-x-8 md:py-7"
-              >
-                <span className="display text-xl text-ink sm:text-2xl">{item.name}</span>
-                <span className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.body}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        {/* ----------------------------------------------- choosing ----- */}
-        <Section>
-          <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.choosing.title}</h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.choosing.lede}</p>
-          </div>
-
-          <dl className="mt-10">
-            {t.choosing.rows.map((row) => (
-              <div
-                key={row.key}
-                className="grid gap-3 py-7 md:grid-cols-[15rem_1fr] md:gap-10 md:py-9"
-              >
-                <dt className="display text-xl text-ink">{row.label}</dt>
-                <dd className="max-w-2xl leading-[1.75] text-ink2">{row.body}</dd>
-              </div>
-            ))}
-          </dl>
-        </Section>
-
-        {/* ------------------------------------------------ closing ----- */}
-        <section>
-          <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
-            <Mark className="mx-auto h-12 w-12 text-ink" />
-            <h2 className="display mt-10 text-[2.2rem] leading-tight sm:text-[3.2rem]">
-              {t.closing.title}
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl leading-[1.75] text-ink2">{t.closing.lede}</p>
-            <Link href={localePath(lang, "/begin")} className="mt-9 inline-block">
-              <CTA className="!px-10 !py-4">{t.closing.cta}</CTA>
-            </Link>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
+
+        {/* ------------------------------------------------- offer ------ */}
+        <section id="offer" className="scroll-mt-16">
+          <div className="mx-auto max-w-3xl px-5 py-14 sm:px-8">
+            <h2 className={H2} style={W700}>
+              {t.offer.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2">{t.offer.lede}</p>
+            <ul className="mt-6">
+              {t.offer.items.map((item) => (
+                <li key={item.key} className="py-4">
+                  <h3 className={H3} style={W700}>
+                    {item.name}
+                  </h3>
+                  <p className="mt-2 text-sm leading-[1.75] text-ink2">{item.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ----------------------------------------------- choosing ----- */}
+        <section>
+          <div className="mx-auto max-w-3xl px-5 py-14 sm:px-8">
+            <h2 className={H2} style={W700}>
+              {t.choosing.title}
+            </h2>
+            <p className="mt-3 leading-[1.6] text-ink2">{t.choosing.lede}</p>
+            <dl className="mt-6">
+              {t.choosing.rows.map((row) => (
+                <div key={row.key} className="py-4">
+                  <dt className={H3} style={W700}>
+                    {row.label}
+                  </dt>
+                  <dd className="mt-2 leading-[1.7] text-ink2">{row.body}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        <RefClose
+          title={t.closing.title}
+          body={t.closing.lede}
+          label={t.closing.cta}
+          href={localePath(lang, "/begin")}
+        />
       </main>
 
       <Footer lang={lang} />

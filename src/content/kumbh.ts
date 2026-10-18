@@ -231,6 +231,8 @@ type Row = { key: string; q: string; a: string };
 type KumbhCopy = {
   meta: { title: string; description: string };
   hero: { title: string; kicker: string; standfirst: string; lede: string };
+  /** The capitals headline: `{accent}` is set in sindoor. */
+  head: { title: string; accent: string };
   provenance: { badge: string; badgeShort: string; line: string };
   facts: { rows: { key: string; term: string; value: string }[] };
   what: { title: string; paras: Para[] };
@@ -275,6 +277,7 @@ export const kumbhContent = {
       description:
         "When the Simhastha Kumbh falls at Nashik and Trimbakeshwar, how it is reckoned, and the bathing days published for 2027 at Ram Kund and Kushavarta.",
     },
+    head: { title: "The {accent} at Nashik.", accent: "Simhastha Kumbh" },
     hero: {
       title: "The Simhastha Kumbh",
       kicker: "Nashik and Trimbakeshwar, on the Godavari",
@@ -475,6 +478,7 @@ export const kumbhContent = {
       description:
         "सिंहस्थ कुंभ नासिक और त्र्यंबकेश्वर में कब पड़ता है, उसकी गणना कैसे होती है, और रामकुंड व कुशावर्त पर २०२७ की प्रकाशित स्नान-तिथियाँ।",
     },
+    head: { title: "नासिक में {accent}", accent: "सिंहस्थ कुंभ" },
     hero: {
       title: "सिंहस्थ कुंभ",
       kicker: "नासिक एवं त्र्यंबकेश्वर, गोदावरी तट पर",
@@ -586,7 +590,7 @@ export const kumbhContent = {
     here: {
       title: "इस साइट पर गोदावरी",
       body: "रामकुंड पर गोदावरी यहाँ के छह जलों में से एक है। मेले की हर सुबह उसका मॉडल-प्रवाह उसके पृष्ठ पर होता है, उसी सार्वजनिक स्रोत से पढ़ा हुआ जिससे किसी भी और दिन, और आप पंचांग की बताई घड़ी पर उसके साथ अपना स्नान कर सकते हैं, चाहे आप कहीं भी हों।",
-      cta: "अपना स्नान आरंभ कीजिए",
+      cta: "अपना स्नान शुरू कीजिए",
     },
     attend: {
       title: "यदि आप नासिक जा रहे हैं",

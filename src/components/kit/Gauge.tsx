@@ -36,7 +36,7 @@ export function Gauge({
   const t = flowContent[lang];
   const today = band ?? model.band;
   return (
-    <div className={className}>
+    <div data-gauge className={className}>
       {heading && today ? (
         <>
           <p className="display text-[1.625rem] leading-[1.05]" style={{ fontWeight: 800 }}>
@@ -85,7 +85,7 @@ export function Gauge({
           <span className="text-right">{t.word.spate}</span>
         </div>
       </div>
-      {figure ? <p className="tabular mt-2 text-[0.75rem] leading-[1.4] text-ink2">{figure}</p> : null}
+      {figure ? <p data-figure className="tabular mt-2 text-[0.75rem] leading-[1.4] text-ink2">{figure}</p> : null}
     </div>
   );
 }

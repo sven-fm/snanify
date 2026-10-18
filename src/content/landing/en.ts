@@ -113,6 +113,7 @@ export const en = {
   notFound: {
     code: "404",
     title: "This ghat has moved.",
+    head: { title: "This {accent} has moved.", accent: "ghat" },
     lede: "The river moved, or the link did. The six waters are where they always were.",
     cta: "Back to the river",
   },

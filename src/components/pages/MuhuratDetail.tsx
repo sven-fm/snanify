@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { WaterBand } from "@/components/WaterBand";
 
 import type { Lang } from "@/lib/locales";
 import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Section } from "@/components/ui";
+import { Section } from "@/components/ui";
+import { ctaHref } from "@/lib/nav";
+import { Festival, H2, H3, QUIET, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
 import { ProvisionalBadge } from "@/components/pages/MuhuratIndex";
 import {
   GHAT_BY_ID,
@@ -17,11 +18,15 @@ import {
 } from "@/content/muhurat";
 import { muhuratIndexContent } from "@/content/muhurat-index";
 import { GAUGES } from "@/lib/riverdata";
-import { horizonFrom, resolveOccasion, RESOLVER, sayResolved } from "@/lib/occasions";
+import { horizonFrom, inWindow, resolveOccasion, RESOLVER, sayResolved } from "@/lib/occasions";
 
 /** A section heading, in order after the h1. */
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="display text-[1.9rem] leading-tight sm:text-[2.4rem]">{children}</h2>;
+  return (
+    <h2 className={H2} style={W700}>
+      {children}
+    </h2>
+  );
 }
 
 function neighbours(occasion: Occasion) {
@@ -51,6 +56,8 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
   })();
   const { prev, next } = neighbours(occasion);
   const windows = occasion.windows.map((id) => WINDOW_BY_ID[id]).filter(Boolean);
+  /* Inside its window the occasion gets the festival panel (spec 6.6). */
+  const now = inWindow(dates);
 
   return (
     <>
@@ -59,45 +66,48 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
       <Header lang={lang} currentPath={`/muhurat/${occasion.slug}`} />
 
       <main>
-        {/* ---------------- masthead ---------------- */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-20">
+        {/* ---------------- masthead ----------------
+            The occasion's own name is the headline, all of it in sindoor. */}
+        <RefHead
+          lang={lang}
+          title=""
+          accent={occasion.name[lang]}
+          plain={occasion.line[lang]}
+          wide
+          before={
             <Link
               href={localePath(lang, "/muhurat")}
-              className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-sindoor"
+              className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
             >
               {t.nav.back}
             </Link>
+          }
+        >
+          {occasion.aka && (
+            <p className="mt-2 text-sm text-ink2">{d.alsoCalled.replace("{aka}", occasion.aka[lang])}</p>
+          )}
+          {now && (
+            <div className="mt-6">
+              <Festival name={occasion.name[lang]}>{sayResolved(now, lang)}</Festival>
+            </div>
+          )}
+        </RefHead>
 
-            <div className="mt-8 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-              <div>
-                <h1 className="ink-in display text-[2.7rem] leading-[1.0] sm:text-6xl">
-                  {occasion.name[lang]}
-                </h1>
-                {occasion.aka && (
-                  <p className="label mt-4 text-ink2">{d.alsoCalled.replace("{aka}", occasion.aka[lang])}</p>
-                )}
-
-                <WaterBand seed={occasion.slug} className="mt-8 h-12 w-full sm:h-14" />
-
-                <p
-                  className="ink-in mt-6 max-w-lg text-[1.05rem] leading-[1.75] text-ink2"
-                  style={{ animationDelay: "120ms" }}
-                >
-                  {occasion.line[lang]}
-                </p>
-              </div>
-
+        <section>
+          <div className="mx-auto max-w-6xl px-5 pb-12 sm:px-8">
+            <div className="max-w-2xl">
               {/* The provisional window. Date, rule and provenance in one block,
                   so the timing can never be read without its caveat. */}
-              <div className="tint self-start p-7 sm:p-8">
-                <h2 className="display text-xl text-ink">{d.whenTitle}</h2>
+              <div className="bg-paper2 p-5 sm:p-7">
+                <h2 className={H3} style={W700}>
+                  {d.whenTitle}
+                </h2>
 
                 {/* The dates, computed at the ghat's own sunrise for the
                     twelve months from today. A dated occasion has one; a
                     recurring one lists what is coming. */}
                 {dates.length === 1 ? (
-                  <p className="display mt-5 text-[1.7rem] leading-[1.25] text-ink sm:text-[2.1rem]" data-occasion-date={dates[0].date}>
+                  <p className="display mt-4 text-[1.5rem] leading-[1.25] text-ink sm:text-[1.9rem]" style={W700} data-occasion-date={dates[0].date}>
                     {sayResolved(dates[0], lang)}
                   </p>
                 ) : (
@@ -162,7 +172,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
         </Section>
 
         {/* ---------------- which waters ---------------- */}
-        <Section tinted>
+        <Section>
           <div className="max-w-2xl">
             <SectionTitle>{d.watersTitle}</SectionTitle>
             <p className="mt-5 leading-[1.75] text-ink2">{occasion.ghatsNote[lang]}</p>
@@ -178,7 +188,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
                   className="grid gap-x-8 gap-y-3 border-b border-rule py-7 sm:grid-cols-[16rem_1fr]"
                 >
                   <div>
-                    <h3 className="display text-xl text-ink">{ghat.river[lang]}</h3>
+                    <h3 className={H3} style={W700}>{ghat.river[lang]}</h3>
                     <p className="mt-1 text-sm text-ink2">
                       {ghat.ghat[lang]}, {ghat.city[lang]}
                     </p>
@@ -201,14 +211,14 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
           </div>
 
           {/* the day's schedule for this occasion, ruled */}
-          <ul className="mt-10">
+          <ul className={`mt-8 ${TABLE_GROUND}`}>
             {windows.map((w) => (
               <li
                 key={w.id}
-                className="grid gap-x-8 gap-y-4 border-b border-rule py-8 sm:grid-cols-[15rem_1fr]"
+                className="grid gap-x-8 gap-y-4 border-b border-rule py-7 last:border-b-0 sm:grid-cols-[15rem_1fr]"
               >
                 <div>
-                  <h3 className="display text-2xl">{w.name[lang]}</h3>
+                  <h3 className={H3} style={W700}>{w.name[lang]}</h3>
                   <p className="mt-2 text-sm text-ink">{t.windows.minutes(w.durationMin)}</p>
                   <p className="mt-1 text-sm text-ink2">{t.anchors[w.anchor]}</p>
                 </div>
@@ -232,7 +242,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
             {d.clockNote}{" "}
             <Link
               href={`${localePath(lang, "/muhurat")}#clock`}
-              className="inline-flex min-h-11 items-center text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-sindoor"
+              className={QUIET}
             >
               {d.clockLink}
             </Link>
@@ -244,7 +254,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
         </Section>
 
         {/* ---------------- provenance ---------------- */}
-        <Section tinted>
+        <Section>
           <div className="max-w-2xl">
             <SectionTitle>{d.provenanceTitle}</SectionTitle>
           </div>
@@ -270,7 +280,7 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
             </dl>
 
             <div>
-              <h3 className="display text-xl text-ink">{d.basisTitle}</h3>
+              <h3 className={H3} style={W700}>{d.basisTitle}</h3>
               <p className="mt-4 max-w-xl text-sm leading-[1.75] text-ink2">
                 {occasion.textualBasis[lang]}
               </p>
@@ -286,45 +296,37 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
 
         {/* ---------------- neighbours ---------------- */}
         <section>
-          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {prev ? (
-                <Link
-                  href={localePath(lang, `/muhurat/${prev.slug}`)}
-                  className="impress tint group block p-6 transition-colors hover:bg-paper3"
-                >
-                  <p className="text-sm text-ink2">{d.prev}</p>
-                  <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-sindoor">
-                    {prev.name[lang]}
-                  </p>
-                </Link>
-              ) : (
-                <span className="hidden sm:block" />
+          <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+            <ul className="border-t border-rule sm:grid sm:grid-cols-2 sm:gap-x-8 sm:border-t-0">
+              {(
+                [
+                  [prev, d.prev],
+                  [next, d.next],
+                ] as const
+              ).map(([o, label]) =>
+                o ? (
+                  <li key={o.slug} className="border-b border-rule">
+                    <Link href={localePath(lang, `/muhurat/${o.slug}`)} className="group block py-4">
+                      <span className="block text-sm text-ink2">{label}</span>
+                      <span className="display mt-1 block text-[1.25rem] text-ink underline decoration-rule decoration-1 underline-offset-4 group-active:text-sindoor" style={W700}>
+                        {o.name[lang]}
+                      </span>
+                    </Link>
+                  </li>
+                ) : null,
               )}
-
-              {next && (
-                <Link
-                  href={localePath(lang, `/muhurat/${next.slug}`)}
-                  className="impress tint group block p-6 transition-colors hover:bg-paper3 sm:text-right"
-                >
-                  <p className="text-sm text-ink2">{d.next}</p>
-                  <p className="display mt-2 text-xl text-ink underline decoration-rule decoration-1 group-hover:decoration-sindoor">
-                    {next.name[lang]}
-                  </p>
-                </Link>
-              )}
-            </div>
-
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-              <Link href={localePath(lang, "/muhurat")}>
-                <CTA variant="ghost">{d.backToCalendar}</CTA>
-              </Link>
-              <Link href={localePath(lang, "/rivers")}>
-                <CTA>{t.cta.primary}</CTA>
-              </Link>
-            </div>
+            </ul>
+            <Link href={localePath(lang, "/muhurat")} className={`${QUIET} mt-4`}>
+              {d.backToCalendar}
+            </Link>
           </div>
         </section>
+
+        <RefClose title={t.cta.title} body={t.cta.lede} label={t.cta.snan} href={ctaHref(lang)}>
+          <Link href={localePath(lang, "/rivers")} className={`${QUIET} mt-4`}>
+            {t.cta.primary}
+          </Link>
+        </RefClose>
       </main>
 
       <Footer lang={lang} />

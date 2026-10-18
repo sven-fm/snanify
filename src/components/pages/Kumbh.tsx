@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { WaterBand } from "@/components/WaterBand";
 
 import { localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Section } from "@/components/ui";
+import { Section } from "@/components/ui";
+import { Festival, H2, H3, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
 import {
   KUMBH_MONTHS,
   KUMBH_ROUTE,
@@ -104,7 +104,7 @@ function MonthPlate({
   while (cells.length % 7 !== 0) cells.push(null);
 
   return (
-    <figure className="bg-paper">
+    <figure className="border border-rule bg-paper">
       <figcaption className="label px-4 pt-4 pb-2 text-ink">
         {months[month - 1]} {deva(String(year), lang)}
       </figcaption>
@@ -172,46 +172,24 @@ export function Kumbh({ lang }: { lang: Lang }) {
       <Header lang={lang} currentPath={KUMBH_ROUTE} />
 
       <main>
-        {/* ------------------------------------------------- masthead ---- */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 pt-10 pb-16 sm:px-8 sm:pt-14 sm:pb-20">
-            <h1 className="ink-in display text-[3.2rem] sm:text-6xl lg:text-[5.2rem]">
-              {t.hero.title}
-            </h1>
-
-            <p
-              className="ink-in display mt-4 text-2xl text-ink sm:text-3xl"
-              style={{ animationDelay: "60ms" }}
-            >
-              {t.hero.kicker}
-            </p>
-
-            <WaterBand seed="kumbh" className="mt-8 h-14 w-full sm:h-16" />
-
-            <p
-              className="ink-in mt-7 max-w-2xl text-xl leading-[1.5] text-ink sm:text-2xl"
-              style={{ animationDelay: "120ms" }}
-            >
-              {t.hero.standfirst}
-            </p>
-
-            <p
-              className="ink-in mt-6 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2"
-              style={{ animationDelay: "180ms" }}
-            >
-              {t.hero.lede}
-            </p>
-
-            <div className="mt-9">
-              <ProvisionalMark lang={lang} />
-            </div>
+        {/* ------------------------------------------------- masthead ----
+            The capitals headline, the dates as its one plain sentence, and
+            the festival panel: the one page outside an occasion's window
+            that carries it, because the mela is the occasion. */}
+        <RefHead lang={lang} title={t.head.title} accent={t.head.accent} plain={t.hero.standfirst} wide>
+          <div className="mt-6 max-w-xl">
+            <Festival name={t.hero.title}>{t.hero.kicker}</Festival>
           </div>
-        </section>
+          <p className="mt-6 max-w-2xl leading-[1.7] text-ink2">{t.hero.lede}</p>
+          <div className="mt-4">
+            <ProvisionalMark lang={lang} />
+          </div>
+        </RefHead>
 
         {/* -------------------------------------------- standing entry --- */}
-        <section className="tint">
-          <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
-            <dl className="grid gap-x-10 md:grid-cols-2">
+        <section>
+          <div className="mx-auto max-w-6xl px-5 pb-6 sm:px-8">
+            <dl className={`grid gap-x-10 md:grid-cols-2 ${TABLE_GROUND}`}>
               {t.facts.rows.map((row) => (
                 <div
                   key={row.key}
@@ -232,7 +210,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
 
         {/* --------------------------------------------- the reckoning --- */}
         <Section id="reckoning">
-          <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.what.title}</h2>
+          <h2 className={H2} style={W700}>{t.what.title}</h2>
           <div className="mt-8 max-w-2xl space-y-7">
             {t.what.paras.map((p, i) => (
               <p key={i} className="text-[1.02rem] leading-[1.85] text-ink2">
@@ -243,8 +221,8 @@ export function Kumbh({ lang }: { lang: Lang }) {
         </Section>
 
         {/* -------------------------------------------------- the place -- */}
-        <Section id="place" tinted>
-          <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.place.title}</h2>
+        <Section id="place">
+          <h2 className={H2} style={W700}>{t.place.title}</h2>
           <div className="mt-8 max-w-2xl space-y-7">
             {t.place.paras.map((p, i) => (
               <p key={i} className="text-[1.02rem] leading-[1.85] text-ink2">
@@ -256,7 +234,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
 
         {/* -------------------------------------------------- the water -- */}
         <Section id="river">
-          <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.river.title}</h2>
+          <h2 className={H2} style={W700}>{t.river.title}</h2>
           <div className="mt-8 max-w-2xl space-y-7">
             {t.river.paras.map((p, i) => (
               <p key={i} className="text-[1.02rem] leading-[1.85] text-ink2">
@@ -267,9 +245,9 @@ export function Kumbh({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ----------------------------------------------- the calendar -- */}
-        <Section id="calendar" tinted>
+        <Section id="calendar">
           <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{c.title}</h2>
+            <h2 className={H2} style={W700}>{c.title}</h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{c.lede}</p>
           </div>
 
@@ -278,8 +256,8 @@ export function Kumbh({ lang }: { lang: Lang }) {
           </div>
 
           {/* the register of days */}
-          <div className="mt-10 overflow-x-auto" tabIndex={0}>
-            <table className="w-full min-w-[46rem] border-collapse text-left">
+          <div className={`mt-8 overflow-x-auto ${TABLE_GROUND}`} tabIndex={0}>
+            <table className="w-full min-w-[40rem] border-collapse text-left">
               <thead>
                 <tr className="border-b border-rule">
                   <th scope="col" className="label py-3 pr-6 text-ink2">
@@ -301,9 +279,9 @@ export function Kumbh({ lang }: { lang: Lang }) {
               </thead>
               <tbody>
                 {KUMBH_SCHEDULE.map((e) => (
-                  <tr key={e.key} className="border-b border-rule align-top">
+                  <tr key={e.key} className="border-b border-rule align-top last:border-b-0">
                     <td className="py-5 pr-6 whitespace-nowrap">
-                      <span className="display text-lg text-ink">
+                      <span className="display text-[1.0625rem] text-ink" style={W700}>
                         {formatDate(e.date, lang, c.months)}
                       </span>
                       <span className="mt-1.5 block text-sm text-sindoor">{c.kinds[e.kind]}</span>
@@ -363,23 +341,10 @@ export function Kumbh({ lang }: { lang: Lang }) {
           </div>
         </Section>
 
-        {/* ------------------------------------------- on this site ------ */}
-        <Section id="here">
-          <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.here.title}</h2>
-            <p className="mt-4 max-w-2xl text-[1.02rem] leading-[1.85] text-ink2">
-              {t.here.body}
-            </p>
-            <Link href={localePath(lang, "/begin")} className="mt-8 block sm:inline-block">
-              <CTA className="w-full !py-4 sm:w-auto">{t.here.cta}</CTA>
-            </Link>
-          </div>
-        </Section>
-
         {/* ------------------------------------------------- going there -- */}
-        <Section id="attending" tinted>
+        <Section id="attending">
           <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.attend.title}</h2>
+            <h2 className={H2} style={W700}>{t.attend.title}</h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.attend.lede}</p>
           </div>
 
@@ -389,7 +354,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
                 key={row.key}
                 className="grid gap-x-10 gap-y-3 border-b border-rule py-7 md:grid-cols-[18rem_1fr] md:py-8"
               >
-                <dt className="display text-xl leading-[1.35] text-ink">{row.q}</dt>
+                <dt className="display text-[1.125rem] leading-[1.35] text-ink" style={W700}>{row.q}</dt>
                 <dd className="max-w-2xl text-[0.98rem] leading-[1.85] text-ink2">{row.a}</dd>
               </div>
             ))}
@@ -399,7 +364,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
         {/* -------------------------------------------------- provenance -- */}
         <Section id="sources">
           <div className="max-w-3xl">
-            <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{t.sources.title}</h2>
+            <h2 className={H2} style={W700}>{t.sources.title}</h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{t.sources.lede}</p>
           </div>
 
@@ -413,7 +378,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
                   href={s.href}
                   rel="noopener noreferrer nofollow"
                   target="_blank"
-                  className="text-[0.98rem] leading-[1.6] text-ink underline decoration-sindoor decoration-1 transition-colors hover:text-sindoor"
+                  className="text-[0.98rem] leading-[1.6] text-ink underline decoration-sindoor decoration-1 underline-offset-4 active:text-sindoor"
                 >
                   {s.label[lang]}
                 </a>
@@ -423,7 +388,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
           </ul>
 
           <div className="mt-14 max-w-3xl">
-            <h3 className="display text-2xl text-ink">{t.sources.unverifiedTitle}</h3>
+            <h3 className={H3} style={W700}>{t.sources.unverifiedTitle}</h3>
             <ul className="mt-6 space-y-4">
               {t.sources.unverified.map((item, i) => (
                 <li
@@ -439,24 +404,26 @@ export function Kumbh({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ------------------------------------------------------ onward -- */}
-        <section className="tint">
-          <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-            <h2 className="display text-3xl sm:text-4xl">{t.onward.title}</h2>
-
-            <div className="mt-8 grid gap-3 md:grid-cols-3">
-              {t.onward.links.map((l) => (
-                <Link
-                  key={l.key}
-                  href={onwardHref[l.key] ?? localePath(lang, "/")}
-                  className="impress bg-paper p-7 transition-colors hover:bg-paper3 sm:p-8"
-                >
-                  <span className="display block text-xl text-ink">{l.label}</span>
-                  <span className="mt-3 block text-sm leading-[1.75] text-ink2">{l.note}</span>
+        <Section>
+          <h2 className={H2} style={W700}>
+            {t.onward.title}
+          </h2>
+          <ul className="mt-6 border-t border-rule">
+            {t.onward.links.map((l) => (
+              <li key={l.key} className="border-b border-rule">
+                <Link href={onwardHref[l.key] ?? localePath(lang, "/")} className="group block py-4">
+                  <span className="display block text-[1.25rem] text-ink underline decoration-rule decoration-1 underline-offset-4 group-active:text-sindoor" style={W700}>
+                    {l.label}
+                  </span>
+                  <span className="mt-1 block text-sm leading-[1.7] text-ink2">{l.note}</span>
                 </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* The Godavari on this site, and the one press. */}
+        <RefClose title={t.here.title} body={t.here.body} label={t.here.cta} href={localePath(lang, "/begin")} />
       </main>
 
       <Footer lang={lang} />

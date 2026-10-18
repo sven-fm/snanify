@@ -890,6 +890,8 @@ type OfferItem = { key: string; name: string; body: string };
 
 type RiverDetailCopy = {
   back: string;
+  /** The capitals headline, `{accent}` the river in sindoor, `{place}` its city. */
+  head: { title: string; now: string; close: string };
   facts: {
     river: string;
     ghat: string;
@@ -934,6 +936,7 @@ type RiverDetailCopy = {
 export const riverDetailContent = {
   en: {
     back: "All six waters",
+    head: { title: "The {accent} at {place}.", now: "This morning", close: "Three minutes with the {river}, tomorrow morning." },
     facts: {
       river: "River",
       ghat: "Ghat",
@@ -1004,7 +1007,7 @@ export const riverDetailContent = {
     },
     occasions: {
       title: "Days this ghat is known for",
-      lede: "Each is reckoned by tithi or by the sun, as noted beside it. Dates are not printed yet: the parva day depends on a panchang, and the site has still to choose the one it will follow.",
+      lede: "Each is reckoned by tithi or by the sun, as noted beside it. The muhurat calendar gives the dates.",
       provisional: "Timing to be confirmed against the panchang",
     },
     keeper: { title: "Who looks after this water" },
@@ -1017,6 +1020,7 @@ export const riverDetailContent = {
 
   hi: {
     back: "सभी छह जल",
+    head: { title: "{place} में {accent}", now: "आज सुबह", close: "कल सुबह, {river} के साथ तीन मिनट।" },
     facts: {
       river: "नदी",
       ghat: "घाट",
@@ -1074,7 +1078,7 @@ export const riverDetailContent = {
           body: "इस जल के साथ तीन मिनट, उस अवस्था में जिसमें यह इस समय है, पंचांग की बताई घड़ी पर, आपके अपने शब्दों में आपका अपना संकल्प।",
         },
       ],
-      cta: "अपना स्नान आरंभ कीजिए",
+      cta: "अपना स्नान शुरू कीजिए",
       muhurat: "मुहूर्त पंचांग",
     },
     tradition: {
@@ -1087,13 +1091,13 @@ export const riverDetailContent = {
     },
     occasions: {
       title: "जिन दिनों के लिए यह घाट जाना जाता है",
-      lede: "हर एक की गणना तिथि से या सूर्य से होती है, जैसा उसके आगे लिखा है। तिथियाँ अभी नहीं छपी हैं: पर्व का दिन पंचांग पर निर्भर है, और स्थल ने अभी तय करना है कि किस पंचांग को माने।",
+      lede: "हर एक की गणना तिथि से या सूर्य से होती है, जैसा उसके आगे लिखा है। तिथियाँ मुहूर्त पंचांग में हैं।",
       provisional: "समय पंचांग से पुष्ट किया जाना शेष",
     },
     keeper: { title: "इस जल की देखरेख कौन करता है" },
     onward: {
       title: "कोई और जल पढ़िए",
-      cta: "अपना स्नान आरंभ कीजिए",
+      cta: "अपना स्नान शुरू कीजिए",
       all: "सभी छह जल",
     },
   },

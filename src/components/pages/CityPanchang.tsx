@@ -7,15 +7,17 @@ import type { CityDay } from "@/lib/city-day";
 import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Section } from "@/components/ui";
+import { H2, QUIET, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
+import { PlaceRow } from "@/components/pages/Panchang";
 import { ctaHref } from "@/lib/nav";
 import { greatCircleKm } from "@/lib/distance";
 import { isIndexableCity } from "@/lib/indexable";
 
 /* ---------------------------------------------------------------------------
-   One city's morning, as a register of hairline rows: each row the city's own clock on
-   the left and the ghat's IST on the right, so a reader in Leicester sees
-   both without arithmetic.
+   One city's morning, in v3 (spec 6.6): the capitals headline with the city
+   in sindoor, then a table of hairline rows on the tint, each row the city's
+   own clock on the left and the ghat's IST on the right, so a reader in
+   Leicester sees both without arithmetic. The one press closes the page.
    --------------------------------------------------------------------------- */
 
 /** Eight cities near this one: the indexed ones within a day's drive first,
@@ -82,114 +84,120 @@ export function CityPanchang({ lang, city, day }: { lang: Lang; city: City; day:
 
   return (
     <>
+      <div className="grain" aria-hidden="true" />
       <Header lang={lang} currentPath="/panchang" />
-      <main className="mx-auto max-w-6xl px-5 sm:px-8">
-        <section className="pt-10 pb-10 sm:pt-14 sm:pb-14">
-          <p className="label text-sindoor">{t.kicker}</p>
-          <h1 className="display mt-3 text-[2.4rem] leading-[1.08] sm:text-[3.4rem]">{fill(t.title)}</h1>
-          <p className="mt-4 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2">{fill(t.lede)}</p>
-          <p className="mt-6 text-sm text-ink2">
-            <span className="label mr-2 text-ink2">{t.rows.date}</span>
+      <main>
+        <RefHead lang={lang} title={t.title.replace("{city}", "{accent}")} accent={name} plain={fill(t.lede)} wide>
+          <p className="mt-3 text-sm text-ink2">
+            <span className="mr-2">{t.rows.date}</span>
             <span className="text-ink">{dayOf(day.sunrise, city.zone, lang)}</span>
           </p>
+        </RefHead>
+
+        {/* ---------------- the morning, as a table ----------------
+            The columns line up, so the rows keep their hairlines on the
+            tint. Three columns fit at 360 in both scripts. */}
+        <section id="morning" className="scroll-mt-16">
+          <div className="mx-auto max-w-6xl px-5 pb-14 sm:px-8">
+            <div className={TABLE_GROUND}>
+              <table className="w-full border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-rule">
+                    <th className="label py-3 pr-3 text-ink2" />
+                    <th className="label py-3 pr-3 text-ink2">{fill(t.localLabel)}</th>
+                    <th className="label py-3 text-ink2">{t.istLabel}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r) => (
+                    <tr key={r.label} className="border-b border-rule align-baseline last:border-b-0">
+                      <th scope="row" className="py-3.5 pr-3 text-left font-normal">
+                        <span className="display text-[1rem] leading-[1.25] text-ink sm:text-[1.2rem]" style={W700}>
+                          {r.label}
+                        </span>
+                      </th>
+                      <td className="py-3.5 pr-3 text-[0.9375rem] text-ink tabular-nums sm:text-[1.05rem]">{r.local}</td>
+                      <td className="py-3.5 text-[0.9375rem] text-ink2 tabular-nums sm:text-[1.05rem]">{r.ist}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <ul className="mt-6">
+              <li>
+                <Link href={localePath(lang, "/muhurat")} className={QUIET}>
+                  {t.ghatLink}
+                </Link>
+              </li>
+              <li>
+                <Link href={localePath(lang, "/panchang/shraddha")} className={QUIET}>
+                  {t.guideLink}
+                </Link>
+              </li>
+            </ul>
+          </div>
         </section>
 
-        <Section id="morning">
-          <div className="overflow-x-auto" tabIndex={0}>
-            <table className="w-full min-w-[30rem] border-collapse text-left">
-              <thead>
-                <tr className="border-b border-rule">
-                  <th className="label py-3 pr-4 text-ink2" />
-                  <th className="label py-3 pr-4 text-ink2">{fill(t.localLabel)}</th>
-                  <th className="label py-3 text-ink2">{t.istLabel}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => (
-                  <tr key={r.label} className="border-b border-rule align-baseline">
-                    <th scope="row" className="py-4 pr-4 text-left font-normal">
-                      <span className="display text-[1.2rem] text-ink">{r.label}</span>
-                    </th>
-                    <td className="py-4 pr-4 text-[1.05rem] text-ink tabular-nums">{r.local}</td>
-                    <td className="py-4 text-[1.05rem] text-ink2 tabular-nums">{r.ist}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <section id="how" className="scroll-mt-16">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+            <div className="max-w-3xl">
+              <h2 className={H2} style={W700}>
+                {t.how}
+              </h2>
+              {t.howBody.map((p) => (
+                <p key={p} className="mt-4 leading-[1.75] text-ink2">
+                  {fill(p)}
+                </p>
+              ))}
+            </div>
           </div>
+        </section>
 
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <Link href={ctaHref(lang)} className="label impress flex min-h-[48px] items-center bg-sindoor px-7 text-paper hover:bg-ink active:bg-ink">
-              {t.begin}
-            </Link>
-            <Link href={localePath(lang, "/muhurat")} className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor">
-              {t.ghatLink}
-            </Link>
-            <Link href={localePath(lang, "/panchang/shraddha")} className="impress text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor">
-              {t.guideLink}
-            </Link>
-          </div>
-        </Section>
-
-        <Section id="how" tinted>
-          <div className="max-w-3xl">
-            <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.how}</h2>
-            {t.howBody.map((p) => (
-              <p key={p} className="mt-4 leading-[1.8] text-ink2">
-                {fill(p)}
-              </p>
-            ))}
-          </div>
-        </Section>
-
-        <Section id="ghats">
-          <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{t.ghatsTitle}</h2>
-          <p className="mt-4 max-w-3xl leading-[1.8] text-ink2">{t.ghatsLede}</p>
-          <ul className="mt-6 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
-            {RIVERS.map((r) => (
-              <li key={r.slug} className="border-b border-rule">
-                <Link
+        <section id="ghats" className="scroll-mt-16">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+            <h2 className={H2} style={W700}>
+              {t.ghatsTitle}
+            </h2>
+            <p className="mt-3 max-w-3xl leading-[1.6] text-ink2">{t.ghatsLede}</p>
+            <ul className="mt-6 border-t border-rule sm:grid sm:grid-cols-2 sm:gap-x-8 sm:border-t-0 lg:grid-cols-3">
+              {RIVERS.map((r) => (
+                <PlaceRow
+                  key={r.slug}
                   href={localePath(lang, `/rivers/${r.slug}`)}
-                  className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-sindoor"
-                >
-                  <span className="display text-[1.1rem]">{r.river[lang]}</span>
-                  <span className="text-right text-sm text-ink2">
-                    {r.city[lang]}, {r.state[lang]}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href={localePath(lang, "/live")}
-            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
-          >
-            {t.liveLink}
-          </Link>
-        </Section>
+                  title={r.river[lang]}
+                  sub={`${r.city[lang]}, ${r.state[lang]}`}
+                />
+              ))}
+            </ul>
+            <Link href={localePath(lang, "/live")} className={`${QUIET} mt-4`}>
+              {t.liveLink}
+            </Link>
+          </div>
+        </section>
 
-        <Section id="cities" tinted>
-          <h2 className="display text-[1.75rem] sm:text-[2.2rem]">{fill(t.othersIn)}</h2>
-          <ul className="mt-6 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-8">
-            {neighbours.map((x) => (
-              <li key={x.slug} className="border-b border-rule">
-                <Link
+        <section id="cities" className="scroll-mt-16">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+            <h2 className={H2} style={W700}>
+              {fill(t.othersIn)}
+            </h2>
+            <ul className="mt-6 border-t border-rule sm:grid sm:grid-cols-2 sm:gap-x-8 sm:border-t-0 lg:grid-cols-4">
+              {neighbours.map((x) => (
+                <PlaceRow
+                  key={x.slug}
                   href={localePath(lang, `/panchang/${x.slug}`)}
-                  className="impress flex min-h-[48px] items-baseline justify-between gap-3 py-3 text-ink active:text-sindoor"
-                >
-                  <span className="display text-[1.1rem]">{x.name[lang]}</span>
-                  {x.region && <span className="text-sm text-ink2">{x.region[lang]}</span>}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href={localePath(lang, "/panchang#cities")}
-            className="impress mt-8 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
-          >
-            {t.allCities}
-          </Link>
-        </Section>
+                  title={x.name[lang]}
+                  sub={x.region?.[lang]}
+                />
+              ))}
+            </ul>
+            <Link href={localePath(lang, "/panchang#cities")} className={`${QUIET} mt-4`}>
+              {t.allCities}
+            </Link>
+          </div>
+        </section>
+
+        <RefClose title={t.close} label={t.begin} href={ctaHref(lang)} />
       </main>
       <Footer lang={lang} />
     </>

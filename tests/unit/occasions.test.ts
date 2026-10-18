@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { OCCASIONS, occasionBySlug } from "@/content/muhurat";
-import { horizonFrom, resolveOccasion, vikramSamvat } from "@/lib/occasions";
+import { horizonFrom, inWindow, resolveOccasion, vikramSamvat } from "@/lib/occasions";
 
 /* ---------------------------------------------------------------------------
    Occasion dates, against the days Drik Panchang names.
@@ -153,5 +153,23 @@ describe("the horizon", () => {
   it("rolls twelve months from today in India", () => {
     const h = horizonFrom(new Date("2026-09-16T10:00:00Z"));
     expect(h).toEqual({ from: "2026-09-16", to: "2027-09-16" });
+  });
+});
+
+describe("inWindow", () => {
+  const day = { slug: "x", ghat: "ganga-haridwar", kind: "day", date: "2026-11-24" } as const;
+  const span = { slug: "y", ghat: "ganga-haridwar", kind: "span", date: "2026-10-26", to: "2026-11-24" } as const;
+
+  it("holds the day itself, in India's civil day", () => {
+    expect(inWindow([day], new Date("2026-11-24T01:00:00+05:30"))).toEqual(day);
+    expect(inWindow([day], new Date("2026-11-23T23:59:00+05:30"))).toBeNull();
+    expect(inWindow([day], new Date("2026-11-25T00:01:00+05:30"))).toBeNull();
+  });
+
+  it("holds every day of a span, its ends included", () => {
+    expect(inWindow([span], new Date("2026-10-26T06:00:00+05:30"))).toEqual(span);
+    expect(inWindow([span], new Date("2026-11-10T06:00:00+05:30"))).toEqual(span);
+    expect(inWindow([span], new Date("2026-11-24T23:00:00+05:30"))).toEqual(span);
+    expect(inWindow([span], new Date("2026-10-25T23:00:00+05:30"))).toBeNull();
   });
 });

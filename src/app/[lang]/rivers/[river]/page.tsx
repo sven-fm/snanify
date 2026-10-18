@@ -17,6 +17,16 @@ import { LANGS, type Lang } from "@/lib/locales";
 import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
 import { pageMetadata } from "@/lib/seo";
+import { getLiveSnapshot, REVALIDATE_SECONDS } from "@/lib/riverdata";
+
+/* The page carries this water's reading this morning (spec 6.6), from the
+   same snapshot /live prints, so it is regenerated on the same schedule. Next
+   reads the literal statically; the line below holds it to the fetch layer. */
+export const revalidate = 1800;
+
+if (revalidate !== REVALIDATE_SECONDS) {
+  throw new Error(`rivers/[river]: revalidate is ${revalidate} but riverdata caches for ${REVALIDATE_SECONDS}`);
+}
 
 /** Every (lang, river) combination, six waters × two locales. */
 export function generateStaticParams() {
@@ -59,6 +69,8 @@ export default async function Page({
 
   const route = `/rivers/${ghat.slug}`;
   const alt = otherLang(lang);
+  const snapshot = await getLiveSnapshot();
+  const water = snapshot.waters.find((w) => w.slug === ghat.slug);
 
   /* Two entities on this page: the water, and the place on it where a rite
      would be performed. The ghat is the main entity, the river is what the
@@ -101,7 +113,7 @@ export default async function Page({
   return (
     <>
       <StructuredData graph={graph} />
-      <RiverDetail lang={lang} ghat={ghat} />
+      <RiverDetail lang={lang} ghat={ghat} water={water} />
     </>
   );
 }

@@ -1,93 +1,50 @@
 import Link from "next/link";
-import { WaterBand } from "@/components/WaterBand";
 import { localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CTA, Section, StatusBadge } from "@/components/ui";
-import { ghatNeighbours, riverDetailContent, type Ghat, type WaterForm } from "@/content/rivers";
+import { StatusBadge } from "@/components/ui";
+import { H2, H3, QUIET, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
+import { Reading, readingView } from "@/components/live/Reading";
+import { ghatNeighbours, riverDetailContent, type Ghat } from "@/content/rivers";
+import type { WaterState } from "@/lib/riverdata";
 
 /* ---------------------------------------------------------------------------
-   No photographs exist in this repo, so each water gets a drawn plate instead
-   of a picture, and the drawing is keyed to what the place physically is:
-   steps down into a flowing river, two lines meeting, or a walled tank with a
-   spring rising in it. Engraved, not rendered: solid ink strokes at printed
-   weights, one vermillion mark, no fades. It is a diagram, never a depiction,
-   and it is aria-hidden.
+   /rivers/[river], in v3 (spec 6.6).
+
+   The capitals headline with the river in sindoor and its epithet as the
+   one plain sentence; then the river this morning as /live shows it (state
+   word, plain sentence, gauge, the exact figure and rank in one small row,
+   the source line); the facts as a ruled register on the tint; the water's
+   own prose in sections set apart by space; and the one press at the end.
    --------------------------------------------------------------------------- */
-function WaterMotif({ form, className = "" }: { form: WaterForm; className?: string }) {
-  const common = {
-    className,
-    viewBox: "0 0 320 200",
-    preserveAspectRatio: "xMidYMid meet" as const,
-    fill: "none",
-    stroke: "currentColor",
-    "aria-hidden": true,
-    focusable: "false" as const,
-  };
 
-  if (form === "confluence") {
-    return (
-      <svg {...common}>
-        {/* two waters arriving, running together, then one channel onward */}
-        <path d="M8 44 H112 L196 96 H312" strokeWidth="2" />
-        <path d="M8 66 H108 L192 104" strokeWidth="1" />
-        <path d="M8 164 H112 L196 116 H312" strokeWidth="2" />
-        <path d="M8 142 H108 L192 108" strokeWidth="1" />
-        {/* the third, held in faith rather than seen */}
-        <path d="M8 104 H188" strokeWidth="1" strokeDasharray="3 9" />
-        {/* the meeting itself */}
-        <rect x="190" y="100" width="12" height="12" fill="var(--sindoor)" stroke="none" />
-      </svg>
-    );
-  }
-
-  if (form === "temple-tank") {
-    return (
-      <svg {...common}>
-        {/* a walled tank, stepped down, with the river leaving it eastward */}
-        <rect x="76" y="24" width="168" height="152" strokeWidth="2" />
-        <rect x="94" y="42" width="132" height="116" strokeWidth="1" />
-        <rect x="112" y="60" width="96" height="80" strokeWidth="1" />
-        <rect x="136" y="76" width="48" height="48" strokeWidth="1" />
-        <path d="M244 100 H312" strokeWidth="2" />
-        {/* the spring */}
-        <circle cx="160" cy="100" r="9" fill="var(--sindoor)" stroke="none" />
-      </svg>
-    );
-  }
-
-  /* flowing-ghat: steps down on the left, the water running away to the right */
-  return (
-    <svg {...common}>
-      <path d="M16 34 H56 V60 H96 V86 H136 V112 H176 V138 H216" strokeWidth="2" />
-      <path d="M216 138 H304" strokeWidth="2" />
-      <path d="M180 158 H304" strokeWidth="1" />
-      <path d="M150 176 H304" strokeWidth="1" />
-      {/* the waterline, where the lowest step meets the river */}
-      <rect x="204" y="126" width="12" height="12" fill="var(--sindoor)" stroke="none" />
-    </svg>
-  );
-}
-
-/** A section heading: a title and at most one plain sentence. The caps label
-    with a red dash that used to sit above each one is gone. */
 function Heading({ title, lede }: { title: string; lede?: string }) {
   return (
-    <div className="max-w-3xl">
-      <h2 className="display text-[2.1rem] sm:text-[2.9rem]">{title}</h2>
-      {lede && <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{lede}</p>}
-    </div>
+    <>
+      <h2 className={H2} style={W700}>
+        {title}
+      </h2>
+      {lede && <p className="mt-3 leading-[1.6] text-ink2">{lede}</p>}
+    </>
   );
 }
 
-export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
+/** A section in the reading column. */
+function Block({ id, children }: { id?: string; children: React.ReactNode }) {
+  return (
+    <section id={id} className="scroll-mt-16">
+      <div className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-16">{children}</div>
+    </section>
+  );
+}
+
+export function RiverDetail({ lang, ghat, water }: { lang: Lang; ghat: Ghat; water?: WaterState }) {
   const t = riverDetailContent[lang];
 
   const riversHref = localePath(lang, "/rivers");
-  const beginHref = localePath(lang, "/begin");
   const muhuratHref = localePath(lang, "/muhurat");
-  /* /live lists all six and anchors each row on its slug, so this lands the
+  /* /live lists all six and anchors each block on its slug, so this lands the
      reader on this water's own block rather than at the top of the page. */
   const liveHref = `${localePath(lang, "/live")}#${ghat.slug}`;
   const neighbours = ghatNeighbours(ghat.slug);
@@ -97,9 +54,7 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
     { key: "ghat", label: t.facts.ghat, value: ghat.ghat[lang] },
     { key: "place", label: t.facts.place, value: `${ghat.city[lang]}, ${ghat.state[lang]}` },
     { key: "form", label: t.facts.form, value: t.formLabels[ghat.form] },
-    ...(ghat.riverAlso
-      ? [{ key: "also", label: t.facts.alsoKnown, value: ghat.riverAlso[lang] }]
-      : []),
+    ...(ghat.riverAlso ? [{ key: "also", label: t.facts.alsoKnown, value: ghat.riverAlso[lang] }] : []),
     { key: "tz", label: t.facts.timezone, value: ghat.tz },
   ];
 
@@ -110,76 +65,49 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
       <Header lang={lang} currentPath={`/rivers/${ghat.slug}`} />
 
       <main>
-        {/* -------------------------------------------------- hero ------ */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 pt-6 pb-16 sm:px-8 sm:pt-8 sm:pb-20">
-            <Link
-              href={riversHref}
-              className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule underline-offset-4 transition-colors hover:text-sindoor hover:decoration-sindoor"
-            >
+        <RefHead
+          lang={lang}
+          title={t.head.title.replace("{place}", ghat.city[lang])}
+          accent={ghat.river[lang]}
+          plain={ghat.epithet[lang]}
+          before={
+            <Link href={riversHref} className="inline-flex min-h-11 items-center text-sm text-ink2 underline decoration-rule underline-offset-4 active:text-sindoor">
               {t.back}
             </Link>
+          }
+        >
+          <p className="mt-4 leading-[1.7] text-ink2">{ghat.standfirst[lang]}</p>
+        </RefHead>
 
-            <div className="mt-6 grid gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
-              <div>
-                <p className="text-sm text-ink2">{t.formLabels[ghat.form]}</p>
-
-                <h1
-                  className="ink-in display mt-4 text-[3rem] sm:text-6xl lg:text-[4.6rem]"
-                  style={{ animationDelay: "80ms" }}
-                >
-                  {ghat.river[lang]}
-                </h1>
-
-                <WaterBand seed={ghat.slug} className="mt-8 h-14 w-full sm:h-16" />
-
-                <p
-                  className="ink-in mt-6 text-xl text-ink sm:text-2xl"
-                  style={{ animationDelay: "160ms" }}
-                >
-                  {ghat.ghat[lang]}
-                  <span className="text-ink2">
-                    , {ghat.city[lang]}, {ghat.state[lang]}
-                  </span>
-                </p>
-
-                <p
-                  className="ink-in display mt-8 max-w-2xl text-xl leading-[1.45] text-ink sm:text-2xl"
-                  style={{ animationDelay: "240ms" }}
-                >
-                  {ghat.epithet[lang]}
-                </p>
-
-                <p
-                  className="ink-in mt-5 max-w-2xl text-[1.05rem] leading-[1.75] text-ink2"
-                  style={{ animationDelay: "320ms" }}
-                >
-                  {ghat.standfirst[lang]}
-                </p>
-              </div>
-
-              {/* the plate: a printed diagram of what the place physically is */}
-              <figure className="tint self-start">
-                <WaterMotif form={ghat.form} className="block h-44 w-full text-ink sm:h-52" />
-                <figcaption className="px-4 py-3 text-sm text-ink2">
-                  {ghat.ghat[lang]}, {ghat.city[lang]}
-                </figcaption>
-              </figure>
+        {/* --------------------------------------- this morning ------ */}
+        {water && (
+          <section id="now" className="scroll-mt-16">
+            <div className="mx-auto max-w-3xl px-5 pb-12 sm:px-8">
+              <h2 className="display text-[1.5rem] leading-[1.15] text-ink" style={W700}>
+                {t.head.now}
+              </h2>
+              <p className="mt-1 text-sm text-ink2">
+                {ghat.ghat[lang]}, {ghat.city[lang]}
+              </p>
+              <Reading className="mt-5" view={readingView(water, lang)} lang={lang} />
+              <Link href={liveHref} className={`${QUIET} mt-3`}>
+                {t.reading.cta}
+              </Link>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* --------------------------------------------- fact strip ----- */}
-        <section className="tint">
-          <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
-            <dl className="flex flex-wrap gap-x-8 gap-y-6">
+        {/* ------------------------------------------------ facts ------ */}
+        <section>
+          <div className="mx-auto max-w-3xl px-5 sm:px-8">
+            <dl className={TABLE_GROUND}>
               {facts.map((f) => (
                 <div
                   key={f.key}
-                  className="min-w-[8.5rem] flex-1"
+                  className="flex items-baseline justify-between gap-4 border-b border-rule py-3 last:border-b-0"
                 >
-                  <dt className="label text-ink2">{f.label}</dt>
-                  <dd className="mt-2 text-sm text-ink">{f.value}</dd>
+                  <dt className="label shrink-0 text-ink2">{f.label}</dt>
+                  <dd className="min-w-0 text-right text-sm text-ink">{f.value}</dd>
                 </div>
               ))}
             </dl>
@@ -187,181 +115,146 @@ export function RiverDetail({ lang, ghat }: { lang: Lang; ghat: Ghat }) {
         </section>
 
         {/* ----------------------------------------------- caution ------
-            A fact the reader needs before choosing this water. Set on the
-            haldi ground because it matters, headed in display type rather
-            than a caps bar. */}
+            A fact the reader needs before choosing this water, set off by
+            a sindoor rule at its edge. */}
         {ghat.caution && (
-          <section>
-            <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
-              <div className="bg-paper2 max-w-3xl px-5 py-6 sm:px-7 sm:py-7">
-                <h2 className="display text-xl text-ink">{t.caution.label}</h2>
-                <p className="mt-3 leading-[1.75] text-ink">{ghat.caution[lang]}</p>
-              </div>
+          <Block>
+            <div className="border-l-4 border-sindoor pl-4">
+              <h2 className={H3} style={W700}>
+                {t.caution.label}
+              </h2>
+              <p className="mt-2 leading-[1.7] text-ink">{ghat.caution[lang]}</p>
             </div>
-          </section>
+          </Block>
         )}
 
         {/* ------------------------------------------------ sacred ------ */}
-        <Section id="water" tinted>
+        <Block id="water">
           <Heading title={t.sacred.title} />
-          <div className="mt-10 max-w-3xl space-y-6">
+          <div className="mt-6 space-y-5">
             {ghat.sacred[lang].map((para, i) => (
-              <p key={i} className="text-[1.02rem] leading-[1.85] text-ink2">
+              <p key={i} className="leading-[1.75] text-ink2">
                 {para}
               </p>
             ))}
           </div>
-        </Section>
+        </Block>
 
         {/* ----------------------------------------------- reading ------ */}
-        <Section id="reading">
+        <Block id="reading">
           <Heading title={t.reading.title} lede={t.reading.lede} />
+          <p className="mt-6 leading-[1.75] text-ink">{ghat.reading[lang]}</p>
 
-          <p className="mt-10 max-w-3xl text-[1.05rem] leading-[1.85] text-ink">
-            {ghat.reading[lang]}
-          </p>
-
-          <div className="mt-9">
-            <Link href={liveHref} className="inline-block">
-              <CTA>{t.reading.cta}</CTA>
-            </Link>
+          {/* Where the figures come from and the licence they carry. */}
+          <h3 className={`${H3} mt-10`} style={W700}>
+            {t.reading.provenanceLabel}
+          </h3>
+          <div className="mt-3 space-y-4">
+            {t.reading.provenance.map((para, i) => (
+              <p key={i} className="text-sm leading-[1.75] text-ink2">
+                {para}
+              </p>
+            ))}
           </div>
 
-          {/* The masthead of a data publication: where the figures come from
-              and the licence they carry. */}
-          <div className="mt-16 max-w-3xl">
-            <h3 className="display text-xl text-ink">{t.reading.provenanceLabel}</h3>
-            <div className="mt-4 space-y-4">
-              {t.reading.provenance.map((para, i) => (
-                <p key={i} className="text-sm leading-[1.8] text-ink2">
-                  {para}
-                </p>
-              ))}
-            </div>
-
-            <h3 className="display mt-10 text-xl text-ink">{t.reading.attributionLabel}</h3>
-            <ul className="mt-3 space-y-1.5">
-              {t.reading.attribution.map((line) => (
-                <li key={line} className="text-sm leading-[1.7] text-ink2">
-                  {line}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Section>
+          <h3 className={`${H3} mt-8`} style={W700}>
+            {t.reading.attributionLabel}
+          </h3>
+          <ul className="mt-3 space-y-1.5">
+            {t.reading.attribution.map((line) => (
+              <li key={line} className="text-sm leading-[1.7] text-ink2">
+                {line}
+              </li>
+            ))}
+          </ul>
+        </Block>
 
         {/* ------------------------------------------------- offer ------ */}
-        <Section id="offer" tinted>
+        <Block id="offer">
           <Heading title={t.offer.title} lede={t.offer.lede} />
-
-          <ul className="mt-10">
+          <ul className="mt-6">
             {t.offer.items.map((item) => (
-              <li
-                key={item.key}
-                className="grid gap-y-2 py-6 md:grid-cols-[14rem_1fr] md:gap-x-8 md:py-7"
-              >
-                <span className="display text-xl text-ink">{item.name}</span>
-                <span className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.body}</span>
+              <li key={item.key} className="py-4">
+                <h3 className={H3} style={W700}>
+                  {item.name}
+                </h3>
+                <p className="mt-2 text-sm leading-[1.75] text-ink2">{item.body}</p>
               </li>
             ))}
           </ul>
-
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <Link href={beginHref}>
-              <CTA>{t.offer.cta}</CTA>
-            </Link>
-            <Link href={muhuratHref}>
-              <CTA variant="ghost">{t.offer.muhurat}</CTA>
-            </Link>
-          </div>
-        </Section>
+          <Link href={muhuratHref} className={`${QUIET} mt-2`}>
+            {t.offer.muhurat}
+          </Link>
+        </Block>
 
         {/* --------------------------------------------- tradition ------ */}
-        <Section id="tradition">
+        <Block id="tradition">
           <Heading title={t.tradition.title} lede={t.tradition.lede} />
-
-          <ul className="mt-10">
+          <ul className="mt-6">
             {ghat.tradition.map((item) => (
-              <li
-                key={item.key}
-                className="grid gap-x-8 gap-y-3 py-7 md:grid-cols-[1fr_14rem] md:py-8"
-              >
-                <div>
-                  <h3 className="display text-2xl text-ink">{item.name[lang]}</h3>
-                  <p className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2">
-                    {item.note[lang]}
-                  </p>
-                </div>
-                <p className="text-sm text-ink2 md:text-right">{t.tradition.kindLabels[item.kind]}</p>
+              <li key={item.key} className="py-4">
+                <h3 className={H3} style={W700}>
+                  {item.name[lang]}
+                </h3>
+                <p className="mt-1 text-sm text-ink2">{t.tradition.kindLabels[item.kind]}</p>
+                <p className="mt-2 text-sm leading-[1.75] text-ink2">{item.note[lang]}</p>
               </li>
             ))}
           </ul>
-        </Section>
+        </Block>
 
-        {/* --------------------------------------------- occasions ------ */}
-        <Section id="occasions" tinted>
+        {/* --------------------------------------------- occasions ------
+            The reckonings line up in a column, so the rows keep their
+            hairline on the tint. */}
+        <Block id="occasions">
           <Heading title={t.occasions.title} lede={t.occasions.lede} />
-
-          {/* Genuinely provisional, so the badge is earned here. */}
-          <div className="mt-8">
+          <div className="mt-4">
             <StatusBadge>{t.occasions.provisional}</StatusBadge>
           </div>
-
-          {/* The reckonings line up in a column, so the rows keep their hairline. */}
-          <ul className="mt-10">
+          <ul className={`mt-4 ${TABLE_GROUND}`}>
             {ghat.occasions.map((o) => (
-              <li
-                key={o.key}
-                className="grid gap-x-8 gap-y-3 border-b border-rule py-7 md:grid-cols-[1fr_17rem] md:py-8"
-              >
-                <div>
-                  <h3 className="display text-2xl text-ink">{o.name[lang]}</h3>
-                  <p className="mt-3 max-w-xl text-sm leading-[1.75] text-ink2">{o.note[lang]}</p>
-                </div>
-                <p className="text-sm text-ink2 md:text-right">{o.reckoning[lang]}</p>
+              <li key={o.key} className="border-b border-rule py-5 last:border-b-0">
+                <h3 className={H3} style={W700}>
+                  {o.name[lang]}
+                </h3>
+                <p className="mt-1 text-sm text-ink">{o.reckoning[lang]}</p>
+                <p className="mt-2 text-sm leading-[1.75] text-ink2">{o.note[lang]}</p>
               </li>
             ))}
           </ul>
-        </Section>
+        </Block>
 
         {/* ------------------------------------------------ keeper ------ */}
-        <Section id="keeper">
+        <Block id="keeper">
           <Heading title={t.keeper.title} />
-          <p className="mt-8 max-w-3xl leading-[1.75] text-ink">{ghat.keeper[lang]}</p>
-        </Section>
+          <p className="mt-6 leading-[1.75] text-ink">{ghat.keeper[lang]}</p>
+        </Block>
 
         {/* ------------------------------------------------ onward ------ */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-            <h2 className="display text-3xl sm:text-4xl">{t.onward.title}</h2>
-
-            {neighbours && (
-              <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                {[neighbours.prev, neighbours.next].map((g) => (
-                  <Link
-                    key={g.slug}
-                    href={localePath(lang, `/rivers/${g.slug}`)}
-                    className="tint impress p-7 transition-colors hover:bg-paper3 active:bg-paper3 sm:p-8"
-                  >
-                    <span className="display block text-2xl text-ink">{g.river[lang]}</span>
-                    <span className="mt-2 block text-sm text-ink2">
+        <Block>
+          <Heading title={t.onward.title} />
+          {neighbours && (
+            <ul className="mt-6 border-t border-rule">
+              {[neighbours.prev, neighbours.next].map((g) => (
+                <li key={g.slug} className="border-b border-rule">
+                  <Link href={localePath(lang, `/rivers/${g.slug}`)} className="group flex min-h-[56px] items-baseline justify-between gap-3 py-3">
+                    <span className="display text-[1.25rem] text-ink group-active:text-sindoor" style={W700}>
+                      {g.river[lang]}
+                    </span>
+                    <span className="text-right text-sm text-ink2">
                       {g.ghat[lang]}, {g.city[lang]}
                     </span>
                   </Link>
-                ))}
-              </div>
-            )}
+                </li>
+              ))}
+            </ul>
+          )}
+          <Link href={riversHref} className={`${QUIET} mt-4`}>
+            {t.onward.all}
+          </Link>
+        </Block>
 
-            <div className="mt-12 flex flex-wrap items-center gap-3">
-              <Link href={beginHref}>
-                <CTA>{t.onward.cta}</CTA>
-              </Link>
-              <Link href={riversHref}>
-                <CTA variant="ghost">{t.onward.all}</CTA>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RefClose title={t.head.close.replace("{river}", ghat.river[lang])} label={t.onward.cta} href={localePath(lang, "/begin")} />
       </main>
 
       <Footer lang={lang} />
