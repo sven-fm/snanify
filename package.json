@@ -10,6 +10,8 @@
     "test": "vitest run",
     "email-art": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/email-art.mjs",
     "icons": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/icons.mjs",
+    "brand": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/brand-export.mjs",
+    "brand-book": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/brand-book.mjs",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "indexnow": "node scripts/indexnow.mjs",

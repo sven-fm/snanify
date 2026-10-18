@@ -13,6 +13,10 @@ buttons press. Where a mockup and this document disagree, this document wins. Th
 and utilities live in `src/app/globals.css`; the hex values for renderers with no stylesheet
 live in `src/lib/palette.ts`.
 
+`brand/` is this document's summary for anyone outside the code (ads, posts, decks, an
+outside designer): one README, the generated tokens and logos, and the brand book. This
+document stays canonical; change a rule here first, then in `brand/README.md`.
+
 ---
 
 ## What the design is for
@@ -253,6 +257,14 @@ load-bearing:
 | U+0131 under it | So the lettering is `aria-hidden` and `select-none`, with the real name in an `sr-only` span |
 
 The brand stays Latin, "Snanify", in both editions; `.wordmark` names Eczar itself.
+
+**Clear space and size** (approved by the owner, 18 October 2026). Keep clear space of half
+the mark's height on every side of the mark, the wordmark and the lockup. The smallest lockup
+is the masthead's: a 30px mark beside a 24px word. Below 32px the mark uses its small cut.
+
+**Keep it as drawn.** Never stretch or squeeze it, recolour it, turn it, give it a soft
+shadow or a glow, set the name in tracked capitals, or set it in another face. The brand
+book (`brand/snanify-brand-book.pdf`, page 7) shows each one.
 
 `src/components/Logo.tsx`: `<Mark />` (and `<Mark small />`), `<Wordmark />`, `<Logo />` (the
 masthead lockup, a 30px mark beside a 24px word).

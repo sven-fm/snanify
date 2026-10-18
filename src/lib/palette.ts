@@ -74,3 +74,71 @@ export const STILLNESS_INK = {
 
 /** The lighter paper the owner's printed copy of the Patra comes out on. */
 export const PRINT_PAPER = "#faf6ea";
+
+/* ---------------------------------------------------------------------------
+   The type, as globals.css, src/components/site/Reference.tsx and the kit set
+   it, written out once for what has no stylesheet: the brand kit
+   (brand/tokens.json, from `npm run brand`) and anyone building outside the
+   repo. The app reads its type from globals.css, not from here;
+   tests/unit/brand.test.ts fails when the two disagree on the values below.
+   --------------------------------------------------------------------------- */
+
+export const TYPE = {
+  families: {
+    display: {
+      name: "Eczar",
+      weights: [400, 600, 700, 800],
+      scripts: ["latin", "devanagari"],
+      url: "https://fonts.google.com/specimen/Eczar",
+      job: "Display: the headline, headings, the wordmark, the seal, the label",
+    },
+    text: {
+      name: "Martel Sans",
+      weights: [400, 600, 700],
+      scripts: ["latin", "devanagari"],
+      url: "https://fonts.google.com/specimen/Martel+Sans",
+      job: "Text: body, buttons, labels, tabular data, the band",
+    },
+    sheet: {
+      name: "Noto Serif Devanagari",
+      weights: [400, 600],
+      scripts: ["devanagari"],
+      url: "https://fonts.google.com/noto/specimen/Noto+Serif+Devanagari",
+      job: "Hindi on the drawn images only (the Patra, the link cards), so conjuncts stack",
+    },
+  },
+  roles: {
+    headline: {
+      family: "Eczar",
+      weight: 800,
+      case: "upper",
+      lineHeight: 0.95,
+      letterSpacing: "-0.01em",
+      devanagari: { lineHeight: 1.22, letterSpacing: "0" },
+      sizes: ["2.125rem", "2.25rem", "2.85rem", "3.4rem"],
+      note: "One per screen, the river's name in sindoor. Hindi has no case.",
+    },
+    h2: { family: "Eczar", weight: 700, case: "sentence", size: "1.75rem", sizeWide: "2.25rem", lineHeight: 1.15 },
+    h3: { family: "Eczar", weight: 700, case: "sentence", size: "1.25rem", lineHeight: 1.3 },
+    body: { family: "Martel Sans", weight: 400, size: "15px", sizeLongReading: "16px" },
+    button: { family: "Martel Sans", weight: 700, case: "sentence", size: "1rem", lineHeight: 1.3 },
+    label: {
+      family: "Martel Sans",
+      weight: 700,
+      case: "sentence",
+      size: "0.8125rem",
+      lineHeight: 1.4,
+      letterSpacing: "0",
+      devanagari: { size: "0.875rem" },
+    },
+    band: { family: "Martel Sans", weight: 800, size: "0.9375rem", lineHeight: 1.3, minSize: "14px" },
+    wordmark: {
+      family: "Eczar",
+      weight: 800,
+      case: "mixed",
+      letterSpacing: "-0.015em",
+      lineHeight: 1,
+      note: "Snanify, the i dotless (U+0131) under a sindoor bindu 0.237em across, its foot 0.543em above the baseline.",
+    },
+  },
+} as const;
