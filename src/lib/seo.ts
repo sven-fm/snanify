@@ -102,7 +102,7 @@ export type PreviewImage = { url: string; width: number; height: number; type: s
  * landing's headline, its share line or the drawing and that hash moves:
  * tests/unit/og-image.test.ts then fails, naming the value to put here.
  */
-export const SITE_CARD_VERSION: Record<Lang, string> = { en: "b11045fa", hi: "bc565a1d" };
+export const SITE_CARD_VERSION: Record<Lang, string> = { en: "c1161381", hi: "fee3cf22" };
 
 /**
  * The site card for an edition, absolute, with its size so a chat app can lay

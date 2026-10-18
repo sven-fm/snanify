@@ -165,8 +165,27 @@ async function landing(req: NextRequest, event: NextFetchEvent) {
  */
 const APP_PATH = /^\/(?:[a-z]{2}\/)?(?:begin|setup|today|account|p|specimen|sign-in|sign-up|sign-out)(?:\/|$)/;
 
+/**
+ * /p/specimen is a development fixture: the owner's sheet on a tall page, for
+ * tests/e2e/patra-print.spec.ts. In production it is the site's own 404,
+ * answered here by the catch-all, so a probe never reaches Clerk or the
+ * page's function. The page keeps its own production check as well.
+ */
+const DEV_FIXTURE = /^\/(?:([a-z]{2})\/)?p\/specimen(?:\/|$)/;
+
+/** Where a production request for a development fixture goes; undefined for every other path. */
+export function fixtureNotFound(pathname: string, env = process.env.NODE_ENV): string | undefined {
+  if (env !== "production") return undefined;
+  const match = DEV_FIXTURE.exec(pathname);
+  if (!match) return undefined;
+  const lang = match[1] && (PREFIXES.has(match[1]) || match[1] === DEFAULT_LANG) ? match[1] : DEFAULT_LANG;
+  return `/${lang}/fixture-not-served`;
+}
+
 export function proxy(req: NextRequest, event: NextFetchEvent) {
   const { pathname } = req.nextUrl;
+  const gone = fixtureNotFound(pathname);
+  if (gone) return NextResponse.rewrite(new URL(gone, req.url));
   if (APP_PATH.test(pathname)) return withClerk(req, event);
   if (isLanding(pathname) && mightBeSignedIn(req.cookies.getAll())) return landing(req, event);
   return route(req);

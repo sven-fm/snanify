@@ -3,7 +3,6 @@ import { eq } from "drizzle-orm";
 import { db, profiles, purchases } from "@/db";
 import { balance } from "@/lib/credits";
 import { currentUser } from "@/lib/auth";
-import { isTier } from "@/lib/packs";
 import { beginRoute, carryQuery, withQuery } from "@/lib/begin-path";
 import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
@@ -59,16 +58,14 @@ export async function Begin({
   /** Sent from /today or /account with every morning kept. */
   out?: boolean;
 }) {
-  const picked = pack && isTier(pack) ? pack : undefined;
   const query = { pack, buy, out, cancelled, error };
-  /* What the reader came with travels through the sign-in and comes back. */
-  const params = new URLSearchParams();
-  if (picked) params.set("pack", picked);
-  if (buy) params.set("buy", "1");
+  /* What the reader came with travels through the sign-in and comes back:
+     carryQuery owns the pack and the water, and the menu's "Buy mornings"
+     rides along on the way back to this page only. */
   const carried = carryQuery({ pack, water });
-  const chosenWater = carried.get("water");
-  if (chosenWater) params.set("water", chosenWater);
-  const here = `${localePath(lang, "/begin")}${params.size ? `?${params}` : ""}`;
+  const back = new URLSearchParams(carried);
+  if (buy) back.set("buy", "1");
+  const here = withQuery(localePath(lang, "/begin"), back);
 
   /* One place decides (src/lib/begin-path.ts); this only reads for it. */
   const user = await currentUser(lang);

@@ -33,7 +33,7 @@ import type { PreviewImage } from "@/lib/seo";
 
    THE VERSION. Facebook and WhatsApp cache an image by its URL, so each URL
    carries a short hash of what the card says (the headline, the accent, the
-   plain line, the edition) and of CARD_DRAWING. Change a page's headline and
+   plain line, the edition's template) and of CARD_DRAWING. Change a page's headline and
    its card's URL moves by itself. Change the drawing (site-card.ts) and bump
    CARD_DRAWING: tests/unit/page-cards.test.ts pins the drawing's file and
    fails until you do. The homepage's URL is also SITE_CARD_VERSION in
@@ -144,7 +144,12 @@ function plainTitle(spec: CardSpec): string {
 export function pageCard(lang: Lang, path: string): PreviewImage | undefined {
   const spec = cardSpec(lang, path);
   if (!spec) return undefined;
-  const version = fnv(`${CARD_DRAWING}|${JSON.stringify(spec)}`);
+  /* The edition is hashed as its template ("Samvat {samvat}"), not the
+     filled line: the year turns at Chaitra Shukla Pratipada with no change
+     to the code, and a URL that moved by itself then would leave the
+     SITE_CARD_VERSION literal behind and fail CI. The next deploy redraws
+     the year in place. */
+  const version = fnv(`${CARD_DRAWING}|${JSON.stringify({ ...spec, edition: content[lang].edition })}`);
   return {
     url: `${SITE_ORIGIN}/opengraph-image/${lang}${path === "/" ? "" : path}?v=${version}`,
     width: 1200,
