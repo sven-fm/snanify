@@ -72,11 +72,10 @@ export function Phone({
 }) {
   return (
     <div
-      className={`phone relative mx-auto w-full bg-ink2 ${className}`}
+      className={`phone @container relative mx-auto w-full bg-ink2 ${className}`}
       style={{
         aspectRatio: `${FRAME_W} / ${FRAME_H.toFixed(3)}`,
         clipPath: round(RADIUS, FRAME_W, FRAME_H),
-        containerType: "inline-size",
       }}
     >
       {/* The bezel, inside the metal band. */}
@@ -93,6 +92,7 @@ export function Phone({
 
       {/* The screen: the status bar, then the content below it. */}
       <div
+        data-phone="screen"
         className={`absolute overflow-hidden ${screenClassName}`}
         style={{
           left: pct(EDGE, FRAME_W),
@@ -103,10 +103,12 @@ export function Phone({
         }}
       >
         {/* The status bar: the hour on the left, the battery on the right,
-            each centred on the island's line. Decoration, so hidden. */}
+            each centred on the island's line. Decoration, so hidden from
+            readers, and dropped on a phone under 180px wide (the one beside
+            the packs on /begin), where the hour would be a 5px smudge. */}
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 top-0 flex items-center justify-between"
+          className="absolute inset-x-0 top-0 flex items-center justify-between @max-[180px]:hidden"
           style={{
             height: pct(ISLAND_TOP * 2 + ISLAND_H, SCREEN_H),
             paddingInline: "9cqw",
@@ -125,6 +127,7 @@ export function Phone({
         </div>
 
         <div
+          data-phone="content"
           className="phone-content absolute inset-x-0 bottom-0"
           style={{ height: pct(CONTENT_H, SCREEN_H) }}
         >
@@ -135,6 +138,7 @@ export function Phone({
       {/* The island, inside the status bar, clear of the content. */}
       <div
         aria-hidden="true"
+        data-phone="island"
         className="absolute bg-[#0b0a08]"
         style={{
           left: pct((FRAME_W - ISLAND_W) / 2, FRAME_W),

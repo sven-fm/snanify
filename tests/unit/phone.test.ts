@@ -31,6 +31,28 @@ describe("the phone", () => {
     expect(G.EDGE / G.FRAME_W).toBeLessThan(0.04);
   });
 
+  it("draws the island above the content box in the rendered markup", () => {
+    const html = renderToStaticMarkup(React.createElement(Phone, null, React.createElement("i")));
+    const style = (part: string) => {
+      const m = html.match(new RegExp(`data-phone="${part}"[^>]*style="([^"]*)"`));
+      expect(m, part).not.toBeNull();
+      const n = (k: string) => Number(m![1].match(new RegExp(`(?:^|;)${k}:([\\d.]+)%`))![1]);
+      return { top: () => n("top"), height: () => n("height") };
+    };
+    // All in percent of the frame's height. The content sits at the foot
+    // of the screen, so its top is the screen's foot less its own height.
+    const screen = style("screen");
+    const contentShare = style("content").height() / 100;
+    const contentTop = screen.top() + screen.height() * (1 - contentShare);
+    const island = style("island");
+    expect(island.top() + island.height()).toBeLessThan(contentTop);
+  });
+
+  it("drops the status bar's hour on a small phone", () => {
+    const html = renderToStaticMarkup(React.createElement(Phone, null, null));
+    expect(html).toContain("@max-[180px]:hidden");
+  });
+
   it("renders its children in the content box", () => {
     const html = renderToStaticMarkup(React.createElement(Phone, null, React.createElement("i", { id: "x" })));
     expect(html).toMatch(/class="phone-content[^"]*"[^>]*><i id="x">/);

@@ -83,7 +83,7 @@ export const en = {
       {
         key: "eleven",
         name: "Eleven mornings",
-        body: "Eleven mornings, paid once. Sit them on any eleven days. They keep.",
+        body: "Eleven mornings, paid once. Sit on any morning you like. They keep.",
       },
       {
         key: "sixty",
