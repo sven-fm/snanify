@@ -66,7 +66,7 @@ const ramp = (x: number, [a, b]: readonly [number, number]) => Math.min(Math.max
 /**
  * The stillness's seconds left, as a cross-fade: each number stands for most
  * of its second, fades as the next fades in, and the next lands at full ink
- * as its own second begins.
+ * as its own second begins. The last one fades out alone.
  */
 export function stillCount(length: number, into: number): StillCount {
   const left = Math.max(0, length - into);
@@ -74,7 +74,9 @@ export function stillCount(length: number, into: number): StillCount {
   const next = now > 1 ? now - 1 : null;
   /* How far through the current second: 0 as it begins, 1 as it ends. */
   const through = now === 0 ? 0 : 1 - (left - (now - 1));
-  if (next === null) return { now, next, nowOpacity: 1, nextOpacity: 0 };
+  /* The last number has nothing to give way to: it fades out on its own, so
+     the minute ends as softly as each second in it. */
+  if (next === null) return { now, next, nowOpacity: now === 0 ? 0 : Number((1 - ramp(through, OUT)).toFixed(3)), nextOpacity: 0 };
   return {
     now,
     next,

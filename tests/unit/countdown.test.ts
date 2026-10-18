@@ -65,8 +65,8 @@ describe("the stillness's countdown", () => {
     expect(stillCount(L, 10.99).nextOpacity).toBeGreaterThan(0.95);
   });
 
-  it("never sets both numbers at half strength or more, and never blanks the screen", () => {
-    for (let s = 0; s < L; s += 0.05) {
+  it("never sets both numbers at half strength or more, and never blanks the screen before the last", () => {
+    for (let s = 0; s < L - 1; s += 0.05) {
       const c = stillCount(L, s);
       expect(Math.min(c.nowOpacity, c.nextOpacity)).toBeLessThanOrEqual(0.5);
       expect(Math.max(c.nowOpacity, c.nextOpacity)).toBeGreaterThanOrEqual(0.25);
@@ -79,7 +79,10 @@ describe("the stillness's countdown", () => {
     expect(c.nowOpacity).toBe(1);
   });
 
-  it("lets the last second stand alone", () => {
-    expect(stillCount(L, 59.9)).toEqual({ now: 1, next: null, nowOpacity: 1, nextOpacity: 0 });
+  it("fades the last number out on its own", () => {
+    expect(stillCount(L, 59.1)).toEqual({ now: 1, next: null, nowOpacity: 1, nextOpacity: 0 });
+    expect(stillCount(L, 59.6).nowOpacity).toBeCloseTo(0.5, 2);
+    expect(stillCount(L, 59.9).nowOpacity).toBe(0);
+    expect(stillCount(L, 60).nowOpacity).toBe(0);
   });
 });

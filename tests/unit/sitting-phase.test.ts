@@ -234,6 +234,8 @@ describe("the snan's parts (spec 6.4)", () => {
   it("the stillness's seconds cross-fade, the next arriving under the last", () => {
     const steady = part("stillness", 12.1);
     expect(steady).toContain('data-remaining="48"');
+    /* The attribute and the numeral are one value, even a hair short of a whole second. */
+    expect(part("stillness", 20.9999999)).toMatch(/data-remaining="39"[^>]*><span[^>]*>39</);
     expect(steady).toMatch(/opacity:1[^>]*>48</);
     expect(steady).not.toMatch(/>47</);
     const turning = part("stillness", 12.7);
@@ -241,7 +243,7 @@ describe("the snan's parts (spec 6.4)", () => {
     expect(turning).toMatch(/opacity:0\.25[^>]*>47</);
   });
 
-  it("under reduced motion the numbers stand plain and the dot holds still", () => {
+  it("under reduced motion the countdown numbers stand plain at full ink", () => {
     const still = renderToStaticMarkup(
       React.createElement(Sitting, {
         lang: "en",
@@ -287,5 +289,16 @@ describe("the snan's parts (spec 6.4)", () => {
 
   it("the Hindi mark is short", () => {
     expect(part("mark", 2, "hi")).toContain("स्नान हो गया।");
+  });
+});
+
+describe("the gauge's pulse under reduced motion", () => {
+  it("stops the ring and hides it inside a prefers-reduced-motion block", async () => {
+    const { readFileSync } = await import("node:fs");
+    const css = readFileSync("src/app/globals.css", "utf8");
+    const blocks = css.split("@media (prefers-reduced-motion: reduce)").slice(1);
+    const holding = blocks.filter((b) => /\.pulse-ring\s*\{\s*opacity:\s*0;?\s*\}/.test(b.slice(0, 600)));
+    expect(holding.length).toBe(1);
+    expect(holding[0].slice(0, 600)).toMatch(/\.pulse-ring\s*\{\s*animation:\s*none;?\s*\}|\.pulse-ring\s*\{[^}]*animation:\s*none/);
   });
 });

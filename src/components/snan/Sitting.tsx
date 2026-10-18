@@ -13,7 +13,6 @@ import {
   INITIAL,
   partNumber,
   progress,
-  remaining,
   step,
   type Phase,
   type SittingState,
@@ -418,7 +417,7 @@ export function Sitting({
               <p className="display text-[1.6rem] leading-[1.3]" style={{ color: STILLNESS_INK.line }}>
                 {t.stillness.line}
               </p>
-              <StillSeconds into={into} reduced={reduced} remaining={remaining(state)} />
+              <StillSeconds into={into} reduced={reduced} />
               <p className="mt-4 text-sm" style={{ color: STILLNESS_INK.dim }}>
                 {t.stillness.note}
               </p>
@@ -620,7 +619,7 @@ function BreathWords({ t, into, lang, reduced }: { t: Copy; into: number; lang: 
  * sitting's clock, so the count reads as a slow tide rather than a jump.
  * Under reduced motion the plain number stands alone.
  */
-function StillSeconds({ into, reduced, remaining }: { into: number; reduced: boolean; remaining: number }) {
+function StillSeconds({ into, reduced }: { into: number; reduced: boolean }) {
   const c = stillCount(SITTING.stillness, into);
   const shown = reduced ? { ...c, next: null, nowOpacity: 1, nextOpacity: 0 } : c;
   return (
@@ -628,7 +627,7 @@ function StillSeconds({ into, reduced, remaining }: { into: number; reduced: boo
       className="display tabular relative mt-6 text-[3.6rem] leading-none"
       style={{ color: STILLNESS_INK.dim }}
       aria-live="off"
-      data-remaining={remaining}
+      data-remaining={c.now}
     >
       <span className="inline-block" style={{ opacity: shown.nowOpacity }}>
         {shown.now}
