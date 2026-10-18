@@ -7,7 +7,7 @@ describe("mornings left after a sitting", () => {
     countLine(morningsContent[lang].left, leftAfterSitting(balance));
 
   it("counts from what is left once this morning is spent", () => {
-    expect(left(1)).toBe("Your mornings are complete");
+    expect(left(1)).toBe("You kept every morning");
     expect(left(2)).toBe("One morning left");
     expect(left(3)).toBe("2 mornings left");
     expect(left(11)).toBe("10 mornings left");
@@ -16,13 +16,13 @@ describe("mornings left after a sitting", () => {
   it("never goes below zero", () => {
     expect(leftAfterSitting(0)).toBe(0);
     expect(countOf(-3)).toBe("zero");
-    expect(left(0)).toBe("Your mornings are complete");
+    expect(left(0)).toBe("You kept every morning");
   });
 
   it("speaks Hindi in the same three shapes", () => {
-    expect(left(1, "hi")).toBe("आपकी सुबहें पूरी हुईं");
-    expect(left(2, "hi")).toBe("एक सुबह शेष");
-    expect(left(5, "hi")).toBe("4 सुबहें शेष");
+    expect(left(1, "hi")).toBe("आपने हर सुबह निभाई");
+    expect(left(2, "hi")).toBe("एक सुबह बाकी");
+    expect(left(5, "hi")).toBe("4 सुबहें बाकी");
   });
 });
 

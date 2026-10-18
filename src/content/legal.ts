@@ -124,7 +124,7 @@ const en = {
         h: "What a morning is",
         body: [
           "You choose a water, write your own sankalp, and sit for about three minutes. At the end, a Sankalp Patra is made: a sheet carrying the names you added, the river's published figure for that day, the panchang for that instant, and a seed anyone can recompute.",
-          "The practice is yours from start to finish. No rite is performed by anybody, at any ghat, on your behalf, and we claim nothing about what a morning does beyond what is printed on the sheet.",
+          "The practice is yours from start to finish. No rite is performed for you by anybody, at any ghat, and we claim nothing about what a morning does beyond what is printed on the sheet.",
         ],
       },
       {

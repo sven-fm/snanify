@@ -88,6 +88,12 @@ const PRODUCT = new Set([
   "@/content/reminders-off",
   "@/lib/content",
 ]);
+/** The v3 voice is bold about what is true and silent about the rest (spec 7.2):
+    no rite at the ghat, no merit, no stand-in presence, no figure "at the ghat",
+    no statistics about other people. */
+const OFF_LIMITS =
+  /holy (dip|water)|punya|on your behalf|as good as being there|measured at the ghat|passes the ghat|most people/i;
+
 const SOURCE_TALK = /\b(modelled|modeled|Modelled|Copernicus|GloFAS|Open-Meteo)\b|मॉडल/;
 
 type Slip = { at: string; text: string; rule: string };
@@ -98,6 +104,8 @@ function walkStrings(value: unknown, at: string, out: Slip[]): void {
     if (value.includes("·")) out.push({ at, text: value, rule: "middle dot" });
     if (RETIRED.test(value)) out.push({ at, text: value, rule: "retired name" });
     if (/\bmeasured\b/i.test(value)) out.push({ at, text: value, rule: "measured, for a modelled figure" });
+    // `tier` is an enum value ("punya" names a weight class), never printed.
+    if (!at.endsWith(".tier") && OFF_LIMITS.test(value)) out.push({ at, text: value, rule: "off limits (spec 7.2)" });
     if (PRODUCT.has(at.split(".")[0]) && SOURCE_TALK.test(value)) {
       out.push({ at, text: value, rule: "source talk on a product surface" });
     }
@@ -159,9 +167,9 @@ describe("the copy rules", () => {
     expect(offenders.map((f) => path.relative(ROOT, f))).toEqual([]);
   });
 
-  it("ships no middle dots, retired names, or 'measured' in any string", async () => {
+  it("ships no middle dots, retired names, 'measured' or off-limits claims in any string", async () => {
     const slips: Slip[] = [];
-    for (const name of MODULES) {
+    for (const name of new Set([...MODULES, ...MARKETING, "@/content/landing/hi"])) {
       const mod = (await import(name)) as Record<string, unknown>;
       walkStrings(mod, name, slips);
     }
@@ -188,6 +196,25 @@ describe("the copy rules", () => {
     };
     for (const name of MARKETING) collect(await import(name), name);
     expect(slips).toEqual([]);
+  });
+
+  it("keeps every marketing h1 and lede under the word limit", async () => {
+    const long: string[] = [];
+    const find = (v: unknown, at: string): void => {
+      if (Array.isArray(v)) v.forEach((x, i) => find(x, `${at}[${i}]`));
+      else if (v && typeof v === "object") {
+        for (const [k, x] of Object.entries(v as object)) {
+          if (/^(h1|lede|title|headline)$/i.test(k) && typeof x === "string") {
+            for (const sentence of x.split(/(?<=[.!?\u0964])\s+/)) {
+              if (sentence.split(/\s+/).length > MAX_WORDS) long.push(`${at}.${k}: ${sentence.slice(0, 90)}`);
+            }
+          }
+          find(x, `${at}.${k}`);
+        }
+      }
+    };
+    for (const name of [...MARKETING, "@/content/landing/hi"]) find(await import(name), name);
+    expect(long).toEqual([]);
   });
 
   it("gives Hindi every key English has, and nothing English lacks", async () => {

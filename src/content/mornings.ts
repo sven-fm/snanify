@@ -23,13 +23,13 @@ const en = {
 
   /** What is left once this morning is spent. */
   left: {
-    zero: "Your mornings are complete",
+    zero: "You kept every morning",
     one: "One morning left",
     many: "{n} mornings left",
   } satisfies Record<Count, string>,
 
   /** The way on, once the count reaches zero. Leads to /begin?out=1. */
-  more: "Choose your next mornings",
+  more: "Pick your next mornings",
 };
 
 const hi = {
@@ -40,9 +40,9 @@ const hi = {
   } satisfies Record<TierKey, string>,
 
   left: {
-    zero: "आपकी सुबहें पूरी हुईं",
-    one: "एक सुबह शेष",
-    many: "{n} सुबहें शेष",
+    zero: "आपने हर सुबह निभाई",
+    one: "एक सुबह बाकी",
+    many: "{n} सुबहें बाकी",
   } satisfies Record<Count, string>,
 
   more: "अपनी अगली सुबहें चुनिए",

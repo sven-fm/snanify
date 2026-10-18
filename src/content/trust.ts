@@ -33,9 +33,8 @@ import { SITTING } from "@/lib/sitting-plan";
  *
  * HOW IT IS WRITTEN. Plain sentences: what the thing is, what the reader does,
  * what they get. Nothing here argues with a reader who has doubts, and nothing
- * here promises an outcome. /ethics is the one page on the site that states
- * the commitment in the negative, as CLAUDE.md allows, and it does so once,
- * in the first section, in the voice of a maker showing the workshop.
+ * here promises an outcome. The first section of the workshop says it in the
+ * positive: what Snanify brings, and that the rest is the reader's own.
  *
  * PLACEHOLDER: ethics@snanify.com must be a real, monitored inbox. The domain
  * currently has no MX record, so neither it nor hello@ receives mail.
@@ -58,10 +57,10 @@ const ethicsEn = {
 
   s1: {
     id: "standard",
-    h: "What we sell, and what we do not",
+    h: "What you buy",
     body: [
       "The practice is yours from start to finish. You choose the water, you say the sankalp in your own words, and you keep the sheet.",
-      "Nobody performs a rite for you. There is no priest, no ceremony at a ghat, and nothing offered or recorded on your behalf, and we never say otherwise. We also make no promise about what a morning does for you. The sheet records a river, a day and your own words, and that is what you buy.",
+      "Snanify brings you the river, the hour and the sheet. The rest is yours. The sheet records a river, a day and your own words. That is what you buy.",
       "Every figure we print can be checked against a public source. The rest of this page says where to look.",
     ],
   },
@@ -70,7 +69,7 @@ const ethicsEn = {
     id: "river",
     h: "The river",
     body: [
-      "The flow shown for each of the six waters is modelled river discharge from the Copernicus Emergency Management Service global flood model. We read it through Open-Meteo at a grid cell on the river's main stem. The model publishes one value a day. The data is licensed CC BY 4.0, and every page that shows a figure names the source.",
+      "The flow shown for each of the six waters is modelled river discharge from the Copernicus Emergency Management Service global flood model. We read it through Open-Meteo at a grid cell on the river's main stem. The model publishes one value a day. The data is licensed CC BY 4.0. This page, the river pages and the live page name the source.",
       "Each figure is printed with the day it was modelled for. When the feed is quiet, the page shows the median for that time of year over 1997 to 2025, and says that is what it is showing.",
       "It is a model, not a gauge in the water. India's Central Water Commission keeps the register of the country's gauges. Where one sits on one of these reaches, we name it with its agency and coordinates.",
     ],
@@ -132,10 +131,10 @@ export const ethicsContent = { en: ethicsEn, hi: {
 
   s1: {
     id: "standard",
-    h: "हम क्या बेचते हैं, और क्या नहीं",
+    h: "आप क्या खरीदते हैं",
     body: [
-      "साधना आरंभ से अंत तक आपकी है। जल आप चुनते हैं, संकल्प आप अपने शब्दों में कहते हैं, और पत्र आप रखते हैं।",
-      "आपके लिए कोई अनुष्ठान नहीं करता। न कोई पुरोहित है, न किसी घाट पर कोई विधि, न आपकी ओर से कुछ अर्पित या दर्ज किया जाता है, और हम कभी इसके विपरीत नहीं कहते। एक सुबह आपके लिए क्या करती है, इसका भी हम कोई वचन नहीं देते। पत्र पर एक नदी, एक दिन और आपके अपने शब्द दर्ज होते हैं, और यही आप खरीदते हैं।",
+      "साधना शुरू से अंत तक आपकी है। जल आप चुनते हैं, संकल्प आप अपने शब्दों में कहते हैं, और पत्र आप रखते हैं।",
+      "Snanify आपको नदी, घड़ी और पत्र देती है। बाकी सब आपका है। पत्र पर एक नदी, एक दिन और आपके अपने शब्द दर्ज होते हैं। यही आप खरीदते हैं।",
       "जो भी अंक हम छापते हैं, उसे सार्वजनिक स्रोत से मिलाया जा सकता है। आगे का पृष्ठ बताता है कि कहाँ देखना है।",
     ],
   },
@@ -144,7 +143,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
     id: "river",
     h: "नदी",
     body: [
-      "छहों जलों का प्रवाह कोपरनिकस एमरजेंसी मैनेजमेंट सर्विस के वैश्विक बाढ़-मॉडल से लिया गया मॉडल-प्रवाह है। हम उसे ओपन-मीटियो के माध्यम से नदी की मुख्य धारा पर पड़ने वाले ग्रिड-कोष्ठ से पढ़ते हैं। मॉडल दिन में एक मान प्रकाशित करता है। आँकड़े CC BY 4.0 के अंतर्गत हैं, और जिस पृष्ठ पर अंक दिखता है, वहाँ स्रोत का नाम भी होता है।",
+      "छहों जलों का प्रवाह कोपरनिकस एमरजेंसी मैनेजमेंट सर्विस के वैश्विक बाढ़-मॉडल से लिया गया मॉडल-प्रवाह है। हम उसे ओपन-मीटियो के माध्यम से नदी की मुख्य धारा पर पड़ने वाले ग्रिड-कोष्ठ से पढ़ते हैं। मॉडल दिन में एक मान प्रकाशित करता है। आँकड़े CC BY 4.0 के अंतर्गत हैं। यह पृष्ठ, नदियों के पृष्ठ और लाइव पृष्ठ स्रोत का नाम देते हैं।",
       "हर अंक के साथ वह दिन छपता है जिसके लिए वह मॉडल किया गया। जब फ़ीड मौन हो, तो पृष्ठ 1997 से २०२५ तक के उसी मौसम का मध्यक दिखाता है, और साथ में यही लिखता है कि वह मध्यक दिखा रहा है।",
       "यह एक मॉडल है, जल में लगा मापक नहीं। भारत के मापक-स्थलों की पंजिका केंद्रीय जल आयोग के पास है। इन धाराओं में जहाँ कोई स्थल है, वहाँ हम उसका नाम, एजेंसी और निर्देशांक देते हैं।",
     ],
@@ -187,9 +186,9 @@ export const ethicsContent = { en: ethicsEn, hi: {
   },
 
   closing: {
-    title: "कल सुबह आरंभ कीजिए।",
+    title: "कल सुबह शुरू कीजिए।",
     body: "आज रात तैयारी कर लीजिए। ग्यारह सुबहें, एक बार भुगतान, आपकी अपनी मुद्रा में।",
-    cta: "आरंभ कीजिए",
+    cta: "शुरू कीजिए",
   },
 } } satisfies Record<Lang, typeof ethicsEn>;
 
@@ -234,7 +233,7 @@ const faqEn = {
           id: "when",
           q: "Do I have to sit before sunrise?",
           a: [
-            "Sit when you wake. You tell us the hour, and the reminder comes at that hour in your own time zone. Many people sit in the evening.",
+            "Sit when you wake. You tell us the hour, and the reminder comes at that hour in your own time zone. The evening works too.",
             "The muhurat windows are computed for each ghat's own sunrise. Sit inside one if that matters to you.",
           ],
         },
@@ -270,8 +269,8 @@ const faqEn = {
           id: "data",
           q: "Where does the river figure come from?",
           a: [
-            "It is modelled river discharge from the Copernicus Emergency Management Service global flood model, read through Open-Meteo at the grid cell covering that reach. The data is public and licensed CC BY 4.0, and every page that shows a figure names the source.",
-            "It is a model, not an instrument in the water, so we write modelled every time.",
+            "It is modelled river discharge from the Copernicus Emergency Management Service global flood model, read through Open-Meteo at the grid cell covering that reach. The data is public and licensed CC BY 4.0. This page, the river pages and the live page name the source.",
+            "It is a model of the whole river, read at one grid cell.",
             "Sunrise, sunset and rain are read for each ghat's own coordinates. Tithi and the muhurat windows are computed for that sunrise.",
           ],
         },
@@ -360,14 +359,14 @@ const faqEn = {
           id: "ancestors",
           q: "Can I sit in memory of someone who has died?",
           a: [
-            "Yes, and many people do. Put their name among the five and say what you want to say in your sankalp. The sheet is one to keep and to send to the family.",
+            "Yes. Put their name among the five and say what you want to say in your sankalp. The sheet is one to keep and to send to the family.",
           ],
         },
         {
           id: "who-can-book",
           q: "I am not Hindu. Can I use this?",
           a: [
-            "Yes. Anyone can sit. People sit for a Hindu parent, for a spouse, or for three quiet minutes of their own.",
+            "Yes. Anyone can sit. Sit for a Hindu parent, for a spouse, or for 3 quiet minutes of your own.",
           ],
         },
       ],
@@ -448,7 +447,7 @@ export const faqContent = { en: faqEn, hi: {
           id: "when",
           q: "क्या सूर्योदय से पहले बैठना ज़रूरी है?",
           a: [
-            "जब आप जागें, तब बैठिए। घड़ी आप बताते हैं, और सूचना उसी घड़ी पर, आपके अपने समय-क्षेत्र में आती है। बहुत लोग शाम को बैठते हैं।",
+            "जब आप जागें, तब बैठिए। घड़ी आप बताते हैं, और सूचना उसी घड़ी पर, आपके अपने समय-क्षेत्र में आती है। शाम को भी बैठ सकते हैं।",
             "मुहूर्त हर घाट के अपने सूर्योदय से गणना होते हैं। यदि आपके लिए इसका महत्व है, तो मुहूर्त के भीतर बैठिए।",
           ],
         },
@@ -484,8 +483,8 @@ export const faqContent = { en: faqEn, hi: {
           id: "data",
           q: "नदी का अंक कहाँ से आता है?",
           a: [
-            "यह कोपरनिकस एमरजेंसी मैनेजमेंट सर्विस के वैश्विक बाढ़-मॉडल का मॉडल-प्रवाह है, जिसे ओपन-मीटियो के माध्यम से उस धारा पर पड़ने वाले ग्रिड-कोष्ठ से पढ़ा जाता है। आँकड़े सार्वजनिक हैं, CC BY 4.0 के अंतर्गत, और जिस पृष्ठ पर अंक दिखता है, वहाँ स्रोत का नाम भी होता है।",
-            "यह एक मॉडल है, जल में लगा यंत्र नहीं, इसलिए हम हर बार 'मॉडल' लिखते हैं।",
+            "यह कोपरनिकस एमरजेंसी मैनेजमेंट सर्विस के वैश्विक बाढ़-मॉडल का मॉडल-प्रवाह है, जिसे ओपन-मीटियो के माध्यम से उस धारा पर पड़ने वाले ग्रिड-कोष्ठ से पढ़ा जाता है। आँकड़े सार्वजनिक हैं, CC BY 4.0 के अंतर्गत। यह पृष्ठ, नदियों के पृष्ठ और लाइव पृष्ठ स्रोत का नाम देते हैं।",
+            "यह पूरी नदी का एक मॉडल है, जो एक ग्रिड-कोष्ठ पर पढ़ा जाता है।",
             "सूर्योदय, सूर्यास्त और वर्षा हर घाट के अपने निर्देशांकों पर पढ़े जाते हैं। तिथि और मुहूर्त उसी सूर्योदय से गणना होते हैं।",
           ],
         },
@@ -574,14 +573,14 @@ export const faqContent = { en: faqEn, hi: {
           id: "ancestors",
           q: "क्या मैं किसी दिवंगत के स्मरण में बैठ सकता हूँ?",
           a: [
-            "हाँ, और बहुत लोग बैठते हैं। उनका नाम पाँच नामों में रखिए, और जो कहना है, अपने संकल्प में कहिए। यह पत्र सँभालने और परिवार को भेजने योग्य होता है।",
+            "हाँ। उनका नाम पाँच नामों में रखिए, और जो कहना है, अपने संकल्प में कहिए। यह पत्र सँभालने और परिवार को भेजने योग्य होता है।",
           ],
         },
         {
           id: "who-can-book",
           q: "मैं हिंदू नहीं हूँ। क्या मैं यह कर सकता हूँ?",
           a: [
-            "हाँ। कोई भी बैठ सकता है। लोग हिंदू माता-पिता के लिए, जीवनसाथी के लिए, या अपने तीन शांत मिनटों के लिए बैठते हैं।",
+            "हाँ। कोई भी बैठ सकता है। हिंदू माता-पिता के लिए, जीवनसाथी के लिए, या अपने 3 शांत मिनटों के लिए बैठिए।",
           ],
         },
       ],

@@ -17,7 +17,7 @@ export const hi = {
   nav: { back: "सभी पर्व" },
   hero: {
     title: "मुहूर्त पंचांग",
-    lede: "आगामी बारह महीनों के सभी पर्व, और उन्हें रखने की दिन की बेलाएँ।",
+    lede: "अगले 12 महीनों के सभी पर्व, और उन्हें रखने की बेलाएँ।",
     asOf: "{date} से बारह महीने",
   },
   head: { title: "{accent} पंचांग", accent: "मुहूर्त" },
@@ -34,8 +34,8 @@ export const hi = {
     sourceLabel: "स्रोत",
     ayanamsaLabel: "अयनांश",
     coordinatesLabel: "घाट के निर्देशांक",
-    coordinatesPending: "सर्वेक्षण शेष",
-    notSet: "तय होना शेष",
+    coordinatesPending: "सर्वेक्षण बाकी",
+    notSet: "तय होना बाकी",
   },
   reading: {
     title: "इस पंचांग को कैसे पढ़ें",

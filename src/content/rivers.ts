@@ -380,7 +380,7 @@ export const RIVERS: Ghat[] = [
       ],
     },
     caution: {
-      en: "The Yamuna at Mathura carries a heavy pollution load for much of the year. Through the dry months a large share of what passes the ghat is regulated release and drain water rather than mountain flow. If you are going there to bathe, know that beforehand and ask locally on the day.",
+      en: "The Yamuna at Mathura carries a heavy pollution load for much of the year. Through the dry months a large share of the water at the ghat is regulated release and drain water rather than mountain flow. If you are going there to bathe, know that beforehand and ask locally on the day.",
       hi: "मथुरा में यमुना का जल वर्ष के अधिकांश समय अत्यंत प्रदूषित रहता है, और सूखे महीनों में घाट के सामने से जो बहता है उसका बड़ा भाग पर्वतीय प्रवाह नहीं, नियंत्रित छोड़ा गया जल और नालों का जल होता है। यदि आप वहाँ स्नान के लिए जा रहे हैं, तो यह पहले जान लीजिए और उस दिन स्थानीय लोगों से पूछ लीजिए।",
     },
     reading: {
@@ -957,7 +957,7 @@ export const riverDetailContent = {
       lede: "One number, taken the same way at all six waters.",
       provenanceLabel: "Where the figures come from",
       provenance: [
-        "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, read at the grid cell covering this reach and published once a day. It is a model rather than a gauge reading, and this site writes modelled beside every number it prints.",
+        "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, read at the grid cell covering this reach and published once a day. It is a model rather than a gauge reading.",
         "Each value is ranked against every daily value that same cell has produced in this same week of the year from 1997 to 2025. That is what the percentile means: one water compared with its own past.",
         "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates rather than at the grid cell. The muhurat windows are the panchang's rules worked out from that sunrise.",
         "Every figure comes from a public source named beside it, and each can be checked against that source.",
@@ -1041,7 +1041,7 @@ export const riverDetailContent = {
       lede: "एक अंक, छहों जलों पर एक ही रीति से लिया हुआ।",
       provenanceLabel: "अंक कहाँ से आते हैं",
       provenance: [
-        "प्रवाह कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से लिया हुआ मॉडल-प्रवाह है, जो इस धारा को ढकने वाले ग्रिड-खंड पर पढ़ा जाता है और दिन में एक बार प्रकाशित होता है। यह गेज का पाठ नहीं, मॉडल है, और यह साइट हर अंक के साथ मॉडल लिखती है।",
+        "प्रवाह कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से लिया हुआ मॉडल-प्रवाह है, जो इस धारा को ढकने वाले ग्रिड-खंड पर पढ़ा जाता है और दिन में एक बार प्रकाशित होता है। यह गेज का पाठ नहीं, मॉडल है।",
         "हर मान की तुलना उसी खंड के उन सभी दैनिक मानों से होती है जो 1997 से 2025 तक वर्ष के इसी सप्ताह में आए। प्रतिशतक का यही अर्थ है: एक जल की तुलना उसके अपने अतीत से।",
         "सूर्योदय, सूर्यास्त, तापमान और वर्षा ग्रिड-खंड पर नहीं, घाट के अपने निर्देशांक पर पढ़े जाते हैं। मुहूर्त पंचांग के नियमों को उसी सूर्योदय पर लगाकर निकाले जाते हैं।",
         "हर अंक एक सार्वजनिक स्रोत से आता है जिसका नाम उसके साथ लिखा है, और हर एक उसी स्रोत पर जाँचा जा सकता है।",

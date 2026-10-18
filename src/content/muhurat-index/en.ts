@@ -36,7 +36,7 @@ export const en = {
   nav: { back: "All occasions" },
   hero: {
     title: "The muhurat calendar",
-    lede: "Every occasion of the next twelve months, and the hours of the day to keep it.",
+    lede: "Every occasion of the next 12 months, and the hours to keep it.",
     asOf: "Twelve months from {date}",
   },
   /** The capitals headline: `{accent}` is set in sindoor. */

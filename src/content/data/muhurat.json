@@ -620,8 +620,8 @@
         "hi": "सूर्य नई राशि में आता है, वर्ष में बारह बार।"
       },
       "about": {
-        "en": "A sankranti is the instant the sun crosses from one sidereal rashi into the next. Twelve of them make the solar year. Each is a joint in the year, and a snan and a gift are customary at it. A sankranti is an instant rather than a span, so tradition marks a punya kaal around it, a window before or after the crossing. Its length depends on the rule followed and on whether the crossing falls by day or after sunset. The lunar calendar governs most occasions. The sun governs the seasons and the harvest, and the sankrantis join the two. They barely move against the Gregorian year, so they are the easiest occasions to plan around.",
-        "hi": "संक्रांति वह क्षण है जब सूर्य एक निरयण राशि से अगली में जाता है। बारह संक्रांतियों से सौर वर्ष बनता है। हर एक वर्ष की एक संधि है, और उस पर स्नान और दान की रीति है। संक्रांति अवधि नहीं, क्षण है, इसलिए परंपरा उसके आसपास पुण्य काल मानती है, संक्रमण से पहले या बाद की एक बेला। उसकी लंबाई इस पर निर्भर है कि कौन-सा नियम माना गया और संक्रमण दिन में हुआ या सूर्यास्त के बाद। अधिकतर पर्व चांद्र पंचांग से चलते हैं। ऋतुएँ और फ़सल सूर्य से चलती हैं, और संक्रांतियाँ दोनों को जोड़ती हैं। अंग्रेज़ी वर्ष के सामने ये मुश्किल से खिसकती हैं, इसलिए इनकी योजना बनाना सबसे आसान है।"
+        "en": "A sankranti is the instant the sun crosses from one sidereal rashi into the next. Twelve of them make the solar year. Each is a joint in the year, and a snan and a gift are customary at it. A sankranti is an instant rather than a span, so tradition marks a window around it, before or after the crossing. Its length depends on the rule followed and on whether the crossing falls by day or after sunset. The lunar calendar governs most occasions. The sun governs the seasons and the harvest, and the sankrantis join the two. They barely move against the Gregorian year, so they are the easiest occasions to plan around.",
+        "hi": "संक्रांति वह क्षण है जब सूर्य एक निरयण राशि से अगली में जाता है। बारह संक्रांतियों से सौर वर्ष बनता है। हर एक वर्ष की एक संधि है, और उस पर स्नान और दान की रीति है। संक्रांति अवधि नहीं, क्षण है, इसलिए परंपरा उसके आसपास एक बेला मानती है, संक्रमण से पहले या बाद की एक बेला। उसकी लंबाई इस पर निर्भर है कि कौन-सा नियम माना गया और संक्रमण दिन में हुआ या सूर्यास्त के बाद। अधिकतर पर्व चांद्र पंचांग से चलते हैं। ऋतुएँ और फ़सल सूर्य से चलती हैं, और संक्रांतियाँ दोनों को जोड़ती हैं। अंग्रेज़ी वर्ष के सामने ये मुश्किल से खिसकती हैं, इसलिए इनकी योजना बनाना सबसे आसान है।"
       },
       "rule": {
         "kind": "solar-ingress",
@@ -631,8 +631,8 @@
           "hi": "सूर्य का निरयण राशि-प्रवेश"
         },
         "resolutionNote": {
-          "en": "The crossing is an instant. The observed window is a punya kaal derived from it, and the derivation differs between traditions. Each occasion page names the rule it follows.",
-          "hi": "संक्रमण एक क्षण है। मानी जाने वाली बेला उससे निकला पुण्य काल है, और उसकी गणना परंपराओं में अलग-अलग है। हर पर्व का पृष्ठ बताता है कि वह किस नियम पर चलता है।"
+          "en": "The crossing is an instant. The observed window is derived from it, and the derivation differs between traditions. Each occasion page names the rule it follows.",
+          "hi": "संक्रमण एक क्षण है। मानी जाने वाली बेला उसी से निकाली जाती है, और उसकी गणना परंपराओं में अलग-अलग है। हर पर्व का पृष्ठ बताता है कि वह किस नियम पर चलता है।"
         }
       },
       "occurrence": {
@@ -814,8 +814,8 @@
           "hi": "सूर्य का तुला राशि में निरयण प्रवेश"
         },
         "resolutionNote": {
-          "en": "The theerthodbhava is observed at the instant of the crossing. The punya kaal around it follows local Kodagu usage rather than a north Indian rule, and that usage will be named with any time published here.",
-          "hi": "तीर्थोद्भव संक्रमण के क्षण पर माना जाता है। उसके आसपास का पुण्य काल उत्तर भारत के नियम से नहीं, कोडगु की स्थानीय रीति से चलता है, और यहाँ कोई समय छपने पर वह रीति भी बताई जाएगी।"
+          "en": "The theerthodbhava is observed at the instant of the crossing. The window kept around it follows local Kodagu usage rather than a north Indian rule, and that usage will be named with any time published here.",
+          "hi": "तीर्थोद्भव संक्रमण के क्षण पर माना जाता है। उसके आसपास की बेला उत्तर भारत के नियम से नहीं, कोडगु की स्थानीय रीति से चलती है, और यहाँ कोई समय छपने पर वह रीति भी बताई जाएगी।"
         }
       },
       "occurrence": {
@@ -1086,7 +1086,7 @@
         {
           "id": "ganga-haridwar",
           "note": {
-            "en": "Har Ki Pauri on Kartik Purnima is the picture most people carry of this day, the whole flight of steps under lamps and the water carrying them downstream.",
+            "en": "Har Ki Pauri on Kartik Purnima is the best-known picture of this day, the whole flight of steps under lamps and the water carrying them downstream.",
             "hi": "कार्तिक पूर्णिमा की हर की पौड़ी वही चित्र है जो अधिकतर लोग इस दिन का मन में रखते हैं, दीपों से भरी पूरी सीढ़ियाँ और उन्हें बहा ले जाता जल।"
           }
         },
@@ -1163,8 +1163,8 @@
           "hi": "सूर्य का मकर राशि में निरयण प्रवेश"
         },
         "resolutionNote": {
-          "en": "The crossing is an instant; what is observed is the punya kaal derived from it. Where the crossing falls after sunset the bathing customarily moves to the following morning. The derivation differs between traditions, so the rule followed is named beside any time published.",
-          "hi": "संक्रमण एक क्षण है; माना उससे निकला पुण्य काल जाता है। जहाँ संक्रमण सूर्यास्त के बाद हो, वहाँ स्नान रीति से अगली सुबह चला जाता है। गणना परंपराओं में अलग है, इसलिए यहाँ छपे हर समय के साथ अपनाया गया नियम भी लिखा जाता है।"
+          "en": "The crossing is an instant; what is observed is the window derived from it. Where the crossing falls after sunset the bathing customarily moves to the following morning. The derivation differs between traditions, so the rule followed is named beside any time published.",
+          "hi": "संक्रमण एक क्षण है; मानी उससे निकली बेला जाती है। जहाँ संक्रमण सूर्यास्त के बाद हो, वहाँ स्नान रीति से अगली सुबह चला जाता है। गणना परंपराओं में अलग है, इसलिए यहाँ छपे हर समय के साथ अपनाया गया नियम भी लिखा जाता है।"
         }
       },
       "occurrence": {
@@ -1177,8 +1177,8 @@
           "hi": "जनवरी 2027"
         },
         "note": {
-          "en": "In recent decades the crossing has fallen on 14 or 15 January. Which of the two, and the punya kaal around it, is published once computed and checked.",
-          "hi": "हाल के दशकों में संक्रमण 14 या 15 जनवरी को हुआ है। दोनों में कौन-सा, और उसके आसपास का पुण्य काल, गणना और जाँच के बाद प्रकाशित होता है।"
+          "en": "In recent decades the crossing has fallen on 14 or 15 January. Which of the two, and the window around it, is published once computed and checked.",
+          "hi": "हाल के दशकों में संक्रमण 14 या 15 जनवरी को हुआ है। दोनों में कौन-सा, और उसके आसपास की बेला, गणना और जाँच के बाद प्रकाशित होता है।"
         }
       },
       "windows": [
@@ -1235,8 +1235,8 @@
         "hi": "छहों जल।"
       },
       "textualBasis": {
-        "en": "Makar Sankranti snan and daan are prescribed in the nibandha literature on kala, and the punya kaal rules differ between the authorities those nibandhas record. A citable edition and passage is still to be added.",
-        "hi": "मकर संक्रांति स्नान और दान का विधान काल-विषयक निबंध-साहित्य में है, और पुण्य काल के नियम उन निबंधों में दर्ज आचार्यों के बीच अलग-अलग हैं। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+        "en": "Makar Sankranti snan and daan are prescribed in the nibandha literature on kala, and the rules for its window differ between the authorities those nibandhas record. A citable edition and passage is still to be added.",
+        "hi": "मकर संक्रांति स्नान और दान का विधान काल-विषयक निबंध-साहित्य में है, और उसकी बेला के नियम उन निबंधों में दर्ज आचार्यों के बीच अलग-अलग हैं। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
       },
       "panchang": {
         "confidence": "provisional",
@@ -1259,7 +1259,7 @@
         "hi": "प्रयागराज की रेत पर एक महीना।"
       },
       "about": {
-        "en": "Magh Snan is the month of Magha kept at the Sangam: daily bathing before dawn through the coldest weeks of the north Indian year. Those who keep it in full, the kalpvasis, live on the sands for the month under a single vow and eat once a day. Most people keep a lighter form, or the three or four days of it that carry their own names. It runs from Makar Sankranti or Paush Purnima to Magha Purnima, depending on the reckoning.",
+        "en": "Magh Snan is the month of Magha kept at the Sangam: daily bathing before dawn through the coldest weeks of the north Indian year. Those who keep it in full, the kalpvasis, live on the sands for the month under a single vow and eat once a day. Others keep a lighter form, or the three or four days of it that carry their own names. It runs from Makar Sankranti or Paush Purnima to Magha Purnima, depending on the reckoning.",
         "hi": "माघ स्नान संगम पर रखा जाने वाला माघ का महीना है: उत्तर भारत के वर्ष के सबसे ठंडे हफ़्तों में रोज़ भोर से पहले स्नान। जो इसे पूरा रखते हैं, यानी कल्पवासी, वे एक व्रत के तहत महीना भर रेत पर रहते हैं और दिन में एक बार खाते हैं। अधिकतर लोग इसका हल्का रूप रखते हैं, या इसके वे तीन-चार दिन जिनके अपने नाम हैं। गणना के अनुसार यह मकर संक्रांति या पौष पूर्णिमा से माघ पूर्णिमा तक चलता है।"
       },
       "rule": {
@@ -3711,8 +3711,8 @@
           "hi": "सूर्य का तुला राशि में निरयण प्रवेश"
         },
         "resolutionNote": {
-          "en": "The theerthodbhava is observed at the instant of the crossing. The punya kaal around it follows local Kodagu usage rather than a north Indian rule, and that usage will be named with any time published here.",
-          "hi": "तीर्थोद्भव संक्रमण के क्षण पर माना जाता है। उसके आसपास का पुण्य काल उत्तर भारत के नियम से नहीं, कोडगु की स्थानीय रीति से चलता है, और यहाँ कोई समय छपने पर वह रीति भी बताई जाएगी।"
+          "en": "The theerthodbhava is observed at the instant of the crossing. The window kept around it follows local Kodagu usage rather than a north Indian rule, and that usage will be named with any time published here.",
+          "hi": "तीर्थोद्भव संक्रमण के क्षण पर माना जाता है। उसके आसपास की बेला उत्तर भारत के नियम से नहीं, कोडगु की स्थानीय रीति से चलती है, और यहाँ कोई समय छपने पर वह रीति भी बताई जाएगी।"
         }
       },
       "occurrence": {
@@ -4061,7 +4061,7 @@
         {
           "id": "ganga-haridwar",
           "note": {
-            "en": "Har Ki Pauri on Kartik Purnima is the picture most people carry of this day, the whole flight of steps under lamps and the water carrying them downstream.",
+            "en": "Har Ki Pauri on Kartik Purnima is the best-known picture of this day, the whole flight of steps under lamps and the water carrying them downstream.",
             "hi": "कार्तिक पूर्णिमा की हर की पौड़ी वही चित्र है जो अधिकतर लोग इस दिन का मन में रखते हैं, दीपों से भरी पूरी सीढ़ियाँ और उन्हें बहा ले जाता जल।"
           }
         },
@@ -4486,8 +4486,8 @@
           "hi": "सूर्य का मकर राशि में निरयण प्रवेश"
         },
         "resolutionNote": {
-          "en": "The crossing is an instant; what is observed is the punya kaal derived from it. Where the crossing falls after sunset the bathing customarily moves to the following morning. The derivation differs between traditions, so the rule followed is named beside any time published.",
-          "hi": "संक्रमण एक क्षण है; माना उससे निकला पुण्य काल जाता है। जहाँ संक्रमण सूर्यास्त के बाद हो, वहाँ स्नान रीति से अगली सुबह चला जाता है। गणना परंपराओं में अलग है, इसलिए यहाँ छपे हर समय के साथ अपनाया गया नियम भी लिखा जाता है।"
+          "en": "The crossing is an instant; what is observed is the window derived from it. Where the crossing falls after sunset the bathing customarily moves to the following morning. The derivation differs between traditions, so the rule followed is named beside any time published.",
+          "hi": "संक्रमण एक क्षण है; मानी उससे निकली बेला जाती है। जहाँ संक्रमण सूर्यास्त के बाद हो, वहाँ स्नान रीति से अगली सुबह चला जाता है। गणना परंपराओं में अलग है, इसलिए यहाँ छपे हर समय के साथ अपनाया गया नियम भी लिखा जाता है।"
         }
       },
       "occurrence": {
@@ -4500,8 +4500,8 @@
           "hi": "जनवरी 2028"
         },
         "note": {
-          "en": "In recent decades the crossing has fallen on 14 or 15 January. Which of the two, and the punya kaal around it, is published once computed and checked.",
-          "hi": "हाल के दशकों में संक्रमण 14 या 15 जनवरी को हुआ है। दोनों में कौन-सा, और उसके आसपास का पुण्य काल, गणना और जाँच के बाद प्रकाशित होता है।"
+          "en": "In recent decades the crossing has fallen on 14 or 15 January. Which of the two, and the window around it, is published once computed and checked.",
+          "hi": "हाल के दशकों में संक्रमण 14 या 15 जनवरी को हुआ है। दोनों में कौन-सा, और उसके आसपास की बेला, गणना और जाँच के बाद प्रकाशित होता है।"
         }
       },
       "windows": [
@@ -4558,8 +4558,8 @@
         "hi": "छहों जल।"
       },
       "textualBasis": {
-        "en": "Makar Sankranti snan and daan are prescribed in the nibandha literature on kala, and the punya kaal rules differ between the authorities those nibandhas record. A citable edition and passage is still to be added.",
-        "hi": "मकर संक्रांति स्नान और दान का विधान काल-विषयक निबंध-साहित्य में है, और पुण्य काल के नियम उन निबंधों में दर्ज आचार्यों के बीच अलग-अलग हैं। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
+        "en": "Makar Sankranti snan and daan are prescribed in the nibandha literature on kala, and the rules for its window differ between the authorities those nibandhas record. A citable edition and passage is still to be added.",
+        "hi": "मकर संक्रांति स्नान और दान का विधान काल-विषयक निबंध-साहित्य में है, और उसकी बेला के नियम उन निबंधों में दर्ज आचार्यों के बीच अलग-अलग हैं। उद्धरण योग्य संस्करण और अंश अभी जोड़ा जाना है।"
       },
       "panchang": {
         "confidence": "provisional",
@@ -4582,7 +4582,7 @@
         "hi": "प्रयागराज की रेत पर एक महीना।"
       },
       "about": {
-        "en": "Magh Snan is the month of Magha kept at the Sangam: daily bathing before dawn through the coldest weeks of the north Indian year. Those who keep it in full, the kalpvasis, live on the sands for the month under a single vow and eat once a day. Most people keep a lighter form, or the three or four days of it that carry their own names. It runs from Makar Sankranti or Paush Purnima to Magha Purnima, depending on the reckoning.",
+        "en": "Magh Snan is the month of Magha kept at the Sangam: daily bathing before dawn through the coldest weeks of the north Indian year. Those who keep it in full, the kalpvasis, live on the sands for the month under a single vow and eat once a day. Others keep a lighter form, or the three or four days of it that carry their own names. It runs from Makar Sankranti or Paush Purnima to Magha Purnima, depending on the reckoning.",
         "hi": "माघ स्नान संगम पर रखा जाने वाला माघ का महीना है: उत्तर भारत के वर्ष के सबसे ठंडे हफ़्तों में रोज़ भोर से पहले स्नान। जो इसे पूरा रखते हैं, यानी कल्पवासी, वे एक व्रत के तहत महीना भर रेत पर रहते हैं और दिन में एक बार खाते हैं। अधिकतर लोग इसका हल्का रूप रखते हैं, या इसके वे तीन-चार दिन जिनके अपने नाम हैं। गणना के अनुसार यह मकर संक्रांति या पौष पूर्णिमा से माघ पूर्णिमा तक चलता है।"
       },
       "rule": {

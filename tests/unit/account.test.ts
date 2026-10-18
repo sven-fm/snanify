@@ -50,7 +50,7 @@ describe("/account", () => {
   it("says the mornings left in plain words", () => {
     expect(view("en")).toContain("You have 8 mornings left.");
     expect(view("en", { credits: 1 })).toContain("You have one morning left.");
-    expect(view("hi")).toContain("8 सुबहें शेष");
+    expect(view("hi")).toContain("8 सुबहें बाकी");
   });
 
   it("carries one press: sit, or the marigold share when today's sheet exists", () => {

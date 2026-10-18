@@ -229,7 +229,7 @@ export const en = {
   close: {
     title: "Every morning",
     cta: "Begin your snan",
-    body: "The six waters, the panchang and the muhurat calendar are here every day. Three minutes with your own river, at the hour it names, is the snan.",
+    body: "The six waters, the panchang and the muhurat calendar are here every day. Sit 3 minutes with your own river, at the hour the panchang names. That is the snan.",
     links: {
       rivers: "The six waters",
       muhurat: "The muhurat calendar",
