@@ -181,11 +181,13 @@ export const config = {
    * path with a dot, which let `/foo.png` reach `[lang]/page.tsx` with a
    * locale of "foo.png" and answer 500 to every bot probe.
    *
-   * `opengraph-image` is load bearing. It lives at `[lang]/opengraph-image`, so
-   * Next writes the English one as `/en/opengraph-image`, which the redirect
-   * above would otherwise 308 to a path that does not exist and mangle the
-   * cache-busting query while doing it. Scrapers do not reliably follow a
-   * redirect for an `og:image`, so the card would simply come out blank.
+   * `opengraph-image` is load bearing. The link cards live at
+   * `/opengraph-image/<lang>/...`, and the homepage's old address,
+   * `/en/opengraph-image`, is a rewrite to its card in next.config.ts; caught
+   * here, the `/en/*` redirect would 308 it to a path that does not exist and
+   * mangle the cache-busting query while doing it. Scrapers do not reliably
+   * follow a redirect for an `og:image`, so the card would come out blank.
+   * `/en/p/<id>/opengraph-image` (the Patra's card) needs the same.
    *
    * `email/` holds the two images every reminder loads by absolute URL, and
    * `brand-1024.png` the Facebook avatar: files in public/ that a locale

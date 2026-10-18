@@ -3,7 +3,8 @@ import { CARD_PATHS, cardSpec } from "@/lib/page-cards";
 import { renderCard } from "@/lib/site-card";
 
 /* ---------------------------------------------------------------------------
-   Each major page's link card, at /opengraph-image/<lang>/<page>.
+   Each major page's link card, at /opengraph-image/<lang>/<page>, and the
+   homepage's at /opengraph-image/<lang>.
 
    A plain route rather than Next's opengraph-image file in every segment: one
    renderer, one list of pages (src/lib/page-cards.ts), and a URL that is not
@@ -20,16 +21,18 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return LANGS.flatMap((lang) => CARD_PATHS.map((path) => ({ lang, page: path.slice(1).split("/") })));
+  return LANGS.flatMap((lang) =>
+    CARD_PATHS.map((path) => ({ lang, page: path === "/" ? [] : path.slice(1).split("/") })),
+  );
 }
 
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ lang: string; page: string[] }> },
+  { params }: { params: Promise<{ lang: string; page?: string[] }> },
 ): Promise<Response> {
   const { lang, page } = await params;
   const edition = parseLang(lang);
-  const spec = edition ? cardSpec(edition, `/${page.join("/")}`) : undefined;
+  const spec = edition ? cardSpec(edition, `/${(page ?? []).join("/")}`) : undefined;
   if (!spec) return new Response("not found", { status: 404 });
   const png = await renderCard(spec);
   return new Response(new Uint8Array(png), {

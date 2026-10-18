@@ -432,15 +432,16 @@ the marigold press to send today's sheet when one exists.
 
 `src/lib/site-card.ts` draws every page's card: paper, the logo and the samvat, the
 page's own headline in capitals with its accent in sindoor, the page's one plain sentence
-in small sans, and the full river with the sun. The homepage's is at
-`/<lang>/opengraph-image`; `/snan`, `/rivers`, each river, `/live`, `/panchang`,
-`/muhurat`, `/kumbh`, `/faq` and `/about` each have their own at
-`/opengraph-image/<lang>/<page>` (`src/lib/page-cards.ts`, which every one of those pages
-names in its metadata). A long headline steps down from 86 to 76 to 66 until it and the
-plain line stand clear of the river. When the drawing changes, bump `CARD_DRAWING` in
-`src/lib/page-cards.ts` and `DRAWING_SHA256` in `tests/unit/page-cards.test.ts`; if the
-homepage's card changes too, touch its route file and bump `SITE_CARD_VERSION` in
-`src/lib/seo.ts` and `ROUTE_SHA256` in `tests/unit/og-image.test.ts`. `patraCardSvg`
+in small sans (Hindi in Noto Serif Devanagari, so conjuncts stack), and the full river with
+the sun. `src/lib/page-cards.ts` says what each card says, and every card is served at
+`/opengraph-image/<lang>` (the homepage) or `/opengraph-image/<lang>/<page>` (`/snan`,
+`/rivers`, each river, `/live`, `/panchang`, `/muhurat`, `/kumbh`, `/faq`, `/about`); the old
+`/<lang>/opengraph-image` is a rewrite to the homepage's card. A long headline steps down
+from 86 to 76 to 66 until it and the plain line stand clear of the river; a headline that
+takes one line grows to fill the measure (up to 124) and sits in the middle of the paper.
+When the drawing changes, bump `CARD_DRAWING` in `src/lib/page-cards.ts`, `DRAWING_SHA256`
+in `tests/unit/page-cards.test.ts` and `SITE_CARD_VERSION` in `src/lib/seo.ts` (the tests
+name each value). `patraCardSvg`
 carries the names, the river's state and the gauge, and the river with the sun; no
 portrait, no badge.
 

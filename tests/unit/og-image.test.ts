@@ -1,32 +1,28 @@
-import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { alt, size } from "@/app/[lang]/opengraph-image";
 import { LANGS } from "@/lib/locales";
+import { pageCard } from "@/lib/page-cards";
+import { SITE_CARD_SIZE } from "@/lib/site-card";
 import { SITE_CARD_VERSION, pageMetadata, siteCard } from "@/lib/seo";
 
 /* ---------------------------------------------------------------------------
-   Every page carries a picture when its link is pasted into Facebook or
-   WhatsApp.
+   Every page carries a picture when its link is pasted into Facebook,
+   WhatsApp or X.
 
    A page that sets `openGraph` replaces the layout's, image and all, so
-   pageMetadata names the site card itself. It names it by the URL the
-   homepage carries, and that URL holds Next's content hash of the card's
-   route file. The pin below is that file's own fingerprint: when it moves,
-   Next's hash has moved too.
+   pageMetadata names the site card itself: the homepage's card, at
+   /opengraph-image/<lang>. Its query is a literal in src/lib/seo.ts (the copy
+   imports seo, so seo cannot import the cards); the test below holds it to
+   the hash src/lib/page-cards.ts gives the homepage's card.
    --------------------------------------------------------------------------- */
-
-const ROUTE = "src/app/[lang]/opengraph-image.tsx";
-const ROUTE_SHA256 = "897817ea17fec3aaddba85d8cc22a2986c50e8e2eed5ea027c00428619c4c020";
 
 describe("the site card on every page", () => {
   it("names the card on a subpage in both editions, for Open Graph and X", () => {
     for (const lang of LANGS) {
-      const meta = pageMetadata({ lang, path: "/snan", title: "t", description: "d" });
+      const meta = pageMetadata({ lang, path: "/privacy", title: "t", description: "d" });
       const card = siteCard(lang);
       expect(meta.openGraph?.images).toEqual([card]);
       expect(meta.twitter?.images).toEqual([card]);
-      expect(card.url).toBe(`https://www.snanify.com/${lang}/opengraph-image?${SITE_CARD_VERSION}`);
+      expect(card.url).toBe(`https://www.snanify.com/opengraph-image/${lang}?v=${SITE_CARD_VERSION[lang]}`);
     }
   });
 
@@ -38,17 +34,17 @@ describe("the site card on every page", () => {
 
   it("describes the card the route draws", () => {
     const card = siteCard("en");
-    expect({ width: card.width, height: card.height }).toEqual(size);
-    expect(card.alt).toBe(alt);
+    expect({ width: card.width, height: card.height }).toEqual(SITE_CARD_SIZE);
   });
 
-  it("follows the homepage's query: when the route file changes, rebuild and copy it", () => {
-    const sha = createHash("sha256").update(readFileSync(ROUTE)).digest("hex");
-    expect(
-      sha,
-      `${ROUTE} changed, so the homepage's og:image query changed. Run \`npm run build\`, ` +
-        `read the query after /en/opengraph-image? on /, set SITE_CARD_VERSION in src/lib/seo.ts ` +
-        `to it and ROUTE_SHA256 here to ${sha}.`,
-    ).toBe(ROUTE_SHA256);
+  it("is the homepage's card, at the version its words and drawing give it", () => {
+    for (const lang of LANGS) {
+      const home = pageCard(lang, "/")!;
+      const version = new URL(home.url).searchParams.get("v");
+      expect(
+        siteCard(lang).url,
+        `The homepage's card moved. Set SITE_CARD_VERSION.${lang} in src/lib/seo.ts to "${version}".`,
+      ).toBe(home.url);
+    }
   });
 });

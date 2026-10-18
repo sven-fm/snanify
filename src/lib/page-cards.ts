@@ -4,6 +4,8 @@ import { content } from "@/lib/content";
 import { snanContent } from "@/content/snan";
 import { riversIndexContent } from "@/content/rivers-index";
 import { getGhat, RIVERS, riverDetailContent } from "@/content/rivers";
+import { waterName } from "@/content/names";
+import { HERO_WATER } from "@/lib/hero-water";
 import { liveContent } from "@/content/live";
 import { panchangContent } from "@/content/panchang";
 import { muhuratIndexContent } from "@/content/muhurat-index";
@@ -18,9 +20,10 @@ import type { PreviewImage } from "@/lib/seo";
 
    The page's headline, its accent and its one plain sentence, exactly as its
    head sets them, drawn by src/lib/site-card.ts and served by
-   src/app/opengraph-image/[lang]/[...page]/route.ts at
-   /opengraph-image/<lang>/<page>. The homepage keeps its card at
-   /<lang>/opengraph-image (src/app/[lang]/opengraph-image.tsx).
+   src/app/opengraph-image/[lang]/[[...page]]/route.ts at
+   /opengraph-image/<lang>/<page>, and the homepage's at /opengraph-image/<lang>.
+   The homepage's old address, /<lang>/opengraph-image, is a rewrite to it in
+   next.config.ts, for the scrapers that cached it.
 
    That path is chosen for the scrapers. It is not under /en/, so the proxy's
    /en/* redirect and robots.txt's /en/ rule never touch it, and it contains
@@ -33,14 +36,17 @@ import type { PreviewImage } from "@/lib/seo";
    plain line, the edition) and of CARD_DRAWING. Change a page's headline and
    its card's URL moves by itself. Change the drawing (site-card.ts) and bump
    CARD_DRAWING: tests/unit/page-cards.test.ts pins the drawing's file and
-   fails until you do.
+   fails until you do. The homepage's URL is also SITE_CARD_VERSION in
+   src/lib/seo.ts, which every page without a card of its own carries;
+   tests/unit/og-image.test.ts fails until the two agree.
    --------------------------------------------------------------------------- */
 
 /** Bump when src/lib/site-card.ts draws differently. */
-export const CARD_DRAWING = "v3-2026-10-18";
+export const CARD_DRAWING = "v3-2026-10-18b";
 
 /** Every page with its own card, by its locale-independent route. */
 export const CARD_PATHS: readonly string[] = [
+  "/",
   "/snan",
   "/rivers",
   ...RIVERS.map((r) => `/rivers/${r.slug}`),
@@ -56,6 +62,13 @@ type Words = { title: string; accent: string; plain: string };
 
 function words(lang: Lang, path: string): Words | undefined {
   switch (path) {
+    case "/": {
+      /* The landing's headline with the hero water, and the share line. */
+      const t = content[lang];
+      const ghat = getGhat(HERO_WATER);
+      const river = ghat ? waterName(ghat, "river", lang) : "Ganga";
+      return { title: t.hero.title.replace("{river}", "{accent}"), accent: river, plain: t.share };
+    }
     case "/snan": {
       const t = snanContent[lang].hero;
       return { title: t.title.replace("{river}", "{accent}"), accent: t.riverWord, plain: t.band };
@@ -104,7 +117,9 @@ export function cardSpec(lang: Lang, path: string): CardSpec | undefined {
   if (!CARD_PATHS.includes(path)) return undefined;
   const w = words(lang, path);
   if (!w) return undefined;
-  return { lang, ...w, edition: withSamvat(content[lang].edition, lang), seed: `snanify-card:${path}` };
+  /* The homepage's river keeps the seed it has always been drawn from. */
+  const seed = path === "/" ? "snanify-site-card" : `snanify-card:${path}`;
+  return { lang, ...w, edition: withSamvat(content[lang].edition, lang), seed };
 }
 
 /** FNV-1a, 32 bits, as hex: short, stable, and free of node:crypto. */
@@ -131,7 +146,7 @@ export function pageCard(lang: Lang, path: string): PreviewImage | undefined {
   if (!spec) return undefined;
   const version = fnv(`${CARD_DRAWING}|${JSON.stringify(spec)}`);
   return {
-    url: `${SITE_ORIGIN}/opengraph-image/${lang}${path}?v=${version}`,
+    url: `${SITE_ORIGIN}/opengraph-image/${lang}${path === "/" ? "" : path}?v=${version}`,
     width: 1200,
     height: 630,
     type: "image/png",

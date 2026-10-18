@@ -208,8 +208,9 @@ locales (`tests/e2e/fold.spec.ts`). Tables become stacked ruled rows.
 - **`font-synthesis: none` on `.display`**; Eczar ships no italic, and a faked one is the tell.
 - **Indic scripts need their own leading**; the type layer keys off `data-script`, not `lang`.
 - **next/font options must be literal**; a spread fails the build.
-- **`opengraph-image` is excluded from the proxy matcher**; the English one lives at
-  `/en/opengraph-image` and scrapers do not follow redirects.
+- **`opengraph-image` is excluded from the proxy matcher**; the link cards live at
+  `/opengraph-image/<lang>/...`, outside `/en/` (robots.txt disallows it), the old
+  `/en/opengraph-image` is a rewrite, and scrapers do not follow redirects.
 - **The band overhangs its column**; its section clips it (`overflow-x: clip`), or the page
   scrolls sideways at 390.
 - **Marigold stays the same at night**; ink on it is `--on-marigold`, never `--ink`.

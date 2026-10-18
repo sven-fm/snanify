@@ -2,15 +2,11 @@ import "server-only";
 import { Resvg } from "@resvg/resvg-js";
 import { PALETTE } from "@/lib/palette";
 import { measure, typeset, wrap } from "@/lib/typeset";
-import { withSamvat } from "@/lib/occasions";
-import { content } from "@/lib/content";
 import type { Lang } from "@/lib/locales";
-import { getGhat } from "@/content/rivers";
-import { waterName } from "@/content/names";
-import { HERO_WATER } from "@/lib/hero-water";
 import { closingRiver } from "@/lib/engraving";
 import { markSvg } from "@/lib/logo-svg";
 import { wordmarkSvg } from "@/lib/wordmark-svg";
+import { cardSpec } from "@/lib/page-cards";
 
 /* ---------------------------------------------------------------------------
    The card a chat app unfurls when somebody pastes a link to the site.
@@ -22,11 +18,11 @@ import { wordmarkSvg } from "@/lib/wordmark-svg";
    by HarfBuzz, as on the Sankalp Patra, so the Hindi edition spells itself
    correctly. Hindi has no capitals and keeps its own case at the same weight.
 
-   One drawing, many cards. The homepage's comes from `homeCardSpec` through
-   src/app/[lang]/opengraph-image.tsx; every other major page's from
-   src/lib/page-cards.ts through src/app/opengraph-image/[lang]/[...page].
-   When the drawing changes, bump CARD_DRAWING in page-cards.ts and touch the
-   homepage's route file, so every chat app fetches the new cards.
+   One drawing, many cards: src/lib/page-cards.ts says what each major page's
+   card says (the homepage's included), and
+   src/app/opengraph-image/[lang]/[[...page]] serves them. When the drawing
+   changes, bump CARD_DRAWING in page-cards.ts, so every chat app fetches the
+   new cards.
    --------------------------------------------------------------------------- */
 
 export const SITE_CARD_SIZE = { width: 1200, height: 630 };
@@ -35,9 +31,10 @@ const PAPER = PALETTE.day.paper;
 const INK = PALETTE.day.ink;
 const SINDOOR = PALETTE.day.sindoor;
 const MARGIN = 64;
-/** The homepage river's fixed seed and every card's rank: a card is the same every day. */
-const SEED = "snanify-site-card";
+/** Every card's rank for its river: a card is the same every day. */
 const RANK = 62;
+/** The largest a one-line headline grows to, filling the measure. */
+const ONE_LINE_MAX = 124;
 /** Nothing set above the river may stand lower than this baseline. */
 const FLOOR = 440;
 
@@ -54,21 +51,6 @@ export type CardSpec = {
   edition: string;
   seed: string;
 };
-
-/** The homepage's card: the landing's headline with the hero water, and the share line. */
-export function homeCardSpec(lang: Lang): CardSpec {
-  const t = content[lang];
-  const ghat = getGhat(HERO_WATER);
-  const river = ghat ? waterName(ghat, "river", lang) : "Ganga";
-  return {
-    lang,
-    title: t.hero.title.replace("{river}", "{accent}"),
-    accent: river,
-    plain: t.share,
-    edition: withSamvat(t.edition, lang),
-    seed: SEED,
-  };
-}
 
 /** The headline sizes to try, largest first: [size, leading]. */
 const SIZES: Record<Lang, readonly (readonly [number, number])[]> = {
@@ -163,9 +145,15 @@ export async function cardSvg(spec: CardSpec): Promise<string> {
   /* Hindi has no capitals and keeps its own case at the same weight. */
   const cased = (text: string) => (lang === "en" ? text.toUpperCase() : text);
   const sentences = spec.title.split(/(?<=[.।?])\s+/);
-  const plainSize = 24;
+  /* Noto Serif Devanagari sets small: two points up keeps the Hindi line as
+     readable as the English one. */
+  const plainSize = lang === "hi" ? 26 : 24;
   const plainLead = 36;
-  const plain = spec.plain ? await wrap(spec.plain, { size: plainSize, family: "sans", maxWidth: measureWidth }) : [];
+  /* Devanagari in the plain line is set in Noto Serif Devanagari, the face
+     the Patra sets its Hindi text in: Martel Sans as shipped here writes a
+     conjunct such as द्ध with a visible halant instead of stacking it. */
+  const plainFamily = lang === "hi" ? "serif" : "sans";
+  const plain = spec.plain ? await wrap(spec.plain, { size: plainSize, family: plainFamily, maxWidth: measureWidth }) : [];
 
   /* The first baseline: 190 at the edition's largest size, and higher by as
      much as a smaller size is smaller, so every headline hangs from one line. */
@@ -186,9 +174,32 @@ export async function cardSvg(spec: CardSpec): Promise<string> {
     }
     set = { size, lead, lines, plain: [] };
   }
+
+  /* A headline that takes one line at the largest size grows until it fills
+     the measure (or reaches ONE_LINE_MAX), so a short one does not leave the
+     card half empty. Two-line headlines, the homepage's among them, keep
+     their size. */
+  const [base, baseLead] = SIZES[lang][0];
+  if (set!.size === base && set!.lines.length === 1 && set!.plain.length === plain.length) {
+    const wide = await measure(joinLine(set!.lines[0]), { size: base, weight: 800 });
+    for (let size = Math.min(ONE_LINE_MAX, Math.floor((base * measureWidth) / wide)); size > base; size -= 2) {
+      const lead = Math.round((size * baseLead) / base);
+      const plainLast = baseline(size) + lead + 6 + (plain.length - 1) * plainLead;
+      if (plainLast <= FLOOR) {
+        set = { ...set!, size, lead };
+        break;
+      }
+    }
+  }
   const { size, lead, lines } = set!;
 
-  let y = baseline(size);
+  /* A one-line headline and its plain line sit in the middle of the paper
+     between the logo and the river, rather than hanging from the top with
+     the lower half empty. */
+  const plainEnd = set!.plain.length ? baseline(size) + lead + 6 + (set!.plain.length - 1) * plainLead : baseline(size);
+  const drop = lines.length === 1 ? Math.max(0, Math.round((FLOOR - plainEnd) / 2)) : 0;
+
+  let y = baseline(size) + drop;
   for (const line of lines) {
     let x = MARGIN;
     for (const run of runsOf(line)) {
@@ -202,7 +213,7 @@ export async function cardSvg(spec: CardSpec): Promise<string> {
   /* --- the plain line ------------------------------------------------------ */
   y += 6;
   for (const line of set!.plain) {
-    parts.push((await typeset(line, { size: plainSize, x: MARGIN, y, family: "sans", fill: PALETTE.day.ink2 })).svg);
+    parts.push((await typeset(line, { size: plainSize, x: MARGIN, y, family: plainFamily, fill: PALETTE.day.ink2 })).svg);
     y += plainLead;
   }
 
@@ -233,9 +244,9 @@ export async function cardSvg(spec: CardSpec): Promise<string> {
   );
 }
 
-/** The homepage's card, as src/app/[lang]/opengraph-image.tsx draws it. */
+/** The homepage's card. */
 export function siteCardSvg(lang: Lang): Promise<string> {
-  return cardSvg(homeCardSpec(lang));
+  return cardSvg(cardSpec(lang, "/")!);
 }
 
 /** A card as a PNG. No external references, so nothing to resolve. */
@@ -250,5 +261,5 @@ export async function renderCard(spec: CardSpec): Promise<Buffer> {
 
 /** The homepage's card as a PNG. */
 export function renderSiteCard(lang: Lang): Promise<Buffer> {
-  return renderCard(homeCardSpec(lang));
+  return renderCard(cardSpec(lang, "/")!);
 }

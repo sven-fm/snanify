@@ -18,7 +18,7 @@ import { config } from "@/proxy";
    --------------------------------------------------------------------------- */
 
 const DRAWING = "src/lib/site-card.ts";
-const DRAWING_SHA256 = "9941a223280ab12cf6ee0dc89d11302ad4764bd47fdff766d022031b97109246";
+const DRAWING_SHA256 = "5b8aecba45206365069f24cb55af5bbab76e8148404b9bf5af38f3ceb9afef56";
 
 type PageModule = { generateMetadata: (args: { params: Promise<{ lang: string; river: string }> }) => Promise<Metadata> };
 
@@ -40,8 +40,8 @@ function matches(pathname: string): boolean {
 }
 
 describe("each major page's own card", () => {
-  it("covers the nine pages and every river, in both editions", () => {
-    expect(CARD_PATHS).toHaveLength(8 + RIVERS.length);
+  it("covers the homepage, the nine pages and every river, in both editions", () => {
+    expect(CARD_PATHS).toHaveLength(9 + RIVERS.length);
     for (const lang of LANGS) for (const path of CARD_PATHS) expect(cardSpec(lang, path), `${lang} ${path}`).toBeDefined();
     expect(cardSpec("en", "/privacy")).toBeUndefined();
     expect(cardSpec("en", "/rivers/nowhere")).toBeUndefined();
@@ -52,7 +52,8 @@ describe("each major page's own card", () => {
     for (const lang of LANGS) {
       for (const path of CARD_PATHS) {
         const card = pageCard(lang, path)!;
-        expect(card.url).toMatch(new RegExp(`^https://www\\.snanify\\.com/opengraph-image/${lang}${path}\\?v=[0-9a-f]{8}$`));
+        const tail = path === "/" ? "" : path;
+        expect(card.url).toMatch(new RegExp(`^https://www\\.snanify\\.com/opengraph-image/${lang}${tail}\\?v=[0-9a-f]{8}$`));
         expect({ width: card.width, height: card.height, type: card.type }).toEqual({ width: 1200, height: 630, type: "image/png" });
         expect(card.alt).not.toContain("{");
         const pathname = new URL(card.url).pathname;
@@ -96,7 +97,7 @@ describe("each major page's own card", () => {
     expect(
       sha,
       `${DRAWING} changed. If the cards draw differently, bump CARD_DRAWING in src/lib/page-cards.ts ` +
-        `(and touch src/app/[lang]/opengraph-image.tsx for the homepage's card), then set DRAWING_SHA256 here to ${sha}.`,
+        `(and SITE_CARD_VERSION in src/lib/seo.ts, as tests/unit/og-image.test.ts says), then set DRAWING_SHA256 here to ${sha}.`,
     ).toBe(DRAWING_SHA256);
   });
 });
