@@ -81,3 +81,118 @@ describe("isDue", () => {
     expect(isDue(utc, AT_0000Z)).toBe(true);
   });
 });
+
+/* --- the reminder's HTML (spec 6.8) ---------------------------------------- */
+
+import { afterEach, beforeEach, vi } from "vitest";
+import { sendReminder, sendReceipt } from "@/lib/email";
+
+type Sent = { html: string; text: string; subject: string; headers: Record<string, string> };
+
+async function renderReminder(over: Partial<Parameters<typeof sendReminder>[0]> = {}): Promise<Sent> {
+  const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ id: "x" }), { status: 200 }));
+  vi.stubGlobal("fetch", fetchMock);
+  await sendReminder({
+    to: "a@example.com",
+    userId: "user_1",
+    lang: "en",
+    water: "Ganga",
+    band: "full",
+    percentile: 86,
+    cumecs: 797,
+    ...over,
+  });
+  return JSON.parse(fetchMock.mock.calls[0][1].body as string) as Sent;
+}
+
+describe("the reminder email", () => {
+  beforeEach(() => {
+    vi.stubEnv("RESEND_API_KEY", "re_test");
+    vi.stubEnv("CRON_SECRET", "secret");
+  });
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it("sets a capitals headline with the river in sindoor", async () => {
+    const { html } = await renderReminder();
+    expect(html).toContain("THE <span style=\"color:#c8251d;\">GANGA</span>, THIS MORNING.");
+    expect(html).toContain("font-family:Georgia");
+  });
+
+  it("leads with the state and the plain sentence, then the gauge, the figure and the button", async () => {
+    const { html } = await renderReminder();
+    const state = html.indexOf("Running full");
+    const plain = html.indexOf("Fuller than usual for this time of year.");
+    const gauge = html.indexOf('data-gauge="river"');
+    const figure = html.indexOf("797 m³/s, 86th percentile since 1997");
+    const press = html.indexOf("border-right:4px solid #141210;border-bottom:4px solid #141210");
+    expect(state).toBeGreaterThan(-1);
+    expect([state, plain, gauge, figure, press]).toEqual([state, plain, gauge, figure, press].sort((a, b) => a - b));
+    expect(plain).toBeGreaterThan(state);
+  });
+
+  it("draws five gauge cells and marks exactly one, the band the river is in", async () => {
+    const { html } = await renderReminder();
+    const table = html.slice(html.indexOf('data-gauge="river"'));
+    expect((table.match(/data-cell="/g) ?? []).length).toBe(5);
+    expect((html.match(/data-today="true"/g) ?? []).length).toBe(1);
+    expect(html).toMatch(/data-cell="full" data-today="true"/);
+  });
+
+  it("marks no cell and claims nothing about today when the feed is quiet", async () => {
+    const { html, subject } = await renderReminder({ percentile: null, cumecs: null, band: "usual" });
+    expect((html.match(/data-cell="/g) ?? []).length).toBe(5);
+    expect(html).not.toContain('data-today="true"');
+    expect(html).toContain("Usual for the season");
+    expect(html).not.toContain("percentile since");
+    expect(subject).not.toMatch(/running/i);
+  });
+
+  it("has one sindoor button cell with the 4px ink border, sentence case, naming the river", async () => {
+    const { html } = await renderReminder();
+    expect((html.match(/border-right:4px solid #141210;border-bottom:4px solid #141210/g) ?? []).length).toBe(1);
+    expect(html).toContain("background:#c8251d");
+    expect(html).toContain(">Sit with the Ganga<");
+  });
+
+  it("puts the river PNG above the footer, with no mauli border", async () => {
+    const { html } = await renderReminder();
+    const png = html.indexOf("https://www.snanify.com/email/river-600x120.png");
+    expect(png).toBeGreaterThan(-1);
+    expect(png).toBeLessThan(html.indexOf("Stop these reminders"));
+    expect(html).not.toContain("dashed");
+    expect(html).not.toMatch(/border-top:3px solid/);
+    expect(html).toContain("https://www.snanify.com/email/logo-480.png");
+  });
+
+  it("never mentions a streak, a count or a day missed, in either language", async () => {
+    const banned = /streak|in a row|missed|of 1[1]/i;
+    for (const lang of ["en", "hi"] as const) {
+      for (const band of ["slack", "low", "usual", "full", "spate"] as const) {
+        const m = await renderReminder({ lang, band, percentile: 50 });
+        expect(`${m.html}\n${m.text}\n${m.subject}`).not.toMatch(banned);
+        vi.unstubAllGlobals();
+      }
+    }
+  });
+
+  it("keeps the one-tap unsubscribe in the footer and in the headers", async () => {
+    const m = await renderReminder();
+    expect(m.html).toContain("/api/reminders/off?u=user_1");
+    expect(m.headers["List-Unsubscribe-Post"]).toBe("List-Unsubscribe=One-Click");
+    expect(m.headers["List-Unsubscribe"]).toContain("/api/reminders/off");
+    expect(m.text).toContain("Stop these reminders");
+  });
+
+  it("keeps the receipt's shell in the same style", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response("{}", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    await sendReceipt({ to: "a@example.com", lang: "en", tier: "eleven", credits: 11, amountMinor: 1100, currency: "USD" });
+    const { html } = JSON.parse(fetchMock.mock.calls[0][1].body as string) as Sent;
+    expect(html).toContain("border-right:4px solid #141210;border-bottom:4px solid #141210");
+    expect(html).toContain("river-600x120.png");
+    expect(html).not.toContain("dashed");
+  });
+});

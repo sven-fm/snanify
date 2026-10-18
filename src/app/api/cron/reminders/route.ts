@@ -135,6 +135,8 @@ export async function GET(request: Request): Promise<Response> {
         lang,
         water: ghat ? waterName(ghat, "river", lang) : person.waterSlug,
         band: water?.discharge.kind === "modelled" ? water.discharge.percentile.band : "usual",
+        percentile: water?.discharge.kind === "modelled" ? water.discharge.percentile.value : null,
+        cumecs: water?.discharge.kind === "modelled" ? water.discharge.cumecs : null,
       });
       if (result.sent) sent += 1;
     } catch (error) {
