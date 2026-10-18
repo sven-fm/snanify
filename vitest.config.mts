@@ -19,6 +19,10 @@ export default defineConfig({
     /* The portrait test presses a photograph through sharp, which takes two
        seconds here and more on a shared CI runner. */
     testTimeout: 30000,
+    /* The ledger suites (credits, fulfil, mint) build a fresh PGlite database
+       in `beforeEach`. Under a full parallel run that boot can outlast
+       vitest's 10s hook default, so hooks get a minute. */
+    hookTimeout: 60000,
     include: ["tests/unit/**/*.test.ts"],
     environment: "node",
     coverage: { provider: "v8", reporter: ["text"] },
