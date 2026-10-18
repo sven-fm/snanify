@@ -7,7 +7,6 @@ import path from "node:path";
 import sharp from "sharp";
 import { SITE_ORIGIN } from "@/lib/locales";
 import { engrave, strokeOpacity, strokeWidth } from "@/lib/engraving";
-import { PALETTE } from "@/lib/palette";
 import { typeset, wrap } from "@/lib/typeset";
 import type { PatraView } from "@/lib/patra-view";
 
@@ -40,14 +39,17 @@ import type { PatraView } from "@/lib/patra-view";
 
 export const PATRA_SIZE_V2 = { width: 1080, height: 1350 };
 
-const { day } = PALETTE;
-const PAPER = day.paper;
-const PAPER_2 = day.paper2;
-const INK = day.ink;
-const INK_2 = day.ink2;
-const RULE = day.rule;
-const SINDOOR = day.sindoor;
-const HALDI = day.haldi;
+/* The v2 day colours, as literals and frozen: these sheets were drawn in them,
+   and a redraw must match the PNG that was sent. They are deliberately not
+   read from src/lib/palette.ts, which moved on with v3. */
+const PAPER = "#faf6ea";
+const PAPER_2 = "#f2ead9";
+const INK = "#16130f";
+const INK_2 = "#57513f";
+const RULE = "#c3b697";
+const SINDOOR = "#b32620";
+const HALDI = "#e3962b";
+const HALDI_2 = "#f6dcae";
 
 const M = 64;
 const RIGHT = PATRA_SIZE_V2.width - M;
@@ -447,7 +449,7 @@ export async function mementoSvgV2(view: PatraView): Promise<string> {
   parts.splice(
     blockAt,
     0,
-    `<rect x="${MM}" y="${blockTop}" width="${IN}" height="${(blockBottom - blockTop).toFixed(1)}" fill="${PAPER_2}" />` +
+    `<rect x="${MM}" y="${blockTop}" width="${IN}" height="${(blockBottom - blockTop).toFixed(1)}" fill="${HALDI_2}" />` +
       tilak(MM + 22, blockTop + pad - 6, nameSize * 1.6),
   );
   y = blockBottom + 72;

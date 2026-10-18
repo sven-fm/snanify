@@ -1,6 +1,7 @@
+import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { mementoSvg, patraCardSvg, patraSvg, renderPatraFor } from "@/lib/patra-image";
-import { renderPatraV2 } from "@/lib/patra-image-v2";
+import { mementoSvgV2, patraCardSvgV2, patraSvgV2, renderPatraV2 } from "@/lib/patra-image-v2";
 import { patraView, type PatraView } from "@/lib/patra-view";
 import { FIVE_LONG, OLD_ROW, PORTRAIT, SPECIMEN_VIEW } from "./helpers/patra";
 
@@ -36,7 +37,38 @@ describe("the Sankalp Patra image, v3", () => {
     expect(c).not.toMatch(/data-morning|data-portrait/);
   });
 
-  it("still renders an old sitting through v2, unchanged", async () => {
+  /* The golden hashes were computed from src/lib/patra-image.ts at 5af80e5,
+     the last commit before v3, on OLD_ROW, in a throwaway worktree of that
+     commit. An old sheet is a record: v2 must redraw it byte for byte. The
+     "plate" hashes blank the ghat picture's PNG bytes (sharp's encoder may
+     differ by platform) and pin everything this code decides: layout, fonts,
+     colours. The full hashes, plate bytes and raster included, are pinned on
+     the machine they were computed on. */
+  const sha = (b: string | Buffer) => createHash("sha256").update(b).digest("hex");
+  const plateless = (s: string) => s.replace(/data:image\/png;base64,[A-Za-z0-9+/=]+/g, "data:plate");
+  const GOLDEN = {
+    memento: "cb8c338793a90f638366661073af43eb308fbfd9c68625d61680b02b05523104",
+    sheet: "0aa077579e9ee9a9d4d447db9b161bdba5ce2bd52deb95ac2d6b973199d5f683",
+    card: "148634e84097cd5d9b16c54105a3c6d95cc3389dd77f4510b9636717cd6d37f3",
+    mementoFull: "1487effbd789fc0c2b3a921f7d4a0a16e17e727599a667a504801e82206f40e0",
+    png: "f426ef24857c21e304e25c0a4cde5f5bff274ac8cb927c54a65620d574422ed9",
+  };
+
+  it("redraws an old sitting through v2 exactly as 5af80e5 drew it", async () => {
+    const v = patraView(OLD_ROW);
+    expect(sha(plateless(await mementoSvgV2(v)))).toBe(GOLDEN.memento);
+    expect(sha(plateless(await patraSvgV2(v)))).toBe(GOLDEN.sheet);
+    expect(sha(await patraCardSvgV2(v))).toBe(GOLDEN.card);
+  });
+
+  it.runIf(process.platform === "darwin")("pins the old sitting's full SVG and PNG bytes", async () => {
+    const v = patraView(OLD_ROW);
+    expect(sha(await mementoSvgV2(v))).toBe(GOLDEN.mementoFull);
+    expect(sha(await renderPatraV2(v))).toBe(GOLDEN.png);
+    expect(sha(await renderPatraFor({ ...OLD_ROW, imageVersion: null }))).toBe(GOLDEN.png);
+  });
+
+  it("routes a row with no image version to v2", async () => {
     expect(await renderPatraFor({ ...OLD_ROW, imageVersion: null })).toEqual(await renderPatraV2(patraView(OLD_ROW)));
   });
 
