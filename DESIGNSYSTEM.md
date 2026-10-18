@@ -430,8 +430,16 @@ the marigold press to send today's sheet when one exists.
 
 ### Link cards
 
-`src/lib/site-card.ts` (what a chat app shows for snanify.com) is paper, the capitals
-headline and the full river with the sun. When it changes, bump `SITE_CARD_VERSION` in
+`src/lib/site-card.ts` draws every page's card: paper, the logo and the samvat, the
+page's own headline in capitals with its accent in sindoor, the page's one plain sentence
+in small sans, and the full river with the sun. The homepage's is at
+`/<lang>/opengraph-image`; `/snan`, `/rivers`, each river, `/live`, `/panchang`,
+`/muhurat`, `/kumbh`, `/faq` and `/about` each have their own at
+`/opengraph-image/<lang>/<page>` (`src/lib/page-cards.ts`, which every one of those pages
+names in its metadata). A long headline steps down from 86 to 76 to 66 until it and the
+plain line stand clear of the river. When the drawing changes, bump `CARD_DRAWING` in
+`src/lib/page-cards.ts` and `DRAWING_SHA256` in `tests/unit/page-cards.test.ts`; if the
+homepage's card changes too, touch its route file and bump `SITE_CARD_VERSION` in
 `src/lib/seo.ts` and `ROUTE_SHA256` in `tests/unit/og-image.test.ts`. `patraCardSvg`
 carries the names, the river's state and the gauge, and the river with the sun; no
 portrait, no badge.

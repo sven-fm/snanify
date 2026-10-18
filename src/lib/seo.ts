@@ -85,9 +85,15 @@ export type PageMetaArgs = {
   title: string;
   description: string;
   ogType?: "website" | "article";
-  /** A page's own preview image. Left out, the page carries the site card. */
-  images?: string[];
+  /**
+   * A page's own preview image: a URL, or a card with its size from
+   * `pageCard` (src/lib/page-cards.ts). Left out, the page carries the site card.
+   */
+  images?: (string | PreviewImage)[];
 };
+
+/** A preview image with its size, so a chat app can lay out the card first. */
+export type PreviewImage = { url: string; width: number; height: number; type: string; alt: string };
 
 /**
  * The query on the site card's URL, which is Next's content hash of
@@ -108,7 +114,7 @@ export const SITE_CARD_VERSION = "7d5fa4fbace400e1";
  * card is named here too. A segment with its own image file (p/[id]) still
  * wins, since Next applies a segment's files over its metadata object.
  */
-export function siteCard(lang: Lang) {
+export function siteCard(lang: Lang): PreviewImage {
   return {
     url: `${SITE_ORIGIN}/${lang}/opengraph-image?${SITE_CARD_VERSION}`,
     width: 1200,

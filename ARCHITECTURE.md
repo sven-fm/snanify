@@ -43,7 +43,8 @@ src/
       (app)/                   the pages that need Clerk in the browser:
         setup/ today/ account/ sign-in/ sign-up/ sign-out/ begin/done/
       layout.tsx               root layout, per-locale metadata, theme colour
-      opengraph-image.tsx      the site card, one per edition
+      opengraph-image.tsx      the homepage's card, one per edition
+    opengraph-image/[lang]/[...page]/   every other major page's own card (src/lib/page-cards.ts)
     api/
       stripe/webhook/          the only place credits are bought
       cron/reminders/          the hourly tick, bearer secret

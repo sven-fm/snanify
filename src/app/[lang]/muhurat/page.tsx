@@ -14,6 +14,7 @@ import { navLabel } from "@/lib/nav";
 import { MuhuratIndex } from "@/components/pages/MuhuratIndex";
 import { OCCASIONS } from "@/content/muhurat";
 import { muhuratIndexContent } from "@/content/muhurat-index";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 
 /**
@@ -42,6 +43,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.indexTitle,
     description: t.indexDescription,
   });

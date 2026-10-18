@@ -16,6 +16,7 @@ import { getGhat } from "@/content/rivers";
 import { langParams, type Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { ARCHIVE, REVALIDATE_SECONDS, SOURCES, getLiveSnapshot } from "@/lib/riverdata";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 
 /**
@@ -58,6 +59,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: ROUTE,
+    images: cardImages(lang, ROUTE),
     title: t.meta.title,
     description: t.meta.description,
   });

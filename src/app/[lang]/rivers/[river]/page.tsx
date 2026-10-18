@@ -16,6 +16,7 @@ import { riverDescription } from "@/content/rivers-index";
 import { LANGS, type Lang } from "@/lib/locales";
 import { otherLang } from "@/lib/i18n";
 import { navLabel } from "@/lib/nav";
+import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 import { getLiveSnapshot, REVALIDATE_SECONDS } from "@/lib/riverdata";
 
@@ -55,7 +56,7 @@ export async function generateMetadata({
 
   const description = riverDescription(lang, ghat);
 
-  return pageMetadata({ lang, path: route, title, description, ogType: "article" });
+  return pageMetadata({ lang, path: route, title, description, ogType: "article", images: cardImages(lang, route) });
 }
 
 export default async function Page({
