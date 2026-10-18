@@ -16,6 +16,7 @@ import { adsAllowed } from "@/lib/meta";
 import { CONSENT_COOKIE } from "@/lib/consent";
 import { sendRegistration } from "@/lib/meta-capi";
 import { isTier } from "@/lib/packs";
+import { autosaveAllowed } from "@/lib/autosave";
 
 /* ---------------------------------------------------------------------------
    Saving the setup form.
@@ -45,6 +46,12 @@ import { isTier } from "@/lib/packs";
    and from the browser's pixel under the same event id, so Meta keeps one.
    The send runs after the response, so a slow or failed one never touches
    the save.
+
+   AN AUTOSAVE WRITES ONLY ONTO A COMPLETED SHEET. The form sends
+   `autosave=1` when it saves a change on its own (src/lib/autosave.ts). That
+   save is refused before anything is written, the photograph included, when
+   the account has no completed sheet: a first setup is saved once, whole, by
+   the press. An autosave returns no `next`, so the form stays where it is.
    --------------------------------------------------------------------------- */
 
 export type SaveState = {
@@ -82,6 +89,18 @@ export async function saveProfile(
   /* A script filling the form gets the form's own error and no row. */
   if ((await checkBotId()).isBot) return { ok: false, errors: { form: "refused" } };
 
+  const autosave = formData.get("autosave") === "1";
+
+  const existing = await db
+    .select({ portraitKey: profiles.portraitKey, completedAt: profiles.completedAt })
+    .from(profiles)
+    .where(eq(profiles.userId, user.id))
+    .limit(1);
+
+  if (autosave && !autosaveAllowed(existing[0]?.completedAt)) {
+    return { ok: false, errors: { form: "unknown" } };
+  }
+
   const raw: RawProfile = {
     waterSlug: String(formData.get("waterSlug") ?? ""),
     names: formData.getAll("name").map(String),
@@ -93,12 +112,6 @@ export async function saveProfile(
 
   const checked = validateProfile(raw);
   if (!checked.ok) return { ok: false, errors: checked.errors };
-
-  const existing = await db
-    .select({ portraitKey: profiles.portraitKey, completedAt: profiles.completedAt })
-    .from(profiles)
-    .where(eq(profiles.userId, user.id))
-    .limit(1);
 
   let portraitKey = existing[0]?.portraitKey ?? null;
   const first = !existing[0]?.completedAt;
@@ -158,6 +171,9 @@ export async function saveProfile(
     .where(eq(users.id, user.id));
 
   revalidatePath(localePath(lang, "/account"));
+
+  /* A change saved on its own: the form stays, and only a first save registers. */
+  if (autosave) return { ok: true, errors: {} };
 
   const eventId = `reg_${user.id}`;
   if (first) await registered(user, lang, eventId);

@@ -7,7 +7,6 @@ import {
   useMemo,
   useRef,
   useState,
-  useSyncExternalStore,
 } from "react";
 import { useRouter } from "next/navigation";
 import type { setupContent } from "@/content/setup";
@@ -17,7 +16,14 @@ import type { Lang } from "@/lib/locales";
 import { SubmitButton, buttonClass } from "@/components/ui";
 import { track } from "@/lib/track";
 import { shrinkPhoto } from "@/lib/shrink-photo";
-import { zonePlace } from "@/lib/zone-place";
+import {
+  CHOICE_DELAY,
+  TEXT_DELAY,
+  autosaveForm,
+  createSaver,
+  type SaveStatus,
+  type Saver,
+} from "@/lib/autosave";
 
 /* ---------------------------------------------------------------------------
    The setup form.
@@ -56,6 +62,14 @@ import { zonePlace } from "@/lib/zone-place";
    The constants live in a leaf module now, and the bisect that found it went:
    remove the fields, remove the form, remove the markup, remove the hooks,
    remove the props, then add the imports back one at a time.
+
+   A COMPLETED SHEET SAVES ITSELF. With `autosave` on (the page sets it when
+   the account has a completed sheet), a choice saves at once and a text field
+   on blur, through the same server action, and the field shows a quiet note.
+   A first setup saves once, on the press, and goes on to the packs: the
+   action validates the whole sheet, and a half-filled one is half a sheet.
+   The fields are controlled, so a failed save keeps every word typed, and the
+   note offers to try again. See src/lib/autosave.ts.
    --------------------------------------------------------------------------- */
 
 type Copy = (typeof setupContent)["en"];
@@ -115,15 +129,45 @@ function radio(checked: boolean) {
   return { type: "button" as const, role: "radio", "aria-checked": checked, tabIndex: checked ? 0 : -1 };
 }
 
-/* A field's name in Eczar 700, sentence case, and its one hint under it. */
-function Label({ label, hint }: { label: string; hint: string }) {
+/* A field's name in Eczar 700, sentence case, and its one hint under it
+   where the field has one. */
+function Label({ label, hint }: { label: string; hint?: string }) {
   return (
     <>
       <span className="display block text-[1.25rem] text-ink" style={W700}>
         {label}
       </span>
-      <span className="mt-1 block text-sm leading-relaxed text-ink2">{hint}</span>
+      {hint && <span className="mt-1 block text-sm leading-relaxed text-ink2">{hint}</span>}
     </>
+  );
+}
+
+type Field = "water" | "portrait" | "names" | "prayer" | "sankalp" | "hour";
+
+/* The quiet line under a field that just saved itself: "Saving", "Saved", or
+   the failure in sindoor with a way to try again. */
+function SaveNote({
+  copy,
+  status,
+  retry,
+}: {
+  copy: Copy["autosave"];
+  status: SaveStatus;
+  retry: () => void;
+}) {
+  return (
+    <p role="status" aria-live="polite" className="mt-2 min-h-[1.25rem] text-sm text-ink2">
+      {status === "saving" && copy.saving}
+      {status === "saved" && copy.saved}
+      {status === "failed" && (
+        <>
+          <span className="font-bold text-sindoor">{copy.failed}</span>{" "}
+          <button type="button" onClick={retry} className={buttonClass("quiet", "min-h-[44px] text-sm")}>
+            {copy.retry}
+          </button>
+        </>
+      )}
+    </p>
   );
 }
 
@@ -133,9 +177,12 @@ export function SetupForm({
   t,
   waters,
   prayers,
+  autosave = false,
   initial,
 }: {
   lang: Lang;
+  /** Save each change as it is made: on for a completed sheet, off for a first setup. */
+  autosave?: boolean;
   /** A pack chosen on a price table, carried on to /begin after the save. */
   pack?: string;
   t: Copy;
@@ -174,6 +221,7 @@ export function SetupForm({
 
     /* After an await the action is outside the form's transition, so it is
        put back into one; otherwise React warns and `pending` never shows. */
+    setAutoErrors(null);
     startTransition(() => rawAction(formData));
   };
 
@@ -191,15 +239,35 @@ export function SetupForm({
   const shrinking = useRef<Promise<File> | null>(null);
   const [tooLarge, setTooLarge] = useState(false);
 
-  /* Named beside the hour picker once the browser has said which zone it is
-     in. Read through useSyncExternalStore with an empty server snapshot, so
-     the server render carries no zone it cannot know and hydration matches. */
-  const zone = useSyncExternalStore(
-    () => () => {},
-    () => readZone(),
-    () => "",
-  );
+  /* ---------------- autosave ----------------
+     The errors of the newest autosave, or null when the press spoke last. */
+  const [autoErrors, setAutoErrors] = useState<SaveState["errors"] | null>(null);
+  const [note, setNote] = useState<{ field: Field; status: SaveStatus } | null>(null);
+  /* A save asked for by the last change. Asked through state, so the effect
+     below runs after the change is committed and reads the form as it is. */
+  const [ask, setAsk] = useState<{ n: number; field: Field; delay: number } | null>(null);
+  const live = useRef({ water, prayer, hour, names, sankalp, dropped });
+  const noted = useRef<Field>("water");
 
+  /** Ask for a save of the sheet after a change to `field`, when autosave is on. */
+  function changed(field: Field, delay: number = CHOICE_DELAY) {
+    if (!autosave) return;
+    setAsk((a) => ({ n: (a?.n ?? 0) + 1, field, delay }));
+  }
+
+  /* The words as last sent, so leaving a field unchanged asks for nothing. */
+  const sentText = useRef(JSON.stringify([initial.names, initial.sankalpText]));
+  function blurred(field: "names" | "sankalp") {
+    const now = JSON.stringify([names, sankalp]);
+    if (now === sentText.current) return;
+    sentText.current = now;
+    changed(field, TEXT_DELAY);
+  }
+
+  function noteFor(field: Field) {
+    if (!autosave || note?.field !== field || note.status === "idle") return null;
+    return <SaveNote copy={t.autosave} status={note.status} retry={() => changed(field)} />;
+  }
 
   /* CompleteRegistration once per account: only the save that completed
      setup is counted, under the event id the server sent to Meta with it.
@@ -225,7 +293,7 @@ export function SetupForm({
   }
 
   const remaining = LIMITS.sankalpChars - [...sankalp].length;
-  const errors = state.errors;
+  const errors = autoErrors ?? state.errors;
 
   function pickFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -234,6 +302,7 @@ export function SetupForm({
     setDropped(false);
     setTooLarge(false);
     shrinking.current = shrinkPhoto(file);
+    changed("portrait");
   }
 
   function dropFile() {
@@ -242,7 +311,62 @@ export function SetupForm({
     setTooLarge(false);
     shrinking.current = null;
     if (fileRef.current) fileRef.current.value = "";
+    changed("portrait");
   }
+
+  /* The autosave's effects sit below every handler that writes a ref they
+     read; the React compiler's lint refuses the other order. */
+  useEffect(() => {
+    live.current = { water, prayer, hour, names, sankalp, dropped };
+  });
+
+  /* Made in an effect, so the save it runs only ever reads the refs after a
+     render, never during one. */
+  const saver = useRef<Saver | null>(null);
+  useEffect(() => {
+    const made = createSaver(
+      async () => {
+        const v = live.current;
+        const sending = shrinking.current;
+        const photo = sending ? await sending : null;
+        if (photo && photo.size > LIMITS.portraitBytes) {
+          setTooLarge(true);
+          return false;
+        }
+        const result = await saveProfile(
+          EMPTY,
+          autosaveForm({
+            lang,
+            pack,
+            waterSlug: v.water,
+            names: v.names,
+            prayerId: v.prayer,
+            sankalpText: v.sankalp,
+            reminderHour: v.hour,
+            tz: readZone(),
+            removePortrait: v.dropped,
+            portrait: photo,
+          }),
+        );
+        setAutoErrors(result.errors);
+        /* The photograph is in the store now: later saves leave it be. */
+        if (result.ok && sending && shrinking.current === sending) {
+          shrinking.current = null;
+          if (fileRef.current) fileRef.current.value = "";
+        }
+        return result.ok;
+      },
+      (status) => setNote({ field: noted.current, status }),
+    );
+    saver.current = made;
+    return () => made.cancel();
+  }, [lang, pack]);
+
+  useEffect(() => {
+    if (!ask) return;
+    noted.current = ask.field;
+    saver.current?.request(ask.delay);
+  }, [ask]);
 
   return (
     <form action={action} className="mt-10">
@@ -253,7 +377,7 @@ export function SetupForm({
       {/* ---------------- the water ---------------- */}
       <fieldset>
         <legend className="sr-only">{t.water.label}</legend>
-        <Label label={t.water.label} hint={t.water.hint} />
+        <Label label={t.water.label} />
 
         {/* Small blocks on 3px walls (spec 5.1a); the chosen one stays sunk,
             with a sindoor face. The value travels in the hidden field. */}
@@ -265,7 +389,10 @@ export function SetupForm({
               <button
                 key={w.slug}
                 {...radio(on)}
-                onClick={() => pickWater(w.slug)}
+                onClick={() => {
+                  pickWater(w.slug);
+                  changed("water");
+                }}
                 className="press-choice min-h-[64px] w-full flex-col items-start justify-center gap-0.5 text-left"
               >
                 <span className="display block text-[1.15rem] leading-tight" style={W700}>
@@ -278,13 +405,14 @@ export function SetupForm({
             );
           })}
         </div>
+        {noteFor("water")}
         <FieldError>{errors.waterSlug && t.errors[errors.waterSlug as "water"]}</FieldError>
       </fieldset>
 
       {/* ---------------- the photograph ---------------- */}
       <fieldset className="mt-14">
         <legend className="sr-only">{t.portrait.label}</legend>
-        <Label label={t.portrait.label} hint={t.portrait.hint} />
+        <Label label={t.portrait.label} />
 
         <div className="mt-5 flex items-start gap-5">
           {/* The frame the sheet prints it in: a 2px ink border, empty until a
@@ -328,6 +456,7 @@ export function SetupForm({
             )}
           </div>
         </div>
+        {noteFor("portrait")}
         <FieldError>
           {tooLarge
             ? t.errors.portrait.tooLarge
@@ -355,6 +484,7 @@ export function SetupForm({
                 next[index] = e.target.value;
                 setNames(next);
               }}
+              onBlur={() => blurred("names")}
               className="field min-h-[48px] w-full text-[1.02rem] text-ink"
             />
           ))}
@@ -369,19 +499,23 @@ export function SetupForm({
             {t.names.add}
           </button>
         )}
+        {noteFor("names")}
         <FieldError>{errors.names && t.errors[errors.names as "namesEmpty"]}</FieldError>
       </fieldset>
 
       {/* ---------------- the prayer ---------------- */}
       <fieldset className="mt-14">
         <legend className="sr-only">{t.prayer.label}</legend>
-        <Label label={t.prayer.label} hint={t.prayer.hint} />
+        <Label label={t.prayer.label} />
 
         <input type="hidden" name="prayerId" value={prayer} />
         <div role="radiogroup" aria-label={t.prayer.label} onKeyDown={arrowKeys} className="mt-5 flex flex-col gap-3">
           <button
             {...radio(prayer === "")}
-            onClick={() => setPrayer("")}
+            onClick={() => {
+              setPrayer("");
+              changed("prayer");
+            }}
             className="press-choice w-full text-left"
           >
             {t.prayer.none}
@@ -393,7 +527,10 @@ export function SetupForm({
               <button
                 key={p.id}
                 {...radio(on)}
-                onClick={() => setPrayer(p.id)}
+                onClick={() => {
+                  setPrayer(p.id);
+                  changed("prayer");
+                }}
                 className="press-choice w-full flex-col items-start gap-1 text-left"
               >
                 <span className="block font-bold">{p.title}</span>
@@ -402,6 +539,7 @@ export function SetupForm({
             );
           })}
         </div>
+        {noteFor("prayer")}
         <FieldError>{errors.prayerId && t.errors.prayer}</FieldError>
       </fieldset>
 
@@ -414,6 +552,7 @@ export function SetupForm({
           name="sankalpText"
           value={sankalp}
           onChange={(e) => setSankalp(e.target.value)}
+          onBlur={() => blurred("sankalp")}
           rows={4}
           placeholder={t.sankalp.placeholder}
           className="field mt-5 w-full py-3 text-[1.05rem] leading-[1.7] text-ink"
@@ -432,7 +571,10 @@ export function SetupForm({
                   <button
                     type="button"
                     aria-pressed={sankalp === example}
-                    onClick={() => setSankalp(example)}
+                    onClick={() => {
+                      setSankalp(example);
+                      changed("sankalp");
+                    }}
                     className="press-choice w-full text-left text-[0.98rem] leading-[1.6]"
                   >
                     {example}
@@ -442,6 +584,7 @@ export function SetupForm({
             </ul>
           </div>
         )}
+        {noteFor("sankalp")}
         <FieldError>{errors.sankalpText && t.errors[errors.sankalpText as "sankalpEmpty"]}</FieldError>
       </fieldset>
 
@@ -458,14 +601,17 @@ export function SetupForm({
             <button
               key={h}
               {...radio(hour === h)}
-              onClick={() => setHour(h)}
+              onClick={() => {
+                setHour(h);
+                changed("hour");
+              }}
               className="press-choice justify-center px-0 tabular-nums"
             >
               {String(h).padStart(2, "0")}:00
             </button>
           ))}
         </div>
-        {zone && <p className="mt-2 text-sm text-ink2">{t.reminder.zone.replace("{zone}", zonePlace(zone))}</p>}
+        {noteFor("hour")}
         <FieldError>{errors.reminderHour && t.errors.hour}</FieldError>
         <FieldError>{errors.tz && t.errors.zone}</FieldError>
       </fieldset>

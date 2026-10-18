@@ -7,10 +7,13 @@ import type { Lang } from "@/lib/locales";
    to them: which water, a photograph, whose names, which prayer, your own
    sankalp, and when to be reminded. Everything can be changed later.
 
-   THE LABELS DO THE TEACHING. A label and one short hint is the whole
-   instruction for a field. Setup comes before paying, so somebody here may
-   have arrived from an ad and read only the landing page: the lede says what
-   the form makes, and each hint says what its field is for.
+   THE LABELS DO THE TEACHING. A label, and one short hint only where the
+   field needs one (the names, the sankalp, the hour), is the whole
+   instruction. The headline and the step line say what the page makes, so
+   the page carries no intro paragraph. The owner's words, 18 October 2026.
+
+   `autosave` is the quiet note a field shows when a change on a completed
+   sheet saves itself (src/lib/autosave.ts).
 
    `errors` holds one line per failure key returned by src/lib/profile-input.ts.
    Those keys are the contract between the validator and this file: the
@@ -24,35 +27,31 @@ const en = {
     description: "Choose your water, add your family's names, and write your sankalp once.",
   },
   title: "Set up your sheet.",
-  lede: "About 2 minutes, once. Your family's names go on your sheet. Then pick your mornings. Each snan takes 3 minutes.",
   /** The three-step line at the top: the water, the sheet, the hour. */
   steps: ["Your water", "Your sheet", "Your mornings"],
 
   water: {
-    label: "Your water",
-    hint: "The one you are from, or the one you are drawn to. You can change it later.",
+    label: "Select your water",
   },
   portrait: {
-    label: "A photograph",
-    hint: "Optional. It prints in grey on the sheet.",
+    label: "Photo (optional)",
     choose: "Choose a photograph",
     change: "Choose another",
     remove: "Remove it",
   },
   names: {
     label: "Your family's names",
-    hint: "Up to five. Your own name first, then your family.",
+    hint: "Up to five. Your own name first.",
     placeholder: "Name",
     add: "Add a name",
   },
   prayer: {
-    label: "A prayer",
-    hint: "Optional. It is printed under the names, in Devanagari.",
+    label: "Select your prayer",
     none: "Without a prayer",
   },
   sankalp: {
-    label: "Your sankalp",
-    hint: "Your own words, in any language. You read them back every morning.",
+    label: "Your own sankalp",
+    hint: "Your own words. Read them back every morning.",
     placeholder: "Your sankalp, in your own words",
     remaining: "{n} characters left",
     /** Three to take as they are, or to start from. Tap one and it fills the field. */
@@ -65,12 +64,17 @@ const en = {
   },
   reminder: {
     label: "Your morning hour",
-    hint: "In your local time. You can change it or stop it on your account page.",
-    zone: "Reminders follow the time in {zone}.",
+    hint: "In your local time. Change it any time.",
   },
 
   save: "Save and continue",
   saving: "Saving",
+  autosave: {
+    saving: "Saving",
+    saved: "Saved",
+    failed: "Saving stopped. Your changes are still here.",
+    retry: "Try again",
+  },
 
   errors: {
     water: "Choose one of the six waters.",
@@ -99,34 +103,30 @@ const hi = {
     description: "अपना जल चुनिए, परिवार के नाम जोड़िए, और अपना संकल्प एक बार लिखिए।",
   },
   title: "अपना पत्र तैयार कीजिए।",
-  lede: "लगभग 2 मिनट, बस एक बार। आपके परिवार के नाम आपके पत्र पर आते हैं। फिर अपनी सुबहें चुनिए। हर स्नान 3 मिनट का है।",
   steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
 
   water: {
-    label: "आपका जल",
-    hint: "वही जिससे आप हैं, या जिसकी ओर मन जाता है। बाद में बदला जा सकता है।",
+    label: "अपना जल चुनिए",
   },
   portrait: {
-    label: "एक चित्र",
-    hint: "ऐच्छिक। पत्र पर यह श्वेत-श्याम में छपता है।",
+    label: "फ़ोटो (चाहें तो)",
     choose: "चित्र चुनिए",
     change: "दूसरा चुनिए",
     remove: "हटाइए",
   },
   names: {
     label: "परिवार के नाम",
-    hint: "अधिकतम पाँच। पहले अपना नाम, फिर अपने परिवार के।",
+    hint: "पाँच तक। पहले अपना नाम।",
     placeholder: "नाम",
     add: "एक नाम जोड़िए",
   },
   prayer: {
-    label: "एक प्रार्थना",
-    hint: "ऐच्छिक। यह नामों के नीचे, देवनागरी में छपती है।",
+    label: "अपनी प्रार्थना चुनिए",
     none: "बिना प्रार्थना के",
   },
   sankalp: {
-    label: "आपका संकल्प",
-    hint: "आपके अपने शब्द, किसी भी भाषा में। हर सुबह आप इन्हें पढ़ते हैं।",
+    label: "आपका अपना संकल्प",
+    hint: "आपके अपने शब्द। हर सुबह इन्हें फिर से पढ़िए।",
     placeholder: "आपका संकल्प, आपके अपने शब्दों में",
     remaining: "{n} अक्षर बाकी",
     examplesLabel: "या इनमें से एक लीजिए",
@@ -137,13 +137,18 @@ const hi = {
     ],
   },
   reminder: {
-    label: "आपकी सुबह की घड़ी",
-    hint: "आपके स्थानीय समय में। खाते के पृष्ठ पर इसे बदल या रोक सकते हैं।",
-    zone: "सूचना {zone} के समय से आती है।",
+    label: "आपकी सुबह का समय",
+    hint: "आपके अपने समय के हिसाब से। जब चाहें बदलिए।",
   },
 
   save: "सहेजिए और आगे बढ़िए",
   saving: "सहेजा जा रहा है",
+  autosave: {
+    saving: "सहेजा जा रहा है",
+    saved: "सहेज लिया गया",
+    failed: "सहेजना रुक गया। आपके बदलाव यहीं हैं।",
+    retry: "फिर से सहेजिए",
+  },
 
   errors: {
     water: "छह जलों में से एक चुनिए।",
