@@ -76,3 +76,16 @@ test("the Clerk card's primary button is the press", async ({ page }) => {
   expect(look.shadow).toContain("6px 6px 0px");
   expect(look.height).toBeGreaterThanOrEqual(56);
 });
+
+/* The eleven pack: the matchbox label is the pack's face and the press under
+   it is the one link, so a keyboard reader meets one tab stop, not two to
+   the same place. */
+for (const path of ["/", "/hi"]) {
+  test(`${path} gives the eleven pack one link, the press`, async ({ page }) => {
+    await page.goto(path);
+    const label = page.locator("#prices [data-label]");
+    await expect(label).toHaveCount(1);
+    expect(await label.evaluate((el) => el.closest("a") === null)).toBe(true);
+    expect(await page.locator('#prices a[href*="pack=eleven"]').count()).toBe(1);
+  });
+}

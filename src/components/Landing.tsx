@@ -228,17 +228,17 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
               .filter((tier) => tier.key === "eleven")
               .map((tier) => (
                 <div key={tier.key} className="mt-8">
-                  <Link href={packHref(tier.key)} className="block">
-                    <Label
-                      kicker={
-                        <>
-                          <Price prices={PER_SNAN.eleven} /> {t.pricing.labels.each}
-                        </>
-                      }
-                      title={tier.name}
-                      price={PRICE.eleven}
-                    />
-                  </Link>
+                  {/* The label is the pack's face, not a second link: the
+                      press under it is the one tab stop to /begin. */}
+                  <Label
+                    kicker={
+                      <>
+                        <Price prices={PER_SNAN.eleven} /> {t.pricing.labels.each}
+                      </>
+                    }
+                    title={tier.name}
+                    price={PRICE.eleven}
+                  />
                   <p className="mt-4 text-[0.9375rem] leading-[1.6] text-ink2">{tier.body}</p>
                   <Link href={packHref(tier.key)} className="mt-5 flex">
                     <CTA className="w-full">{t.pricing.labels.choose}</CTA>
