@@ -35,7 +35,7 @@ const en = {
   },
   portrait: {
     label: "Photo (optional)",
-    choose: "Choose a photograph",
+    choose: "Choose a photo",
     change: "Choose another",
     remove: "Remove it",
   },
@@ -110,8 +110,8 @@ const hi = {
   },
   portrait: {
     label: "फ़ोटो (चाहें तो)",
-    choose: "चित्र चुनिए",
-    change: "दूसरा चुनिए",
+    choose: "फ़ोटो चुनिए",
+    change: "दूसरी फ़ोटो चुनिए",
     remove: "हटाइए",
   },
   names: {
@@ -145,7 +145,7 @@ const hi = {
   saving: "सहेजा जा रहा है",
   autosave: {
     saving: "सहेजा जा रहा है",
-    saved: "सहेज लिया गया",
+    saved: "सहेज लिया",
     failed: "सहेजना रुक गया। आपके बदलाव यहीं हैं।",
     retry: "फिर से सहेजिए",
   },

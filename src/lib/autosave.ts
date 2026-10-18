@@ -13,16 +13,17 @@
    The server holds the same line: an autosave for an account without a
    completed sheet is refused before anything is written.
 
-   ONE SAVE AT A TIME, AND THE LAST ONE WINS. A choice saves at once and a text
-   field on blur, after a short pause so that moving between name rows is one
-   save. A change made while a save is in flight queues one more, and that one
+   ONE SAVE AT A TIME, AND THE LAST ONE WINS. A choice saves after a breath
+   and a text field on blur after a short pause, so that arrowing through the
+   hours or moving between name rows is one save. A change made while a save is in flight queues one more, and that one
    reads the form as it stands when it runs, so the newest state is what lands.
    --------------------------------------------------------------------------- */
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
 
-/** A choice (water, prayer, hour, photograph) saves at once. */
-export const CHOICE_DELAY = 0;
+/** A choice (water, prayer, hour, photograph) saves this soon: at once to a
+    reader, and long enough that arrowing through the hours is one save. */
+export const CHOICE_DELAY = 350;
 /** A text field (names, sankalp) saves this long after it loses focus. */
 export const TEXT_DELAY = 600;
 
@@ -36,53 +37,70 @@ type Timer = ReturnType<typeof setTimeout>;
 export type Saver = {
   /** Ask for a save after `delay` ms; a later request replaces an earlier one. */
   request(delay: number): void;
-  /** Drop a waiting save (on unmount). An in-flight one finishes. */
+  /** Run a waiting save now (leaving the page, the form unmounting). */
+  flush(): void;
+  /** Drop a waiting save and any queued behind the one in flight. */
   cancel(): void;
+  /** Resolves once nothing is in flight or queued. */
+  settled(): Promise<void>;
+  /** A save is waiting, in flight or queued. */
+  busy(): boolean;
 };
 
 /**
  * A debounced, serialised saver. `run` does one save and resolves true when
- * it landed; a throw counts as a failure. `onStatus` hears every change.
+ * it landed; a throw counts as a failure. `onStatus` hears "saving" when a
+ * round of saves starts and "saved" or "failed" once, when it settles.
  */
 export function createSaver(
   run: () => Promise<boolean>,
   onStatus: (status: SaveStatus) => void,
 ): Saver {
   let timer: Timer | null = null;
-  let inFlight = false;
+  let running: Promise<void> | null = null;
   let again = false;
 
-  async function fire() {
-    timer = null;
-    if (inFlight) {
-      again = true;
-      return;
-    }
-    inFlight = true;
+  async function drain() {
     onStatus("saving");
     let ok = false;
-    try {
-      ok = await run();
-    } catch {
-      ok = false;
-    }
-    inFlight = false;
-    if (again) {
+    do {
       again = false;
-      void fire();
-      return;
-    }
+      try {
+        ok = await run();
+      } catch {
+        ok = false;
+      }
+    } while (again);
+    running = null;
     onStatus(ok ? "saved" : "failed");
+  }
+
+  function fire() {
+    timer = null;
+    if (running) again = true;
+    else running = drain();
   }
 
   return {
     request(delay) {
       if (timer) clearTimeout(timer);
-      timer = setTimeout(() => void fire(), delay);
+      timer = setTimeout(fire, delay);
+    },
+    flush() {
+      if (!timer) return;
+      clearTimeout(timer);
+      fire();
     },
     cancel() {
       if (timer) clearTimeout(timer);
       timer = null;
+      again = false;
+    },
+    async settled() {
+      while (running) await running;
+    },
+    busy() {
+      return timer !== null || running !== null;
     },
   };
 }

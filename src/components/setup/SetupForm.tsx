@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import type { setupContent } from "@/content/setup";
 import { LIMITS } from "@/lib/limits";
 import { saveProfile, type SaveState } from "@/app/[lang]/(app)/setup/actions";
-import type { Lang } from "@/lib/locales";
+import { localePath, type Lang } from "@/lib/locales";
 import { SubmitButton, buttonClass } from "@/components/ui";
 import { track } from "@/lib/track";
 import { shrinkPhoto } from "@/lib/shrink-photo";
@@ -145,7 +145,9 @@ function Label({ label, hint }: { label: string; hint?: string }) {
 type Field = "water" | "portrait" | "names" | "prayer" | "sankalp" | "hour";
 
 /* The quiet line under a field that just saved itself: "Saving", "Saved", or
-   the failure in sindoor with a way to try again. */
+   the failure in sindoor with a way to try again. It is for the eye only:
+   a screen reader hears the one live region at the foot of the form, and the
+   button stays an ordinary button outside it. */
 function SaveNote({
   copy,
   status,
@@ -156,18 +158,21 @@ function SaveNote({
   retry: () => void;
 }) {
   return (
-    <p role="status" aria-live="polite" className="mt-2 min-h-[1.25rem] text-sm text-ink2">
-      {status === "saving" && copy.saving}
-      {status === "saved" && copy.saved}
+    <div className="mt-2 min-h-[1.25rem] text-sm text-ink2">
+      <span aria-hidden="true" className={status === "failed" ? "font-bold text-sindoor" : ""}>
+        {status === "saving" && copy.saving}
+        {status === "saved" && copy.saved}
+        {status === "failed" && copy.failed}
+      </span>
       {status === "failed" && (
         <>
-          <span className="font-bold text-sindoor">{copy.failed}</span>{" "}
+          {" "}
           <button type="button" onClick={retry} className={buttonClass("quiet", "min-h-[44px] text-sm")}>
             {copy.retry}
           </button>
         </>
       )}
-    </p>
+    </div>
   );
 }
 
@@ -199,6 +204,10 @@ export function SetupForm({
 }) {
   const router = useRouter();
   const [state, rawAction, pending] = useActionState(saveProfile, EMPTY);
+  /* The autosave, made in an effect below, and whether the press has the
+     floor. Declared here because the press reads both. */
+  const saver = useRef<Saver | null>(null);
+  const pressing = useRef(false);
 
   /* The zone is put on the form at the moment it is submitted, rather than
      rendered into a hidden field and hoped for. Writing it into the DOM from an
@@ -209,14 +218,30 @@ export function SetupForm({
   const action = async (formData: FormData) => {
     formData.set("tz", readZone());
 
+    /* On a sheet that saves itself, the press takes over: a save still
+       waiting is dropped (the press carries the same fields), one in flight
+       is waited for, and no new one starts until the press has answered. A
+       photograph that autosave already stored is gone from `shrinking`, so
+       it is never sent twice. */
+    if (autosave) {
+      pressing.current = true;
+      saver.current?.cancel();
+      await saver.current?.settled();
+    }
+
     /* Usually long finished by the time Save is pressed; awaited in case not. */
     const photo = await shrinking.current;
     if (photo) {
       if (photo.size > LIMITS.portraitBytes) {
+        pressing.current = false;
         setTooLarge(true);
         return;
       }
       formData.set("portrait", photo, photo.name);
+    } else {
+      /* The file input may still hold the original; only a shrunk, unsaved
+         photograph travels. */
+      formData.delete("portrait");
     }
 
     /* After an await the action is outside the form's transition, so it is
@@ -235,6 +260,9 @@ export function SetupForm({
   const [preview, setPreview] = useState<string | null>(initial.portraitUrl);
   const [dropped, setDropped] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  /* The preview of the photograph last chosen, and of the one last saved. */
+  const picked = useRef<string | null>(null);
+  const shownSaved = useRef<string | null>(initial.portraitUrl);
   /* The chosen photograph, shrunk for sending; null until one is chosen. */
   const shrinking = useRef<Promise<File> | null>(null);
   const [tooLarge, setTooLarge] = useState(false);
@@ -255,12 +283,12 @@ export function SetupForm({
     setAsk((a) => ({ n: (a?.n ?? 0) + 1, field, delay }));
   }
 
-  /* The words as last sent, so leaving a field unchanged asks for nothing. */
+  /* The words as last saved, so leaving a field unchanged asks for nothing.
+     Moved on only when a save lands, so a failed one is asked for again. */
   const sentText = useRef(JSON.stringify([initial.names, initial.sankalpText]));
   function blurred(field: "names" | "sankalp") {
     const now = JSON.stringify([names, sankalp]);
     if (now === sentText.current) return;
-    sentText.current = now;
     changed(field, TEXT_DELAY);
   }
 
@@ -268,16 +296,6 @@ export function SetupForm({
     if (!autosave || note?.field !== field || note.status === "idle") return null;
     return <SaveNote copy={t.autosave} status={note.status} retry={() => changed(field)} />;
   }
-
-  /* CompleteRegistration once per account: only the save that completed
-     setup is counted, under the event id the server sent to Meta with it.
-     Every later save is the settings page and is counted nowhere. */
-  useEffect(() => {
-    if (!state.ok) return;
-    if (state.first) track("setup_done", { water, lang }, { eventId: state.eventId });
-    router.push(state.next ?? `${lang === "en" ? "" : `/${lang}`}/today`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.ok, lang, router]);
 
   const offered = useMemo(
     () => prayers.filter((p) => p.waters === "all" || p.waters.includes(water)),
@@ -298,7 +316,8 @@ export function SetupForm({
   function pickFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
-    setPreview(URL.createObjectURL(file));
+    picked.current = URL.createObjectURL(file);
+    setPreview(picked.current);
     setDropped(false);
     setTooLarge(false);
     shrinking.current = shrinkPhoto(file);
@@ -314,6 +333,20 @@ export function SetupForm({
     changed("portrait");
   }
 
+  /* CompleteRegistration once per account: only the save that completed
+     setup is counted, under the event id the server sent to Meta with it.
+     Every later save is the settings page and is counted nowhere. */
+  useEffect(() => {
+    if (!state.ok) {
+      pressing.current = false;
+      return;
+    }
+    shrinking.current = null;
+    if (state.first) track("setup_done", { water, lang }, { eventId: state.eventId });
+    router.push(state.next ?? `${lang === "en" ? "" : `/${lang}`}/today`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, lang, router]);
+
   /* The autosave's effects sit below every handler that writes a ref they
      read; the React compiler's lint refuses the other order. */
   useEffect(() => {
@@ -322,16 +355,24 @@ export function SetupForm({
 
   /* Made in an effect, so the save it runs only ever reads the refs after a
      render, never during one. */
-  const saver = useRef<Saver | null>(null);
   useEffect(() => {
     const made = createSaver(
       async () => {
         const v = live.current;
-        const sending = shrinking.current;
-        const photo = sending ? await sending : null;
+        let sending = shrinking.current;
+        let photo = sending ? await sending : null;
+        /* A photograph too large to send is let go, with its error, and the
+           rest of the sheet still saves; otherwise every later change would
+           fail behind it. */
         if (photo && photo.size > LIMITS.portraitBytes) {
           setTooLarge(true);
-          return false;
+          if (shrinking.current === sending) {
+            shrinking.current = null;
+            if (fileRef.current) fileRef.current.value = "";
+            setPreview(shownSaved.current);
+          }
+          sending = null;
+          photo = null;
         }
         const result = await saveProfile(
           EMPTY,
@@ -349,21 +390,62 @@ export function SetupForm({
           }),
         );
         setAutoErrors(result.errors);
-        /* The photograph is in the store now: later saves leave it be. */
-        if (result.ok && sending && shrinking.current === sending) {
-          shrinking.current = null;
-          if (fileRef.current) fileRef.current.value = "";
+        if (result.ok) {
+          sentText.current = JSON.stringify([v.names, v.sankalp]);
+          if (v.dropped) shownSaved.current = null;
+          /* The photograph is in the store now: later saves leave it be. */
+          if (sending && shrinking.current === sending) {
+            shownSaved.current = picked.current;
+            shrinking.current = null;
+            if (fileRef.current) fileRef.current.value = "";
+          }
         }
         return result.ok;
       },
       (status) => setNote({ field: noted.current, status }),
     );
     saver.current = made;
-    return () => made.cancel();
+
+    /* Leaving loses nothing. A tab put away (visibility hidden) saves now
+       through the action. A page that is closing cannot finish an action, so
+       what is still unsaved goes by beacon to the route beside the action
+       (setup/autosave/route.ts): the words and choices, never a photograph. */
+    const hidden = () => {
+      if (document.visibilityState === "hidden" && !pressing.current) made.flush();
+    };
+    const closing = () => {
+      if (pressing.current || !made.busy()) return;
+      made.cancel();
+      const v = live.current;
+      navigator.sendBeacon(
+        localePath(lang, "/setup/autosave"),
+        autosaveForm({
+          lang,
+          waterSlug: v.water,
+          names: v.names,
+          prayerId: v.prayer,
+          sankalpText: v.sankalp,
+          reminderHour: v.hour,
+          tz: readZone(),
+          removePortrait: v.dropped,
+          portrait: null,
+        }),
+      );
+    };
+    document.addEventListener("visibilitychange", hidden);
+    window.addEventListener("pagehide", closing);
+    return () => {
+      document.removeEventListener("visibilitychange", hidden);
+      window.removeEventListener("pagehide", closing);
+      /* Unmounting (a link inside the app) runs a waiting save at once
+         rather than dropping it; the page is still alive to finish it. */
+      if (pressing.current) made.cancel();
+      else made.flush();
+    };
   }, [lang, pack]);
 
   useEffect(() => {
-    if (!ask) return;
+    if (!ask || pressing.current) return;
     noted.current = ask.field;
     saver.current?.request(ask.delay);
   }, [ask]);
@@ -618,9 +700,18 @@ export function SetupForm({
 
       <FieldError>{errors.form && t.errors.unknown}</FieldError>
 
+      {/* The one live region for autosave, always mounted, so a screen reader
+          hears each settled save once: "Saved" or the failure, never "Saving",
+          and arrowing through the hours ends in one announcement. */}
+      {autosave && (
+        <p role="status" aria-live="polite" className="sr-only">
+          {note?.status === "saved" ? t.autosave.saved : note?.status === "failed" ? t.autosave.failed : ""}
+        </p>
+      )}
+
       <div className="mt-12">
-        <SubmitButton className="w-full" disabled={pending}>
-          {pending ? t.saving : t.save}
+        <SubmitButton className="w-full" disabled={pending || note?.status === "saving"}>
+          {pending || note?.status === "saving" ? t.saving : t.save}
         </SubmitButton>
       </div>
     </form>
