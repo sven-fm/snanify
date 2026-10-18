@@ -68,3 +68,15 @@ export function nthMorning(n: number, lang: string): string {
   if (n >= 1 && n <= words.length) return words[n - 1];
   return lang === "hi" ? `${n}वीं` : ordinal(n, "en");
 }
+
+/**
+ * Numbers a register, newest first. A row keeps the morning it was minted
+ * with; a row from before the count (null) takes its place in the history,
+ * oldest = 1, so the register reads continuously.
+ */
+export function numberRegister<T extends { morningNo: number | null }>(
+  newestFirst: T[],
+): (T & { n: number })[] {
+  const total = newestFirst.length;
+  return newestFirst.map((row, i) => ({ ...row, n: row.morningNo ?? total - i }));
+}
