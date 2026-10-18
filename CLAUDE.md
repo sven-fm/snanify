@@ -91,25 +91,29 @@ bed on morning three.
 | Part | Length | What happens |
 | --- | --- | --- |
 | The reading | 15s | The river's flow today and its rank against every day since 1997 |
-| The breath | 45s | The engraved water rises for four seconds and falls for six, at the river's own amplitude |
+| The breath | 45s | The river rises for four seconds and falls for six, at its own amplitude |
 | The sankalp | 11s | Your own words, held under your thumb while the ink fills |
-| The stillness | 60s | The screen goes black, with the seconds left in dim ink and a Next |
-| The mark | 20s | One line writes itself into your register |
+| The stillness | 60s | The screen goes near black over the night river, with the seconds left in dim ink and a Next |
+| The mark | 20s | One line writes itself into your register, and the sheet is ready to send |
 
-The artefact is the **Sankalp Patra**: the names, the water, the day's figure and rank, the
-tithi, the distance, the time in the person's zone and in IST, a prayer, an optional
-portrait, and an engraving seeded by that day's published flow.
+The artefact is the **Sankalp Patra**: the names, one per line, the water, the day's figure
+and rank beside the gauge, the tithi, the distance, the time in the person's zone and in IST,
+a prayer, the person's own photograph pinned on the ghat picture when they gave one, the
+morning badge ("7th morning") from the second morning on, and the river at the foot,
+engraved from that day's published flow.
 
-**As the buyer sees it.** Landing: one live sentence, the headline, the river, one button,
-the reading, a specimen sheet inside a phone beside the six waters, eleven mornings for
-eleven. Begin: sign in on one combined screen. Set up, once, about two minutes. Pay on
-`/begin`, the third step, eleven first and raised beside the specimen with their own names.
-Sit each morning on `/today`: the practice takes the whole screen with the water running
-behind every part, the stillness is black, the mark writes itself, a cross in the corner
-leaves without spending. The sheet arrives on `/p/[id]` pulled from the press and the share
-sheet opens with the image attached; WhatsApp is the target. Tomorrow: an email at the
-chosen hour with a one-tap way out, a line in the register on `/account`, a calendar file
-and the home-screen icon.
+**As the buyer sees it.** Landing, above the fold: the headline in capitals ("Your Ganga
+snan. From home."), the band, the price seal with three short lines, one press. Below it:
+the river with the sun, the reading as a gauge, a specimen sheet inside a phone, the six
+waters, eleven mornings for eleven on the label. Begin: sign in on one combined screen. Set
+up, once, about two minutes. Pay on `/begin`, the third step, eleven first and raised beside
+the specimen with their own names. Sit each morning on `/today`: the practice takes the
+whole screen with the river at the foot of every part, the stillness is near black, the mark
+writes itself and ends on the marigold press to send it, a cross in the corner leaves
+without spending. The sheet arrives on `/p/[id]` pulled from the press and the share sheet
+opens with the image attached; WhatsApp is the target. Tomorrow: an email at the chosen hour
+with a one-tap way out, a line in the register on `/account`, a calendar file and the
+home-screen icon.
 
 **One price, in the reader's own currency**, from `src/content/prices.ts`. Eleven mornings
 cost eleven in every currency: that is the hook. The packs are named by their count.
@@ -173,7 +177,9 @@ because the proxy runs Clerk's middleware for every product path (`APP_PATH`).
 
 Reason at **390 x 844 first** and let desktop be the adaptation. Nothing scrolls horizontally
 at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a press state
-(`impress`), because a phone has no hover. Tables become stacked ruled rows.
+(the press, or an `active:` state on a small control), because a phone has no hover. The
+fold is a contract: the landing's press sits above 660 at 390 wide and 640 at 360, in both
+locales (`tests/e2e/fold.spec.ts`). Tables become stacked ruled rows.
 
 ### Never
 
@@ -185,9 +191,13 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
 - **Officiants, priests, rites performed for anyone, subscriptions, gifting, tiers of
   service.** The product is the three minutes and the sheet. Anything else is an item in
   `plan.md` argued from revenue, never a quiet addition.
-- Gradients, glows, blurs, soft shadows, rounded boxes. Round marks (the bindu, the sun, the
-  kumkum dots) are SVG; the one rounded frame is the phone around the specimen. Tracked
-  capitals and labels above headings are retired. See `DESIGNSYSTEM.md`.
+- Gradients, glows, blurs, soft shadows, rounded boxes. The press's hard ink walls are a
+  solid box, not a soft shadow. Round things (the bindu, the sun, the seal) are SVG; the one
+  rounded frame is the phone around the specimen. Tracked capitals are retired; the one
+  display headline per screen is set in tight capitals. Labels above headings stay retired.
+  See `DESIGNSYSTEM.md`.
+- The band, the label or a pack count on the Patra, and anything that sells inside the
+  sitting. One press per screen.
 - Fabricated statistics presented as fact.
 
 ### Known traps, each of which cost real debugging
@@ -200,7 +210,11 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
 - **next/font options must be literal**; a spread fails the build.
 - **`opengraph-image` is excluded from the proxy matcher**; the English one lives at
   `/en/opengraph-image` and scrapers do not follow redirects.
-- **The hero waterline is anchored** under `[data-horizon-anchor]`, never a fraction of the box.
+- **The band overhangs its column**; its section clips it (`overflow-x: clip`), or the page
+  scrolls sideways at 390.
+- **Marigold stays the same at night**; ink on it is `--on-marigold`, never `--ink`.
+- **The image renderers have no stylesheet**; colours come from `src/lib/palette.ts`, and
+  `tests/unit/palette.test.ts` fails when it drifts from `globals.css`.
 - **Prices and the theme are stamped by a sync `<head>` script**; render a price with
   `<Price>`, never by reading the currency in a component.
 - **The pay intent cookie is Secure only over https**, so the sign-in continuation on
@@ -215,7 +229,9 @@ at 390px. Tap targets 44px. Primary actions thumb-reachable. Every control has a
 | Path | What it holds |
 | --- | --- |
 | `ARCHITECTURE.md` | Stack, routing, data flow, deployment |
-| `DESIGNSYSTEM.md` | Colour, type, the marks, the five motions, voice, the campaign layer |
+| `DESIGNSYSTEM.md` | Design system v3: the palette, type, the kit (press, seal, band, label, gauge, river), the logo, every surface, the six motions, voice, mobile first, the campaign layer |
+| `docs/superpowers/specs/2026-10-17-design-system-v3-design.md` | The v3 spec, with the owner's choices and the designer's calls |
+| `docs/design/v3-mockups/` | The approved v3 mockups and the surface checks |
 | `plan.md` | The work queue: what waits for the owner's eyes, what waits for a go, what is done |
 | `docs/seo/search-console.md` | The Search Console runbook and the hreflang contract |
 | `docs/panchang-check.md` | The occasion dates checked against Drik Panchang |

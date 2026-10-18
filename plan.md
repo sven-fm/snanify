@@ -18,40 +18,51 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
    `https://www.snanify.com/` (or the domain by DNS), submit its sitemap, remove the old
    non-www sitemap; submit the top ten URLs by hand. Win five to ten real referring
    domains. Re-check coverage on 9 and 23 October 2026.
+3. **Design system v3, your eyes on it. P1.** Built on `design-v3`; read
+   `DESIGNSYSTEM.md` for what it is. On your phone, on the preview or on production once
+   merged, by day and by night, in both editions: the landing (the fold inside the
+   Instagram browser), `/snan`, `/begin`, setup, a real sitting on a test account, the
+   Patra image and `/p/[id]`, `/account`, the reference pages, a reminder email, the link
+   card, the icons. The preview shares the production
+   database, so sit only with a test account.
+   - *The Hindi drafts, for your pass.* Every v3 Hindi line is a draft. In particular: the
+     plain river sentences ("इस समय के हिसाब से…" may read as "right now"; perhaps "साल के इस
+     समय के हिसाब से"); the price seal "11 / सुबहें / ₹501 में"; the masthead's "शुरू" (cut
+     to fit at 360); the ready line, which differs from the spec's example; "ग्यारह सुबहें ₹501
+     में।" for rupee readers; the "अधिकतर लोग" lines about how the tradition is kept, left as
+     description of practice.
+   - *The calls made for you, to keep or reverse.* The sun about a third hidden by the
+     horizon (one constant); the landing's river is the approved horizon drawing, with
+     `RiverFlow` kept for wide panoramas; the morning badge from the second morning, counted
+     across all waters; "N mornings left" on the owner's Patra page; the link card drawn in
+     v3 for old sheets too, while sent mementos stay as sent; the masthead Begin still on
+     `/begin/done`; the stillness block on `/snan`; a few headlines accent a word other than
+     the river; two full rivers on the landing (the hero and the footer's); the festival
+     panel appears after hydration; "punya kaal" kept on the muhurat pages as the name of a
+     time window.
+   - *Still to see in the real world.* The bordered email button in Outlook and Gmail, and
+     the Hindi email in Georgia's fallback for Devanagari; the wordmark's `foreignObject`
+     on `/rivers` in iOS Safari; the signed-in `/begin` and setup on a real account.
+   - *Yours to do after the cutover.* Swap the Facebook Page avatar and the ad account's
+     image from `public/brand-1024.png`; approve the v3 creatives for Meta (a swap resets
+     delivery learning); the ad videos still show the 13 October recording of the old app,
+     so re-record a sitting once v3 is live.
 
 ## Waiting for your go
 
-1. **The design system, rolled out. P1.** `DESIGNSYSTEM.md` was rewritten on 15 October 2026:
-   haldi beside vermillion, puja marks in place of rules and tracked capitals, petals and a
-   diya, an action voice, and a campaign layer (matchbox, signboard, calendar art). Phases,
-   each its own commit, each checked at 390px by day and night in both editions:
-   1. *Foundation.* Done 15 October. `--haldi`, `--haldi-2`, `.warm`, `flicker` in `globals.css`;
-      `src/components/marks/` (Tilak, Kumkum, Mauli, Bindu, Diya, Petals); `Section` loses its
-      top rule; `.label` goes to sentence case; `Card`, `DataRow`, the legacy colour aliases
-      and the masthead, double and heavy rules are deleted once unused.
-   2. *Landing.* Done 15 October, with the footer's mauli. Haldi glitter and petals on the river (the river stays the hero), a tilak on
-      the headline, packs on a warm block under a mauli, the river list unboxed, copy in the
-      new voice in en and hi.
-   3. *The buyer's path.* Done 15 October, with sign-in's step line and a kept-morning count at the mark; the signed-in screens still want a look on a real account. `/begin`, `/setup`, `/today` (diya at the hold, petals and the kept
-      count at the mark), `/p/[id]` and `patra-image.ts` (its hex tokens), `/account`.
-   4. *Reference pages.* Done 15 October, with the consent banner, menus and sign-up, and `/snan` in the new voice. `/live`, `/rivers`, `/muhurat`, `/panchang`, `/kumbh`, `/faq`,
-      `/about`: rules only in timing tables, labels out.
-   5. *Email.* Done 15 October. Sentence-case button, the mauli above the footer, the river's state first.
-   6. *Campaigns.* Done 15 October. Matchbox, signboard and calendar-art templates in `ads/src/`; the link
-      card in `src/lib/site-card.ts` in matchbox.
-2. **The hydration flake. P2.** React error 418 on 13 of 72 loads in the ten minutes
+1. **The hydration flake. P2.** React error 418 on 13 of 72 loads in the ten minutes
    after a production deploy, 0 of 118 afterwards, HTML byte-identical, none on a cold
    preview. A transient of the deploy, not the markup. `scripts/hydration-probe.mjs`
    measures it. Next step if it matters: a preview with `<Analytics />` swapped for
    `@vercel/analytics/react`, probed in its first ten minutes.
-3. **A voice of its own for each indexed city. P1.** A "Snan in <City>" section for the
+2. **A voice of its own for each indexed city. P1.** A "Snan in <City>" section for the
    thirty cities in `INDEXABLE_CITIES`, en and hi, 150 to 250 words each: local mandirs
    and community centres (name and neighbourhood), the water people use, the DST shift
    against IST, the festivals kept there. Only facts that can be sourced. Gate:
    `npm run seo:similarity` at or below 0.5 on every pair (twelve pairs are above it
    today; Brampton and Mississauga at 0.78). Then, once more than sixty of the seventy
    routes are indexed, the next twenty cities, each with its content first.
-4. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
+3. **Small things. P3.** A webhook e2e test in Stripe test mode; `sameAs` once a social
    profile exists.
 
 ## After launch, argued from data
@@ -63,6 +74,23 @@ folios and the email the day before; a third locale chosen from the zone data in
 ---
 
 ## Done
+
+### 17 and 18 October 2026
+
+- **Design system v3, one family, loud and calm**, on `design-v3`, to the spec in
+  `docs/superpowers/specs/2026-10-17-design-system-v3-design.md`. One palette for the site,
+  the Patra, the emails and the ads (one red, one yellow, the river's teal); the kit lifted
+  from the ads (the press, the seal, the band, the label, the gauge, the river as strip,
+  full river and night river); the horizon-sun mark and a one-weight wordmark on every
+  surface and icon; every route rebuilt at 390 first, with the fold held at 390 x 660 and
+  360 x 640; the snan calm and selling nothing, the mark ending on "Send it to the family";
+  the Patra with the names one per line, the person's own photograph pinned, the morning
+  badge from the second morning and the flow-seeded river at the foot, sent sheets kept as
+  sent; the reminder led by the river's state; the voice bold about what is true, guarded
+  in `copy-guard`; every ad set re-rendered. The 15 October marks (tilak, kumkum, mauli,
+  diya, petals), `impress` and `.warm` are retired. `DESIGNSYSTEM.md` rewritten to it.
+- The 15 October design rollout (haldi, the puja marks, the bazaar campaign layer), done in
+  six phases that day, is superseded by v3.
 
 ### 13 October 2026
 
