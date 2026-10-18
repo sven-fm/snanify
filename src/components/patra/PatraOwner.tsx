@@ -75,6 +75,7 @@ export function PatraOwner({
           water={waterSlug}
           lang={lang}
           auto={auto}
+          fetchInView
         />
         <div className="mt-3 flex flex-col items-center">
           <a href={`${imageSrc}?download=1`} download={DOWNLOAD_NAME} className={buttonClass("quiet")}>

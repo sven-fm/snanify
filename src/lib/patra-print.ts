@@ -7,18 +7,24 @@
    about 2.6. The printed column is chosen from that ratio, just before the
    print, so the whole of it ends inside the shorter of the two papers.
 
-   The fallback width, used when the browser prints without telling the page
-   first, fits the tallest sheet the form allows in practice.
+   The fallback width, plain CSS used whenever the browser prints without
+   telling the page first, fits the tallest sheet the form allows at all:
+   five names of 60 characters, the longest prayer and 280 characters of
+   sankalp, measured by tests/e2e/patra-print.spec.ts on /p/specimen?worst=1.
    --------------------------------------------------------------------------- */
 
 /** US Letter is 279.4mm tall; less the 10mm margins and a little air. */
-export const PRINT_HEIGHT_MM = 253;
+export const PRINT_HEIGHT_MM = 250;
 
 /** The widest the column prints, so a short sheet stays a sheet. */
 export const PRINT_MAX_MM = 140;
 
-/** The column when nothing measured it: five names, the prayer, 280 characters. */
-export const PRINT_FALLBACK_MM = 96;
+/** The tallest sheet the form allows, height over width: 3.47 measured in
+    English (Latin capitals wrap first), 3.07 in Hindi, rounded up. */
+export const PRINT_WORST_RATIO = 3.5;
+
+/** The column when nothing measured it: the worst ratio inside the height. */
+export const PRINT_FALLBACK_MM = Math.floor(PRINT_HEIGHT_MM / PRINT_WORST_RATIO);
 
 /** The custom property the measured width is written to. */
 export const PRINT_WIDTH_VAR = "--patra-print-width";

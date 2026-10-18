@@ -222,9 +222,9 @@ export function AccountView({
         {/* ---------------- deleting everything, under a fold that says so ---------------- */}
         <details className="group mt-16" open={misstyped}>
           <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-ink active:text-sindoor [&::-webkit-details-marker]:hidden">
-            <span className="display text-[1.25rem]" style={{ fontWeight: 700 }}>
+            <h2 className="display text-[1.25rem]" style={{ fontWeight: 700 }}>
               {t.deleteHeading}
-            </span>
+            </h2>
             <span aria-hidden="true" className="display text-xl text-ink2 group-open:hidden">
               +
             </span>
@@ -232,7 +232,7 @@ export function AccountView({
               −
             </span>
           </summary>
-          <section className="settle-panel mt-1" aria-label={t.deleteHeading}>
+          <section className="settle-panel mt-1">
             {credits > 0 && (
               <p className="mt-3 max-w-lg font-bold leading-[1.6] text-ink">
                 {credits === 1 ? t.deleteCreditsOne : t.deleteCredits.replace("{n}", String(credits))}

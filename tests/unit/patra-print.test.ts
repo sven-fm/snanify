@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PRINT_FALLBACK_MM, PRINT_HEIGHT_MM, PRINT_MAX_MM, printWidthMm } from "@/lib/patra-print";
+import { PRINT_FALLBACK_MM, PRINT_HEIGHT_MM, PRINT_MAX_MM, PRINT_WORST_RATIO, printWidthMm } from "@/lib/patra-print";
 
 describe("the printed column", () => {
   it("ends every sheet inside the height of US Letter, the shorter paper", () => {
@@ -16,7 +16,10 @@ describe("the printed column", () => {
   it("falls back to the column that fits the tallest sheet", () => {
     expect(printWidthMm(Number.NaN)).toBe(PRINT_FALLBACK_MM);
     expect(printWidthMm(0)).toBe(PRINT_FALLBACK_MM);
-    /* Five names, the prayer and a full sankalp measure about 2.6. */
-    expect(PRINT_FALLBACK_MM * 2.6).toBeLessThanOrEqual(PRINT_HEIGHT_MM);
+    /* Five names of 60 characters, the longest prayer and a full sankalp
+       measure 3.47 (tests/e2e/patra-print.spec.ts holds the page to it). */
+    expect(PRINT_WORST_RATIO).toBeGreaterThanOrEqual(3.47);
+    expect(PRINT_FALLBACK_MM * PRINT_WORST_RATIO).toBeLessThanOrEqual(PRINT_HEIGHT_MM);
+    expect(PRINT_FALLBACK_MM).toBe(71);
   });
 });

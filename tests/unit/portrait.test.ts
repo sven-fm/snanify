@@ -165,3 +165,27 @@ describe("processPortrait", () => {
     expect(Math.abs(centre - info.width / 2)).toBeLessThanOrEqual(4);
   });
 });
+
+describe("processPortrait on a tall photograph", () => {
+  it("keeps more of the top than the bottom, so a forehead stays on", async () => {
+    /* 800 by 1600: twice as tall as wide, so 600 rows of excess, and the
+       window starts 30% into it, 180 rows down. A white band marks rows 200
+       to 240 of the photograph. */
+    const w = 800;
+    const h = 1600;
+    const band = await sharp({ create: { width: w, height: 40, channels: 3, background: "#ffffff" } })
+      .png()
+      .toBuffer();
+    const tall = await sharp({ create: { width: w, height: h, channels: 3, background: "#000000" } })
+      .composite([{ input: band, left: 0, top: 200 }])
+      .png()
+      .toBuffer();
+    const out = await processPortrait(tall);
+    const { data, info } = await sharp(out.buffer).grayscale().raw().toBuffer({ resolveWithObject: true });
+    const light = (y: number) => data[y * info.width + Math.round(info.width / 2)] > 128;
+    /* Rows 200 to 240 of the photograph land at 20 to 60 of the window. A
+       centred cut (300 rows down) would have dropped the band entirely. */
+    expect(light(40)).toBe(true);
+    expect(light(120)).toBe(false);
+  });
+});

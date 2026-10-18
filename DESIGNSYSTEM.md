@@ -355,8 +355,9 @@ Two renderings of one design, from the owner's final cut in
   it, on the owner's copy only. Print CSS swaps to `#faf6ea` and holds the sheet and the
   sankalp on one page of A4 or US Letter.
 - **The portrait is cut from the middle.** `src/lib/portrait.ts` crops an upload to the 4 : 5
-  window from its centre, never by saliency: sharp's "attention" crop centres a side-lit face
-  on its lit cheek and leaves the head off to one side.
+  window centred across, never by saliency: sharp's "attention" crop centres a side-lit face
+  on its lit cheek and leaves the head off to one side. A photograph taller than 4 : 5 keeps
+  more of its top (the window starts 30% into the excess), where a head sits.
 
 From top to foot:
 

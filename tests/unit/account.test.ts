@@ -85,6 +85,8 @@ describe("/account", () => {
       const out = view(lang);
       const summary = out.match(/<summary[^>]*>([\s\S]*?)<\/summary>/)?.[1] ?? "";
       expect(summary).toContain(label);
+      /* A heading inside the summary, so the fold is in the outline. */
+      expect(summary).toMatch(new RegExp(`<h2[^>]*>${label}</h2>`));
       expect(out).toMatch(/<details class="group[^"]*">/);
       expect(out).not.toMatch(/<details[^>]*open/);
     }
