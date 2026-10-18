@@ -361,6 +361,15 @@ function sheetTitle(view: PatraView): string {
   return view.specimen ? c.specimenTitle : c.title;
 }
 
+/** The name sizes for one or two, three, and four or five names, largest
+    first; the tall formats step down a row only when the river needs room. */
+const NAME_TIERS = [
+  [84, 68, 56],
+  [72, 58, 48],
+  [60, 50, 40],
+  [48, 40, 34],
+] as const;
+
 /** The horizon sits this far into the river's box; the sun rises above it. */
 const HORIZON = 24;
 
@@ -424,7 +433,6 @@ async function tallSvg(view: PatraView, f: Format): Promise<string> {
   }
 
   /* --- the parts below the picture, measured before they are placed --------- */
-  const names = await nameLines(view.names, [84, 68, 56], IN);
   const prayerLines: string[] = [];
   if (view.prayer) {
     for (const line of view.prayer.devanagari) {
@@ -435,20 +443,32 @@ async function tallSvg(view: PatraView, f: Format): Promise<string> {
   const plain = plainLine(view);
 
   const namesTop = picBottom + f.gapNames;
-  const namesHeight = names.reduce((sum, l) => sum + l.step, 0);
-  const placeBaseline = r(namesTop + namesHeight + 50);
-  const placeBottom = placeBaseline + 14;
   const footBaseline = H - 56;
   const riverBottom = H - 120;
   /* The state block: the word, the plain line, the gauge. */
   const stateHeight = 56 + (plain ? 48 : 0) + 28 + 48;
+  const height = (lines: NameLine[]) => lines.reduce((sum, l) => sum + l.step, 0);
+  /* Where the river's box starts, under names of a height and k prayer lines. */
+  const riverTopAt = (namesHeight: number, k: number) =>
+    r(namesTop + namesHeight + 50) + 14 + (k > 0 ? f.gapPrayer + k * prayerStep : 0) + f.gapState + stateHeight + f.gapRiver - HORIZON;
+  const fits = (namesHeight: number, k: number) => riverBottom - riverTopAt(namesHeight, k) >= f.riverMin;
+
+  /* Names first at the size their count calls for. When five long names
+     would push the river past its floor even with the prayer gone, they step
+     down a tier at a time; at the last tier, lines leave from the end. */
+  let names: NameLine[] = [];
+  for (const tiers of NAME_TIERS) {
+    names = await nameLines(view.names, tiers, IN);
+    if (fits(height(names), 0)) break;
+  }
+  while (names.length > 1 && !fits(height(names), 0)) names = names.slice(0, -1);
+  const placeBaseline = r(namesTop + height(names) + 50);
+  const placeBottom = placeBaseline + 14;
 
   /* The river shortens as names are added. When even its shortest would not
      fit, the prayer gives up lines from the end, as the v2 sheet's did. */
-  const riverTopFor = (k: number) =>
-    placeBottom + (k > 0 ? f.gapPrayer + k * prayerStep : 0) + f.gapState + stateHeight + f.gapRiver - HORIZON;
   let keep = prayerLines.length;
-  while (keep > 0 && riverBottom - riverTopFor(keep) < f.riverMin) keep -= 1;
+  while (keep > 0 && !fits(height(names), keep)) keep -= 1;
 
   /* --- names, place, prayer -------------------------------------------------- */
   parts.push((await setNames(names, M, namesTop, IN)).svg);

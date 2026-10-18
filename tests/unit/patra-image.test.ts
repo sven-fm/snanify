@@ -85,3 +85,29 @@ describe("the Sankalp Patra image, v3", () => {
     expect(s).toContain('data-morning="7"');
   });
 });
+
+describe("the memento with five very long names", () => {
+  const LONG = Array.from({ length: 5 }, (_, i) => `${"Venkataraghavan Subrahmanyam ".repeat(2)}${i}`.padEnd(60, "x").slice(0, 60));
+
+  /* Each format's river box ends at H - 120, over the foot, and keeps a floor
+     of 160 (memento) or 100 (sheet); nothing above may push it shorter. */
+  for (const [name, render, H, floor] of [
+    ["memento", mementoSvg, 1920, 160],
+    ["sheet", patraSvg, 1350, 100],
+  ] as const) {
+    it(`keeps the ${name}'s river above its foot, prayer or none`, async () => {
+      for (const prayer of [SPECIMEN_VIEW.prayer, null]) {
+        const s = await render({ ...SPECIMEN_VIEW, names: LONG, prayer });
+        const riverTop = Number(s.match(/data-river="" transform="translate\(0 ([\d.]+)\)"/)![1]);
+        expect(riverTop).toBeLessThanOrEqual(H - 120 - floor);
+        expect(s.match(/data-name-line=/g)!.length).toBeGreaterThanOrEqual(5);
+      }
+    });
+  }
+
+  it("steps the names down a tier rather than overlap", async () => {
+    const s = await mementoSvg({ ...SPECIMEN_VIEW, names: LONG });
+    const tiers = new Set([...s.matchAll(/data-name-line="(\d+)"/g)].map((m) => Number(m[1])));
+    expect(Math.max(...tiers)).toBeLessThan(56);
+  });
+});
