@@ -62,5 +62,15 @@ export const NIGHT_RIVER = { waves: "#16404a", sun: "#4a1410", path: "#5a4a1c" }
 /** The stillness: the ground the sitting goes dark on. */
 export const STILLNESS = "#0b0a08";
 
+/** The stillness's dim inks on that ground: the line, the seconds and the
+    part's name, the bar's track, the cross's edge. */
+export const STILLNESS_INK = {
+  line: "#b5ad99",
+  dim: "#6f685a",
+  mute: "#8a836f",
+  track: "#2a2622",
+  edge: "#3a3530",
+} as const;
+
 /** The lighter paper the owner's printed copy of the Patra comes out on. */
 export const PRINT_PAPER = "#faf6ea";

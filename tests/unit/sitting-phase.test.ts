@@ -81,3 +81,148 @@ describe("which part a moment falls in", () => {
     expect(clock(TOTAL_SECONDS)).toBe("2:31");
   });
 });
+
+/* ---------------------------------------------------------------------------
+   The snan in v3 (spec 6.4, 7.2): its words, and each part as it renders.
+
+   The parts are rendered from a given machine state with the clock stopped
+   (speed 0), the way the screenshots are taken. The router and the server
+   action are stubbed: neither is reached by a first render.
+   --------------------------------------------------------------------------- */
+
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { vi } from "vitest";
+import { todayContent } from "@/content/today";
+import type { SittingState } from "@/lib/sitting-machine";
+
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push: () => {} }) }));
+vi.mock("@/app/[lang]/(app)/today/actions", () => ({ keepThisMorning: async () => ({ id: null }) }));
+
+const { Sitting } = await import("@/components/snan/Sitting");
+
+function strings(value: unknown, out: string[] = []): string[] {
+  if (typeof value === "string") out.push(value);
+  else if (value && typeof value === "object") for (const v of Object.values(value)) strings(v, out);
+  return out;
+}
+
+function part(phase: SittingState["phase"], into = 0, lang: "en" | "hi" = "en") {
+  return renderToStaticMarkup(
+    React.createElement(Sitting, {
+      lang,
+      t: todayContent[lang],
+      reading: {
+        water: "Ganga",
+        ghat: "Har Ki Pauri",
+        city: "Haridwar",
+        percentile: 86,
+        band: "full",
+        figure: "797 m³/s, 86th percentile since 1997",
+        distance: "5,760 km",
+      },
+      sankalp: "For my mother, every morning this month.",
+      names: ["Anjali Sharma", "Vikram Sharma"],
+      waterSlug: "ganga-haridwar",
+      outHref: "/begin?out=1",
+      leaveHref: "/account",
+      speed: 0,
+      start: { phase, into, held: 0 },
+    }),
+  );
+}
+
+describe("the snan's words (spec 7.2)", () => {
+  const en = todayContent.en;
+
+  it("reads as the spec's table", () => {
+    expect(en.begin.ready).toBe("Your {river}, this morning.");
+    expect(en.begin.band).toBe("Three minutes. Phone on silent.");
+    expect(en.stillness.line).toBe("Be still with the river.");
+    expect(en.mark.done).toBe("Snan done.");
+    expect(en.mark.after).toBe("Your family will want to see this.");
+    expect(en.mark.cta).toBe("Send it to the family");
+  });
+
+  it("counts no pack, in either edition", () => {
+    for (const lang of ["en", "hi"] as const) {
+      for (const s of strings(todayContent[lang])) expect(s).not.toMatch(/of 1[1]|\bpack\b/i);
+    }
+  });
+});
+
+describe("the snan's parts (spec 6.4)", () => {
+  it("ready: the capitals line with the river in sindoor, the band, the river, the press", () => {
+    const out = part("ready");
+    expect(out).toContain("Three minutes. Phone on silent.");
+    expect(out).toMatch(/text-sindoor[^>]*>Ganga</);
+    expect(out).toContain("this morning.");
+    expect(out).toContain("press");
+    expect(out).toContain("Begin");
+    expect(out).toContain("flow-line");
+  });
+
+  it("the reading: the gauge and the figure row, without the old table", () => {
+    const out = part("reading", 3);
+    expect(out).toContain("data-today");
+    expect(out).toContain("797 m³/s, 86th percentile since 1997");
+    expect(out).toContain("Running full");
+    expect(out).toMatch(/text-sindoor[^>]*>Ganga</);
+    expect(out).not.toContain("Seasonal median");
+  });
+
+  it("the breath: the river breathes at the river's own amplitude, Out in teal", () => {
+    const out = part("breath", 5);
+    expect(out).toContain("breathe-waves");
+    expect(out).toContain("--breathe-high:1.25");
+    expect(out).toMatch(/text-teal[^>]*>Out</);
+  });
+
+  it("the breath of a thin river rises less than one in spate", () => {
+    const thin = renderToStaticMarkup(
+      React.createElement(Sitting, {
+        lang: "en",
+        t: todayContent.en,
+        reading: { water: "Ganga", ghat: "", city: "", percentile: 4, band: "slack", figure: "", distance: null },
+        sankalp: "",
+        names: [],
+        waterSlug: "ganga-haridwar",
+        outHref: "/begin?out=1",
+        leaveHref: "/account",
+        speed: 0,
+        start: { phase: "breath", into: 1, held: 0 },
+      }),
+    );
+    expect(thin).toContain("--breathe-high:1.1");
+  });
+
+  it("the sankalp: a paper press that fills with sindoor, with no diya", () => {
+    const out = part("hold");
+    expect(out).toContain("For my mother, every morning this month.");
+    expect(out).toContain("Anjali Sharma, Vikram Sharma");
+    expect(out).toContain("press");
+    expect(out).toContain("data-ink");
+    expect(out).not.toContain("hold-box");
+    expect(out).not.toContain("flicker");
+  });
+
+  it("the stillness: near black, the night river, the line", () => {
+    const out = part("stillness", 12);
+    expect(out).toContain("#0b0a08");
+    expect(out).toContain("#16404a");
+    expect(out).toContain("Be still with the river.");
+    expect(out).toContain("data-next");
+  });
+
+  it("the mark: Snan done. in capitals, the line writing, no petals, no count", () => {
+    const out = part("mark", 2);
+    expect(out).toContain("Snan done.");
+    expect(out).toContain("uppercase");
+    expect(out).not.toContain("petal");
+    expect(out).not.toMatch(/of 11|mornings left/i);
+  });
+
+  it("the Hindi mark is short", () => {
+    expect(part("mark", 2, "hi")).toContain("स्नान हो गया।");
+  });
+});

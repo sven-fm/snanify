@@ -3,71 +3,70 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LIMB_ORDER, SITTING } from "@/lib/sitting-plan";
-import { WaterBand } from "@/components/WaterBand";
-import { Diya } from "@/components/marks";
-import { nthMorning } from "@/lib/mornings";
+import { BREATH, LIMB_ORDER, SITTING } from "@/lib/sitting-plan";
+import { Band, Gauge, RiverHorizon, Seal } from "@/components/kit";
+import { buttonClass } from "@/components/ui";
+import { STILLNESS, STILLNESS_INK } from "@/lib/palette";
+import type { FlowBand } from "@/lib/riverdata";
 import {
   INITIAL,
-  STILLNESS_NOTE_SECONDS,
   partNumber,
   progress,
   remaining,
   step,
   type Phase,
+  type SittingState,
 } from "@/lib/sitting-machine";
 import type { todayContent } from "@/content/today";
-import { keepThisMorning } from "@/app/[lang]/(app)/today/actions";
+import { keepThisMorning, type Kept } from "@/app/[lang]/(app)/today/actions";
 import { track } from "@/lib/track";
 import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
-   The sitting: five parts, three minutes, once a morning.
+   The snan: five parts, three minutes, once a morning (spec 6.4).
+
+   CALM, AND THE SAME FAMILY AS THE LANDING. The same capitals, the same
+   river, the same press, spoken softly. The ready screen carries the band
+   and the one press; from Begin on there is no selling at all, and no count
+   of mornings. The full river sits at the foot of every part; the stillness
+   gets the night river on near black.
 
    THE PRACTICE OWNS THE SCREEN. From the press of Begin to the done screen
    the sitting is a fixed sheet over the whole viewport: no masthead, no
-   footer, no count of mornings, nothing to tap but Next, the vow and a small
-   cross in the corner. The stillness was the first part to take the whole
-   screen; every part does now. Behind each part the engraved water runs,
-   faint, so a screen with three lines of type on it still reads as alive.
+   footer, nothing to tap but Next, the hold and a small cross in the corner.
 
    THE CLOCK IS A FRAME LOOP, NOT AN INTERVAL. `setInterval` drifts, and a
-   browser throttles it hard in a background tab, which for a sixty second
-   stillness means the screen comes back minutes late. This accumulates real
-   elapsed time from `performance.now()` deltas, so it is accurate to the frame
-   and immune to throttling.
+   browser throttles it hard in a background tab. This accumulates real
+   elapsed time from `performance.now()` deltas, so it is accurate to the
+   frame and immune to throttling.
 
-   LEAVING PAUSES; IT NEVER RESTARTS. If the phone locks or a call arrives, the
-   clock stops and resumes where it stopped. Somebody who put the phone down
-   during the stillness, which is the instruction, must not come back to find
-   the morning abandoned.
+   LEAVING PAUSES; IT NEVER RESTARTS. If the phone locks or a call arrives,
+   the clock stops and resumes where it stopped.
 
-   THE MACHINE LIVES IN src/lib/sitting-machine.ts, with no React in it, so
-   the rules can be tested to the second: "next" leaves the reading, the
-   breath and the stillness early, the vow ends when the thumb has held for
-   its whole length, and the mark finishes on its own.
+   THE MACHINE LIVES IN src/lib/sitting-machine.ts, with no React in it:
+   "next" leaves the reading, the breath and the stillness early, the hold
+   ends when the thumb has held for its whole length, and the mark finishes
+   on its own.
 
-   THE BREATH IS WATER. The engraved band rises for four seconds and falls for
-   six, at the river's own amplitude, its lines closing as it rises and
-   opening as it falls. It used to be a flat rectangle at fourteen percent.
+   THE BREATH IS THE RIVER. The waves' vertical scale rises for four seconds
+   and falls for six (`breathe`), at the river's own amplitude: a thin river
+   barely stirs, a river in spate swells. The motion is scrubbed by the
+   sitting's own clock, so the water and the words never drift apart.
 
-   THE MORNING IS MINTED AT THE START OF THE MARK, not at the end. The row and
-   the credit are written the moment the mark begins, so closing the tab while
-   the line draws still leaves a Sankalp Patra. The animation is twenty seconds
-   of drawing over work that has already been done.
+   THE MORNING IS MINTED AT THE START OF THE MARK, not at the end, so closing
+   the tab while the line draws still leaves a Sankalp Patra. The mark's
+   marigold press goes to the sheet's page, where the share sheet lives; the
+   mark still moves on by itself after its twenty seconds.
 
-   THE CROSS GOES WHEN THE MARK BEGINS. Until then leaving spends nothing;
-   from the first frame of the mark the morning is already written, so the
-   one way on is forward, to the sheet.
+   THE CROSS GOES WHEN THE MARK BEGINS. Until then leaving spends nothing.
 
-   A MORNING WITH NO CREDIT BEHIND IT goes to the pack picker. The server
-   refuses the spend, and a Try again would be refused every time.
+   A MORNING WITH NO CREDIT BEHIND IT goes to the pack picker.
 
    HAPTICS where the browser has them (Android): a short pulse as the thumb
-   lands on the vow and one as the mark completes. iOS has none and gets none.
+   lands on the hold and one as the mark completes.
 
-   REDUCED MOTION is honoured throughout: the breath becomes two words and a
-   still band, and the mark stops drawing and simply appears.
+   REDUCED MOTION is honoured throughout: the river stands still, the breath
+   becomes two words, and the mark's line and seal simply appear.
    --------------------------------------------------------------------------- */
 
 type Copy = (typeof todayContent)["en"];
@@ -76,18 +75,21 @@ type Reading = {
   water: string;
   ghat: string;
   city: string;
-  /** "Running full", from src/content/flow.ts: the words lead the reading. */
-  state: string;
-  flow: string;
-  rank: string | null;
-  normal: string;
-  /** "3,880 km", or null when the request carried no coordinates. */
+  /** The morning's percentile and band; null when the feed is quiet. */
+  percentile: number | null;
+  band: FlowBand | null;
+  /** The exact figure and rank, "797 m³/s, 86th percentile since 1997". */
+  figure: string;
+  /** "3,880 km from you", or null when the request carried no coordinates. */
   distance: string | null;
 };
 
-/** Six breaths a minute: four seconds in, six out, which is where a body settles. */
-const BREATH_IN = 4;
-const BREATH_OUT = 6;
+/** How far the river swells on the breath: a thin river barely, one in spate most. */
+const SWELL: Record<FlowBand, number> = { slack: 0.1, low: 0.15, usual: 0.2, full: 0.25, spate: 0.3 };
+
+/** The river's height at the foot of a part, and in the breath its share of the screen. */
+const FOOT = 150;
+const BREATH_SHARE = 0.5;
 
 function pulse(ms: number) {
   try {
@@ -97,6 +99,15 @@ function pulse(ms: number) {
   }
 }
 
+/** The capitals headline in the landing's cut. Devanagari takes its own leading and no case. */
+function caps(lang: Lang): { className: string; style: React.CSSProperties } {
+  const hi = lang === "hi";
+  return {
+    className: `display ${hi ? "" : "uppercase"}`,
+    style: { fontWeight: 800, lineHeight: hi ? 1.22 : 0.95, letterSpacing: hi ? 0 : "-0.01em" },
+  };
+}
+
 export function Sitting({
   lang,
   t,
@@ -104,14 +115,12 @@ export function Sitting({
   sankalp,
   names,
   waterSlug,
-  picture,
-  left,
-  kept,
-  more,
   outHref,
   leaveHref,
   reducedMotionDefault = false,
   speed = 1,
+  start,
+  keep = keepThisMorning,
 }: {
   lang: Lang;
   t: Copy;
@@ -120,14 +129,6 @@ export function Sitting({
   names: string[];
   /** One of six, and the only thing measurement is told about a morning. */
   waterSlug: string;
-  /** The ghat, as ink on the paper: the same plate /live prints. */
-  picture: { src: string; alt: string };
-  /** "Ten mornings left", shown on the done screen and nowhere earlier. */
-  left: string;
-  /** Mornings kept with this water, counting this one. Said at the mark. */
-  kept: number;
-  /** The way to the next pack, when this morning is the last on the account. */
-  more: { href: string; label: string } | null;
   /** The pack picker's "your mornings are complete" line, for a refused spend. */
   outHref: string;
   /** Where the corner cross goes. Leaving before the mark spends nothing. */
@@ -135,33 +136,34 @@ export function Sitting({
   reducedMotionDefault?: boolean;
   /**
    * How many times faster than real time the clock runs. Always 1 in
-   * production; the page refuses to pass anything else there. A three minute
-   * practice cannot be driven end to end by a browser test at real speed, and
-   * a test that never runs is worse than one that runs fast.
+   * production; the page refuses to pass anything else there. 0 stops the
+   * clock, for a still picture of one part.
    */
   speed?: number;
+  /** Where the machine starts, for tests and still pictures. /today never passes it. */
+  start?: SittingState;
+  /** How the morning is kept. /today uses the server action; a fixture passes its own. */
+  keep?: (lang: Lang) => Promise<Kept>;
 }) {
   const router = useRouter();
 
   /* One reducer holds the phase, the seconds into it and the held seconds,
-     and every change to them goes through `step`. An earlier version derived
-     the phase from one elapsed number and moved it from inside a state
-     updater, which is a side effect during a render and silently did
-     nothing; a reducer is the one place that cannot happen. */
-  const [state, dispatch] = useReducer(step, INITIAL);
+     and every change to them goes through `step`. */
+  const [state, dispatch] = useReducer(step, start ?? INITIAL);
   const [outcome, setOutcome] = useReducer(
-    (was: { patraId: string | null; failed: boolean }, next: Partial<{ patraId: string | null; failed: boolean }>) => ({
-      ...was,
-      ...next,
-    }),
-    { patraId: null, failed: false },
+    (
+      was: { patraId: string | null; morning: number | null; failed: boolean },
+      next: Partial<{ patraId: string | null; morning: number | null; failed: boolean }>,
+    ) => ({ ...was, ...next }),
+    { patraId: null, morning: null, failed: false },
   );
   const { phase, into, held } = state;
-  const { patraId, failed } = outcome;
+  const { patraId, morning, failed } = outcome;
   const running = phase !== "ready" && phase !== "done";
   const holding = useRef(false);
   const minted = useRef(false);
   const wakeLock = useRef<WakeLockSentinel | null>(null);
+  const [screen, setScreen] = useState(844);
 
   const reduced =
     reducedMotionDefault ||
@@ -170,7 +172,7 @@ export function Sitting({
 
   /* --- the clock -------------------------------------------------------- */
   useEffect(() => {
-    if (!running) return;
+    if (!running || speed === 0) return;
 
     let frame = 0;
     let last = performance.now();
@@ -233,13 +235,18 @@ export function Sitting({
     };
   }, [running]);
 
-  /* --- the sheet over the page: the body must not scroll under it ------- */
+  /* --- the sheet over the page: the body must not scroll under it, and the
+         breath's river is half of whatever screen this is ------------------ */
   useEffect(() => {
     if (!running) return;
     const was = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const measure = () => setScreen(window.innerHeight);
+    measure();
+    window.addEventListener("resize", measure);
     return () => {
       document.body.style.overflow = was;
+      window.removeEventListener("resize", measure);
     };
   }, [running]);
 
@@ -248,17 +255,17 @@ export function Sitting({
     if (phase !== "mark" || minted.current) return;
     minted.current = true;
 
-    keepThisMorning(lang)
+    keep(lang)
       .then((result) => {
         if (result.id) {
-          setOutcome({ patraId: result.id });
+          setOutcome({ patraId: result.id, morning: result.morning ?? null });
           track("sitting_done", { water: waterSlug, lang });
           pulse(12);
         } else if (result.reason === "no-credit") router.push(outHref);
         else setOutcome({ failed: true });
       })
       .catch(() => setOutcome({ failed: true }));
-  }, [phase, lang, waterSlug, router, outHref]);
+  }, [phase, lang, waterSlug, router, outHref, keep]);
 
   /* --- and the page moves on once both are finished --------------------- */
   const patraHref = patraId ? `${lang === "en" ? "" : `/${lang}`}/p/${patraId}?new=1` : null;
@@ -278,33 +285,27 @@ export function Sitting({
     dispatch({ type: "next" });
   }, [phase, waterSlug, lang]);
 
+  const head = caps(lang);
+
   /* --- before it begins: in the flow of the page, under the masthead ------ */
   if (phase === "ready") {
+    const [lead, tail] = t.begin.ready.split("{river}");
     return (
-      <div className="mx-auto max-w-md px-5 py-6 sm:py-10" data-sitting data-speed={speed} data-phase={phase}>
-        <div className="plate relative aspect-[3/2] overflow-hidden">
-          <div
-            role="img"
-            aria-label={picture.alt}
-            className="ink-picture absolute inset-0"
-            style={{ ["--picture" as string]: `url(${picture.src})` }}
-          />
-          <div className="absolute bottom-0 left-0 bg-paper px-3 py-2">
-            <p className="display text-[1.4rem] leading-tight">{reading.water}</p>
-            <p className="text-sm text-ink2">
-              {reading.ghat}, {reading.city}
-            </p>
-          </div>
-        </div>
-
-        <p className="display mt-8 text-center text-[1.5rem] leading-[1.3]">{t.begin.ready}</p>
-        <p className="mt-2 text-center text-sm text-ink2">{t.begin.quiet}</p>
+      <div className="mx-auto max-w-md overflow-x-clip px-5 pt-8 pb-10 sm:pt-12" data-sitting data-speed={speed} data-phase={phase}>
+        <h1 className={`${head.className} text-[2.35rem] min-[380px]:text-[2.5rem]`} style={head.style}>
+          {lead}
+          <span className="text-sindoor">{reading.water}</span>
+          {tail}
+        </h1>
+        <p className="mt-3 text-[0.875rem] leading-[1.45] text-ink2">
+          {reading.ghat}, {reading.city}
+        </p>
         {/* How far the water is from here, when the request carried a fix. */}
-        {reading.distance && (
-          <p className="mt-2 text-center text-sm text-ink2">
-            {t.reading.distanceLabel}: {reading.distance}
-          </p>
-        )}
+        {reading.distance && <p className="text-[0.875rem] leading-[1.45] text-ink2">{reading.distance}</p>}
+
+        <Band className="mt-5">{t.begin.band}</Band>
+
+        <RiverHorizon height={120} className="mt-8" />
 
         <button
           type="button"
@@ -312,9 +313,10 @@ export function Sitting({
             track("sitting_start", { water: waterSlug, lang });
             dispatch({ type: "start" });
           }}
-          className="label impress mt-8 min-h-[56px] w-full bg-sindoor px-8 text-paper hover:bg-ink active:bg-ink"
+          className={buttonClass("solid", "mt-6 w-full")}
         >
-          {t.begin.cta}
+          <span>{t.begin.cta}</span>
+          <span aria-hidden="true">→</span>
         </button>
       </div>
     );
@@ -322,53 +324,42 @@ export function Sitting({
 
   /* --- the sheet: every part from here on fills the screen ---------------- */
   const stillness = phase === "stillness";
-  const announcing = stillness && into < STILLNESS_NOTE_SECONDS;
-  const skippable = phase === "reading" || phase === "breath";
+  const breathing = phase === "breath";
+  const skippable = phase === "reading" || breathing || stillness;
+  const swell = SWELL[reading.band ?? "usual"];
+  const riverHeight = breathing ? Math.round(screen * BREATH_SHARE) : FOOT;
 
   return (
     <div
-      className={`sheet-in fixed inset-0 z-50 flex flex-col ${stillness ? "bg-[#0b0a08] text-[#8a836f]" : "bg-paper"}`}
+      className={`sheet-in fixed inset-0 z-50 flex flex-col ${stillness ? "" : "bg-paper text-ink"}`}
+      style={stillness ? { backgroundColor: STILLNESS, color: STILLNESS_INK.mute } : undefined}
       data-sitting
       data-speed={speed}
       data-phase={phase}
-      data-announcing={announcing ? "1" : undefined}
     >
-      {/* The water behind the reading, the breath, the vow and the mark,
-          slow enough to be a river seen from the steps. The stillness has
-          none: it is dark, with the words and the count and nothing else,
-          as a contrast to everything before it. */}
-      {!stillness && (
-        <WaterBand
-          seed={`${waterSlug}-sitting`}
-          percentile={70}
-          faint
-          slow
-          className="pointer-events-none absolute inset-0 h-full w-full opacity-50"
-        />
-      )}
-
       <div
         className="relative mx-auto flex w-full max-w-md flex-1 flex-col px-5 pt-5"
         style={{ paddingTop: "max(1.25rem, env(safe-area-inset-top))" }}
       >
         {/* The bar and the cross. In the stillness they take their own dim
-            light tones: the day's ink vanishes on the dark ground. */}
+            tones: the day's ink vanishes on the dark ground. */}
         <div className="flex items-start gap-4">
           <div className="flex-1 pt-4">
             <StoryBar t={t} state={state} dark={stillness} />
             {/* The name of the part, in the small voice. */}
-            <p className={`mt-3 text-sm ${stillness ? "text-[#8a836f]" : "text-ink2"}`}>{labelFor(t, phase)}</p>
+            <p className={`mt-3 text-sm ${stillness ? "" : "text-ink2"}`} style={stillness ? { color: STILLNESS_INK.dim } : undefined}>
+              {labelFor(t, phase)}
+            </p>
           </div>
           {phase !== "done" && phase !== "mark" && (
             <Link
               href={leaveHref}
               aria-label={t.leave}
               title={t.leave}
-              className={`impress grid h-11 w-11 shrink-0 place-items-center border ${
-                stillness
-                  ? "border-[#3a3530] text-[#8a836f] hover:border-[#6f685a] hover:text-[#b5ad99] active:text-[#b5ad99]"
-                  : "border-rule text-ink2 hover:border-rulestrong hover:text-ink active:bg-paper2"
+              className={`grid h-11 w-11 shrink-0 place-items-center border-[1.5px] ${
+                stillness ? "" : "border-ink text-ink active:bg-ink active:text-paper"
               }`}
+              style={stillness ? { borderColor: STILLNESS_INK.edge, color: STILLNESS_INK.dim } : undefined}
               data-leave
             >
               <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4">
@@ -378,126 +369,135 @@ export function Sitting({
           )}
         </div>
 
-        <div className="flex flex-1 flex-col justify-center pb-24">
+        <div className={`flex flex-1 flex-col ${breathing ? "justify-end pb-6" : "justify-center pb-6"}`}>
           {phase === "reading" && (
             <div className="pull">
-              <p className="display text-[2rem] leading-[1.15]">{reading.water}</p>
-              <p className="mt-1 text-ink2">
+              <p className={`${head.className} text-[2.5rem] text-sindoor`} style={head.style}>
+                {reading.water}
+              </p>
+              <p className="mt-2 text-[0.875rem] text-ink2">
                 {reading.ghat}, {reading.city}
               </p>
-
-              {/* How the river is running, in words, before the figures that
-                  prove it. */}
-              <p className="display mt-7 text-[1.6rem] leading-tight text-sindoor">{reading.state}</p>
-
-              <dl className="mt-5 space-y-1">
-                <Row k={t.reading.flowLabel} v={reading.flow} />
-                {reading.rank && <Row k={t.reading.rankLabel} v={reading.rank} />}
-                <Row k={t.reading.normalLabel} v={reading.normal} />
-                {reading.distance && <Row k={t.reading.distanceLabel} v={reading.distance} />}
-              </dl>
+              {/* How the river is running, in words, then the strip, then the
+                  figure that proves it, small, for anyone who wants to check. */}
+              <Gauge
+                className="mt-7"
+                percentile={reading.percentile}
+                band={reading.band}
+                lang={lang}
+                figure={reading.figure}
+              />
             </div>
           )}
 
-          {phase === "breath" && (
-            <BreathScreen
-              t={t}
-              into={into}
-              left={remaining(state)}
-              reduced={reduced}
-              band={reading.rank}
-              waterSlug={waterSlug}
-            />
-          )}
+          {breathing && <BreathWords t={t} into={into} lang={lang} />}
 
-          {phase === "hold" && (
-            <VowScreen t={t} sankalp={sankalp} names={names} held={held} onHold={hold} />
-          )}
+          {phase === "hold" && <HoldScreen t={t} sankalp={sankalp} names={names} held={held} onHold={hold} />}
 
           {stillness && (
             <div className="pull flex flex-col items-center text-center">
-              <p
-                className={`display text-[1.4rem] text-[#8a836f] transition-opacity duration-1000 ${announcing ? "opacity-100" : "opacity-0"}`}
-                aria-hidden={!announcing}
-              >
-                {t.stillness.instruction}
-              </p>
-              <p
-                className={`display mt-2 text-[1.6rem] leading-[1.3] text-[#b5ad99] transition-opacity duration-1000 ${announcing ? "opacity-0" : "opacity-100"}`}
-              >
+              <p className="display text-[1.6rem] leading-[1.3]" style={{ color: STILLNESS_INK.line }}>
                 {t.stillness.line}
               </p>
-              <p className="display tabular mt-6 text-[3.6rem] leading-none text-[#6f685a]" aria-live="off" data-remaining={remaining(state)}>
+              <p
+                className="display tabular mt-6 text-[3.6rem] leading-none"
+                style={{ color: STILLNESS_INK.dim }}
+                aria-live="off"
+                data-remaining={remaining(state)}
+              >
                 <Tick value={remaining(state)} />
               </p>
-            </div>
-          )}
-
-          {phase === "mark" && (
-            <div className="pull text-center">
-              <p className="display text-[1.6rem] leading-[1.3]">
-                {failed ? t.failed.title : patraId ? t.mark.done : t.mark.writing}
+              <p className="mt-4 text-sm" style={{ color: STILLNESS_INK.dim }}>
+                {t.stillness.note}
               </p>
-              {failed && <p className="mt-4 text-ink2">{t.failed.body}</p>}
-              {!failed && <MarkLine reduced={reduced} into={into} />}
-              {!failed && <KeptLine t={t} lang={lang} kept={kept} water={reading.water} rise={!reduced} />}
             </div>
           )}
 
-          {phase === "done" && (
-            <div className="pull text-center">
-              <p className="display text-[1.6rem]">{failed ? t.failed.title : t.mark.done}</p>
-              {failed && (
+          {(phase === "mark" || phase === "done") && (
+            <div className="pull">
+              <div className="flex items-start justify-between gap-4">
+                <p className={`${head.className} text-[2.35rem]`} style={head.style}>
+                  {failed ? t.failed.title : t.mark.done}
+                </p>
+                {!failed && morning !== null && (
+                  <Seal kind="morning" n={morning} lang={lang} stamp={phase === "mark" && !reduced} className="-mt-1" />
+                )}
+              </div>
+              {failed ? (
+                <p className="mt-4 text-ink2">{t.failed.body}</p>
+              ) : (
+                <MarkLine reduced={reduced || phase === "done"} into={into} />
+              )}
+
+              {failed && phase === "done" && (
                 <button
                   type="button"
                   onClick={() => {
                     minted.current = false;
-                    setOutcome({ failed: false, patraId: null });
+                    setOutcome({ failed: false, patraId: null, morning: null });
                     dispatch({ type: "retry" });
                   }}
-                  className="label impress mt-8 min-h-[48px] w-full bg-sindoor px-6 text-paper active:bg-ink"
+                  className={buttonClass("solid", "mt-8 w-full")}
                 >
-                  {t.failed.cta}
+                  <span>{t.failed.cta}</span>
+                  <span aria-hidden="true">→</span>
                 </button>
               )}
-              {/* The page moves on by itself; this is for the browser that did
-                  not, and for the person who wants to press something. */}
-              {patraHref && (
-                <Link href={patraHref} className="label impress mt-8 flex min-h-[56px] items-center justify-center bg-sindoor px-6 text-paper active:bg-ink">
-                  {t.mark.open}
-                </Link>
-              )}
-              {!failed && <KeptLine t={t} lang={lang} kept={kept} water={reading.water} rise={false} />}
-              {!failed && <p className="mt-3 text-sm text-ink2">{left}</p>}
-              {!failed && more && (
-                <Link
-                  href={more.href}
-                  className="label impress mt-4 flex min-h-[48px] items-center justify-center border-2 border-rulestrong px-6 text-ink active:bg-ink active:text-paper"
-                >
-                  {more.label}
-                </Link>
+
+              {/* The sheet's page holds the share sheet. The page moves on by
+                  itself after the mark; this lets the person go sooner. */}
+              {!failed && patraHref && (
+                <>
+                  <p className="mt-8 text-[0.9375rem] leading-[1.45] text-ink2">{t.mark.after}</p>
+                  <Link href={patraHref} className={buttonClass("share", "mt-3 w-full")} data-share>
+                    <span>{t.mark.cta}</span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </>
               )}
             </div>
           )}
         </div>
 
-        {/* Next, at the foot where the thumb is: on the parts that may be
-            left early. Dim in the stillness, ruled elsewhere. */}
-        {(skippable || stillness) && (
-          <button
-            type="button"
-            onClick={next}
-            className={`label impress absolute inset-x-5 bottom-8 flex min-h-[56px] items-center justify-center border-2 ${
-              stillness
-                ? "border-[#2a2622] text-[#6f685a] hover:border-[#4a443c] hover:text-[#b5ad99] active:border-[#4a443c] active:text-[#b5ad99]"
-                : "border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
-            }`}
-            style={{ bottom: "max(2rem, env(safe-area-inset-bottom))" }}
-            data-next
-          >
-            {t.next}
-          </button>
+        {/* Next, quiet, at the foot where the thumb is: on the parts that
+            may be left early. It stands clear of the sun on the horizon. */}
+        {skippable && (
+          <div className="flex justify-end pb-10">
+            <button
+              type="button"
+              onClick={next}
+              className={stillness ? "inline-flex min-h-[44px] items-center px-2 font-bold" : buttonClass("quiet", "px-2")}
+              style={stillness ? { color: STILLNESS_INK.dim } : undefined}
+              data-next
+            >
+              {t.next}
+            </button>
+          </div>
         )}
+      </div>
+
+      {/* The river at the foot of every part; in the breath it takes half
+          the screen and breathes; in the stillness it is the night river. */}
+      <div
+        className="shrink-0"
+        style={
+          breathing
+            ? ({
+                "--breathe-low": (1 - swell).toFixed(2),
+                "--breathe-high": (1 + swell).toFixed(2),
+                "--breathe-at": (into % (BREATH.in + BREATH.out)).toFixed(2),
+                "--breathe-play": "paused",
+              } as React.CSSProperties)
+            : undefined
+        }
+      >
+        <RiverHorizon
+          height={riverHeight}
+          night={stillness}
+          breathe={breathing}
+          className="w-full"
+        />
+        <div style={{ height: "env(safe-area-inset-bottom)" }} />
       </div>
     </div>
   );
@@ -505,20 +505,11 @@ export function Sitting({
 
 /**
  * Five segments for the five parts, filling left to right, the way a story
- * bar does. The vow's segment fills with the thumb rather than the clock.
+ * bar does. The hold's segment fills with the thumb rather than the clock.
  * Widths are rounded numbers from the machine, so the server and the browser
  * print the same markup.
  */
-function StoryBar({
-  t,
-  state,
-  dark = false,
-}: {
-  t: Copy;
-  state: { phase: Phase; into: number; held: number };
-  /** On the stillness's dark ground: a dim track and a light fill. */
-  dark?: boolean;
-}) {
+function StoryBar({ t, state, dark = false }: { t: Copy; state: SittingState; dark?: boolean }) {
   const fills = progress(state);
   const n = partNumber(state.phase);
   return (
@@ -532,15 +523,23 @@ function StoryBar({
       data-story-bar
     >
       {LIMB_ORDER.map((limb, i) => (
-        <div key={limb} className={`h-[3px] flex-1 ${dark ? "bg-[#2a2622]" : "bg-rule"}`} data-segment={limb}>
-          <div className={`h-full ${dark ? "bg-[#8a836f]" : "bg-ink"}`} style={{ width: `${(fills[i] * 100).toFixed(1)}%` }} />
+        <div
+          key={limb}
+          className={`h-[3px] flex-1 ${dark ? "" : "bg-rule"}`}
+          style={dark ? { backgroundColor: STILLNESS_INK.track } : undefined}
+          data-segment={limb}
+        >
+          <div
+            className={`h-full ${dark ? "" : "bg-ink"}`}
+            style={{ width: `${(fills[i] * 100).toFixed(1)}%`, ...(dark ? { backgroundColor: STILLNESS_INK.dim } : {}) }}
+          />
         </div>
       ))}
     </div>
   );
 }
 
-/** The heading over each limb. "hold" is the vow's limb key; "done" has none. */
+/** The heading over each part. "hold" is the sankalp's key; "done" has none. */
 function labelFor(t: Copy, phase: Phase): string {
   switch (phase) {
     case "reading":
@@ -558,92 +557,37 @@ function labelFor(t: Copy, phase: Phase): string {
   }
 }
 
-function Row({ k, v }: { k: string; v: string }) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-2">
-      <dt className="label text-ink2">{k}</dt>
-      <dd className="text-right text-ink">{v}</dd>
-    </div>
-  );
-}
-
 /**
- * The breath, as water. The engraved band stands at the foot of the screen
- * and rises for four seconds, falls for six, at the amplitude the river is
- * running at: a river in spate climbs higher. The band is drawn twice its
- * box and squashed to fit, so its lines close as it rises and open as it
- * falls. The two words cross-fade rather than switch.
- *
- * Heights are percentages rounded to two places, because a raw float
- * serialises differently on server and client and React calls that a
- * mismatch.
+ * "In" and "Out" over the river, in capitals, Out in teal. The two words
+ * cross-fade on the sitting's clock, four seconds in and six out, the same
+ * clock that scrubs the river's swell.
  */
-function BreathScreen({
-  t,
-  into,
-  left,
-  reduced,
-  band,
-  waterSlug,
-}: {
-  t: Copy;
-  into: number;
-  /** Seconds left in the breath, counted beside the water. */
-  left: number;
-  reduced: boolean;
-  band: string | null;
-  waterSlug: string;
-}) {
-  const cycle = BREATH_IN + BREATH_OUT;
-  const at = into % cycle;
-  const rising = at < BREATH_IN;
-  const progress = rising ? at / BREATH_IN : 1 - (at - BREATH_IN) / BREATH_OUT;
-
-  /* Eased at both ends, so the turn at the top of the breath is soft. */
-  const eased = 0.5 - Math.cos(Math.PI * progress) / 2;
-  const height = reduced ? 0.5 : eased;
-  const pct = (22 + height * 46).toFixed(2);
-
+function BreathWords({ t, into, lang }: { t: Copy; into: number; lang: Lang }) {
+  const rising = into % (BREATH.in + BREATH.out) < BREATH.in;
+  const head = caps(lang);
   return (
-    <div className="pull flex h-full flex-col">
-      <div className="relative h-[2.6rem]">
-        <p
-          className={`display absolute inset-x-0 text-center text-[2.4rem] leading-none settle ${rising ? "opacity-100" : "opacity-0"}`}
-          aria-hidden={!rising}
-        >
-          {t.breath.in}
-        </p>
-        <p
-          className={`display absolute inset-x-0 text-center text-[2.4rem] leading-none settle ${rising ? "opacity-0" : "opacity-100"}`}
-          aria-hidden={rising}
-        >
-          {t.breath.out}
-        </p>
-      </div>
-
-      {/* The water, in the sindoor: the one thing on the screen that is
-          not ink on paper, because it is the thing itself. Its top edge is
-          the waterline, with a faint wash of the same red beneath. */}
-      <div className="relative mt-6 h-[44vh] overflow-hidden" aria-hidden="true">
-        <div className="absolute inset-x-0 bottom-0" style={{ height: `${pct}%` }} data-waterline>
-          <div className="absolute inset-0" style={{ backgroundColor: "color-mix(in srgb, var(--sindoor) 9%, transparent)" }} />
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-sindoor" />
-          <WaterBand seed={`${waterSlug}-breath`} percentile={78} color="sindoor" className="absolute inset-0 h-full w-full" />
-        </div>
-      </div>
-
-      <p className="display tabular mt-5 text-center text-[1.4rem] leading-none text-ink2" data-remaining={left}>
-        <Tick value={left} />
+    <div className="pull relative h-[3.4rem] text-center">
+      <p
+        className={`${head.className} settle absolute inset-x-0 text-[3.2rem] ${rising ? "opacity-100" : "opacity-0"}`}
+        style={head.style}
+        aria-hidden={!rising}
+      >
+        {t.breath.in}
       </p>
-      {band && <p className="mt-2 text-center text-sm text-ink2">{band}</p>}
+      <p
+        className={`${head.className} settle absolute inset-x-0 text-[3.2rem] text-teal ${rising ? "opacity-0" : "opacity-100"}`}
+        style={head.style}
+        aria-hidden={rising}
+      >
+        {t.breath.out}
+      </p>
     </div>
   );
 }
 
 /**
  * A number that arrives: each new value fades and settles in, so a counter
- * reads as a clock ticking rather than a label changing. The key restarts
- * the animation; reduced motion turns it off in the stylesheet.
+ * reads as a clock ticking rather than a label changing.
  */
 function Tick({ value }: { value: number }) {
   return (
@@ -654,11 +598,13 @@ function Tick({ value }: { value: number }) {
 }
 
 /**
- * The vow: one pressable box. The ink rises from the foot of the box while
- * the thumb is down and drains the moment it lifts, and the box says what
- * to do in the label voice. Eleven unbroken seconds fill it.
+ * The sankalp: the household's names, the person's own words, and the hold.
+ * The hold is the press (spec 5.1) with a paper face: the thumb sinks it,
+ * and sindoor fills it left to right over the hold's eleven seconds. It
+ * drains the moment the thumb lifts. The white words are the ink words
+ * clipped to the fill, so they read on both grounds.
  */
-function VowScreen({
+function HoldScreen({
   t,
   sankalp,
   names,
@@ -672,16 +618,18 @@ function VowScreen({
   onHold: (down: boolean) => void;
 }) {
   const filled = Math.min(held / SITTING.hold, 1);
-  const pct = (filled * 100).toFixed(2);
   const pressing = held > 0;
+  const words = filled >= 1 ? t.vow.done : pressing ? t.vow.holding : t.vow.hold;
 
   return (
     <div className="pull">
-      <p className="text-center text-sm text-ink2">{names.join(", ")}</p>
+      <p className="text-[0.8125rem] leading-[1.45] text-ink2">{names.join(", ")}</p>
+      <p className="display mt-3 text-[1.6rem] leading-[1.3]" style={{ fontWeight: 700 }}>
+        {sankalp}
+      </p>
 
       {/* A div with a button's role, not a <button>: Chrome wraps a button's
-          children in an anonymous box of automatic height, and the ink's
-          percentage height resolved against that and came out as nothing. */}
+          children in an anonymous box, and the fill resolved against it. */}
       <div
         role="button"
         tabIndex={0}
@@ -699,102 +647,40 @@ function VowScreen({
           if (e.key === " " || e.key === "Enter") onHold(false);
         }}
         onContextMenu={(e) => e.preventDefault()}
-        className="hold-box bg-paper2 impress relative mt-4 block w-full cursor-pointer touch-none select-none overflow-hidden px-6 py-12 text-center"
+        className={buttonClass("solid", "mt-8 flex w-full touch-none justify-center overflow-hidden text-center")}
+        style={{
+          backgroundColor: "var(--paper)",
+          color: "var(--ink)",
+          ...(pressing ? { transform: "translate(6px, 6px)", boxShadow: "none" } : {}),
+        }}
         data-holding={pressing ? "1" : undefined}
         aria-label={t.vow.hold}
       >
         <span
-          className="absolute inset-x-0 bottom-0"
-          style={{ height: `${pct}%`, backgroundColor: "color-mix(in srgb, var(--sindoor) 28%, transparent)" }}
           aria-hidden="true"
+          className="absolute inset-0 bg-sindoor"
+          style={{ transform: `scaleX(${filled.toFixed(3)})`, transformOrigin: "0 50%" }}
           data-ink
         />
-        <span className="relative display block text-[1.6rem] leading-[1.4]">{sankalp}</span>
-        {/* The diya, lit while the words are held. */}
-        <Diya className="relative mx-auto mt-7 block text-[1.6rem] text-ink" />
-        <span className="label relative mt-3 block text-ink2">
-          {filled >= 1 ? t.vow.done : pressing ? t.vow.holding : t.vow.hold}
+        <span className="relative">{words}</span>
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 flex items-center justify-center text-white"
+          style={{ clipPath: `inset(0 ${((1 - filled) * 100).toFixed(2)}% 0 0)` }}
+        >
+          {words}
         </span>
       </div>
     </div>
   );
 }
 
-/**
- * One line, writing itself, and three petals settling onto it: the moment
- * the snan feels finished. Under reduced motion the line and the petals are
- * simply there.
- */
+/** One ink line, writing itself across the mark's twenty seconds. */
 function MarkLine({ reduced, into }: { reduced: boolean; into: number }) {
-  const width = reduced ? 100 : Math.min((into / SITTING.mark) * 100, 100);
-
+  const width = reduced ? 1 : Math.min(into / SITTING.mark, 1);
   return (
-    <div className="relative mx-auto mt-10 w-full max-w-sm" aria-hidden="true">
-      <div className="h-px bg-rule">
-        <div className="h-px bg-sindoor" style={{ width: `${width.toFixed(2)}%` }} />
-      </div>
-      {SETTLE.map((p, i) => (
-        <svg
-          key={i}
-          viewBox="0 0 10 6"
-          className={reduced ? "absolute" : "petal-settle absolute"}
-          style={{
-            left: `${p.x}%`,
-            top: "-7px",
-            width: "14px",
-            height: "8.4px",
-            transform: `rotate(${p.turn}deg)`,
-            animationDelay: `${p.delay}s`,
-          }}
-        >
-          <path d="M0 3 C2 0 8 0 10 3 C8 6 2 6 0 3Z" fill={p.tone} />
-        </svg>
-      ))}
+    <div className="mt-5 h-[2px] w-full" aria-hidden="true" data-mark-line>
+      <div className="h-full bg-ink" style={{ transform: `scaleX(${width.toFixed(3)})`, transformOrigin: "0 50%" }} />
     </div>
-  );
-}
-
-/* Where the three petals land on the mark: marigold, vermillion, marigold. */
-const SETTLE = [
-  { x: 30, turn: -18, delay: 1.2, tone: "var(--haldi)" },
-  { x: 48, turn: 12, delay: 1.9, tone: "var(--sindoor)" },
-  { x: 64, turn: -6, delay: 2.6, tone: "var(--haldi)" },
-];
-
-/**
- * "Your fourth morning with the Ganga." At the mark the count ticks up from
- * the morning before; on the done screen it simply stands.
- */
-function KeptLine({
-  t,
-  lang,
-  kept,
-  water,
-  rise,
-}: {
-  t: Copy;
-  lang: Lang;
-  kept: number;
-  water: string;
-  rise: boolean;
-}) {
-  const [shown, setShown] = useState(rise && kept > 1 ? kept - 1 : kept);
-  useEffect(() => {
-    if (shown === kept) return;
-    const id = setTimeout(() => setShown(kept), 2600);
-    return () => clearTimeout(id);
-  }, [shown, kept]);
-
-  if (kept < 1) return null;
-  const line = (shown === 1 ? t.mark.kept.first : t.mark.kept.many)
-    .replace("{water}", water)
-    .replace("{nth}", nthMorning(shown, lang));
-
-  return (
-    <p className="mt-8 text-[1.05rem] text-ink">
-      <span key={shown} className={shown === kept && rise ? "tick inline-block" : "inline-block"}>
-        {line}
-      </span>
-    </p>
   );
 }

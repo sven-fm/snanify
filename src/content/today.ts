@@ -1,16 +1,14 @@
 import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
-   The sitting, in words.
+   The snan, in words (spec 6.4 and 7.2).
 
-   Almost nothing is said out loud here. The screen does the pacing and the
-   instructions are one line each, because a person reading a paragraph is a
-   person not breathing. Five names for the five parts, one instruction each,
-   and the two words that appear on the breath.
+   The snan speaks softly: short, calm, active. The screen does the pacing
+   and every line is one idea, because a person reading a paragraph is a
+   person not breathing. Inside the sitting there is no selling and no count
+   of mornings; the morning seal at the mark is the only number of that kind.
 
-   NOTHING COUNTS DOWN IN NUMBERS. There is no timer, no progress percentage
-   and no "2 of 5". The only visible progress is the ink filling under your
-   thumb, and that one is a gesture rather than a clock.
+   `{river}` in `begin.ready` is filled at render and set in sindoor.
    --------------------------------------------------------------------------- */
 
 const en = {
@@ -20,9 +18,9 @@ const en = {
   },
 
   begin: {
-    ready: "Begin when you are ready.",
+    ready: "Your {river}, this morning.",
+    band: "Three minutes. Phone on silent.",
     cta: "Begin",
-    quiet: "Put the phone on silent. It takes three minutes.",
   },
 
   /** "Part 2 of 5", read by screen readers over the bar; sighted readers see the bar. */
@@ -31,13 +29,8 @@ const en = {
 
   reading: {
     label: "The reading",
-    flowLabel: "Flow",
-    rankLabel: "Ranked",
-    normalLabel: "Seasonal median",
-    percentile: "{n} percentile since 1997",
     /** "3,880 km from you", from the request's own coordinates. Absent when there are none. */
-    distanceLabel: "From you",
-    distance: "{km} km",
+    distance: "{km} km from you",
   },
 
   breath: {
@@ -55,29 +48,23 @@ const en = {
 
   stillness: {
     label: "The stillness",
-    instruction: "Put the phone down.",
-    line: "The river keeps running.",
+    line: "Be still with the river.",
+    note: "The river keeps running.",
   },
 
   mark: {
     label: "The mark",
-    writing: "Your morning is being written into your register.",
-    done: "Your morning is kept.",
-    open: "Open your Sankalp Patra",
-    /** The count of mornings kept with this water, said at the mark. `{nth}`
-        is a word up to tenth, then a figure. */
-    kept: {
-      first: "Your first morning with the {water}.",
-      many: "Your {nth} morning with the {water}.",
-    },
+    done: "Snan done.",
+    after: "Your family will want to see this.",
+    cta: "Send it to the family",
   },
 
   already: {
-    title: "Your morning is kept",
-    body: "Keep it in your heart. Send it to your family.",
+    title: "Snan done.",
+    body: "Your family will want to see this.",
     cta: "Open your Sankalp Patra",
-    share: "Send it to family",
-    tomorrow: "One morning a day. The next one is tomorrow.",
+    share: "Send it to the family",
+    tomorrow: "One snan a day. The next one is tomorrow.",
     /** In place of `tomorrow` when this was the last morning on the account. */
     out: "Your mornings are complete. Choose your next ones for tomorrow.",
   },
@@ -99,9 +86,9 @@ const hi = {
   },
 
   begin: {
-    ready: "जब तैयार हों, आरंभ कीजिए।",
-    cta: "आरंभ",
-    quiet: "फ़ोन को मौन पर रखिए। इसमें तीन मिनट लगते हैं।",
+    ready: "{river} के साथ, आज सुबह।",
+    band: "बस 3 मिनट। फ़ोन साइलेंट पर रखिए।",
+    cta: "शुरू कीजिए",
   },
 
   partOf: "{total} में से भाग {n}",
@@ -109,12 +96,7 @@ const hi = {
 
   reading: {
     label: "पाठ",
-    flowLabel: "प्रवाह",
-    rankLabel: "स्थान",
-    normalLabel: "ऋतु-मध्यक",
-    percentile: "1997 से {n}वाँ प्रतिशतक",
-    distanceLabel: "आपसे दूरी",
-    distance: "{km} कि.मी.",
+    distance: "आपसे {km} कि.मी. दूर",
   },
 
   breath: {
@@ -132,27 +114,23 @@ const hi = {
 
   stillness: {
     label: "मौन",
-    instruction: "फ़ोन नीचे रख दीजिए।",
-    line: "नदी बहती रहती है।",
+    line: "नदी के साथ शांत रहिए।",
+    note: "नदी बहती रहती है।",
   },
 
   mark: {
     label: "चिह्न",
-    writing: "आपकी सुबह आपकी पंजिका में लिखी जा रही है।",
-    done: "आपकी सुबह रख ली गई।",
-    open: "अपना संकल्प पत्र खोलिए",
-    kept: {
-      first: "{water} के साथ आपकी पहली सुबह।",
-      many: "{water} के साथ आपकी {nth} सुबह।",
-    },
+    done: "स्नान हो गया।",
+    after: "आपका परिवार इसे देखना चाहेगा।",
+    cta: "परिवार को भेजिए",
   },
 
   already: {
-    title: "आपकी सुबह रख ली गई",
-    body: "इसे अपने हृदय में रखिए। अपने परिवार को भेजिए।",
+    title: "स्नान हो गया।",
+    body: "आपका परिवार इसे देखना चाहेगा।",
     cta: "अपना संकल्प पत्र खोलिए",
     share: "परिवार को भेजिए",
-    tomorrow: "दिन में एक सुबह। अगली कल है।",
+    tomorrow: "दिन में एक स्नान। अगला कल है।",
     out: "आपकी सुबहें पूरी हुईं। कल के लिए अपनी अगली सुबहें चुनिए।",
   },
 
