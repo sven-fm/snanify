@@ -64,22 +64,25 @@ export async function Begin({
   if (buy) params.set("buy", "1");
   const here = `${localePath(lang, "/begin")}${params.size ? `?${params}` : ""}`;
 
+  /* One place decides (src/lib/begin-path.ts); this only reads for it. */
   const user = await currentUser(lang);
-  if (!user) redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
-
-  const [credits, profile, bought] = await Promise.all([
-    balance(db, user.id),
-    db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
-    db.select({ id: purchases.id }).from(purchases).where(eq(purchases.userId, user.id)).limit(1),
-  ]);
+  const [credits, profile, bought] = user
+    ? await Promise.all([
+        balance(db, user.id),
+        db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
+        db.select({ id: purchases.id }).from(purchases).where(eq(purchases.userId, user.id)).limit(1),
+      ])
+    : [0, [], []];
 
   const route = beginRoute(
-    { signedIn: true, setUp: profile[0]?.completedAt != null, credits, bought: bought.length > 0 },
+    user
+      ? { signedIn: true, setUp: profile[0]?.completedAt != null, credits, bought: bought.length > 0 }
+      : { signedIn: false },
     query,
   );
+  if (route.to === "sign-in") redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
   if (route.to === "setup") redirect(picked ? `${localePath(lang, "/setup")}?pack=${picked}` : localePath(lang, "/setup"));
   if (route.to === "account") redirect(localePath(lang, "/account"));
-  if (route.to === "sign-in") redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
 
   return (
     <>

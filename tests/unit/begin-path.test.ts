@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { beginRoute, type BeginReader } from "@/lib/begin-path";
+import { accountForwardsToSetup, beginRoute, type BeginReader } from "@/lib/begin-path";
 
 /* Where a press of Begin goes (src/lib/begin-path.ts): the whole branching of
    /begin, without a session or a database. */
@@ -36,7 +36,11 @@ describe("/begin, who goes where", () => {
 
   it("a returning buyer at zero sees the packs alone", () => {
     expect(beginRoute(reader({ bought: true }), {})).toEqual({ to: "packs", pack: "eleven" });
-    expect(beginRoute(reader(), { out: true })).toEqual({ to: "packs", pack: "eleven" });
+    expect(beginRoute(reader({ bought: true }), { out: true })).toEqual({ to: "packs", pack: "eleven" });
+  });
+
+  it("out=1 for somebody set up who never paid keeps the specimen beside the packs", () => {
+    expect(beginRoute(reader(), { out: true })).toEqual({ to: "first", pack: "eleven" });
   });
 
   it("a first-time buyer sees the specimen beside the packs", () => {
@@ -54,5 +58,20 @@ describe("/begin, who goes where", () => {
   it("ignores a pack that does not exist", () => {
     expect(beginRoute(reader({ credits: 4, bought: true }), { pack: "ninety" })).toEqual({ to: "account" });
     expect(beginRoute(reader({ bought: true }), { buy: true, pack: "ninety" })).toEqual({ to: "packs", pack: "eleven" });
+  });
+});
+
+describe("/account, for a fresh account", () => {
+  const none = { setUp: false, kept: 0, bought: 0, credits: 0 };
+
+  it("forwards somebody with nothing at all to /setup", () => {
+    expect(accountForwardsToSetup(none)).toBe(true);
+  });
+
+  it("keeps anybody with a sheet, a morning, a purchase or credits", () => {
+    expect(accountForwardsToSetup({ ...none, setUp: true })).toBe(false);
+    expect(accountForwardsToSetup({ ...none, kept: 1 })).toBe(false);
+    expect(accountForwardsToSetup({ ...none, bought: 1 })).toBe(false);
+    expect(accountForwardsToSetup({ ...none, credits: 3 })).toBe(false);
   });
 });

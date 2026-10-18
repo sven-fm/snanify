@@ -136,8 +136,25 @@ const landingWithClerk = clerkMiddleware(async (auth, req) => {
   if (!userId) return route(req);
   const first = req.nextUrl.pathname.split("/")[1];
   const prefix = PREFIXES.has(first) ? `/${first}` : "";
-  return NextResponse.redirect(new URL(`${prefix}/account`, req.url), 307);
+  /* The ad's fbclid and utm_* ride along. */
+  const to = new URL(`${prefix}/account`, req.url);
+  to.search = req.nextUrl.search;
+  return NextResponse.redirect(to, 307);
 });
+
+/**
+ * THE LANDING NEVER DEPENDS ON CLERK. A missing key, a JWKS fetch that fails
+ * on a cold start or an outage throws out of Clerk's middleware; the reader
+ * then gets the landing, as a stranger would, rather than a 500.
+ */
+async function landing(req: NextRequest, event: NextFetchEvent) {
+  try {
+    return await landingWithClerk(req, event);
+  } catch (error) {
+    console.error("landing: clerk", error);
+    return route(req);
+  }
+}
 
 /**
  * Only the signed-in routes pass through Clerk. On a marketing page Clerk has
@@ -151,7 +168,7 @@ const APP_PATH = /^\/(?:[a-z]{2}\/)?(?:begin|setup|today|account|p|specimen|sign
 export function proxy(req: NextRequest, event: NextFetchEvent) {
   const { pathname } = req.nextUrl;
   if (APP_PATH.test(pathname)) return withClerk(req, event);
-  if (isLanding(pathname) && mightBeSignedIn(req.cookies.getAll())) return landingWithClerk(req, event);
+  if (isLanding(pathname) && mightBeSignedIn(req.cookies.getAll())) return landing(req, event);
   return route(req);
 }
 
