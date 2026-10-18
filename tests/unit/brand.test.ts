@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
-import { TYPE } from "@/lib/palette";
+import { PALETTE, TYPE } from "@/lib/palette";
 import { brandTokens } from "../../scripts/brand-tokens.mjs";
 
 /* brand/ is the kit anyone outside the repo builds from. Its tokens are
@@ -30,4 +30,14 @@ it("every logo the README names exists", () => {
   for (const piece of ["mark", "wordmark", "lockup"])
     for (const edition of ["light", "dark", "on-marigold"])
       for (const ext of ["svg", "png"]) expect(existsSync(`brand/logo/${piece}-${edition}.${ext}`)).toBe(true);
+});
+
+it("the palette table in brand/README.md matches palette.ts", () => {
+  const readme = readFileSync("brand/README.md", "utf8");
+  const rows = [...readme.matchAll(/^\| (?:\*\*)?([A-Za-z]+(?: 2| 3)?)(?:\*\*)? \| `(#[0-9a-f]{6})` \| `(#[0-9a-f]{6})` \|/gm)];
+  const seen = new Map(rows.map(([, name, day, night]) => [name.toLowerCase().replace(" ", ""), { day, night }]));
+  for (const key of Object.keys(PALETTE.day) as (keyof typeof PALETTE.day)[]) {
+    expect(seen.get(key), `README row for ${key}`).toEqual({ day: PALETTE.day[key], night: PALETTE.night[key] });
+  }
+  expect(seen.size).toBe(Object.keys(PALETTE.day).length);
 });

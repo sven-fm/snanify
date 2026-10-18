@@ -13,6 +13,10 @@ buttons press. Where a mockup and this document disagree, this document wins. Th
 and utilities live in `src/app/globals.css`; the hex values for renderers with no stylesheet
 live in `src/lib/palette.ts`.
 
+`brand/` is this document's summary for anyone outside the code (ads, posts, decks, an
+outside designer): one README, the generated tokens and logos, and the brand book. This
+document stays canonical; change a rule here first, then in `brand/README.md`.
+
 ---
 
 ## What the design is for

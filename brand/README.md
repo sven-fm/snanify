@@ -1,8 +1,9 @@
 # Snanify brand kit
 
 One page to build from. Ads, social posts, a deck, a designer outside the repo: start here.
-The app's own sources stay the truth; everything below is either generated from them or
-points at them.
+This page summarises [`DESIGNSYSTEM.md`](../DESIGNSYSTEM.md), which is canonical: where
+the two disagree, DESIGNSYSTEM.md wins. The tokens, the logos and the brand book are
+generated from the app's own sources.
 
 **Snanify** is a digital snan. At an hour the panchang names, a person sits for three
 minutes with a sacred river in India as it runs this morning, makes their own sankalp, and
