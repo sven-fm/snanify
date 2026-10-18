@@ -527,8 +527,10 @@ Over 90% of readers are on a phone, at 6 a.m., in bed. Every surface is designed
 wide first**; desktop is the adaptation.
 
 Why 390: what matters is the CSS viewport, not the screen's pixels (a 1170-pixel iPhone lays
-out at 390). In the US, StatCounter's August 2026 mobile and tablet data puts 414 × 896 first
-(about 20%), 390 × 844 second (about 11%) and 393 × 852 next (about 5%); nearly all US phone
+out at 390). In the US, StatCounter's August 2026 mobile and tablet data
+([gs.statcounter.com](https://gs.statcounter.com/screen-resolution-stats/mobile-tablet/united-states-of-america),
+August 2026) puts 414 × 896 first (about 20%), 390 × 844 second (about 11%) and 393 × 852
+next (about 5%); nearly all US phone
 traffic sits between 360 and 430 wide. The UK, Canada and Australia lean further toward
 iPhone. So: **design at 390, nothing breaks at 360, and it still looks right at 430.** Once
 v3 is live, the site's own analytics replace these numbers.
