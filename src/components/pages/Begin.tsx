@@ -56,7 +56,9 @@ export async function Begin({
 }) {
   const chosen = pack && isTier(pack) ? pack : DEFAULT_TIER;
   /* A pack chosen on a price table travels with the reader, through the
-     sign-in and through setup, and comes back raised here. */
+     sign-in and through setup, and comes back here. The page always raises
+     eleven beside the specimen (BeginView); the chosen pack is only counted,
+     on the begin_view event. */
   const here = pack && isTier(pack) ? `${localePath(lang, "/begin")}?pack=${pack}` : localePath(lang, "/begin");
 
   const user = await currentUser(lang);
