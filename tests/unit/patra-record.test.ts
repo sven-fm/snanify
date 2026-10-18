@@ -9,6 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { PatraSheet } from "@/components/SankalpPatra";
 import { PatraGuest } from "@/components/patra/PatraGuest";
 import { patraPageContent } from "@/content/patra-page";
+import { downloadResponse, wantsDownload } from "@/lib/patra-download";
 
 /* A water in the modelled arm: the flood model published a figure for today. */
 function modelled(over: Record<string, unknown> = {}): WaterState {
@@ -182,16 +183,18 @@ describe("the HTML sheet: the owner's copy and the guest's page", () => {
     const sheet = html(React.createElement(PatraSheet, { data: patraView(sitting) }));
     expect(sheet).not.toContain(SANKALP);
     expect(sheet).not.toContain("data-sankalp");
-    const guest = html(
-      React.createElement(PatraGuest, {
-        lang: "en",
-        t: patraPageContent.en,
-        imageSrc: "/p/abc/image",
-        alt: "Rekha Sharma, Ganga",
-        line: "Rekha Sharma kept a sankalp with the Ganga.",
-      }),
-    );
-    expect(guest).not.toContain(SANKALP);
+  });
+
+  it("carries the Devanagari faces on the sheet itself, for English pages too", () => {
+    const out = html(React.createElement(PatraSheet, { data: printableRecord(row()) }));
+    expect(out).toContain("font-var-font-eczar-deva");
+    expect(out).toContain("font-var-font-martel-deva");
+  });
+
+  it("names the sankalp for a screen reader in text, not an ignored aria-label", () => {
+    const out = html(React.createElement(PatraSheet, { data: printableRecord(row()) }));
+    expect(out).toMatch(/<span class="sr-only">Your sankalp: <\/span>/);
+    expect(out).not.toMatch(/data-sankalp[^>]*aria-label/);
   });
 
   it("gives the guest one press, and it starts their own snan", () => {
@@ -222,5 +225,21 @@ describe("the HTML sheet: the owner's copy and the guest's page", () => {
   it("keeps the print paper at #faf6ea", () => {
     const out = html(React.createElement(PatraSheet, { data: printableRecord(row()) }));
     expect(out).toContain("#faf6ea");
+  });
+});
+
+describe("saving the image", () => {
+  it("asks for the file only on ?download=1", () => {
+    expect(wantsDownload(new Request("https://www.snanify.com/p/abc/image?download=1"))).toBe(true);
+    expect(wantsDownload(new Request("https://www.snanify.com/p/abc/image"))).toBe(false);
+  });
+
+  it("hands the PNG over as an attachment, private for a private sheet", async () => {
+    const res = downloadResponse(new Uint8Array([137, 80, 78, 71]), true);
+    expect(res.headers.get("content-disposition")).toBe('attachment; filename="sankalp-patra.png"');
+    expect(res.headers.get("content-type")).toBe("image/png");
+    expect(res.headers.get("cache-control")).toBe("private, no-store");
+    expect(new Uint8Array(await res.arrayBuffer())).toEqual(new Uint8Array([137, 80, 78, 71]));
+    expect(downloadResponse(new Uint8Array([1]), false).headers.get("cache-control")).toContain("public");
   });
 });

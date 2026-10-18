@@ -37,7 +37,6 @@ type SheetCopy = {
   morning: (n: number) => [string, string];
   /** Read aloud for the owner's words, which print without a label. */
   sankalpAria: string;
-  print: string;
 };
 
 const tail = (v: Pick<PatraView, "ghat" | "city">) => `${v.ghat ? `, ${v.ghat}` : ""}${v.city ? `, ${v.city}` : ""}`;
@@ -53,7 +52,6 @@ const en: { sheet: SheetCopy } = {
     median: "Seasonal median, 1997 to 2025",
     morning: (n) => [ordinal(n, "en"), "morning"],
     sankalpAria: "Your sankalp",
-    print: "Print your copy",
   },
 };
 
@@ -68,7 +66,6 @@ const hi: typeof en = {
     median: "1997 से 2025 का सामान्य स्तर",
     morning: (n) => [nthMorning(n, "hi"), "सुबह"],
     sankalpAria: "आपका संकल्प",
-    print: "अपनी प्रति छापिए",
   },
 };
 

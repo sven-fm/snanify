@@ -41,6 +41,7 @@ const en = {
   privateWarning: "People you have already sent the image to keep it. Making it private stops the link.",
   printHeading: "Your copy",
   printNote: "Your sankalp stands under the names. This copy stays with you.",
+  print: "Print your copy",
 
   /** The owner's "what comes next". */
   next: {
@@ -76,6 +77,7 @@ const hi = {
   privateWarning: "जिन्हें आपने चित्र भेज दिया है, उनके पास वह रहता है। निजी करने से कड़ी बंद होती है।",
   printHeading: "आपकी प्रति",
   printNote: "नामों के नीचे आपका संकल्प है। यह प्रति आपके पास रहती है।",
+  print: "अपनी प्रति छापिए",
 
   next: {
     heading: "आपकी अगली सुबह",

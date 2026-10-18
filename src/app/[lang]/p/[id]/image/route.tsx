@@ -5,6 +5,7 @@ import { isId } from "@/lib/ids";
 import { allow, clientKey } from "@/lib/limiter";
 import { renderPatraFor } from "@/lib/patra-image";
 import { sheetUrl, storeSheet } from "@/lib/patra-store";
+import { downloadResponse, storedBytes, wantsDownload } from "@/lib/patra-download";
 
 /* ---------------------------------------------------------------------------
    The share image, 1080 by 1920: the memento.
@@ -55,6 +56,15 @@ export async function GET(
   }
 
   const stored = sheetUrl(sitting);
+
+  /* "Save the image": the bytes from this origin, as an attachment, because a
+     browser will not save a file it was redirected to on another origin. */
+  if (wantsDownload(request)) {
+    const bytes = (stored && (await storedBytes(stored))) || new Uint8Array(await renderPatraFor(sitting));
+    if (!stored) void storeSheet(sitting);
+    return downloadResponse(bytes, owned);
+  }
+
   if (stored && owned) {
     return new Response(null, {
       status: 307,

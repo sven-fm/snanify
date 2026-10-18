@@ -3,7 +3,8 @@ import { patraContent, type PatraRecord } from "@/content/patra";
 import { flowContent } from "@/content/flow";
 import { closingRiver } from "@/lib/engraving";
 import { gaugeModel } from "@/lib/gauge";
-import { GAUGE_FILLS, PALETTE } from "@/lib/palette";
+import { devaFontClass } from "@/lib/fonts";
+import { GAUGE_FILLS, PALETTE, PRINT_PAPER } from "@/lib/palette";
 import type { PatraView } from "@/lib/patra-view";
 import type { FlowBand } from "@/lib/riverdata";
 
@@ -40,8 +41,6 @@ const SUN_R = 68;
 
 /** Design units to container-width units, so the whole sheet scales as one. */
 const u = (px: number) => `${((px / W) * 100).toFixed(4)}cqw`;
-
-const PRINT_PAPER = "#faf6ea";
 
 const { day } = PALETTE;
 /* The day tokens, set on the sheet itself so every var() inside resolves to
@@ -257,7 +256,7 @@ export function PatraSheet({ data, className = "" }: PatraSheetProps) {
   const sealD = mount * 0.53;
 
   return (
-    <div data-patra-print className={`w-full ${className}`} style={{ containerType: "inline-size" }}>
+    <div data-patra-print className={`w-full ${devaFontClass} ${className}`} style={{ containerType: "inline-size" }}>
       <style href="snanify-patra-print" precedence="medium">
         {PRINT_CSS}
       </style>
@@ -369,9 +368,9 @@ export function PatraSheet({ data, className = "" }: PatraSheetProps) {
         {sankalp ? (
           <p
             data-sankalp=""
-            aria-label={t.sankalpAria}
             style={display(48, 700, { marginTop: u(48), lineHeight: hasDeva(sankalp) ? 1.5 : 1.3 })}
           >
+            <span className="sr-only">{t.sankalpAria}: </span>
             {sankalp}
           </p>
         ) : null}

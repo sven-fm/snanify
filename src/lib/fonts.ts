@@ -50,7 +50,7 @@ const martelLatin = Martel_Sans({
 
 const eczarDeva = Eczar({
   subsets: ["devanagari"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "600", "700", "800"],
   variable: "--font-eczar-deva",
   display: "swap",
   preload: false,
@@ -80,6 +80,13 @@ const martelDeva = Martel_Sans({
 
 
 
+
+/**
+ * The Devanagari faces for one block on any page: the Sankalp Patra prints a
+ * Sanskrit prayer, and Hindi names or a Hindi sankalp, on English pages too.
+ * Unpreloaded, so a face is fetched only when a glyph from it is painted.
+ */
+export const devaFontClass = `${eczarDeva.variable} ${martelDeva.variable}`;
 
 /**
  * The `<html>` class list that makes this locale's faces available.

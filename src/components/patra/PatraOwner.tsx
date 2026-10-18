@@ -7,7 +7,7 @@ import { PatraSheet } from "@/components/SankalpPatra";
 import { buttonClass, LinkButton, SubmitButton } from "@/components/ui";
 import Link from "next/link";
 import { morningsContent } from "@/content/mornings";
-import { patraContent } from "@/content/patra";
+import { DOWNLOAD_NAME } from "@/lib/patra-download";
 import { countLine } from "@/lib/mornings";
 import { localePath } from "@/lib/locales";
 import { setPatraPublic } from "@/app/[lang]/p/[id]/actions";
@@ -77,7 +77,7 @@ export function PatraOwner({
           auto={auto}
         />
         <div className="mt-3 text-center">
-          <a href={imageSrc} download="sankalp-patra.png" className={buttonClass("quiet")}>
+          <a href={`${imageSrc}?download=1`} download={DOWNLOAD_NAME} className={buttonClass("quiet")}>
             {t.download}
           </a>
         </div>
@@ -125,7 +125,7 @@ export function PatraOwner({
           <PatraSheet data={printable} />
         </div>
         <div className="mt-3">
-          <PrintButton label={patraContent[printable.locale === "hi" ? "hi" : "en"].sheet.print} />
+          <PrintButton label={t.print} />
         </div>
       </section>
     </main>
