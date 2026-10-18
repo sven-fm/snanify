@@ -890,6 +890,8 @@ type OfferItem = { key: string; name: string; body: string };
 
 type RiverDetailCopy = {
   back: string;
+  /** The press: Begin, with this water chosen for a new sheet. */
+  here: string;
   /** The capitals headline, `{accent}` the river in sindoor, `{place}` its city. */
   head: { title: string; now: string; close: string };
   facts: {
@@ -936,6 +938,7 @@ type RiverDetailCopy = {
 export const riverDetailContent = {
   en: {
     back: "All six waters",
+    here: "Do your snan here",
     head: { title: "The {accent} at {place}.", now: "This morning", close: "Three minutes with the {river}, tomorrow morning." },
     facts: {
       river: "River",
@@ -967,7 +970,7 @@ export const riverDetailContent = {
         "River discharge: Copernicus Emergency Management Service, GloFAS, served by Open-Meteo, CC BY 4.0.",
         "Sun and weather: Open-Meteo, CC BY 4.0.",
       ],
-      cta: "See this water live",
+      cta: "All six rivers this morning",
     },
     offer: {
       title: "What you find here",
@@ -1020,6 +1023,7 @@ export const riverDetailContent = {
 
   hi: {
     back: "सभी छह जल",
+    here: "यहाँ स्नान कीजिए",
     head: { title: "{place} में {accent}", now: "आज सुबह", close: "कल सुबह, {river} के साथ तीन मिनट।" },
     facts: {
       river: "नदी",
@@ -1051,7 +1055,7 @@ export const riverDetailContent = {
         "नदी-प्रवाह: Copernicus Emergency Management Service, GloFAS, Open-Meteo के माध्यम से, CC BY 4.0.",
         "सूर्य एवं मौसम: Open-Meteo, CC BY 4.0.",
       ],
-      cta: "यह जल सजीव देखिए",
+      cta: "आज सुबह की छहों नदियाँ",
     },
     offer: {
       title: "यहाँ आपको क्या मिलता है",

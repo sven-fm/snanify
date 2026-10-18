@@ -170,6 +170,16 @@ const en = {
           "Write to hello@snanify.com about anything here.",
         ],
       },
+      {
+        /** The anchor every picture on the site links to (src/content/live/pictures.ts). */
+        id: "image-credits",
+        h: "Image credits",
+        body: [
+          "The pictures of the six waters are photographs from Wikimedia Commons, reduced to five tones of ink for this site. Each one is credited here with its photographer and its licence. The ink versions of the CC BY-SA photographs are shared under the same licence.",
+        ],
+        /** The credit line under each picture's name, filled from pictures.ts. */
+        credit: "Photograph by {author}, {license}.",
+      },
     ],
   },
   /** The one press at the end of both pages, inviting the snan. */
@@ -323,6 +333,14 @@ const hi = {
           "ये शर्तें बदलें तो ऊपर का संस्करण और तिथि भी बदलते हैं, और जो सुबहें आप पहले खरीद चुके हैं, वे उन्हीं शर्तों पर रहती हैं जिन पर खरीदी गईं।",
           "इनमें से किसी बात पर hello@snanify.com पर लिखिए।",
         ],
+      },
+      {
+        id: "image-credits",
+        h: "चित्र-श्रेय",
+        body: [
+          "छह जलों के चित्र Wikimedia Commons के छायाचित्र हैं, जिन्हें इस साइट के लिए स्याही के पाँच रंगों में छापा गया है। हर चित्र का श्रेय यहाँ उसके छायाकार और उसके लाइसेंस के साथ है। CC BY-SA छायाचित्रों के स्याही वाले रूप उसी लाइसेंस के अंतर्गत साझा हैं।",
+        ],
+        credit: "छायाचित्र: {author}, {license}।",
       },
     ],
   },

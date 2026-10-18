@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { todayContent } from "@/content/today";
 import { getGhat } from "@/content/rivers";
-import { PICTURES } from "@/content/live/pictures";
+import { CREDITS_PATH, IMAGE_CREDITS, PICTURES } from "@/content/live/pictures";
 import type { WaterSlug } from "@/lib/riverdata";
 import { waterName } from "@/content/names";
 import { balance } from "@/lib/credits";
@@ -112,8 +112,14 @@ export default async function Page({
               style={{ ["--picture" as string]: `url(${pic.src})` }}
             />
           </div>
+          <Link
+            href={localePath(lang, CREDITS_PATH)}
+            className="inline-flex min-h-[44px] items-center text-xs text-ink2 underline decoration-rule underline-offset-4 active:text-sindoor"
+          >
+            {IMAGE_CREDITS[lang]}
+          </Link>
           <h1
-            className={`display mt-8 text-[2.35rem] ${lang === "hi" ? "" : "uppercase"}`}
+            className={`display mt-4 text-[2.35rem] ${lang === "hi" ? "" : "uppercase"}`}
             style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95, letterSpacing: lang === "hi" ? 0 : "-0.01em" }}
           >
             {t.already.title}

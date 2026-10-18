@@ -4,6 +4,7 @@ import { db, profiles, purchases } from "@/db";
 import { balance } from "@/lib/credits";
 import { currentUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
+import { getGhat } from "@/content/rivers";
 import { beginRoute } from "@/lib/begin-path";
 import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
@@ -45,9 +46,12 @@ export async function Begin({
   cancelled,
   error,
   out,
+  water,
 }: {
   lang: Lang;
   pack?: string;
+  /** A water chosen on /rivers, carried on to /setup for a new sheet. */
+  water?: string;
   /** From the menu's "Buy mornings": the packs alone, whatever is in hand. */
   buy?: boolean;
   cancelled?: boolean;
@@ -57,11 +61,13 @@ export async function Begin({
   out?: boolean;
 }) {
   const picked = pack && isTier(pack) ? pack : undefined;
+  const chosenWater = water && getGhat(water) ? water : undefined;
   const query = { pack, buy, out, cancelled, error };
   /* What the reader came with travels through the sign-in and comes back. */
   const params = new URLSearchParams();
   if (picked) params.set("pack", picked);
   if (buy) params.set("buy", "1");
+  if (chosenWater) params.set("water", chosenWater);
   const here = `${localePath(lang, "/begin")}${params.size ? `?${params}` : ""}`;
 
   /* One place decides (src/lib/begin-path.ts); this only reads for it. */
@@ -81,7 +87,12 @@ export async function Begin({
     query,
   );
   if (route.to === "sign-in") redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
-  if (route.to === "setup") redirect(picked ? `${localePath(lang, "/setup")}?pack=${picked}` : localePath(lang, "/setup"));
+  if (route.to === "setup") {
+    const onward = new URLSearchParams();
+    if (picked) onward.set("pack", picked);
+    if (chosenWater) onward.set("water", chosenWater);
+    redirect(`${localePath(lang, "/setup")}${onward.size ? `?${onward}` : ""}`);
+  }
   if (route.to === "account") redirect(localePath(lang, "/account"));
 
   return (

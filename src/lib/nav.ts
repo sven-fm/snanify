@@ -76,3 +76,12 @@ export function primaryNav(lang: Lang): NavItem[] {
 export function ctaHref(lang: Lang): string {
   return localePath(lang, "/begin");
 }
+
+/**
+ * "Do your snan here", from a river's own page and its card on /rivers: the
+ * same Begin, with the water carried through the sign-in to /setup, where it
+ * is the first choice on a new sheet (src/app/[lang]/(app)/setup/page.tsx).
+ */
+export function snanHereHref(lang: Lang, water: string): string {
+  return `${localePath(lang, "/begin")}?water=${encodeURIComponent(water)}`;
+}

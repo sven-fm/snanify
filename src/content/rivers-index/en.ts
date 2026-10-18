@@ -31,6 +31,8 @@ export const en = {
     plain: "Read about each one, then choose the river you grew up near.",
   },
   lead: { read: "Read about this water" },
+  /** Begin, with the water chosen for a new sheet: a quiet link on each water. */
+  here: "Do your snan here",
   index: {
     title: "The other five",
     lede: "Five more waters, each with a page.",

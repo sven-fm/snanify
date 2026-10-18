@@ -38,6 +38,7 @@ export default async function Page({
     go?: string;
     error?: string;
     out?: string;
+    water?: string;
   }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
@@ -56,6 +57,7 @@ export default async function Page({
       cancelled={query.cancelled === "1"}
       error={query.error === "pay"}
       out={query.out === "1"}
+      water={query.water}
     />
   );
 }

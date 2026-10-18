@@ -5,6 +5,8 @@ import { Footer } from "@/components/site/Footer";
 import { ConsentChoice } from "@/components/ConsentChoice";
 import { RefClose, RefHead } from "@/components/site/Reference";
 import { ctaHref } from "@/lib/nav";
+import { fill } from "@/content/live";
+import { LICENSE_HREF, PICTURES } from "@/content/live/pictures";
 
 /* ---------------------------------------------------------------------------
    /privacy and /terms, set as one page with two sets of copy.
@@ -19,11 +21,15 @@ import { ctaHref } from "@/lib/nav";
    --------------------------------------------------------------------------- */
 
 type Section = {
+  /** An anchor somebody links to, as /terms#image-credits. */
+  id?: string;
   h: string;
   body?: readonly string[];
   rows?: readonly { k: string; v: string }[];
   /** Where the reader's answer to the cookie notice is shown and changed. */
   consent?: boolean;
+  /** The image credits: one line per picture, filled from pictures.ts. */
+  credit?: string;
 };
 
 export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" }) {
@@ -45,7 +51,7 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
           <div className="max-w-[38rem]">
 
         {sections.map((section, index) => (
-          <section key={section.h} className="mt-14 first:mt-4">
+          <section key={section.h} id={section.id} className="mt-14 scroll-mt-20 first:mt-4">
             <div className="flex items-baseline gap-4">
               <span className="display text-[1.2rem] leading-none text-sindoor tabular-nums">
                 {String(index + 1).padStart(2, "0")}
@@ -76,6 +82,42 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
             )}
 
             {section.consent && <ConsentChoice lang={lang} />}
+
+            {section.credit && (
+              <ul className="mt-6">
+                {Object.values(PICTURES).map((pic) => (
+                  <li key={pic.src} className="border-b border-rule py-3 text-[0.98rem] leading-[1.75] text-ink2">
+                    <a
+                      href={pic.page}
+                      rel="noopener noreferrer external"
+                      className="inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-rule underline-offset-4 active:text-sindoor"
+                    >
+                      {pic.subject[lang]}
+                    </a>
+                    <span className="block">
+                      {fill(section.credit ?? "", { author: pic.author, license: "{license}" })
+                        .split("{license}")
+                        .map((part, i) =>
+                          i === 0 ? (
+                            part
+                          ) : (
+                            <span key={i}>
+                              <a
+                                href={LICENSE_HREF[pic.license]}
+                                rel="noopener noreferrer external license"
+                                className="underline decoration-rule underline-offset-4 active:text-sindoor"
+                              >
+                                {pic.license}
+                              </a>
+                              {part}
+                            </span>
+                          ),
+                        )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
         ))}
           </div>

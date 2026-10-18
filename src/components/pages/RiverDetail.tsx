@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { localePath } from "@/lib/i18n";
-import { ctaHref } from "@/lib/nav";
+import { snanHereHref } from "@/lib/nav";
 import type { Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { StatusBadge } from "@/components/ui";
-import { H2, H3, QUIET, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
+import { LinkButton, StatusBadge } from "@/components/ui";
+import { H2, H3, QUIET, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
 import { Reading, readingView } from "@/components/live/Reading";
+import { TrendLine, WaterDetail } from "@/components/live/WaterDetail";
 import { ghatNeighbours, riverDetailContent, type Ghat } from "@/content/rivers";
 import type { WaterState } from "@/lib/riverdata";
 
@@ -16,8 +17,13 @@ import type { WaterState } from "@/lib/riverdata";
    The capitals headline with the river in sindoor and its epithet as the
    one plain sentence; then the river this morning as /live shows it (state
    word, plain sentence, gauge, the exact figure and rank in one small row,
-   the source line); the facts as a ruled register on the tint; the water's
-   own prose in sections set apart by space; and the one press at the end.
+   the source line) and the press, "Do your snan here", which starts Begin
+   with this water chosen for a new sheet; then the rest of this morning
+   that /live carried until it became the six at a glance (WaterDetail: the
+   landmark, the usual range, the sky, the register); the facts as a ruled
+   register on the tint; the water's own prose in sections set apart by
+   space; and at the end the same invitation as a quiet link, since the
+   press under the reading is the page's one press.
    --------------------------------------------------------------------------- */
 
 function Heading({ title, lede }: { title: string; lede?: string }) {
@@ -45,9 +51,8 @@ export function RiverDetail({ lang, ghat, water }: { lang: Lang; ghat: Ghat; wat
 
   const riversHref = localePath(lang, "/rivers");
   const muhuratHref = localePath(lang, "/muhurat");
-  /* /live lists all six and anchors each block on its slug, so this lands the
-     reader on this water's own block rather than at the top of the page. */
-  const liveHref = `${localePath(lang, "/live")}#${ghat.slug}`;
+  const liveHref = localePath(lang, "/live");
+  const here = snanHereHref(lang, ghat.slug);
   const neighbours = ghatNeighbours(ghat.slug);
 
   const facts: { key: string; label: string; value: string }[] = [
@@ -81,22 +86,33 @@ export function RiverDetail({ lang, ghat, water }: { lang: Lang; ghat: Ghat; wat
         </RefHead>
 
         {/* --------------------------------------- this morning ------ */}
-        {water && (
-          <section id="now" className="scroll-mt-16">
-            <div className="mx-auto max-w-3xl px-5 pb-12 sm:px-8">
-              <h2 className="display text-[1.5rem] leading-[1.15] text-ink" style={W700}>
-                {t.head.now}
-              </h2>
-              <p className="mt-1 text-sm text-ink2">
-                {ghat.ghat[lang]}, {ghat.city[lang]}
-              </p>
-              <Reading className="mt-5" view={readingView(water, lang)} lang={lang} />
-              <Link href={liveHref} className={`${QUIET} mt-3`}>
+        <section id="now" className="scroll-mt-16">
+          <div className="mx-auto max-w-3xl px-5 pb-12 sm:px-8">
+            {water && (
+              <>
+                <h2 className="display text-[1.5rem] leading-[1.15] text-ink" style={W700}>
+                  {t.head.now}
+                </h2>
+                <p className="mt-1 text-sm text-ink2">
+                  {ghat.ghat[lang]}, {ghat.city[lang]}
+                </p>
+                <Reading className="mt-5" view={readingView(water, lang)} lang={lang} />
+                <TrendLine water={water} lang={lang} className="mt-4" />
+              </>
+            )}
+            <LinkButton href={here} className="mt-7 w-full sm:w-auto">
+              {t.here}
+            </LinkButton>
+          </div>
+          {water && (
+            <div className="mx-auto max-w-3xl px-5 pb-4 sm:px-8 lg:max-w-6xl">
+              <WaterDetail water={water} lang={lang} />
+              <Link href={liveHref} className={`${QUIET} mt-6`}>
                 {t.reading.cta}
               </Link>
             </div>
-          </section>
-        )}
+          )}
+        </section>
 
         {/* ------------------------------------------------ facts ------ */}
         <section>
@@ -255,7 +271,16 @@ export function RiverDetail({ lang, ghat, water }: { lang: Lang; ghat: Ghat; wat
           </Link>
         </Block>
 
-        <RefClose title={t.head.close.replace("{river}", ghat.river[lang])} label={t.onward.cta} href={ctaHref(lang)} />
+        <section>
+          <div className="mx-auto max-w-md px-5 py-16 sm:max-w-3xl sm:px-8 sm:py-20">
+            <h2 className={H2} style={W700}>
+              {t.head.close.replace("{river}", ghat.river[lang])}
+            </h2>
+            <Link href={here} className={`${QUIET} mt-5`}>
+              {t.here}
+            </Link>
+          </div>
+        </section>
       </main>
 
       <Footer lang={lang} />

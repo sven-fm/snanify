@@ -51,14 +51,9 @@ export const en = {
   meta: {
     title: "Six sacred waters, live | Snanify",
     description:
-      "Modelled flow, sunrise, weather and today's muhurat at six sacred waters, from the Ganga at Haridwar to the Kaveri. Ranked against 1997 to 2025.",
+      "Modelled flow at six sacred waters, from the Ganga at Haridwar to the Kaveri, ranked against 1997 to 2025. Each river's page carries its sunrise, weather and muhurat.",
   },
 
-  badges: {
-    live: "Live from six waters",
-    cached: "Six waters, the latest readings",
-    normal: "Six waters, seasonal normals",
-  },
   /* The breadcrumb name, read by src/app/[lang]/live/page.tsx. */
   crumb: "The rivers, live",
   title: "How the rivers are running today.",
@@ -75,10 +70,8 @@ export const en = {
   assembled: "This page was assembled at {time} IST.",
   modelledEvery: "The flood model publishes one value per cell per day.",
 
-  index: {
-    title: "The six at a glance",
-    note: "Each water is ranked against its own record.",
-  },
+  /** The one press under each river: its own page, with the rest of this morning. */
+  open: "Open the {river}",
 
   section: {
     cellLabel: "Grid cell",
@@ -199,9 +192,9 @@ export const en = {
     heading: "Where the numbers come from",
     paras: [
       "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, GloFAS. It is read at the grid cell covering each reach and published once a day. It is a model output, and this page says modelled beside every figure.",
-      "The grid cell sits near the ghat, and each one is printed above with its distance from it. Each cell was chosen by finding the trunk river in the lattice around the ghat, and it stays fixed.",
+      "The grid cell sits near the ghat, and each river's page prints it with its distance from the ghat. Each cell was chosen by finding the trunk river in the lattice around the ghat, and it stays fixed.",
       "Each value is ranked against every daily value the same cell produced in the same week of the year, 1997 to 2025. That is 609 values behind each week, and each water is compared only with itself.",
-      "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates. The muhurat windows are the panchang's rules applied to that ghat's sunrise, which is why Haridwar and Nashik differ.",
+      "On each river's page, sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates. The muhurat windows are the panchang's rules applied to that ghat's sunrise, which is why Haridwar and Nashik differ.",
       "The Central Water Commission's National Water Data Portal lists India's own gauges. It publishes no current reading for these six reaches, so every figure here comes from the flood model.",
     ],
     attributionLabel: "Attribution",
@@ -210,20 +203,6 @@ export const en = {
       "Sun and weather: Open-Meteo, CC BY 4.0.",
       "Gauge register: Central Water Commission, National Water Data Portal.",
     ],
-  },
-
-  /* The picker and the gauge at the head of the page; see
-     src/components/live/LiveHero.tsx. */
-  hero: {
-    pick: "Choose a water",
-    next: "Next window",
-    sunrise: "Sunrise",
-    open: "Read the full entry",
-  },
-
-  pictures: {
-    heading: "The pictures",
-    credit: "{subject}. Photograph by {author}, {license}, printed here as ink.",
   },
 
   close: {

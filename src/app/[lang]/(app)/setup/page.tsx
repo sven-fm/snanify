@@ -47,12 +47,16 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ lang: Lang }>;
-  searchParams: Promise<{ bought?: string; pack?: string }>;
+  searchParams: Promise<{ bought?: string; pack?: string; water?: string }>;
 }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
   const t = setupContent[lang];
 
-  const user = await requireUser(lang, ROUTE);
+  /* A pack or a water chosen before the sign-in comes back with it. */
+  const carried = new URLSearchParams();
+  if (query.pack && isTier(query.pack)) carried.set("pack", query.pack);
+  if (query.water && GHATS.some((g) => g.id === query.water)) carried.set("water", query.water);
+  const user = await requireUser(lang, carried.size ? `${ROUTE}?${carried}` : ROUTE);
 
   const existing = await db
     .select()
@@ -113,7 +117,9 @@ export default async function Page({
           /* A completed sheet saves each change; a first setup saves on the press. */
           autosave={autosaveAllowed(profile?.completedAt)}
           initial={{
-            waterSlug: profile?.waterSlug ?? waters[0].slug,
+            /* A water chosen on /rivers ("Do your snan here") is the first
+               choice on a new sheet; a saved sheet keeps its own. */
+            waterSlug: profile?.waterSlug ?? carried.get("water") ?? waters[0].slug,
             names,
             prayerId: profile?.prayerId ?? "",
             sankalpText: profile?.sankalpText ?? "",

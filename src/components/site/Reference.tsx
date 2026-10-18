@@ -31,6 +31,15 @@ export const W700 = { fontWeight: 700 } as const;
 export const QUIET =
   "inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor";
 
+/**
+ * The quiet action at full width: the ink-underlined label and an arrow on a
+ * 56px row under a hairline, so a thumb finds it, sinking 2px when pressed.
+ * Not a block and not a press: the page's one press stays the press. /live
+ * opens each river's page with it.
+ */
+export const QUIET_ROW =
+  "flex min-h-[56px] w-full items-center justify-between gap-4 border-t border-rule font-bold text-ink transition-transform duration-75 active:translate-y-[2px] active:text-sindoor [-webkit-tap-highlight-color:transparent]";
+
 /** Data tables: hairline rules on the paper-2 tint, where columns line up. */
 export const TABLE_GROUND = "bg-paper2 px-4 sm:px-6";
 
