@@ -1,10 +1,11 @@
 import { desc, eq } from "drizzle-orm";
 import { SignOutButton } from "@clerk/nextjs";
-import { db, sittings, profiles, purchases } from "@/db";
+import { db, profiles, purchases } from "@/db";
 import { accountContent } from "@/content/account";
 import { morningsContent } from "@/content/mornings";
 import { patraPageContent } from "@/content/patra-page";
-import { asTier, formatDay, formatMoney, numberRegister } from "@/lib/mornings";
+import { asTier, formatDay, formatMoney } from "@/lib/mornings";
+import { loadRegister } from "@/lib/register";
 import { sittingToday } from "@/lib/sitting";
 import { patraView } from "@/lib/patra-view";
 import { getGhat } from "@/content/rivers";
@@ -23,7 +24,8 @@ import { AccountView, type TodaySheet } from "@/components/pages/AccountView";
    copy. Data loading, reminder saving and deletion are unchanged.
 
    Rows from before the count was kept (morningNo null) are numbered by their
-   place in the history, oldest = 1, so the register reads continuously.
+   place in the whole history, oldest = 1, against a count of every sitting
+   rather than the hundred loaded (src/lib/register.ts).
    --------------------------------------------------------------------------- */
 
 function formatKept(keptOn: string, lang: Lang): string {
@@ -50,17 +52,7 @@ export async function Account({
 
   const [credits, kept, profile, bought] = await Promise.all([
     balance(db, user.id),
-    db
-      .select({
-        id: sittings.id,
-        keptOn: sittings.keptOn,
-        waterSlug: sittings.waterSlug,
-        morningNo: sittings.morningNo,
-      })
-      .from(sittings)
-      .where(eq(sittings.userId, user.id))
-      .orderBy(desc(sittings.keptAt))
-      .limit(100),
+    loadRegister(db, user.id),
     db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1),
     db
       .select({
@@ -112,7 +104,7 @@ export async function Account({
         credits={credits}
         setUp={setUp}
         names={profile[0] ? (profile[0].names as { name: string }[]).map((n) => n.name) : []}
-        rows={numberRegister(kept).map((s) => {
+        rows={kept.map((s) => {
           const ghat = getGhat(s.waterSlug);
           return {
             id: s.id,
