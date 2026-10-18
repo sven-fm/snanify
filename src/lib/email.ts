@@ -240,7 +240,7 @@ export async function sendReminder(input: ReminderInput): Promise<Sent> {
       ? ""
       : flow.proof
           .replace("{flow}", `${new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(input.cumecs)} m³/s`)
-          .replace("{n}", ordinal(Math.round(input.percentile ?? 0), input.lang));
+          .replace("{n}", ordinal(Math.round(input.percentile as number), input.lang));
 
   const text = [
     state,
@@ -259,7 +259,7 @@ export async function sendReminder(input: ReminderInput): Promise<Sent> {
   const html = wrap(
     `<h1 style="margin:0 0 16px;font-size:30px;line-height:1.15;font-weight:bold;letter-spacing:0.01em;">${headline(input.lang, t.headline, input.water)}</h1>
      <p style="margin:0 0 4px;font-size:22px;font-weight:bold;line-height:1.3;">${escapeHtml(stateWord)}</p>
-     ${plain ? `<p style="margin:0 0 18px;">${plain}</p>` : '<div style="height:14px;"></div>'}
+     ${plain ? `<p style="margin:0 0 18px;">${escapeHtml(plain)}</p>` : '<div style="height:14px;"></div>'}
      ${gaugeTable(input.percentile, t.today)}
      ${figure ? `<p style="margin:8px 0 0;font-size:13px;color:${P.ink2};">${escapeHtml(figure)}</p>` : ""}
      <p style="margin:22px 0 20px;">${t.invite}</p>

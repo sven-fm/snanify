@@ -135,6 +135,10 @@ export const config = {
    * cache-busting query while doing it. Scrapers do not reliably follow a
    * redirect for an `og:image`, so the card would simply come out blank.
    *
+   * `email/` holds the two images every reminder loads by absolute URL, and
+   * `brand-1024.png` the Facebook avatar: files in public/ that a locale
+   * rewrite would answer with the site's 404.
+   *
    * The 32-hex `.txt` is the IndexNow key file (public/<key>.txt). Search
    * engines fetch it to verify a submission and want the bare key back, so it
    * is served as the static file it is, like robots.txt.
@@ -147,6 +151,6 @@ export const config = {
    * package, so an upgrade that moves it fails there first.
    */
   matcher: [
-    "/((?!_next/|api/|waters/|149e9513-01fa-4fb0-aad4-566afd725d1b/|favicon\\.ico|icon\\.svg|icon-\\d+\\.png|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|[0-9a-f]{32}\\.txt|.*opengraph-image|.*twitter-image).*)",
+    "/((?!_next/|api/|waters/|email/|149e9513-01fa-4fb0-aad4-566afd725d1b/|favicon\\.ico|icon\\.svg|icon-\\d+\\.png|brand-\\d+\\.png|apple-touch-icon\\.png|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|[0-9a-f]{32}\\.txt|.*opengraph-image|.*twitter-image).*)",
   ],
 };
