@@ -20,34 +20,40 @@
   svg.abs { position: absolute; inset: 0; }
 
   /* --- signboard, truck art ------------------------------------------------ */
-  .sb { background: #f6c518; color: #141210; }
+  .sb { background: #f2c230; color: #141210; }
   .sb .col { padding: calc(var(--top) + 8px) 104px calc(var(--bottom) + 8px); }
   .sb .frame { position: absolute; inset: 44px; border: 10px solid #141210; }
   .sb .head { display: flex; justify-content: space-between; align-items: baseline; font-size: 42px; font-weight: 800; }
+  /* v3 wordmark: Eczar 800, one weight, the sindoor bindu on the dotless i (globals.css, measured). */
+  .wm { font-family: "Eczar", serif; font-weight: 800; letter-spacing: -0.015em; line-height: 1; font-synthesis: none; display: inline-block; }
+  .wm-i { position: relative; display: inline-block; }
+  .wm-i svg { position: absolute; left: 53.6%; bottom: 0.789em; width: 0.237em; height: 0.237em; transform: translateX(-50%); }
+  .lock { display: inline-flex; align-items: center; gap: 0.5em; }
+  .lock > svg { width: 1.25em; height: 1.25em; flex: none; }
   .sb .words { position: relative; margin-top: 10px; font-weight: 800; line-height: 0.84; letter-spacing: -0.02em; }
-  .sb .w1 { color: #d1261c; font-size: var(--giant); text-shadow: 12px 12px 0 #141210; display: block; }
-  .sb .w2 { color: #141210; font-size: var(--giant); text-shadow: 12px 12px 0 #d1261c; display: block; }
+  .sb .w1 { color: #c8251d; font-size: var(--giant); text-shadow: 12px 12px 0 #141210; display: block; }
+  .sb .w2 { color: #141210; font-size: var(--giant); text-shadow: 12px 12px 0 #c8251d; display: block; }
   [lang="hi"] .sb .words { line-height: 1.12; }
   .sb .burst { position: absolute; right: -40px; top: 170px; width: 310px; height: 310px; transform: rotate(12deg); }
   [lang="hi"] .sb .burst { top: 40px; }
   .sb .burst .t { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; }
   .sb .burst .big { font-weight: 800; font-size: var(--seal); line-height: 0.9; }
   .sb .burst .small { font-weight: 800; font-size: 26px; line-height: 1.15; max-width: 200px; margin-top: 6px; }
-  .sb .band { margin: 44px -104px 0; background: #141210; color: #f6c518; transform: rotate(-2.5deg); padding: 22px 104px; font-weight: 800; font-size: 46px; line-height: 1.15; letter-spacing: 0.01em; }
-  .sb .cta { background: #d1261c; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 26px 34px; box-shadow: 12px 12px 0 #141210; }
+  .sb .band { margin: 44px -104px 0; background: #141210; color: #f2c230; transform: rotate(-2.5deg); padding: 22px 104px; font-weight: 800; font-size: 46px; line-height: 1.15; letter-spacing: 0.01em; }
+  .sb .cta { background: #c8251d; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 26px 34px; box-shadow: 12px 12px 0 #141210; }
   .sb .cta .go { font-weight: 800; font-size: 76px; line-height: 1; }
   .sb .cta .url { font-weight: 800; font-size: 40px; }
   .sb .offer-big { font-weight: 800; font-size: 92px; line-height: 1.02; color: #141210; text-align: center; }
   [lang="hi"] .sb .offer-big { font-size: 80px; line-height: 1.3; }
-  .sb .okp { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 34px; font-weight: 800; font-size: 62px; color: #d1261c; text-shadow: 5px 5px 0 #141210; letter-spacing: 0.04em; }
+  .sb .okp { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 34px; font-weight: 800; font-size: 62px; color: #c8251d; text-shadow: 5px 5px 0 #141210; letter-spacing: 0.04em; }
 
   /* --- matchbox, full bleed -------------------------------------------------- */
   .mb { background: #c8251d; color: #f2c230; }
   .mb .col { padding: var(--top) 72px var(--bottom); }
   .mb .head { font-size: 42px; font-weight: 800; }
-  .mb .hook { font-weight: 800; font-size: var(--hook); line-height: 0.95; margin-top: 18px; text-shadow: 9px 9px 0 #1a1410; letter-spacing: -0.01em; }
+  .mb .hook { font-weight: 800; font-size: var(--hook); line-height: 0.95; margin-top: 18px; text-shadow: 9px 9px 0 #141210; letter-spacing: -0.01em; }
   [lang="hi"] .mb .hook { line-height: 1.25; }
-  .mb .label { position: relative; margin: 46px auto 0; width: 880px; background: #f2c230; border: 12px solid #1a1410; padding: 16px; transform: rotate(-4deg); box-shadow: 24px 24px 0 #1a1410; color: #1a1410; }
+  .mb .label { position: relative; margin: 46px auto 0; width: 880px; background: #f2c230; border: 12px solid #141210; padding: 16px; transform: rotate(-4deg); box-shadow: 24px 24px 0 #141210; color: #141210; }
   .mb .inner { border: 5px solid #c8251d; padding: 22px 26px 30px; text-align: center; }
   .mb .row { display: flex; justify-content: space-between; font-weight: 800; font-size: 26px; letter-spacing: 0.18em; color: #c8251d; }
   .mb .emblem { display: block; margin: 8px auto 0; width: 420px; height: 300px; }
@@ -59,7 +65,7 @@
   .mb .stamp .big { font-weight: 800; font-size: var(--seal); line-height: 0.9; }
   .mb .stamp .small { font-weight: 800; font-size: 22px; line-height: 1.15; max-width: 170px; margin-top: 4px; }
   .mb .side { position: relative; margin: 0 -72px; height: 190px; background: #5b3420; display: flex; align-items: center; justify-content: space-between; padding: 0 72px; }
-  .mb .side .go { position: relative; font-weight: 800; font-size: 80px; color: #f2c230; text-shadow: 6px 6px 0 #1a1410; }
+  .mb .side .go { position: relative; font-weight: 800; font-size: 80px; color: #f2c230; text-shadow: 6px 6px 0 #141210; }
   .mb .side .url { position: relative; font-weight: 800; font-size: 40px; color: #f2c230; }
 
   /* 4:5 is shorter: the matchbox label and its type step down to fit. */
@@ -77,17 +83,17 @@
 
   /* --- calendar art, festival ----------------------------------------------- */
   .cal { background: #7a1a14; color: #f6e3b4; }
-  .cal .frame { position: absolute; inset: 26px; border: 10px double #e2a93b; }
+  .cal .frame { position: absolute; inset: 26px; border: 10px double #e3962b; }
   .cal .col { padding: calc(var(--top) - 10px) 70px calc(var(--bottom) - 10px); text-align: center; }
-  .cal .sash { position: absolute; top: 96px; right: -150px; width: 600px; transform: rotate(45deg); background: #e2a93b; color: #4a0f0b; font-weight: 800; font-size: 34px; padding: 14px 0; text-align: center; letter-spacing: 0.04em; box-shadow: 0 8px 0 #4a0f0b; z-index: 2; }
-  .cal .samvat { font-weight: 700; font-size: 34px; color: #e2a93b; }
-  .cal .scene { display: block; width: 100%; flex: 1; min-height: 0; margin-top: 22px; border: 7px solid #e2a93b; }
-  .cal .title { font-weight: 800; font-size: var(--title); line-height: 0.95; margin-top: 30px; text-shadow: 8px 8px 0 #e2a93b; letter-spacing: -0.01em; }
+  .cal .sash { position: absolute; top: 96px; right: -150px; width: 600px; transform: rotate(45deg); background: #e3962b; color: #4a0f0b; font-weight: 800; font-size: 34px; padding: 14px 0; text-align: center; letter-spacing: 0.04em; box-shadow: 0 8px 0 #4a0f0b; z-index: 2; }
+  .cal .samvat { font-weight: 700; font-size: 34px; color: #e3962b; }
+  .cal .scene { display: block; width: 100%; flex: 1; min-height: 0; margin-top: 22px; border: 7px solid #e3962b; }
+  .cal .title { font-weight: 800; font-size: var(--title); line-height: 0.95; margin-top: 30px; text-shadow: 8px 8px 0 #e3962b; letter-spacing: -0.01em; }
   [lang="hi"] .cal .title { line-height: 1.25; }
   .cal .sub { font-weight: 700; font-size: 46px; line-height: 1.15; color: #f0c97a; margin-top: 16px; }
   .cal .line { font-size: 30px; line-height: 1.45; margin: 14px auto 0; max-width: 860px; }
-  .cal .offer { font-weight: 800; font-size: 40px; color: #e2a93b; margin-top: 16px; }
-  .cal .cta { margin-top: 22px; background: #f6e3b4; color: #7a1a14; display: flex; justify-content: center; align-items: baseline; gap: 26px; padding: 18px 0; box-shadow: 10px 10px 0 #e2a93b; }
+  .cal .offer { font-weight: 800; font-size: 40px; color: #e3962b; margin-top: 16px; }
+  .cal .cta { margin-top: 22px; background: #f6e3b4; color: #7a1a14; display: flex; justify-content: center; align-items: baseline; gap: 26px; padding: 18px 0; box-shadow: 10px 10px 0 #e3962b; }
   .cal .cta .go { font-weight: 800; font-size: 60px; line-height: 1; }
   .cal .cta .url { font-weight: 800; font-size: 34px; }
 
@@ -96,8 +102,8 @@
      kartik: the four-by-five sheet framed in calendar art.
      frame and end: the video's caption overlay and its end card. */
   .home .main { display: grid; grid-template-columns: minmax(0, 1fr) var(--phone); gap: 34px; margin-top: 22px; align-items: start; }
-  .home .hook { font-weight: 800; font-size: var(--homehook); line-height: 0.92; letter-spacing: -0.01em; text-shadow: 8px 8px 0 #d1261c; }
-  .home .hook .r { color: #d1261c; text-shadow: 8px 8px 0 #141210; }
+  .home .hook { font-weight: 800; font-size: var(--homehook); line-height: 0.92; letter-spacing: -0.01em; text-shadow: 8px 8px 0 #c8251d; }
+  .home .hook .r { color: #c8251d; text-shadow: 8px 8px 0 #141210; }
   [lang="hi"] .home .hook { line-height: 1.22; }
   .home .sub { font-size: 32px; line-height: 1.4; margin-top: 30px; font-weight: 700; }
   .home .phone { position: relative; width: var(--phone); aspect-ratio: 1080 / 2020; }
@@ -111,14 +117,14 @@
   .home .pburst .t { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; }
   .home .pburst .big { font-weight: 800; font-size: calc(var(--seal) * 0.78); line-height: 0.9; }
   .home .pburst .small { font-weight: 800; font-size: 19px; line-height: 1.15; max-width: 140px; margin-top: 4px; }
-  .kartik .sheetbox { flex: 1; min-height: 0; margin-top: 22px; border: 7px solid #e2a93b; background: #4a0f0b; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .kartik .sheetbox { flex: 1; min-height: 0; margin-top: 22px; border: 7px solid #e3962b; background: #4a0f0b; display: flex; align-items: center; justify-content: center; padding: 16px; }
   .kartik .sheetbox img { max-height: 100%; max-width: 100%; display: block; }
   .vframe { background: transparent !important; }
-  .vframe .kick { position: absolute; left: 72px; right: 72px; top: 190px; font-weight: 800; font-size: 34px; color: #d1261c; letter-spacing: 0.06em; }
-  .vframe .vcap { position: absolute; left: 72px; right: 72px; top: 296px; height: 266px; display: flex; align-items: flex-end; font-weight: 800; font-size: 86px; line-height: 0.98; color: #141210; text-shadow: 6px 6px 0 #d1261c; letter-spacing: -0.01em; }
+  .vframe .kick { position: absolute; left: 72px; right: 72px; top: 190px; font-weight: 800; font-size: 34px; color: #c8251d; letter-spacing: 0.06em; }
+  .vframe .vcap { position: absolute; left: 72px; right: 72px; top: 296px; height: 266px; display: flex; align-items: flex-end; font-weight: 800; font-size: 86px; line-height: 0.98; color: #141210; text-shadow: 6px 6px 0 #c8251d; letter-spacing: -0.01em; }
   [lang="hi"] .vframe .vcap { font-size: 74px; line-height: 1.28; }
   .endcard .col { justify-content: flex-start; }
-  .endcard .vband { margin: 40px -104px 0; background: #141210; color: #f6c518; transform: rotate(-2.5deg); padding: 22px 104px; font-weight: 800; font-size: 50px; line-height: 1.12; }
+  .endcard .vband { margin: 40px -104px 0; background: #141210; color: #f2c230; transform: rotate(-2.5deg); padding: 22px 104px; font-weight: 800; font-size: 50px; line-height: 1.12; }
   .endcard .cta { margin-top: 48px; }
   .endcard .ph { position: absolute; left: 230px; top: 1180px; width: 620px; height: 800px; border: 20px solid #141210; border-bottom: 0; border-radius: 48px 48px 0 0; overflow: hidden; background: #f2ead9; z-index: 1; }
   .endcard .ph img { width: 100%; display: block; }
@@ -144,8 +150,10 @@
   s.setProperty("--seal", (p.seal && p.seal.big.length > 2 ? 66 : 112) + "px");
   s.setProperty("--phone", (tall ? 470 : 380) + "px");
   s.setProperty("--homehook", (hi ? 100 : 116) + "px");
+  const MARK = (ink) => `<svg viewBox="0 0 48 48" aria-hidden="true"><defs><clipPath id="mk"><circle cx="24" cy="24" r="20"/></clipPath></defs><circle cx="24" cy="24" r="21.6" fill="#f2ead9" stroke="${ink}" stroke-width="2.4"/><g clip-path="url(#mk)"><path d="M15.4 24.6A8.6 8.6 0 0 1 32.6 24.6Z" fill="#c8251d"/><rect y="24.6" width="48" height="1.4" fill="${ink}"/><g fill="#1d5a6a"><rect x="8" y="29" width="32" height="1.8"/><rect x="5" y="33.4" width="38" height="2"/><rect x="2" y="38" width="44" height="2.2"/></g></g></svg>`;
+  const WM = (color, ink = "#141210") => `<span class="lock" style="color:${color}">${MARK(ink)}<span class="wm">Snan<span class="wm-i">\u0131<svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="5" fill="#c8251d"/></svg></span>fy</span></span>`;
   const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
-  const mark = (fill) => `<span class="d" style="color:${fill}"><b>Snan</b><span style="font-weight:400">ify</span></span>`;
+  const mark = (fill) => WM(fill, fill);
 
   /* A starburst of `n` points, as a polygon, for the price seal. */
   function burst(n, fill, stroke) {
@@ -162,12 +170,12 @@
   function truckBorder() {
     const W = p.w, H = p.h, b = 44, polys = [];
     for (let x = -b * 2; x < W + b * 2; x += 72) {
-      polys.push(`<polygon points="${x},0 ${x + 36},0 ${x + 36 + b},${b} ${x + b},${b}" fill="#d1261c"/>`);
-      polys.push(`<polygon points="${x},${H - b} ${x + 36},${H - b} ${x + 36 + b},${H} ${x + b},${H}" fill="#d1261c"/>`);
+      polys.push(`<polygon points="${x},0 ${x + 36},0 ${x + 36 + b},${b} ${x + b},${b}" fill="#c8251d"/>`);
+      polys.push(`<polygon points="${x},${H - b} ${x + 36},${H - b} ${x + 36 + b},${H} ${x + b},${H}" fill="#c8251d"/>`);
     }
     for (let y = -b * 2; y < H + b * 2; y += 72) {
-      polys.push(`<polygon points="0,${y} ${b},${y + b} ${b},${y + b + 36} 0,${y + 36}" fill="#d1261c"/>`);
-      polys.push(`<polygon points="${W - b},${y} ${W},${y + b} ${W},${y + b + 36} ${W - b},${y + 36}" fill="#d1261c"/>`);
+      polys.push(`<polygon points="0,${y} ${b},${y + b} ${b},${y + b + 36} 0,${y + 36}" fill="#c8251d"/>`);
+      polys.push(`<polygon points="${W - b},${y} ${W},${y + b} ${W},${y + b + 36} ${W - b},${y + 36}" fill="#c8251d"/>`);
     }
     return `<svg class="abs" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${polys.join("")}</svg>`;
   }
@@ -181,12 +189,12 @@
       const a = (i / 18) * Math.PI * 2;
       if (Math.sin(a) > 0.2) continue;
       const pt = (r, t) => `${(210 + r * Math.cos(t)).toFixed(2)},${(150 + r * Math.sin(t)).toFixed(2)}`;
-      rays.push(`<polygon points="${pt(118, a - 0.08)} ${pt(160, a)} ${pt(118, a + 0.08)}" fill="#1a1410"/>`);
+      rays.push(`<polygon points="${pt(118, a - 0.08)} ${pt(160, a)} ${pt(118, a + 0.08)}" fill="#141210"/>`);
     }
     return `<svg class="emblem" viewBox="0 0 420 300">${rays.join("")}
       <clipPath id="sky"><rect width="420" height="188"/></clipPath>
       <circle cx="210" cy="150" r="102" fill="#c8251d" clip-path="url(#sky)"/>
-      <rect x="120" y="202" width="180" height="17" fill="#1a1410"/><rect x="74" y="236" width="272" height="17" fill="#1a1410"/><rect x="18" y="270" width="384" height="17" fill="#1a1410"/></svg>`;
+      <rect x="120" y="202" width="180" height="17" fill="#141210"/><rect x="74" y="236" width="272" height="17" fill="#141210"/><rect x="18" y="270" width="384" height="17" fill="#141210"/></svg>`;
   }
 
   /* The brown side of the box, its grain as dots: it carries the call to action. */
@@ -216,22 +224,22 @@
       <rect x="500" y="350" width="200" height="7" fill="#f0b648"/><rect x="530" y="374" width="140" height="7" fill="#f0b648"/><rect x="560" y="398" width="80" height="7" fill="#f0b648"/>
       ${ripples.join("")}
       <polygon points="0,270 150,270 150,350 220,350 220,440 290,440 290,540 360,540 360,760 0,760" fill="#4a0f0b"/>
-      <rect x="0" y="258" width="160" height="12" fill="#e2a93b"/>
+      <rect x="0" y="258" width="160" height="12" fill="#e3962b"/>
       <path d="M182 336 C192 314 198 306 202 292 C206 306 212 314 222 336 Z" fill="#f6e3b4"/>
-      <path d="M166 338 H238 L228 358 H176 Z" fill="#e2a93b"/>
+      <path d="M166 338 H238 L228 358 H176 Z" fill="#e3962b"/>
       ${petals}
     </svg>`;
   }
 
   const redGanga = (t) => esc(t).replace(/(Ganga|गंगा)/, '<span class="r">$1</span>');
-  const sealHtml = (cls) => p.seal ? `<div class="${cls}">${burst(16, "#d1261c", "#141210")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>` : "";
+  const sealHtml = (cls) => p.seal ? `<div class="${cls}">${burst(16, "#c8251d", "#141210")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>` : "";
   const phone = (img) => `<div class="phone"><svg viewBox="0 0 1080 2020" preserveAspectRatio="none"><rect x="6" y="6" width="1068" height="2008" rx="120" fill="#141210"/><rect x="50" y="140" width="980" height="1742" fill="#f2ead9"/><rect x="430" y="60" width="220" height="34" rx="17" fill="#2b2620"/></svg><img src="${img}">${sealHtml("pburst")}</div>`;
 
   const root = document.getElementById("root");
   if (p.style === "home") {
     document.body.className = "sb home" + (tall ? " tallhome" : "") + (p.cta.length > 10 ? " long" : "");
     root.innerHTML = `${truckBorder()}<div class="frame"></div><div class="col">
-      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#d1261c">${esc(p.kicker)}</span></div>
+      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#c8251d">${esc(p.kicker)}</span></div>
       <div class="main">
         <div><div class="hook d caps">${redGanga(p.hook)}</div></div>
         ${phone(p.img)}
@@ -257,12 +265,12 @@
     document.body.className = "vframe";
     const stripes = [];
     for (let y = -88; y < 1920 + 88; y += 72) {
-      stripes.push(`<polygon points="0,${y} 44,${y + 44} 44,${y + 80} 0,${y + 36}" fill="#d1261c"/>`);
-      stripes.push(`<polygon points="1036,${y} 1080,${y + 44} 1080,${y + 80} 1036,${y + 36}" fill="#d1261c"/>`);
+      stripes.push(`<polygon points="0,${y} 44,${y + 44} 44,${y + 80} 0,${y + 36}" fill="#c8251d"/>`);
+      stripes.push(`<polygon points="1036,${y} 1080,${y + 44} 1080,${y + 80} 1036,${y + 36}" fill="#c8251d"/>`);
     }
-    for (let x = -88; x < 1080 + 88; x += 72) stripes.push(`<polygon points="${x},0 ${x + 36},0 ${x + 80},44 ${x + 44},44" fill="#d1261c"/>`);
+    for (let x = -88; x < 1080 + 88; x += 72) stripes.push(`<polygon points="${x},0 ${x + 36},0 ${x + 80},44 ${x + 44},44" fill="#c8251d"/>`);
     root.innerHTML = `<svg class="abs" width="1080" height="1920" viewBox="0 0 1080 1920">
-        <path fill-rule="evenodd" fill="#f6c518" d="M0 0H1080V1920H0Z M106 590V1920H974V590Z"/>
+        <path fill-rule="evenodd" fill="#f2c230" d="M0 0H1080V1920H0Z M106 590V1920H974V590Z"/>
         ${stripes.join("")}
         <rect x="94" y="578" width="892" height="1420" rx="60" fill="none" stroke="#141210" stroke-width="24"/>
       </svg>
@@ -271,7 +279,7 @@
   } else if (p.style === "end") {
     document.body.className = "sb endcard" + (p.cta.length > 10 ? " long" : "");
     root.innerHTML = `${truckBorder()}<div class="frame"></div><div class="col">
-      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#d1261c">${esc(p.k)}</span></div>
+      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#c8251d">${esc(p.k)}</span></div>
       <div class="words d caps"><span class="w1">${esc(p.top)}</span><span class="w2">${esc(p.bottom)}</span>
         ${sealHtml("burst")}
       </div>
@@ -281,9 +289,9 @@
   } else if (p.style === "signboard") {
     document.body.className = "sb" + (p.cta.length > 10 ? " long" : "");
     root.innerHTML = `${truckBorder()}<div class="frame"></div><div class="col">
-      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#d1261c">${esc(p.samvat)}</span></div>
+      <div class="head">${mark("#141210")}<span class="d caps" style="font-size:30px;color:#c8251d">${esc(p.samvat)}</span></div>
       <div class="words d caps"><span class="w1">${esc(p.top)}</span><span class="w2">${esc(p.bottom)}</span>
-        <div class="burst">${burst(16, "#d1261c", "#141210")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>
+        <div class="burst">${burst(16, "#c8251d", "#141210")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>
       </div>
       <div class="band d caps">${esc(p.band)}</div>
       <div class="grow"></div>
@@ -297,7 +305,7 @@
       <div class="head">${mark("#f2c230")}</div>
       <div class="hook d caps">${esc(p.hook)}</div>
       <div class="label">
-        <div class="stamp">${burst(12, "#1a1410", "#f2c230")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>
+        <div class="stamp">${burst(12, "#141210", "#f2c230")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>
         <div class="inner">
           <div class="row d caps"><span>${esc(p.brand)}</span><span>${esc(p.number)}</span></div>
           ${emblem()}
