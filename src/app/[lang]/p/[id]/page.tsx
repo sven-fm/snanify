@@ -21,9 +21,10 @@ import { balance } from "@/lib/credits";
    identifier is twenty-two characters of base58, so the link is the capability
    and nothing needs a sign-in.
 
-   TWO PAGES, NOT ONE PAGE WITH CONDITIONS. The owner gets the sheet, the send
-   press, the controls and their own copy with their sankalp on it; the person
-   it was sent to gets the sheet, one line and one press. Everything a
+   TWO PAGES, NOT ONE PAGE WITH CONDITIONS. The owner gets one sheet with
+   their sankalp under it, the send press, a print that holds both on one
+   page, and the controls; the person it was sent to gets the sheet, one line
+   and one press. Everything a
    stranger can reach is built from `patraView`, a type that has never held
    the sankalp.
    --------------------------------------------------------------------------- */
@@ -142,7 +143,6 @@ export default async function Page({
           t={t}
           id={view.id}
           imageSrc={imageSrc}
-          alt={alt}
           pageUrl={pageUrl}
           imageUrl={imageUrl}
           shareText={line}

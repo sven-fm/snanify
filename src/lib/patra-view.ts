@@ -171,7 +171,7 @@ export function patraView(sitting: Sitting, edition?: Lang): PatraView {
    The same sitting, as the owner's own copy.
 
    `SankalpPatra.tsx` draws it: the memento's layout as a page, with the
-   person's sankalp under the names, and print CSS on lighter paper.
+   person's sankalp under the sheet, and print CSS on lighter paper.
 
    THE SHEET IS THE OWNER'S, SO IT CARRIES THEIR SANKALP. That is the one thing
    `patraView` deliberately never holds, and it is why this takes the sitting

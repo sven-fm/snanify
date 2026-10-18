@@ -10,7 +10,7 @@ import { nthMorning } from "@/lib/mornings";
    The sheet is the memento (src/lib/patra-image.ts) set as a page, in the
    sitting's own edition: the header, the ghat, the names in capitals, where,
    the prayer, how the river ran, the closing river, the foot. The owner's
-   copy adds one thing, their sankalp under the names.
+   copy adds one thing, their sankalp under the sheet.
 
    `hi` is checked against the shape of `en`, so a missing translation is a
    compile error rather than an English word on a Hindi sheet.
@@ -37,6 +37,8 @@ type SheetCopy = {
   morning: (n: number) => [string, string];
   /** Read aloud for the owner's words, which print without a label. */
   sankalpAria: string;
+  /** The quiet line under the owner's words, on their page and their paper. */
+  sankalpNote: string;
 };
 
 const tail = (v: Pick<PatraView, "ghat" | "city">) => `${v.ghat ? `, ${v.ghat}` : ""}${v.city ? `, ${v.city}` : ""}`;
@@ -52,6 +54,7 @@ const en: { sheet: SheetCopy } = {
     median: "Seasonal median, 1997 to 2025",
     morning: (n) => [ordinal(n, "en"), "morning"],
     sankalpAria: "Your sankalp",
+    sankalpNote: "Your sankalp. It stays with you.",
   },
 };
 
@@ -66,6 +69,7 @@ const hi: typeof en = {
     median: "1997 से 2025 का सामान्य स्तर",
     morning: (n) => [nthMorning(n, "hi"), "सुबह"],
     sankalpAria: "आपका संकल्प",
+    sankalpNote: "आपका संकल्प। यह आपके पास रहता है।",
   },
 };
 

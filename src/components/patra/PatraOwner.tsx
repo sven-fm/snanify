@@ -23,18 +23,18 @@ export type OwnerNext = {
 };
 
 /**
- * The sheet for the person who kept it, straight after the morning. The
- * image they send, and under it the marigold press that sends it with a quiet
- * link to save it; then their next morning, the controls, and their own copy:
- * the same sheet in HTML with their sankalp under the names, ready to print.
- * One press on the page: everything else is a quiet link.
+ * The sheet for the person who kept it, straight after the morning. ONE
+ * SHEET: the HTML sheet, pulled from the press, with their sankalp standing
+ * under it; under that the marigold press that sends the image with quiet
+ * links to save it and to print the sheet and the sankalp on one page; then
+ * their next morning and the controls. One press on the page: everything
+ * else is a quiet link.
  */
 export function PatraOwner({
   lang,
   t,
   id,
   imageSrc,
-  alt,
   pageUrl,
   imageUrl,
   shareText,
@@ -48,7 +48,6 @@ export function PatraOwner({
   t: Copy;
   id: string;
   imageSrc: string;
-  alt: string;
   pageUrl: string;
   imageUrl: string;
   shareText: string;
@@ -62,10 +61,11 @@ export function PatraOwner({
   return (
     <main className="mx-auto max-w-xl px-4 py-6 pb-16 sm:px-8 sm:py-14">
       {/* Pulled from the press, then the send button settles under it. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull block w-full bg-paper2" />
+      <div className="pull">
+        <PatraSheet data={printable} />
+      </div>
 
-      <div className="pull mt-6" style={{ animationDelay: "320ms" }}>
+      <div className="pull mt-8" style={{ animationDelay: "320ms" }}>
         <ShareButton
           url={pageUrl}
           imageUrl={imageUrl}
@@ -76,12 +76,12 @@ export function PatraOwner({
           lang={lang}
           auto={auto}
         />
-        <div className="mt-3 text-center">
+        <div className="mt-3 flex flex-col items-center">
           <a href={`${imageSrc}?download=1`} download={DOWNLOAD_NAME} className={buttonClass("quiet")}>
             {t.download}
           </a>
+          <PrintButton label={t.print} />
         </div>
-        {auto && <p className="mt-3 text-center text-sm text-ink2">{t.homeScreen}</p>}
       </div>
 
       <section className="mt-14" data-owner-next>
@@ -115,18 +115,6 @@ export function PatraOwner({
         </form>
 
         {isPublic && <p className="mt-2 max-w-lg text-sm leading-relaxed text-ink2">{t.privateWarning}</p>}
-      </section>
-
-      {/* The owner's copy: the same sheet, with their sankalp under the names. */}
-      <section className="mt-14">
-        <h2 className="display text-xl text-ink">{t.printHeading}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-ink2">{t.printNote}</p>
-        <div className="mt-5">
-          <PatraSheet data={printable} />
-        </div>
-        <div className="mt-3">
-          <PrintButton label={t.print} />
-        </div>
       </section>
     </main>
   );

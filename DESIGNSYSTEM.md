@@ -350,9 +350,13 @@ Two renderings of one design, from the owner's final cut in
   serve and people share. `patraSvg` and `renderPatraSheet` make the 1080 × 1350 sheet for
   the ad renderer, in the same order with a shorter river. `patraCardSvg` is the 1200 × 630
   link card.
-- `src/components/SankalpPatra.tsx`, HTML, for `/p/[id]`, the specimen and print: the same
-  layout as the memento, plus the person's own sankalp in Eczar 700 under the names on the
-  owner's copy. Print CSS swaps to `#faf6ea`.
+- `src/components/SankalpPatra.tsx`, HTML, the one sheet on the owner's `/p/[id]`: the same
+  layout as the memento, with the person's own sankalp in Eczar 700 under the sheet, outside
+  it, on the owner's copy only. Print CSS swaps to `#faf6ea` and holds the sheet and the
+  sankalp on one page of A4 or US Letter.
+- **The portrait is cut from the middle.** `src/lib/portrait.ts` crops an upload to the 4 : 5
+  window from its centre, never by saliency: sharp's "attention" crop centres a side-lit face
+  on its lit cheek and leaves the head off to one side.
 
 From top to foot:
 

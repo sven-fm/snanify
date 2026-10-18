@@ -23,6 +23,11 @@ import { track } from "@/lib/track";
    two seconds after a sixty-second silence is asking them to lose the impulse.
    `navigator.share` needs a gesture in most browsers, so this is attempted and
    allowed to fail quietly rather than promised.
+
+   THE FILE IS FETCHED ON ARRIVAL, NOT ON THE PRESS. The owner's page shows
+   the sheet in HTML, so nothing else has the PNG in hand; a share sheet opened
+   after a slow fetch has lost the gesture that allowed it on some phones.
+   The press awaits a fetch that has usually finished already.
    --------------------------------------------------------------------------- */
 
 export function ShareButton({
@@ -48,6 +53,7 @@ export function ShareButton({
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
   const tried = useRef(false);
+  const file = useRef<Promise<File | null> | null>(null);
 
   async function send() {
     if (busy) return;
@@ -55,10 +61,12 @@ export function ShareButton({
     track("share_open", { water, lang });
 
     try {
-      const file = await sheetFile(imageUrl);
+      /* A fetch that failed on arrival gets one more try on the press. */
+      let sheet = await (file.current ??= sheetFile(imageUrl));
+      if (!sheet) sheet = await (file.current = sheetFile(imageUrl));
 
-      if (file && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], text, url });
+      if (sheet && navigator.canShare?.({ files: [sheet] })) {
+        await navigator.share({ files: [sheet], text, url });
         track("share_done", { water, lang, how: "files" });
         return;
       }
@@ -80,6 +88,10 @@ export function ShareButton({
       setBusy(false);
     }
   }
+
+  useEffect(() => {
+    file.current ??= sheetFile(imageUrl);
+  }, [imageUrl]);
 
   useEffect(() => {
     if (!auto || tried.current) return;
