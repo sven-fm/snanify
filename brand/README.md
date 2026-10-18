@@ -141,8 +141,15 @@ Two families that set Latin and Devanagari natively, so both languages speak in 
 
 Each comes as SVG (outlined, no font needed) and PNG at twice size. The mark is an ink ring
 on paper, a sindoor sun cut by an ink horizon, three teal water bands. The wordmark is
-Eczar 800, its i dotless under a sindoor bindu. Recolour neither, redraw neither, add no
-marigold to the mark. The Facebook Page avatar is `public/brand-1024.png`.
+Eczar 800, its i dotless under a sindoor bindu. The Facebook Page avatar is
+`public/brand-1024.png`.
+
+**Clear space and size.** Half the mark's height on every side. The smallest lockup is the
+masthead's: a 30px mark beside a 24px word. Below 32px the mark uses its small cut.
+
+**Keep it as drawn.** Never stretch, recolour or turn it, give it a soft shadow or a glow,
+set the name in tracked capitals or another face, or add marigold to the mark. Page 7 of
+the brand book shows each.
 
 ## The kit
 
