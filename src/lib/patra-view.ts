@@ -1,4 +1,3 @@
-import { ordinal } from "@/lib/ordinal";
 import "server-only";
 import type { Sitting } from "@/db/schema";
 import type { RiverSlice, SkySlice } from "@/lib/patra-record";
@@ -8,7 +7,6 @@ import { waterName } from "@/content/names";
 import { blobUrl } from "@/lib/blob";
 import { shortSeed } from "@/lib/seed";
 import type { PatraRecord } from "@/content/patra";
-import { SITE_ORIGIN } from "@/lib/locales";
 import type { Lang } from "@/lib/locales";
 import { timeAtPlace, zonePlace } from "@/lib/zone-place";
 import { flowContent } from "@/content/flow";
@@ -170,59 +168,19 @@ export function patraView(sitting: Sitting, edition?: Lang): PatraView {
 
 
 /* ---------------------------------------------------------------------------
-   The same sitting, shaped for the printable A4 sheet.
+   The same sitting, as the owner's own copy.
 
-   `SankalpPatra.tsx` draws it: the double rule, the folio line, the ruled
-   register, the colophon and the print CSS.
+   `SankalpPatra.tsx` draws it: the memento's layout as a page, with the
+   person's sankalp under the names, and print CSS on lighter paper.
 
    THE SHEET IS THE OWNER'S, SO IT CARRIES THEIR SANKALP. That is the one thing
    `patraView` deliberately never holds, and it is why this takes the sitting
    rather than the view: printing your own words is the whole reason to print
-   the sheet, and nothing else renders from this function.
-
-   A field with nothing behind it is left off rather than filled with a
-   plausible value: gotra, the giver, the muhurat window and the gauge level
-   are all absent, and the sheet prints an honest blank for each.
+   the sheet, and nothing else renders from this function. The view inside it
+   is in the sitting's own edition, so the copy matches the image it was sent
+   as.
    --------------------------------------------------------------------------- */
 
 export function printableRecord(sitting: Sitting): PatraRecord {
-  const view = patraView(sitting);
-  const river = sitting.river as RiverSlice;
-
-  return {
-    patraId: sitting.id,
-    names: view.names.map((name) => ({
-      latin: name,
-      /* Already Devanagari, so it is the same string and the sheet sets it
-         once rather than printing a transliteration of itself. */
-      devanagari: /[\u0900-\u097f]/.test(name) ? name : undefined,
-    })),
-    sankalpText: sitting.sankalpText || undefined,
-
-    water: view.water,
-    ghat: view.ghat,
-    place: view.city,
-
-    keptOn: view.keptDate,
-    keptIst: `${view.keptIst} IST`,
-    keptLocal: view.keptLocal,
-
-    /* Printed since the check of 11 September 2026: the tithi is computed
-       here and was matched against Drik Panchang on eight days, every one to
-       the minute; see docs/panchang-check.md. Before that the sheet left the
-       line ruled and empty. */
-    tithi: { label: view.tithi, confidence: "sourced" },
-
-    flow: {
-      value: view.flow,
-      note:
-        river.kind === "modelled" && view.rank
-          ? `${view.state}. ${ordinal(Number(view.rank))} percentile since 1997.`
-          : "Seasonal median, 1997 to 2025.",
-    },
-
-    seed: view.seed,
-    distance: view.distance ? { value: view.distance, note: "" } : undefined,
-    verifyUrl: `${SITE_ORIGIN}/p/${sitting.id}`,
-  };
+  return { ...patraView(sitting), sankalp: sitting.sankalpText?.trim() || null };
 }

@@ -22,9 +22,10 @@ import { balance } from "@/lib/credits";
    and nothing needs a sign-in.
 
    TWO PAGES, NOT ONE PAGE WITH CONDITIONS. The owner gets the sheet, the send
-   button, their own sankalp and the controls; the person it was sent to gets
-   the sheet, one line and the invitation. Everything a stranger can reach is
-   built from `patraView`, a type that has never held the sankalp.
+   press, the controls and their own copy with their sankalp on it; the person
+   it was sent to gets the sheet, one line and one press. Everything a
+   stranger can reach is built from `patraView`, a type that has never held
+   the sankalp.
    --------------------------------------------------------------------------- */
 
 export const dynamic = "force-dynamic";
@@ -146,7 +147,6 @@ export default async function Page({
           imageUrl={imageUrl}
           shareText={line}
           waterSlug={sitting.waterSlug}
-          sankalp={sitting.sankalpText}
           isPublic={sitting.isPublic}
           printable={printableRecord(sitting)}
           auto={query.new === "1"}

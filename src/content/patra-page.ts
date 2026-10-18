@@ -4,28 +4,25 @@ import type { Lang } from "@/lib/locales";
    /p/[id], the Sankalp Patra.
 
    Two readers, two pages. The person who kept the morning, arriving straight
-   from it, gets the sheet, the send button, their own words and the controls.
-   Whoever they send it to, arriving cold in a family group, gets the sheet,
-   one line saying what it is, and the invitation. Neither page repeats what
-   the sheet already says, and neither argues for it. Where the figures come
-   from is said on /rivers and /faq, and nowhere near a sheet.
+   from it, gets the sheet, the marigold press that sends it, a link to save
+   it, their next morning, the controls, and their own copy with their
+   sankalp on it. Whoever they send it to, arriving cold in a family group,
+   gets the sheet, one line saying what it is, and one press to start their
+   own snan. Where the figures come from is said on /rivers and /faq.
 
    `shareText` is what lands in WhatsApp above the link. It says one true
    thing: somebody kept a sankalp with a named river on a named morning.
    --------------------------------------------------------------------------- */
 
 const en = {
-  share: "Send it to the family group",
+  share: "Send it to the family",
   shareCopied: "Link copied",
+  /** The quiet link under the press: the image, to keep. */
+  download: "Save the image",
 
-  yours: "Your sankalp",
-  privateNote: "Only you see your sankalp. The sheet you send carries the names and the river.",
-
-  visitTitle: "Sit with your own river tomorrow morning",
-  visitBody: "Three minutes at the hour the panchang names, wherever you are.",
-  visitCta: "Begin your snan",
-  /** The strip above the sheet, for whoever it was sent to. */
-  visitTop: "Sit with your own river. Three minutes, at the hour the panchang names.",
+  visitTitle: "Sit with your own river.",
+  visitBody: "Three minutes, at the hour the panchang names. Wherever you are.",
+  visitCta: "Start your own snan",
 
   shareText: "{name} kept a sankalp with the {water} on {date}.",
   metaTitle: "{name}, {water}, {date}",
@@ -42,10 +39,10 @@ const en = {
   makePublic: "Make it shareable",
   privateNow: "Only you can open this link now.",
   privateWarning: "People you have already sent the image to keep it. Making it private stops the link.",
-  printHeading: "Print version",
-  printNote: "A4, with your sankalp on it. This copy is for you.",
+  printHeading: "Your copy",
+  printNote: "Your sankalp stands under the names. This copy stays with you.",
 
-  /** The owner's "what comes next", under their sankalp. */
+  /** The owner's "what comes next". */
   next: {
     heading: "Your next morning",
     /** {hour} is "05:00", {tz} the IANA zone. */
@@ -55,16 +52,13 @@ const en = {
 };
 
 const hi = {
-  share: "परिवार के समूह में भेजिए",
+  share: "परिवार को भेजिए",
   shareCopied: "कड़ी प्रतिलिपि हो गई",
+  download: "चित्र सहेजिए",
 
-  yours: "आपका संकल्प",
-  privateNote: "आपका संकल्प केवल आप देखते हैं। जो पत्र आप भेजते हैं, उस पर नाम और नदी होते हैं।",
-
-  visitTitle: "कल सुबह अपनी नदी के साथ बैठिए",
-  visitBody: "पंचांग की बताई घड़ी पर तीन मिनट, आप जहाँ भी हों।",
+  visitTitle: "अपनी नदी के साथ बैठिए।",
+  visitBody: "पंचांग की बताई घड़ी पर तीन मिनट। आप जहाँ भी हों।",
   visitCta: "अपना स्नान आरंभ कीजिए",
-  visitTop: "अपनी नदी के साथ बैठिए। तीन मिनट, पंचांग की बताई घड़ी पर।",
 
   shareText: "{name} ने {date} को {water} के साथ संकल्प रखा।",
   metaTitle: "{name}, {water}, {date}",
@@ -80,8 +74,8 @@ const hi = {
   makePublic: "इसे साझा योग्य कीजिए",
   privateNow: "अब यह कड़ी केवल आप खोल सकते हैं।",
   privateWarning: "जिन्हें आपने चित्र भेज दिया है, उनके पास वह रहता है। निजी करने से कड़ी बंद होती है।",
-  printHeading: "छपाई के लिए",
-  printNote: "ए-४, आपके संकल्प के साथ। यह प्रति आपके लिए है।",
+  printHeading: "आपकी प्रति",
+  printNote: "नामों के नीचे आपका संकल्प है। यह प्रति आपके पास रहती है।",
 
   next: {
     heading: "आपकी अगली सुबह",

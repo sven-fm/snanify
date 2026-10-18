@@ -1,671 +1,421 @@
-"use client";
-
-import { useEffect, useId, useState } from "react";
-import { createPortal } from "react-dom";
-import { Colophon, Mark, Wordmark } from "@/components/Logo";
-import { Kumkum, Mauli } from "@/components/marks";
-import {
-  patraContent,
-  SPECIMEN_TEXT,
-  type PatraRecord,
-} from "@/content/patra";
-import type { Lang } from "@/lib/locales";
+import type { CSSProperties } from "react";
+import { patraContent, type PatraRecord } from "@/content/patra";
+import { flowContent } from "@/content/flow";
+import { closingRiver } from "@/lib/engraving";
+import { gaugeModel } from "@/lib/gauge";
+import { GAUGE_FILLS, PALETTE } from "@/lib/palette";
+import type { PatraView } from "@/lib/patra-view";
+import type { FlowBand } from "@/lib/riverdata";
 
 /* ---------------------------------------------------------------------------
-   The Sankalp Patra, the printable A4 form.
+   The Sankalp Patra as a page (spec 6.5).
 
-   This began as a certificate of a rite performed by a person at a ghat. No
-   rite is performed, so that document does not exist any more. The furniture
-   does, and it was always the good part: the double rule, the folio line, the
-   ruled register, the colophon at the foot, the `u()` unit system and the
-   print CSS. All of it is kept.
+   THE SAME DESIGN AS THE IMAGE. src/lib/patra-image.ts draws the 1080 by 1920
+   memento; this sets the same sheet in HTML, top to bottom: "Sankalp Patra"
+   and the date, the ghat with the portrait pinned on it and the morning's
+   seal, the names one per line in capitals, where, the prayer, how the river
+   ran with its gauge and its figure, the closing river drawn from the day's
+   seed, the foot. Every distance is the image's own, in 1080ths of the sheet's
+   width (`u()`), so the page and the picture keep one geometry and the sheet
+   scales as one block from a phone to a print.
 
-   It was then orphaned for a while, when /patra/sample was deleted, and it is
-   back as the owner's own print view on /p/[id]: the one copy that carries
-   their sankalp. src/lib/patra-view.ts maps a sitting onto the record below.
+   THE OWNER'S COPY CARRIES THE SANKALP. Given a `PatraRecord` (only
+   `printableRecord()` makes one) the person's own words print in Eczar 700
+   under the names. Given a bare `PatraView`, the type every shared surface is
+   built from, there is nothing to print: the field does not exist.
 
-   What the sheet now asserts, and the whole of it: a name was kept at a stated
-   moment, and the water was in a stated condition at that moment, according to
-   a named public source. It never says a snan was performed for anybody,
-   because none was. "Taken in the name of" is the strongest claim on it, and
-   that claim is exactly true.
-
-   Prop-driven, so the issuance pipeline can render a real record with the same
-   component that renders the specimen today. Nothing here fetches, and nothing
-   here invents: a field absent from `data` is either omitted or printed as an
-   honest blank, never filled with a plausible value.
-
-   Sizing: the sheet is laid out at a fixed 840 x 1188 (A4 proportion) and
-   every measurement below is expressed as a fraction of the container width in
-   `cqw`. The document therefore scales, never reflows, never breaks, from a
-   390px phone to a print sheet. If content ever exceeds the design height the
-   box grows rather than clipping.
-
-   Phones: a fixed-ratio A4 document rendered into 366 usable pixels sets body
-   type at about six pixels, which is a picture of a document rather than a
-   document. `PatraSheetViewer` is therefore the component pages should reach
-   for: it renders the sheet inline and gives the reader a full-size viewer,
-   with the controls at the bottom of the screen where a thumb is.
+   ALWAYS THE DAY SHEET. The sheet is paper in every edition, as the image is,
+   so it pins the day palette on itself; printed, the paper lightens to
+   #faf6ea. The wordmark stays off it, as it does on the image: the foot
+   carries snanify.com.
    --------------------------------------------------------------------------- */
 
-const W = 840;
-const H = 1188;
+/** The sheet's design width, the memento's. */
+const W = 1080;
+/** The side margin, the image's. */
+const M = 64;
 
-/** Design pixels to container-width units, so the whole sheet scales as one. */
+/** The sun on the closing river, the image's. */
+const SUN_R = 68;
+
+/** Design units to container-width units, so the whole sheet scales as one. */
 const u = (px: number) => `${((px / W) * 100).toFixed(4)}cqw`;
 
+const PRINT_PAPER = "#faf6ea";
+
+const { day } = PALETTE;
+/* The day tokens, set on the sheet itself so every var() inside resolves to
+   paper and ink whatever edition the page around it is in. */
+const DAY_TOKENS = {
+  "--paper": day.paper,
+  "--paper-2": day.paper2,
+  "--ink": day.ink,
+  "--ink-2": day.ink2,
+  "--sindoor": day.sindoor,
+  "--marigold": day.marigold,
+  "--teal": day.teal,
+  "--rule": day.rule,
+  "--rule-strong": day.ink,
+  ...Object.fromEntries(GAUGE_FILLS.day.map((hex, i) => [`--gauge-${i + 1}`, hex])),
+} as CSSProperties;
+
 /**
- * Print rules for the document. Injected via React's stylesheet hoisting so the
- * component stays self-contained and globals.css is untouched. In print the
- * sheet forces the day edition: a reader printing the night edition would
- * otherwise get a solid black page.
+ * Print: the sheet alone, on lighter paper, on one A4 page. Everything that
+ * neither holds the sheet nor sits inside it is taken out of the flow, so no
+ * blank pages follow it; 120mm wide leaves room for a long sankalp.
  */
 const PRINT_CSS = `
 [data-patra-sheet]{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 @media print{
-  @page{ size: A4 portrait; margin: 12mm; }
-  html, body{ background:#ffffff !important; }
-  [data-patra-hide]{ display:none !important; }
-  [data-patra-page]{ padding:0 !important; margin:0 !important; }
-  [data-patra-sheet]{
-    --paper:#faf6ea; --paper-2:#f2ead9; --paper-3:#e5d9be;
-    --ink:#141210; --ink-2:#57513f;
-    --sindoor:#c8251d; --haldi:#e3962b; --rule:#c3b697; --rule-strong:#141210;
-    background-color:#faf6ea !important; color:#141210 !important;
-    box-shadow:none !important;
-    break-inside: avoid; page-break-inside: avoid;
-  }
-  [data-patra-sheet] *{ box-shadow:none !important; }
+  @page{ size: A4 portrait; margin: 10mm; }
+  html, body{ background:${PRINT_PAPER} !important; }
+  body *:not(:has([data-patra-print])):not([data-patra-print]):not([data-patra-print] *){ display:none !important; }
+  body *:has([data-patra-print]){ margin:0 !important; padding:0 !important; border:0 !important; min-height:0 !important; max-width:none !important; }
+  [data-patra-print]{ width:120mm !important; margin:0 auto !important; }
+  [data-patra-sheet]{ --paper:${PRINT_PAPER}; background-color:${PRINT_PAPER} !important; break-inside:avoid; page-break-inside:avoid; }
 }
 `;
 
-export type PatraSheetProps = {
-  lang: Lang;
-  data: PatraRecord;
-  /**
-   * Marks the sheet as a specimen: tiled specimen, spot-colour rules, and a
-   * stated banner. Anything not issued against a real record must set this.
-   */
-  specimen?: boolean;
-  /**
-   * The generative engraving for this sheet, drawn from the seed. Slotted
-   * rather than built here, because the plate is a pure module the raster
-   * routes share. Absent, nothing is drawn: a decorative stand-in on a
-   * document whose entire argument is that nothing on it is decorative would
-   * be the one dishonest mark on the page.
-   */
-  plate?: React.ReactNode;
-  className?: string;
-};
+/* Eczar and Martel in both scripts. The sheet is set in the sitting's edition,
+   which may not be the page's, so the Devanagari cut is named first where the
+   page has it and falls through to the Latin one where it does not. */
+const SERIF = "var(--font-eczar-deva, var(--font-eczar)), var(--font-eczar), Georgia, serif";
+const SANS = "var(--font-martel-deva, var(--font-martel)), var(--font-martel), ui-sans-serif, system-ui, sans-serif";
 
-/* Small typographic primitives, shared by the register cells. */
+const display = (size: number, weight: 700 | 800, extra: CSSProperties = {}): CSSProperties => ({
+  fontFamily: SERIF,
+  fontWeight: weight,
+  fontSize: u(size),
+  fontSynthesis: "none",
+  ...extra,
+});
 
-/** An inscriptional column head, sized in sheet units like everything else. */
-function CellLabel({
-  children,
-  spot = false,
-}: {
-  children: React.ReactNode;
-  spot?: boolean;
-}) {
+const sans = (size: number, extra: CSSProperties = {}): CSSProperties => ({
+  fontFamily: SANS,
+  fontSize: u(size),
+  ...extra,
+});
+
+const hasDeva = (text: string) => /[ऀ-ॿ]/.test(text);
+
+/** The size the names' count calls for: the image's 84, 68 and 56. */
+function nameTier(count: number): number {
+  return count <= 2 ? 84 : count === 3 ? 68 : 56;
+}
+
+/* --- the pieces ------------------------------------------------------------- */
+
+/**
+ * The morning seal (spec 5.2) at the sheet's own scale: a sindoor disc with a
+ * hard ink offset, a dashed marigold ring, the count in marigold Eczar 800,
+ * turned 10deg. Drawn in a 100-unit box so it scales with the sheet, which
+ * the kit's pixel-sized `Seal` cannot.
+ */
+function SheetSeal({ n, lines, deva, d }: { n: number; lines: [string, string]; deva: boolean; d: number }) {
+  const step = deva ? 18 : 15.75;
   return (
-    <p className={`label ${spot ? "text-sindoor" : "text-ink2"}`} style={{ fontSize: u(9.5) }}>
-      {children}
-    </p>
+    <svg
+      data-morning={n}
+      aria-hidden="true"
+      viewBox="0 0 100 100"
+      overflow="visible"
+      style={{ width: u(d), height: u(d), transform: "rotate(10deg)", display: "block" }}
+    >
+      <circle cx="55" cy="55" r="50" fill="var(--ink)" />
+      <circle cx="50" cy="50" r="50" fill="var(--sindoor)" />
+      <circle cx="50" cy="50" r="41" fill="none" stroke="var(--marigold)" strokeWidth="2.6" strokeDasharray="5.5 4" />
+      {lines.map((line, i) => (
+        <text
+          key={i}
+          x="50"
+          y={(55.1 + (i === 0 ? -step / 2 : step / 2)).toFixed(2)}
+          textAnchor="middle"
+          fill="var(--marigold)"
+          style={{ fontFamily: SERIF, fontWeight: 800, fontSize: 15, fontSynthesis: "none" }}
+        >
+          {line}
+        </text>
+      ))}
+    </svg>
   );
 }
 
-function Cell({
-  label,
-  children,
-  sub,
-  opening = false,
-}: {
-  label: string;
-  children: React.ReactNode;
-  sub?: string;
-  /** The first row of the register opens on the full-strength rule. */
-  opening?: boolean;
-}) {
+/**
+ * The gauge (spec 5.5) at the sheet's scale: five fills at 1 : 2 : 4 : 2 : 1,
+ * an ink frame, the dashed line at "usual", and today's sindoor dot ringed in
+ * ink. A quiet feed draws no dot.
+ */
+function SheetGauge({ percentile }: { percentile: number | null }) {
+  const model = gaugeModel(percentile);
+  const h = 48;
+  const frame = h / 8;
   return (
-    <div
-      className={opening ? "border-t-2 border-rulestrong" : "border-t border-rule"}
-      style={{ paddingTop: u(11), paddingRight: u(14), minHeight: u(72) }}
-    >
-      <CellLabel>{label}</CellLabel>
-      <div className="text-ink" style={{ marginTop: u(8), fontSize: u(13.5), lineHeight: 1.45 }}>
-        {children}
+    <div data-gauge="" aria-hidden="true" className="relative" style={{ height: u(h) }}>
+      <div className="flex h-full" style={{ border: `${u(frame)} solid var(--ink)` }}>
+        {model.segments.map((s, i) => (
+          <i
+            key={s.band}
+            className="block h-full"
+            style={{ flexGrow: Math.round((s.to - s.from) * 10), backgroundColor: `var(--gauge-${i + 1})` }}
+          />
+        ))}
       </div>
-      {sub && (
-        <p className="text-ink2" style={{ marginTop: u(5), fontSize: u(10.5), lineHeight: 1.42 }}>
-          {sub}
-        </p>
-      )}
+      <span
+        className="absolute"
+        style={{
+          left: "50%",
+          top: u(-h * 0.33),
+          height: u(h * 1.66),
+          borderLeft: `${u(frame)} dashed var(--ink)`,
+          transform: "translateX(-50%)",
+        }}
+      />
+      {model.dot !== null ? (
+        <svg
+          data-today=""
+          viewBox="0 0 48 48"
+          className="absolute"
+          style={{
+            left: `${(model.dot * 100).toFixed(2)}%`,
+            top: 0,
+            width: u(h),
+            height: u(h),
+            transform: "translateX(-50%)",
+            overflow: "visible",
+          }}
+        >
+          <circle cx="24" cy="24" r="24" fill="var(--sindoor)" stroke="var(--ink)" strokeWidth={frame} />
+        </svg>
+      ) : null}
     </div>
   );
 }
 
-export function PatraSheet({
-  lang,
-  data,
-  specimen = false,
-  plate,
-  className = "",
-}: PatraSheetProps) {
-  const t = patraContent[lang].sheet;
-  const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
-  const patternId = `patra-wm-${uid}`;
-  /* Devanagari is set in Eczar in both editions: the sheet titles itself in
-     Devanagari even on an English page, so the face is pinned rather than
-     inherited from a locale that may not carry the script. */
-  const deva = "var(--font-eczar), Georgia, serif";
-  const ringColour = specimen ? "var(--sindoor)" : "var(--rule)";
+/** The closing river, drawn from the day's seed exactly as the image draws it. */
+function ClosingRiver({ seed, percentile }: { seed: string; percentile: number | null }) {
+  const height = 420;
+  const sunR = SUN_R;
+  const svg = closingRiver({
+    seed,
+    percentile,
+    width: W,
+    height,
+    horizon: 24,
+    sunX: W - 104 - sunR,
+    sunR,
+    colours: {
+      paper: "var(--paper)",
+      ink: "var(--ink)",
+      teal: "var(--teal)",
+      sindoor: "var(--sindoor)",
+      marigold: "var(--marigold)",
+    },
+  });
+  return (
+    <svg
+      data-river=""
+      aria-hidden="true"
+      /* The box reaches above the horizon by the sun's height, so the sun
+         rises over the water instead of being cut by the box's own edge. */
+      viewBox={`0 ${-sunR} ${W} ${height + sunR}`}
+      className="block w-full"
+      style={{ height: u(height + sunR) }}
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
+}
 
-  const allRemembrance =
-    data.names.length > 0 && data.names.every((n) => n.remembrance);
+/* --- the sheet -------------------------------------------------------------- */
+
+export type PatraSheetProps = {
+  /** A bare view prints what is shared; the owner's record adds the sankalp. */
+  data: PatraView | PatraRecord;
+  className?: string;
+};
+
+export function PatraSheet({ data, className = "" }: PatraSheetProps) {
+  const lang = data.locale === "hi" ? "hi" : "en";
+  const t = patraContent[lang].sheet;
+  const deva = lang === "hi";
+  const sankalp = "sankalp" in data ? data.sankalp : null;
+
+  const names = data.names.filter((n) => n.trim()).slice(0, 5);
+  const tier = nameTier(names.length);
+  const [before, river, after] = t.place(data);
+  const plain = data.figureKind === "modelled" ? (flowContent[lang].plain[data.band as FlowBand] ?? null) : null;
+  const figure = data.flow;
+  const rank = data.figureKind === "modelled" && data.rank !== null ? t.rank(Number(data.rank)) : t.median;
+  const n = data.morning ?? 0;
+  const seal = n >= 2 ? t.morning(n) : null;
+
+  /* The pinned print, as the image places it: the mount 288 tall at 5 : 6,
+     its right edge 104 in from the picture's, centred on the picture. */
+  const pic = 440;
+  const mount = 288;
+  const mountW = (mount * 5) / 6;
+  const pad = mount / 24;
+  const sealD = mount * 0.53;
 
   return (
-    <div className={`w-full ${className}`} style={{ containerType: "inline-size" }}>
+    <div data-patra-print className={`w-full ${className}`} style={{ containerType: "inline-size" }}>
       <style href="snanify-patra-print" precedence="medium">
         {PRINT_CSS}
       </style>
 
       <article
         data-patra-sheet
-        aria-label={specimen ? t.ariaSpecimen : t.aria}
-        className="relative isolate flex flex-col border-2 border-rulestrong bg-paper"
-        style={{ aspectRatio: `${W} / ${H}`, padding: u(44) }}
+        lang={lang}
+        aria-label={data.specimen ? t.specimenTitle : t.aria}
+        className="relative overflow-hidden"
+        style={{
+          ...DAY_TOKENS,
+          backgroundColor: "var(--paper)",
+          color: "var(--ink)",
+          padding: `${u(64)} ${u(M)} ${u(48)}`,
+        }}
       >
-        {/* the inner rule: a printed document has two edges */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute"
-          style={{ inset: u(14), border: `1px solid ${ringColour}` }}
-        />
+        {/* header: the sheet's name in sindoor, the date and the tithi */}
+        <div className="flex items-baseline justify-between" style={{ gap: u(32) }}>
+          <p style={display(36, 700, { color: "var(--sindoor)", lineHeight: 1.2 })}>
+            {data.specimen ? t.specimenTitle : t.title}
+          </p>
+          <p className="text-right" style={sans(30, { color: "var(--ink-2)", lineHeight: 1.3 })}>
+            {data.keptDate} · {data.tithi}
+          </p>
+        </div>
 
-        {specimen && (
-          <svg
-            aria-hidden="true"
-            /* The viewBox matches the sheet's own proportions, so the tiled
-               mark is measured in design pixels and scales with the document,
-               the same specimen on a 390px phone and on an A4 print, rather
-               than a huge one on the small preview. */
-            viewBox={`0 0 ${W} ${H}`}
-            className="pointer-events-none absolute inset-0 h-full w-full"
-            style={{ zIndex: 1 }}
-          >
-            <defs>
-              <pattern
-                id={patternId}
-                width="330"
-                height="132"
-                patternUnits="userSpaceOnUse"
-                patternTransform="rotate(-24)"
-              >
-                <text
-                  x="0"
-                  y="30"
-                  fill="var(--sindoor)"
-                  opacity="0.13"
-                  style={{
-                    fontFamily: deva,
-                    fontWeight: 700,
-                    fontSize: "27px",
-                    letterSpacing: "0.2em",
-                  }}
-                >
-                  {SPECIMEN_TEXT}
-                </text>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill={`url(#${patternId})`} />
-          </svg>
-        )}
-
-        {/* --------------------------- the document --------------------------- */}
-        <div className="relative flex flex-1 flex-col justify-between" style={{ zIndex: 2 }}>
-          {/* masthead: mark, wordmark, folio */}
-          <div>
-            <div className="flex items-baseline justify-between" style={{ gap: u(16) }}>
-              <span className="inline-flex items-center" style={{ gap: u(10) }}>
-                <span className="inline-block shrink-0" style={{ width: u(26), height: u(26) }}>
-                  <Mark className="h-full w-full text-ink" />
-                </span>
-                <Wordmark className="text-ink" style={{ fontSize: u(13) }} />
-              </span>
-              <span className="text-ink2" style={{ fontSize: u(9.5), textAlign: "right" }}>
-                {/* Every label carries its size inline: the `label` utility is
-                    a fixed rem, and this sheet must scale as one block. */}
-                <span className="label text-ink2" style={{ fontSize: u(9.5) }}>
-                  {t.folioLabel}
-                </span>
-                {data.folioNo && (
-                  <>
-                    <span style={{ paddingLeft: u(7) }} />
-                    <span className="tabular text-ink" style={{ letterSpacing: "0.08em" }}>
-                      {data.folioNo}
-                    </span>
-                  </>
-                )}
-              </span>
-            </div>
-
-            {/* The mauli under the masthead: the sheet's one divider. */}
-            <div style={{ marginTop: u(12), fontSize: u(14) }}>
-              <Mauli />
-            </div>
-
-            {/* title */}
-            <div className="text-center" style={{ marginTop: u(18) }}>
-              <p
-                className="display text-ink"
-                style={{ fontSize: u(30), lineHeight: 1.35, fontFamily: deva }}
-              >
-                संकल्प पत्र
-              </p>
-              <p
-                className="label text-sindoor"
-                style={{
-                  marginTop: u(9),
-                  fontSize: u(12),
-                  /* Latin in both editions, set as written: sentence case,
-                     no tracking, as every label on the site now is. */
-                  letterSpacing: "0.01em",
-                }}
-              >
-                {t.titleLatin}
-              </p>
-              <p className="text-ink2" style={{ marginTop: u(11), fontSize: u(11.5) }}>
-                {t.subtitle}
-              </p>
-              {data.sequenceLine && (
-                <p className="text-ink2" style={{ marginTop: u(6), fontSize: u(10.5) }}>
-                  {data.sequenceLine}
-                </p>
-              )}
-
-              {specimen && (
-                <p
-                  className="label text-sindoor"
-                  style={{
-                    marginTop: u(13),
-                    display: "inline-block",
-                    border: "1px solid var(--sindoor)",
-                    paddingLeft: u(14),
-                    paddingRight: u(14),
-                    paddingTop: u(5),
-                    paddingBottom: u(5),
-                    fontSize: u(9),
-                  }}
-                >
-                  {t.specimenChip}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* the engraving, when one has been drawn for this record */}
-          {plate && (
-            <div style={{ marginTop: u(18) }} aria-hidden="true">
-              {plate}
-            </div>
-          )}
-
-          {/* names, gotra, giver, sankalp. The names stand on the tinted
-              block the site keeps for anything personal, except on a sheet
-              that remembers somebody: haldi is an auspicious colour, and a
-              remembrance takes none. */}
-          <div>
+        {/* the ghat, full width, with the print pinned on it and the seal */}
+        <div className="relative" style={{ marginTop: u(40), height: u(pic) }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/waters/${data.waterSlug}.webp`}
+            alt=""
+            className="block h-full w-full object-cover"
+          />
+          {data.portraitUrl ? (
             <div
-              className={`text-center ${data.names.some((n) => n.remembrance) ? "" : "bg-paper2"}`}
-              style={{ paddingTop: u(16), paddingBottom: u(18), paddingLeft: u(16), paddingRight: u(16) }}
+              data-portrait=""
+              className="absolute"
+              style={{
+                right: u(mount * 0.36),
+                top: u((pic - mount) / 2),
+                width: u(mountW),
+                height: u(mount),
+                transform: "rotate(3deg)",
+              }}
             >
-              {/* A mixed list keeps the neutral heading; the remembrance label
-                  then sits on the individual name it belongs to. Nothing else
-                  about the row changes, no imagery, no colour. */}
-              <CellLabel spot>{allRemembrance ? t.remembranceLabel : t.namesLabel}</CellLabel>
-
-              <ul style={{ marginTop: u(13) }}>
-                {data.names.map((n, i) => (
-                  <li key={`${n.latin}-${i}`} style={{ marginTop: i === 0 ? 0 : u(15) }}>
-                    <p
-                      className="display text-ink"
-                      style={{ fontSize: u(i === 0 ? 32 : 22), lineHeight: 1.15 }}
-                    >
-                      {n.latin}
-                    </p>
-                    {n.devanagari && (
-                      <p
-                        className="text-ink2"
-                        style={{
-                          marginTop: u(4),
-                          fontSize: u(i === 0 ? 19 : 15),
-                          fontFamily: deva,
-                          lineHeight: 1.5,
-                        }}
-                      >
-                        {n.devanagari}
-                      </p>
-                    )}
-                    {(n.relation || n.remembrance) && (
-                      <p className="label text-ink2" style={{ marginTop: u(6), fontSize: u(9.5) }}>
-                        {[
-                          n.remembrance && !allRemembrance ? t.remembranceLabel : null,
-                          n.relation,
-                        ]
-                          .filter(Boolean)
-                          .join(", ")}
-                      </p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-
-              {/* The gotra, when one was given. An unstated one printed as
-                  "Not stated" was a line saying nothing. */}
-              {data.gotra && (
-                <p className="text-ink2" style={{ marginTop: u(14), fontSize: u(12) }}>
-                  <span className="label text-ink2" style={{ fontSize: u(10) }}>
-                    {t.gotraLabel}
-                  </span>
-                  <span style={{ paddingLeft: u(8) }} />
-                  <span className="text-ink">{data.gotra}</span>
-                </p>
-              )}
-
-              {/* A gift sheet with one name on it fails as a gift, every time. */}
-              {data.givenBy && (
-                <p className="text-ink2" style={{ marginTop: u(7), fontSize: u(12) }}>
-                  <span className="label text-ink2" style={{ fontSize: u(10) }}>
-                    {t.givenByLabel}
-                  </span>
-                  <span style={{ paddingLeft: u(8) }} />
-                  <span className="text-ink">{data.givenBy}</span>
-                </p>
-              )}
-            </div>
-
-            {data.sankalpText && (
-              <div className="text-center" style={{ marginTop: u(18) }}>
-                <div style={{ fontSize: u(16) }}>
-                  <Kumkum className="!py-0" />
-                </div>
-                <p className="label text-sindoor" style={{ marginTop: u(12), fontSize: u(9.5) }}>
-                  {t.sankalpLabel}
-                </p>
-                <p
-                  className="display mx-auto text-ink"
-                  style={{
-                    marginTop: u(11),
-                    maxWidth: u(630),
-                    fontSize: u(18),
-                    lineHeight: 1.55,
-                  }}
-                >
-                  {data.sankalpText}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* the record, set as a ruled register */}
-          <div
-            className="grid grid-cols-3"
-            style={{ columnGap: u(22), rowGap: u(14), marginTop: u(16) }}
-          >
-            <Cell label={t.waterLabel} opening sub={data.waterNote}>
-              {data.water}
-              <br />
-              {data.ghat}, {data.place}
-            </Cell>
-
-            <Cell
-              label={t.keptLabel}
-              opening
-              sub={data.keptLocal ? `${t.localLabel}, ${data.keptLocal}` : undefined}
-            >
-              {data.keptOn}
-              <br />
-              {data.keptIst}
-            </Cell>
-
-            {/* A tithi is printed only when it has been confirmed against a
-                named panchang source. Unsourced, the cell is a blank rule,
-                never an estimate. */}
-            {/* Only what is true prints. A field with nothing behind it used to
-                keep its rule running as an empty cell, which read as a line
-                with no content under it; the register now holds only the
-                cells that carry something. */}
-            {data.tithi?.confidence === "sourced" && (
-              <Cell label={t.tithiLabel} opening>
-                {data.tithi.label}
-              </Cell>
-            )}
-
-            {data.window && (
-              <Cell label={t.windowLabel} sub={data.window.span}>
-                {data.window.label}
-              </Cell>
-            )}
-
-            {data.flow && (
-              <Cell label={t.flowLabel} sub={data.flow.note}>
-                <span className="tabular">{data.flow.value}</span>
-              </Cell>
-            )}
-
-            {data.level && (
-              <Cell label={t.levelLabel} sub={data.level.note}>
-                <span className="tabular">{data.level.value}</span>
-              </Cell>
-            )}
-
-            {data.distance && (
-              <Cell label={t.distanceLabel} sub={data.distance.note}>
-                <span className="tabular">{data.distance.value}</span>
-              </Cell>
-            )}
-
-          </div>
-
-          {/* the state of the water, the address, the record line */}
-          <div>
-            {data.stateLine && (
-              <div className="border-t-2 border-rulestrong" style={{ paddingTop: u(13) }}>
-                <CellLabel spot>{t.stateLabel}</CellLabel>
-                <p
-                  className="display text-ink"
-                  style={{ marginTop: u(8), fontSize: u(16.5), lineHeight: 1.45 }}
-                >
-                  {data.stateLine}
-                </p>
-              </div>
-            )}
-
-            <div
-              className={`flex items-end justify-between ${
-                data.stateLine ? "border-t border-rule" : "border-t-2 border-rulestrong"
-              }`}
-              style={{ gap: u(20), paddingTop: u(16), marginTop: u(data.stateLine ? 14 : 0) }}
-            >
-              <div>
-                <CellLabel>{t.verifyLabel}</CellLabel>
-                <p
-                  className="text-ink"
-                  style={{
-                    marginTop: u(8),
-                    fontSize: u(13.5),
-                    letterSpacing: "0.02em",
-                    wordBreak: "break-word",
-                  }}
-                >
-                  {data.verifyUrl}
-                </p>
-              </div>
-
-              <span className="inline-block shrink-0" style={{ width: u(60), height: u(60) }}>
-                <Colophon className="h-full w-full text-ink" />
-              </span>
-            </div>
-
-            {specimen && (
-              <p
-                className="border-l-2 text-sindoor"
+              <span
+                className="absolute"
+                style={{ left: u(pad), top: u(pad), width: "100%", height: "100%", backgroundColor: "var(--ink)" }}
+              />
+              <span className="absolute inset-0" style={{ backgroundColor: "var(--paper)" }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={data.portraitUrl}
+                alt=""
+                className="absolute object-cover"
                 style={{
-                  marginTop: u(13),
-                  paddingLeft: u(12),
-                  borderColor: "var(--sindoor)",
-                  fontSize: u(11.5),
-                  lineHeight: 1.5,
+                  left: u(pad),
+                  top: u(pad),
+                  width: u(mountW - 2 * pad),
+                  height: u(mount - 2 * pad),
+                  filter: "grayscale(1) contrast(1.1)",
+                  outline: `${u(pad / 3)} solid var(--ink)`,
+                  outlineOffset: `-${u(pad / 3)}`,
                 }}
-              >
-                {t.specimenBanner}
-              </p>
-            )}
+              />
+              {seal ? (
+                <span
+                  className="absolute"
+                  style={{ left: u(mountW + sealD * 0.18 - sealD / 2), top: u(-sealD * 0.13 - sealD / 2) }}
+                >
+                  <SheetSeal n={n} lines={seal} deva={deva} d={sealD} />
+                </span>
+              ) : null}
+            </div>
+          ) : seal ? (
+            <span className="absolute" style={{ right: u(20), top: u(-sealD * 0.13) }}>
+              <SheetSeal n={n} lines={seal} deva={deva} d={sealD} />
+            </span>
+          ) : null}
+        </div>
 
-            {/* The record line is not fine print: it clears 9pt when this
-                sheet is printed at A4. One line; the address above it is
-                where anyone checks the figures. */}
-            <p
-              className="text-ink2"
-              style={{ marginTop: u(specimen ? 13 : 18), fontSize: u(12.6), lineHeight: 1.55 }}
+        {/* the names, one per line in capitals; a long name wraps under itself */}
+        <ul style={{ marginTop: u(72) }}>
+          {names.map((name, i) => (
+            <li
+              key={`${name}-${i}`}
+              data-name-line={tier}
+              style={display(tier, 800, {
+                textTransform: "uppercase",
+                lineHeight: hasDeva(name) ? 1.22 : 1.05,
+                letterSpacing: "-0.01em",
+                overflowWrap: "anywhere",
+              })}
             >
-              {t.footerLine}
-            </p>
+              {name}
+            </li>
+          ))}
+        </ul>
+
+        {/* where: the river in sindoor */}
+        <p style={sans(40, { marginTop: u(16), lineHeight: 1.35 })}>
+          {before}
+          <span style={{ color: "var(--sindoor)", fontWeight: 700 }}>{river}</span>
+          {after}
+        </p>
+
+        {/* the owner's own words, under the names; only their copy has them */}
+        {sankalp ? (
+          <p
+            data-sankalp=""
+            aria-label={t.sankalpAria}
+            style={display(48, 700, { marginTop: u(48), lineHeight: hasDeva(sankalp) ? 1.5 : 1.3 })}
+          >
+            {sankalp}
+          </p>
+        ) : null}
+
+        {/* the prayer, as written */}
+        {data.prayer ? (
+          <div lang="sa" style={{ marginTop: u(64), fontFamily: SERIF, fontSize: u(46), lineHeight: 1.5 }}>
+            {data.prayer.devanagari.map((line, i) => (
+              <p key={i}>{line}</p>
+            ))}
+          </div>
+        ) : null}
+
+        {/* how the river ran: the word, the plain line, the gauge, the proof */}
+        <div style={{ marginTop: u(72) }}>
+          <p style={display(60, 800, { lineHeight: 1.1 })}>
+            {data.state}
+            {t.stop}
+          </p>
+          {plain ? <p style={sans(34, { color: "var(--ink-2)", marginTop: u(8), lineHeight: 1.35 })}>{plain}</p> : null}
+          <div className="flex items-end" style={{ marginTop: u(28), gap: u(40) }}>
+            <div className="min-w-0 flex-1">
+              <SheetGauge percentile={data.percentile} />
+            </div>
+            <div className="text-right" style={sans(30, { color: "var(--ink-2)", lineHeight: 1.35 })}>
+              <p className="tabular">{figure}</p>
+              <p>{rank}</p>
+            </div>
           </div>
         </div>
+
+        {/* the closing river, edge to edge */}
+        <div style={{ marginTop: u(96 - SUN_R), marginLeft: u(-M), marginRight: u(-M) }}>
+          <ClosingRiver seed={data.seed} percentile={data.percentile} />
+        </div>
+
+        {/* the foot: the person's clock, India's, the distance, the address */}
+        <div className="flex items-baseline justify-between" style={{ marginTop: u(40), gap: u(32) }}>
+          <p className="tabular" style={sans(32, { color: "var(--ink-2)", lineHeight: 1.35 })}>
+            {[data.keptLocal, `${data.keptIst} IST`, data.distance].filter(Boolean).join(" · ")}
+          </p>
+          <p style={sans(32, { fontWeight: 700, lineHeight: 1.35 })}>snanify.com</p>
+        </div>
       </article>
-    </div>
-  );
-}
-
-/* --------------------------------- viewer ---------------------------------- */
-
-/**
- * The sheet, plus the one affordance a phone needs.
- *
- * An A4 document scaled into a 390px viewport is legible as an object and not
- * as a document, and pinch-to-zoom on a page that is not the document is a bad
- * answer. So: the sheet inline, and a full-height viewer with two honest
- * states, the whole sheet fitted to the screen and the sheet at its own
- * reading size with the reader panning it. Controls sit on the bottom edge,
- * inside a thumb's reach, at 52px tall.
- *
- * The overlay is its own scroll container, so nothing here can make the page
- * behind it scroll sideways. No transforms, no transitions, no filters: this
- * has to be cheap on a mid-range Android, and the design system has no
- * vocabulary for any of them anyway.
- */
-export function PatraSheetViewer({
-  lang,
-  data,
-  specimen = false,
-  plate,
-  className = "",
-  sheetClassName = "",
-}: PatraSheetProps & { sheetClassName?: string }) {
-  const t = patraContent[lang].sheet;
-  const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<"fit" | "read">("fit");
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = previous;
-    };
-  }, [open]);
-
-  /* Kept as three disjoint strings rather than one string plus an override:
-     two competing background utilities on one element resolve by stylesheet
-     order, not by the order they are written in. */
-  const barButton =
-    "label flex min-h-[52px] flex-1 items-center justify-center px-4 transition-colors";
-  const barIdle = "bg-paper text-ink hover:bg-ink hover:text-paper";
-  const barActive = "bg-ink text-paper";
-
-  return (
-    <div className={className}>
-      <div className={sheetClassName}>
-        <PatraSheet lang={lang} data={data} specimen={specimen} plate={plate} />
-      </div>
-
-      <button
-        type="button"
-        onClick={() => {
-          setMode("fit");
-          setOpen(true);
-        }}
-        data-patra-hide
-        className="label mt-5 flex min-h-[52px] w-full items-center justify-center gap-3 border border-rulestrong px-6 text-ink transition-colors hover:bg-ink hover:text-paper sm:w-auto"
-      >
-        {t.viewFull}
-      </button>
-
-      {/* Portalled to the document body. Several of the places this sits
-          inside (the misregistered hero figure, an `ink-in` block) establish
-          their own stacking context, and a fixed overlay trapped inside one
-          would paint underneath the paper grain. `open` can only become true
-          from a click, so there is never a server render of this branch. */}
-      {open &&
-        createPortal(
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label={t.viewerAria}
-            data-patra-hide
-            className="fixed inset-0 z-[70] bg-paper"
-          >
-            <div className="h-full w-full overflow-auto px-3 pt-3 pb-[4.5rem]">
-              <div
-                className="mx-auto"
-                style={
-                  mode === "fit"
-                    ? { width: `min(100%, calc((100dvh - 6.5rem) * ${W} / ${H}))` }
-                    : { width: `${W}px`, maxWidth: "none" }
-                }
-              >
-                <PatraSheet lang={lang} data={data} specimen={specimen} plate={plate} />
-              </div>
-            </div>
-
-            <div className="absolute inset-x-0 bottom-0 flex gap-px border-t-2 border-rulestrong bg-rule">
-              <button
-                type="button"
-                onClick={() => setMode("fit")}
-                aria-pressed={mode === "fit"}
-                className={`${barButton} ${mode === "fit" ? barActive : barIdle}`}
-              >
-                {t.viewFit}
-              </button>
-              <button
-                type="button"
-                onClick={() => setMode("read")}
-                aria-pressed={mode === "read"}
-                className={`${barButton} ${mode === "read" ? barActive : barIdle}`}
-              >
-                {t.viewRead}
-              </button>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className={`${barButton} ${barIdle}`}
-              >
-                {t.viewClose}
-              </button>
-            </div>
-          </div>,
-          document.body,
-        )}
     </div>
   );
 }

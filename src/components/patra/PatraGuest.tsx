@@ -1,13 +1,13 @@
-import Link from "next/link";
 import type { patraPageContent } from "@/content/patra-page";
+import { LinkButton } from "@/components/ui";
 import { localePath, type Lang } from "@/lib/locales";
 
 type Copy = (typeof patraPageContent)["en"];
 
 /**
  * The sheet as it arrives in a family group: the sheet, one line saying what
- * it is, and the invitation. Nothing to manage and nothing to verify; the
- * sheet carries its own record line and its own address.
+ * it is, and one sindoor press to start their own snan. The page holds the
+ * shared image only, which has never carried anybody's sankalp.
  */
 export function PatraGuest({
   lang,
@@ -23,35 +23,20 @@ export function PatraGuest({
   line: string;
 }) {
   return (
-    <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
-      {/* The offer first, one line and a button, then the sheet they were sent. */}
-      <div className="bg-paper2 mb-6 flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-        <p className="text-[0.98rem] leading-[1.6] text-ink">{t.visitTop}</p>
-        <Link
-          href={localePath(lang, "/begin")}
-          className="label impress inline-flex min-h-[48px] shrink-0 items-center justify-center bg-sindoor px-6 text-paper hover:bg-ink active:bg-ink"
-        >
-          {t.visitCta}
-        </Link>
-      </div>
+    <main className="mx-auto max-w-xl px-4 py-6 pb-16 sm:px-8 sm:py-14">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull w-full bg-paper2 p-2 sm:p-3" />
+      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull block w-full bg-paper2" />
 
-      <p className="pull mt-6 text-center text-[1.02rem] leading-[1.7] text-ink2" style={{ animationDelay: "320ms" }}>
+      <p className="pull mt-5 text-center text-[1rem] leading-[1.6] text-ink2" style={{ animationDelay: "320ms" }}>
         {line}
       </p>
 
-      <section className="mt-16 text-center">
-        <h2 className="display text-[1.7rem] leading-[1.25]">{t.visitTitle}</h2>
-        <p className="mt-4 text-ink2">{t.visitBody}</p>
-        <div className="mt-6">
-          <Link
-            href={localePath(lang, "/begin")}
-            className="label impress inline-flex min-h-[56px] items-center justify-center bg-sindoor px-8 text-paper hover:bg-ink active:bg-ink"
-          >
-            {t.visitCta}
-          </Link>
-        </div>
+      <section className="mt-12 text-center">
+        <h2 className="display text-[1.7rem] leading-[1.2]">{t.visitTitle}</h2>
+        <p className="mt-3 text-ink2">{t.visitBody}</p>
+        <LinkButton href={localePath(lang, "/begin")} className="mt-6 w-full sm:w-auto">
+          {t.visitCta}
+        </LinkButton>
       </section>
     </main>
   );

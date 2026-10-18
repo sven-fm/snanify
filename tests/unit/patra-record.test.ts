@@ -3,7 +3,12 @@ import { riverSlice, seedDay, seedFigure, skySlice } from "@/lib/patra-record";
 import type { WaterState } from "@/lib/riverdata";
 import type { SkyReading } from "@/lib/sky";
 import type { Sitting } from "@/db/schema";
-import { patraView } from "@/lib/patra-view";
+import { patraView, printableRecord } from "@/lib/patra-view";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { PatraSheet } from "@/components/SankalpPatra";
+import { PatraGuest } from "@/components/patra/PatraGuest";
+import { patraPageContent } from "@/content/patra-page";
 
 /* A water in the modelled arm: the flood model published a figure for today. */
 function modelled(over: Record<string, unknown> = {}): WaterState {
@@ -145,5 +150,77 @@ describe("the morning number on the view", () => {
   it("reaches the view, and is null for rows minted before it existed", () => {
     expect(patraView(sittingRow({ morningNo: 7 })).morning).toBe(7);
     expect(patraView(sittingRow({ morningNo: null })).morning).toBeNull();
+  });
+});
+
+describe("the HTML sheet: the owner's copy and the guest's page", () => {
+  const SANKALP = "May my mother walk without pain this winter";
+  const row = () =>
+    sittingRow({
+      sankalpText: SANKALP,
+      names: [{ name: "Rekha Sharma" }, { name: "Anil Sharma" }],
+      morningNo: 7,
+      distanceKm: 11650,
+    });
+  const html = (node: React.ReactElement) => renderToStaticMarkup(node);
+
+  it("carries the sankalp on the owner's copy, from printableRecord", () => {
+    const record = printableRecord(row());
+    expect(record.sankalp).toBe(SANKALP);
+    const out = html(React.createElement(PatraSheet, { data: record }));
+    expect(out).toContain(SANKALP);
+    expect(out).toContain("data-sankalp");
+    for (const name of ["Rekha Sharma", "Anil Sharma"]) expect(out).toContain(name);
+    expect(out).toContain("Sankalp Patra");
+    expect(out).toContain("7th");
+    expect(out).toContain("IST");
+    expect(out).toContain("snanify.com");
+  });
+
+  it("never carries the sankalp for a guest of the same sitting", () => {
+    const sitting = row();
+    const sheet = html(React.createElement(PatraSheet, { data: patraView(sitting) }));
+    expect(sheet).not.toContain(SANKALP);
+    expect(sheet).not.toContain("data-sankalp");
+    const guest = html(
+      React.createElement(PatraGuest, {
+        lang: "en",
+        t: patraPageContent.en,
+        imageSrc: "/p/abc/image",
+        alt: "Rekha Sharma, Ganga",
+        line: "Rekha Sharma kept a sankalp with the Ganga.",
+      }),
+    );
+    expect(guest).not.toContain(SANKALP);
+  });
+
+  it("gives the guest one press, and it starts their own snan", () => {
+    const guest = html(
+      React.createElement(PatraGuest, {
+        lang: "en",
+        t: patraPageContent.en,
+        imageSrc: "/p/abc/image",
+        alt: "Rekha Sharma, Ganga",
+        line: "Rekha Sharma kept a sankalp with the Ganga.",
+      }),
+    );
+    expect(guest.match(/class="press[ "]/g) ?? []).toHaveLength(1);
+    expect(guest).toContain('href="/begin"');
+    expect(guest).not.toContain("press-share");
+  });
+
+  it("drops the register, the gotra and the giver from both", () => {
+    const sitting = row();
+    for (const data of [printableRecord(sitting), patraView(sitting)]) {
+      const out = html(React.createElement(PatraSheet, { data }));
+      for (const gone of ["Gotra", "Given by", "Kept in the name of", "Find this sheet at", "Water and ghat"]) {
+        expect(out).not.toContain(gone);
+      }
+    }
+  });
+
+  it("keeps the print paper at #faf6ea", () => {
+    const out = html(React.createElement(PatraSheet, { data: printableRecord(row()) }));
+    expect(out).toContain("#faf6ea");
   });
 });
