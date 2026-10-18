@@ -4,8 +4,7 @@ import { db, profiles, purchases } from "@/db";
 import { balance } from "@/lib/credits";
 import { currentUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
-import { getGhat } from "@/content/rivers";
-import { beginRoute } from "@/lib/begin-path";
+import { beginRoute, carryQuery, withQuery } from "@/lib/begin-path";
 import { localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -61,12 +60,13 @@ export async function Begin({
   out?: boolean;
 }) {
   const picked = pack && isTier(pack) ? pack : undefined;
-  const chosenWater = water && getGhat(water) ? water : undefined;
   const query = { pack, buy, out, cancelled, error };
   /* What the reader came with travels through the sign-in and comes back. */
   const params = new URLSearchParams();
   if (picked) params.set("pack", picked);
   if (buy) params.set("buy", "1");
+  const carried = carryQuery({ pack, water });
+  const chosenWater = carried.get("water");
   if (chosenWater) params.set("water", chosenWater);
   const here = `${localePath(lang, "/begin")}${params.size ? `?${params}` : ""}`;
 
@@ -87,12 +87,7 @@ export async function Begin({
     query,
   );
   if (route.to === "sign-in") redirect(`${localePath(lang, "/sign-in")}?redirect_url=${encodeURIComponent(here)}`);
-  if (route.to === "setup") {
-    const onward = new URLSearchParams();
-    if (picked) onward.set("pack", picked);
-    if (chosenWater) onward.set("water", chosenWater);
-    redirect(`${localePath(lang, "/setup")}${onward.size ? `?${onward}` : ""}`);
-  }
+  if (route.to === "setup") redirect(withQuery(localePath(lang, "/setup"), carried));
   if (route.to === "account") redirect(localePath(lang, "/account"));
 
   return (

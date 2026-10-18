@@ -918,7 +918,6 @@ type RiverDetailCopy = {
     title: string;
     lede: string;
     items: OfferItem[];
-    cta: string;
     muhurat: string;
   };
   tradition: {
@@ -932,7 +931,7 @@ type RiverDetailCopy = {
     provisional: string;
   };
   keeper: { title: string };
-  onward: { title: string; cta: string; all: string };
+  onward: { title: string; all: string };
 };
 
 export const riverDetailContent = {
@@ -997,7 +996,6 @@ export const riverDetailContent = {
           body: "Three minutes with this water at the state it is in, at an hour the panchang names, with your own sankalp in your own words.",
         },
       ],
-      cta: "Begin your snan",
       muhurat: "The muhurat calendar",
     },
     tradition: {
@@ -1016,7 +1014,6 @@ export const riverDetailContent = {
     keeper: { title: "Who looks after this water" },
     onward: {
       title: "Read another water",
-      cta: "Begin your snan",
       all: "All six waters",
     },
   },
@@ -1082,7 +1079,6 @@ export const riverDetailContent = {
           body: "इस जल के साथ तीन मिनट, उस अवस्था में जिसमें यह इस समय है, पंचांग की बताई घड़ी पर, आपके अपने शब्दों में आपका अपना संकल्प।",
         },
       ],
-      cta: "अपना स्नान शुरू कीजिए",
       muhurat: "मुहूर्त पंचांग",
     },
     tradition: {
@@ -1101,7 +1097,6 @@ export const riverDetailContent = {
     keeper: { title: "इस जल की देखरेख कौन करता है" },
     onward: {
       title: "कोई और जल पढ़िए",
-      cta: "अपना स्नान शुरू कीजिए",
       all: "सभी छह जल",
     },
   },

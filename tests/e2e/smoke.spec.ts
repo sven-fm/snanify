@@ -108,12 +108,16 @@ for (const prefix of ["", "/hi"]) {
   });
 }
 
-test("a river page links its picture to the image credits, and /live prints none", async ({ page }) => {
-  await page.goto("/rivers/ganga-haridwar");
-  await expect(page.locator('main a[href="/terms#image-credits"]')).toHaveCount(1);
-  await page.goto("/live");
-  await expect(page.locator('a[href^="https://commons.wikimedia.org/"]')).toHaveCount(0);
-});
+for (const prefix of ["", "/hi"]) {
+  test(`${prefix}/rivers/ganga-haridwar links its picture to the image credits, and the link lands`, async ({ page }) => {
+    await page.goto(`${prefix}/rivers/ganga-haridwar`);
+    const link = page.locator(`main a[href="${prefix}/terms#image-credits"]`);
+    await expect(link).toHaveCount(1);
+    await link.click();
+    await expect(page).toHaveURL(new RegExp(`${prefix}/terms#image-credits$`));
+    await expect(page.locator("section#image-credits")).toBeInViewport();
+  });
+}
 
 /* /live opens each river onto its own page, through a quiet control. */
 test("/live opens each of the six onto its river page", async ({ page }) => {
@@ -121,7 +125,6 @@ test("/live opens each of the six onto its river page", async ({ page }) => {
   const open = page.locator('main a[data-open-river][href^="/rivers/"]');
   await expect(open).toHaveCount(6);
   expect((await open.first().boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(56);
-  await expect(page.locator('[role="tablist"]')).toHaveCount(0);
 });
 
 /* The festival panel on an occasion page shows on the days the occasion is

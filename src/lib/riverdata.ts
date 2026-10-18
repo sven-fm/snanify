@@ -35,6 +35,11 @@ import { GHAT_BY_ID, WINDOWS, type GhatId, type MuhuratWindowId } from "@/conten
 /** The six waters, keyed exactly as `rivers.ts` and `muhurat.ts` key them. */
 export type WaterSlug = GhatId;
 
+/** Whether a value read from an address names one of the six waters. */
+export function isWaterSlug(value: unknown): value is WaterSlug {
+  return typeof value === "string" && Object.hasOwn(GHAT_BY_ID, value);
+}
+
 export interface GaugeCell {
   readonly slug: WaterSlug;
   /**

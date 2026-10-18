@@ -1,4 +1,5 @@
 import { DEFAULT_TIER, isTier } from "@/lib/packs";
+import { isWaterSlug, type WaterSlug } from "@/lib/riverdata";
 import type { TierKey } from "@/content/prices";
 
 /* ---------------------------------------------------------------------------
@@ -55,6 +56,34 @@ export type BeginRoute =
  */
 export function accountForwardsToSetup(a: { setUp: boolean; kept: number; bought: number; credits: number }): boolean {
   return !a.setUp && a.kept === 0 && a.bought === 0 && a.credits === 0;
+}
+
+/**
+ * What the reader came with that travels through the sign-in and on to
+ * /setup: a pack picked on a price table, and a water picked with "Do your
+ * snan here". Anything that is not one of ours is dropped, an array included
+ * (a repeated `?water=` arrives as one).
+ */
+export function carryQuery(q: { pack?: unknown; water?: unknown }): URLSearchParams {
+  const out = new URLSearchParams();
+  if (typeof q.pack === "string" && isTier(q.pack)) out.set("pack", q.pack);
+  if (isWaterSlug(q.water)) out.set("water", q.water);
+  return out;
+}
+
+/** `path`, with the carried query when there is one. */
+export function withQuery(path: string, query: URLSearchParams): string {
+  return query.size ? `${path}?${query}` : path;
+}
+
+/**
+ * The water a sheet opens on in /setup. A saved sheet keeps its own: a press
+ * of "Do your snan here" never changes a sheet somebody already made. A new
+ * sheet opens on the water chosen, or else on the first of the six.
+ */
+export function initialWater(saved: string | null | undefined, chosen: unknown, first: string): string {
+  if (saved) return saved;
+  return isWaterSlug(chosen) ? (chosen as WaterSlug) : first;
 }
 
 export function beginRoute(reader: BeginReader, query: BeginQuery): BeginRoute {

@@ -1,10 +1,10 @@
-import Link from "next/link";
 import type { Lang } from "@/lib/locales";
-import { localePath } from "@/lib/i18n";
 import { windowName } from "@/content/names";
 import { WINDOW_BY_ID } from "@/content/muhurat";
 import { fill, liveContent } from "@/content/live";
-import { CREDITS_PATH, IMAGE_CREDITS, PICTURES } from "@/content/live/pictures";
+import { PICTURES } from "@/content/live/pictures";
+import { CreditsLink } from "@/components/live/CreditsLink";
+import { InView } from "@/components/live/InView";
 import { cumecs, longDate } from "@/components/live/Reading";
 import {
   ARCHIVE,
@@ -109,6 +109,8 @@ function ElevenDays({ series }: { series: readonly { date: string; cumecs: numbe
         return (
           <rect
             key={day.date}
+            className="grow"
+            style={{ ["--i" as string]: i }}
             x={(i * slot + (slot - barWidth) / 2).toFixed(2)}
             y={(34 - height).toFixed(2)}
             width={barWidth.toFixed(2)}
@@ -243,17 +245,12 @@ export function WaterPlate({ water, lang }: { water: WaterState; lang: Lang }) {
         <div
           role="img"
           aria-label={pic.alt[lang]}
-          className="ink-picture absolute inset-0"
+          className="ink-picture-lazy absolute inset-0"
           style={{ ["--picture" as string]: `url(${pic.src})` }}
         />
       </div>
       <figcaption>
-        <Link
-          href={localePath(lang, CREDITS_PATH)}
-          className="inline-flex min-h-[44px] items-center text-xs text-ink2 underline decoration-rule underline-offset-4 active:text-sindoor"
-        >
-          {IMAGE_CREDITS[lang]}
-        </Link>
+        <CreditsLink lang={lang} />
       </figcaption>
     </figure>
   );
@@ -272,7 +269,9 @@ export function WaterDetail({ water, lang }: { water: WaterState; lang: Lang }) 
   const read = discharge.kind === "modelled" ? discharge : null;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+    /* InView marks the block on arrival: the picture is fetched then and the
+       eleven bars rise from their baseline (globals.css, `.grow`). */
+    <InView className="grid gap-10 lg:grid-cols-2 lg:gap-14">
       <div className="min-w-0">
         <WaterPlate water={water} lang={lang} />
 
@@ -360,6 +359,6 @@ export function WaterDetail({ water, lang }: { water: WaterState; lang: Lang }) 
           </p>
         </details>
       </div>
-    </div>
+    </InView>
   );
 }

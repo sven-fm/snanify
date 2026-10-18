@@ -5,7 +5,7 @@ import type { Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { H2, H3, QUIET, RefClose, RefHead, W700 } from "@/components/site/Reference";
+import { H2, H3, QUIET, RefClose, RefHead, RowLink, W700 } from "@/components/site/Reference";
 import { RIVERS } from "@/content/rivers";
 import { riversIndexContent } from "@/content/rivers-index";
 
@@ -18,8 +18,8 @@ import { riversIndexContent } from "@/content/rivers-index";
    Space divides the sections; hairlines stay between rows.
 
    "Do your snan here" starts Begin with that water chosen for a new sheet.
-   On every water here it is a quiet link, because six presses on rows of
-   about 300px at 390 would put two or three on one screen. Each river's own
+   On every water here it is a boxed row (RowLink), not a press, because six
+   presses on rows of about 300px at 390 would put two or three on one screen. Each river's own
    page carries it as the press. The one press here is the close: Begin with
    no water chosen.
    --------------------------------------------------------------------------- */
@@ -56,14 +56,12 @@ export function RiversIndex({ lang }: { lang: Lang }) {
             <p className="mt-4 leading-[1.7] text-ink2">{first.standfirst[lang]}</p>
             <p className="mt-4 text-sm leading-[1.7] text-ink2">{first.sacred[lang][0]}</p>
             <p className="mt-2 text-sm text-ink2">{t.formLabels[first.form]}</p>
-            <p className="mt-3 flex flex-wrap gap-x-6">
-              <Link href={snanHereHref(lang, first.slug)} className={QUIET}>
-                {t.here}
-              </Link>
-              <Link href={localePath(lang, `/rivers/${first.slug}`)} className={QUIET}>
-                {t.lead.read}
-              </Link>
-            </p>
+            <RowLink href={snanHereHref(lang, first.slug)} className="mt-6 sm:max-w-sm">
+              {t.here}
+            </RowLink>
+            <Link href={localePath(lang, `/rivers/${first.slug}`)} className={`${QUIET} mt-2`}>
+              {t.lead.read}
+            </Link>
           </div>
         </section>
 
@@ -93,9 +91,9 @@ export function RiversIndex({ lang }: { lang: Lang }) {
                       </span>
                     </p>
                   </Link>
-                  <Link href={snanHereHref(lang, r.slug)} className={`${QUIET} mt-2`}>
+                  <RowLink href={snanHereHref(lang, r.slug)} className="mt-4 sm:max-w-sm">
                     {t.here}
-                  </Link>
+                  </RowLink>
                 </li>
               ))}
             </ul>

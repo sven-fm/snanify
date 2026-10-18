@@ -6,7 +6,7 @@ import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { RiverHorizon } from "@/components/kit";
-import { H2, H3, QUIET, QUIET_ROW, RefClose, RefHead, W700 } from "@/components/site/Reference";
+import { H2, H3, QUIET, RefClose, RefHead, RowLink, W700 } from "@/components/site/Reference";
 import { Reading, readingView } from "@/components/live/Reading";
 import { clock } from "@/components/live/WaterDetail";
 import { InView } from "@/components/live/InView";
@@ -25,7 +25,7 @@ import { SOURCES, istWallClock, type LiveSnapshot } from "@/lib/riverdata";
       plain sentence.
    2. The six, each as its name, its place, and the reading (the state word,
       the gauge, the exact figure and rank, the source line), and a full-width
-      quiet row to the river's own page (QUIET_ROW: one press per screen, so
+      boxed row to the river's own page (RowLink: one press per screen, so
       the six are not presses; the river's page carries the press). Everything else about a water this morning,
       the trend, the usual range, the eleven model days, the sky and the
       register, is on that page (src/components/live/WaterDetail.tsx).
@@ -74,12 +74,9 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                       {waterName(ghat, "ghat", lang)}, {waterName(ghat, "city", lang)}
                     </p>
                     <Reading className="mt-5" view={readingView(water, lang)} lang={lang} />
-                    <Link data-open-river href={localePath(lang, `/rivers/${water.slug}`)} className={`${QUIET_ROW} mt-6`}>
-                      <span className="underline decoration-ink decoration-2 underline-offset-4">
-                        {fill(t.open, { river })}
-                      </span>
-                      <span aria-hidden="true">→</span>
-                    </Link>
+                    <RowLink data-open-river href={localePath(lang, `/rivers/${water.slug}`)} className="mt-6">
+                      {fill(t.open, { river })}
+                    </RowLink>
                   </li>
                 );
               })}

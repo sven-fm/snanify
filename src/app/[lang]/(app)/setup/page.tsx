@@ -8,6 +8,7 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { requireUser } from "@/lib/auth";
 import { isTier } from "@/lib/packs";
+import { carryQuery, initialWater, withQuery } from "@/lib/begin-path";
 import { autosaveAllowed } from "@/lib/autosave";
 import { blobUrl } from "@/lib/blob";
 import { LANGS, type Lang } from "@/lib/locales";
@@ -53,10 +54,8 @@ export default async function Page({
   const t = setupContent[lang];
 
   /* A pack or a water chosen before the sign-in comes back with it. */
-  const carried = new URLSearchParams();
-  if (query.pack && isTier(query.pack)) carried.set("pack", query.pack);
-  if (query.water && GHATS.some((g) => g.id === query.water)) carried.set("water", query.water);
-  const user = await requireUser(lang, carried.size ? `${ROUTE}?${carried}` : ROUTE);
+  const carried = carryQuery(query);
+  const user = await requireUser(lang, withQuery(ROUTE, carried));
 
   const existing = await db
     .select()
@@ -119,7 +118,7 @@ export default async function Page({
           initial={{
             /* A water chosen on /rivers ("Do your snan here") is the first
                choice on a new sheet; a saved sheet keeps its own. */
-            waterSlug: profile?.waterSlug ?? carried.get("water") ?? waters[0].slug,
+            waterSlug: initialWater(profile?.waterSlug, carried.get("water"), waters[0].slug),
             names,
             prayerId: profile?.prayerId ?? "",
             sankalpText: profile?.sankalpText ?? "",

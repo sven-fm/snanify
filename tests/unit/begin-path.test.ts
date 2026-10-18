@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { accountForwardsToSetup, beginRoute, type BeginReader } from "@/lib/begin-path";
+import { accountForwardsToSetup, beginRoute, carryQuery, initialWater, withQuery, type BeginReader } from "@/lib/begin-path";
 
 /* Where a press of Begin goes (src/lib/begin-path.ts): the whole branching of
    /begin, without a session or a database. */
@@ -73,5 +73,36 @@ describe("/account, for a fresh account", () => {
     expect(accountForwardsToSetup({ ...none, kept: 1 })).toBe(false);
     expect(accountForwardsToSetup({ ...none, bought: 1 })).toBe(false);
     expect(accountForwardsToSetup({ ...none, credits: 3 })).toBe(false);
+  });
+});
+
+/* "Do your snan here": the water travels through the sign-in to /setup, and
+   opens a new sheet on it, never a saved one. */
+describe("the chosen water", () => {
+  it("carries a pack and a water together", () => {
+    expect(carryQuery({ pack: "eleven", water: "yamuna-mathura" }).toString()).toBe("pack=eleven&water=yamuna-mathura");
+  });
+
+  it("drops an unknown water, an unknown pack and an array", () => {
+    expect(carryQuery({ water: "thames-london" }).size).toBe(0);
+    expect(carryQuery({ pack: "ninety" }).size).toBe(0);
+    expect(carryQuery({ water: ["yamuna-mathura", "godavari-nashik"] }).size).toBe(0);
+    expect(carryQuery({}).size).toBe(0);
+  });
+
+  it("adds the query to a path only when there is one", () => {
+    expect(withQuery("/setup", carryQuery({ water: "godavari-nashik" }))).toBe("/setup?water=godavari-nashik");
+    expect(withQuery("/hi/setup", carryQuery({}))).toBe("/hi/setup");
+  });
+
+  it("keeps a saved sheet's water over the chosen one", () => {
+    expect(initialWater("ganga-haridwar", "yamuna-mathura", "ganga-haridwar")).toBe("ganga-haridwar");
+    expect(initialWater("shipra-ujjain", "yamuna-mathura", "ganga-haridwar")).toBe("shipra-ujjain");
+  });
+
+  it("opens a new sheet on the chosen water, or on the first when it is not one of the six", () => {
+    expect(initialWater(null, "yamuna-mathura", "ganga-haridwar")).toBe("yamuna-mathura");
+    expect(initialWater(undefined, "thames-london", "ganga-haridwar")).toBe("ganga-haridwar");
+    expect(initialWater(undefined, undefined, "ganga-haridwar")).toBe("ganga-haridwar");
   });
 });

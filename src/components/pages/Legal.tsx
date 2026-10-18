@@ -32,6 +32,43 @@ type Section = {
   credit?: string;
 };
 
+/**
+ * The image credits: per picture its subject, linked to its Commons page,
+ * then the credit line with the licence linked to its deed. The template
+ * fills `{author}`; `{license}` marks where the licence link goes.
+ */
+function Credits({ lang, template }: { lang: Lang; template: string }) {
+  return (
+    <ul className="mt-6">
+      {Object.values(PICTURES).map((pic) => {
+        const [before, after = ""] = fill(template, { author: pic.author }).split("{license}");
+        return (
+          <li key={pic.src} className="border-b border-rule py-3 text-[0.98rem] leading-[1.75] text-ink2">
+            <a
+              href={pic.page}
+              rel="noopener noreferrer external"
+              className="inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-rule underline-offset-4 active:text-sindoor"
+            >
+              {pic.subject[lang]}
+            </a>
+            <span className="block">
+              {before}
+              <a
+                href={LICENSE_HREF[pic.license]}
+                rel="noopener noreferrer external license"
+                className="underline decoration-rule underline-offset-4 active:text-sindoor"
+              >
+                {pic.license}
+              </a>
+              {after}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" }) {
   const t = legalContent[lang][which];
   const close = legalContent[lang].close;
@@ -83,41 +120,7 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
 
             {section.consent && <ConsentChoice lang={lang} />}
 
-            {section.credit && (
-              <ul className="mt-6">
-                {Object.values(PICTURES).map((pic) => (
-                  <li key={pic.src} className="border-b border-rule py-3 text-[0.98rem] leading-[1.75] text-ink2">
-                    <a
-                      href={pic.page}
-                      rel="noopener noreferrer external"
-                      className="inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-rule underline-offset-4 active:text-sindoor"
-                    >
-                      {pic.subject[lang]}
-                    </a>
-                    <span className="block">
-                      {fill(section.credit ?? "", { author: pic.author, license: "{license}" })
-                        .split("{license}")
-                        .map((part, i) =>
-                          i === 0 ? (
-                            part
-                          ) : (
-                            <span key={i}>
-                              <a
-                                href={LICENSE_HREF[pic.license]}
-                                rel="noopener noreferrer external license"
-                                className="underline decoration-rule underline-offset-4 active:text-sindoor"
-                              >
-                                {pic.license}
-                              </a>
-                              {part}
-                            </span>
-                          ),
-                        )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
+            {section.credit && <Credits lang={lang} template={section.credit} />}
           </section>
         ))}
           </div>

@@ -51,7 +51,7 @@ export const en = {
   meta: {
     title: "Six sacred waters, live | Snanify",
     description:
-      "Modelled flow at six sacred waters, from the Ganga at Haridwar to the Kaveri, ranked against 1997 to 2025. Each river's page carries its sunrise, weather and muhurat.",
+      "Modelled flow at six sacred waters this morning, from the Ganga at Haridwar to the Kaveri, each ranked against the same week from 1997 to 2025.",
   },
 
   /* The breadcrumb name, read by src/app/[lang]/live/page.tsx. */
