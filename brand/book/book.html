@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en" data-script="latin">
+<head>
+<meta charset="utf-8">
+<title>Snanify brand book</title>
+<!--
+  The source of brand/snanify-brand-book.pdf. Build it with `npm run brand-book`
+  (scripts/brand-book.mjs), which hands in brand/tokens.json as window.TOKENS
+  and prints this page with Chromium. A4 landscape, one idea a page.
+-->
+<style>
+  @font-face { font-family: Eczar; font-weight: 400; src: url(../../src/assets/fonts/eczar-400.ttf); }
+  @font-face { font-family: Eczar; font-weight: 600; src: url(../../src/assets/fonts/eczar-600.ttf); }
+  @font-face { font-family: Eczar; font-weight: 700; src: url(../../src/assets/fonts/eczar-700.ttf); }
+  @font-face { font-family: Eczar; font-weight: 800; src: url(../../src/assets/fonts/eczar-800.ttf); }
+  @font-face { font-family: "Martel Sans"; font-weight: 400; src: url(../../src/assets/fonts/martel-400.ttf); }
+  @font-face { font-family: "Martel Sans"; font-weight: 700; src: url(../../src/assets/fonts/martel-700.ttf); }
+  @font-face { font-family: "Noto Serif Devanagari"; font-weight: 400; src: url(../../src/assets/fonts/noto-deva-400.ttf); }
+  @font-face { font-family: "Noto Serif Devanagari"; font-weight: 600; src: url(../../src/assets/fonts/noto-deva-600.ttf); }
+
+  /* Fallbacks only: the build overwrites these from tokens.json. */
+  :root {
+    --paper: #f2ead9; --paper-2: #eae0c9; --paper-3: #ded1b4; --ink: #141210; --ink-2: #57513f;
+    --sindoor: #c8251d; --marigold: #f2c230; --haldi: #e3962b; --teal: #1d5a6a; --maroon: #7a1a14;
+    --rule: #c3b697; --night: #12110e; --night-ink: #ece3cf;
+  }
+  @page { size: 297mm 210mm; margin: 0; }
+  *, *::before, *::after { box-sizing: border-box; border-radius: 0 !important; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body { font-family: "Martel Sans", sans-serif; font-size: 3.6mm; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  img { display: block; }
+  p { margin: 0 0 2.4mm; }
+
+  .page {
+    position: relative; width: 297mm; height: 210mm; overflow: hidden;
+    padding: 14mm 18mm 16mm; break-after: page; background: var(--paper);
+    display: flex; flex-direction: column;
+  }
+  .page:last-child { break-after: auto; }
+  .run { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7mm; font-weight: 700; font-size: 3mm; color: var(--ink-2); }
+  .run img { height: 6.5mm; }
+  .run .n { color: var(--sindoor); font-family: Eczar; font-weight: 800; font-size: 4.2mm; }
+
+  .cap { font-family: Eczar; font-weight: 800; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.01em; font-size: 15mm; margin: 0 0 7mm; font-synthesis: none; }
+  .s { color: var(--sindoor); }
+  h3 { font-family: Eczar; font-weight: 700; font-size: 5.6mm; line-height: 1.15; margin: 0 0 2mm; }
+  .label { font-weight: 700; font-size: 3mm; line-height: 1.4; color: var(--ink-2); }
+  .lede { font-size: 4.6mm; line-height: 1.45; }
+  .small { font-size: 3mm; line-height: 1.45; color: var(--ink-2); }
+  .grow { flex: 1; min-height: 0; }
+  .cols { display: grid; gap: 10mm; }
+  code { font-family: "Martel Sans", sans-serif; font-weight: 700; font-size: 0.95em; }
+
+  table { border-collapse: collapse; width: 100%; }
+  td, th { text-align: left; vertical-align: top; padding: 1.8mm 3mm 1.6mm 0; border-bottom: 0.3mm solid var(--rule); }
+  th { font-weight: 700; font-size: 3mm; color: var(--ink-2); border-bottom: 0.5mm solid var(--ink); }
+  tr:last-child td { border-bottom: 0; }
+
+  .shot { border: 0.5mm solid var(--ink); background: var(--paper); }
+  .river-foot { position: absolute; left: 0; right: 0; bottom: 0; width: 297mm; height: auto; }
+  .river-foot.low { height: 34mm; object-fit: cover; object-position: 50% 0; }
+
+  /* 1. Cover */
+  .cover { padding-top: 16mm; }
+  .cover .lockup { align-self: flex-start; height: 15mm; margin-bottom: 22mm; }
+  .cover .cap { font-size: 30mm; line-height: 0.9; margin-bottom: 8mm; }
+  .cover .sub { font-size: 5mm; max-width: 170mm; }
+  .cover .meta { position: absolute; right: 18mm; top: 18mm; text-align: right; }
+
+  /* 2. What it is */
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; margin-top: 6mm; }
+  .three div { border-top: 1mm solid var(--ink); padding-top: 3mm; }
+  .three .num { font-family: Eczar; font-weight: 800; font-size: 9mm; line-height: 1; color: var(--sindoor); }
+
+  /* 3. The rules */
+  .rule-card { border: 0.6mm solid var(--ink); padding: 7mm 8mm; display: grid; grid-template-columns: 22mm 1fr; gap: 4mm; border-top-width: 2mm; background: var(--paper); }
+  .rule-card .big { font-family: Eczar; font-weight: 800; font-size: 26mm; line-height: 0.8; color: var(--sindoor); }
+  .rule-card h3 { font-size: 8.6mm; margin-bottom: 3mm; }
+  .rule-card p { font-size: 4.2mm; line-height: 1.5; }
+  .truths { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm; }
+  .truths div { border-top: 0.5mm solid var(--ink); padding-top: 2.4mm; }
+
+  /* 4. Voice */
+  .dodont td:first-child { width: 50%; font-family: Eczar; font-weight: 700; font-size: 4.4mm; }
+  .dodont td:last-child { color: var(--ink-2); }
+  .tag { display: inline-block; font-weight: 700; font-size: 2.8mm; padding: 0.4mm 2mm; margin-bottom: 2mm; }
+  .tag.do { background: var(--sindoor); color: #fff; }
+  .tag.dont { background: var(--ink); color: var(--paper); }
+  .rewrite { border-left: 1.2mm solid var(--sindoor); padding: 1mm 0 1mm 4mm; margin-top: 4mm; }
+  .rewrite s { color: var(--ink-2); text-decoration-thickness: 0.4mm; }
+
+  /* 5. Colour */
+  .hero-swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm; }
+  .sw .chip { height: 42mm; border: 0.4mm solid var(--ink); display: flex; align-items: flex-end; padding: 2.4mm 3mm; font-family: Eczar; font-weight: 800; font-size: 6mm; }
+  .sw .hex { font-weight: 700; margin-top: 1.6mm; font-size: 3.2mm; }
+  .sw .job { font-size: 2.8mm; line-height: 1.35; color: var(--ink-2); }
+  .minor-swatches { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4mm; margin-top: 7mm; }
+  .minor-swatches .chip { height: 14mm; font-size: 3.6mm; }
+  .gaugebar { display: flex; height: 7mm; border: 0.5mm solid var(--ink); margin-top: 1.5mm; }
+
+  /* 6. Type */
+  .specimen { border-top: 0.5mm solid var(--ink); padding-top: 3mm; }
+  .deva { font-family: Eczar; font-weight: 800; font-size: 10mm; line-height: 1.22; }
+
+  /* 7. Logo */
+  .clear { position: relative; display: inline-block; padding: 12mm; outline: 0.4mm dashed var(--sindoor); outline-offset: 0; }
+  .clear::after { content: ""; position: absolute; inset: 12mm; outline: 0.25mm solid var(--rule); }
+  .clear img { height: 24mm; }
+  .grounds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .ground { height: 30mm; display: flex; align-items: center; justify-content: center; border: 0.4mm solid var(--ink); }
+  .ground img { height: 9mm; }
+  .misuse { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4mm; }
+  .mis .tile { height: 30mm; border: 0.4mm solid var(--ink); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; background: var(--paper); }
+  .mis .tile img { height: 13mm; }
+  .mis .tile::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; height: 0.8mm; background: var(--sindoor); transform: rotate(-24deg); }
+  .mis .why { font-size: 2.8mm; line-height: 1.35; margin-top: 1.5mm; }
+
+  /* 8. Kit */
+  .kit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm 8mm; }
+  .piece .pic { height: 34mm; display: flex; align-items: center; justify-content: flex-start; overflow: hidden; margin-bottom: 2.4mm; }
+  .piece .pic img { max-height: 34mm; max-width: 100%; }
+  .piece h3 { font-size: 4.8mm; margin-bottom: 1mm; }
+  .piece p { font-size: 3mm; line-height: 1.4; margin: 0 0 1mm; }
+  .piece .limit { font-weight: 700; font-size: 2.9mm; color: var(--sindoor); }
+
+  /* 9. Patra */
+  .patra-grid { display: grid; grid-template-columns: 112mm 1fr; gap: 12mm; }
+  .patra-grid img { align-self: start; width: 112mm; border: 0.5mm solid var(--ink); }
+  ul.lines { list-style: none; padding: 0; margin: 0; }
+  ul.lines li { padding: 1.5mm 0 1.3mm; border-bottom: 0.3mm solid var(--rule); }
+  ul.lines li:last-child { border-bottom: 0; }
+
+  /* 10. Calm and loud */
+  .volumes { display: grid; grid-template-columns: 54mm 1fr; gap: 10mm; }
+  .ads { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
+  .ads img { width: 100%; border: 0.4mm solid var(--ink); }
+
+  /* 11. Mobile first */
+  .phones { display: grid; grid-template-columns: repeat(3, 52mm); gap: 6mm; }
+  .phones img { width: 52mm; }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover ---------------------------------------------------------------->
+<section class="page cover">
+  <img class="lockup" src="../logo/lockup-light.svg" alt="Snanify">
+  <div class="meta label">Design system v3<br>October 2026</div>
+  <h1 class="cap">The brand<br><span class="s">book.</span></h1>
+  <p class="sub">One family, loud and calm. The colours, the type, the mark and the pieces of
+  Snanify, and the two rules every line is written under.</p>
+  <img class="river-foot" src="assets/river.svg" alt="">
+</section>
+
+<!-- 2. What Snanify is ------------------------------------------------------>
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">02</span></div>
+  <h1 class="cap">Your <span class="s">Ganga</span> snan.<br>From home.</h1>
+  <div class="cols" style="grid-template-columns: 1.1fr 1fr;">
+    <div>
+      <p class="lede">A digital snan. At an hour the panchang names, you sit for three minutes
+      with a sacred river in India as it runs this morning, make your own sankalp, and send
+      the family a Sankalp Patra with their names on it.</p>
+      <p>For Indians and the Hindu diaspora far from their river, thirty and over: the US, the
+      UK, Canada, the Gulf, Singapore, Australia. English and Hindi. Most arrive on a phone, at
+      six in the morning, in bed.</p>
+      <div class="three">
+        <div><div class="num">1</div><h3>Buy mornings</h3><p class="small">The pack, the price and the press are the clearest things on a selling page.</p></div>
+        <div><div class="num">2</div><h3>Sit the snan</h3><p class="small">Three calm minutes, the same every morning. Only the river changes.</p></div>
+        <div><div class="num">3</div><h3>Send it home</h3><p class="small">The Patra is made to land well in a family WhatsApp group.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="label" style="margin-bottom:1.5mm">The snan, three minutes</div>
+      <table>
+        <tr><th>Part</th><th>Length</th><th>What happens</th></tr>
+        <tr><td><b>The reading</b></td><td>15s</td><td>The river’s flow today, and how it ranks for this time of year</td></tr>
+        <tr><td><b>The breath</b></td><td>45s</td><td>The river rises for four seconds and falls for six</td></tr>
+        <tr><td><b>The sankalp</b></td><td>11s</td><td>Your own words, held under your thumb while the ink fills</td></tr>
+        <tr><td><b>The stillness</b></td><td>60s</td><td>The screen goes near black over the night river</td></tr>
+        <tr><td><b>The mark</b></td><td>20s</td><td>One line writes itself into your register, and the sheet is ready to send</td></tr>
+      </table>
+    </div>
+  </div>
+  <img class="river-foot low" src="assets/river.svg" alt="">
+</section>
+
+<!-- 3. The two rules -------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">03</span></div>
+  <h1 class="cap">Two <span class="s">rules.</span></h1>
+  <div class="cols" style="grid-template-columns: 1fr 1fr; gap: 12mm;">
+    <div class="rule-card"><div class="big">1</div><div><h3>Never claim a physical rite happened.</h3>
+      <p>The practice is the person’s own. Every line keeps priests, ceremonies at a ghat and offerings made on anyone’s behalf out of the picture.</p></div></div>
+    <div class="rule-card"><div class="big">2</div><div><h3>Never make a promise that is not true.</h3>
+      <p>Speak of what is real: the river, the sky, the sankalp, the family’s names. Karma, sins, blessings and the soul stay out of the copy.</p></div></div>
+  </div>
+  <div class="grow"></div>
+  <p class="lede" style="margin-bottom:5mm"><b>Beyond those two, sell the thing.</b> Proud, plain, active. These four are true, so say them loudly:</p>
+  <div class="truths">
+    <div><h3>The river is real</h3><p class="small">Modelled discharge from Copernicus GloFAS through Open-Meteo, one value a day. A model at a grid cell, never called “measured”.</p></div>
+    <div><h3>The sky is real</h3><p class="small">Tithi, nakshatra, the moon and the muhurat, computed at each ghat and checked against Drik Panchang.</p></div>
+    <div><h3>The sankalp is real</h3><p class="small">The person states an intention, in their own words. That is a real practice.</p></div>
+    <div><h3>The waters are real</h3><p class="small">Six real places with real traditions: the Ganga, the Yamuna, the Triveni, the Godavari, the Shipra, the Kaveri.</p></div>
+  </div>
+</section>
+
+<!-- 4. Voice ---------------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">04</span></div>
+  <h1 class="cap">Bold. Active. <span class="s">Simple.</span></h1>
+  <div class="cols" style="grid-template-columns: 0.8fr 1.2fr; gap: 12mm;">
+    <div>
+      <h3>Lead with the verb.</h3><p class="small">Second person, present tense. “Do your first snan today!” “Send it to the family.”</p>
+      <h3>Short.</h3><p class="small">One idea a sentence, most under twelve words, numbers as digits. Many readers meet English as a third language, at 6 a.m.</p>
+      <h3>Reverence stays.</h3><p class="small">The river is a presence, its name capitalised and in sindoor. Jokes, slang and emoji stay out of the product. One exclamation mark a screen at most.</p>
+      <h3>Names.</h3><p class="small">“The snan”, the “Sankalp Patra”, and a pack is its count: “Eleven mornings”. Snan, sankalp, ghat, tithi and muhurat stay untranslated. Hindi uses everyday words and “आप”.</p>
+      <div class="rewrite">
+        <div class="label">Build on a noun and a verb</div>
+        <p style="margin:1mm 0 0"><s>Nobody stands in the water for you.</s><br><b>The practice is yours.</b></p>
+        <p class="small" style="margin-top:1.5mm">The one exception removes a buyer’s fear in two words: “No subscription.”</p>
+      </div>
+    </div>
+    <div>
+      <table class="dodont">
+        <tr><th><span class="tag do">Say it boldly</span></th><th><span class="tag dont">Leave it out, however bold</span></th></tr>
+        <tr><td>“The Ganga, as it runs this morning.”</td><td>Anything a priest or a person does for them</td></tr>
+        <tr><td>“Your Ganga snan. From home.”</td><td>A dip, a bath, a ritual performed at the ghat</td></tr>
+        <tr><td>“Your family’s names, at the river.”</td><td>Punya, blessings, sins, karma, the soul</td></tr>
+        <tr><td>“Three minutes. Every morning.”</td><td>“As good as being there”, “holy water”</td></tr>
+        <tr><td>“Fuller than usual for this time of year.”</td><td>“Live” footage, “measured at the ghat”</td></tr>
+        <tr><td>“Eleven mornings for eleven.”</td><td>Statistics about other users</td></tr>
+      </table>
+      <p class="small" style="margin-top:4mm">Em dashes stay out of every line: use a comma, a colon, a full stop or parentheses. In rupees the hook reads “Eleven mornings for ₹501.”</p>
+    </div>
+  </div>
+  <img class="river-foot low" src="assets/river.svg" alt="">
+</section>
+
+<!-- 5. Colour --------------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">05</span></div>
+  <h1 class="cap">One red. One <span class="s">yellow.</span></h1>
+  <div class="hero-swatches" id="hero-swatches"></div>
+  <div class="minor-swatches" id="minor-swatches"></div>
+  <div class="grow"></div>
+  <div class="cols" style="grid-template-columns: 1fr 1fr; gap: 12mm;">
+    <div>
+      <div class="label">The gauge, thin to in spate</div>
+      <div class="gaugebar" id="gauge"></div>
+      <p class="small" style="margin-top:1.5mm">Widths 1 : 2 : 4 : 2 : 1. Teal stepping out of paper.</p>
+    </div>
+    <div class="small">
+      <p><b style="color:var(--ink)">Flat colour, one job each.</b> Ink sits on marigold, never marigold on paper (about 1.5:1). White sits on sindoor. Marigold is the same by day and by night. Ads use the day column; every value, night included, is in <code>brand/tokens.json</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Type ----------------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">06</span></div>
+  <h1 class="cap">Eczar and <span class="s">Martel.</span></h1>
+  <div class="cols" style="grid-template-columns: 1.15fr 1fr; gap: 12mm;">
+    <div>
+      <div class="specimen">
+        <div class="label">The headline: Eczar 800, tight capitals, 0.95, -0.01em. One a screen.</div>
+        <div class="cap" style="font-size:12mm; margin:2mm 0 4mm">Your <span class="s">Ganga</span> snan. From home.</div>
+      </div>
+      <div class="specimen" lang="hi">
+        <div class="label">Hindi has no case: Eczar 800 at a line height of 1.22</div>
+        <div class="deva" style="margin:1mm 0 4mm">आपका <span class="s">गंगा</span> स्नान। घर से।</div>
+      </div>
+      <div class="specimen">
+        <div class="label">Headings: Eczar 700, sentence case. Body: Martel Sans 400.</div>
+        <h3 style="font-size:8mm; margin:1.5mm 0 1mm">Running full.</h3>
+        <p style="font-size:4.4mm; margin:0">Fuller than usual for this time of year.</p>
+        <p lang="hi" style="font-size:4.4mm; line-height:1.7">इस समय के हिसाब से सामान्य से भरी।</p>
+      </div>
+    </div>
+    <div>
+      <table>
+        <tr><th>Family</th><th>Weights</th><th>Job</th></tr>
+        <tr><td style="font-family:Eczar;font-weight:800;font-size:5mm">Eczar</td><td>400 to 800</td><td>Display: headlines, headings, the wordmark, the seal. Latin and Devanagari. <span class="small">fonts.google.com/specimen/Eczar</span></td></tr>
+        <tr><td style="font-weight:700;font-size:4.6mm">Martel Sans</td><td>400, 600, 700</td><td>Text: body, buttons, labels, tables. Latin and Devanagari. <span class="small">fonts.google.com/specimen/Martel+Sans</span></td></tr>
+        <tr><td style="font-family:'Noto Serif Devanagari';font-weight:600;font-size:4.6mm">Noto Serif Devanagari</td><td>400, 600</td><td>Hindi on drawn images (the Patra, link cards), so conjuncts stack: <span lang="hi" style="font-family:'Noto Serif Devanagari'">अनिल शर्मा</span></td></tr>
+      </table>
+      <div style="margin-top:6mm">
+        <h3>Rules</h3>
+        <ul class="lines small">
+          <li>Buttons and labels: Martel Sans 700, sentence case.</li>
+          <li>Tracked capitals are retired. Every word is set as written.</li>
+          <li>Eczar has no italic: text stays upright, and a faked cut is the tell.</li>
+          <li>Indic scripts take their own, taller leading.</li>
+          <li>Hindi numerals are Devanagari. Figures line up in tables.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Logo ----------------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">07</span></div>
+  <h1 class="cap">The horizon <span class="s">sun.</span></h1>
+  <div class="cols" style="grid-template-columns: 1fr 1.25fr; gap: 12mm;">
+    <div>
+      <div class="clear"><img src="../logo/lockup-light.svg" alt="Snanify"></div>
+      <p class="small" style="margin-top:3mm"><b style="color:var(--ink)">Clear space:</b> half the mark’s height on every side (the dashed line). <b style="color:var(--ink)">Smallest:</b> the masthead’s lockup, a 30px mark beside a 24px word. Below 32px the mark uses its small cut.</p>
+      <p class="small">An ink ring on paper, a sindoor sun cut by an ink horizon, three teal bands. The wordmark is Eczar 800 at -0.015em, its i dotless under a sindoor bindu.</p>
+    </div>
+    <div>
+      <div class="grounds">
+        <div><div class="ground" style="background:var(--paper)"><img src="../logo/lockup-light.svg" alt=""></div><div class="label" style="margin-top:1.2mm">lockup-light</div></div>
+        <div><div class="ground" style="background:var(--night)"><img src="../logo/lockup-dark.svg" alt=""></div><div class="label" style="margin-top:1.2mm">lockup-dark</div></div>
+        <div><div class="ground" style="background:var(--marigold)"><img src="../logo/lockup-on-marigold.svg" alt="" style="height:13mm"></div><div class="label" style="margin-top:1.2mm">lockup-on-marigold</div></div>
+      </div>
+      <p class="small" style="margin-top:3mm">SVG and PNG of each, and the mark and the wordmark alone, are in <code>brand/logo/</code>.</p>
+    </div>
+  </div>
+  <div class="grow"></div>
+  <div class="label" style="margin-bottom:2mm">Keep it as drawn</div>
+  <div class="misuse">
+    <div class="mis"><div class="tile"><img src="../logo/mark-light.svg" alt="" style="transform:scaleX(1.5)"></div><div class="why">Stretched or squeezed</div></div>
+    <div class="mis"><div class="tile"><img src="../logo/mark-light.svg" alt="" style="filter:hue-rotate(150deg)"></div><div class="why">Recoloured</div></div>
+    <div class="mis"><div class="tile"><img src="../logo/mark-light.svg" alt="" style="transform:rotate(-20deg)"></div><div class="why">Turned</div></div>
+    <div class="mis"><div class="tile"><img src="../logo/mark-light.svg" alt="" style="filter:drop-shadow(1.5mm 1.5mm 2mm rgba(0,0,0,.45))"></div><div class="why">A soft shadow or a glow</div></div>
+    <div class="mis"><div class="tile"><span style="font-family:Eczar;font-weight:700;letter-spacing:0.3em;font-size:5mm">SNANIFY</span></div><div class="why">Tracked capitals</div></div>
+    <div class="mis"><div class="tile"><span style="font-family:'Martel Sans';font-weight:700;font-size:7mm">Snanify</span></div><div class="why">Set in another face</div></div>
+  </div>
+</section>
+
+<!-- 8. The kit -------------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">08</span></div>
+  <h1 class="cap">Six <span class="s">pieces.</span></h1>
+  <div class="kit">
+    <div class="piece"><div class="pic"><img src="assets/kit-press.png" alt=""></div><h3>The press</h3>
+      <p>A sindoor block on a hard ink wall 6px deep. It sinks flush when pressed. The marigold face is only “Send it to the family”.</p><div class="limit">One per screen</div></div>
+    <div class="piece"><div class="pic"><img src="assets/kit-seal.png" alt=""></div><h3>The seal</h3>
+      <p>A round sindoor stamp, marigold Eczar 800, a dashed ring, turned a few degrees. The price, or the morning badge.</p><div class="limit">Those two uses, never under 66px</div></div>
+    <div class="piece"><div class="pic"><img src="assets/kit-band.png" alt=""></div><h3>The band</h3>
+      <p>Ink with marigold words, turned -2°, running off both edges. It says the one thing to do.</p><div class="limit">One per page, selling pages only</div></div>
+    <div class="piece"><div class="pic"><img src="assets/kit-label.png" alt=""></div><h3>The label</h3>
+      <p>The matchbox label: marigold, a 3px ink frame, a thin sindoor rule inside.</p><div class="limit">The eleven-morning pack only</div></div>
+    <div class="piece"><div class="pic"><img src="assets/kit-gauge.png" alt=""></div><h3>The gauge</h3>
+      <p>How the river runs, without numbers: five fills, a dashed “usual”, a sindoor dot for today. The exact figure sits small beside it.</p><div class="limit">Wherever a river figure appears</div></div>
+    <div class="piece"><div class="pic"><img src="assets/kit-river.png" alt=""></div><h3>The river</h3>
+      <p>Teal waves, an ink horizon, the sindoor sun sitting on it, a marigold path of light. The brand’s living element.</p><div class="limit">Below the press, at the foot of every screen</div></div>
+  </div>
+</section>
+
+<!-- 9. The Sankalp Patra ---------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">09</span></div>
+  <div class="patra-grid grow">
+    <img src="../examples/patra.png" alt="A Sankalp Patra">
+    <div>
+      <h1 class="cap">The Sankalp <span class="s">Patra.</span></h1>
+      <p class="lede">One sheet per completed morning, made to land in the family WhatsApp. Eleven
+      mornings make eleven sheets to send.</p>
+      <div class="label" style="margin:4mm 0 1mm">What it carries</div>
+      <ul class="lines small">
+        <li>Up to five household names, one per line, in capitals</li>
+        <li>The water, the day’s figure and its rank beside the gauge</li>
+        <li>The tithi, the distance to the water, the time in the person’s zone and in IST</li>
+        <li>One chosen prayer, printed as written</li>
+        <li>The person’s photograph pinned on the ghat, when they gave one</li>
+        <li>The morning badge, from the second morning on</li>
+        <li>The river at the foot, engraved from that day’s flow</li>
+      </ul>
+      <p class="small" style="margin-top:4mm"><b style="color:var(--sindoor)">The sheet sells nothing.</b> The band, the label, a price and a pack count stay off it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Calm and loud ------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">10</span></div>
+  <h1 class="cap">Calm site. <span class="s">Loud</span> ads.</h1>
+  <div class="volumes grow">
+    <div>
+      <img class="shot" src="../examples/landing-en-390.png" alt="The landing at 390" style="width:54mm">
+      <div class="label" style="margin-top:1.5mm">The site: the landing at 390</div>
+    </div>
+    <div style="display:flex; flex-direction:column">
+      <div class="ads">
+        <div><img src="../examples/ad-plain-45.png" alt=""><div class="label" style="margin-top:1.2mm">Plain, the current direction</div></div>
+        <div><img src="../examples/ad-matchbox-45.png" alt=""><div class="label" style="margin-top:1.2mm">Matchbox</div></div>
+        <div><img src="../examples/ad-signboard-45.png" alt=""><div class="label" style="margin-top:1.2mm">Signboard</div></div>
+        <div><img src="../examples/ad-calendar-45.png" alt=""><div class="label" style="margin-top:1.2mm">Calendar art</div></div>
+      </div>
+      <table style="margin-top:5mm">
+        <tr><th></th><th>The campaign layer, loud</th><th>The site, calm</th></tr>
+        <tr><td class="label">Ground</td><td>Full-bleed marigold or sindoor</td><td>Paper, colour in its one job</td></tr>
+        <tr><td class="label">Type</td><td>Capitals large and stacked, filling the frame</td><td>One capitals headline, then sentence case</td></tr>
+        <tr><td class="label">Pieces</td><td>Hard offsets, starburst seals, tilted labels, sashes</td><td>The press, seal, band and label, each in its limit</td></tr>
+        <tr><td class="label">Held in both</td><td colspan="2">The palette, Eczar and Martel, the mark, the two rules, flat colour and square corners</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 11. Mobile first -------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">11</span></div>
+  <div class="cols grow" style="grid-template-columns: auto 1fr; gap: 12mm;">
+    <div class="phones">
+      <div><img class="shot" src="../examples/landing-en-390.png" alt=""><div class="label" style="margin-top:1.2mm">The landing</div></div>
+      <div><img class="shot" src="../../docs/design/v3-mockups/sitting-check-reading-day.png" alt=""><div class="label" style="margin-top:1.2mm">The reading</div></div>
+      <div><img class="shot" src="../../docs/design/v3-mockups/sitting-check-stillness-night.png" alt=""><div class="label" style="margin-top:1.2mm">The stillness</div></div>
+    </div>
+    <div>
+      <h1 class="cap">390 wide <span class="s">first.</span></h1>
+      <p class="lede">Over ninety percent of readers arrive on a phone, at six in the morning, in bed.</p>
+      <ul class="lines small">
+        <li><b style="color:var(--ink)">Design at 390 by 844.</b> Hold at 360, look right at 430. Desktop is the adaptation.</li>
+        <li><b style="color:var(--ink)">The fold is a contract.</b> Headline, band, seal and press sit above 660 at 390 wide, in both languages.</li>
+        <li><b style="color:var(--ink)">Thumb-sized.</b> The press is at least 56px tall, every other target 44px.</li>
+        <li><b style="color:var(--ink)">Every control shows a press.</b> A phone has no hover.</li>
+        <li><b style="color:var(--ink)">Page width holds.</b> Nothing scrolls sideways; tables become stacked rows.</li>
+        <li><b style="color:var(--ink)">The river is cheap.</b> SVG lines, transform-only motion, paused off screen.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Sources ------------------------------------------------------------->
+<section class="page">
+  <div class="run"><img src="../logo/lockup-light.svg" alt=""><span class="n">12</span></div>
+  <h1 class="cap">Where it <span class="s">lives.</span></h1>
+  <table style="width:190mm">
+    <tr><th style="width:80mm">Source</th><th>What it holds</th></tr>
+    <tr><td><code>brand/README.md</code></td><td>This book on one page, with the prices and the Meta rules</td></tr>
+    <tr><td><code>brand/tokens.json</code>, <code>brand/logo/</code></td><td>Every colour and type role, and the logo files. <code>npm run brand</code> writes them from the app</td></tr>
+    <tr><td><code>DESIGNSYSTEM.md</code></td><td>The canonical design system: every surface, the motions, the logo’s geometry</td></tr>
+    <tr><td><code>CLAUDE.md</code></td><td>The two rules, the voice, the locked decisions, the prices</td></tr>
+    <tr><td><code>ads/README.md</code>, <code>ads/src/</code></td><td>The Meta campaign, its copy in English and Hindi, and the ad renderers</td></tr>
+    <tr><td><code>docs/design/v3-mockups/</code></td><td>The approved v3 mockups and surface checks</td></tr>
+    <tr><td><code>docs/superpowers/specs/2026-10-17-design-system-v3-design.md</code></td><td>The approved v3 spec, with the owner’s choices</td></tr>
+    <tr><td><code>brand/book/</code></td><td>The source of this book. <code>npm run brand-book</code> prints it again</td></tr>
+  </table>
+  <p class="small" style="margin-top:4mm">www.snanify.com</p>
+  <img class="river-foot" src="assets/river.svg" alt="">
+</section>
+
+<script>
+  /* The colour page and the custom properties, from brand/tokens.json. */
+  const T = window.TOKENS;
+  if (T) {
+    const css = document.documentElement.style;
+    for (const c of Object.values(T.colour)) css.setProperty(c.css, c.day);
+    css.setProperty("--night", T.colour.paper.night);
+    css.setProperty("--night-ink", T.colour.ink.night);
+    const label = { paper2: "Paper 2", paper3: "Paper 3", ink2: "Ink 2" };
+    const name = (k) => label[k] ?? k[0].toUpperCase() + k.slice(1);
+    const onInk = new Set(["ink", "ink2", "sindoor", "teal", "maroon", "wall"]);
+    const chip = (k, c, small) => {
+      const fg = onInk.has(k) ? (k === "sindoor" ? T.onColour.onSindoor.hex : T.colour.paper.day) : T.colour.ink.day;
+      return `<div class="sw"><div class="chip" style="background:${c.day};color:${fg}">${name(k)}</div>` +
+        `<div class="hex">${c.day}${small ? "" : ` <span class="small">night ${c.night}</span>`}</div>` +
+        (small ? "" : `<div class="job">${c.job}</div>`) + `</div>`;
+    };
+    const hero = ["sindoor", "marigold", "teal", "ink", "paper"];
+    document.getElementById("hero-swatches").innerHTML = hero.map((k) => chip(k, T.colour[k])).join("");
+    document.getElementById("minor-swatches").innerHTML = Object.entries(T.colour)
+      .filter(([k]) => !hero.includes(k)).map(([k, c]) => chip(k, c, true)).join("");
+    document.getElementById("gauge").innerHTML = T.gauge.day
+      .map((hex, i) => `<div style="flex:${T.gauge.widths[i]};background:${hex}"></div>`).join("");
+  }
+</script>
+</body>
+</html>

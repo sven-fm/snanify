@@ -14,12 +14,20 @@ thirty and over, mostly on a phone at six in the morning. English and Hindi.
 | [`tokens.json`](tokens.json) | Every colour (day and night) and the type roles, generated from `src/lib/palette.ts` |
 | [`logo/`](logo/) | The mark, the wordmark and the lockup, as SVG and PNG, light, dark and on marigold |
 | [`examples/`](examples/) | Approved references: the landing at 390, a Patra, a link card, the four ad styles |
+| [`snanify-brand-book.pdf`](snanify-brand-book.pdf) | The brand book: twelve A4 pages, one idea each, to send to anyone. Its source is [`book/`](book/) |
 
 Regenerate the tokens and the logos after a palette, type or logo change, and commit what it
 writes. `tests/unit/brand.test.ts` fails when `tokens.json` and `palette.ts` disagree.
 
 ```bash
 npm run brand
+```
+
+Then print the brand book again. It reads `tokens.json`, cuts the kit from the approved kit
+render and draws the river from `src/lib/river-geometry.ts`:
+
+```bash
+npm run brand-book
 ```
 
 ---
