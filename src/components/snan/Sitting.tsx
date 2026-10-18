@@ -88,6 +88,14 @@ type Reading = {
 const SWELL: Record<FlowBand, number> = { slack: 0.1, low: 0.15, usual: 0.2, full: 0.25, spate: 0.3 };
 
 /** The river's height at the foot of a part, and in the breath its share of the screen. */
+/* The stillness tones as custom properties, so the leave cross and Next can
+   name them in classes and carry a press state on the dark ground. */
+const STILL_VARS = {
+  "--still-edge": STILLNESS_INK.edge,
+  "--still-dim": STILLNESS_INK.dim,
+  "--still-line": STILLNESS_INK.line,
+} as React.CSSProperties;
+
 const FOOT = 150;
 const BREATH_SHARE = 0.5;
 
@@ -357,9 +365,11 @@ export function Sitting({
               aria-label={t.leave}
               title={t.leave}
               className={`grid h-11 w-11 shrink-0 place-items-center border-[1.5px] ${
-                stillness ? "" : "border-ink text-ink active:bg-ink active:text-paper"
+                stillness
+                  ? "border-[var(--still-edge)] text-[var(--still-dim)] active:bg-[var(--still-edge)] active:text-[var(--still-line)]"
+                  : "border-ink text-ink active:bg-ink active:text-paper"
               }`}
-              style={stillness ? { borderColor: STILLNESS_INK.edge, color: STILLNESS_INK.dim } : undefined}
+              style={stillness ? STILL_VARS : undefined}
               data-leave
             >
               <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4">
@@ -466,8 +476,12 @@ export function Sitting({
             <button
               type="button"
               onClick={next}
-              className={stillness ? "inline-flex min-h-[44px] items-center px-2 font-bold" : buttonClass("quiet", "px-2")}
-              style={stillness ? { color: STILLNESS_INK.dim } : undefined}
+              className={
+                stillness
+                  ? "inline-flex min-h-[44px] items-center px-2 font-bold text-[var(--still-dim)] active:bg-[var(--still-edge)] active:text-[var(--still-line)]"
+                  : buttonClass("quiet", "px-2")
+              }
+              style={stillness ? STILL_VARS : undefined}
               data-next
             >
               {t.next}
