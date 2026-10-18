@@ -70,6 +70,41 @@ describe("/begin", () => {
     for (const gone of ["misregister", "bg-paper2", "impress", "tilak", "water-band"]) expect(out).not.toContain(gone);
   });
 
+  it("names ₹501 to a rupee reader, and eleven for eleven to everyone else", () => {
+    /* What a reader in one currency sees: every other currency's span goes
+       (they hold plain text only), then the tags. */
+    const seen = (out: string, cur: string) =>
+      out
+        .replace(new RegExp(`<span class="cur cur-(?!${cur})[A-Z]{3}[^"]*">[^<]*</span>`, "g"), "")
+        .replace(/<[^>]+>/g, "");
+    const en = begin("en");
+    expect(seen(en, "INR")).toContain("Eleven mornings for ₹501.");
+    expect(seen(en, "INR").toLowerCase()).not.toContain("eleven for eleven");
+    expect(seen(en, "USD")).toContain("Eleven for eleven.");
+    expect(seen(en, "GBP")).toContain("Eleven for eleven.");
+    const hi = begin("hi");
+    expect(seen(hi, "INR")).toContain("ग्यारह सुबहें ₹501 में।");
+    expect(seen(hi, "INR")).not.toContain("ग्यारह में");
+    expect(seen(hi, "EUR")).toContain("ग्यारह सुबहें, ग्यारह में।");
+  });
+
+  it("the landing and /snan say the same, through the same line", async () => {
+    const { CurrencyLine } = await import("@/components/ui");
+    const { content } = await import("@/lib/content");
+    const { snanContent } = await import("@/content/snan");
+    for (const lang of ["en", "hi"] as const) {
+      for (const [other, inr] of [
+        [content[lang].pricing.title, content[lang].pricing.titleInr],
+        [snanContent[lang].tariff.title, snanContent[lang].tariff.titleInr],
+      ]) {
+        const out = html(React.createElement(CurrencyLine, { other, inr }));
+        expect(out).toContain('<span class="cur cur-USD">' + other + "</span>");
+        expect(inr).toContain("{price:eleven}");
+        expect(out).toContain("₹501");
+      }
+    }
+  });
+
   it("has a Hindi edition in आप", () => {
     const out = begin("hi");
     expect(out).toContain(beginContent.hi.title);
@@ -93,20 +128,28 @@ const setup = (lang: "en" | "hi", sankalpText = "") =>
   );
 
 describe("setup", () => {
-  it("every choice is a small block that says whether it is pressed", () => {
+  it("each one-of-many choice is a radio in a radiogroup, drawn as a small block", () => {
     const out = setup("en");
-    const choices = out.match(/<button[^>]*class="press-choice[^"]*"[^>]*>/g) ?? [];
-    /* Two waters, the prayer and "without", three examples, twenty-four hours. */
-    expect(choices.length).toBe(2 + 2 + 3 + 24);
-    for (const c of choices) expect(c).toMatch(/aria-pressed="(true|false)"/);
-    /* The chosen water, the empty prayer and six o'clock. */
-    expect(count(out, /aria-pressed="true"/g)).toBe(3);
+    expect(count(out, /role="radiogroup"/g)).toBe(3);
+    const radios = out.match(/<button[^>]*role="radio"[^>]*>/g) ?? [];
+    /* Two waters, the prayer and "without", twenty-four hours. */
+    expect(radios.length).toBe(2 + 2 + 24);
+    for (const r of radios) {
+      expect(r).toContain("press-choice");
+      expect(r).toMatch(/aria-checked="(true|false)"/);
+    }
+    /* The chosen water, the empty prayer and six o'clock: the group's tab stops. */
+    expect(count(out, /aria-checked="true"/g)).toBe(3);
+    expect(count(out, /role="radio"[^>]*tabindex="0"|tabindex="0"[^>]*role="radio"/g)).toBe(3);
+    expect(out).not.toMatch(/role="radio"[^>]*aria-pressed/);
   });
 
-  it("an example taken stays pressed", () => {
-    const example = setupContent.en.sankalp.examples[1];
-    const out = setup("en", example);
-    expect(count(out, /aria-pressed="true"/g)).toBe(4);
+  it("the example sankalps are press-choice buttons, and one taken stays pressed", () => {
+    const examples = setup("en").match(/<button[^>]*aria-pressed[^>]*>/g) ?? [];
+    expect(examples.length).toBe(3);
+    for (const e of examples) expect(e).toContain("press-choice");
+    const taken = setup("en", setupContent.en.sankalp.examples[1]);
+    expect(count(taken, /aria-pressed="true"/g)).toBe(1);
   });
 
   it("sends the choices as fields", () => {
@@ -130,6 +173,17 @@ describe("setup", () => {
   });
 });
 
+describe("the masthead on a screen with its own press", () => {
+  it("drops its sindoor Begin, and draws it as the press elsewhere", async () => {
+    const { Header } = await import("@/components/site/Header");
+    const shown = html(React.createElement(Header, { lang: "en", currentPath: "/" }));
+    const hidden = html(React.createElement(Header, { lang: "en", currentPath: "/begin", hideCta: true }));
+    expect(count(shown, PRESS)).toBeGreaterThan(0);
+    expect(count(hidden, PRESS)).toBe(0);
+    expect(shown + hidden).not.toMatch(/<a[^>]*impress[^>]*bg-sindoor/);
+  });
+});
+
 describe("the step line", () => {
   it("puts the bindu on the current step", () => {
     const out = html(React.createElement(Steps, { steps: ["A", "B", "C"], here: [2], label: "Steps" }));
@@ -150,7 +204,7 @@ describe("Clerk, dressed as the site", () => {
   });
 
   it("reads only the palette's tokens", () => {
-    const tokens = new Set(["paper", "paper-2", "paper-3", "ink", "ink-2", "sindoor", "marigold", "teal", "rule", "wall", "font-body", "font-display"]);
+    const tokens = new Set(["paper", "paper-2", "paper-3", "ink", "ink-2", "sindoor", "marigold", "teal", "rule", "wall", "on-sindoor", "font-body", "font-display"]);
     const used = [...JSON.stringify(clerkAppearance).matchAll(/var\(--([a-z0-9-]+)\)/g)].map((m) => m[1]);
     expect(used.length).toBeGreaterThan(0);
     for (const name of used) expect(tokens, name).toContain(name);

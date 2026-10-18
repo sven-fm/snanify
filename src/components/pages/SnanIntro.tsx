@@ -7,7 +7,7 @@ import { PastHero } from "@/components/site/PastHero";
 import { SittingLoop } from "@/components/snan/SittingLoop";
 import { Specimen } from "@/components/Specimen";
 import { Band, Label, RiverHorizon, Seal } from "@/components/kit";
-import { buttonClass, CTA, Price, TaxNote } from "@/components/ui";
+import { buttonClass, CTA, CurrencyLine, Price, TaxNote } from "@/components/ui";
 import { snanContent } from "@/content/snan";
 import { PER_SNAN, PRICE } from "@/content/prices";
 import { clock, LIMB_START, SITTING } from "@/lib/sitting-plan";
@@ -197,7 +197,7 @@ export function SnanIntro({ lang }: { lang: Lang }) {
         <section id="tariff" className="tint scroll-mt-16">
           <div className="mx-auto max-w-md px-5 py-16 lg:max-w-3xl lg:px-8">
             <h2 className={H2} style={W700}>
-              {t.tariff.title}
+              <CurrencyLine other={t.tariff.title} inr={t.tariff.titleInr} />
             </h2>
             <p className="mt-3 leading-[1.6] text-ink2">{t.tariff.lede}</p>
 

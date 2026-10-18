@@ -15,11 +15,13 @@ const en = {
   meta: {
     title: "Begin | Snanify",
     description:
-      "Eleven mornings for eleven, in your own currency. Pick a pack and set up your sheet once.",
+      "Eleven mornings. Your first one today. Set up your sheet once, then pick your mornings.",
   },
   /* The headline in capitals, then its second sentence in sindoor (spec 7.2). */
   title: "Pick your mornings.",
   sub: "Eleven for eleven.",
+  /* For rupee readers: eleven mornings cost ₹501, so the line names it. */
+  subInr: "Eleven mornings for {price:eleven}.",
   /* The band: the one thing to know before paying. */
   band: "Pay once. Use them any morning you like.",
   steps: ["Your water", "Your sheet", "Your mornings"],
@@ -72,10 +74,11 @@ const hi = {
   meta: {
     title: "शुरू कीजिए | Snanify",
     description:
-      "ग्यारह सुबहें ग्यारह में, आपकी अपनी मुद्रा में। एक पैक चुनिए और अपना पत्र एक बार तय कीजिए।",
+      "ग्यारह सुबहें। पहली आज ही। अपना पत्र एक बार तैयार कीजिए, फिर अपनी सुबहें चुनिए।",
   },
   title: "अपनी सुबहें चुनिए।",
   sub: "ग्यारह सुबहें, ग्यारह में।",
+  subInr: "ग्यारह सुबहें {price:eleven} में।",
   band: "एक बार भुगतान कीजिए। फिर जिस सुबह चाहें, स्नान कीजिए।",
   steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
   setLine: "आपका पत्र तैयार है। यह रहा, आपके नामों के साथ।",

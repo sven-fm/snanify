@@ -94,6 +94,27 @@ function FieldError({ children }: { children?: string }) {
 
 const W700 = { fontWeight: 700 } as const;
 
+/* The water, the prayer and the hour are each one choice of many: a
+   radiogroup of press-choice buttons (role="radio", aria-checked), with the
+   chosen one the only tab stop. The arrows move the choice, as they do in a
+   native radio group. */
+function arrowKeys(e: React.KeyboardEvent<HTMLDivElement>) {
+  const dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+  if (!dir) return;
+  const radios = [...e.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]')];
+  const at = radios.indexOf(document.activeElement as HTMLButtonElement);
+  if (at < 0) return;
+  e.preventDefault();
+  const next = radios[(at + dir + radios.length) % radios.length];
+  next.focus();
+  next.click();
+}
+
+/** The props that make a press-choice button one radio of a group. */
+function radio(checked: boolean) {
+  return { type: "button" as const, role: "radio", "aria-checked": checked, tabIndex: checked ? 0 : -1 };
+}
+
 /* A field's name in Eczar 700, sentence case, and its one hint under it. */
 function Label({ label, hint }: { label: string; hint: string }) {
   return (
@@ -237,14 +258,13 @@ export function SetupForm({
         {/* Small blocks on 3px walls (spec 5.1a); the chosen one stays sunk,
             with a sindoor face. The value travels in the hidden field. */}
         <input type="hidden" name="waterSlug" value={water} />
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        <div role="radiogroup" aria-label={t.water.label} onKeyDown={arrowKeys} className="mt-5 grid gap-3 sm:grid-cols-2">
           {waters.map((w) => {
             const on = water === w.slug;
             return (
               <button
                 key={w.slug}
-                type="button"
-                aria-pressed={on}
+                {...radio(on)}
                 onClick={() => pickWater(w.slug)}
                 className="press-choice min-h-[64px] w-full flex-col items-start justify-center gap-0.5 text-left"
               >
@@ -358,10 +378,9 @@ export function SetupForm({
         <Label label={t.prayer.label} hint={t.prayer.hint} />
 
         <input type="hidden" name="prayerId" value={prayer} />
-        <div className="mt-5 flex flex-col gap-3">
+        <div role="radiogroup" aria-label={t.prayer.label} onKeyDown={arrowKeys} className="mt-5 flex flex-col gap-3">
           <button
-            type="button"
-            aria-pressed={prayer === ""}
+            {...radio(prayer === "")}
             onClick={() => setPrayer("")}
             className="press-choice w-full text-left"
           >
@@ -373,8 +392,7 @@ export function SetupForm({
             return (
               <button
                 key={p.id}
-                type="button"
-                aria-pressed={on}
+                {...radio(on)}
                 onClick={() => setPrayer(p.id)}
                 className="press-choice w-full flex-col items-start gap-1 text-left"
               >
@@ -435,12 +453,11 @@ export function SetupForm({
         {/* Twenty-four small blocks rather than a select: the hour is chosen
             with a thumb, and the chosen one stays sunk like the chosen water. */}
         <input type="hidden" name="reminderHour" value={hour} />
-        <div className="mt-5 grid grid-cols-4 gap-2.5 sm:grid-cols-6">
+        <div role="radiogroup" aria-label={t.reminder.label} onKeyDown={arrowKeys} className="mt-5 grid grid-cols-4 gap-2.5 sm:grid-cols-6">
           {Array.from({ length: 24 }, (_, h) => (
             <button
               key={h}
-              type="button"
-              aria-pressed={hour === h}
+              {...radio(hour === h)}
               onClick={() => setHour(h)}
               className="press-choice justify-center px-0 tabular-nums"
             >

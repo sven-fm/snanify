@@ -77,7 +77,7 @@ export async function Begin({
     <>
       <div className="grain" aria-hidden="true" />
       <TrackView event="begin_view" props={{ pack: chosen, lang }} />
-      <Header lang={lang} currentPath="/begin" />
+      <Header lang={lang} currentPath="/begin" hideCta />
       <BeginView
         lang={lang}
         credits={credits}

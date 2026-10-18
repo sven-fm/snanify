@@ -67,7 +67,7 @@ const SINK = {
 export const clerkAppearance = {
   variables: {
     colorPrimary: "var(--sindoor)",
-    colorPrimaryForeground: "#fff",
+    colorPrimaryForeground: "var(--on-sindoor)",
     colorBackground: "var(--paper)",
     colorForeground: "var(--ink)",
     colorMutedForeground: "var(--ink-2)",
@@ -122,9 +122,9 @@ export const clerkAppearance = {
       boxShadow: `${WALLS} !important`,
       backgroundImage: FLAT,
       backgroundColor: "var(--sindoor)",
-      color: "#fff",
+      color: "var(--on-sindoor)",
       "&::before, &::after": { display: "none !important" },
-      "&:hover, &:focus": { backgroundColor: "var(--sindoor) !important", color: "#fff" },
+      "&:hover, &:focus": { backgroundColor: "var(--sindoor) !important", color: "var(--on-sindoor)" },
       "&:focus-visible": { outline: "2px solid var(--sindoor)", outlineOffset: "4px" },
     },
 

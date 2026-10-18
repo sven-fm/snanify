@@ -15,7 +15,7 @@ import {
 import { PastHero } from "@/components/site/PastHero";
 import { Specimen } from "@/components/Specimen";
 import { Band, Gauge, Label, RiverHorizon, Seal } from "@/components/kit";
-import { CTA, Price, TaxNote } from "@/components/ui";
+import { CTA, CurrencyLine, Price, TaxNote } from "@/components/ui";
 import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 
 /**
@@ -220,7 +220,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
         <section id="prices" className="scroll-mt-16">
           <div className="mx-auto max-w-md px-5 py-16 lg:px-8">
             <h2 className={H2} style={W700}>
-              {t.pricing.title}
+              <CurrencyLine other={t.pricing.title} inr={t.pricing.titleInr} />
             </h2>
             <p className="mt-3 leading-[1.6] text-ink2">{t.pricing.lede}</p>
 

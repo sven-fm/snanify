@@ -114,7 +114,7 @@ const ethicsEn = {
 
   closing: {
     title: "Begin tomorrow morning.",
-    body: "Set it up tonight. Eleven mornings for eleven, in your own currency.",
+    body: "Set it up tonight. Eleven mornings, paid once, in your own currency.",
     cta: "Begin",
   },
 };
@@ -188,7 +188,7 @@ export const ethicsContent = { en: ethicsEn, hi: {
 
   closing: {
     title: "कल सुबह आरंभ कीजिए।",
-    body: "आज रात तैयारी कर लीजिए। ग्यारह सुबहें, ग्यारह में, आपकी अपनी मुद्रा में।",
+    body: "आज रात तैयारी कर लीजिए। ग्यारह सुबहें, एक बार भुगतान, आपकी अपनी मुद्रा में।",
     cta: "आरंभ कीजिए",
   },
 } } satisfies Record<Lang, typeof ethicsEn>;

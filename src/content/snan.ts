@@ -104,6 +104,8 @@ type Copy = {
 
   readonly tariff: {
     readonly title: string;
+    /** The title for rupee readers, with `{price:eleven}` filled at render. */
+    readonly titleInr: string;
     readonly lede: string;
     readonly heads: {
       readonly price: string;
@@ -127,7 +129,7 @@ const en: Copy = {
   meta: {
     title: "The snan, three minutes with your river",
     description:
-      "Three minutes with the river you grew up near, at the hour the panchang names, and a Sankalp Patra with your family's names. Eleven mornings for eleven.",
+      "Three minutes with the river you grew up near, at the hour the panchang names, and a Sankalp Patra with your family's names. Eleven mornings. Your first one today.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
@@ -243,6 +245,7 @@ const en: Copy = {
 
   tariff: {
     title: "Eleven mornings for eleven.",
+    titleInr: "Eleven mornings for {price:eleven}.",
     lede: "Pay once, in your own currency. Sit them on any mornings you like.",
     heads: { price: "Price", per: "Per morning" },
     choose: "Choose this pack",
@@ -280,7 +283,7 @@ const hi: Copy = {
   meta: {
     title: "स्नान, अपनी नदी के साथ तीन मिनट",
     description:
-      "पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट जिसके पास आप बड़े हुए, और एक संकल्प पत्र जिस पर आपके परिवार के नाम हैं। ग्यारह सुबहें, ग्यारह में।",
+      "पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट जिसके पास आप बड़े हुए, और एक संकल्प पत्र जिस पर आपके परिवार के नाम हैं। ग्यारह सुबहें। पहली आज ही।",
   },
 
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
@@ -396,6 +399,7 @@ const hi: Copy = {
 
   tariff: {
     title: "ग्यारह सुबहें, ग्यारह में।",
+    titleInr: "ग्यारह सुबहें {price:eleven} में।",
     lede: "एक बार भुगतान, आपकी अपनी मुद्रा में। जिस सुबह चाहें, बैठिए।",
     heads: { price: "मूल्य", per: "प्रति सुबह" },
     choose: "यह पैक चुनिए",

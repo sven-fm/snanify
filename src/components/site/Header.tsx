@@ -8,6 +8,7 @@ import { RiverStrip } from "@/components/kit";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
 import { MobileCta, ProfileMenu, ProfileRows } from "@/components/site/HeaderCta";
+import { MASTHEAD_PRESS, buttonClass } from "@/components/ui";
 
 export type NavLink = { href: string; label: string };
 
@@ -31,6 +32,7 @@ export function Header({
   currentPath = "/",
   ctaTo,
   ctaAfterHero = false,
+  hideCta = false,
 }: {
   lang: Lang;
   links?: NavLink[];
@@ -42,6 +44,11 @@ export function Header({
    * that one has scrolled off: see PastHero and `[data-until-scrolled]`.
    */
   ctaAfterHero?: boolean;
+  /**
+   * On a screen that carries its own press (/begin, sign-in, /setup, /today)
+   * the masthead's Begin stands down: one sindoor block per screen.
+   */
+  hideCta?: boolean;
 }) {
   const t = content[lang];
   /* The almanac's edition line, computed so it turns over at Chaitra by itself. */
@@ -95,6 +102,7 @@ export function Header({
               accountLabel={t.nav.account}
               rows={profileRows}
               afterHero={ctaAfterHero}
+              hideBegin={hideCta}
             />
 
             {/* The menu, phones and tablets. A <details> so it needs no
@@ -135,25 +143,26 @@ export function Header({
                     </li>
                   </ul>
                   <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
-                    <a
-                      href={ctaTo ?? ctaHref(lang)}
-                      className="label impress flex min-h-[48px] items-center justify-center bg-sindoor text-paper hover:bg-ink active:bg-ink"
-                    >
-                      {t.nav.cta}
-                    </a>
-                    <p className="label mt-4 text-ink2">{edition}</p>
+                    {!hideCta && (
+                      <a href={ctaTo ?? ctaHref(lang)} className={buttonClass("solid", "mb-4 min-h-[48px] w-full justify-center")}>
+                        {t.nav.cta}
+                      </a>
+                    )}
+                    <p className="label text-ink2">{edition}</p>
                   </div>
                 </div>
               </details>
             )}
 
-            <a
-              href={ctaTo ?? ctaHref(lang)}
-              data-until-scrolled={ctaAfterHero ? "" : undefined}
-              className="label impress hidden min-h-[44px] items-center bg-sindoor px-4 text-paper hover:bg-ink active:bg-ink sm:inline-flex"
-            >
-              {t.nav.cta}
-            </a>
+            {!hideCta && (
+              <a
+                href={ctaTo ?? ctaHref(lang)}
+                data-until-scrolled={ctaAfterHero ? "" : undefined}
+                className={buttonClass("solid", MASTHEAD_PRESS + " hidden sm:inline-flex")}
+              >
+                {t.nav.cta}
+              </a>
+            )}
           </div>
         </div>
       </div>

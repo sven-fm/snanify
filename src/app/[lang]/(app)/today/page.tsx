@@ -102,7 +102,7 @@ export default async function Page({
     return (
       <>
         <div className="grain" aria-hidden="true" />
-        <Header lang={lang} currentPath={ROUTE} />
+        <Header lang={lang} currentPath={ROUTE} hideCta />
         <main className="mx-auto max-w-md px-5 py-8 sm:py-14">
           <div className="plate relative aspect-[3/2] overflow-hidden">
             <div
@@ -176,7 +176,7 @@ export default async function Page({
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} hideCta />
 
       <main>
         <Sitting

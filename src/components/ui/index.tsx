@@ -62,6 +62,9 @@ export function buttonClass(variant: ButtonVariant = "solid", className = "") {
   return `${buttonVariants[variant]} ${className}`.trim();
 }
 
+/** The press sized for the masthead's Begin: a 44px target, Martel 700 at the label size. */
+export const MASTHEAD_PRESS = "min-h-[44px] px-2 py-0 text-[0.875rem]";
+
 /** The arrow at the right of a primary press. */
 function Arrow({ variant, arrow }: { variant: ButtonVariant; arrow?: boolean }) {
   if (!(arrow ?? variant === "solid")) return null;
@@ -201,6 +204,25 @@ export function TaxNote({ lang }: { lang: Lang }) {
       {CURRENCIES.map((c) => (
         <span key={c} className={`cur cur-${c}`}>
           {c === "USD" ? t.exclusive : t.inclusive}
+        </span>
+      ))}
+    </>
+  );
+}
+
+/**
+ * A line whose claim holds in some currencies only. "Eleven for eleven" is
+ * true in dollars, euros, pounds and Canadian dollars; in rupees eleven
+ * mornings cost ₹501, so a rupee reader gets `inr`, with its `{price:…}`
+ * filled through <Price>. Same mechanism as <TaxNote>: every line is in the
+ * markup and CSS shows the reader's own.
+ */
+export function CurrencyLine({ other, inr }: { other: string; inr: string }) {
+  return (
+    <>
+      {CURRENCIES.map((c) => (
+        <span key={c} className={`cur cur-${c}`}>
+          {c === "INR" ? <PriceText>{inr}</PriceText> : other}
         </span>
       ))}
     </>

@@ -88,7 +88,7 @@ export default async function Page({
     <>
       <div className="grain" aria-hidden="true" />
       {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} hideCta />
 
       {/* One column at max-w-md (spec 6.3): the step line, the headline in
           capitals, one short lede, then the six fields. No band, no seal. */}

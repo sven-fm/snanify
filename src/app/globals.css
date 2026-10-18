@@ -163,6 +163,8 @@
   /* Ink on marigold stays dark at night: marigold is the same in both
      editions, and light ink on it would vanish. */
   --on-marigold: #141210;
+  /* White type on the sindoor face, the same in both editions. */
+  --on-sindoor: #ffffff;
 }
 @layer components {
   .press {
@@ -178,7 +180,7 @@
     font-size: 1rem;
     line-height: 1.3;
     text-align: left;
-    color: #fff;
+    color: var(--on-sindoor);
     background-color: var(--sindoor);
     border: 2px solid var(--ink);
     box-shadow: 1px 1px 0 var(--wall), 2px 2px 0 var(--wall), 3px 3px 0 var(--wall), 4px 4px 0 var(--wall), 5px 5px 0 var(--wall), 6px 6px 0 var(--wall);
@@ -247,7 +249,7 @@
   .press-choice[aria-pressed="true"],
   .press-choice[aria-checked="true"],
   .press-choice:has(input:checked) {
-    color: #fff;
+    color: var(--on-sindoor);
     background-color: var(--sindoor);
   }
 

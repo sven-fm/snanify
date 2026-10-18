@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
+import { MASTHEAD_PRESS, buttonClass } from "@/components/ui";
 
 /* ---------------------------------------------------------------------------
    The account, in the masthead, for somebody signed in.
@@ -91,6 +92,7 @@ export function MobileCta({
   accountLabel,
   rows,
   afterHero = false,
+  hideBegin = false,
 }: {
   begin: string;
   beginLabel: string;
@@ -99,14 +101,17 @@ export function MobileCta({
   rows: ProfileRow[];
   /** Wait for the hero's own Begin to scroll off; see PastHero. */
   afterHero?: boolean;
+  /** The screen carries its own press; see Header's `hideCta`. */
+  hideBegin?: boolean;
 }) {
   const signedIn = useSignedIn();
 
   if (!signedIn) {
+    if (hideBegin) return null;
     return (
       <Link
         href={begin}
-        className="label impress flex min-h-[44px] items-center whitespace-nowrap bg-sindoor px-3 text-paper hover:bg-ink active:bg-ink sm:hidden"
+        className={buttonClass("solid", `${MASTHEAD_PRESS} whitespace-nowrap sm:hidden`)}
         data-mobile-cta
         data-until-scrolled={afterHero ? "" : undefined}
       >

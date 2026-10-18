@@ -4,7 +4,7 @@ import { beginContent } from "@/content/begin";
 import { content } from "@/lib/content";
 import { PER_SNAN, PRICE, type TierKey } from "@/content/prices";
 import { localePath, type Lang } from "@/lib/locales";
-import { Price, TaxNote, buttonClass } from "@/components/ui";
+import { CurrencyLine, Price, TaxNote, buttonClass } from "@/components/ui";
 import { Band, Label, Seal } from "@/components/kit";
 import { Bindu } from "@/components/marks";
 import { Steps } from "@/components/site/Steps";
@@ -114,7 +114,9 @@ export function BeginView({
           className={`display text-ink ${hi ? "text-[2.1rem]" : "text-[2.2rem] uppercase min-[380px]:text-[2.35rem]"}`}
           style={{ fontWeight: 800, lineHeight: hi ? 1.22 : 0.95, letterSpacing: hi ? 0 : "-0.01em" }}
         >
-          {t.title} <span className="text-sindoor">{t.sub}</span>
+          {t.title} <span className="text-sindoor">
+            <CurrencyLine other={t.sub} inr={t.subInr} />
+          </span>
         </h1>
 
         <Band className="mt-4">{t.band}</Band>

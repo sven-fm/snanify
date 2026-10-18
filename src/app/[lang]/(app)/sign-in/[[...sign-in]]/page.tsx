@@ -47,7 +47,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
     <>
       <div className="grain" aria-hidden="true" />
       <TrackView event="sign_in_view" props={{ lang }} />
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} hideCta />
 
       <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-md">
