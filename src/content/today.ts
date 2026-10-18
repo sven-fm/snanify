@@ -66,7 +66,7 @@ const en = {
     share: "Send it to the family",
     tomorrow: "One snan a day. The next one is tomorrow.",
     /** In place of `tomorrow` when this was the last morning on the account. */
-    out: "Your mornings are complete. Choose your next ones for tomorrow.",
+    out: "You kept every morning. Pick your next ones for tomorrow.",
   },
 
   failed: {
@@ -131,7 +131,7 @@ const hi = {
     cta: "अपना संकल्प पत्र खोलिए",
     share: "परिवार को भेजिए",
     tomorrow: "दिन में एक स्नान। अगला कल है।",
-    out: "आपकी सुबहें पूरी हुईं। कल के लिए अपनी अगली सुबहें चुनिए।",
+    out: "आपने हर सुबह निभाई। कल के लिए अपनी अगली सुबहें चुनिए।",
   },
 
   failed: {

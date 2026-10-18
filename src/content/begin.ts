@@ -30,7 +30,7 @@ const en = {
   /* Beside the Pay buttons after a press that came back unopened. */
   payError: "Press Pay once more to open the payment page.",
   /* For a reader sent from /today or /account with every morning kept. */
-  outLine: "Every morning is kept. Pick your next ones.",
+  outLine: "You kept every morning. Pick your next ones.",
   perLabel: "a morning",
   cta: "Pay {price}",
   opening: "Opening Stripe",
@@ -84,7 +84,7 @@ const hi = {
   setLine: "आपका पत्र तैयार है। यह रहा, आपके नामों के साथ।",
   cancelled: "भुगतान Stripe पर रुक गया। जब तैयार हों, अपनी सुबहें चुनिए।",
   payError: "भुगतान पृष्ठ खोलने के लिए भुगतान का बटन एक बार फिर दबाइए।",
-  outLine: "आपकी सभी सुबहें पूरी हुईं। अब अगली सुबहें चुनिए।",
+  outLine: "आपने हर सुबह निभाई। अब अगली सुबहें चुनिए।",
   perLabel: "प्रति सुबह",
   cta: "{price} का भुगतान कीजिए",
   opening: "Stripe खुल रहा है",

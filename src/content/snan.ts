@@ -75,7 +75,6 @@ type Copy = {
   readonly form: {
     readonly title: string;
     readonly lede: string;
-    readonly clockHead: string;
     readonly lengthHead: string;
     /** "{n} seconds", filled from the sitting plan. */
     readonly seconds: string;
@@ -146,7 +145,6 @@ const en: Copy = {
   form: {
     title: "Your three minutes, in five parts",
     lede: "Every morning runs the same way. Only the river changes.",
-    clockHead: "Starts at",
     lengthHead: "Length",
     seconds: "{n} seconds",
     limbs: [
@@ -300,7 +298,6 @@ const hi: Copy = {
   form: {
     title: "आपके तीन मिनट, पाँच अंगों में",
     lede: "हर सुबह इसी तरह चलती है। केवल नदी बदलती है।",
-    clockHead: "शुरू",
     lengthHead: "अवधि",
     seconds: "{n} सेकंड",
     limbs: [

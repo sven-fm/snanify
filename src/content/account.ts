@@ -37,7 +37,7 @@ const en = {
     title: "Your {accent}",
     accent: "mornings",
     left: {
-      zero: "Your mornings are complete.",
+      zero: "You kept every morning.",
       one: "You have one morning left.",
       many: "You have {n} mornings left.",
     },
@@ -97,7 +97,7 @@ const hi = {
     title: "आपकी {accent}",
     accent: "सुबहें",
     left: {
-      zero: "आपकी सुबहें पूरी हुईं।",
+      zero: "आपने हर सुबह निभाई।",
       one: "आपके पास एक सुबह बाकी है।",
       many: "आपके पास {n} सुबहें बाकी हैं।",
     },

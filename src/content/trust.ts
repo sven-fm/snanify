@@ -24,8 +24,9 @@ import { SITTING } from "@/lib/sitting-plan";
  *
  * PROVENANCE, do not loosen:
  *   · Flow is MODELLED discharge from the Copernicus global flood model read
- *     through Open-Meteo, not a gauge reading. "Modelled" appears wherever a
- *     figure does.
+ *     through Open-Meteo, not a gauge reading. "Modelled" and the source are
+ *     named on /rivers, /live and /faq; product surfaces show the figure
+ *     plainly (tests/unit/copy-guard.test.ts holds that split).
  *   · The Central Water Commission is the register of India's gauges and
  *     nothing more. Never imply a gauge exists where one does not.
  *   · The panchang is computed here and ships labelled provisional until a

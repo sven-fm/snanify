@@ -92,7 +92,7 @@ const PRODUCT = new Set([
     no rite at the ghat, no merit, no stand-in presence, no figure "at the ghat",
     no statistics about other people. */
 const OFF_LIMITS =
-  /holy (dip|water)|punya|on your behalf|as good as being there|measured at the ghat|passes the ghat|most people/i;
+  /holy (dip|water)|punya(?! kaal)|on your behalf|as good as being there|measured at the ghat|passes the ghat|most people/i;
 
 const SOURCE_TALK = /\b(modelled|modeled|Modelled|Copernicus|GloFAS|Open-Meteo)\b|मॉडल/;
 
@@ -195,26 +195,34 @@ describe("the copy rules", () => {
       else if (v && typeof v === "object") for (const [k, x] of Object.entries(v as object)) collect(x, `${at}.${k}`);
     };
     for (const name of MARKETING) collect(await import(name), name);
-    expect(slips).toEqual([]);
-  });
 
-  it("keeps every marketing h1 and lede under the word limit", async () => {
-    const long: string[] = [];
-    const find = (v: unknown, at: string): void => {
-      if (Array.isArray(v)) v.forEach((x, i) => find(x, `${at}[${i}]`));
+    /* The h1 and lede of every marketing page, both editions, held to the same limit. */
+    const heads = (v: unknown, at: string): void => {
+      if (Array.isArray(v)) v.forEach((x, i) => heads(x, `${at}[${i}]`));
       else if (v && typeof v === "object") {
         for (const [k, x] of Object.entries(v as object)) {
           if (/^(h1|lede|title|headline)$/i.test(k) && typeof x === "string") {
             for (const sentence of x.split(/(?<=[.!?\u0964])\s+/)) {
-              if (sentence.split(/\s+/).length > MAX_WORDS) long.push(`${at}.${k}: ${sentence.slice(0, 90)}`);
+              if (sentence.split(/\s+/).length > MAX_WORDS) slips.push(`${MAX_WORDS}+ words: ${at}.${k}: ${sentence.slice(0, 90)}`);
             }
           }
-          find(x, `${at}.${k}`);
+          heads(x, `${at}.${k}`);
         }
       }
     };
-    for (const name of [...MARKETING, "@/content/landing/hi"]) find(await import(name), name);
-    expect(long).toEqual([]);
+    for (const name of [...MARKETING, "@/content/landing/hi"]) heads(await import(name), name);
+    expect(slips).toEqual([]);
+  });
+
+  it("lets the panchang's punya kaal through and stops a bare punya claim", () => {
+    const check = (text: string): Slip[] => {
+      const out: Slip[] = [];
+      walkStrings(text, "probe", out);
+      return out.filter((x) => x.rule.startsWith("off limits"));
+    };
+    expect(check("The observed window is a punya kaal derived from it.")).toEqual([]);
+    expect(check("Each morning earns you punya.")).toHaveLength(1);
+    expect(check("The observed window is a punya kaal, and the snan earns punya.")).toHaveLength(1);
   });
 
   it("gives Hindi every key English has, and nothing English lacks", async () => {
