@@ -151,9 +151,9 @@
   s.setProperty("--phone", (tall ? 470 : 380) + "px");
   s.setProperty("--homehook", (hi ? 100 : 116) + "px");
   const MARK = (ink) => `<svg viewBox="0 0 48 48" aria-hidden="true"><defs><clipPath id="mk"><circle cx="24" cy="24" r="20"/></clipPath></defs><circle cx="24" cy="24" r="21.6" fill="#f2ead9" stroke="${ink}" stroke-width="2.4"/><g clip-path="url(#mk)"><path d="M15.4 24.6A8.6 8.6 0 0 1 32.6 24.6Z" fill="#c8251d"/><rect y="24.6" width="48" height="1.4" fill="${ink}"/><g fill="#1d5a6a"><rect x="8" y="29" width="32" height="1.8"/><rect x="5" y="33.4" width="38" height="2"/><rect x="2" y="38" width="44" height="2.2"/></g></g></svg>`;
-  const WM = (color, ink = "#141210") => `<span class="lock" style="color:${color}">${MARK(ink)}<span class="wm">Snan<span class="wm-i">\u0131<svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="5" fill="#c8251d"/></svg></span>fy</span></span>`;
+  const WM = (color, ink = "#141210", dot = "#c8251d") => `<span class="lock" style="color:${color}">${MARK(ink)}<span class="wm">Snan<span class="wm-i">\u0131<svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="5" fill="${dot}"/></svg></span>fy</span></span>`;
   const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
-  const mark = (fill) => WM(fill, fill);
+  const mark = (fill, dot) => WM(fill, fill, dot);
 
   /* A starburst of `n` points, as a polygon, for the price seal. */
   function burst(n, fill, stroke) {
@@ -302,7 +302,7 @@
   } else if (p.style === "matchbox") {
     document.body.className = "mb" + (tall ? "" : " short") + (p.cta.length > 10 ? " long" : "");
     root.innerHTML = `<div class="col">
-      <div class="head">${mark("#f2c230")}</div>
+      <div class="head">${mark("#f2c230", "#f2c230")}</div>
       <div class="hook d caps">${esc(p.hook)}</div>
       <div class="label">
         <div class="stamp">${burst(12, "#141210", "#f2c230")}<div class="t d"><div class="big">${esc(p.seal.big)}</div><div class="small">${esc(p.seal.small)}</div></div></div>
