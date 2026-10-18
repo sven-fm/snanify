@@ -1,7 +1,7 @@
 import type { Lang } from "@/lib/locales";
 import { Gauge } from "@/components/kit";
 import { fill, liveContent } from "@/content/live";
-import { flowContent } from "@/content/flow";
+import { flowContent, quietFigure } from "@/content/flow";
 import { ordinal } from "@/lib/ordinal";
 import { SOURCES, type FlowBand, type WaterState } from "@/lib/riverdata";
 
@@ -67,7 +67,7 @@ export function readingView(water: WaterState, lang: Lang): ReadingView {
   return {
     percentile: null,
     band: null,
-    figure: `${flow}, ${words.stateMedian}`,
+    figure: quietFigure(flow, lang),
     source: `${t.feed.normalLabel}, ${by}`,
   };
 }

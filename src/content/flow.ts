@@ -57,6 +57,8 @@ const en = {
   /** When the feed is quiet the page shows the seasonal median and says so, claiming nothing about today. */
   lineMedian: "The {river} at {city}: today's figure is on its way. Here is its usual level for the season.",
   stateMedian: "Usual for the season",
+  /** The figure row on a quiet feed: the state joins the flow mid-sentence, so lower case. */
+  figureMedian: "{flow}, usual for the season",
   /** The proof under the word: "797 m³/s, 86th percentile since 1997". */
   proof: "{flow}, {n} percentile since 1997",
   /** The window the percentile is drawn from, said plainly. */
@@ -94,11 +96,17 @@ const hi: typeof en = {
   },
   lineMedian: "{city} में {river}: आज का आँकड़ा आ रहा है। यह इस ऋतु का उनका सामान्य स्तर है।",
   stateMedian: "इस ऋतु का सामान्य स्तर",
+  figureMedian: "{flow}, इस ऋतु का सामान्य स्तर",
   proof: "{flow}, 1997 से {n}वाँ प्रतिशतक",
   forSeason: "वर्ष के इस सप्ताह के हिसाब से",
 };
 
 export const flowContent = { en, hi } satisfies Record<Lang, typeof en>;
+
+/** "717 m³/s, usual for the season": the figure row when the feed is quiet. */
+export function quietFigure(flow: string, lang: Lang): string {
+  return flowContent[lang].figureMedian.replace("{flow}", flow);
+}
 
 export type FlowCopy = typeof en;
 export type { FlowBand };

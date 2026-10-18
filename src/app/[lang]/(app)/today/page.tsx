@@ -22,7 +22,7 @@ import { Footer } from "@/components/site/Footer";
 import Link from "next/link";
 import { LinkButton, buttonClass } from "@/components/ui";
 import { Sitting } from "@/components/snan/Sitting";
-import { flowContent } from "@/content/flow";
+import { flowContent, quietFigure } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
    /today, the morning itself.
@@ -167,7 +167,7 @@ export default async function Page({
     band: modelled ? d.percentile.band : null,
     figure: modelled
       ? words.proof.replace("{flow}", flow).replace("{n}", ordinal(Math.round(d.percentile.value), lang))
-      : `${flow}, ${words.stateMedian}`,
+      : quietFigure(flow, lang),
     distance: km === null ? null : t.reading.distance.replace("{km}", NUMBER.format(km)),
   };
 

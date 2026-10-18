@@ -8,7 +8,7 @@ import { getGhat } from "@/content/rivers";
 import { waterName } from "@/content/names";
 import { getLiveSnapshot, REVALIDATE_SECONDS, type WaterState } from "@/lib/riverdata";
 import { liveContent } from "@/content/live";
-import { flowContent } from "@/content/flow";
+import { flowContent, quietFigure } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
    The landing page, with a real river on it.
@@ -67,7 +67,7 @@ function buildCard(lang: Lang, water: WaterState): LiveCard {
     ? words.proof
         .replace("{flow}", flow)
         .replace("{n}", ordinal(Math.round(d.percentile.value), lang))
-    : `${flow}, ${words.stateMedian}`;
+    : quietFigure(flow, lang);
 
   const next = water.next ?? water.current;
 
