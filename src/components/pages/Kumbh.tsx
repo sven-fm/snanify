@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { localePath } from "@/lib/i18n";
+import { ctaHref } from "@/lib/nav";
 import type { Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -423,7 +424,7 @@ export function Kumbh({ lang }: { lang: Lang }) {
         </Section>
 
         {/* The Godavari on this site, and the one press. */}
-        <RefClose title={t.here.title} body={t.here.body} label={t.here.cta} href={localePath(lang, "/begin")} />
+        <RefClose title={t.here.title} body={t.here.body} label={t.here.cta} href={ctaHref(lang)} />
       </main>
 
       <Footer lang={lang} />

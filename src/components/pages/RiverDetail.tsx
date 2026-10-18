@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { localePath } from "@/lib/i18n";
+import { ctaHref } from "@/lib/nav";
 import type { Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -254,7 +255,7 @@ export function RiverDetail({ lang, ghat, water }: { lang: Lang; ghat: Ghat; wat
           </Link>
         </Block>
 
-        <RefClose title={t.head.close.replace("{river}", ghat.river[lang])} label={t.onward.cta} href={localePath(lang, "/begin")} />
+        <RefClose title={t.head.close.replace("{river}", ghat.river[lang])} label={t.onward.cta} href={ctaHref(lang)} />
       </main>
 
       <Footer lang={lang} />

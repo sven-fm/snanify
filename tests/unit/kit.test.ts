@@ -60,6 +60,13 @@ describe("the kit", () => {
     for (const w of ["Thin", "Usual", "In spate", "797 m³/s"]) expect(out).toContain(w);
   });
 
+  it("the gauge ends the state with each script's own full stop", () => {
+    expect(html(Gauge({ percentile: 86, band: "full", lang: "en" }))).toContain("Running full.");
+    const hi = html(Gauge({ percentile: 86, band: "full", lang: "hi" }));
+    expect(hi).toContain("भरी धार।");
+    expect(hi).not.toContain("भरी धार.");
+  });
+
   it("the strip carries no marigold", () => {
     expect(html(RiverStrip({}))).not.toMatch(/f2c230|marigold/i);
   });

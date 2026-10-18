@@ -149,7 +149,10 @@ export function Festival({ name, children }: { name: string; children?: React.Re
   return (
     <div data-festival className="bg-maroon p-[5px] text-paper dark:text-ink">
       <div className="px-5 py-5 sm:px-7 sm:py-6" style={{ border: "4px double var(--haldi)" }}>
-        <p className="display text-[1.5rem] leading-[1.2] text-haldi" style={W700}>
+        {/* Haldi on the day maroon reads at 4.4:1; on the brighter night
+            maroon it falls to 3.2:1, so the name takes the light ink at
+            night (5.1:1) and the haldi stays in the double rule. */}
+        <p className="display text-[1.5rem] leading-[1.2] text-haldi dark:text-ink" style={W700}>
           {name}
         </p>
         {children ? <div className="mt-2 text-[0.9375rem] leading-[1.55]">{children}</div> : null}

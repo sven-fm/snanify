@@ -40,7 +40,7 @@ export function Gauge({
       {heading && today ? (
         <>
           <p className="display text-[1.625rem] leading-[1.05]" style={{ fontWeight: 800 }}>
-            {t.state[today]}.
+            {`${t.state[today]}${lang === "hi" ? "।" : "."}`}
           </p>
           <p className="mt-1.5 text-[0.875rem] leading-[1.45]">{t.plain[today]}</p>
         </>

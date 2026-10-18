@@ -172,6 +172,8 @@ const en = {
       },
     ],
   },
+  /** The one press at the end of both pages, inviting the snan. */
+  close: { title: "Your river, tomorrow morning.", cta: "Begin your snan" },
 };
 
 const hi = {
@@ -324,6 +326,8 @@ const hi = {
       },
     ],
   },
+  /** The one press at the end of both pages, inviting the snan. */
+  close: { title: "कल सुबह, आपकी नदी।", cta: "अपना स्नान शुरू कीजिए" },
 };
 
 export const legalContent = { en, hi } satisfies Record<Lang, typeof en>;

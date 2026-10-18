@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { OCCASIONS, occasionBySlug } from "@/content/muhurat";
-import { horizonFrom, inWindow, resolveOccasion, vikramSamvat } from "@/lib/occasions";
+import { horizonFrom, resolveOccasion, vikramSamvat } from "@/lib/occasions";
+import { inWindow } from "@/lib/festival-window";
 
 /* ---------------------------------------------------------------------------
    Occasion dates, against the days Drik Panchang names.
@@ -171,5 +172,18 @@ describe("inWindow", () => {
     expect(inWindow([span], new Date("2026-11-10T06:00:00+05:30"))).toEqual(span);
     expect(inWindow([span], new Date("2026-11-24T23:00:00+05:30"))).toEqual(span);
     expect(inWindow([span], new Date("2026-10-25T23:00:00+05:30"))).toBeNull();
+  });
+
+  /* The page resolves its dates over horizonFrom(now), which starts today.
+     A span already running must still come back whole, or the panel would
+     go dark on every day but the first. */
+  it("finds Kartik snan in the middle of its month", () => {
+    const now = new Date("2026-11-08T07:00:00+05:30");
+    const { from, to } = horizonFrom(now);
+    const dates = resolveOccasion(occasionBySlug("kartik-snan-2026")!, from, to);
+    expect(dates[0]).toMatchObject({ kind: "span", date: "2026-10-27", to: "2026-11-24" });
+    expect(dates[0].date < from).toBe(true);
+    expect(inWindow(dates, now)).toEqual(dates[0]);
+    expect(inWindow(dates, new Date("2026-11-25T07:00:00+05:30"))).toBeNull();
   });
 });

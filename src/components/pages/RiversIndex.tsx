@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { localePath } from "@/lib/i18n";
+import { ctaHref } from "@/lib/nav";
 import type { Lang } from "@/lib/locales";
 import { waterName } from "@/content/names";
 import { Header } from "@/components/site/Header";
@@ -132,7 +133,7 @@ export function RiversIndex({ lang }: { lang: Lang }) {
           title={t.closing.title}
           body={t.closing.lede}
           label={t.closing.cta}
-          href={localePath(lang, "/begin")}
+          href={ctaHref(lang)}
         />
       </main>
 

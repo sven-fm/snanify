@@ -18,7 +18,8 @@ export function NotFoundPage({ lang }: { lang: Lang }) {
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} currentPath="/" />
+      {/* No current page: the language switch leads to the other edition's home. */}
+      <Header lang={lang} />
       <main>
         <section>
           <div className="mx-auto max-w-md px-5 pt-8 pb-16 sm:max-w-3xl sm:px-8 sm:pt-14 sm:pb-20">

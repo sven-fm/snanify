@@ -1007,7 +1007,7 @@ export const riverDetailContent = {
     },
     occasions: {
       title: "Days this ghat is known for",
-      lede: "Each is reckoned by tithi or by the sun, as noted beside it. The muhurat calendar gives the dates.",
+      lede: "Each is reckoned by tithi or by the sun, as noted beside it. Dated occasions are on the muhurat calendar.",
       provisional: "Timing to be confirmed against the panchang",
     },
     keeper: { title: "Who looks after this water" },
@@ -1091,7 +1091,7 @@ export const riverDetailContent = {
     },
     occasions: {
       title: "जिन दिनों के लिए यह घाट जाना जाता है",
-      lede: "हर एक की गणना तिथि से या सूर्य से होती है, जैसा उसके आगे लिखा है। तिथियाँ मुहूर्त पंचांग में हैं।",
+      lede: "हर एक की गणना तिथि से या सूर्य से होती है, जैसा उसके आगे लिखा है। जिन पर्वों की तिथि निकाली गई है, वे मुहूर्त पंचांग में हैं।",
       provisional: "समय पंचांग से पुष्ट किया जाना शेष",
     },
     keeper: { title: "इस जल की देखरेख कौन करता है" },

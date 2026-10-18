@@ -30,7 +30,6 @@ export const en = {
     accent: "sacred waters",
     plain: "Read about each one, then choose the river you grew up near.",
   },
-  lede: "Each has a modelled flow every day, a sunrise and a calendar. These pages describe the places and help you choose one.",
   lead: { read: "Read about this water" },
   index: {
     title: "The other five",

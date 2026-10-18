@@ -3,7 +3,8 @@ import { legalContent } from "@/content/legal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ConsentChoice } from "@/components/ConsentChoice";
-import { RefHead } from "@/components/site/Reference";
+import { RefClose, RefHead } from "@/components/site/Reference";
+import { ctaHref } from "@/lib/nav";
 
 /* ---------------------------------------------------------------------------
    /privacy and /terms, set as one page with two sets of copy.
@@ -27,6 +28,7 @@ type Section = {
 
 export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" }) {
   const t = legalContent[lang][which];
+  const close = legalContent[lang].close;
   const sections = t.sections as readonly Section[];
 
   return (
@@ -78,6 +80,8 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
         ))}
           </div>
         </div>
+
+        <RefClose title={close.title} label={close.cta} href={ctaHref(lang)} />
       </main>
 
       <Footer lang={lang} />

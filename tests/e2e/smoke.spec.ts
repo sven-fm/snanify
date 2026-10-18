@@ -23,7 +23,7 @@ for (const width of WIDTHS) {
 
 /* The reference pages (spec 6.6): the free search and daily-return surface.
    Each sits on the strip in the masthead, carries one capitals headline with
-   its river or occasion in sindoor, at most one press (at the end, inviting
+   its river or occasion in sindoor, exactly one press (at the end, inviting
    the snan), and none of the selling kit: no band, no label. */
 const REFERENCE = [
   "/live",
@@ -55,7 +55,7 @@ for (const path of REFERENCE) {
     const transform = await h1.evaluate((el) => getComputedStyle(el).textTransform);
     expect(transform).toBe(hindi ? "none" : "uppercase");
 
-    expect(await page.locator("main .press").count()).toBeLessThanOrEqual(1);
+    await expect(page.locator("main .press")).toHaveCount(1);
     await expect(page.locator("[data-band]")).toHaveCount(0);
     await expect(page.locator("[data-label]")).toHaveCount(0);
     await expect(page.locator("[data-seal]")).toHaveCount(0);
@@ -80,5 +80,20 @@ for (const path of ["/live", "/rivers/ganga-haridwar"]) {
     await expect(reading.locator("[data-gauge]")).toHaveCount(1);
     await expect(reading.locator("[data-figure]")).toBeVisible();
     await expect(reading.locator("[data-source]")).toContainText(/GloFAS|Copernicus/);
+  });
+}
+
+/* The festival panel on an occasion page shows on the days the occasion is
+   kept, decided in the browser by India's civil day (the page is rebuilt
+   once a day, so the server cannot know the reader's day). */
+for (const [when, shown] of [
+  ["2026-11-08T07:00:00+05:30", true],
+  ["2026-12-08T07:00:00+05:30", false],
+] as const) {
+  test(`kartik snan carries the festival panel only inside its month (${when.slice(0, 10)})`, async ({ page }) => {
+    await page.clock.setFixedTime(new Date(when));
+    await page.goto("/muhurat/kartik-snan-2026");
+    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("[data-festival]")).toHaveCount(shown ? 1 : 0);
   });
 }

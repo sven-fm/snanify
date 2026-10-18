@@ -6,7 +6,8 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/ui";
 import { ctaHref } from "@/lib/nav";
-import { Festival, H2, H3, QUIET, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
+import { FestivalNow } from "@/components/site/FestivalNow";
+import { H2, H3, QUIET, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
 import { ProvisionalBadge } from "@/components/pages/MuhuratIndex";
 import {
   GHAT_BY_ID,
@@ -18,7 +19,7 @@ import {
 } from "@/content/muhurat";
 import { muhuratIndexContent } from "@/content/muhurat-index";
 import { GAUGES } from "@/lib/riverdata";
-import { horizonFrom, inWindow, resolveOccasion, RESOLVER, sayResolved } from "@/lib/occasions";
+import { horizonFrom, resolveOccasion, RESOLVER, sayResolved } from "@/lib/occasions";
 
 /** A section heading, in order after the h1. */
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -56,8 +57,6 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
   })();
   const { prev, next } = neighbours(occasion);
   const windows = occasion.windows.map((id) => WINDOW_BY_ID[id]).filter(Boolean);
-  /* Inside its window the occasion gets the festival panel (spec 6.6). */
-  const now = inWindow(dates);
 
   return (
     <>
@@ -86,11 +85,13 @@ export function MuhuratDetail({ lang, occasion }: { lang: Lang; occasion: Occasi
           {occasion.aka && (
             <p className="mt-2 text-sm text-ink2">{d.alsoCalled.replace("{aka}", occasion.aka[lang])}</p>
           )}
-          {now && (
-            <div className="mt-6">
-              <Festival name={occasion.name[lang]}>{sayResolved(now, lang)}</Festival>
-            </div>
-          )}
+          {/* Inside its window the occasion gets the festival panel (spec
+              6.6), decided in the browser on the day itself. */}
+          <FestivalNow
+            className="mt-6"
+            name={occasion.name[lang]}
+            windows={dates.map((x) => ({ date: x.date, to: x.to, said: sayResolved(x, lang) }))}
+          />
         </RefHead>
 
         <section>

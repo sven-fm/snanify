@@ -84,16 +84,6 @@ export function istDay(at: Date): string {
   return IST.format(at);
 }
 
-/**
- * The date an occasion is being kept on right now, if any: the one whose
- * civil day in India (or span of days) holds today. This is what puts the
- * festival panel on an occasion page (spec 6.6), and only inside its window.
- */
-export function inWindow(dates: readonly ResolvedDate[], now = new Date()): ResolvedDate | null {
-  const today = istDay(now);
-  return dates.find((d) => d.date <= today && today <= (d.to ?? d.date)) ?? null;
-}
-
 /** IST midnight at the start of a civil day, as an instant. */
 function istMidnight(day: string): Date {
   return new Date(`${day}T00:00:00+05:30`);
