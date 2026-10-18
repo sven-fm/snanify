@@ -7,6 +7,7 @@ import { BREATH, LIMB_ORDER, SITTING } from "@/lib/sitting-plan";
 import { Band, Gauge, RiverHorizon, Seal } from "@/components/kit";
 import { buttonClass } from "@/components/ui";
 import { STILLNESS, STILLNESS_INK } from "@/lib/palette";
+import { breathCount, fadeAway, stillCount } from "@/lib/countdown";
 import type { FlowBand } from "@/lib/riverdata";
 import {
   INITIAL,
@@ -65,8 +66,15 @@ import type { Lang } from "@/lib/locales";
    HAPTICS where the browser has them (Android): a short pulse as the thumb
    lands on the hold and one as the mark completes.
 
-   REDUCED MOTION is honoured throughout: the river stands still, the breath
-   becomes two words, and the mark's line and seal simply appear.
+   THE COUNTDOWNS READ THE SAME CLOCK. The breath counts 4..1 in and 6..1
+   out under its words, each number fading away across its second; the
+   stillness's seconds cross-fade one into the next. Number and fade are both
+   derived from `into` (src/lib/countdown.ts), so nothing runs a timer of its
+   own and nothing can drift from the river.
+
+   REDUCED MOTION is honoured throughout: the river stands still, the gauge's
+   dot stops pulsing, the breath becomes two words over plain numbers, the
+   stillness shows plain numbers, and the mark's line and seal simply appear.
    --------------------------------------------------------------------------- */
 
 type Copy = (typeof todayContent)["en"];
@@ -396,11 +404,12 @@ export function Sitting({
                 band={reading.band}
                 lang={lang}
                 figure={reading.figure}
+                pulse
               />
             </div>
           )}
 
-          {breathing && <BreathWords t={t} into={into} lang={lang} />}
+          {breathing && <BreathWords t={t} into={into} lang={lang} reduced={reduced} />}
 
           {phase === "hold" && <HoldScreen t={t} sankalp={sankalp} names={names} held={held} onHold={hold} />}
 
@@ -409,14 +418,7 @@ export function Sitting({
               <p className="display text-[1.6rem] leading-[1.3]" style={{ color: STILLNESS_INK.line }}>
                 {t.stillness.line}
               </p>
-              <p
-                className="display tabular mt-6 text-[3.6rem] leading-none"
-                style={{ color: STILLNESS_INK.dim }}
-                aria-live="off"
-                data-remaining={remaining(state)}
-              >
-                <Tick value={remaining(state)} />
-              </p>
+              <StillSeconds into={into} reduced={reduced} remaining={remaining(state)} />
               <p className="mt-4 text-sm" style={{ color: STILLNESS_INK.dim }}>
                 {t.stillness.note}
               </p>
@@ -572,42 +574,71 @@ function labelFor(t: Copy, phase: Phase): string {
 }
 
 /**
- * "In" and "Out" over the river, in capitals, Out in teal. The two words
- * cross-fade on the sitting's clock, four seconds in and six out, the same
- * clock that scrubs the river's swell.
+ * "Breathe in" and "Breathe out" over the river, in capitals, Out in teal,
+ * and under them the seconds of that half of the breath: 4..1 in, 6..1 out.
+ * The words cross-fade and each number fades away across its second, all on
+ * the sitting's clock, the same clock that scrubs the river's swell. Under
+ * reduced motion the numbers stand at full ink.
  */
-function BreathWords({ t, into, lang }: { t: Copy; into: number; lang: Lang }) {
-  const rising = into % (BREATH.in + BREATH.out) < BREATH.in;
+function BreathWords({ t, into, lang, reduced }: { t: Copy; into: number; lang: Lang; reduced: boolean }) {
+  const { rising, n, frac } = breathCount(into);
   const head = caps(lang);
+  const size = lang === "hi" ? "text-[2.6rem]" : "text-[2.35rem] min-[380px]:text-[2.6rem]";
   return (
-    <div className="pull relative h-[3.4rem] text-center">
+    <div className="pull text-center">
+      <div className={`relative ${lang === "hi" ? "h-[3.4rem]" : "h-[2.6rem]"}`}>
+        <p
+          className={`${head.className} settle absolute inset-x-0 ${size} ${rising ? "opacity-100" : "opacity-0"}`}
+          style={head.style}
+          aria-hidden={!rising}
+        >
+          {t.breath.in}
+        </p>
+        <p
+          className={`${head.className} settle absolute inset-x-0 ${size} text-teal ${rising ? "opacity-0" : "opacity-100"}`}
+          style={head.style}
+          aria-hidden={rising}
+        >
+          {t.breath.out}
+        </p>
+      </div>
       <p
-        className={`${head.className} settle absolute inset-x-0 text-[3.2rem] ${rising ? "opacity-100" : "opacity-0"}`}
-        style={head.style}
-        aria-hidden={!rising}
+        className={`display tabular mt-4 text-[2.6rem] leading-none ${rising ? "text-ink2" : "text-teal"}`}
+        style={{ opacity: reduced ? 1 : fadeAway(frac) }}
+        aria-hidden="true"
+        data-count={n}
       >
-        {t.breath.in}
-      </p>
-      <p
-        className={`${head.className} settle absolute inset-x-0 text-[3.2rem] text-teal ${rising ? "opacity-0" : "opacity-100"}`}
-        style={head.style}
-        aria-hidden={rising}
-      >
-        {t.breath.out}
+        {n}
       </p>
     </div>
   );
 }
 
 /**
- * A number that arrives: each new value fades and settles in, so a counter
- * reads as a clock ticking rather than a label changing.
+ * The stillness's seconds left, in dim ink. Each number stands for most of
+ * its second and cross-fades into the next over the last of it, on the
+ * sitting's clock, so the count reads as a slow tide rather than a jump.
+ * Under reduced motion the plain number stands alone.
  */
-function Tick({ value }: { value: number }) {
+function StillSeconds({ into, reduced, remaining }: { into: number; reduced: boolean; remaining: number }) {
+  const c = stillCount(SITTING.stillness, into);
+  const shown = reduced ? { ...c, next: null, nowOpacity: 1, nextOpacity: 0 } : c;
   return (
-    <span key={value} className="tick inline-block">
-      {value}
-    </span>
+    <p
+      className="display tabular relative mt-6 text-[3.6rem] leading-none"
+      style={{ color: STILLNESS_INK.dim }}
+      aria-live="off"
+      data-remaining={remaining}
+    >
+      <span className="inline-block" style={{ opacity: shown.nowOpacity }}>
+        {shown.now}
+      </span>
+      {shown.next !== null && shown.nextOpacity > 0 ? (
+        <span aria-hidden="true" className="absolute inset-0 block text-center" style={{ opacity: shown.nextOpacity }}>
+          {shown.next}
+        </span>
+      ) : null}
+    </p>
   );
 }
 

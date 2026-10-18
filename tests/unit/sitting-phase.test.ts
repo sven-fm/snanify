@@ -137,7 +137,12 @@ describe("the snan's words (spec 7.2)", () => {
 
   it("reads as the spec's table", () => {
     expect(en.begin.ready).toBe("Your {river}, this morning.");
-    expect(en.begin.band).toBe("Three minutes. Phone on silent.");
+    expect(en.begin.band).toBe("Take three minutes. Put your phone on silent.");
+    expect(todayContent.hi.begin.band).toBe("तीन मिनट दीजिए। फ़ोन साइलेंट पर रखिए।");
+    expect(en.breath.in).toBe("Breathe in");
+    expect(en.breath.out).toBe("Breathe out");
+    expect(todayContent.hi.breath.in).toBe("साँस लीजिए");
+    expect(todayContent.hi.breath.out).toBe("साँस छोड़िए");
     expect(en.stillness.line).toBe("Be still with the river.");
     expect(en.mark.done).toBe("Snan done.");
     expect(en.mark.after).toBe("Your family will want to see this.");
@@ -154,7 +159,7 @@ describe("the snan's words (spec 7.2)", () => {
 describe("the snan's parts (spec 6.4)", () => {
   it("ready: the capitals line with the river in sindoor, the band, the river, the press", () => {
     const out = part("ready");
-    expect(out).toContain("Three minutes. Phone on silent.");
+    expect(out).toContain("Take three minutes. Put your phone on silent.");
     expect(out).toMatch(/text-sindoor[^>]*>Ganga</);
     expect(out).toContain("this morning.");
     expect(out).toContain("press");
@@ -167,6 +172,9 @@ describe("the snan's parts (spec 6.4)", () => {
     expect(out).toContain("data-today");
     expect(out).toContain("797 m³/s, 86th percentile since 1997");
     expect(out).toContain("Running full");
+    /* The dot pulses, so the eye goes to today. */
+    expect(out).toContain("data-pulse");
+    expect(out).toContain("pulse-ring");
     expect(out).toMatch(/text-sindoor[^>]*>Ganga</);
     expect(out).not.toContain("Seasonal median");
   });
@@ -175,7 +183,16 @@ describe("the snan's parts (spec 6.4)", () => {
     const out = part("breath", 5);
     expect(out).toContain("breathe-waves");
     expect(out).toContain("--breathe-high:1.25");
-    expect(out).toMatch(/text-teal[^>]*>Out</);
+    expect(out).toMatch(/text-teal[^>]*>Breathe out</);
+  });
+
+  it("the breath counts 4..1 in and 6..1 out, each number fading on the sitting's clock", () => {
+    const inhale = part("breath", 10.5);
+    expect(inhale).toMatch(/data-count="4"[^>]*>4</);
+    expect(inhale).toContain("opacity:0.75");
+    const exhale = part("breath", 4.25);
+    expect(exhale).toMatch(/data-count="6"[^>]*>6</);
+    expect(part("breath", 9.5)).toMatch(/data-count="1"[^>]*>1</);
   });
 
   it("the breath of a thin river rises less than one in spate", () => {
@@ -212,6 +229,52 @@ describe("the snan's parts (spec 6.4)", () => {
     expect(out).toContain("#16404a");
     expect(out).toContain("Be still with the river.");
     expect(out).toContain("data-next");
+  });
+
+  it("the stillness's seconds cross-fade, the next arriving under the last", () => {
+    const steady = part("stillness", 12.1);
+    expect(steady).toContain('data-remaining="48"');
+    expect(steady).toMatch(/opacity:1[^>]*>48</);
+    expect(steady).not.toMatch(/>47</);
+    const turning = part("stillness", 12.7);
+    expect(turning).toMatch(/opacity:0\.25[^>]*>48</);
+    expect(turning).toMatch(/opacity:0\.25[^>]*>47</);
+  });
+
+  it("under reduced motion the numbers stand plain and the dot holds still", () => {
+    const still = renderToStaticMarkup(
+      React.createElement(Sitting, {
+        lang: "en",
+        t: todayContent.en,
+        reading: { water: "Ganga", ghat: "", city: "", percentile: 50, band: "usual", figure: "", distance: null },
+        sankalp: "",
+        names: [],
+        waterSlug: "ganga-haridwar",
+        outHref: "/begin?out=1",
+        leaveHref: "/account",
+        reducedMotionDefault: true,
+        speed: 0,
+        start: { phase: "stillness", into: 12.8, held: 0 },
+      }),
+    );
+    expect(still).toMatch(/opacity:1[^>]*>48</);
+    expect(still).not.toMatch(/>47</);
+    const breath = renderToStaticMarkup(
+      React.createElement(Sitting, {
+        lang: "en",
+        t: todayContent.en,
+        reading: { water: "Ganga", ghat: "", city: "", percentile: 50, band: "usual", figure: "", distance: null },
+        sankalp: "",
+        names: [],
+        waterSlug: "ganga-haridwar",
+        outHref: "/begin?out=1",
+        leaveHref: "/account",
+        reducedMotionDefault: true,
+        speed: 0,
+        start: { phase: "breath", into: 0.9, held: 0 },
+      }),
+    );
+    expect(breath).toMatch(/opacity:1[^>]*data-count="4"/);
   });
 
   it("the mark: Snan done. in capitals, the line writing, no petals, no count", () => {

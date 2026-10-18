@@ -229,7 +229,7 @@ locales (`tests/e2e/fold.spec.ts`). Tables become stacked ruled rows.
 | Path | What it holds |
 | --- | --- |
 | `ARCHITECTURE.md` | Stack, routing, data flow, deployment |
-| `DESIGNSYSTEM.md` | Design system v3: the palette, type, the kit (press, seal, band, label, gauge, river), the logo, every surface, the six motions, voice, mobile first, the campaign layer |
+| `DESIGNSYSTEM.md` | Design system v3: the palette, type, the kit (press, seal, band, label, gauge, river), the logo, every surface, the eight motions, voice, mobile first, the campaign layer |
 | `docs/superpowers/specs/2026-10-17-design-system-v3-design.md` | The v3 spec, with the owner's choices and the designer's calls |
 | `docs/design/v3-mockups/` | The approved v3 mockups and the surface checks |
 | `plan.md` | The work queue: what waits for the owner's eyes, what waits for a go, what is done |

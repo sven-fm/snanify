@@ -26,16 +26,19 @@ const COLUMNS: { at: number; keys: NavKey[] }[] = [
 /**
  * The imprint: everything the almanac prints at the back. Every page closes on
  * the full river (spec 5.6), the sun sitting on its horizon, and the imprint
- * opens under the water.
+ * opens under the water. `river={false}` leaves the water out: /today has
+ * its own river under the ready screen's press, and two read as a mistake.
  */
-export function Footer({ lang }: { lang: Lang }) {
+export function Footer({ lang, river = true }: { lang: Lang; river?: boolean }) {
   const t = content[lang];
 
   return (
     <footer className="tint">
-      <div className="bg-paper">
-        <RiverHorizon height={120} />
-      </div>
+      {river ? (
+        <div className="bg-paper">
+          <RiverHorizon height={120} />
+        </div>
+      ) : null}
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>

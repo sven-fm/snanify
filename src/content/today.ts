@@ -19,7 +19,7 @@ const en = {
 
   begin: {
     ready: "Your {river}, this morning.",
-    band: "Three minutes. Phone on silent.",
+    band: "Take three minutes. Put your phone on silent.",
     cta: "Begin",
   },
 
@@ -35,8 +35,9 @@ const en = {
 
   breath: {
     label: "The breath",
-    in: "In",
-    out: "Out",
+    /** Over the river, with the seconds of that half of the breath counting down under it. */
+    in: "Breathe in",
+    out: "Breathe out",
   },
 
   vow: {
@@ -87,7 +88,7 @@ const hi = {
 
   begin: {
     ready: "{river} के साथ, आज सुबह।",
-    band: "बस 3 मिनट। फ़ोन साइलेंट पर रखिए।",
+    band: "तीन मिनट दीजिए। फ़ोन साइलेंट पर रखिए।",
     cta: "शुरू कीजिए",
   },
 
@@ -101,8 +102,8 @@ const hi = {
 
   breath: {
     label: "श्वास",
-    in: "लीजिए",
-    out: "छोड़िए",
+    in: "साँस लीजिए",
+    out: "साँस छोड़िए",
   },
 
   vow: {
