@@ -22,7 +22,7 @@ export function Label({
   className?: string;
 }) {
   return (
-    <div className={`bg-marigold p-[5px] ${className}`} style={{ border: "3px solid var(--ink)", color: "var(--on-marigold)" }}>
+    <div data-label className={`bg-marigold p-[5px] ${className}`} style={{ border: "3px solid var(--ink)", color: "var(--on-marigold)" }}>
       <div className="px-3 py-2.5 text-center" style={{ border: "1.5px solid var(--sindoor)" }}>
         {kicker ? (
           <p className="font-body text-[0.75rem] leading-[1.4]" style={{ fontWeight: 700, color: "var(--sindoor)" }}>

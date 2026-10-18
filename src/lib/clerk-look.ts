@@ -5,8 +5,9 @@ import type { Lang } from "@/lib/locales";
 
    Sign-in is the first screen after somebody decides to pay. A default purple
    SaaS card dropped into the middle of a letterpress almanac is the worst
-   possible place to break the spell, so the widget takes the paper, the ink,
-   the sindoor and the square corners.
+   possible place to break the spell, so the widget takes the palette (spec 3,
+   as the site's --* tokens), the square corners and the press for its
+   primary button (spec 6.3).
 
    THE HEADING IS OVERRIDDEN ON PURPOSE. Clerk titles its card with the
    application's name in the Clerk dashboard, which for a marketplace-
@@ -50,20 +51,23 @@ const LABEL = {
   },
 };
 
-/* The `impress` press: one pixel down and right, at once, lifting over 120ms. */
-const PRESS = {
-  transitionProperty: "transform, background-color, color, border-color",
+const FLAT = "none !important";
+
+/* The press (spec 5.1, `.press` in globals.css): a 2px ink border over side
+   walls stacked one pixel at a time to six, in --wall. Under the thumb it
+   sinks the walls' depth in 70ms and rises back in 120ms. */
+const WALLS = [1, 2, 3, 4, 5, 6].map((n) => `${n}px ${n}px 0 var(--wall)`).join(", ");
+const SINK = {
+  transitionProperty: "transform, box-shadow",
   transitionDuration: "120ms",
   transitionTimingFunction: "ease-out",
-  "&:active": { transform: "translate(1px, 1px)", transitionDuration: "0ms" },
+  "&:active": { transform: "translate(6px, 6px)", boxShadow: FLAT, transitionDuration: "70ms" },
 };
-
-const FLAT = "none !important";
 
 export const clerkAppearance = {
   variables: {
     colorPrimary: "var(--sindoor)",
-    colorPrimaryForeground: "var(--paper)",
+    colorPrimaryForeground: "#fff",
     colorBackground: "var(--paper)",
     colorForeground: "var(--ink)",
     colorMutedForeground: "var(--ink-2)",
@@ -82,57 +86,64 @@ export const clerkAppearance = {
   elements: {
     rootBox: { width: "100%" },
     cardBox: { width: "100%", borderRadius: "0", border: "0", boxShadow: FLAT },
-    /* The `boxed` rule, at the 2px the site uses for a box that holds a form. */
+    /* The card is the page: paper on paper, no frame, so the press is the one
+       block on the screen. */
     card: {
       borderRadius: "0",
       boxShadow: FLAT,
-      border: "2px solid var(--rule-strong)",
+      border: "0",
       backgroundColor: "var(--paper)",
+      paddingLeft: "0",
+      paddingRight: "0",
     },
+    /* Sentence case, Eczar 700: the page's own heading is for screen readers. */
     headerTitle: {
       fontFamily: DISPLAY,
-      fontWeight: 600,
+      fontWeight: 700,
       fontSynthesis: "none",
       fontSize: "1.5rem",
       color: "var(--ink)",
     },
     headerSubtitle: { color: "var(--ink-2)" },
 
-    /* The site's solid CTA: flat spot, paper type, ink under the thumb. */
+    /* The press: sindoor face, white Martel 700, the 2px ink border and the
+       ink walls. It sinks flush under the thumb. */
     formButtonPrimary: {
-      ...LABEL,
-      ...PRESS,
-      minHeight: "48px",
+      ...SINK,
+      fontFamily: BODY,
+      fontWeight: 700,
+      fontSize: "1rem",
+      textTransform: "none" as const,
+      letterSpacing: "0",
+      minHeight: "56px",
+      marginBottom: "6px",
       borderRadius: "0",
-      border: "0",
-      boxShadow: FLAT,
+      border: "2px solid var(--ink) !important",
+      boxShadow: `${WALLS} !important`,
       backgroundImage: FLAT,
       backgroundColor: "var(--sindoor)",
-      color: "var(--paper)",
+      color: "#fff",
       "&::before, &::after": { display: "none !important" },
-      "&:hover, &:focus, &:active": {
-        backgroundColor: "var(--ink) !important",
-        color: "var(--paper)",
-        boxShadow: FLAT,
-      },
-      "&:focus-visible": { outline: "2px solid var(--sindoor)", outlineOffset: "2px" },
+      "&:hover, &:focus": { backgroundColor: "var(--sindoor) !important", color: "#fff" },
+      "&:focus-visible": { outline: "2px solid var(--sindoor)", outlineOffset: "4px" },
     },
 
-    /* The site's ruled secondary button. It tints rather than inverts on
-       press, so the four colours of the Google mark stay legible. */
+    /* Google: a paper box on the 2px ink border, flat, so the four colours of
+       its mark stay legible and the press stays the one block. It takes the
+       paper-2 ground under the thumb. */
     socialButtonsBlockButton: {
-      ...PRESS,
-      minHeight: "48px",
+      minHeight: "52px",
       borderRadius: "0",
       boxShadow: FLAT,
-      border: "1px solid var(--rule-strong) !important",
-      backgroundColor: "transparent",
+      border: "2px solid var(--ink) !important",
+      backgroundColor: "var(--paper)",
+      transition: "background-color 70ms ease-out",
       "&:hover, &:focus, &:active": { backgroundColor: "var(--paper-2) !important", boxShadow: FLAT },
       "&:focus-visible": { outline: "2px solid var(--sindoor)", outlineOffset: "2px" },
     },
-    socialButtonsBlockButtonText: { color: "var(--ink)", fontWeight: 600 },
+    socialButtonsBlockButtonText: { color: "var(--ink)", fontWeight: 700 },
 
-    dividerLine: { backgroundColor: "var(--rule)" },
+    dividerLine: { backgroundColor: "var(--ink-2)" },
     dividerText: { color: "var(--ink-2)" },
 
     /* The setup form's `field`: a 2px underline that takes the spot on focus. */
@@ -163,7 +174,7 @@ export const clerkAppearance = {
     footerActionLink: {
       color: "var(--ink)",
       textDecoration: "underline",
-      textDecorationColor: "var(--sindoor)",
+      textDecorationColor: "var(--ink)",
       textDecorationThickness: "2px",
       textUnderlineOffset: "3px",
       "&:hover, &:active": { color: "var(--sindoor)" },

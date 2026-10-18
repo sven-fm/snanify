@@ -52,6 +52,7 @@ export function Seal(props: SealProps) {
 
   return (
     <span
+      data-seal={props.kind}
       className={`relative inline-grid shrink-0 place-items-center ${props.stamp ? "stamp" : ""} ${props.className ?? ""}`}
       style={
         {

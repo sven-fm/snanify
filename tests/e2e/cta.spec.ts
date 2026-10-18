@@ -48,3 +48,31 @@ for (const path of ["/snan", "/hi/snan"]) {
     await expect(page.getByText("Walk through the five parts")).toHaveCount(0);
   });
 }
+
+/* The buyer's path (spec 6.3). /begin and /setup need an account, so their
+   views are rendered in tests/unit/buyer-path.test.ts; here a signed-out
+   reader is sent to sign in, and the sign-in screen carries the step line
+   with every step still ahead and Clerk's primary button as the press. */
+for (const prefix of ["", "/hi"]) {
+  test(`${prefix}/begin sends a signed-out reader to sign in, on the step line`, async ({ page }) => {
+    await page.goto(`${prefix}/begin?pack=eleven`);
+    await expect(page).toHaveURL(new RegExp(`${prefix}/sign-in\\?redirect_url=`));
+
+    const steps = page.locator("main ol li");
+    await expect(steps).toHaveCount(3);
+    expect(await page.locator('main [aria-current="step"]').count()).toBe(0);
+  });
+}
+
+test("the Clerk card's primary button is the press", async ({ page }) => {
+  await page.goto("/sign-in");
+  const primary = page.locator(".cl-formButtonPrimary").first();
+  await expect(primary).toBeVisible({ timeout: 30_000 });
+  const look = await primary.evaluate((el) => {
+    const s = getComputedStyle(el);
+    return { shadow: s.boxShadow, border: s.borderTopWidth, height: el.getBoundingClientRect().height };
+  });
+  expect(look.border).toBe("2px");
+  expect(look.shadow).toContain("6px 6px 0px");
+  expect(look.height).toBeGreaterThanOrEqual(56);
+});

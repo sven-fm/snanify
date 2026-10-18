@@ -21,6 +21,7 @@ export function Band({
 }) {
   return (
     <p
+      data-band
       className={`relative py-2 font-body dark:border-y-2 dark:border-ink text-[0.9375rem] leading-[1.3] text-marigold ${className}`}
       style={{
         fontWeight: 800,

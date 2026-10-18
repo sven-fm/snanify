@@ -3,9 +3,9 @@ import type { Lang } from "@/lib/locales";
 /* ---------------------------------------------------------------------------
    /begin, the pack picker, and /begin/done, the moment after paying.
 
-   This page is read by somebody who has already decided. It sells nothing a
-   second time and explains nothing again. Three packs, the eleven marked, and
-   a button on each that says what it does: pay.
+   This page is read by somebody who has already decided. It says the offer
+   once, in the v3 voice (spec 7.2), and shows three packs: eleven on the
+   label with the one press, one and sixty as plain rows whose links pay.
 
    `{price}` in `cta` is filled with the pack's own price at render, in the
    reader's currency, so the button and the charge always agree.
@@ -17,32 +17,32 @@ const en = {
     description:
       "Eleven mornings for eleven, in your own currency. Pick a pack and set up your sheet once.",
   },
-  title: "Choose your mornings",
+  /* The headline in capitals, then its second sentence in sindoor (spec 7.2). */
+  title: "Pick your mornings.",
+  sub: "Eleven for eleven.",
+  /* The band: the one thing to know before paying. */
+  band: "Pay once. Use them any morning you like.",
   steps: ["Your water", "Your sheet", "Your mornings"],
-  setLine: "Your sheet is set. This is it, with your names on it and the river as it runs today.",
-  lede: "Pick how many.",
-  lede2: "You pay once, and the mornings stay on your account until you use them.",
-  cancelled: "The payment was cancelled. Pick a pack when you are ready.",
+  setLine: "Your sheet is set. Here it is, with your names on it.",
+  cancelled: "The payment stopped at Stripe. Pick your mornings when you are ready.",
   /* Beside the Pay buttons after a press that came back unopened. */
   payError: "Press Pay once more to open the payment page.",
   /* For a reader sent from /today or /account with every morning kept. */
-  outLine: "Your mornings are all kept. Choose your next ones.",
-  perLabel: "per morning",
-  countLabel: "Mornings",
+  outLine: "Every morning is kept. Pick your next ones.",
+  perLabel: "a morning",
   cta: "Pay {price}",
   opening: "Opening Stripe",
   /* One line under each pack, written for this page's one job. */
   blurb: {
     one: "Try one morning first.",
-    eleven: "One for each morning. Any eleven days you like.",
+    eleven: "Any eleven mornings you like.",
     sixty: "Five a month for a year.",
   },
-  usual: "Most people take this one",
   note: "Stripe handles the payment.",
-  refund: "Mornings you have not used are refunded on request.",
+  refund: "Unused mornings are refunded on request.",
   haveCredits: "You already have {credits} mornings on your account.",
   haveOne: "You already have one morning on your account.",
-  toToday: "Sit this morning",
+  toToday: "Do your snan this morning",
 
   done: {
     /* The tab title, true before and after the booking. */
@@ -70,33 +70,31 @@ const en = {
 
 const hi = {
   meta: {
-    title: "आरंभ कीजिए | Snanify",
+    title: "शुरू कीजिए | Snanify",
     description:
       "ग्यारह सुबहें ग्यारह में, आपकी अपनी मुद्रा में। एक पैक चुनिए और अपना पत्र एक बार तय कीजिए।",
   },
-  title: "अपनी सुबहें चुनिए",
+  title: "अपनी सुबहें चुनिए।",
+  sub: "ग्यारह सुबहें, ग्यारह में।",
+  band: "एक बार भुगतान कीजिए। फिर जिस सुबह चाहें, स्नान कीजिए।",
   steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
-  setLine: "आपका पत्र तय है। यह रहा, आपके नामों के साथ और आज की नदी के साथ।",
-  lede: "कितनी चाहिए, यह चुनिए।",
-  lede2: "भुगतान एक बार होता है, और सुबहें आपके खाते में तब तक रहती हैं जब तक आप उन्हें लेते हैं।",
-  cancelled: "भुगतान रद्द हो गया। जब तैयार हों, एक पैक चुन लीजिए।",
+  setLine: "आपका पत्र तैयार है। यह रहा, आपके नामों के साथ।",
+  cancelled: "भुगतान Stripe पर रुक गया। जब तैयार हों, अपनी सुबहें चुनिए।",
   payError: "भुगतान पृष्ठ खोलने के लिए भुगतान का बटन एक बार फिर दबाइए।",
   outLine: "आपकी सभी सुबहें पूरी हुईं। अब अगली सुबहें चुनिए।",
   perLabel: "प्रति सुबह",
-  countLabel: "सुबहें",
   cta: "{price} का भुगतान कीजिए",
   opening: "Stripe खुल रहा है",
   blurb: {
     one: "पहले एक सुबह आज़माइए।",
-    eleven: "हर सुबह के लिए एक। कोई भी ग्यारह दिन।",
+    eleven: "कोई भी ग्यारह सुबहें, जब आप चाहें।",
     sixty: "महीने में पाँच, पूरे वर्ष।",
   },
-  usual: "अधिकतर लोग यही लेते हैं",
   note: "भुगतान Stripe संभालता है।",
-  refund: "जो सुबहें आपने नहीं लीं, वे कहने पर लौटा दी जाती हैं।",
+  refund: "बची हुई सुबहें कहने पर लौटा दी जाती हैं।",
   haveCredits: "आपके खाते में पहले से {credits} सुबहें हैं।",
   haveOne: "आपके खाते में पहले से एक सुबह है।",
-  toToday: "आज सुबह बैठिए",
+  toToday: "आज सुबह स्नान कीजिए",
 
   done: {
     meta: "आपकी सुबहें | Snanify",

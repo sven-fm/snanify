@@ -23,8 +23,8 @@ const en = {
     title: "Set up your sheet | Snanify",
     description: "Choose your water, add your family's names, and write your sankalp once.",
   },
-  title: "Set up your sheet",
-  lede: "About two minutes, once. It makes your sheet, with your family's names on it. Then you choose your mornings, and each one takes three minutes.",
+  title: "Set up your sheet.",
+  lede: "About 2 minutes, once. Your family's names go on your sheet. Then pick your mornings. Each snan takes 3 minutes.",
   /** The three-step line at the top: the water, the sheet, the hour. */
   steps: ["Your water", "Your sheet", "Your mornings"],
 
@@ -95,11 +95,11 @@ const en = {
 
 const hi = {
   meta: {
-    title: "अपना पत्र तय कीजिए | Snanify",
+    title: "अपना पत्र तैयार कीजिए | Snanify",
     description: "अपना जल चुनिए, परिवार के नाम जोड़िए, और अपना संकल्प एक बार लिखिए।",
   },
-  title: "अपना पत्र तय कीजिए",
-  lede: "लगभग दो मिनट, एक बार। इससे आपका पत्र बनता है, आपके परिवार के नामों के साथ। फिर आप अपनी सुबहें चुनते हैं, और हर सुबह तीन मिनट की है।",
+  title: "अपना पत्र तैयार कीजिए।",
+  lede: "लगभग 2 मिनट, बस एक बार। आपके परिवार के नाम आपके पत्र पर आते हैं। फिर अपनी सुबहें चुनिए। हर स्नान 3 मिनट का है।",
   steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
 
   water: {
