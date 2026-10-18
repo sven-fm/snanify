@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import sharp from "sharp";
-import { Colophon, Logo, Mark, Wordmark } from "@/components/Logo";
+import { Logo, Mark, Wordmark } from "@/components/Logo";
 import manifest from "@/app/manifest";
 
 /* The v3 logo (spec 6.9): the horizon sun over teal water, no marigold, and
@@ -36,13 +36,6 @@ describe("the mark", () => {
     expect(waterRects(full)).toBe(3);
     expect(small).toContain('stroke-width="3.6"');
     expect(waterRects(small)).toBe(2);
-  });
-
-  it("the colophon is the large mark over the wordmark, the dial gone", () => {
-    const out = html(React.createElement(Colophon));
-    expect(out).toContain("var(--teal)");
-    expect(out).toContain("Snanify");
-    expect(out).not.toContain("<line");
   });
 });
 

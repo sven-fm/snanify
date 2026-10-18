@@ -102,27 +102,3 @@ export function Logo({ className = "" }: { className?: string }) {
     </span>
   );
 }
-
-/**
- * The large colophon, for page heads and the foot of the Patra: the full mark
- * with the wordmark set under it, one block that scales with its box. The
- * word is HTML inside a foreignObject, so it keeps the measured bindu and the
- * live face while the whole block scales as one drawing.
- */
-export function Colophon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 200 200" className={className} fill="none" aria-hidden="true">
-      <svg x="34" y="0" width="132" height="132">
-        <Mark />
-      </svg>
-      <foreignObject x="0" y="146" width="200" height="54">
-        <div style={{ textAlign: "center", lineHeight: 1 }}>
-          <Wordmark style={{ fontSize: 44 }} />
-        </div>
-      </foreignObject>
-    </svg>
-  );
-}
-
-/** Retained so pages written against the previous mark keep compiling. */
-export const SealAnimated = Colophon;

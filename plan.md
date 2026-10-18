@@ -32,8 +32,8 @@ language `DESIGNSYSTEM.md`. Done items drop to the log at the foot, one line eac
      में।" for rupee readers; the "अधिकतर लोग" lines about how the tradition is kept, left as
      description of practice.
    - *The calls made for you, to keep or reverse.* The sun about a third hidden by the
-     horizon (one constant); the landing's river is the approved horizon drawing, with
-     `RiverFlow` kept for wide panoramas; the morning badge from the second morning, counted
+     horizon (one constant); the landing's river is the approved horizon drawing
+     (`RiverFlow`, unused, deleted on 18 October); the morning badge from the second morning, counted
      across all waters; "N mornings left" on the owner's Patra page; the link card drawn in
      v3 for old sheets too, while sent mementos stay as sent; the masthead Begin still on
      `/begin/done`; the stillness block on `/snan`; a few headlines accent a word other than

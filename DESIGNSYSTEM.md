@@ -211,9 +211,7 @@ Motion is CSS on one clock (`flow`, `breathe`), so the river needs no client scr
 stops under `prefers-reduced-motion`. SVG polylines, transform-only animation, held to 60fps
 on a mid-range Android.
 
-`src/components/RiverFlow.tsx` keeps the true-perspective engine (the `1/d` projection, the
-trapezoid glitter), restyled to the palette with the sun on the horizon (`placeSun`), for a
-wide panorama. The Patra's closing river is neither: it is `engrave()` from that day's seed
+The Patra's closing river is not `<RiverHorizon />`: it is `engrave()` from that day's seed
 and percentile, restyled to v3, because the sheet promises an engraving seeded by that day's
 flow.
 
@@ -254,8 +252,7 @@ load-bearing:
 The brand stays Latin, "Snanify", in both editions; `.wordmark` names Eczar itself.
 
 `src/components/Logo.tsx`: `<Mark />` (and `<Mark small />`), `<Wordmark />`, `<Logo />` (the
-masthead lockup, a 30px mark beside a 24px word), `<Colophon />` (the large mark with the
-word under it).
+masthead lockup, a 30px mark beside a 24px word).
 
 **Where they go.** The header, on the strip; the footer; the Patra (image and HTML), the
 specimen and `/p/[id]`; the link cards; every `opengraph-image`; the email header as a
@@ -582,7 +579,7 @@ with `SubmitButton`; `CTA` is a skin for a link.
 
 **`@/components/marks`**: `Bindu`.
 
-**`@/components/Logo`**: `Mark`, `Wordmark`, `Logo`, `Colophon`.
+**`@/components/Logo`**: `Mark`, `Wordmark`, `Logo`.
 
 **`src/components/site/`**: `Header` (on the strip; defaults to `primaryNav(lang)` and
 `ctaHref(lang)`, `hideCta` where the page has its own press), `Footer` (the full river above
@@ -604,8 +601,6 @@ it), `Steps`, `LangSwitch`, `HeaderCta`, `FestivalNow`, `PastHero`, and `Referen
   Change a colour in both places in one commit.
 - **The band overhangs its column**; its section must clip (`overflow-x: clip`).
 - **Marigold stays the same at night**; ink on it is `--on-marigold`, never `--ink`.
-- **`Colophon` draws its word in a `foreignObject`**, a WebKit risk; the Patra draws its
-  wordmark without one.
 - **`/favicon.ico` must exist as a file**, and the touch icon must be opaque.
 
 ## Checklist before shipping a page
