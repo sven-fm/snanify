@@ -10,6 +10,7 @@ import { morningsContent } from "@/content/mornings";
 import { DOWNLOAD_NAME } from "@/lib/patra-download";
 import { countLine } from "@/lib/mornings";
 import { localePath } from "@/lib/locales";
+import { CreditsLink } from "@/components/live/CreditsLink";
 import { setPatraPublic } from "@/app/[lang]/p/[id]/actions";
 
 type Copy = (typeof patraPageContent)["en"];
@@ -117,6 +118,10 @@ export function PatraOwner({
 
         {isPublic && <p className="mt-2 max-w-lg text-sm leading-relaxed text-ink2">{t.privateWarning}</p>}
       </section>
+
+      <p className="mt-10 print:hidden">
+        <CreditsLink lang={lang} />
+      </p>
     </main>
   );
 }
