@@ -35,6 +35,22 @@ describe("the proxy matcher", () => {
     expect(matches(proxy)).toBe(false);
   });
 
+  it("skips every file in public/ that the site serves as itself", () => {
+    for (const path of [
+      "/email/logo-480.png",
+      "/email/river-600x120.png",
+      "/favicon.ico",
+      "/icon.svg",
+      "/icon-192.png",
+      "/icon-512.png",
+      "/brand-1024.png",
+      "/apple-touch-icon.png",
+      "/manifest.webmanifest",
+    ]) {
+      expect(matches(path), path).toBe(false);
+    }
+  });
+
   it("still runs for pages, product paths and stray dotted paths", () => {
     for (const path of ["/", "/rivers", "/hi/live", "/begin", "/setup", "/wp-login.php"]) {
       expect(matches(path), path).toBe(true);

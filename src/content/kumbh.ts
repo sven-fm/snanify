@@ -231,6 +231,8 @@ type Row = { key: string; q: string; a: string };
 type KumbhCopy = {
   meta: { title: string; description: string };
   hero: { title: string; kicker: string; standfirst: string; lede: string };
+  /** The capitals headline: `{accent}` is set in sindoor. */
+  head: { title: string; accent: string };
   provenance: { badge: string; badgeShort: string; line: string };
   facts: { rows: { key: string; term: string; value: string }[] };
   what: { title: string; paras: Para[] };
@@ -275,6 +277,7 @@ export const kumbhContent = {
       description:
         "When the Simhastha Kumbh falls at Nashik and Trimbakeshwar, how it is reckoned, and the bathing days published for 2027 at Ram Kund and Kushavarta.",
     },
+    head: { title: "The {accent} at Nashik.", accent: "Simhastha Kumbh" },
     hero: {
       title: "The Simhastha Kumbh",
       kicker: "Nashik and Trimbakeshwar, on the Godavari",
@@ -475,10 +478,11 @@ export const kumbhContent = {
       description:
         "सिंहस्थ कुंभ नासिक और त्र्यंबकेश्वर में कब पड़ता है, उसकी गणना कैसे होती है, और रामकुंड व कुशावर्त पर २०२७ की प्रकाशित स्नान-तिथियाँ।",
     },
+    head: { title: "नासिक में {accent}", accent: "सिंहस्थ कुंभ" },
     hero: {
       title: "सिंहस्थ कुंभ",
       kicker: "नासिक एवं त्र्यंबकेश्वर, गोदावरी तट पर",
-      standfirst: "आरंभ ३१ अक्टूबर २०२६। स्नान-दिवस अगस्त और सितंबर २०२७ में।",
+      standfirst: "शुरुआत ३१ अक्टूबर २०२६। स्नान-दिवस अगस्त और सितंबर २०२७ में।",
       lede: "सिंहस्थ की गणना कैसे होती है, वह इन्हीं दो स्थानों पर क्यों होता है, और शासन ने कौन-सी स्नान-तिथियाँ प्रकाशित की हैं। हर तिथि अनंतिम है और वैसी ही अंकित है।",
     },
     provenance: {
@@ -500,7 +504,7 @@ export const kumbhContent = {
           term: "स्नान-स्थल",
           value: "रामकुंड, पंचवटी, नासिक। कुशावर्त, त्र्यंबकेश्वर।",
         },
-        { key: "opens", term: "आरंभ", value: "३१ अक्टूबर २०२६, ध्वजारोहण" },
+        { key: "opens", term: "शुरुआत", value: "३१ अक्टूबर २०२६, ध्वजारोहण" },
         { key: "peak", term: "स्नान-दिवस", value: "२ एवं ३१ अगस्त, ११ एवं १२ सितंबर २०२७" },
         { key: "closes", term: "समापन", value: "२४ जुलाई २०२८, ध्वज अवरोहण" },
         {
@@ -547,7 +551,7 @@ export const kumbhContent = {
         place: "स्थान",
       },
       kinds: {
-        dhwajarohan: "आरंभ",
+        dhwajarohan: "शुरुआत",
         "amrit-snan": "अमृत स्नान",
         avarohan: "समापन",
       },
@@ -577,7 +581,7 @@ export const kumbhContent = {
       ],
       legend: {
         amrit: "अमृत स्नान",
-        open: "ध्वजारोहण, आरंभ",
+        open: "ध्वजारोहण, शुरुआत",
       },
       amritNote:
         "अमृत स्नान मेला प्रशासन का शब्द है उसके लिए जिसे पुराने विवरण शाही स्नान कहते हैं। उन सुबहों में घाट तय क्रम से और तय घंटों के लिए अखाड़ों को सौंप दिए जाते हैं, और शेष सब लोग उनके बाहर स्नान करते हैं। मेला छह सौ से अधिक दिन चलता है, और इस तालिका में उनमें से पाँच हैं।",
@@ -586,7 +590,7 @@ export const kumbhContent = {
     here: {
       title: "इस साइट पर गोदावरी",
       body: "रामकुंड पर गोदावरी यहाँ के छह जलों में से एक है। मेले की हर सुबह उसका मॉडल-प्रवाह उसके पृष्ठ पर होता है, उसी सार्वजनिक स्रोत से पढ़ा हुआ जिससे किसी भी और दिन, और आप पंचांग की बताई घड़ी पर उसके साथ अपना स्नान कर सकते हैं, चाहे आप कहीं भी हों।",
-      cta: "अपना स्नान आरंभ कीजिए",
+      cta: "अपना स्नान शुरू कीजिए",
     },
     attend: {
       title: "यदि आप नासिक जा रहे हैं",

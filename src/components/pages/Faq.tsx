@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { WaterBand } from "@/components/WaterBand";
 import { localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/locales";
 import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { PriceText } from "@/components/ui";
+import { H2, H3, QUIET, RefClose, RefHead, W700 } from "@/components/site/Reference";
 import { ETHICS_MAIL, ethicsContent, faqContent } from "@/content/trust";
 
 /**
@@ -17,9 +17,8 @@ import { ETHICS_MAIL, ethicsContent, faqContent } from "@/content/trust";
  * Set as a ruled register: hairline rows that open in place, the way an
  * almanac lists its entries. Unnumbered, because questions are not a sequence.
  *
- * MOBILE FIRST. One column at 390px, 56px summary rows, 16px answer type, and
- * the primary action on a thumb rail at the bottom of the viewport rather than
- * a button the reader has to scroll back up to find.
+ * MOBILE FIRST. One column at 390px, 56px summary rows, 16px answer type at
+ * 1.75, and the one press at the end, inviting the snan (spec 6.6).
  */
 
 /**
@@ -51,7 +50,7 @@ const DEEP_LINKS: Record<string, string> = {
 
 /** Prose column for the workshop section: ~68ch measure, generous leading. */
 function P({ children }: { children: React.ReactNode }) {
-  return <p className="mt-5 text-[1.02rem] leading-[1.8] text-ink2">{children}</p>;
+  return <p className="mt-5 text-[1rem] leading-[1.75] text-ink2">{children}</p>;
 }
 
 /** A term over its value on a phone, a two-column ruled row from `sm` up. */
@@ -76,35 +75,21 @@ export function Faq({ lang }: { lang: Lang }) {
 
       <Header lang={lang} currentPath="/faq" />
 
-      {/* The bottom rail is 3.75rem tall on a phone; the page ends above it. */}
-      <main className="pb-20 sm:pb-0">
-        {/* ---------------- masthead ---------------- */}
-        <header>
-          <div className="mx-auto max-w-6xl px-5 pt-10 pb-10 sm:px-8 sm:pt-24 sm:pb-20">
-            <div className="ink-in max-w-3xl">
-              <h1 className="display text-[2.3rem] leading-[1.12] sm:text-6xl">
-                {t.title}
-              </h1>
-              <WaterBand seed="faq" className="mt-8 h-14 w-full sm:h-16" />
-              <p className="mt-6 max-w-2xl text-[1.05rem] leading-[1.8] text-ink2 sm:text-[1.08rem]">
-                {t.lede}
-              </p>
-            </div>
-          </div>
-        </header>
+      <main>
+        <RefHead lang={lang} title={t.head.title} accent={t.head.accent} plain={t.lede} wide />
 
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <div className="gap-16 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)]">
             {/* ---------------- group index ---------------- */}
             <nav aria-label={t.indexLabel} className="hidden lg:block">
-              <div className="sticky top-24 py-20">
+              <div className="sticky top-24 pt-8">
                 <p className="text-sm text-ink2">{t.indexLabel}</p>
                 <ul className="mt-4 space-y-1">
                   {index.map((g) => (
                     <li key={g.id}>
                       <a
                         href={`#${g.id}`}
-                        className="block py-2.5 text-[0.9rem] leading-snug text-ink transition-colors hover:text-spot"
+                        className="block py-2.5 text-[0.9rem] leading-snug text-ink active:text-sindoor"
                       >
                         {g.title}
                       </a>
@@ -115,7 +100,7 @@ export function Faq({ lang }: { lang: Lang }) {
             </nav>
 
             {/* ---------------- questions ---------------- */}
-            <div className="max-w-[44rem] py-12 sm:py-20">
+            <div className="max-w-[38rem] pb-12 sm:pb-20 lg:pt-8">
               {/* On a phone the sticky index is gone, so the six groups are
                   offered as a jump list before the first question. */}
               <nav aria-label={t.indexLabel} className="mb-12 lg:hidden">
@@ -125,7 +110,7 @@ export function Faq({ lang }: { lang: Lang }) {
                     <li key={g.id}>
                       <a
                         href={`#${g.id}`}
-                        className="flex min-h-[44px] items-center py-2 text-[0.98rem] leading-snug text-ink"
+                        className="flex min-h-[44px] items-center py-2 text-[0.98rem] leading-snug font-bold text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-sindoor"
                       >
                         {g.title}
                       </a>
@@ -139,6 +124,7 @@ export function Faq({ lang }: { lang: Lang }) {
                     <h2
                       id={group.id}
                       className="display scroll-mt-20 text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]"
+                      style={W700}
                     >
                       {group.title}
                     </h2>
@@ -153,12 +139,12 @@ export function Faq({ lang }: { lang: Lang }) {
                             id={item.id}
                             className="group scroll-mt-20 border-b border-rule"
                           >
-                            <summary className="grid min-h-[56px] cursor-pointer list-none grid-cols-[minmax(0,1fr)_0.75rem] items-start gap-x-4 py-4 transition-colors hover:text-spot [&::-webkit-details-marker]:hidden">
-                              <h3 className="display text-[1.1rem] leading-snug text-ink transition-colors group-hover:text-spot sm:text-[1.25rem]">
+                            <summary className="grid min-h-[56px] cursor-pointer list-none grid-cols-[minmax(0,1fr)_0.75rem] items-start gap-x-4 py-4 active:text-sindoor [&::-webkit-details-marker]:hidden">
+                              <h3 className="display text-[1.1rem] leading-snug text-ink group-open:text-sindoor sm:text-[1.25rem]" style={W700}>
                                 {item.q}
                               </h3>
                               <span
-                                className="relative mt-1.5 h-3 w-3 shrink-0 text-ink2 transition-colors group-hover:text-spot"
+                                className="relative mt-1.5 h-3 w-3 shrink-0 text-ink2"
                                 aria-hidden="true"
                               >
                                 <span className="absolute top-1/2 left-0 h-px w-3 -translate-y-1/2 bg-current" />
@@ -170,7 +156,7 @@ export function Faq({ lang }: { lang: Lang }) {
                               {item.a.map((p) => (
                                 <p
                                   key={p}
-                                  className="mt-4 max-w-[38rem] text-[0.98rem] leading-[1.8] text-ink2 first:mt-0"
+                                  className="mt-4 max-w-[38rem] text-[1rem] leading-[1.75] text-ink2 first:mt-0"
                                 >
                                   <PriceText>{p}</PriceText>
                                 </p>
@@ -179,7 +165,7 @@ export function Faq({ lang }: { lang: Lang }) {
                                 <p className="mt-5">
                                   <Link
                                     href={to.startsWith("#") ? to : localePath(lang, to)}
-                                    className="inline-flex min-h-[44px] items-center text-[0.98rem] text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
+                                    className={QUIET}
                                   >
                                     {t.moreLabel}
                                   </Link>
@@ -198,15 +184,15 @@ export function Faq({ lang }: { lang: Lang }) {
                   rules as the standard, the river, the sky, the sheet, and
                   the five companies that touch the product. */}
               <section id="how" className="mt-16 scroll-mt-20 sm:mt-20">
-                <h2 className="display text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">
+                <h2 className="display text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]" style={W700}>
                   {made.title}
                 </h2>
-                <p className="mt-4 max-w-[38rem] text-[1rem] leading-[1.8] text-ink2">{made.lede}</p>
+                <p className="mt-4 max-w-[38rem] text-[1rem] leading-[1.75] text-ink2">{made.lede}</p>
                 <p className="mt-3 text-sm text-ink2">{made.version}</p>
 
                 {[made.s1, made.s2, made.s3, made.s4].map((sec) => (
                   <section key={sec.id} id={`how-${sec.id}`} className="mt-12 scroll-mt-20">
-                    <h3 className="display text-[1.25rem] leading-snug text-ink">{sec.h}</h3>
+                    <h3 className={H3} style={W700}>{sec.h}</h3>
                     {sec.body.map((para) => (
                       <P key={para}>{para}</P>
                     ))}
@@ -214,7 +200,7 @@ export function Faq({ lang }: { lang: Lang }) {
                 ))}
 
                 <section id={`how-${made.s5.id}`} className="mt-12 scroll-mt-20">
-                  <h3 className="display text-[1.25rem] leading-snug text-ink">{made.s5.h}</h3>
+                  <h3 className={H3} style={W700}>{made.s5.h}</h3>
                   <P>{made.s5.lede}</P>
                   {/* Five companies against what each one does: a table to read
                       across, so its rows keep their hairline. */}
@@ -231,17 +217,17 @@ export function Faq({ lang }: { lang: Lang }) {
 
               {/* ---------------- closing ---------------- */}
               <section className="mt-20 sm:mt-28">
-                <h2 className="display text-[1.7rem] leading-[1.2] sm:text-[2.2rem]">
+                <h2 className={H2} style={W700}>
                   {t.closing.title}
                 </h2>
-                <p className="mt-5 max-w-[38rem] text-[1rem] leading-[1.8] text-ink2">
+                <p className="mt-5 max-w-[38rem] text-[1rem] leading-[1.75] text-ink2">
                   {t.closing.body}
                 </p>
                 {/* PLACEHOLDER: ethics@snanify.com must be a real, monitored inbox. */}
                 <p className="mt-8">
                   <a
                     href={`mailto:${ETHICS_MAIL}`}
-                    className="inline-flex min-h-[44px] flex-wrap items-center gap-x-3 gap-y-1 border-b-2 border-spot pb-1 text-[1.02rem] text-spot transition-colors hover:border-rulestrong hover:text-ink"
+                    className="inline-flex min-h-[44px] flex-wrap items-center gap-x-3 gap-y-1 border-b-2 border-sindoor pb-1 text-[1.02rem] font-bold text-sindoor active:text-ink"
                   >
                     <span>{t.closing.mailLabel}</span>
                     <span className="break-all text-ink2">{ETHICS_MAIL}</span>
@@ -251,19 +237,11 @@ export function Faq({ lang }: { lang: Lang }) {
             </div>
           </div>
         </div>
+        <RefClose title={t.snanTitle} label={t.ctaLabel} href={cta} />
       </main>
 
       <Footer lang={lang} />
 
-      {/* ---------------- thumb rail, phones only ---------------- */}
-      <aside aria-label={t.ctaLabel} className="fixed inset-x-0 bottom-0 z-40 bg-paper sm:hidden">
-        <a
-          href={cta}
-          className="label flex min-h-[3.75rem] items-center justify-center bg-spot px-5 text-paper"
-        >
-          {t.ctaLabel}
-        </a>
-      </aside>
     </>
   );
 }

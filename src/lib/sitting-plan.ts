@@ -34,6 +34,11 @@ export const SITTING = {
 
 export type Limb = keyof typeof SITTING;
 
+/** One breath inside the breath: four seconds in, six out, six breaths a
+    minute, which is where a body settles. The words and the river's
+    `breathe` motion both run on these. */
+export const BREATH = { in: 4, out: 6 } as const;
+
 /** The order the limbs run in. The machine walks this array. */
 export const LIMB_ORDER = ["reading", "breath", "hold", "stillness", "mark"] as const;
 

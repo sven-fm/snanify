@@ -1,5 +1,5 @@
 import "server-only";
-import { and, count, eq } from "drizzle-orm";
+import { and, count, eq, lt } from "drizzle-orm";
 import { db, profiles, sittings, type Sitting } from "@/db";
 import { balance, book, InsufficientCredits } from "@/lib/credits";
 import { newId } from "@/lib/ids";
@@ -9,6 +9,7 @@ import { getLiveSnapshot, istDate, type WaterState } from "@/lib/riverdata";
 import { readSky } from "@/lib/sky";
 import { getGhat } from "@/content/rivers";
 import { asInstant } from "@/content/muhurat";
+import { IMAGE_VERSION } from "@/lib/patra-version";
 import { riverSlice, seedDay, seedFigure, skySlice } from "@/lib/patra-record";
 import type { Lang } from "@/lib/locales";
 
@@ -37,8 +38,8 @@ import type { Lang } from "@/lib/locales";
    --------------------------------------------------------------------------- */
 
 export type Minted =
-  | { outcome: "kept"; sitting: Sitting; creditsLeft: number }
-  | { outcome: "already"; sitting: Sitting }
+  | { outcome: "kept"; sitting: Sitting; creditsLeft: number; morning: number }
+  | { outcome: "already"; sitting: Sitting; morning: number }
   | { outcome: "no-credit" }
   | { outcome: "no-profile" };
 
@@ -54,6 +55,21 @@ export function localDate(at: Date, tz: string): string {
   } catch {
     return istDate(at);
   }
+}
+
+/** The nth morning: the mornings kept before this one, across every water, plus one. */
+export function morningNumber(priorMornings: number): number {
+  return priorMornings + 1;
+}
+
+/** The stored number, or for rows from before it was counted, worked out from the register. */
+async function morningOf(sitting: Sitting): Promise<number> {
+  if (sitting.morningNo !== null && sitting.morningNo !== undefined) return sitting.morningNo;
+  const rows = await db
+    .select({ n: count() })
+    .from(sittings)
+    .where(and(eq(sittings.userId, sitting.userId), lt(sittings.keptAt, sitting.keptAt)));
+  return morningNumber(Number(rows[0]?.n ?? 0));
 }
 
 export async function mintSitting({
@@ -93,7 +109,8 @@ export async function mintSitting({
     )
     .limit(1);
 
-  if (existing[0]) return { outcome: "already", sitting: existing[0] };
+  if (existing[0])
+    return { outcome: "already", sitting: existing[0], morning: await morningOf(existing[0]) };
 
   const snapshot = await getLiveSnapshot();
   const water = snapshot.waters.find((w) => w.slug === profile.waterSlug);
@@ -122,9 +139,21 @@ export async function mintSitting({
     discharge: seedFigure(river),
   });
 
+  let morning = 1;
+
   try {
     await db.transaction(async (tx) => {
       await book(tx, { userId, delta: -1, reason: "sitting", refId: id });
+
+      /* Counted AFTER book(), which takes the per-user row lock. Under the lock
+         this sees every morning another transaction of the same person has
+         committed, so two concurrent mints cannot read the same count. Do not
+         move it above the book. */
+      const prior = await tx
+        .select({ n: count() })
+        .from(sittings)
+        .where(eq(sittings.userId, userId));
+      morning = morningNumber(Number(prior[0]?.n ?? 0));
 
       await tx.insert(sittings).values({
         id,
@@ -142,6 +171,8 @@ export async function mintSitting({
         portraitKey: profile.portraitKey,
         sankalpText: profile.sankalpText,
         distanceKm: from ? Math.round(greatCircleKm(from, water.gauge.ghat) / 10) * 10 : null,
+        morningNo: morning,
+        imageVersion: IMAGE_VERSION,
       });
     });
   } catch (error) {
@@ -161,7 +192,8 @@ export async function mintSitting({
       )
       .limit(1);
 
-    if (raced[0]) return { outcome: "already", sitting: raced[0] };
+    if (raced[0])
+      return { outcome: "already", sitting: raced[0], morning: await morningOf(raced[0]) };
     throw error;
   }
 
@@ -178,6 +210,7 @@ export async function mintSitting({
     outcome: "kept",
     sitting: imageKey ? { ...kept[0], imageKey } : kept[0],
     creditsLeft: await balance(db, userId),
+    morning: kept[0].morningNo ?? morning,
   };
 }
 

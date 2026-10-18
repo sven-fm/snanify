@@ -1,27 +1,41 @@
+import Link from "next/link";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/i18n";
-import { Mark } from "@/components/Logo";
-import { LinkButton } from "@/components/ui";
-import { WaterBand } from "@/components/WaterBand";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { CTA } from "@/components/ui";
+import { Capitals, QUIET } from "@/components/site/Reference";
+import { navLabel } from "@/lib/nav";
 
+/**
+ * The 404, as a reference page in v3 (spec 6.6): the masthead on its strip,
+ * the capitals headline with the ghat in sindoor, one plain sentence, the
+ * one press back to the river, and the footer's full river under it.
+ */
 export function NotFoundPage({ lang }: { lang: Lang }) {
   const t = content[lang].notFound;
 
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <main className="relative grid min-h-screen place-items-center overflow-hidden px-5">
-        <div className="relative max-w-md text-center">
-          <Mark className="mx-auto h-16 w-16 text-ink" />
-          <p className="mt-10 text-sm text-ink2">{t.code}</p>
-          <h1 className="display mt-4 text-4xl leading-tight sm:text-5xl">{t.title}</h1>
-          <p className="mt-5 text-sm leading-relaxed text-ink2">{t.lede}</p>
-          <WaterBand seed="404" className="mx-auto mt-6 h-12 w-full max-w-xs" />
-          <LinkButton href={localePath(lang, "/")} className="mt-9">
-            {t.cta}
-          </LinkButton>
-        </div>
+      {/* No current page: the language switch leads to the other edition's home. */}
+      <Header lang={lang} />
+      <main>
+        <section>
+          <div className="mx-auto max-w-md px-5 pt-8 pb-16 sm:max-w-3xl sm:px-8 sm:pt-14 sm:pb-20">
+            <p className="text-sm text-ink2">{t.code}</p>
+            <Capitals lang={lang} title={t.head.title} accent={t.head.accent} className="mt-2" />
+            <p className="mt-4 max-w-xl text-[1.0625rem] leading-[1.6] text-ink">{t.lede}</p>
+            <Link href={localePath(lang, "/")} className="mt-8 flex sm:inline-flex">
+              <CTA className="w-full sm:w-auto">{t.cta}</CTA>
+            </Link>
+            <Link href={localePath(lang, "/rivers")} className={`${QUIET} mt-4`}>
+              {navLabel(lang, "rivers")}
+            </Link>
+          </div>
+        </section>
       </main>
+      <Footer lang={lang} />
     </>
   );
 }

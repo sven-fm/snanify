@@ -15,7 +15,7 @@ import { DEFAULT_CURRENCY, type Currency } from "@/lib/currency";
 
    THE SHAPE OF THE OFFER. Eleven mornings cost eleven, one for each morning, in
    whatever currency the reader is in. That is the whole hook and it is why
-   `eleven` is the tier most people take. The other two lines exist to make it
+   `eleven` is the tier the page raises. The other two lines exist to make it
    obvious: one morning costs more than one of eleven, and sixty costs less.
 
    Change a price and change `each` in the same commit. `each` is arithmetic on

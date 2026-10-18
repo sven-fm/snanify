@@ -28,7 +28,7 @@ export function LangSwitch({
   return (
     <details className="group relative">
       <summary
-        className="label impress flex min-h-[44px] cursor-pointer list-none items-center gap-1.5 border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden"
+        className="label flex min-h-[44px] cursor-pointer list-none items-center gap-1.5 border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden"
         aria-label={`${def.native}, ${label}`}
       >
         <span className="sm:hidden">{def.code.toUpperCase()}</span>
@@ -49,7 +49,7 @@ export function LangSwitch({
                 href={href}
                 hrefLang={other.tag}
                 lang={other.tag}
-                className="impress flex min-h-11 items-center justify-between gap-3 px-3 py-2.5 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
+                className="flex min-h-11 items-center justify-between gap-3 px-3 py-2.5 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
               >
                 <span className="text-[0.95rem]">{other.native}</span>
                 {/* The English name too, because a reader who lands in the

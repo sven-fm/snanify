@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { WaterBand } from "@/components/WaterBand";
 
 import { content } from "@/lib/content";
 import type { Lang } from "@/lib/locales";
 import { localePath } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Mark } from "@/components/Logo";
-import { CTA, Section } from "@/components/ui";
+import { Section } from "@/components/ui";
+import { ctaHref } from "@/lib/nav";
+import { H2, H3, QUIET, RefClose, RefHead, TABLE_GROUND, W700 } from "@/components/site/Reference";
 import {
   MUHURAT,
   RECURRING_OCCASIONS,
@@ -50,14 +50,14 @@ function deva(value: string, lang: Lang): string {
  * It is a component rather than a string so that adding a timing surface
  * without its provenance is a conspicuous omission rather than a silent one.
  *
- * The square is hollow, matching StatusBadge: it only ever fills when a thing
- * is settled, and nothing on this calendar is settled yet.
+ * The square is hollow: it fills when a thing is settled, and every date on
+ * this calendar is still provisional. Set in small body type, unboxed.
  */
 export function ProvisionalBadge({ lang, short = false }: { lang: Lang; short?: boolean }) {
   const c = muhuratIndexContent[lang].provenance;
   return (
-    <span className="label inline-flex items-center gap-2 border border-spot px-2.5 py-1.5 text-spot">
-      <span className="h-1.5 w-1.5 shrink-0 border border-spot" aria-hidden="true" />
+    <span className="inline-flex items-center gap-2 text-sm font-bold text-sindoor">
+      <span className="h-1.5 w-1.5 shrink-0 border border-sindoor" aria-hidden="true" />
       {short ? c.badgeShort : c.badge}
     </span>
   );
@@ -67,8 +67,10 @@ export function ProvisionalBadge({ lang, short = false }: { lang: Lang; short?: 
 function Heading({ title, lede }: { title: string; lede?: string }) {
   return (
     <div className="max-w-3xl">
-      <h2 className="display text-[2.1rem] leading-tight sm:text-[2.9rem]">{title}</h2>
-      {lede && <p className="mt-4 max-w-2xl leading-relaxed text-ink2">{lede}</p>}
+      <h2 className={H2} style={W700}>
+        {title}
+      </h2>
+      {lede && <p className="mt-3 max-w-2xl leading-[1.6] text-ink2">{lede}</p>}
     </div>
   );
 }
@@ -81,7 +83,7 @@ function Heading({ title, lede }: { title: string; lede?: string }) {
    shows.
 
    Cut in two colours like the rest of the forme: tint blocks for the bands,
-   hairlines for the structure, the spot colour only on the window edges.   */
+   hairlines for the structure, the sindoor only on the window edges.   */
 
 const T0 = 4; // the diagram spans 04:00 to 20:00
 const SPAN = 16;
@@ -118,7 +120,7 @@ function DayDiagram({ lang }: { lang: Lang }) {
           stroke="var(--rule)"
           strokeWidth="1"
         />
-        <circle cx={x(12)} cy="70" r="5" fill="var(--spot)" />
+        <circle cx={x(12)} cy="70" r="5" fill="var(--sindoor)" />
 
         {/* the four windows */}
         {BANDS.map((b) => (
@@ -130,8 +132,8 @@ function DayDiagram({ lang }: { lang: Lang }) {
               height="146"
               fill="var(--paper-3)"
             />
-            <rect x={x(b.from)} y="24" width="1.5" height="146" fill="var(--spot)" />
-            <rect x={x(b.to)} y="24" width="1.5" height="146" fill="var(--spot)" />
+            <rect x={x(b.from)} y="24" width="1.5" height="146" fill="var(--sindoor)" />
+            <rect x={x(b.to)} y="24" width="1.5" height="146" fill="var(--sindoor)" />
             <text
               x={(x(b.from) + x(b.to)) / 2}
               y="192"
@@ -198,12 +200,12 @@ function OccasionRow({
     <li>
       <Link
         href={localePath(lang, `/muhurat/${occasion.slug}`)}
-        className={`group block py-6 transition-colors hover:bg-paper3 ${SPINE_COLS}`}
+        className={`group block py-6 ${SPINE_COLS}`}
       >
         {/* the occasion */}
         <div>
           {/* h4: the month above it is the h3 of this group. */}
-          <h4 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot sm:text-[1.6rem]">
+          <h4 className="display text-[1.375rem] text-ink underline decoration-rule decoration-1 underline-offset-4 group-active:text-sindoor sm:text-[1.5rem]" style={W700}>
             {occasionName(occasion, lang)}
           </h4>
           <p className="mt-1.5 text-sm leading-[1.7] text-ink2">{occasion.line[lang]}</p>
@@ -296,36 +298,19 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
 
       <main>
         {/* ---------------- masthead ----------------
-            Title, one sentence, and the provenance sentence with its badge.
-            The provenance is part of the masthead rather than a footnote,
-            because /faq#how promises that every timing carries it. */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20">
-            <h1 className="ink-in display max-w-3xl text-[2.9rem] leading-[0.98] sm:text-6xl lg:text-7xl">
-              {t.hero.title}
-            </h1>
-
-            <WaterBand seed="muhurat" className="mt-8 h-14 w-full sm:h-16" />
-
-            <p
-              className="ink-in mt-6 max-w-xl text-[1.05rem] leading-[1.75] text-ink2"
-              style={{ animationDelay: "120ms" }}
-            >
-              {t.hero.lede}
-            </p>
-
-            <div
-              className="ink-in tint mt-10 max-w-2xl px-5 py-5"
-              style={{ animationDelay: "200ms" }}
-            >
-              <p className="text-sm leading-[1.75] text-ink2">{t.provenance.line}</p>
-              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <ProvisionalBadge lang={lang} />
-                <p className="text-sm text-ink2">{deva(t.hero.asOf.replace("{date}", sayDay(today, lang)), lang)}</p>
-              </div>
+            The capitals headline, one sentence, and the provenance sentence
+            with its badge. The provenance is part of the masthead rather
+            than a footnote, because /faq#how promises that every timing
+            carries it. */}
+        <RefHead lang={lang} title={t.head.title} accent={t.head.accent} plain={t.hero.lede} wide>
+          <div className="mt-6 max-w-2xl">
+            <p className="text-sm leading-[1.75] text-ink2">{t.provenance.line}</p>
+            <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <ProvisionalBadge lang={lang} />
+              <p className="text-sm text-ink2">{deva(t.hero.asOf.replace("{date}", sayDay(today, lang)), lang)}</p>
             </div>
           </div>
-        </section>
+        </RefHead>
 
         {/* ---------------- how to read this ---------------- */}
         <Section>
@@ -337,7 +322,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
                 key={item.t}
                 className="grid gap-2 border-b border-rule py-5 sm:grid-cols-[15rem_1fr] sm:gap-8"
               >
-                <dt className="display text-xl text-ink">{item.t}</dt>
+                <dt className="display text-[1.125rem] text-ink" style={W700}>{item.t}</dt>
                 <dd className="max-w-2xl text-sm leading-[1.75] text-ink2">{item.d}</dd>
               </div>
             ))}
@@ -345,17 +330,17 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ---------------- the monthly rhythm ---------------- */}
-        <Section tinted>
+        <Section>
           <Heading title={t.rhythm.title} lede={t.rhythm.lede} />
 
-          <ul className="mt-10">
+          <ul className={`mt-8 ${TABLE_GROUND}`}>
             {RECURRING_OCCASIONS.map((o) => (
               <li key={o.slug}>
                 <Link
                   href={localePath(lang, `/muhurat/${o.slug}`)}
-                  className="group grid gap-y-1.5 border-b border-rule py-5 transition-colors hover:bg-paper3 sm:grid-cols-[14rem_1fr_11rem] sm:items-baseline sm:gap-x-8"
+                  className="group grid gap-y-1.5 border-b border-rule py-5 sm:grid-cols-[14rem_1fr_11rem] sm:items-baseline sm:gap-x-8"
                 >
-                  <h3 className="display text-2xl text-ink underline decoration-rule decoration-1 group-hover:decoration-spot">
+                  <h3 className="display text-[1.375rem] text-ink underline decoration-rule decoration-1 underline-offset-4 group-active:text-sindoor" style={W700}>
                     {occasionName(o, lang)}
                   </h3>
                   <span className="text-sm leading-[1.7] text-ink2">{o.line[lang]}</span>
@@ -376,7 +361,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
         <Section id="spine">
           <Heading title={t.spine.title} />
 
-          <div className="mt-10">
+          <div className={`mt-8 ${TABLE_GROUND}`}>
             {/* column heads, as a printed register sets them */}
             <div className="hidden border-b border-rule sm:grid sm:grid-cols-[8rem_1fr] sm:gap-x-8">
               <p className="label py-3 text-ink2">{t.spine.columns.month}</p>
@@ -397,7 +382,7 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
                   >
                     <div className="sm:sticky sm:top-24 sm:self-start sm:py-7">
                       {/* A real heading: the month is how this list is navigated. */}
-                      <h3 className="display text-2xl text-ink">{name}</h3>
+                      <h3 className="display text-[1.375rem] text-ink" style={W700}>{name}</h3>
                       <p className="mt-1 text-sm text-ink2">{deva(year, lang)}</p>
                     </div>
 
@@ -419,11 +404,11 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
           {/* Dates that come from elsewhere, and the calendars this one does
               not follow, stated as facts under the register they qualify. */}
           <div className="mt-16 max-w-3xl">
-            <h3 className="display text-2xl text-ink">{t.elsewhere.title}</h3>
+            <h3 className={H3} style={W700}>{t.elsewhere.title}</h3>
             <dl className="mt-6 space-y-7">
               {MUHURAT.notPublished.map((n) => (
                 <div key={n.id}>
-                  <dt className="display text-lg text-ink">{n.name[lang]}</dt>
+                  <dt className="display text-[1.0625rem] text-ink" style={W700}>{n.name[lang]}</dt>
                   <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
                     {n.text[lang]}
                   </dd>
@@ -434,20 +419,20 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
         </Section>
 
         {/* ---------------- daily windows ---------------- */}
-        <Section tinted>
+        <Section>
           <Heading title={t.windows.title} lede={t.windows.lede} />
 
           <DayDiagram lang={lang} />
 
           {/* the day's schedule, ruled, in the order the day runs */}
-          <ul className="mt-12">
+          <ul className={`mt-10 ${TABLE_GROUND}`}>
             {WINDOWS.map((w) => (
               <li
                 key={w.id}
-                className="grid gap-x-8 gap-y-4 border-b border-rule py-8 sm:grid-cols-[15rem_1fr] sm:py-10"
+                className="grid gap-x-8 gap-y-4 border-b border-rule py-7 last:border-b-0 sm:grid-cols-[15rem_1fr]"
               >
                 <div>
-                  <h3 className="display text-2xl">{windowName(w.id, w.name, lang)}</h3>
+                  <h3 className={H3} style={W700}>{windowName(w.id, w.name, lang)}</h3>
                   <p className="mt-2 text-sm text-ink">{t.windows.minutes(w.durationMin)}</p>
                   <p className="mt-1 text-sm text-ink2">{t.anchors[w.anchor]}</p>
                 </div>
@@ -478,11 +463,11 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
           </div>
 
           <div className="mt-14 max-w-3xl">
-            <h3 className="display text-2xl text-ink">{t.windows.alsoTitle}</h3>
+            <h3 className={H3} style={W700}>{t.windows.alsoTitle}</h3>
             <dl className="mt-6 space-y-7">
               {MUHURAT.displayedNotActedOn.map((n) => (
                 <div key={n.id}>
-                  <dt className="display text-lg text-ink">{n.name[lang]}</dt>
+                  <dt className="display text-[1.0625rem] text-ink" style={W700}>{n.name[lang]}</dt>
                   <dd className="mt-2 max-w-2xl text-sm leading-[1.75] text-ink2">
                     {n.text[lang]}
                   </dd>
@@ -505,35 +490,29 @@ export async function MuhuratIndex({ lang }: { lang: Lang }) {
           />
           <Link
             href={localePath(lang, "/panchang")}
-            className="impress mt-10 inline-flex min-h-[44px] items-center text-ink underline decoration-rule decoration-1 underline-offset-4 active:text-spot"
+            className={`${QUIET} mt-8`}
           >
             {t.clock.cityLink}
           </Link>
         </Section>
 
         {/* ---------------- closing ---------------- */}
-        <section>
-          <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 sm:py-24">
-            <Mark className="mx-auto h-12 w-12 text-ink" />
-            <h2 className="display mt-8 text-[2.2rem] leading-tight sm:text-[3.2rem]">
-              {t.cta.title}
-            </h2>
-            <p className="mx-auto mt-5 max-w-lg leading-[1.75] text-ink2">{t.cta.lede}</p>
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-              <Link href={localePath(lang, "/rivers")}>
-                <CTA>{t.cta.primary}</CTA>
+        <RefClose title={t.cta.title} body={t.cta.lede} label={t.cta.snan} href={ctaHref(lang)}>
+          <ul className="mt-6">
+            <li>
+              <Link href={localePath(lang, "/rivers")} className={QUIET}>
+                {t.cta.primary}
               </Link>
-              <a href="#spine">
-                <CTA variant="ghost">{t.cta.secondary}</CTA>
+            </li>
+            <li>
+              <a href="#spine" className={QUIET}>
+                {t.cta.secondary}
               </a>
-            </div>
-
-            {/* The provenance sentence closes the page as well as opening it. */}
-            <p className="mx-auto mt-16 max-w-2xl text-xs leading-[1.75] text-ink2">
-              {MUHURAT.provider.note[lang]}
-            </p>
-          </div>
-        </section>
+            </li>
+          </ul>
+          {/* The provenance sentence closes the page as well as opening it. */}
+          <p className="mt-10 text-xs leading-[1.75] text-ink2">{MUHURAT.provider.note[lang]}</p>
+        </RefClose>
       </main>
 
       <Footer lang={lang} />

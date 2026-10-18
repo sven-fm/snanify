@@ -20,7 +20,8 @@ import type { Lang } from "@/lib/locales";
    own saved profile rather than from this request.
    --------------------------------------------------------------------------- */
 
-export type Kept = { id: string | null; already?: boolean; reason?: string };
+/** `morning` is the nth morning across every water, for the seal at the mark. */
+export type Kept = { id: string | null; already?: boolean; reason?: string; morning?: number };
 
 export async function keepThisMorning(lang: Lang): Promise<Kept> {
   const user = await requireUser(lang, "/today");
@@ -37,9 +38,9 @@ export async function keepThisMorning(lang: Lang): Promise<Kept> {
 
   switch (result.outcome) {
     case "kept":
-      return { id: result.sitting.id };
+      return { id: result.sitting.id, morning: result.morning };
     case "already":
-      return { id: result.sitting.id, already: true };
+      return { id: result.sitting.id, already: true, morning: result.morning };
     case "no-credit":
       return { id: null, reason: "no-credit" };
     case "no-profile":

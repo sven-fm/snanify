@@ -2,10 +2,12 @@ import type { patraPageContent } from "@/content/patra-page";
 import type { Lang } from "@/lib/locales";
 import type { PatraRecord } from "@/content/patra";
 import { ShareButton } from "@/components/patra/ShareButton";
-import { PatraSheetViewer } from "@/components/SankalpPatra";
-import { LinkButton, SubmitButton } from "@/components/ui";
+import { PrintButton } from "@/components/patra/PrintButton";
+import { PatraSheet } from "@/components/SankalpPatra";
+import { buttonClass, LinkButton, SubmitButton } from "@/components/ui";
 import Link from "next/link";
 import { morningsContent } from "@/content/mornings";
+import { DOWNLOAD_NAME } from "@/lib/patra-download";
 import { countLine } from "@/lib/mornings";
 import { localePath } from "@/lib/locales";
 import { setPatraPublic } from "@/app/[lang]/p/[id]/actions";
@@ -21,15 +23,11 @@ export type OwnerNext = {
 };
 
 /**
- * The sheet for the person who kept it, straight after the morning. In this
- * order and nothing else: the sheet, the send button, their own words, the
- * controls. What the sheet already prints is not printed again underneath
- * it, and where its figures come from is said on /rivers and /faq, not here.
- *
- * Under the sankalp, a short block for what follows: the mornings left, the
- * hour of the next email, the account. The sitting moves on to this page as
- * the mark starts, so this is where the count is actually read. With none
- * left it carries the way to the next pack as the one solid button.
+ * The sheet for the person who kept it, straight after the morning. The
+ * image they send, and under it the marigold press that sends it with a quiet
+ * link to save it; then their next morning, the controls, and their own copy:
+ * the same sheet in HTML with their sankalp under the names, ready to print.
+ * One press on the page: everything else is a quiet link.
  */
 export function PatraOwner({
   lang,
@@ -41,7 +39,6 @@ export function PatraOwner({
   imageUrl,
   shareText,
   waterSlug,
-  sankalp,
   isPublic,
   printable,
   auto,
@@ -56,7 +53,6 @@ export function PatraOwner({
   imageUrl: string;
   shareText: string;
   waterSlug: string;
-  sankalp: string | null;
   isPublic: boolean;
   printable: PatraRecord;
   auto: boolean;
@@ -64,10 +60,10 @@ export function PatraOwner({
 }) {
   const m = morningsContent[lang];
   return (
-    <main className="mx-auto max-w-xl px-5 py-8 pb-16 sm:px-8 sm:py-14">
+    <main className="mx-auto max-w-xl px-4 py-6 pb-16 sm:px-8 sm:py-14">
       {/* Pulled from the press, then the send button settles under it. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull w-full bg-paper2 p-2 sm:p-3" />
+      <img src={imageSrc} alt={alt} width={1080} height={1920} className="pull block w-full bg-paper2" />
 
       <div className="pull mt-6" style={{ animationDelay: "320ms" }}>
         <ShareButton
@@ -80,16 +76,13 @@ export function PatraOwner({
           lang={lang}
           auto={auto}
         />
-        {auto && <p className="mt-4 text-center text-sm text-ink2">{t.homeScreen}</p>}
+        <div className="mt-3 text-center">
+          <a href={`${imageSrc}?download=1`} download={DOWNLOAD_NAME} className={buttonClass("quiet")}>
+            {t.download}
+          </a>
+        </div>
+        {auto && <p className="mt-3 text-center text-sm text-ink2">{t.homeScreen}</p>}
       </div>
-
-      {sankalp && (
-        <section className="warm mt-12 p-5 sm:p-6">
-          <h2 className="display text-xl text-ink">{t.yours}</h2>
-          <p className="display mt-4 text-[1.5rem] leading-[1.45]">{sankalp}</p>
-          <p className="mt-4 text-sm text-ink2">{t.privateNote}</p>
-        </section>
-      )}
 
       <section className="mt-14" data-owner-next>
         <h2 className="display text-xl text-ink">{t.next.heading}</h2>
@@ -100,17 +93,16 @@ export function PatraOwner({
             {t.next.reminder.replace("{hour}", next.reminderHour).replace("{tz}", next.tz)}
           </p>
         )}
-        {next.credits < 1 && (
-          <LinkButton href={`${localePath(lang, "/begin")}?out=1`} className="mt-5 w-full">
-            {m.more}
-          </LinkButton>
-        )}
-        <Link
-          href={localePath(lang, "/account")}
-          className="impress mt-3 inline-flex min-h-[44px] items-center text-ink underline decoration-rule underline-offset-4 hover:decoration-spot active:text-spot"
-        >
-          {t.next.account}
-        </Link>
+        <div className="mt-3 flex flex-col items-start">
+          {next.credits < 1 && (
+            <LinkButton href={`${localePath(lang, "/begin")}?out=1`} variant="quiet">
+              {m.more}
+            </LinkButton>
+          )}
+          <Link href={localePath(lang, "/account")} className={buttonClass("quiet")}>
+            {t.next.account}
+          </Link>
+        </div>
       </section>
 
       <section className="mt-14">
@@ -118,20 +110,22 @@ export function PatraOwner({
 
         {!isPublic && <p className="mt-4 text-[0.98rem] text-ink">{t.privateNow}</p>}
 
-        <form action={setPatraPublic.bind(null, lang, id, !isPublic)} className="mt-4">
-          <SubmitButton variant="ghost">{isPublic ? t.makePrivate : t.makePublic}</SubmitButton>
+        <form action={setPatraPublic.bind(null, lang, id, !isPublic)} className="mt-3">
+          <SubmitButton variant="quiet">{isPublic ? t.makePrivate : t.makePublic}</SubmitButton>
         </form>
 
-        {isPublic && <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink2">{t.privateWarning}</p>}
+        {isPublic && <p className="mt-2 max-w-lg text-sm leading-relaxed text-ink2">{t.privateWarning}</p>}
+      </section>
 
-        {/* The A4 sheet, which carries the sankalp and is meant for paper.
-            Its own viewer handles the phone case, where a fixed-ratio
-            document rendered into 366 pixels would set body type at about
-            six. */}
-        <h3 className="display mt-12 text-xl text-ink">{t.printHeading}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-ink2">{t.printNote}</p>
+      {/* The owner's copy: the same sheet, with their sankalp under the names. */}
+      <section className="mt-14">
+        <h2 className="display text-xl text-ink">{t.printHeading}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-ink2">{t.printNote}</p>
         <div className="mt-5">
-          <PatraSheetViewer lang={lang} data={printable} />
+          <PatraSheet data={printable} />
+        </div>
+        <div className="mt-3">
+          <PrintButton label={t.print} />
         </div>
       </section>
     </main>

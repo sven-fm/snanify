@@ -11,12 +11,18 @@ export default defineConfig({
          Server Component throws. Vitest is neither, so it resolves to an empty
          module here and the guard keeps doing its job in the app. */
       "server-only": fileURLToPath(new URL("./tests/unit/helpers/empty.ts", import.meta.url)),
+      /* next/font is resolved by the Next compiler; here it is a stub. */
+      "next/font/google": fileURLToPath(new URL("./tests/unit/helpers/next-font.ts", import.meta.url)),
     },
   },
   test: {
     /* The portrait test presses a photograph through sharp, which takes two
        seconds here and more on a shared CI runner. */
     testTimeout: 30000,
+    /* The ledger suites (credits, fulfil, mint) build a fresh PGlite database
+       in `beforeEach`. Under a full parallel run that boot can outlast
+       vitest's 10s hook default, so hooks get a minute. */
+    hookTimeout: 60000,
     include: ["tests/unit/**/*.test.ts"],
     environment: "node",
     coverage: { provider: "v8", reporter: ["text"] },

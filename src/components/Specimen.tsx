@@ -88,7 +88,7 @@ export function Specimen({
       </div>
       {caption && (
         <figcaption className="mt-4 text-center text-sm leading-[1.6] text-ink2">
-          <span className="label mr-2 text-spot">{t.label}</span>
+          <span className="label mr-2 text-sindoor">{t.label}</span>
           {t.caption}
         </figcaption>
       )}

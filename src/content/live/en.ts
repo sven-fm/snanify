@@ -1,4 +1,4 @@
-import type { FlowBand, Trend, WaterSlug, WeatherId } from "@/lib/riverdata";
+import type { Trend, WaterSlug, WeatherId } from "@/lib/riverdata";
 import { flowContent } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
@@ -62,6 +62,12 @@ export const en = {
   /* The breadcrumb name, read by src/app/[lang]/live/page.tsx. */
   crumb: "The rivers, live",
   title: "How the rivers are running today.",
+  /** The capitals headline: `{accent}` is set in sindoor. */
+  head: {
+    title: "{accent}, this morning.",
+    accent: "Six rivers",
+    plain: "See how each one runs today, against the same week since 1997.",
+  },
   /** The fold under each water: eleven days and the register, for whoever wants them. */
   more: "More about this morning",
   standfirst:
@@ -81,17 +87,11 @@ export const en = {
   },
 
   flow: {
-    label: "Modelled flow",
     unit: "m³/s",
     modelledFor: "Modelled for {date}",
-    rankLabel: "Rank",
-    rankSuffix: "against the same week of the year, 1997 to 2025",
-    cappedBelow: "in the lowest 5 per cent of the record",
-    cappedAbove: "in the highest 5 per cent of the record",
     normalLabel: "Usual for this week",
     normalBody:
       "Since 1997, eight of every ten daily values for this week fell between {p10} and {p90} {unit}. The median is {median} {unit}.",
-    scaleLabel: "Thin, low, usual, full, in spate",
     seriesLabel: "The last eleven model days",
     seriesNote: "One bar per day, oldest on the left.",
     trendSince: "over seven days",
@@ -103,14 +103,6 @@ export const en = {
     kmh: "km/h",
     celsius: "°C",
   },
-
-  bands: {
-    slack: "{river} is running thin, lower than on nine days in ten at this time of year.",
-    low: "{river} is running low for this week of the year.",
-    usual: "{river} is running as it usually does at this time of year.",
-    full: "{river} is running full for this week of the year.",
-    spate: "{river} is in spate, higher than on nine days in ten at this time of year.",
-  } satisfies Record<FlowBand, string>,
 
   /* One vocabulary for how a river runs: src/content/flow.ts. */
   bandWords: flowContent.en.word,
@@ -224,14 +216,9 @@ export const en = {
      src/components/live/LiveHero.tsx. */
   hero: {
     pick: "Choose a water",
-    flow: "Flow today",
-    rank: "Rank since 1997",
-    of: "of 100",
     next: "Next window",
     sunrise: "Sunrise",
     open: "Read the full entry",
-    eleven: "Eleven model days",
-    dialLabel: "{river}: {band}, {rank} of 100 since 1997",
   },
 
   pictures: {
@@ -241,7 +228,8 @@ export const en = {
 
   close: {
     title: "Every morning",
-    body: "The six waters, the panchang and the muhurat calendar are here every day. Three minutes with your own river, at the hour it names, is the snan.",
+    cta: "Begin your snan",
+    body: "The six waters, the panchang and the muhurat calendar are here every day. Sit 3 minutes with your own river, at the hour the panchang names. That is the snan.",
     links: {
       rivers: "The six waters",
       muhurat: "The muhurat calendar",

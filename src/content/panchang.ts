@@ -203,8 +203,10 @@ export const panchangContent = {
     },
     hero: {
       title: "The panchang, in your own city",
-      lede: "Today's sunrise, Brahma muhurat and tithi where you live, with the ghat's hour in IST. Pick your city.",
+      lede: "Today's sunrise, Brahma muhurat and tithi where you live, with the ghat's hour in IST.",
     },
+    /** The capitals headline: `{accent}` is set in sindoor. */
+    head: { title: "The panchang in {accent}.", accent: "your city" },
     provenance: {
       heading: "Where the timings come from",
       extra:
@@ -353,6 +355,8 @@ export const panchangContent = {
         { href: "/snan", label: "How the snan works" },
       ],
       note: "Add your city's page to your home screen.",
+      snan: "Sit with your river at sunrise.",
+      cta: "Begin your snan",
     },
     shraddha: {
       meta: {
@@ -363,8 +367,9 @@ export const panchangContent = {
       kicker: "The shraddha guide",
       hero: {
         title: "Which day is the shraddha?",
-        lede: "The day moves every year, and the question comes up a fortnight too late. Here are the sixteen days, the rules behind them, and how to find the day from a date of death.",
+        lede: "The sixteen days of Pitru Paksha, the rules behind them, and how to find your day from a date of death.",
       },
+      head: { title: "Which day is the {accent}?", accent: "shraddha" },
       cityTitle: "This morning's tithi, in your city",
       cityLede: "The tithi at sunrise in the sixteen largest cities. The rest are on the panchang page.",
       cityAll: "Every city, by country",
@@ -381,6 +386,8 @@ export const panchangContent = {
           { href: "/snan", label: "How the snan works" },
         ],
         note: "Bookmark this page for next year.",
+        snan: "Keep the day with your river.",
+        cta: "Begin your snan",
       },
     },
   },
@@ -393,8 +400,9 @@ export const panchangContent = {
     },
     hero: {
       title: "पंचांग, आपके अपने शहर में",
-      lede: "आप जहाँ रहते हैं, वहाँ का आज का सूर्योदय, ब्रह्म मुहूर्त और तिथि, साथ में घाट का समय IST में। अपना शहर चुनिए।",
+      lede: "आप जहाँ रहते हैं, वहाँ का आज का सूर्योदय, ब्रह्म मुहूर्त और तिथि, साथ में घाट का समय IST में।",
     },
+    head: { title: "{accent} का पंचांग", accent: "आपके शहर" },
     provenance: {
       heading: "समय कहाँ से आते हैं",
       extra:
@@ -543,6 +551,8 @@ export const panchangContent = {
         { href: "/snan", label: "स्नान कैसे होता है" },
       ],
       note: "अपने शहर का पृष्ठ होम स्क्रीन पर जोड़ लीजिए।",
+      snan: "सूर्योदय पर अपनी नदी के साथ बैठिए।",
+      cta: "अपना स्नान शुरू कीजिए",
     },
     shraddha: {
       meta: {
@@ -553,8 +563,9 @@ export const panchangContent = {
       kicker: "श्राद्ध मार्गदर्शिका",
       hero: {
         title: "श्राद्ध किस दिन है?",
-        lede: "दिन हर वर्ष बदलता है, और प्रश्न एक पक्ष देर से उठता है। यहाँ सोलह दिन हैं, उनके पीछे के नियम, और मृत्यु की तारीख़ से दिन निकालने का तरीक़ा।",
+        lede: "पितृ पक्ष के सोलह दिन, उनके पीछे के नियम, और मृत्यु की तारीख़ से अपना दिन निकालने का तरीक़ा।",
       },
+      head: { title: "{accent} किस दिन है?", accent: "श्राद्ध" },
       cityTitle: "आज सुबह की तिथि, आपके शहर में",
       cityLede: "सोलह सबसे बड़े शहरों में सूर्योदय की तिथि। शेष पंचांग पृष्ठ पर।",
       cityAll: "देश के अनुसार सभी शहर",
@@ -571,6 +582,8 @@ export const panchangContent = {
           { href: "/snan", label: "स्नान कैसे होता है" },
         ],
         note: "अगले वर्ष के लिए यह पृष्ठ सहेज लीजिए।",
+        snan: "यह दिन अपनी नदी के साथ रखिए।",
+        cta: "अपना स्नान शुरू कीजिए",
       },
     },
   },

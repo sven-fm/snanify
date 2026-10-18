@@ -25,7 +25,7 @@ const LABELS = {
   },
   begin: {
     en: "Begin",
-    hi: "आरंभ कीजिए",
+    hi: "शुरू कीजिए",
   },
   account: {
     en: "Your mornings",

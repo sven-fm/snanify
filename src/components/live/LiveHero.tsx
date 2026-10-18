@@ -1,232 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { engrave } from "@/lib/engraving";
-import { UNIFORM_OPACITY, UNIFORM_WIDTH } from "@/components/WaterBand";
-import { PICTURES } from "@/content/live/pictures";
-import type { WaterSlug } from "@/lib/riverdata";
-import { CountUp } from "@/components/live/CountUp";
+import type { Lang } from "@/lib/locales";
+import { Reading, type ReadingView } from "@/components/live/Reading";
 
 /* ---------------------------------------------------------------------------
-   The head of /live: pick a water, and its gauge answers.
+   The head of /live: pick a water, and its reading answers.
 
    Everything here is already in the page. The six waters arrive as plain
    strings and numbers from the server, so the picker only decides which of
-   them is on the plate; nothing is fetched and the markup for the first water
-   is in the HTML for anyone without JavaScript.
+   them is shown; nothing is fetched and the first water is in the HTML for
+   anyone without JavaScript.
 
-   What moves, and why each thing moves:
-     · the picture prints in six steps when the water changes, as ink does;
-     · the needle sweeps to the rank, because a dial that jumps reads as a
-       number and a dial that sweeps reads as a measurement;
-     · the flow figure counts up and stops, under a second;
-     · the eleven bars rise from their baseline in turn;
-     · the waterline breathes at the river's own amplitude, four seconds in
-       and six out, which is the one motion the sitting itself has.
-   All of it is transform and opacity, so a mid-range phone paints it without
-   noticing, and all of it stops under prefers-reduced-motion.
+   v3 (spec 6.6): each river as its name in sindoor, the state word, one
+   plain sentence and the gauge, then the exact figure and rank in one small
+   row with its source line. The six names wrap as quiet tabs, so nothing
+   scrolls sideways at 390; the chosen one carries the sindoor rule.
    --------------------------------------------------------------------------- */
 
 export interface HeroWater {
   slug: string;
   river: string;
   place: string;
-  sentence: string;
+  view: ReadingView;
   trend: string;
-  caret: string;
-  cumecs: number;
-  unit: string;
-  /** 0 to 100, or null when the page stands on the seasonal median. */
-  percentile: number | null;
-  bandWord: string;
-  rankNote: string;
-  modelled: string;
   sunrise: string;
   nextWindow: string | null;
-  series: number[];
-  picture: { src: string; alt: string };
   href: string;
 }
 
 export interface HeroLabels {
   pick: string;
-  flow: string;
-  rank: string;
-  of: string;
   next: string;
   sunrise: string;
   open: string;
-  eleven: string;
-  dialLabel: string;
-  bandWords: Record<string, string>;
 }
-
-/** A stable hex seed per water, so the band is the same river each visit. */
-function seedFor(slug: string): string {
-  let h = 2166136261;
-  for (const ch of slug) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0;
-  return h.toString(16).padStart(8, "0").repeat(8);
-}
-
-/* --- the dial ------------------------------------------------------------- */
-
-const CX = 100;
-const CY = 100;
-const R = 84;
-
-function polar(p: number, r = R): [number, number] {
-  const a = Math.PI - (p / 100) * Math.PI;
-  return [CX + r * Math.cos(a), CY - r * Math.sin(a)];
-}
-
-function arc(from: number, to: number, r = R): string {
-  const [x1, y1] = polar(from, r);
-  const [x2, y2] = polar(to, r);
-  return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`;
-}
-
-const BANDS: [number, number][] = [
-  [0, 10],
-  [10, 30],
-  [30, 70],
-  [70, 90],
-  [90, 100],
-];
-
-function Dial({ percentile, label }: { percentile: number | null; label: string }) {
-  const p = percentile ?? 50;
-  const band = BANDS.find(([lo, hi]) => p >= lo && p < hi) ?? BANDS[4];
-  const deg = -90 + (p / 100) * 180;
-
-  return (
-    <svg viewBox="0 0 200 112" className="w-full text-ink" role="img" aria-label={label}>
-      {/* the scale */}
-      <path d={arc(0, 100)} fill="none" stroke="currentColor" strokeWidth="1" />
-      <path d={arc(0, 100, R - 10)} fill="none" stroke="var(--rule)" strokeWidth="0.6" />
-      {[10, 30, 70, 90].map((t) => {
-        const [x1, y1] = polar(t, R - 10);
-        const [x2, y2] = polar(t, R + 4);
-        return (
-          <line
-            key={t}
-            x1={x1.toFixed(2)}
-            y1={y1.toFixed(2)}
-            x2={x2.toFixed(2)}
-            y2={y2.toFixed(2)}
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-        );
-      })}
-      {/* the band the river is in, inked */}
-      {percentile !== null && (
-        <path
-          d={arc(band[0], band[1])}
-          fill="none"
-          stroke="var(--spot)"
-          strokeWidth="3.5"
-          style={{ transition: "d 0.6s" }}
-        />
-      )}
-      {/* the needle */}
-      <g
-        style={{
-          transform: `rotate(${deg.toFixed(2)}deg)`,
-          transformOrigin: `${CX}px ${CY}px`,
-          transition: "transform 1.1s cubic-bezier(0.2, 0.8, 0.3, 1)",
-          opacity: percentile === null ? 0.25 : 1,
-        }}
-      >
-        <g className="quiver" style={{ transformOrigin: `${CX}px ${CY}px` }}>
-          <line x1={CX} y1={CY} x2={CX} y2={CY - R + 14} stroke="var(--spot)" strokeWidth="2.5" />
-          <line x1={CX} y1={CY} x2={CX} y2={CY + 8} stroke="currentColor" strokeWidth="2.5" />
-        </g>
-      </g>
-      <circle cx={CX} cy={CY} r="4" fill="currentColor" />
-      <line x1="8" y1={CY + 8} x2="192" y2={CY + 8} stroke="currentColor" strokeWidth="1" />
-    </svg>
-  );
-}
-
-/* --- the waterline ---------------------------------------------------------
-
-   The engraved water over the foot of the plate, where the water is in the
-   photograph, running steadily downward and never stopping. The drawing is
-   cut flat so it tiles, stacked twice, and slid down by one copy on a loop,
-   the same motion WaterBand uses, and only that: no sway, no breathing. It used to stand a third of the way up the picture and breathe,
-   which put lines across the ghat steps and left the foot of the plate bare.
-   --------------------------------------------------------------------------- */
-
-function Waterline({
-  slug,
-  percentile,
-  tone = "ink",
-}: {
-  slug: string;
-  percentile: number | null;
-  tone?: "ink" | "paper";
-}) {
-  const drawn = engrave({ seed: seedFor(slug), percentile, width: 1000, height: 300, flat: true });
-  /* One weight for every line, as WaterBand draws them: a tile that is
-     heavy at one end reads as a refresh each time it passes. */
-  const lines = drawn.lines.map((d, i) => (
-    <path
-      key={i}
-      d={d}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={UNIFORM_WIDTH * 1.1}
-      strokeOpacity={UNIFORM_OPACITY + 0.1}
-      vectorEffect="non-scaling-stroke"
-    />
-  ));
-  return (
-    <div
-      className={`absolute inset-x-0 bottom-0 h-[19%] overflow-hidden ${tone === "paper" ? "text-paper opacity-80" : "text-ink"}`}
-      aria-hidden="true"
-    >
-      <svg
-        viewBox="0 0 1000 600"
-        preserveAspectRatio="none"
-        className="flow absolute left-[-4%] top-[-100%] h-[200%] w-[108%]"
-      >
-        <g>{lines}</g>
-        <g transform="translate(0 300)">{lines}</g>
-      </svg>
-    </div>
-  );
-}
-
-/* --- eleven days ----------------------------------------------------------- */
-
-function Eleven({ series }: { series: number[] }) {
-  const max = Math.max(...series);
-  if (!Number.isFinite(max) || max <= 0 || series.length < 2) return null;
-  const slot = 100 / series.length;
-  const w = slot * 0.52;
-  return (
-    <svg viewBox="0 0 100 30" preserveAspectRatio="none" className="mt-3 h-12 w-full text-ink" aria-hidden="true">
-      {series.map((v, i) => {
-        const h = Math.max(0.6, (v / max) * 30);
-        return (
-          <rect
-            key={i}
-            className="rise"
-            style={{ ["--i" as string]: i }}
-            x={(i * slot + (slot - w) / 2).toFixed(2)}
-            y={(30 - h).toFixed(2)}
-            width={w.toFixed(2)}
-            height={h.toFixed(2)}
-            fill="currentColor"
-            opacity={i === series.length - 1 ? 1 : 0.5}
-          />
-        );
-      })}
-    </svg>
-  );
-}
-
-/* --- the hero -------------------------------------------------------------- */
 
 export function LiveHero({
   lang,
@@ -234,34 +42,22 @@ export function LiveHero({
   labels,
   note,
 }: {
-  lang: string;
+  lang: Lang;
   waters: HeroWater[];
   labels: HeroLabels;
-  /** When the page was assembled, printed under the plate. */
+  /** When the page was assembled, printed under the reading. */
   note: string;
 }) {
   const [index, setIndex] = useState(0);
   const w = waters[index] ?? waters[0];
   if (!w) return null;
 
-  const rank = w.percentile === null ? null : Math.round(w.percentile);
-  const dialLabel = labels.dialLabel
-    .replace("{river}", w.river)
-    .replace("{band}", w.bandWord)
-    .replace("{rank}", rank === null ? "" : String(rank));
-
   return (
     <section>
-      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12">
+      <div className="mx-auto max-w-3xl px-5 pb-10 sm:px-8">
         <p className="text-sm text-ink2">{labels.pick}</p>
 
-        {/* Six tabs in a row that scrolls on a phone and wraps from sm. Each
-            clears 44px. The chosen one is set in ink, as a stamp. */}
-        <div
-          role="tablist"
-          aria-label={labels.pick}
-          className="-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
-        >
+        <div role="tablist" aria-label={labels.pick} className="mt-1 flex flex-wrap gap-x-5">
           {waters.map((x, i) => (
             <button
               key={x.slug}
@@ -269,111 +65,47 @@ export function LiveHero({
               role="tab"
               aria-selected={i === index}
               onClick={() => setIndex(i)}
-              className={`display min-h-[44px] shrink-0 border-2 px-4 text-[1.05rem] transition-colors ${
-                i === index
-                  ? "border-ink bg-ink text-paper"
-                  : "border-rulestrong bg-paper text-ink hover:bg-paper3"
+              className={`display min-h-[44px] border-b-[3px] text-[1.0625rem] active:text-sindoor ${
+                i === index ? "border-sindoor text-ink" : "border-transparent text-ink2"
               }`}
+              style={{ fontWeight: 700 }}
             >
               {x.river}
             </button>
           ))}
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-          {/* --------------------------------------------------- plate --- */}
-          <div className="relative aspect-[3/2] overflow-hidden bg-paper2">
-            <div
-              key={w.slug}
-              role="img"
-              aria-label={w.picture.alt}
-              className="ink-picture ink-in absolute inset-0"
-              style={{ ["--picture" as string]: `url(${w.picture.src})` }}
-            />
-            <Waterline
-              key={`${w.slug}-line`}
-              slug={w.slug}
-              percentile={w.percentile}
-              tone={PICTURES[w.slug as WaterSlug].waterTone}
-            />
-            <div className="absolute top-4 left-4 bg-paper px-3 py-2">
-              <p className="display text-[1.4rem] leading-tight sm:text-[1.8rem]">{w.river}</p>
-              <p className="text-xs text-ink2 sm:text-sm">{w.place}</p>
+        <div key={w.slug} className="pull mt-7">
+          <h2 className="display text-[1.75rem] leading-[1.1] text-sindoor" style={{ fontWeight: 800 }}>
+            {w.river}
+          </h2>
+          <p className="mt-1 text-sm text-ink2">{w.place}</p>
+
+          <Reading className="mt-5" view={w.view} lang={lang} />
+
+          <dl className="mt-5">
+            <div className="flex items-baseline justify-between gap-4 border-b border-rule py-2.5">
+              <dt className="label text-ink2">{labels.sunrise}</dt>
+              <dd className="tabular text-sm text-ink">{w.sunrise} IST</dd>
             </div>
-          </div>
-
-          {/* --------------------------------------------------- gauge --- */}
-          <div className="flex flex-col">
-            <p key={`${w.slug}-s`} className="display ink-in text-[1.3rem] leading-[1.3] sm:text-[1.6rem]">
-              {w.sentence}
-            </p>
-            <p className="mt-2 flex items-center gap-2 text-sm text-ink2">
-              <span aria-hidden="true" className="text-[0.8rem] leading-none text-spot">
-                {w.caret}
-              </span>
-              {w.trend}
-            </p>
-
-            <div className="mt-5 grid grid-cols-[1fr_auto] items-end gap-4">
-              <div>
-                <p className="text-sm text-ink2">{labels.flow}</p>
-                <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
-                  <CountUp
-                    key={w.slug}
-                    value={w.cumecs}
-                    lang={lang}
-                    className="display tabular text-[2.8rem] leading-none sm:text-[3.6rem]"
-                  />
-                  <span className="text-sm text-ink2">{w.unit}</span>
-                </p>
-                <p className="mt-2 text-[0.85rem] leading-snug text-ink2">{w.modelled}</p>
-              </div>
-              <div className="w-[9.5rem] sm:w-[11rem]">
-                <Dial percentile={w.percentile} label={dialLabel} />
-                <p className="mt-1 flex justify-between text-[0.7rem] text-ink2">
-                  <span>{labels.bandWords.slack}</span>
-                  <span>{labels.bandWords.usual}</span>
-                  <span>{labels.bandWords.spate}</span>
-                </p>
-              </div>
-            </div>
-
-            <dl className="mt-5">
+            {w.nextWindow && (
               <div className="flex items-baseline justify-between gap-4 border-b border-rule py-2.5">
-                <dt className="label text-ink2">{labels.rank}</dt>
-                <dd className="text-sm text-ink">
-                  {rank === null ? w.rankNote : `${rank} ${labels.of}, ${w.bandWord.toLowerCase()}`}
-                </dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-4 border-b border-rule py-2.5">
-                <dt className="label text-ink2">{labels.sunrise}</dt>
-                <dd className="tabular text-sm text-ink">{w.sunrise} IST</dd>
-              </div>
-              {w.nextWindow && (
-                <div className="flex items-baseline justify-between gap-4 border-b border-rule py-2.5">
-                  <dt className="label text-ink2">{labels.next}</dt>
-                  <dd className="text-right text-sm text-ink">{w.nextWindow}</dd>
-                </div>
-              )}
-            </dl>
-
-            {w.series.length > 1 && (
-              <div className="mt-4">
-                <p className="text-xs text-ink2">{labels.eleven}</p>
-                <Eleven key={`${w.slug}-e`} series={w.series} />
+                <dt className="label text-ink2">{labels.next}</dt>
+                <dd className="text-right text-sm text-ink">{w.nextWindow}</dd>
               </div>
             )}
+          </dl>
+          <p className="mt-3 text-sm text-ink2">{w.trend}</p>
 
-            <a
-              href={w.href}
-              className="mt-5 inline-flex min-h-[44px] items-center self-start text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
-            >
-              {labels.open}
-            </a>
-          </div>
+          <a
+            href={w.href}
+            className="mt-2 inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor"
+          >
+            {labels.open}
+          </a>
         </div>
 
-        <p className="mt-6 max-w-2xl text-sm leading-[1.7] text-ink2">{note}</p>
+        <p className="mt-6 text-sm leading-[1.6] text-ink2">{note}</p>
       </div>
     </section>
   );

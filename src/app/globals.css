@@ -3,13 +3,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------------------
-   Snanify, a morning at the ghat, set in type.
+   Snanify, design system v3: one family, loud and calm.
 
-   Paper, ink and two inks with two jobs: vermillion acts (the button, the
-   bindu, the sun), haldi warms (the glitter, petals, the diya, anything
-   personal). Colour is flat: gradients, glows, blurs and soft shadows stay
-   out of this file, and boxes stay square. Round things are SVG marks.
-   DESIGNSYSTEM.md is the reference.
+   Paper and ink, one red, one yellow and the river's teal, each with one job:
+   sindoor acts (the press, the river's name, the sun, the seal, the bindu),
+   marigold is where you pay or share and the light on the water, teal is the
+   river. Colour is flat: gradients, glows, blurs and soft shadows stay out of
+   this file, and boxes stay square. The press's hard ink walls are a solid
+   box, not a soft shadow. Round things are SVG. DESIGNSYSTEM.md is the
+   reference.
    --------------------------------------------------------------------------- */
 
 :root {
@@ -18,13 +20,22 @@
   --paper: #f2ead9;
   --paper-2: #eae0c9;
   --paper-3: #ded1b4;
-  --ink: #16130f;
+  --ink: #141210;
   --ink-2: #57513f;
-  --spot: #b32620;
+  --sindoor: #c8251d;
+  --marigold: #f2c230;
   --haldi: #e3962b;
-  --haldi-2: #f6dcae;
+  --teal: #1d5a6a;
+  --maroon: #7a1a14;
   --rule: #c3b697;
-  --rule-strong: #16130f;
+  --rule-strong: #141210;
+  --wall: #141210;
+
+  --gauge-1: #f2ead9;
+  --gauge-2: #e8dcc0;
+  --gauge-3: #c9d7d2;
+  --gauge-4: #7fa3a6;
+  --gauge-5: #1d5a6a;
 
   --grain: 0.05;
 }
@@ -38,11 +49,20 @@
   --paper-3: #24211a;
   --ink: #ece3cf;
   --ink-2: #99917f;
-  --spot: #e04a40;
+  --sindoor: #e04a40;
+  --marigold: #f2c230;
   --haldi: #f0a83c;
-  --haldi-2: #2a2116;
+  --teal: #5c9aa5;
+  --maroon: #a8352b;
   --rule: #35302a;
   --rule-strong: #ece3cf;
+  --wall: #000000;
+
+  --gauge-1: #1a1814;
+  --gauge-2: #2a2a22;
+  --gauge-3: #24393c;
+  --gauge-4: #3d6b72;
+  --gauge-5: #5c9aa5;
 
   --grain: 0.07;
 }
@@ -53,11 +73,14 @@
   --color-paper3: var(--paper-3);
   --color-ink: var(--ink);
   --color-ink2: var(--ink-2);
-  --color-spot: var(--spot);
+  --color-sindoor: var(--sindoor);
+  --color-marigold: var(--marigold);
   --color-haldi: var(--haldi);
-  --color-haldi2: var(--haldi-2);
+  --color-teal: var(--teal);
+  --color-maroon: var(--maroon);
   --color-rule: var(--rule);
   --color-rulestrong: var(--rule-strong);
+  --color-wall: var(--wall);
 
   /* Eczar carries Devanagari and Latin in one voice, no borrowed second face.
      Martel Sans does the same for text and tabular data. The ten other locales
@@ -98,12 +121,12 @@
   }
 
   ::selection {
-    background: var(--spot);
+    background: var(--sindoor);
     color: var(--paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--spot);
+    outline: 2px solid var(--sindoor);
     outline-offset: 2px;
   }
 
@@ -128,29 +151,173 @@
   }
 }
 
-/* --- The impression ---------------------------------------------------------
-   A control is a plate. Under the thumb it lands: one pixel down and one
-   right, the ink darkening at once, and it lifts back on release over 120ms.
-   Every button, link-button, summary and the vow box carries `impress`; the
-   colour of the pressed state is set per variant in src/components/ui.
-   A second impression (`misregister`) registers with the first as it lands:
-   its four-pixel offset closes to one.                                      */
-@utility impress {
-  transition-property: transform, background-color, color, border-color, box-shadow, opacity;
-  transition-duration: 120ms;
-  transition-timing-function: ease-out;
+/* --- The press ---------------------------------------------------------------
+   Every primary button and every tappable block is the top of a solid box.
+   Its side walls are `--wall`, stacked one pixel at a time so the corners
+   connect: a box, not a floating shadow. Under the thumb it sinks the depth
+   of its walls in 70ms and the walls collapse, flush with the page; it rises
+   back in 120ms. Night keeps the geometry: the walls go to #000 and the
+   border to the light ink, so the edge still reads. `sink` in the motion
+   table. See src/components/ui.                                             */
+:root {
+  --sink-down: 70ms;
+  --sink-up: 120ms;
+  /* Ink on marigold stays dark at night: marigold is the same in both
+     editions, and light ink on it would vanish. */
+  --on-marigold: #141210;
+  /* White type on the sindoor face, the same in both editions. */
+  --on-sindoor: #ffffff;
 }
-.impress:active,
-a:active > .impress,
-label:active > .impress {
-  transform: translate(1px, 1px);
-  transition-duration: 0ms;
+@layer components {
+  .press {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 56px;
+    padding: 0.875rem 1rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3;
+    text-align: left;
+    color: var(--on-sindoor);
+    background-color: var(--sindoor);
+    border: 2px solid var(--ink);
+    box-shadow: 1px 1px 0 var(--wall), 2px 2px 0 var(--wall), 3px 3px 0 var(--wall), 4px 4px 0 var(--wall), 5px 5px 0 var(--wall), 6px 6px 0 var(--wall);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+      transform var(--sink-up) ease-out,
+      box-shadow var(--sink-up) ease-out;
+  }
+  .press:active {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+    transition-duration: var(--sink-down);
+  }
+  a:active > .press,
+  label:active > .press {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+    transition-duration: var(--sink-down);
+  }
+  .press:disabled,
+  .press[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: default;
+  }
+  .press:disabled:active {
+    transform: none;
+    box-shadow: 1px 1px 0 var(--wall), 2px 2px 0 var(--wall), 3px 3px 0 var(--wall), 4px 4px 0 var(--wall), 5px 5px 0 var(--wall), 6px 6px 0 var(--wall);
+  }
+  /* The one marigold button in the product: send it to the family. */
+  .press-share {
+    color: var(--on-marigold);
+    background-color: var(--marigold);
+  }
+  /* Setup's choices: smaller blocks on 3px walls. The chosen one stays sunk,
+     with a sindoor face. */
+  .press-choice {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.625rem 0.875rem;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 1px 1px 0 var(--wall), 2px 2px 0 var(--wall), 3px 3px 0 var(--wall);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+      transform var(--sink-up) ease-out,
+      box-shadow var(--sink-up) ease-out;
+  }
+  .press-choice:active,
+  .press-choice[data-chosen],
+  .press-choice[aria-pressed="true"],
+  .press-choice[aria-checked="true"],
+  .press-choice:has(input:checked) {
+    transform: translate(3px, 3px);
+    box-shadow: none;
+    transition-duration: var(--sink-down);
+  }
+  .press-choice[data-chosen],
+  .press-choice[aria-pressed="true"],
+  .press-choice[aria-checked="true"],
+  .press-choice:has(input:checked) {
+    color: var(--on-sindoor);
+    background-color: var(--sindoor);
+  }
+
+  /* --- The kit's motions -----------------------------------------------------
+     `flow`: each wave line drifts sideways by one period at its own pace, and
+     the sun's path shimmers. `breathe`: the waves' vertical scale, four
+     seconds up and six down. `stamp`: the morning seal lands, from 1.15 and
+     -14deg to its rest in 180ms, stepped. Transform and opacity only. The
+     river pauses off screen: InView drops `data-in` when it leaves.          */
+  @keyframes flow {
+    from { transform: translateX(0); }
+    to { transform: translateX(var(--shift, -40px)); }
+  }
+  .flow-line {
+    animation: flow var(--drift, 9s) linear infinite;
+  }
+  @keyframes flow-glint {
+    from { opacity: 0.7; transform: translateX(var(--glint-from, -1px)); }
+    to { opacity: 1; transform: translateX(var(--glint-to, 1px)); }
+  }
+  .flow-glint {
+    animation: flow-glint var(--glint, 4s) ease-in-out infinite alternate;
+  }
+  /* The amplitude is the river's own: `--breathe-low` and `--breathe-high`
+     are set from the morning's band (src/components/snan/Sitting.tsx), from
+     0.9 to 1.1 for a thin river to 0.7 to 1.3 in spate. The sitting scrubs
+     the motion with its own clock (`--breathe-play: paused` and
+     `--breathe-at`, seconds into the breath), so the water and the words
+     never drift apart; anywhere else it simply runs. */
+  @keyframes breathe {
+    0% { transform: scaleY(var(--breathe-low, 0.8)); }
+    40% { transform: scaleY(var(--breathe-high, 1.2)); }
+    100% { transform: scaleY(var(--breathe-low, 0.8)); }
+  }
+  .breathe-waves {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation: breathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    animation-delay: calc(var(--breathe-at, 0) * -1s);
+    animation-play-state: var(--breathe-play, running);
+  }
+  @keyframes stamp {
+    from { opacity: 0; transform: scale(1.15) rotate(-14deg); }
+    to { opacity: 1; transform: rotate(var(--seal-turn, 0deg)); }
+  }
+  .stamp {
+    animation: stamp 180ms steps(3, end) both;
+  }
+  html[data-js] [data-armed]:not([data-in]) .flow-line,
+  html[data-js] [data-armed]:not([data-in]) .flow-glint,
+  html[data-js] [data-armed]:not([data-in]) .breathe-waves {
+    animation-play-state: paused;
+  }
 }
-.misregister:active,
-a:active > .misregister {
-  box-shadow: 1px 1px 0 0 var(--spot);
-  transform: translate(3px, 3px);
-  transition-duration: 0ms;
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sink-down: 0ms;
+    --sink-up: 0ms;
+  }
+  .flow-line,
+  .flow-glint,
+  .breathe-waves,
+  .stamp {
+    animation: none;
+  }
 }
 
 /* --- Settle -----------------------------------------------------------------
@@ -216,14 +383,20 @@ html[data-js]:not([data-past-hero]) [data-until-scrolled="rail"] {
 html[data-scrolled] header[data-masthead] {
   box-shadow: 0 1px 0 0 var(--paper-3);
 }
+/* The strip runs its full 74px past the bar at the top of the page; once the
+   page scrolls under the masthead, the strip is trimmed to the bar so the
+   waves never lie over the text below. */
+html[data-scrolled] header[data-masthead] [data-strip] {
+  height: 100%;
+}
 .dark .display {
   font-weight: 700;
 }
 
 /* --- Form marks ---------------------------------------------------------------
-   A radio or a checkbox is a ruled square that fills with the spot colour,
+   A radio or a checkbox is a ruled square that fills with the sindoor,
    not the platform's blue circle. Inputs sit on a 2px rule rather than in a
-   box, and the rule turns spot when the field has focus.                    */
+   box, and the rule turns sindoor when the field has focus.                 */
 input[type="radio"],
 input[type="checkbox"] {
   appearance: none;
@@ -245,7 +418,7 @@ input[type="checkbox"]::before {
   content: "";
   width: 0.55rem;
   height: 0.55rem;
-  background-color: var(--spot);
+  background-color: var(--sindoor);
   transform: scale(0);
   transition: transform 120ms cubic-bezier(0.2, 0.8, 0.3, 1);
 }
@@ -255,7 +428,7 @@ input[type="checkbox"]:checked::before {
 }
 input[type="radio"]:checked,
 input[type="checkbox"]:checked {
-  border-color: var(--spot);
+  border-color: var(--sindoor);
 }
 @utility field {
   border: 0;
@@ -267,7 +440,7 @@ input[type="checkbox"]:checked {
   transition: border-color 120ms ease-out;
 }
 .field:focus {
-  border-bottom-color: var(--spot);
+  border-bottom-color: var(--sindoor);
 }
 .field::placeholder {
   color: var(--ink-2);
@@ -321,39 +494,32 @@ html:not([data-script="latin"]) .label {
 }
 
 /* The masthead wordmark stays Latin in Eczar in every locale, so the brand is
-   one mark and not twelve. This is the one place that names a family.
+   one mark in both editions. This is the one place that names a family.
 
-   It is set as a LOGOTYPE, not as a label. The 800 caps it used to carry closed
-   the counters of a high-contrast face and the near-zero tracking flattened the
-   word into an even grey. It is now mixed case in two weights: the Sanskrit root
-   heavy, the English suffix light, with the dot of the i inked in the spot
-   colour so the seal's bindu recurs inside the word.
+   It is set as a LOGOTYPE in one heavy weight (spec 6.9): Eczar 800, the
+   display capitals' weight, in mixed case so it stays a name, at -0.015em.
+   The dot of the i is inked in the sindoor so the mark's sun recurs inside
+   the word.
 
    line-height: 1 IS LOAD-BEARING. The bindu is positioned in em from the box
-   bottom, and that offset (0.826em) is the sum of the dot's foot above the
-   baseline (0.587em, measured off Eczar) and the baseline's height above the box
-   bottom, which is only 0.2388em while the line box is exactly one em. Change
-   the leading and the dot drifts off the stem. */
+   bottom, and that offset (0.789em) is the sum of the dot's foot above the
+   baseline (0.543em, measured off Eczar 800) and the baseline's height above
+   the box bottom, which is 0.2455em only while the line box is exactly one em.
+   Change the leading and the dot drifts off the stem.
+
+   Measured 17 October 2026 off the live face in the browser: the dotted i set
+   at 1000px on a canvas, its tittle's inked box read at half coverage, and the
+   baseline read from a zero-height inline-block in a .wordmark box. Re-measure
+   the same way if the weight, the tracking or the face ever changes. */
 @utility wordmark {
   font-family: var(--font-eczar), Georgia, serif;
-  font-weight: 400;
+  font-weight: 800;
+  letter-spacing: -0.015em;
   line-height: 1;
   font-feature-settings: "kern" 1;
   /* Eczar ships no italic and nothing above 800, so a synthesised cut is a
      defect rather than emphasis. */
   font-synthesis: none;
-}
-
-/* Snan, the root. */
-@utility wordmark-root {
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-/* ify, the suffix, opened a touch to carry the lighter weight. */
-@utility wordmark-suffix {
-  font-weight: 400;
-  letter-spacing: 0.015em;
 }
 
 /* The dotless i (U+0131) that the bindu sits over. */
@@ -362,16 +528,17 @@ html:not([data-script="latin"]) .label {
   display: inline-block;
 }
 
-/* The bindu, measured into Eczar's own tittle box at weight 400:
-   0.152em across, foot 0.587em above the baseline, centred at 46.1% of the
-   glyph's advance. An SVG circle rather than a rounded span, because the base
-   layer sets border-radius: 0 !important and would print a square. */
+/* The bindu, measured into Eczar 800's own tittle box: 0.237em across, foot
+   0.543em above the baseline, centred 0.1795em into the glyph, which is 53.6%
+   of the dotless i's box (its 0.35em advance less the -0.015em tracking).
+   An SVG circle rather than a rounded span, because the base layer sets
+   border-radius: 0 !important and would print a square. */
 @utility wordmark-bindu {
   position: absolute;
-  left: 46.1%;
-  bottom: 0.826em;
-  width: 0.152em;
-  height: 0.152em;
+  left: 53.6%;
+  bottom: 0.789em;
+  width: 0.237em;
+  height: 0.237em;
   transform: translateX(-50%);
 }
 
@@ -411,21 +578,9 @@ html:not([data-script="latin"]) i {
   background-color: var(--paper-2);
 }
 
-/* A warm block in haldi, the ground for anything personal: the family's
-   names, today's sheet, a morning kept. */
-@utility warm {
-  background-color: var(--haldi-2);
-}
-
 /* Hard-ruled box. No radius, no shadow, just ink. */
 @utility boxed {
   border: 1px solid var(--rule-strong);
-}
-
-/* Registration offset: a second impression sitting slightly off, the way a
-   two-colour press misaligns. Used sparingly, never as a drop shadow. */
-@utility misregister {
-  box-shadow: 4px 4px 0 0 var(--spot);
 }
 
 /* Paper grain. The one texture the system keeps, because paper has tooth. */
@@ -462,7 +617,7 @@ html:not([data-script="latin"]) i {
   animation: ink-in 0.45s steps(6, end) forwards;
 }
 
-/* The same impression under the name the motion table uses: `pull`, as a
+/* The same entrance under the name the motion table uses: `pull`, as a
    sheet is pulled from the press. A part of the sitting arrives this way,
    and so does the Sankalp Patra. */
 @utility pull {
@@ -517,7 +672,7 @@ html[data-cur="INR"] .cur-INR {
 
 /* --- Scroll-driven reveals -------------------------------------------------
    Content on the long reference pages sets itself as the reader reaches it,
-   with the same stepped impression as `ink-in`: an opacity in six steps and a
+   with the same stepped entrance as `ink-in`: an opacity in six steps and a
    rise of a few pixels, never a float. `InView` in src/components/live sets
    `data-in` once, and `--i` staggers siblings. Reduced motion shows everything
    at once, below.                                                            */
@@ -558,26 +713,6 @@ html[data-js] [data-in] .grow {
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 45ms);
 }
 
-/* Engraved water flowing steadily downward: the band's drawing, cut flat so
-   it tiles, is stacked twice and slides down by one copy, so the loop has no
-   seam. Thirty seconds per copy, which on a band this tall is a slow river
-   rather than a scroll. */
-@keyframes flow {
-  from { transform: translateY(0); }
-  to { transform: translateY(50%); }
-}
-.flow {
-  animation: flow 30s linear infinite;
-  will-change: transform;
-}
-/* The same water, eight times slower: behind the practice, where the reading
-   speed made the owner dizzy. Four minutes per copy is a river seen from a
-   ghat, not from a boat. */
-.flow-slow {
-  animation: flow 240s linear infinite;
-  will-change: transform;
-}
-
 /* A counter's new second settles in: a touch below and faint, then in place. */
 @keyframes tick {
   from { opacity: 0.35; transform: translateY(0.12em); }
@@ -585,29 +720,6 @@ html[data-js] [data-in] .grow {
 }
 .tick {
   animation: tick 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) both;
-}
-
-/* The vow's warm block asks to be pressed: its ground breathes a shade
-   deeper toward the haldi and back until a thumb lands, then holds still. */
-@keyframes warm-breathe {
-  0% { background-color: var(--haldi-2); }
-  50% { background-color: color-mix(in srgb, var(--haldi-2) 72%, var(--haldi)); }
-  100% { background-color: var(--haldi-2); }
-}
-.hold-box:not([data-holding]) {
-  animation: warm-breathe 2.4s ease-in-out infinite;
-}
-
-/* The waterline breathes at the river's own amplitude: four seconds in, six
-   out, as the sitting does. `--amp` is set from the percentile. */
-@keyframes breathe {
-  0% { transform: translateY(0); }
-  40% { transform: translateY(calc(var(--amp, 6px) * -1)); }
-  100% { transform: translateY(0); }
-}
-.breathe {
-  animation: breathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  will-change: transform;
 }
 
 /* The plate a photograph is printed on. By day it is the tint; by night it
@@ -665,11 +777,7 @@ html:not([data-js]) .ink-picture-lazy {
     transform: none;
     transition: none;
   }
-  .breathe,
-  .flow,
-  .flow-slow,
-  .tick,
-  .hold-box:not([data-holding]) {
+  .tick {
     animation: none;
   }
 }
@@ -746,7 +854,7 @@ html:not([data-js]) .ink-picture-lazy {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--spot);
+  background: var(--sindoor);
   transform-origin: left;
   transform: scaleX(0);
   animation: loop-seg 10s linear infinite;
@@ -789,50 +897,4 @@ html:not([data-js]) .ink-picture-lazy {
   .loop-screen[style*="--i: 0"] { opacity: 1; }
   .loop-out { opacity: 0; }
   .loop-ink { width: 60%; }
-}
-
-/* --- Flicker ---------------------------------------------------------------
-   A diya flame breathing from its base. The flame on the primary button and
-   the one in the sitting; nowhere else. */
-@keyframes flicker {
-  0%, 100% { transform: scaleY(1) scaleX(1); }
-  35% { transform: scaleY(0.84) scaleX(1.06); }
-  70% { transform: scaleY(0.94) scaleX(0.97); }
-}
-.flicker {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: flicker 1.4s ease-in-out infinite;
-}
-
-/* Petals ride the water: a slow drift across, at the river's own pace, with
-   a small bob. Part of `flow`. `--d` sets the duration, `--delay` the
-   offset, `--x` how far a petal travels. */
-@keyframes petal-drift {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(calc(var(--x, 120px) * 0.5), -3px) rotate(18deg); }
-  100% { transform: translate(var(--x, 120px), 0) rotate(36deg); }
-}
-.petal {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: petal-drift var(--d, 18s) linear var(--delay, 0s) infinite alternate;
-}
-
-/* Three petals settle onto the mark at the end of a sitting: they fall a
-   little, turning, and come to rest. They stay where they land. */
-@keyframes petal-settle {
-  from { opacity: 0; translate: 0 -46px; rotate: -40deg; }
-  to { opacity: 1; translate: 0 0; rotate: 0deg; }
-}
-.petal-settle {
-  animation: petal-settle 2.2s cubic-bezier(0.2, 0.8, 0.3, 1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .flicker,
-  .petal,
-  .petal-settle {
-    animation: none;
-  }
 }

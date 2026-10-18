@@ -128,11 +128,11 @@ export function LiveClock({
         <p className="display mt-6 text-2xl text-ink" suppressHydrationWarning>
           {dayIn(now, GHAT_ZONE, lang)}
         </p>
-        <p className="display tabular mt-1 text-4xl text-spot" suppressHydrationWarning>
+        <p className="display tabular mt-1 text-4xl text-sindoor" suppressHydrationWarning>
           {timeIn(now, GHAT_ZONE, lang, true)}
         </p>
         <p className="mt-2 flex items-center gap-2 text-sm text-ink2">
-          <span className="h-2 w-2 bg-spot" aria-hidden="true" />
+          <span className="h-2 w-2 bg-sindoor" aria-hidden="true" />
           IST, {t.live}
         </p>
 
@@ -181,7 +181,7 @@ export function LiveClock({
                   <p className="text-sm text-ink2" suppressHydrationWarning>
                     <span className="tabular text-ink">{timeIn(now, z.zone, lang)}</span>, {dayIn(now, z.zone, lang)}
                   </p>
-                  <p className={`mt-1 text-xs ${s === 0 ? "text-ink2" : "text-spot"}`} suppressHydrationWarning>
+                  <p className={`mt-1 text-xs ${s === 0 ? "text-ink2" : "text-sindoor"}`} suppressHydrationWarning>
                     {s < 0 ? t.shiftBack : s > 0 ? t.shiftForward : t.shiftSame}
                   </p>
                 </div>

@@ -17,9 +17,10 @@ export const hi = {
   nav: { back: "सभी पर्व" },
   hero: {
     title: "मुहूर्त पंचांग",
-    lede: "आगामी बारह महीनों के पर्व, दिन की वे बेलाएँ जिनमें वे रखे जाते हैं, और हर एक की तिथि के बारे में कितना पता है।",
+    lede: "अगले 12 महीनों के सभी पर्व, और उन्हें रखने की बेलाएँ।",
     asOf: "{date} से बारह महीने",
   },
+  head: { title: "{accent} पंचांग", accent: "मुहूर्त" },
   provenance: {
     badge: "यहीं गणना, दृक पंचांग से मिलान",
     badgeShort: "गणना, मिलान",
@@ -33,8 +34,8 @@ export const hi = {
     sourceLabel: "स्रोत",
     ayanamsaLabel: "अयनांश",
     coordinatesLabel: "घाट के निर्देशांक",
-    coordinatesPending: "सर्वेक्षण शेष",
-    notSet: "तय होना शेष",
+    coordinatesPending: "सर्वेक्षण बाकी",
+    notSet: "तय होना बाकी",
   },
   reading: {
     title: "इस पंचांग को कैसे पढ़ें",
@@ -99,6 +100,7 @@ export const hi = {
     lede: "यहाँ का हर पर्व छह जलों में से किसी एक पर रखा जाता है। उससे शुरू कीजिए जिसके पास आप बड़े हुए।",
     primary: "छह जल",
     secondary: "पर्वों की सूची",
+    snan: "अपना स्नान शुरू कीजिए",
   },
   tiers: {
     nitya: "नित्य कर्म",

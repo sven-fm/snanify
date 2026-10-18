@@ -7,13 +7,12 @@ import { PRICE } from "@/content/prices";
 import { Bindu } from "@/components/marks";
 
 /* Shared primitives. Everything here is flat: solid fills, square boxes,
-   vermillion for the action. See DESIGNSYSTEM.md. */
+   sindoor for the action. See DESIGNSYSTEM.md. */
 
 /**
  * A section of a page. Space divides one section from the next, never a rule.
- * `ground` changes the rhythm: paper, the cool tint for reference data, the
- * warm haldi block for anything personal. `tinted` is the older spelling of
- * `ground="tint"`.
+ * `ground` changes the rhythm: paper, or the tint for reference data.
+ * `tinted` is the older spelling of `ground="tint"`.
  */
 export function Section({
   id,
@@ -24,7 +23,7 @@ export function Section({
 }: {
   id?: string;
   tinted?: boolean;
-  ground?: "paper" | "tint" | "warm";
+  ground?: "paper" | "tint";
   children: React.ReactNode;
   className?: string;
 }) {
@@ -39,28 +38,39 @@ export function Section({
   );
 }
 
-const buttonBase =
-  "label impress inline-flex items-center justify-center gap-2 px-6 py-3.5 select-none";
+/* The press (globals.css): every primary action is the top of a solid ink
+   box and sinks flush under the thumb, which is the only feedback a phone
+   gives. One block per screen; a secondary action is a plain underlined
+   link, never a second block. */
+const quiet =
+  "inline-flex min-h-[44px] items-center gap-2 font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor disabled:opacity-60";
 
-/* Every variant has a pressed state as well as a hover, because a phone has
-   no hover: the press is the only feedback a thumb ever gets. `impress` in
-   globals.css moves the plate; these set its ink. */
 const buttonVariants = {
-  /* The press impression: solid spot colour, inverted type. */
-  solid: "bg-spot text-paper hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
-  /* A ruled box that fills with ink on hover and on press. Opaque, not
-     transparent: the hero sits this button on top of the river, and ripples
-     reading through the type made the label almost unreadable. */
-  ghost:
-    "border border-rulestrong bg-paper text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper disabled:opacity-60",
-  quiet:
-    "text-ink underline decoration-spot decoration-2 hover:text-spot active:text-spot px-0 py-1",
+  /* Sindoor face, white type, an arrow at the right. */
+  solid: "press",
+  /* Marigold face, ink type: "Send it to the family", and nothing else. */
+  share: "press press-share",
+  /* A plain ink-underlined link. */
+  quiet,
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;
 
 export function buttonClass(variant: ButtonVariant = "solid", className = "") {
-  return `${buttonBase} ${buttonVariants[variant]} ${className}`;
+  return `${buttonVariants[variant]} ${className}`.trim();
+}
+
+/** The press sized for the masthead's Begin: a 44px target, Martel 700 at the label size. */
+export const MASTHEAD_PRESS = "min-h-[44px] px-2 py-0 text-[0.875rem]";
+
+/** The arrow at the right of a primary press. */
+function Arrow({ variant, arrow }: { variant: ButtonVariant; arrow?: boolean }) {
+  if (!(arrow ?? variant === "solid")) return null;
+  return (
+    <span aria-hidden="true" className="shrink-0">
+      →
+    </span>
+  );
 }
 
 /**
@@ -74,13 +84,21 @@ export function buttonClass(variant: ButtonVariant = "solid", className = "") {
 export function CTA({
   children,
   variant = "solid",
+  arrow,
   className = "",
 }: {
   children: React.ReactNode;
   variant?: ButtonVariant;
+  /** The arrow at the right; on by default for the solid press. */
+  arrow?: boolean;
   className?: string;
 }) {
-  return <span className={buttonClass(variant, className)}>{children}</span>;
+  return (
+    <span className={buttonClass(variant, className)}>
+      <span>{children}</span>
+      <Arrow variant={variant} arrow={arrow} />
+    </span>
+  );
 }
 
 /**
@@ -91,16 +109,19 @@ export function CTA({
 export function SubmitButton({
   children,
   variant = "solid",
+  arrow,
   className = "",
   ...rest
 }: {
   children: React.ReactNode;
   variant?: ButtonVariant;
+  arrow?: boolean;
   className?: string;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className">) {
   return (
     <button type="submit" className={buttonClass(variant, className)} {...rest}>
-      {children}
+      <span>{children}</span>
+      <Arrow variant={variant} arrow={arrow} />
     </button>
   );
 }
@@ -110,6 +131,7 @@ export function LinkButton({
   hrefLang,
   children,
   variant = "solid",
+  arrow,
   className = "",
 }: {
   href: string;
@@ -117,11 +139,13 @@ export function LinkButton({
   hrefLang?: string;
   children: React.ReactNode;
   variant?: ButtonVariant;
+  arrow?: boolean;
   className?: string;
 }) {
   return (
     <Link href={href} hrefLang={hrefLang} className={buttonClass(variant, className)}>
-      {children}
+      <span>{children}</span>
+      <Arrow variant={variant} arrow={arrow} />
     </Link>
   );
 }
@@ -140,7 +164,7 @@ export function StatusBadge({
 }) {
   return (
     <p className="label inline-flex min-h-[44px] items-center gap-2.5 text-ink">
-      <Bindu tone={live ? "spot" : "faint"} className="shrink-0 text-[1.1rem]" />
+      <Bindu tone={live ? "sindoor" : "faint"} className="shrink-0 text-[1.1rem]" />
       {children}
     </p>
   );
@@ -178,6 +202,25 @@ export function TaxNote({ lang }: { lang: Lang }) {
       {CURRENCIES.map((c) => (
         <span key={c} className={`cur cur-${c}`}>
           {c === "USD" ? t.exclusive : t.inclusive}
+        </span>
+      ))}
+    </>
+  );
+}
+
+/**
+ * A line whose claim holds in some currencies only. "Eleven for eleven" is
+ * true in dollars, euros, pounds and Canadian dollars; in rupees eleven
+ * mornings cost ₹501, so a rupee reader gets `inr`, with its `{price:…}`
+ * filled through <Price>. Same mechanism as <TaxNote>: every line is in the
+ * markup and CSS shows the reader's own.
+ */
+export function CurrencyLine({ other, inr }: { other: string; inr: string }) {
+  return (
+    <>
+      {CURRENCIES.map((c) => (
+        <span key={c} className={`cur cur-${c}`}>
+          {c === "INR" ? <PriceText>{inr}</PriceText> : other}
         </span>
       ))}
     </>

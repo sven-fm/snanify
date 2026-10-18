@@ -1,14 +1,14 @@
 import { todayContent } from "@/content/today";
 import { snanContent } from "@/content/snan";
+import { Gauge } from "@/components/kit";
 import type { Lang } from "@/lib/locales";
 
 /* ---------------------------------------------------------------------------
    The sitting, shown before it is bought: the five screens inside a phone,
    each held two seconds, on a ten-second loop drawn entirely by the
    stylesheet (`.loop` in globals.css). Nothing here is a morning's figure:
-   where the reading prints a number, this prints a rule, because the number
-   is the day's and the page is prerendered. Reduced motion shows the first
-   screen alone.
+   the reading's gauge carries no dot, because the day is the day's and the
+   page is prerendered. Reduced motion shows the first screen alone.
    --------------------------------------------------------------------------- */
 
 const BEZEL = 3;
@@ -17,10 +17,6 @@ const SCREEN_H = (SCREEN_W * 1920) / 1080;
 const FRAME_W = SCREEN_W + BEZEL * 2;
 const FRAME_H = SCREEN_H + BEZEL * 2;
 const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(3)}%`;
-
-function Blank() {
-  return <span className="mt-2 inline-block h-px w-16 bg-rulestrong align-middle" aria-hidden="true" />;
-}
 
 export function SittingLoop({ lang }: { lang: Lang }) {
   const t = todayContent[lang];
@@ -57,28 +53,27 @@ export function SittingLoop({ lang }: { lang: Lang }) {
             ))}
           </p>
 
-          {/* 1. the reading */}
+          {/* 1. the reading: the river, and the gauge with no day on it */}
           <div className="loop-screen absolute inset-x-4 top-24" style={{ ["--i" as string]: 0 }}>
-            <p className="display text-[1.15rem] leading-tight">{lang === "hi" ? "गंगा" : "Ganga"}</p>
-            <p className="mt-0.5 text-[0.65rem] text-ink2">{lang === "hi" ? "हर की पौड़ी, हरिद्वार" : "Har Ki Pauri, Haridwar"}</p>
-            <dl className="mt-4 text-[0.65rem]">
-              {[t.reading.flowLabel, t.reading.rankLabel, t.reading.distanceLabel].map((k) => (
-                <div key={k} className="flex items-baseline justify-between border-b border-rule py-1.5">
-                  <dt className="text-ink2">{k}</dt>
-                  <dd>
-                    <Blank />
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <p
+              className={`display text-[1.3rem] text-sindoor ${lang === "hi" ? "" : "uppercase"}`}
+              style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95 }}
+            >
+              {lang === "hi" ? "गंगा" : "Ganga"}
+            </p>
+            <p className="mt-1 text-[0.65rem] text-ink2">{lang === "hi" ? "हर की पौड़ी, हरिद्वार" : "Har Ki Pauri, Haridwar"}</p>
+            <Gauge className="mt-4" percentile={null} band={null} lang={lang} heading={false} />
           </div>
 
-          {/* 2. the breath: the water rising and falling in the spot colour */}
+          {/* 2. the breath: the river rising and falling, In and Out (Out in teal) */}
           <div className="loop-screen absolute inset-0" style={{ ["--i" as string]: 1 }}>
-            <div className="loop-water absolute inset-x-0 bottom-0 bg-spot opacity-90" aria-hidden="true" />
-            <p className="display absolute inset-x-4 top-24 text-[1.15rem] leading-tight">
+            <div className="loop-water absolute inset-x-0 bottom-0 bg-teal opacity-90" aria-hidden="true" />
+            <p
+              className={`display absolute inset-x-4 top-24 text-[1.3rem] ${lang === "hi" ? "" : "uppercase"}`}
+              style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95 }}
+            >
               <span className="loop-in">{t.breath.in}</span>
-              <span className="loop-out">{t.breath.out}</span>
+              <span className="loop-out text-teal">{t.breath.out}</span>
             </p>
           </div>
 
@@ -89,7 +84,7 @@ export function SittingLoop({ lang }: { lang: Lang }) {
               {lang === "hi" ? "आपके अपने शब्द, आपके अँगूठे के नीचे।" : "Your own words, under your thumb."}
             </p>
             <div className="mt-5 h-px w-full bg-rule">
-              <div className="loop-ink h-px bg-spot" />
+              <div className="loop-ink h-px bg-sindoor" />
             </div>
             <p className="mt-3 text-[0.65rem] text-ink2">{t.vow.hold}</p>
           </div>
@@ -104,9 +99,14 @@ export function SittingLoop({ lang }: { lang: Lang }) {
 
           {/* 5. the mark, a line writing itself */}
           <div className="loop-screen absolute inset-x-4 top-1/2 -translate-y-1/2 text-center" style={{ ["--i" as string]: 4 }}>
-            <p className="display text-[1rem] leading-[1.3]">{t.mark.writing}</p>
+            <p
+              className={`display text-[1.3rem] ${lang === "hi" ? "" : "uppercase"}`}
+              style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95 }}
+            >
+              {t.mark.done}
+            </p>
             <div className="mx-auto mt-5 h-px w-4/5 bg-rule">
-              <div className="loop-ink h-px bg-spot" />
+              <div className="loop-ink h-px bg-ink" />
             </div>
           </div>
         </div>

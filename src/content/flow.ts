@@ -38,6 +38,14 @@ const en = {
     full: "Running full",
     spate: "In spate",
   } satisfies Record<FlowBand, string>,
+  /** The state against the same time of year, one plain sentence under the gauge. */
+  plain: {
+    slack: "Much lower than usual for this time of year.",
+    low: "Lower than usual for this time of year.",
+    usual: "About as usual for this time of year.",
+    full: "Fuller than usual for this time of year.",
+    spate: "Much fuller than usual for this time of year.",
+  } satisfies Record<FlowBand, string>,
   /** One sentence, {river} and {city} filled at render. */
   line: {
     slack: "The {river} at {city} is running thin this morning.",
@@ -49,6 +57,8 @@ const en = {
   /** When the feed is quiet the page shows the seasonal median and says so, claiming nothing about today. */
   lineMedian: "The {river} at {city}: today's figure is on its way. Here is its usual level for the season.",
   stateMedian: "Usual for the season",
+  /** The figure row on a quiet feed: the state joins the flow mid-sentence, so lower case. */
+  figureMedian: "{flow}, usual for the season",
   /** The proof under the word: "797 m³/s, 86th percentile since 1997". */
   proof: "{flow}, {n} percentile since 1997",
   /** The window the percentile is drawn from, said plainly. */
@@ -70,6 +80,13 @@ const hi: typeof en = {
     full: "भरी धार",
     spate: "उफान पर",
   },
+  plain: {
+    slack: "इस समय के हिसाब से सामान्य से बहुत कम।",
+    low: "इस समय के हिसाब से सामान्य से कम।",
+    usual: "इस समय के हिसाब से लगभग सामान्य।",
+    full: "इस समय के हिसाब से सामान्य से भरी।",
+    spate: "इस समय के हिसाब से सामान्य से बहुत भरी।",
+  },
   line: {
     slack: "{city} में {river} आज सुबह पतली धार में बह रही हैं।",
     low: "{city} में {river} आज सुबह कम बह रही हैं।",
@@ -79,11 +96,17 @@ const hi: typeof en = {
   },
   lineMedian: "{city} में {river}: आज का आँकड़ा आ रहा है। यह इस ऋतु का उनका सामान्य स्तर है।",
   stateMedian: "इस ऋतु का सामान्य स्तर",
+  figureMedian: "{flow}, इस ऋतु का सामान्य स्तर",
   proof: "{flow}, 1997 से {n}वाँ प्रतिशतक",
   forSeason: "वर्ष के इस सप्ताह के हिसाब से",
 };
 
 export const flowContent = { en, hi } satisfies Record<Lang, typeof en>;
+
+/** "717 m³/s, usual for the season": the figure row when the feed is quiet. */
+export function quietFigure(flow: string, lang: Lang): string {
+  return flowContent[lang].figureMedian.replace("{flow}", flow);
+}
 
 export type FlowCopy = typeof en;
 export type { FlowBand };

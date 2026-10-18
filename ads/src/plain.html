@@ -11,7 +11,7 @@
      the key words in red, one red button. No jokes to decode, no stripes,
      stamps or scenes. Filled by render-plain.mjs. */
   * { margin: 0; box-sizing: border-box; }
-  :root { --y: #f6c518; --k: #141210; --r: #d1261c; }
+  :root { --y: #f2c230; --k: #141210; --r: #c8251d; }
   body { width: var(--w); height: var(--h); overflow: hidden; background: var(--y); color: var(--k); font-family: "Martel Sans", sans-serif; }
   .d { font-family: "Eczar", serif; font-synthesis: none; }
   .caps { text-transform: uppercase; }
@@ -19,9 +19,14 @@
   .col { height: 100%; display: flex; flex-direction: column; padding: var(--top) 72px var(--bottom); }
   .grow { flex: 1; min-height: 20px; }
   .r { color: var(--r); }
-  .mark { font-size: 40px; font-weight: 800; }
-  .mark span { font-weight: 400; }
+  .mark { font-size: 40px; }
 
+  /* v3 wordmark: Eczar 800, one weight, the sindoor bindu on the dotless i (globals.css, measured). */
+  .wm { font-family: "Eczar", serif; font-weight: 800; letter-spacing: -0.015em; line-height: 1; font-synthesis: none; display: inline-block; }
+  .wm-i { position: relative; display: inline-block; }
+  .wm-i svg { position: absolute; left: 53.6%; bottom: 0.789em; width: 0.237em; height: 0.237em; transform: translateX(-50%); }
+  .lock { display: inline-flex; align-items: center; gap: 0.5em; }
+  .lock > svg { width: 1.25em; height: 1.25em; flex: none; }
   .big { font-weight: 800; line-height: 0.95; letter-spacing: -0.01em; }
   [lang="hi"] .big { line-height: 1.22; letter-spacing: 0; }
   .sub { font-weight: 800; font-size: 44px; line-height: 1.2; margin-top: 26px; }
@@ -103,10 +108,12 @@
   set("--stepsize", (hi ? 66 : 74) + "px");
   set("--num", (tall ? 130 : 116) + "px");
   set("--stepgap", (tall ? 56 : 40) + "px");
+  const MARK = (ink) => `<svg viewBox="0 0 48 48" aria-hidden="true"><defs><clipPath id="mk"><circle cx="24" cy="24" r="20"/></clipPath></defs><circle cx="24" cy="24" r="21.6" fill="#f2ead9" stroke="${ink}" stroke-width="2.4"/><g clip-path="url(#mk)"><path d="M15.4 24.6A8.6 8.6 0 0 1 32.6 24.6Z" fill="#c8251d"/><rect y="24.6" width="48" height="1.4" fill="${ink}"/><g fill="#1d5a6a"><rect x="8" y="29" width="32" height="1.8"/><rect x="5" y="33.4" width="38" height="2"/><rect x="2" y="38" width="44" height="2.2"/></g></g></svg>`;
+  const WM = (color, ink = "#141210") => `<span class="lock" style="color:${color}">${MARK(ink)}<span class="wm">Snan<span class="wm-i">\u0131<svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="5" fill="#c8251d"/></svg></span>fy</span></span>`;
   const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
   /* The river's name in red, wherever the line says it. */
   const red = (t) => esc(t).replace(/(Ganga|गंगा)/, '<span class="r">$1</span>');
-  const mark = `<div class="mark d">Snan<span>ify</span></div>`;
+  const mark = `<div class="mark">${WM("#141210")}</div>`;
   const foot = `<div class="offer d">${esc(p.offer)}</div><div class="cta d"><span class="go caps">${esc(p.cta)} →</span><span class="url">snanify.com</span></div>`;
   const root = document.getElementById("root");
 
@@ -145,7 +152,7 @@
   } else if (p.style === "frame") {
     document.body.className = "vframe";
     root.innerHTML = `<svg width="1080" height="1920" viewBox="0 0 1080 1920">
-        <path fill-rule="evenodd" fill="#f6c518" d="M0 0H1080V1920H0Z M106 590V1920H974V590Z"/>
+        <path fill-rule="evenodd" fill="#f2c230" d="M0 0H1080V1920H0Z M106 590V1920H974V590Z"/>
         <rect x="94" y="578" width="892" height="1420" rx="60" fill="none" stroke="#141210" stroke-width="24"/>
       </svg>
       <div class="kick d caps">${esc(p.k)}</div>

@@ -1,9 +1,10 @@
-import { WaterBand } from "@/components/WaterBand";
 import type { Lang } from "@/lib/locales";
 import { legalContent } from "@/content/legal";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ConsentChoice } from "@/components/ConsentChoice";
+import { RefClose, RefHead } from "@/components/site/Reference";
+import { ctaHref } from "@/lib/nav";
 
 /* ---------------------------------------------------------------------------
    /privacy and /terms, set as one page with two sets of copy.
@@ -27,6 +28,7 @@ type Section = {
 
 export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" }) {
   const t = legalContent[lang][which];
+  const close = legalContent[lang].close;
   const sections = t.sections as readonly Section[];
 
   return (
@@ -34,25 +36,27 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
       <div className="grain" aria-hidden="true" />
       <Header lang={lang} currentPath={`/${which}`} />
 
-      <main className="mx-auto max-w-2xl px-5 py-10 pb-20 sm:px-8 sm:py-16">
-        <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-        <WaterBand seed="legal" className="mt-8 h-12 w-full" />
-        <p className="mt-6 text-[1.05rem] leading-[1.8] text-ink2">{t.lede}</p>
-        <p className="mt-8 text-sm text-ink2">{t.updated}</p>
+      <main>
+        <RefHead lang={lang} title={t.head.title} accent={t.head.accent} plain={t.lede}>
+          <p className="mt-4 text-sm text-ink2">{t.updated}</p>
+        </RefHead>
+
+        <div className="mx-auto max-w-3xl px-5 pb-20 sm:px-8">
+          <div className="max-w-[38rem]">
 
         {sections.map((section, index) => (
-          <section key={section.h} className="mt-16">
+          <section key={section.h} className="mt-14 first:mt-4">
             <div className="flex items-baseline gap-4">
-              <span className="display text-[1.2rem] leading-none text-spot tabular-nums">
+              <span className="display text-[1.2rem] leading-none text-sindoor tabular-nums">
                 {String(index + 1).padStart(2, "0")}
               </span>
             </div>
-            <h2 className="display mt-3 text-[1.6rem] leading-[1.2] sm:text-[1.9rem]">
+            <h2 className="display mt-3 text-[1.5rem] leading-[1.2] sm:text-[1.8rem]" style={{ fontWeight: 700 }}>
               {section.h}
             </h2>
 
             {section.body?.map((paragraph) => (
-              <p key={paragraph} className="mt-5 text-[1.02rem] leading-[1.8] text-ink2">
+              <p key={paragraph} className="mt-5 text-[1rem] leading-[1.75] text-ink2">
                 {paragraph}
               </p>
             ))}
@@ -74,6 +78,10 @@ export function Legal({ lang, which }: { lang: Lang; which: "privacy" | "terms" 
             {section.consent && <ConsentChoice lang={lang} />}
           </section>
         ))}
+          </div>
+        </div>
+
+        <RefClose title={close.title} label={close.cta} href={ctaHref(lang)} />
       </main>
 
       <Footer lang={lang} />

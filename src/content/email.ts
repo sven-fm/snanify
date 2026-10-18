@@ -17,7 +17,9 @@ import type { TierKey } from "@/content/prices";
    The reminder leads with what the river is doing this morning, in the
    subject and the first line, because that is the reason to open it; one
    line of invitation follows. It never mentions a streak, a count, or a day
-   missed.
+   missed. In the HTML it is a capitals headline with the river in sindoor, the
+   state and one plain sentence, a five-cell gauge with today's cell marked
+   (none when the feed is quiet), the small figure row, and the button.
    --------------------------------------------------------------------------- */
 
 const en = {
@@ -51,6 +53,10 @@ const en = {
       full: "The {water} is running full this morning.",
       spate: "The {water} is in spate this morning.",
     } satisfies Record<FlowBand, string>,
+    /* The quiet feed: nothing about today, so the subject and the line say so. */
+    quiet: "The {water}: today's figure is on its way.",
+    headline: "The {water}, this morning.",
+    today: "Today",
     invite: "Your three minutes are ready whenever you are.",
     cta: "Sit with the {water}",
     link: "Open this morning here:",
@@ -87,6 +93,9 @@ const hi = {
       full: "{water} आज सुबह भरपूर बह रही है।",
       spate: "{water} आज सुबह उफान पर है।",
     } satisfies Record<FlowBand, string>,
+    quiet: "{water}: आज का आँकड़ा आ रहा है।",
+    headline: "{water}, आज सुबह।",
+    today: "आज",
     invite: "जब आप तैयार हों, आपके तीन मिनट तैयार हैं।",
     cta: "{water} के साथ बैठिए",
     link: "आज की सुबह यहाँ खोलिए:",

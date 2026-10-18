@@ -3,20 +3,22 @@
 <head>
 <meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;600;700&family=Martel+Sans:wght@400;600;700&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;600;700;800&family=Martel+Sans:wght@400;600;700&display=block" rel="stylesheet">
 <style>
   /* One daily Facebook post, 1080 x 1350, set like a page of the almanac:
      the masthead, a red kicker, the headline, then a figure or a plate, and
      the site's address on the foot rule. Site tokens only, no gradients,
      glows, blurs or rounded corners. Filled by render-post.mjs. */
-  :root { --paper: #f2ead9; --paper-2: #eae0c9; --ink: #16130f; --ink-2: #57513f; --spot: #b32620; --rule: #c3b697; }
+  :root { --paper: #f2ead9; --paper-2: #eae0c9; --ink: #16130f; --ink-2: #57513f; --spot: #c8251d; --rule: #c3b697; }
   * { margin: 0; box-sizing: border-box; }
   html, body { background: var(--paper); }
   body { width: 1080px; height: 1350px; overflow: hidden; color: var(--ink); font-family: "Martel Sans", sans-serif; }
   .frame { width: 100%; height: 100%; padding: 64px 72px 60px; display: flex; flex-direction: column; }
   .mast { display: flex; align-items: center; gap: 18px; padding-bottom: 20px; border-bottom: 4px solid var(--ink); }
   .mast svg { width: 56px; height: 56px; flex: none; }
-  .mast .name { font-family: "Eczar", serif; font-weight: 700; font-size: 44px; line-height: 1; font-synthesis: none; }
+  .mast .name { font-family: "Eczar", serif; font-weight: 800; letter-spacing: -0.015em; font-size: 44px; line-height: 1; font-synthesis: none; }
+  .wm-i { position: relative; display: inline-block; }
+  .mast .wm-i svg { position: absolute; left: 53.6%; bottom: 0.789em; width: 0.237em; height: 0.237em; transform: translateX(-50%); }
   .mast .date { margin-left: auto; font-size: 26px; color: var(--ink-2); }
   .kicker { margin-top: 44px; font-family: "Eczar", serif; font-weight: 600; font-size: 30px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--spot); }
   .head { margin-top: 14px; font-family: "Eczar", serif; font-weight: 700; font-size: var(--head); line-height: 1.04; letter-spacing: -0.01em; font-synthesis: none; }
@@ -43,8 +45,8 @@
 <body>
 <div class="frame">
   <div class="mast">
-    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#f2ead9"/><circle cx="24" cy="24" r="21.4" stroke="#16130f" stroke-width="3.2" fill="none"/><clipPath id="s"><circle cx="24" cy="24" r="20"/></clipPath><g clip-path="url(#s)"><circle cx="24" cy="16.2" r="6.6" fill="#b32620"/><rect x="11" y="27.8" width="26" height="3.2" fill="#16130f"/><rect x="4" y="34.6" width="40" height="3.4" fill="#16130f"/></g></svg>
-    <div class="name">Snanify</div>
+    <svg viewBox="0 0 48 48"><defs><clipPath id="mk"><circle cx="24" cy="24" r="20"/></clipPath></defs><circle cx="24" cy="24" r="21.6" fill="#f2ead9" stroke="#141210" stroke-width="2.4"/><g clip-path="url(#mk)"><path d="M15.4 24.6A8.6 8.6 0 0 1 32.6 24.6Z" fill="#c8251d"/><rect y="24.6" width="48" height="1.4" fill="#141210"/><g fill="#1d5a6a"><rect x="8" y="29" width="32" height="1.8"/><rect x="5" y="33.4" width="38" height="2"/><rect x="2" y="38" width="44" height="2.2"/></g></g></svg>
+    <div class="name">Snan<span class="wm-i">ı<svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="5" fill="#c8251d"/></svg></span>fy</div>
     <div class="date" id="date"></div>
   </div>
   <div class="kicker" id="kicker"></div>

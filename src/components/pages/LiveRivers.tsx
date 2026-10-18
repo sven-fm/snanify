@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { content } from "@/lib/content";
 import { localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/locales";
 import { waterName, windowName } from "@/content/names";
@@ -7,13 +6,15 @@ import { ctaHref } from "@/lib/nav";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { StatusBadge } from "@/components/ui";
+import { RiverHorizon } from "@/components/kit";
+import { H2, H3, QUIET, RefClose, RefHead, W700 } from "@/components/site/Reference";
+import { Reading, cumecs, longDate, readingView } from "@/components/live/Reading";
 import { getGhat } from "@/content/rivers";
 import { WINDOW_BY_ID } from "@/content/muhurat";
 import { fill, liveContent } from "@/content/live";
 import { PICTURES } from "@/content/live/pictures";
 import { LiveHero, type HeroWater } from "@/components/live/LiveHero";
 import { InView } from "@/components/live/InView";
-import { CountUp } from "@/components/live/CountUp";
 import {
   ARCHIVE,
   SOURCES,
@@ -27,57 +28,27 @@ import {
 } from "@/lib/riverdata";
 
 /* ---------------------------------------------------------------------------
-   /live, the free page.
+   /live, the free page, in v3 (spec 6.6).
 
-   Built for a 390px viewport first and widened from there, because this is a
-   page people open at six in the morning on a phone. Consequences, all of them
-   deliberate:
+   Built for a 390px viewport first, because this is a page people open at
+   six in the morning on a phone:
 
-   · One water per screen block. No table, no horizontal scroller, nothing that
-     needs two thumbs. The one dense grid is the sky panel, which is two columns
-     at 390px and four above 640.
-   · The flow figure is set at 3rem so it is readable at arm's length, and the
-     ruled label rows sit at 0.95rem, never at the 0.66rem `label` size, which
-     is for column headings and not for data a reader has to take in.
-   · Every interactive element is at least 44px in the vertical, and the primary
-     action sits in a fixed bar at the bottom of the viewport where a thumb is,
-     not in the masthead where it is not.
-   · No `RiverFlow` and no canvas. The page is server-rendered markup and a
-     few hundred SVG shapes. What moves is transform and opacity only: the
-     picker's gauge at the head (src/components/live/LiveHero.tsx), the
-     sections setting themselves as the reader reaches them (InView), figures
-     counting up for under a second, and the waterline breathing at the
-     river's amplitude. All of it stops under prefers-reduced-motion.
-   · The six landmark pictures are ink masks (src/content/live/pictures.ts),
-     fetched only when their section arrives.
+   1. The head: one capitals headline with the rivers in sindoor, one plain
+      sentence, and the feed's status line.
+   2. Pick a water (LiveHero): each river as its name, state word, plain
+      sentence and gauge, then the exact figure and rank in one small row
+      with its source line. The full river runs below it.
+   3. The six at a glance, then one block per water: the same reading, the
+      trend, the usual range and the eleven model days, the sky at the ghat,
+      and a fold with the register for whoever wants it.
+   4. Where the numbers come from, and the one press at the end.
 
-   And the rule that outranks all of the above: a number appears here only with
-   its provenance and its date beside it. The `Discharge` union is what makes
+   The rule that outranks the rest: a number appears here only with its
+   provenance and its date beside it. The `Discharge` union is what makes
    that structural rather than a matter of care, see `riverdata.ts`.
-
-   WHAT WAS TAKEN OFF THIS PAGE, and must stay off: the caps eyebrow with a
-   red dash above every section, the 01 to 06 numerals on six waters that are
-   a choice and not a sequence, meta lines joining facts with middle dots, the
-   red-boxed "not a reading" warning, the heavy rules between sections, and
-   the arrow after every link. Everything is sentence case, the button too.
-   Space divides the page; a hairline stays only between rows of figures.
    --------------------------------------------------------------------------- */
 
 const locale = (lang: Lang) => (lang === "hi" ? "hi-IN" : "en-IN");
-
-/**
- * Discharge spans four orders of magnitude across the six, from the Kaveri at
- * a fifth of a cubic metre to the Ganga at thirty thousand, so precision is
- * chosen from the magnitude rather than fixed. Two decimals on a trickle, none
- * on a flood.
- */
-function cumecs(value: number, lang: Lang): string {
-  const digits = value < 10 ? 2 : value < 100 ? 1 : 0;
-  return new Intl.NumberFormat(locale(lang), {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  }).format(value);
-}
 
 function decimal(value: number, lang: Lang, digits = 1): string {
   return new Intl.NumberFormat(locale(lang), {
@@ -88,16 +59,6 @@ function decimal(value: number, lang: Lang, digits = 1): string {
 
 function whole(value: number, lang: Lang): string {
   return new Intl.NumberFormat(locale(lang), { maximumFractionDigits: 0 }).format(value);
-}
-
-/** "11 Aug 2026". The civil date is a date, so it is formatted in UTC. */
-function longDate(date: string, lang: Lang): string {
-  return new Intl.DateTimeFormat(locale(lang), {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`));
 }
 
 /** "05:42" out of an IST wall clock or an IST instant. Never converted. */
@@ -135,34 +96,6 @@ function Entry({ term, children }: { term: string; children: React.ReactNode }) 
       <dd className="tabular min-w-0 text-right text-[0.95rem] leading-snug break-words text-ink">
         {children}
       </dd>
-    </div>
-  );
-}
-
-/**
- * The percentile, set as a ruled scale. Hairline ticks at the four band
- * boundaries, one solid vermillion rule at the value. No fill, no gradient,
- * no rounding: it is an engraved gauge, which is the only kind this design
- * system has.
- */
-function Scale({ value, label }: { value: number; label: string }) {
-  return (
-    <div className="mt-5">
-      <div className="relative h-7 border border-rulestrong tint" role="img" aria-label={label}>
-        {[10, 30, 70, 90].map((tick) => (
-          <span
-            key={tick}
-            className="absolute top-0 h-full w-px bg-rule"
-            style={{ left: `${tick}%` }}
-            aria-hidden="true"
-          />
-        ))}
-        <span
-          className="absolute top-0 h-full w-[3px] bg-spot"
-          style={{ left: `calc(${value}% - 1.5px)` }}
-          aria-hidden="true"
-        />
-      </div>
     </div>
   );
 }
@@ -208,91 +141,34 @@ function ElevenDays({ series }: { series: readonly { date: string; cumecs: numbe
   );
 }
 
-/* --- the flow panel ------------------------------------------------------- */
+/* --- the flow panel -------------------------------------------------------
+   Under the reading: the usual range for this week, and the last eleven
+   model days in a fold for whoever wants them. The figure itself and its
+   rank sit in the reading's small row (src/components/live/Reading.tsx). */
 
-function FlowPanel({
-  discharge,
-  lang,
-}: {
-  discharge: Discharge;
-  lang: Lang;
-}) {
+function FlowPanel({ discharge, lang }: { discharge: Discharge; lang: Lang }) {
   const t = liveContent[lang];
   const normal = discharge.normal;
 
   return (
-    <div className="mt-8">
-      {/* A quiet feed is stated in a tint block, in the same voice as the
-          rest of the page, rather than shouted from a red box. */}
+    <div>
       {discharge.kind === "normal" && (
-        <div className="tint mb-6 p-4">
-          <h3 className="display text-lg leading-tight">{t.feed.normalHeading}</h3>
-          <p className="mt-2 text-[0.95rem] leading-[1.7] text-ink">{t.feed.normalNote}</p>
-        </div>
+        <p className="text-[0.95rem] leading-[1.7] text-ink">{t.feed.normalNote}</p>
       )}
 
-      <div className="py-6">
-        <p className="text-sm text-ink2">
-          {discharge.kind === "modelled" ? t.flow.label : t.feed.normalHeading}
-        </p>
-
-        {/* The unit is set in body type: the caps utility would print it as
-            M³/S, which is a unit nobody writes. */}
-        <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <CountUp
-            value={discharge.cumecs}
-            lang={lang}
-            className="display tabular text-[3rem] leading-[0.95] sm:text-[4.5rem]"
-          />
-          <span className="text-sm text-ink2">{t.flow.unit}</span>
-        </p>
-
-        <p className="mt-4 text-[0.95rem] leading-snug text-ink2">
-          {discharge.kind === "modelled"
-            ? fill(t.flow.modelledFor, { date: longDate(discharge.modelledFor, lang) })
-            : fill(t.flow.modelledFor, { date: longDate(discharge.forDate, lang) })}
-        </p>
-      </div>
-
-      {discharge.kind === "modelled" && (
-        <div className="mt-7">
-          <p className="text-sm text-ink2">{t.flow.rankLabel}</p>
-          <p className="mt-2 flex items-baseline gap-2">
-            <span className="display tabular text-[2.2rem] leading-none sm:text-[2.8rem]">
-              {whole(discharge.percentile.value, lang)}
-            </span>
-            <span className="text-sm text-ink2">/ 100</span>
-          </p>
-          <p className="mt-2 text-[0.95rem] leading-snug text-ink2">
-            {discharge.percentile.capped === "below"
-              ? t.flow.cappedBelow
-              : discharge.percentile.capped === "above"
-                ? t.flow.cappedAbove
-                : t.flow.rankSuffix}
-          </p>
-          <Scale value={discharge.percentile.value} label={t.flow.scaleLabel} />
-          <p className="tabular mt-2 flex justify-between text-xs text-ink2">
-            <span>0</span>
-            <span>100</span>
-          </p>
-        </div>
-      )}
-
-      <div className="mt-7 tint p-5">
-        <p className="text-sm text-ink2">{t.flow.normalLabel}</p>
-        <p className="mt-2 text-[0.95rem] leading-[1.7] text-ink">
-          {fill(t.flow.normalBody, {
-            p10: cumecs(normal.p10, lang),
-            p90: cumecs(normal.p90, lang),
-            median: cumecs(normal.median, lang),
-            unit: t.flow.unit,
-          })}
-        </p>
-      </div>
+      <p className="mt-4 text-sm text-ink2">{t.flow.normalLabel}</p>
+      <p className="mt-1 text-[0.95rem] leading-[1.7] text-ink">
+        {fill(t.flow.normalBody, {
+          p10: cumecs(normal.p10, lang),
+          p90: cumecs(normal.p90, lang),
+          median: cumecs(normal.median, lang),
+          unit: t.flow.unit,
+        })}
+      </p>
 
       {discharge.kind === "modelled" && discharge.series.length > 1 && (
-        <details className="group mt-8">
-          <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm text-ink [&::-webkit-details-marker]:hidden">
+        <details className="group mt-6">
+          <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-ink active:text-sindoor [&::-webkit-details-marker]:hidden">
             {t.flow.seriesLabel}
             <span aria-hidden="true" className="text-ink2 group-open:hidden">+</span>
             <span aria-hidden="true" className="hidden text-ink2 group-open:inline">−</span>
@@ -357,28 +233,33 @@ function windowLine(slot: WindowSlot, lang: Lang): string {
 
 /* --- one water ------------------------------------------------------------ */
 
+function trendLine(read: Extract<Discharge, { kind: "modelled" }>, lang: Lang): string {
+  const t = liveContent[lang];
+  return read.deltaPct === null
+    ? t.trendPlain[read.trend]
+    : fill(t.trends[read.trend], { pct: whole(Math.abs(read.deltaPct), lang), since: t.flow.trendSince });
+}
+
 function Water({ water, lang }: { water: WaterState; lang: Lang }) {
   const t = liveContent[lang];
   const ghat = getGhat(water.slug);
   if (!ghat) return null;
 
   const { discharge, sky, gauge } = water;
-  const subject = t.subjects[water.slug];
   const slot = water.current ?? water.next;
 
-  /* Band and trend exist only on a real reading. Reading them off the narrowed
-     value rather than off the state keeps that structural: there is no way to
-     render a band sentence for a seasonal normal, which would be a claim about
-     what the river is doing today that we did not measure. */
+  /* Trend exists only on a real reading. Reading it off the narrowed value
+     rather than off the state keeps that structural: a seasonal normal
+     carries no claim about what the river is doing today. */
   const read = discharge.kind === "modelled" ? discharge : null;
 
   return (
     <InView as="section" className="scroll-mt-20">
-      <div id={water.slug} className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+      <div id={water.slug} className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-16 lg:max-w-6xl">
         {/* ------------------------------------------------------- head --- */}
         <div className="grid gap-6 sm:grid-cols-[1fr_16rem] sm:items-end lg:grid-cols-[1fr_22rem]">
           <div className="reveal min-w-0">
-            <h2 className="display text-[1.7rem] leading-tight sm:text-[2.6rem]">
+            <h2 className="display text-[1.75rem] leading-[1.1] text-sindoor sm:text-[2.4rem]" style={{ fontWeight: 800 }}>
               {waterName(ghat, "river", lang)}
             </h2>
             <p className="mt-1.5 text-sm text-ink2">
@@ -397,120 +278,102 @@ function Water({ water, lang }: { water: WaterState; lang: Lang }) {
           </div>
         </div>
 
-        {/* --------------------------------------------- the sentence --- */}
-        {read && (
-          <p
-            className="reveal display mt-8 max-w-3xl text-[1.4rem] leading-[1.3] sm:text-[2rem]"
-            style={{ ["--i" as string]: 2 }}
-          >
-            {fill(t.bands[read.percentile.band], { river: subject })}
-          </p>
-        )}
+        <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="min-w-0">
+            {/* ---------------------------------------- the reading --- */}
+            <Reading view={readingView(water, lang)} lang={lang} />
 
-        {read && (
-          <p className="mt-4 flex items-center gap-2.5 text-sm text-ink2">
-            <span aria-hidden="true" className="text-[0.8rem] leading-none text-spot">
-              {CARET[read.trend]}
-            </span>
-            {read.deltaPct === null
-              ? t.trendPlain[read.trend]
-              : fill(t.trends[read.trend], {
-                  pct: whole(Math.abs(read.deltaPct), lang),
-                  since: t.flow.trendSince,
-                })}
-          </p>
-        )}
+            {read && (
+              <p className="mt-4 flex items-center gap-2.5 text-sm text-ink2">
+                <span aria-hidden="true" className="text-[0.8rem] leading-none text-sindoor">
+                  {CARET[read.trend]}
+                </span>
+                {trendLine(read, lang)}
+              </p>
+            )}
 
-        <p className="mt-5 max-w-2xl text-[0.95rem] leading-[1.7] text-ink2">
-          {t.reaches[water.slug]}
-        </p>
+            <p className="mt-5 text-[0.95rem] leading-[1.7] text-ink2">{t.reaches[water.slug]}</p>
+            {water.slug === "kaveri-talakaveri" && (
+              <p className="mt-3 text-[0.95rem] leading-[1.7] text-ink2">{t.talakaveri}</p>
+            )}
 
-        {water.slug === "kaveri-talakaveri" && (
-          <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.7] text-ink2">{t.talakaveri}</p>
-        )}
-
-        <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-14">
-          <InView>
-            <div className="reveal">
+            <div className="mt-6">
               <FlowPanel discharge={discharge} lang={lang} />
             </div>
-          </InView>
+          </div>
 
-          <InView>
-            <div className="reveal">
+          <div className="min-w-0">
             <SkyPanel sky={sky} lang={lang} />
 
             {/* ------------------------------------------ the register ---
                 Folded: the page was twenty-three screens on a phone with
-                every register open. The window and the source stay in the
-                fold's summary line; the rest is one tap away. */}
-            <details className="group mt-10">
-            <summary className="impress flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm text-ink [&::-webkit-details-marker]:hidden">
-              {t.more}
-              <span aria-hidden="true" className="text-ink2 group-open:hidden">+</span>
-              <span aria-hidden="true" className="hidden text-ink2 group-open:inline">−</span>
-            </summary>
-            <dl className="settle-panel mt-2">
-              {slot && (
-                <Entry term={slot.open ? t.windows.openNow : t.windows.next}>
-                  {windowLine(slot, lang)}
+                every register open. The rest is one tap away. */}
+            <details className="group mt-8">
+              <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-ink active:text-sindoor [&::-webkit-details-marker]:hidden">
+                {t.more}
+                <span aria-hidden="true" className="text-ink2 group-open:hidden">+</span>
+                <span aria-hidden="true" className="hidden text-ink2 group-open:inline">−</span>
+              </summary>
+              <dl className="settle-panel mt-2">
+                {slot && (
+                  <Entry term={slot.open ? t.windows.openNow : t.windows.next}>
+                    {windowLine(slot, lang)}
+                  </Entry>
+                )}
+
+                {sky.kind === "observed" && (
+                  <>
+                    <Entry term={t.sky.condition}>{t.weather[weatherId(sky.weatherCode)]}</Entry>
+                    <Entry term={t.sky.air}>
+                      {decimal(sky.airTempC, lang)} {t.units.celsius}
+                    </Entry>
+                    <Entry term={t.sky.humidity}>{whole(sky.humidityPct, lang)}%</Entry>
+                    <Entry term={t.sky.rainHour}>
+                      {decimal(sky.precipMm, lang)} {t.units.mm}
+                    </Entry>
+                    <Entry term={t.sky.rainToday}>
+                      {decimal(sky.precipTodayMm, lang)} {t.units.mm}
+                    </Entry>
+                    <Entry term={t.sky.cloud}>{whole(sky.cloudPct, lang)}%</Entry>
+                    <Entry term={t.sky.wind}>
+                      {decimal(sky.windKph, lang)} {t.units.kmh}
+                    </Entry>
+                  </>
+                )}
+
+                <Entry term={t.section.cellLabel}>
+                  {coords(gauge.cell, 3)}
+                  <span className="block text-ink2">
+                    {fill(t.section.cellNote, { km: decimal(gauge.cellOffsetKm, lang) })}
+                  </span>
                 </Entry>
+
+                <Entry term={t.section.ghatLabel}>{coords(gauge.ghat, 4)}</Entry>
+
+                <Entry
+                  term={
+                    read === null
+                      ? t.feed.normalLabel
+                      : read.stale
+                        ? fill(t.feed.staleLabel, { days: whole(read.ageDays, lang) })
+                        : t.feed.liveLabel
+                  }
+                >
+                  {SOURCES.discharge.shortName}
+                </Entry>
+              </dl>
+
+              {read && (
+                <p className="mt-5 text-[0.9rem] leading-[1.7] text-ink2">
+                  {read.stale
+                    ? fill(t.feed.staleNote, { days: whole(read.ageDays, lang) })
+                    : t.feed.liveNote}
+                </p>
               )}
 
-              {sky.kind === "observed" && (
-                <>
-                  <Entry term={t.sky.condition}>{t.weather[weatherId(sky.weatherCode)]}</Entry>
-                  <Entry term={t.sky.air}>
-                    {decimal(sky.airTempC, lang)} {t.units.celsius}
-                  </Entry>
-                  <Entry term={t.sky.humidity}>{whole(sky.humidityPct, lang)}%</Entry>
-                  <Entry term={t.sky.rainHour}>
-                    {decimal(sky.precipMm, lang)} {t.units.mm}
-                  </Entry>
-                  <Entry term={t.sky.rainToday}>
-                    {decimal(sky.precipTodayMm, lang)} {t.units.mm}
-                  </Entry>
-                  <Entry term={t.sky.cloud}>{whole(sky.cloudPct, lang)}%</Entry>
-                  <Entry term={t.sky.wind}>
-                    {decimal(sky.windKph, lang)} {t.units.kmh}
-                  </Entry>
-                </>
-              )}
-
-              <Entry term={t.section.cellLabel}>
-                {coords(gauge.cell, 3)}
-                <span className="block text-ink2">
-                  {fill(t.section.cellNote, { km: decimal(gauge.cellOffsetKm, lang) })}
-                </span>
-              </Entry>
-
-              <Entry term={t.section.ghatLabel}>{coords(gauge.ghat, 4)}</Entry>
-
-              <Entry
-                term={
-                  read === null
-                    ? t.feed.normalLabel
-                    : read.stale
-                      ? fill(t.feed.staleLabel, { days: whole(read.ageDays, lang) })
-                      : t.feed.liveLabel
-                }
-              >
-                {SOURCES.discharge.shortName}
-              </Entry>
-            </dl>
-
-            {read && (
-              <p className="mt-5 text-[0.9rem] leading-[1.7] text-ink2">
-                {read.stale
-                  ? fill(t.feed.staleNote, { days: whole(read.ageDays, lang) })
-                  : t.feed.liveNote}
-              </p>
-            )}
-
-            <p className="mt-3 text-[0.9rem] leading-[1.7] text-ink2">{t.windows.basis}</p>
+              <p className="mt-3 text-[0.9rem] leading-[1.7] text-ink2">{t.windows.basis}</p>
             </details>
-            </div>
-          </InView>
+          </div>
         </div>
       </div>
     </InView>
@@ -529,33 +392,14 @@ function heroWaters(snapshot: LiveSnapshot, lang: Lang): HeroWater[] {
     const d = water.discharge;
     const read = d.kind === "modelled" ? d : null;
     const slot = water.current ?? water.next;
-    const river = waterName(ghat, "river", lang);
     out.push({
       slug: water.slug,
-      river,
+      river: waterName(ghat, "river", lang),
       place: `${waterName(ghat, "ghat", lang)}, ${waterName(ghat, "city", lang)}`,
-      sentence: read
-        ? fill(t.bands[read.percentile.band], { river: t.subjects[water.slug] })
-        : t.feed.normalNote,
-      trend: read
-        ? read.deltaPct === null
-          ? t.trendPlain[read.trend]
-          : fill(t.trends[read.trend], { pct: whole(Math.abs(read.deltaPct), lang), since: t.flow.trendSince })
-        : t.feed.normalLabel,
-      caret: read ? CARET[read.trend] : CARET.steady,
-      cumecs: d.cumecs,
-      unit: t.flow.unit,
-      percentile: read ? read.percentile.value : null,
-      bandWord: read ? t.bandWords[read.percentile.band] : t.feed.normalLabel,
-      rankNote: t.feed.normalLabel,
-      modelled:
-        d.kind === "modelled"
-          ? fill(t.flow.modelledFor, { date: longDate(d.modelledFor, lang) })
-          : fill(t.flow.modelledFor, { date: longDate(d.forDate, lang) }),
+      view: readingView(water, lang),
+      trend: read ? trendLine(read, lang) : t.feed.normalNote,
       sunrise: clock(water.sky.sunrise),
       nextWindow: slot ? windowLine(slot, lang) : null,
-      series: read ? read.series.map((x) => x.cumecs) : [],
-      picture: { src: PICTURES[water.slug].src, alt: PICTURES[water.slug].alt[lang] },
       href: `#${water.slug}`,
     });
   }
@@ -564,8 +408,6 @@ function heroWaters(snapshot: LiveSnapshot, lang: Lang): HeroWater[] {
 
 export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnapshot }) {
   const t = liveContent[lang];
-  const site = content[lang];
-  const cta = ctaHref(lang);
 
   /* Our own clock, labelled as ours. It is not a reading time and the copy
      beside it does not pretend it is. */
@@ -577,50 +419,32 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
 
       <Header lang={lang} currentPath="/live" />
 
-      {/* The fixed bar at the foot of the viewport overlaps the last 6rem of
-          the page on a phone, so the document ends above it rather than under
-          it. Above lg the bar is gone and so is the padding. */}
-      <main className="pb-28 lg:pb-0">
+      <main>
         {/* ---------------------------------------------- front matter --- */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 pt-8 pb-4 sm:px-8 sm:pt-10 sm:pb-6">
-            {/* The badge names the rung the page is actually on. The spot
-                square fills only when the feed is genuinely live, which is the
-                one thing that square is for. */}
-            <div className="ink-in">
-              <StatusBadge live={snapshot.source === "live"}>
-                {t.badges[snapshot.source]}
-              </StatusBadge>
-            </div>
-
-            <h1
-              className="ink-in display mt-6 max-w-4xl text-[2.2rem] leading-[1.05] sm:text-[3rem] lg:text-[3.4rem]"
-              style={{ animationDelay: "80ms" }}
-            >
-              {t.title}
-            </h1>
-
-            <p
-              className="ink-in mt-4 max-w-2xl text-[1.02rem] leading-[1.7] text-ink2"
-              style={{ animationDelay: "160ms" }}
-            >
-              {t.standfirst}
-            </p>
+        <RefHead lang={lang} title={t.head.title} accent={t.head.accent} plain={t.head.plain}>
+          {/* The bindu is sindoor only when the feed is genuinely live. */}
+          <div className="mt-3">
+            <StatusBadge live={snapshot.source === "live"}>{t.badges[snapshot.source]}</StatusBadge>
           </div>
-        </section>
+        </RefHead>
 
         {/* --------------------------------------------- pick a water --- */}
         <LiveHero
           lang={lang}
           waters={heroWaters(snapshot, lang)}
-          labels={{ ...t.hero, bandWords: t.bandWords }}
+          labels={t.hero}
           note={`${fill(t.assembled, { time: assembledAt })} ${t.modelledEvery}`}
         />
 
+        {/* The full river, below the reading (spec 5.6). */}
+        <div className="mx-auto max-w-3xl">
+          <RiverHorizon height={120} />
+        </div>
+
         {/* ------------------------------------------------- the index --- */}
-        <section className="tint">
-          <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14">
-            <h2 className="display text-[1.7rem] leading-tight sm:text-[2.2rem]">
+        <section>
+          <div className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-14">
+            <h2 className={H2} style={W700}>
               {t.index.title}
             </h2>
 
@@ -635,14 +459,13 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
 
                 return (
                   <li key={water.slug} className="reveal border-b border-rule" style={{ ["--i" as string]: i }}>
-                    {/* 56px minimum, so every row is a comfortable tap target
-                        and the six of them are a usable index on a phone. */}
+                    {/* 56px minimum, so every row is a comfortable tap target. */}
                     <a
                       href={`#${water.slug}`}
-                      className="flex min-h-[56px] items-center gap-4 py-3 transition-colors hover:text-spot"
+                      className="flex min-h-[56px] items-center gap-4 py-3 active:text-sindoor"
                     >
                       <span className="min-w-0 flex-1">
-                        <span className="display block truncate text-[1.15rem] leading-tight text-ink">
+                        <span className="display block truncate text-[1.15rem] leading-tight text-ink" style={W700}>
                           {waterName(ghat, "river", lang)}
                         </span>
                         <span className="block text-sm text-ink2">{waterName(ghat, "city", lang)}</span>
@@ -652,7 +475,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
                           {band ? t.bandWords[band] : t.feed.normalLabel}
                         </span>
                         {trend && (
-                          <span aria-hidden="true" className="text-[0.8rem] leading-none text-spot">
+                          <span aria-hidden="true" className="text-[0.8rem] leading-none text-sindoor">
                             {CARET[trend]}
                           </span>
                         )}
@@ -663,7 +486,7 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
               })}
             </InView>
 
-            <p className="mt-5 max-w-2xl text-[0.95rem] leading-[1.7] text-ink2">{t.index.note}</p>
+            <p className="mt-5 text-[0.95rem] leading-[1.7] text-ink2">{t.index.note}</p>
           </div>
         </section>
 
@@ -673,27 +496,29 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         ))}
 
         {/* -------------------------------------------- how we know it --- */}
-        <section className="tint">
-          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
-            <h2 className="display text-[1.9rem] leading-tight sm:text-[2.7rem]">
+        <section>
+          <div className="mx-auto max-w-3xl px-5 py-14 sm:px-8 sm:py-20">
+            <h2 className={H2} style={W700}>
               {t.provenance.heading}
             </h2>
 
-            <div className="mt-7 max-w-3xl space-y-5">
+            <div className="mt-6 space-y-5">
               {t.provenance.paras.map((para) => (
-                <p key={para.slice(0, 24)} className="text-[0.98rem] leading-[1.8] text-ink2">
+                <p key={para.slice(0, 24)} className="text-[0.98rem] leading-[1.75] text-ink2">
                   {para}
                 </p>
               ))}
             </div>
 
-            <h3 className="display mt-10 text-xl">{t.pictures.heading}</h3>
-            <ul className="mt-3 max-w-3xl space-y-1.5 text-[0.9rem] leading-[1.6] text-ink2">
+            <h3 className={`${H3} mt-10`} style={W700}>
+              {t.pictures.heading}
+            </h3>
+            <ul className="mt-3 space-y-1.5 text-[0.9rem] leading-[1.6] text-ink2">
               {snapshot.waters.map((water) => {
                 const pic = PICTURES[water.slug];
                 return (
                   <li key={water.slug}>
-                    <a href={pic.page} className="underline decoration-rule underline-offset-4 hover:decoration-spot">
+                    <a href={pic.page} className="underline decoration-rule underline-offset-4 active:text-sindoor">
                       {fill(t.pictures.credit, { subject: pic.subject[lang], author: pic.author, license: pic.license })}
                     </a>
                   </li>
@@ -701,12 +526,12 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
               })}
             </ul>
 
-            <p className="mt-8 max-w-3xl text-[0.95rem] leading-[1.7] text-ink2">
-              {t.sky.noWater}
-            </p>
+            <p className="mt-8 text-[0.95rem] leading-[1.7] text-ink2">{t.sky.noWater}</p>
 
-            <h3 className="display mt-14 text-lg">{t.provenance.attributionLabel}</h3>
-            <ul className="mt-3 max-w-3xl space-y-2">
+            <h3 className={`${H3} mt-12`} style={W700}>
+              {t.provenance.attributionLabel}
+            </h3>
+            <ul className="mt-3 space-y-2">
               {t.provenance.attribution.map((line) => (
                 <li key={line.slice(0, 24)} className="text-[0.9rem] leading-[1.7] text-ink2">
                   {line}
@@ -716,35 +541,23 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
 
             <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
               <li>
-                <a
-                  href={SOURCES.discharge.modelHref}
-                  rel="noopener noreferrer external"
-                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
-                >
+                <a href={SOURCES.discharge.modelHref} rel="noopener noreferrer external" className={QUIET}>
                   Copernicus EMS
                 </a>
               </li>
               <li>
-                <a
-                  href={SOURCES.discharge.href}
-                  rel="noopener noreferrer external"
-                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
-                >
+                <a href={SOURCES.discharge.href} rel="noopener noreferrer external" className={QUIET}>
                   Open-Meteo
                 </a>
               </li>
               <li>
-                <a
-                  href={SOURCES.registry.href}
-                  rel="noopener noreferrer external"
-                  className="inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule decoration-1 underline-offset-4 hover:decoration-spot"
-                >
+                <a href={SOURCES.registry.href} rel="noopener noreferrer external" className={QUIET}>
                   {SOURCES.registry.shortName}
                 </a>
               </li>
             </ul>
 
-            <p className="mt-8 max-w-3xl text-sm leading-[1.7] text-ink2">
+            <p className="mt-8 text-sm leading-[1.7] text-ink2">
               {fill(t.flow.archiveLine, {
                 samples: whole(ARCHIVE.samplesPerWeek, lang),
                 from: ARCHIVE.firstYear,
@@ -755,45 +568,26 @@ export function LiveRivers({ lang, snapshot }: { lang: Lang; snapshot: LiveSnaps
         </section>
 
         {/* ---------------------------------------------------- close --- */}
-        <section>
-          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
-            <h2 className="display max-w-3xl text-[1.9rem] sm:text-[2.7rem]">{t.close.title}</h2>
-            <p className="mt-5 max-w-2xl text-[1rem] leading-[1.75] text-ink2">{t.close.body}</p>
-
-            <ul className="mt-9">
-              {(
-                [
-                  ["/rivers", t.close.links.rivers],
-                  ["/muhurat", t.close.links.muhurat],
-                  ["/panchang", t.close.links.panchang],
-                ] as const
-              ).map(([path, label]) => (
-                <li key={path}>
-                  <Link
-                    href={localePath(lang, path)}
-                    className="display flex min-h-[56px] items-center py-3 text-xl text-ink underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-spot"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <RefClose title={t.close.title} body={t.close.body} label={t.close.cta} href={ctaHref(lang)}>
+          <ul className="mt-6">
+            {(
+              [
+                ["/rivers", t.close.links.rivers],
+                ["/muhurat", t.close.links.muhurat],
+                ["/panchang", t.close.links.panchang],
+              ] as const
+            ).map(([path, label]) => (
+              <li key={path}>
+                <Link href={localePath(lang, path)} className={QUIET}>
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </RefClose>
       </main>
 
       <Footer lang={lang} />
-
-      {/* The primary action, put where a thumb reaches on a 390px screen.
-          Hidden above lg, where the masthead's own button is in reach. */}
-      <aside aria-label={t.close.title} className="warm fixed inset-x-0 bottom-0 z-50 px-5 py-3 lg:hidden">
-        <a
-          href={cta}
-          className="label flex min-h-[48px] items-center justify-center bg-spot px-6 text-paper transition-colors hover:bg-ink"
-        >
-          {site.nav.cta}
-        </a>
-      </aside>
     </>
   );
 }

@@ -380,7 +380,7 @@ export const RIVERS: Ghat[] = [
       ],
     },
     caution: {
-      en: "The Yamuna at Mathura carries a heavy pollution load for much of the year. Through the dry months a large share of what passes the ghat is regulated release and drain water rather than mountain flow. If you are going there to bathe, know that beforehand and ask locally on the day.",
+      en: "The Yamuna at Mathura carries a heavy pollution load for much of the year. Through the dry months a large share of the water at the ghat is regulated release and drain water rather than mountain flow. If you are going there to bathe, know that beforehand and ask locally on the day.",
       hi: "मथुरा में यमुना का जल वर्ष के अधिकांश समय अत्यंत प्रदूषित रहता है, और सूखे महीनों में घाट के सामने से जो बहता है उसका बड़ा भाग पर्वतीय प्रवाह नहीं, नियंत्रित छोड़ा गया जल और नालों का जल होता है। यदि आप वहाँ स्नान के लिए जा रहे हैं, तो यह पहले जान लीजिए और उस दिन स्थानीय लोगों से पूछ लीजिए।",
     },
     reading: {
@@ -890,6 +890,8 @@ type OfferItem = { key: string; name: string; body: string };
 
 type RiverDetailCopy = {
   back: string;
+  /** The capitals headline, `{accent}` the river in sindoor, `{place}` its city. */
+  head: { title: string; now: string; close: string };
   facts: {
     river: string;
     ghat: string;
@@ -934,6 +936,7 @@ type RiverDetailCopy = {
 export const riverDetailContent = {
   en: {
     back: "All six waters",
+    head: { title: "The {accent} at {place}.", now: "This morning", close: "Three minutes with the {river}, tomorrow morning." },
     facts: {
       river: "River",
       ghat: "Ghat",
@@ -954,7 +957,7 @@ export const riverDetailContent = {
       lede: "One number, taken the same way at all six waters.",
       provenanceLabel: "Where the figures come from",
       provenance: [
-        "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, read at the grid cell covering this reach and published once a day. It is a model rather than a gauge reading, and this site writes modelled beside every number it prints.",
+        "Flow is modelled river discharge from the Copernicus Emergency Management Service global flood model, read at the grid cell covering this reach and published once a day. It is a model rather than a gauge reading.",
         "Each value is ranked against every daily value that same cell has produced in this same week of the year from 1997 to 2025. That is what the percentile means: one water compared with its own past.",
         "Sunrise, sunset, air temperature and rainfall are read at the ghat's own coordinates rather than at the grid cell. The muhurat windows are the panchang's rules worked out from that sunrise.",
         "Every figure comes from a public source named beside it, and each can be checked against that source.",
@@ -1004,7 +1007,7 @@ export const riverDetailContent = {
     },
     occasions: {
       title: "Days this ghat is known for",
-      lede: "Each is reckoned by tithi or by the sun, as noted beside it. Dates are not printed yet: the parva day depends on a panchang, and the site has still to choose the one it will follow.",
+      lede: "Each is reckoned by tithi or by the sun, as noted beside it. Dated occasions are on the muhurat calendar.",
       provisional: "Timing to be confirmed against the panchang",
     },
     keeper: { title: "Who looks after this water" },
@@ -1017,6 +1020,7 @@ export const riverDetailContent = {
 
   hi: {
     back: "सभी छह जल",
+    head: { title: "{place} में {accent}", now: "आज सुबह", close: "कल सुबह, {river} के साथ तीन मिनट।" },
     facts: {
       river: "नदी",
       ghat: "घाट",
@@ -1037,7 +1041,7 @@ export const riverDetailContent = {
       lede: "एक अंक, छहों जलों पर एक ही रीति से लिया हुआ।",
       provenanceLabel: "अंक कहाँ से आते हैं",
       provenance: [
-        "प्रवाह कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से लिया हुआ मॉडल-प्रवाह है, जो इस धारा को ढकने वाले ग्रिड-खंड पर पढ़ा जाता है और दिन में एक बार प्रकाशित होता है। यह गेज का पाठ नहीं, मॉडल है, और यह साइट हर अंक के साथ मॉडल लिखती है।",
+        "प्रवाह कोपरनिकस आपातकालीन प्रबंधन सेवा के वैश्विक बाढ़ मॉडल से लिया हुआ मॉडल-प्रवाह है, जो इस धारा को ढकने वाले ग्रिड-खंड पर पढ़ा जाता है और दिन में एक बार प्रकाशित होता है। यह गेज का पाठ नहीं, मॉडल है।",
         "हर मान की तुलना उसी खंड के उन सभी दैनिक मानों से होती है जो 1997 से 2025 तक वर्ष के इसी सप्ताह में आए। प्रतिशतक का यही अर्थ है: एक जल की तुलना उसके अपने अतीत से।",
         "सूर्योदय, सूर्यास्त, तापमान और वर्षा ग्रिड-खंड पर नहीं, घाट के अपने निर्देशांक पर पढ़े जाते हैं। मुहूर्त पंचांग के नियमों को उसी सूर्योदय पर लगाकर निकाले जाते हैं।",
         "हर अंक एक सार्वजनिक स्रोत से आता है जिसका नाम उसके साथ लिखा है, और हर एक उसी स्रोत पर जाँचा जा सकता है।",
@@ -1074,7 +1078,7 @@ export const riverDetailContent = {
           body: "इस जल के साथ तीन मिनट, उस अवस्था में जिसमें यह इस समय है, पंचांग की बताई घड़ी पर, आपके अपने शब्दों में आपका अपना संकल्प।",
         },
       ],
-      cta: "अपना स्नान आरंभ कीजिए",
+      cta: "अपना स्नान शुरू कीजिए",
       muhurat: "मुहूर्त पंचांग",
     },
     tradition: {
@@ -1087,13 +1091,13 @@ export const riverDetailContent = {
     },
     occasions: {
       title: "जिन दिनों के लिए यह घाट जाना जाता है",
-      lede: "हर एक की गणना तिथि से या सूर्य से होती है, जैसा उसके आगे लिखा है। तिथियाँ अभी नहीं छपी हैं: पर्व का दिन पंचांग पर निर्भर है, और स्थल ने अभी तय करना है कि किस पंचांग को माने।",
+      lede: "हर एक की गणना तिथि से या सूर्य से होती है, जैसा उसके आगे लिखा है। जिन पर्वों की तिथि निकाली गई है, वे मुहूर्त पंचांग में हैं।",
       provisional: "समय पंचांग से पुष्ट किया जाना शेष",
     },
     keeper: { title: "इस जल की देखरेख कौन करता है" },
     onward: {
       title: "कोई और जल पढ़िए",
-      cta: "अपना स्नान आरंभ कीजिए",
+      cta: "अपना स्नान शुरू कीजिए",
       all: "सभी छह जल",
     },
   },

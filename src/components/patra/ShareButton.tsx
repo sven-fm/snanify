@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { buttonClass } from "@/components/ui";
 import { track } from "@/lib/track";
 
 /* ---------------------------------------------------------------------------
@@ -92,9 +93,13 @@ export function ShareButton({
       type="button"
       onClick={send}
       disabled={busy}
-      className="label min-h-[56px] w-full bg-spot px-8 text-paper transition-colors hover:bg-ink disabled:opacity-60"
+      /* The marigold press: the one marigold button in the product. */
+      className={buttonClass("share", "w-full")}
     >
-      {copied ? copiedLabel : label}
+      <span>{copied ? copiedLabel : label}</span>
+      <span aria-hidden="true" className="shrink-0">
+        →
+      </span>
     </button>
   );
 }

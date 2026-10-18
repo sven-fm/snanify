@@ -17,7 +17,6 @@ export const panchangCityContent = {
         "Today's sunrise, Brahma muhurat, sunset and tithi in {city}, on your clock and in IST.",
       ],
     },
-    kicker: "Panchang by city",
     title: "{city}, this morning",
     lede: "Today in {city}, on your clock and in IST.",
     rows: {
@@ -46,6 +45,7 @@ export const panchangCityContent = {
     ghatsLede: "The IST column is read at one of these ghats. Each has a page.",
     liveLink: "All six rivers now",
     begin: "Sit with the river at this hour",
+    close: "Three minutes with your river, at sunrise.",
   },
   hi: {
     meta: {
@@ -60,7 +60,6 @@ export const panchangCityContent = {
         "{city} में आज का सूर्योदय, ब्रह्म मुहूर्त, सूर्यास्त और तिथि, आपकी घड़ी और IST में।",
       ],
     },
-    kicker: "शहर के अनुसार पंचांग",
     title: "{city}, आज की सुबह",
     lede: "आज {city} में, आपकी घड़ी और IST में।",
     rows: {
@@ -89,6 +88,7 @@ export const panchangCityContent = {
     ghatsLede: "IST का स्तंभ इन्हीं घाटों में से एक पर पढ़ा जाता है। हर एक का पृष्ठ है।",
     liveLink: "छहों नदियाँ अभी",
     begin: "इस बेला में नदी के साथ बैठिए",
+    close: "सूर्योदय पर, अपनी नदी के साथ तीन मिनट।",
   },
 } satisfies Record<Lang, unknown>;
 

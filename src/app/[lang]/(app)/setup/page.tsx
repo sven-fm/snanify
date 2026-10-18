@@ -88,14 +88,21 @@ export default async function Page({
     <>
       <div className="grain" aria-hidden="true" />
       {query.bought === "1" && <TrackView event="purchase" props={{ lang }} />}
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} hideCta />
 
-      <main className="mx-auto max-w-2xl px-5 py-10 pb-16 sm:px-8 sm:py-16">
-        <h1 className="display text-[2.1rem] leading-[1.15] sm:text-4xl">{t.title}</h1>
-        <p className="mt-5 text-[1.02rem] leading-[1.75] text-ink2">{t.lede}</p>
-
+      {/* One column at max-w-md (spec 6.3): the step line, the headline in
+          capitals, one short lede, then the six fields. No band, no seal. */}
+      <main className="mx-auto max-w-md px-5 pt-6 pb-16 sm:pt-10">
         {/* The three steps: this page is the water and the sheet. */}
-        <Steps steps={t.steps} here={[0, 1]} label={t.title} className="mt-8" />
+        <Steps steps={t.steps} here={[0, 1]} label={t.title} className="mb-5" />
+
+        <h1
+          className={`display text-ink ${lang === "hi" ? "text-[2.1rem]" : "text-[2.2rem] uppercase min-[380px]:text-[2.35rem]"}`}
+          style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95, letterSpacing: lang === "hi" ? 0 : "-0.01em" }}
+        >
+          {t.title}
+        </h1>
+        <p className="mt-4 text-[0.9375rem] leading-[1.6] text-ink2">{t.lede}</p>
 
         <SetupForm
           lang={lang}

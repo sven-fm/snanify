@@ -42,7 +42,7 @@ export function ConsentChoice({ lang }: { lang: Lang }) {
           type="button"
           onClick={() => setConsent("no")}
           aria-pressed={state.answer === "no"}
-          className={buttonClass("ghost", "min-h-[48px] sm:min-w-[9rem]")}
+          className={buttonClass("quiet", "min-h-[48px] sm:min-w-[9rem]")}
         >
           {t.decline}
         </button>
@@ -50,7 +50,7 @@ export function ConsentChoice({ lang }: { lang: Lang }) {
           type="button"
           onClick={() => setConsent("yes")}
           aria-pressed={state.answer === "yes"}
-          className={buttonClass("ghost", "min-h-[48px] sm:min-w-[9rem]")}
+          className={buttonClass("quiet", "min-h-[48px] sm:min-w-[9rem]")}
         >
           {t.accept}
         </button>

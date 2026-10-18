@@ -14,7 +14,7 @@ import type { setupContent } from "@/content/setup";
 import { LIMITS } from "@/lib/limits";
 import { saveProfile, type SaveState } from "@/app/[lang]/(app)/setup/actions";
 import type { Lang } from "@/lib/locales";
-import { SubmitButton } from "@/components/ui";
+import { SubmitButton, buttonClass } from "@/components/ui";
 import { track } from "@/lib/track";
 import { shrinkPhoto } from "@/lib/shrink-photo";
 import { zonePlace } from "@/lib/zone-place";
@@ -89,13 +89,39 @@ function readZone(): string {
 
 function FieldError({ children }: { children?: string }) {
   if (!children) return null;
-  return <p className="mt-2 text-sm font-bold text-spot">{children}</p>;
+  return <p className="mt-2 text-sm font-bold text-sindoor">{children}</p>;
 }
 
+const W700 = { fontWeight: 700 } as const;
+
+/* The water, the prayer and the hour are each one choice of many: a
+   radiogroup of press-choice buttons (role="radio", aria-checked), with the
+   chosen one the only tab stop. The arrows move the choice, as they do in a
+   native radio group. */
+function arrowKeys(e: React.KeyboardEvent<HTMLDivElement>) {
+  const dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+  if (!dir) return;
+  const radios = [...e.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]')];
+  const at = radios.indexOf(document.activeElement as HTMLButtonElement);
+  if (at < 0) return;
+  e.preventDefault();
+  const next = radios[(at + dir + radios.length) % radios.length];
+  next.focus();
+  next.click();
+}
+
+/** The props that make a press-choice button one radio of a group. */
+function radio(checked: boolean) {
+  return { type: "button" as const, role: "radio", "aria-checked": checked, tabIndex: checked ? 0 : -1 };
+}
+
+/* A field's name in Eczar 700, sentence case, and its one hint under it. */
 function Label({ label, hint }: { label: string; hint: string }) {
   return (
     <>
-      <span className="display block text-[1.15rem] text-ink">{label}</span>
+      <span className="display block text-[1.25rem] text-ink" style={W700}>
+        {label}
+      </span>
       <span className="mt-1 block text-sm leading-relaxed text-ink2">{hint}</span>
     </>
   );
@@ -152,6 +178,7 @@ export function SetupForm({
   };
 
   const [water, setWater] = useState(initial.waterSlug);
+  const [prayer, setPrayer] = useState(initial.prayerId);
   const [hour, setHour] = useState(initial.reminderHour);
   const [names, setNames] = useState<string[]>(
     initial.names.length > 0 ? initial.names : [""],
@@ -189,6 +216,14 @@ export function SetupForm({
     [prayers, water],
   );
 
+  /* A prayer belongs to its waters: moving to a water it does not belong to
+     lets it go, rather than sending one the server refuses. */
+  function pickWater(slug: string) {
+    setWater(slug);
+    const kept = prayers.find((p) => p.id === prayer);
+    if (kept && kept.waters !== "all" && !kept.waters.includes(slug)) setPrayer("");
+  }
+
   const remaining = LIMITS.sankalpChars - [...sankalp].length;
   const errors = state.errors;
 
@@ -220,33 +255,28 @@ export function SetupForm({
         <legend className="sr-only">{t.water.label}</legend>
         <Label label={t.water.label} hint={t.water.hint} />
 
-        {/* The chosen water stands on the warm ground: it is personal. */}
-        <div className="mt-5 grid gap-2 sm:grid-cols-2">
-          {waters.map((w) => (
-            <label
-              key={w.slug}
-              className={`impress flex min-h-[64px] cursor-pointer items-baseline justify-between gap-3 p-4 transition-colors ${
-                water === w.slug ? "bg-haldi2 text-ink" : "bg-paper2 text-ink2"
-              }`}
-            >
-              <span>
-                <span className="display block text-[1.15rem] leading-tight text-ink">
+        {/* Small blocks on 3px walls (spec 5.1a); the chosen one stays sunk,
+            with a sindoor face. The value travels in the hidden field. */}
+        <input type="hidden" name="waterSlug" value={water} />
+        <div role="radiogroup" aria-label={t.water.label} onKeyDown={arrowKeys} className="mt-5 grid gap-3 sm:grid-cols-2">
+          {waters.map((w) => {
+            const on = water === w.slug;
+            return (
+              <button
+                key={w.slug}
+                {...radio(on)}
+                onClick={() => pickWater(w.slug)}
+                className="press-choice min-h-[64px] w-full flex-col items-start justify-center gap-0.5 text-left"
+              >
+                <span className="display block text-[1.15rem] leading-tight" style={W700}>
                   {w.river}
                 </span>
-                <span className="mt-1 block text-sm text-ink2">
+                <span className={`block text-sm ${on ? "" : "text-ink2"}`}>
                   {w.ghat}, {w.city}
                 </span>
-              </span>
-              <input
-                type="radio"
-                name="waterSlug"
-                value={w.slug}
-                checked={water === w.slug}
-                onChange={() => setWater(w.slug)}
-                className="mt-1"
-              />
-            </label>
-          ))}
+              </button>
+            );
+          })}
         </div>
         <FieldError>{errors.waterSlug && t.errors[errors.waterSlug as "water"]}</FieldError>
       </fieldset>
@@ -257,7 +287,9 @@ export function SetupForm({
         <Label label={t.portrait.label} hint={t.portrait.hint} />
 
         <div className="mt-5 flex items-start gap-5">
-          <div className="h-[120px] w-24 shrink-0 bg-paper2">
+          {/* The frame the sheet prints it in: a 2px ink border, empty until a
+              photograph is chosen. */}
+          <div className="h-[120px] w-24 shrink-0 border-2 border-ink">
             {preview && !dropped && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -280,7 +312,7 @@ export function SetupForm({
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="label min-h-[44px] border border-rulestrong px-4 text-ink transition-colors hover:bg-ink hover:text-paper"
+              className={buttonClass("quiet")}
             >
               {preview && !dropped ? t.portrait.change : t.portrait.choose}
             </button>
@@ -289,7 +321,7 @@ export function SetupForm({
               <button
                 type="button"
                 onClick={dropFile}
-                className="label min-h-[44px] text-ink2 underline decoration-rule underline-offset-4"
+                className={buttonClass("quiet", "font-normal text-ink2")}
               >
                 {t.portrait.remove}
               </button>
@@ -332,7 +364,7 @@ export function SetupForm({
           <button
             type="button"
             onClick={() => setNames([...names, ""])}
-            className="mt-3 min-h-[44px] text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-spot"
+            className={buttonClass("quiet", "mt-3")}
           >
             {t.names.add}
           </button>
@@ -345,36 +377,30 @@ export function SetupForm({
         <legend className="sr-only">{t.prayer.label}</legend>
         <Label label={t.prayer.label} hint={t.prayer.hint} />
 
-        <div className="mt-5 flex flex-col">
-          <label className="-mx-3 flex min-h-[48px] cursor-pointer items-center gap-3 px-3 py-3 has-[:checked]:bg-haldi2">
-            <input
-              type="radio"
-              name="prayerId"
-              value=""
-              defaultChecked={initial.prayerId === ""}
-              
-            />
-            <span className="text-ink2">{t.prayer.none}</span>
-          </label>
+        <input type="hidden" name="prayerId" value={prayer} />
+        <div role="radiogroup" aria-label={t.prayer.label} onKeyDown={arrowKeys} className="mt-5 flex flex-col gap-3">
+          <button
+            {...radio(prayer === "")}
+            onClick={() => setPrayer("")}
+            className="press-choice w-full text-left"
+          >
+            {t.prayer.none}
+          </button>
 
-          {offered.map((p) => (
-            <label
-              key={p.id}
-              className="-mx-3 flex min-h-[48px] cursor-pointer items-start gap-3 px-3 py-3 has-[:checked]:bg-haldi2"
-            >
-              <input
-                type="radio"
-                name="prayerId"
-                value={p.id}
-                defaultChecked={initial.prayerId === p.id}
-                className="mt-1"
-              />
-              <span>
-                <span className="block text-ink">{p.title}</span>
-                <span className="mt-1 block text-sm leading-relaxed text-ink2">{p.line}</span>
-              </span>
-            </label>
-          ))}
+          {offered.map((p) => {
+            const on = prayer === p.id;
+            return (
+              <button
+                key={p.id}
+                {...radio(on)}
+                onClick={() => setPrayer(p.id)}
+                className="press-choice w-full flex-col items-start gap-1 text-left"
+              >
+                <span className="block font-bold">{p.title}</span>
+                <span className={`block text-sm leading-relaxed ${on ? "" : "text-ink2"}`}>{p.line}</span>
+              </button>
+            );
+          })}
         </div>
         <FieldError>{errors.prayerId && t.errors.prayer}</FieldError>
       </fieldset>
@@ -397,16 +423,17 @@ export function SetupForm({
         </p>
 
         {/* Three to take as they are, for the person who stops here. */}
-        {sankalp.trim() === "" && (
+        {(sankalp.trim() === "" || t.sankalp.examples.includes(sankalp)) && (
           <div className="mt-4">
             <p className="text-sm text-ink2">{t.sankalp.examplesLabel}</p>
-            <ul className="mt-2 flex flex-col gap-2">
+            <ul className="mt-3 flex flex-col gap-3">
               {t.sankalp.examples.map((example) => (
                 <li key={example}>
                   <button
                     type="button"
+                    aria-pressed={sankalp === example}
                     onClick={() => setSankalp(example)}
-                    className="impress min-h-[44px] w-full bg-paper2 px-4 py-2 text-left text-[0.98rem] leading-[1.6] text-ink hover:bg-paper3 active:bg-haldi2"
+                    className="press-choice w-full text-left text-[0.98rem] leading-[1.6]"
                   >
                     {example}
                   </button>
@@ -423,27 +450,19 @@ export function SetupForm({
         <legend className="sr-only">{t.reminder.label}</legend>
         <Label label={t.reminder.label} hint={t.reminder.hint} />
 
-        {/* Twenty-four cells rather than a select: the hour is chosen with a
-            thumb, and the chosen cell stands on the warm ground like the
-            chosen water. */}
-        <div className="mt-5 grid grid-cols-4 gap-1.5 sm:grid-cols-6">
+        {/* Twenty-four small blocks rather than a select: the hour is chosen
+            with a thumb, and the chosen one stays sunk like the chosen water. */}
+        <input type="hidden" name="reminderHour" value={hour} />
+        <div role="radiogroup" aria-label={t.reminder.label} onKeyDown={arrowKeys} className="mt-5 grid grid-cols-4 gap-2.5 sm:grid-cols-6">
           {Array.from({ length: 24 }, (_, h) => (
-            <label
+            <button
               key={h}
-              className={`flex min-h-[48px] cursor-pointer items-center justify-center tabular-nums transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-[-2px] has-[:focus-visible]:outline-spot ${
-                hour === h ? "bg-haldi2 font-bold text-ink" : "bg-paper2 text-ink2"
-              }`}
+              {...radio(hour === h)}
+              onClick={() => setHour(h)}
+              className="press-choice justify-center px-0 tabular-nums"
             >
-              <input
-                type="radio"
-                name="reminderHour"
-                value={h}
-                checked={hour === h}
-                onChange={() => setHour(h)}
-                className="sr-only"
-              />
               {String(h).padStart(2, "0")}:00
-            </label>
+            </button>
           ))}
         </div>
         {zone && <p className="mt-2 text-sm text-ink2">{t.reminder.zone.replace("{zone}", zonePlace(zone))}</p>}
@@ -454,7 +473,7 @@ export function SetupForm({
       <FieldError>{errors.form && t.errors.unknown}</FieldError>
 
       <div className="mt-12">
-        <SubmitButton className="w-full !py-4" disabled={pending}>
+        <SubmitButton className="w-full" disabled={pending}>
           {pending ? t.saving : t.save}
         </SubmitButton>
       </div>

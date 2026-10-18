@@ -12,17 +12,17 @@ import { balance } from "@/lib/credits";
 import { requireUser } from "@/lib/auth";
 import { getLiveSnapshot } from "@/lib/riverdata";
 import { ordinal } from "@/lib/ordinal";
-import { keptWith, sittingToday } from "@/lib/sitting";
+import { sittingToday } from "@/lib/sitting";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { morningsContent } from "@/content/mornings";
-import { countLine, leftAfterSitting } from "@/lib/mornings";
 import { LANGS, localePath, type Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { LinkButton } from "@/components/ui";
+import Link from "next/link";
+import { LinkButton, buttonClass } from "@/components/ui";
 import { Sitting } from "@/components/snan/Sitting";
-import { flowContent } from "@/content/flow";
+import { flowContent, quietFigure } from "@/content/flow";
 
 /* ---------------------------------------------------------------------------
    /today, the morning itself.
@@ -88,13 +88,8 @@ export default async function Page({
      at. The first production sitting spent its owner's last credit, the page
      was re-requested during the mark, and the balance gate sent them to the
      pack picker instead of to the sheet they had just made. */
-  const [kept, keptBefore] = await Promise.all([
-    sittingToday(user.id, profile.waterSlug, user.tz),
-    keptWith(user.id, profile.waterSlug),
-  ]);
+  const kept = await sittingToday(user.id, profile.waterSlug, user.tz);
 
-  const pic = PICTURES[profile.waterSlug as WaterSlug];
-  const picture = { src: pic.src, alt: pic.alt[lang] };
   const ghat = getGhat(profile.waterSlug);
 
   /* `/begin?out=1` opens the pack picker on a line for somebody whose
@@ -103,38 +98,44 @@ export default async function Page({
 
   if (kept) {
     const out = credits < 1;
+    const pic = PICTURES[profile.waterSlug as WaterSlug];
     return (
       <>
         <div className="grain" aria-hidden="true" />
-        <Header lang={lang} currentPath={ROUTE} />
+        <Header lang={lang} currentPath={ROUTE} hideCta />
         <main className="mx-auto max-w-md px-5 py-8 sm:py-14">
           <div className="plate relative aspect-[3/2] overflow-hidden">
             <div
               role="img"
-              aria-label={picture.alt}
+              aria-label={pic.alt[lang]}
               className="ink-picture absolute inset-0"
-              style={{ ["--picture" as string]: `url(${picture.src})` }}
+              style={{ ["--picture" as string]: `url(${pic.src})` }}
             />
           </div>
-          <h1 className="display mt-8 text-center text-[2rem] leading-[1.2]">{t.already.title}</h1>
-          <p className="mt-4 text-center text-[1.05rem] leading-[1.7] text-ink2">{t.already.body}</p>
-          <div className="mt-8 flex flex-col gap-3">
-            <LinkButton href={localePath(lang, `/p/${kept.id}?new=1`)} variant={out ? "ghost" : "solid"}>
-              {t.already.share}
-            </LinkButton>
-            <LinkButton href={localePath(lang, `/p/${kept.id}`)} variant="ghost">
+          <h1
+            className={`display mt-8 text-[2.35rem] ${lang === "hi" ? "" : "uppercase"}`}
+            style={{ fontWeight: 800, lineHeight: lang === "hi" ? 1.22 : 0.95, letterSpacing: lang === "hi" ? 0 : "-0.01em" }}
+          >
+            {t.already.title}
+          </h1>
+          <p className="mt-4 text-[1.05rem] leading-[1.6] text-ink2">{t.already.body}</p>
+          <LinkButton href={localePath(lang, `/p/${kept.id}?new=1`)} variant="share" arrow className="mt-6 w-full">
+            {t.already.share}
+          </LinkButton>
+          <p className="mt-4">
+            <Link href={localePath(lang, `/p/${kept.id}`)} className={buttonClass("quiet")}>
               {t.already.cta}
-            </LinkButton>
-          </div>
+            </Link>
+          </p>
           {out ? (
-            <div className="warm mt-8 p-5">
-              <p className="text-center text-[1.02rem] leading-[1.6] text-ink">{t.already.out}</p>
-              <LinkButton href={outHref} className="mt-5 w-full">
+            <p className="mt-8 text-[1.02rem] leading-[1.6] text-ink">
+              {t.already.out}{" "}
+              <Link href={outHref} className={buttonClass("quiet")}>
                 {morningsContent[lang].more}
-              </LinkButton>
-            </div>
+              </Link>
+            </p>
           ) : (
-            <p className="mt-8 text-center text-sm text-ink2">{t.already.tomorrow}</p>
+            <p className="mt-8 text-sm text-ink2">{t.already.tomorrow}</p>
           )}
         </main>
         <Footer lang={lang} />
@@ -151,17 +152,22 @@ export default async function Page({
   const d = water.discharge;
   const km = distanceKm(await headers(), water.gauge.ghat);
 
+  /* The gauge leads and the figure proves it (src/content/flow.ts), the
+     same words the landing prints. A quiet feed draws no dot and says it
+     stands on the season's usual level. */
+  const words = flowContent[lang];
+  const flow = `${NUMBER.format(d.cumecs)} m³/s`;
+  const modelled = d.kind === "modelled";
+
   const reading = {
     water: ghat ? waterName(ghat, "river", lang) : profile.waterSlug,
     ghat: ghat ? waterName(ghat, "ghat", lang) : "",
     city: ghat ? waterName(ghat, "city", lang) : "",
-    state: d.kind === "modelled" ? flowContent[lang].state[d.percentile.band] : flowContent[lang].stateMedian,
-    flow: `${NUMBER.format(d.cumecs)} m³/s`,
-    rank:
-      d.kind === "modelled"
-        ? t.reading.percentile.replace("{n}", ordinal(Math.round(d.percentile.value), lang))
-        : null,
-    normal: `${NUMBER.format(d.normal.median)} m³/s`,
+    percentile: modelled ? d.percentile.value : null,
+    band: modelled ? d.percentile.band : null,
+    figure: modelled
+      ? words.proof.replace("{flow}", flow).replace("{n}", ordinal(Math.round(d.percentile.value), lang))
+      : quietFigure(flow, lang),
     distance: km === null ? null : t.reading.distance.replace("{km}", NUMBER.format(km)),
   };
 
@@ -170,9 +176,9 @@ export default async function Page({
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} hideCta />
 
-      <main className="pb-16">
+      <main>
         <Sitting
           lang={lang}
           t={t}
@@ -180,10 +186,6 @@ export default async function Page({
           sankalp={profile.sankalpText}
           names={names}
           waterSlug={profile.waterSlug}
-          picture={picture}
-          left={countLine(morningsContent[lang].left, leftAfterSitting(credits))}
-          kept={keptBefore + 1}
-          more={leftAfterSitting(credits) < 1 ? { href: outHref, label: morningsContent[lang].more } : null}
           outHref={outHref}
           leaveHref={localePath(lang, "/account")}
           /* Never outside development: a fast sitting is a testing affordance,

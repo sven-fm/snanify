@@ -4,7 +4,7 @@ import { LIMITS } from "@/lib/limits";
 /* ---------------------------------------------------------------------------
    A photograph, turned into something that belongs on the sheet.
 
-   The Sankalp Patra is ink on paper: a rule, a serif, one spot colour. A
+   The Sankalp Patra is ink on paper: a rule, a serif, one sindoor. A
    phone snapshot dropped into it in full colour looks like a photograph
    pasted onto a certificate, which is exactly the look this design exists to
    avoid. So every portrait is put through the same press: cropped to the

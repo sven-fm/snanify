@@ -63,22 +63,18 @@ type Copy = {
   readonly crumbs: { readonly home: string; readonly here: string };
 
   readonly hero: {
+    /** "Three minutes with your {river}.": the river word is set in sindoor. */
     readonly title: string;
+    readonly riverWord: string;
+    readonly band: string;
     readonly lede: string;
     readonly offer: string;
     readonly ctaPrimary: string;
-    readonly ctaSecondary: string;
-  };
-
-  readonly sticky: {
-    readonly name: string;
-    readonly cta: string;
   };
 
   readonly form: {
     readonly title: string;
     readonly lede: string;
-    readonly clockHead: string;
     readonly lengthHead: string;
     /** "{n} seconds", filled from the sitting plan. */
     readonly seconds: string;
@@ -107,6 +103,8 @@ type Copy = {
 
   readonly tariff: {
     readonly title: string;
+    /** The title for rupee readers, with `{price:eleven}` filled at render. */
+    readonly titleInr: string;
     readonly lede: string;
     readonly heads: {
       readonly price: string;
@@ -115,7 +113,6 @@ type Copy = {
     readonly rows: readonly TariffRow[];
     readonly note: string;
     readonly choose: string;
-    readonly cta: string;
   };
 
   readonly closing: {
@@ -131,28 +128,23 @@ const en: Copy = {
   meta: {
     title: "The snan, three minutes with your river",
     description:
-      "Three minutes with the river you grew up near, at the hour the panchang names, and a Sankalp Patra with your family's names. Eleven mornings for eleven.",
+      "Three minutes with the river you grew up near, at the hour the panchang names, and a Sankalp Patra with your family's names. Eleven mornings. Your first one today.",
   },
 
   crumbs: { home: "Home", here: "The snan" },
 
   hero: {
-    title: "Three minutes with your river.",
-    lede: "Pick the river you grew up near. Each morning it shows you how it runs today, and you sit with it for three minutes. Then you send the family a Sankalp Patra with their names on it.",
-    offer: "Eleven mornings for {price}. Your first one today.",
+    title: "Three minutes with your {river}.",
+    riverWord: "river",
+    band: "Takes just 3 minutes. Then share it with your family.",
+    lede: "Pick the river you grew up near. Each morning it shows you how it runs today. Sit with it, breathe, and make your sankalp.",
+    offer: "Eleven mornings. Your first one today.",
     ctaPrimary: "Start your snan now",
-    ctaSecondary: "Walk through the five parts",
-  },
-
-  sticky: {
-    name: "Eleven mornings",
-    cta: "Begin",
   },
 
   form: {
     title: "Your three minutes, in five parts",
     lede: "Every morning runs the same way. Only the river changes.",
-    clockHead: "Starts at",
     lengthHead: "Length",
     seconds: "{n} seconds",
     limbs: [
@@ -207,8 +199,8 @@ const en: Copy = {
   },
 
   patra: {
-    title: "Your Sankalp Patra, ready to send",
-    lede: "Every snan ends in one sheet with your family's names on it. Keep it, and send it to the family group.",
+    title: "Your family's names, at the river.",
+    lede: "Every morning, one sheet to send. Keep it, and send it to the family group.",
     carries: [
       { k: "Names", v: "Your name and up to five more from your household." },
       { k: "Portrait", v: "Your photograph, if you add one." },
@@ -251,6 +243,7 @@ const en: Copy = {
 
   tariff: {
     title: "Eleven mornings for eleven.",
+    titleInr: "Eleven mornings for {price:eleven}.",
     lede: "Pay once, in your own currency. Sit them on any mornings you like.",
     heads: { price: "Price", per: "Per morning" },
     choose: "Choose this pack",
@@ -273,7 +266,6 @@ const en: Copy = {
       },
     ],
     note: "Your mornings keep until you sit them.",
-    cta: "Start your snan now",
   },
 
   closing: {
@@ -289,28 +281,23 @@ const hi: Copy = {
   meta: {
     title: "स्नान, अपनी नदी के साथ तीन मिनट",
     description:
-      "पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट जिसके पास आप बड़े हुए, और एक संकल्प पत्र जिस पर आपके परिवार के नाम हैं। ग्यारह सुबहें, ग्यारह में।",
+      "पंचांग की बताई घड़ी पर उस नदी के साथ तीन मिनट जिसके पास आप बड़े हुए, और एक संकल्प पत्र जिस पर आपके परिवार के नाम हैं। ग्यारह सुबहें। पहली आज ही।",
   },
 
   crumbs: { home: "मुखपृष्ठ", here: "स्नान" },
 
   hero: {
-    title: "अपनी नदी के साथ तीन मिनट।",
-    lede: "वह नदी चुनिए जिसके पास आप बड़े हुए। हर सुबह वह दिखाती है कि आज कैसे बह रही है, और आप उसके साथ तीन मिनट बैठते हैं। फिर परिवार को उनके नामों वाला संकल्प पत्र भेजिए।",
-    offer: "ग्यारह सुबहें {price} में। पहली आज ही।",
-    ctaPrimary: "अभी अपना स्नान आरंभ कीजिए",
-    ctaSecondary: "पाँचों अंग देखिए",
-  },
-
-  sticky: {
-    name: "ग्यारह सुबहें",
-    cta: "आरंभ",
+    title: "अपनी {river} के साथ तीन मिनट।",
+    riverWord: "नदी",
+    band: "बस 3 मिनट। फिर परिवार को भेजिए।",
+    lede: "वह नदी चुनिए जिसके पास आप बड़े हुए। हर सुबह वह दिखाती है कि आज कैसे बह रही है। उसके साथ बैठिए, साँस लीजिए और अपना संकल्प कीजिए।",
+    offer: "ग्यारह सुबहें। पहली आज ही।",
+    ctaPrimary: "अभी अपना स्नान शुरू कीजिए",
   },
 
   form: {
     title: "आपके तीन मिनट, पाँच अंगों में",
     lede: "हर सुबह इसी तरह चलती है। केवल नदी बदलती है।",
-    clockHead: "आरंभ",
     lengthHead: "अवधि",
     seconds: "{n} सेकंड",
     limbs: [
@@ -365,8 +352,8 @@ const hi: Copy = {
   },
 
   patra: {
-    title: "आपका संकल्प पत्र, भेजने को तैयार",
-    lede: "हर स्नान एक पत्र पर पूरा होता है, जिस पर आपके परिवार के नाम हैं। उसे रखिए, और परिवार के समूह में भेजिए।",
+    title: "आपके परिवार के नाम, नदी के साथ।",
+    lede: "हर सुबह, भेजने के लिए एक पत्र। उसे रखिए, और परिवार के समूह में भेजिए।",
     carries: [
       { k: "नाम", v: "आपका नाम और आपके घर के पाँच और नाम।" },
       { k: "चित्र", v: "आपका चित्र, यदि आप जोड़ें।" },
@@ -386,7 +373,7 @@ const hi: Copy = {
   },
 
   before: {
-    title: "आरंभ से पहले के प्रश्न",
+    title: "शुरू करने से पहले के प्रश्न",
     items: [
       {
         q: "क्या सूर्योदय से पहले उठना ज़रूरी है?",
@@ -409,6 +396,7 @@ const hi: Copy = {
 
   tariff: {
     title: "ग्यारह सुबहें, ग्यारह में।",
+    titleInr: "ग्यारह सुबहें {price:eleven} में।",
     lede: "एक बार भुगतान, आपकी अपनी मुद्रा में। जिस सुबह चाहें, बैठिए।",
     heads: { price: "मूल्य", per: "प्रति सुबह" },
     choose: "यह पैक चुनिए",
@@ -431,13 +419,12 @@ const hi: Copy = {
       },
     ],
     note: "आपकी सुबहें तब तक रखी रहती हैं जब तक आप बैठें।",
-    cta: "अभी अपना स्नान आरंभ कीजिए",
   },
 
   closing: {
     title: "आज ही अपनी नदी के साथ बैठिए।",
     body: "दो मिनट में तैयारी कीजिए: अपनी नदी, परिवार के नाम, अपना संकल्प। फिर तुरंत उसके साथ बैठिए।",
-    cta: "अभी अपना स्नान आरंभ कीजिए",
+    cta: "अभी अपना स्नान शुरू कीजिए",
   },
 };
 

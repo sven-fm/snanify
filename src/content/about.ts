@@ -79,6 +79,8 @@ type Copy = {
   readonly meta: { readonly title: string; readonly description: string };
   readonly title: string;
   readonly lede: string;
+  /** The capitals headline: `{accent}` is set in sindoor. */
+  readonly head: { readonly title: string; readonly accent: string };
   readonly why: { readonly title: string; readonly body: readonly string[] };
   readonly founders: {
     readonly title: string;
@@ -105,7 +107,8 @@ const en: Copy = {
       "Snanify is made in Berlin by Sven Ahrens and Hiten Sangani. Who we are, why we built a daily snan with India's sacred rivers, and how to write to us.",
   },
   title: "Who we are",
-  lede: "Snanify is made by two people in Berlin, Sven Ahrens and Hiten Sangani. We build products for a living. Here is who we are, and why we made this.",
+  lede: "Two people in Berlin, Sven Ahrens and Hiten Sangani, make Snanify for the river you grew up near.",
+  head: { title: "Made for your {accent}.", accent: "river" },
   why: {
     title: "Why we made this",
     body: [
@@ -166,7 +169,8 @@ const hi: Copy = {
       "Snanify बर्लिन में स्वेन आरेन्स और हितेन संगानी बनाते हैं। हम कौन हैं, भारत की पवित्र नदियों के साथ रोज़ का स्नान हमने क्यों बनाया, और हमें कैसे लिखें।",
   },
   title: "हम कौन हैं",
-  lede: "Snanify बर्लिन में रहने वाले दो लोग बनाते हैं, स्वेन आरेन्स और हितेन संगानी। उत्पाद बनाना हमारा काम है। यहाँ पढ़िए कि हम कौन हैं, और हमने यह क्यों बनाया।",
+  lede: "बर्लिन में रहने वाले दो लोग, स्वेन आरेन्स और हितेन संगानी, Snanify उस नदी के लिए बनाते हैं जिसके पास आप बड़े हुए।",
+  head: { title: "आपकी {accent} के लिए बनाया", accent: "नदी" },
   why: {
     title: "हमने यह क्यों बनाया",
     body: [
@@ -213,9 +217,9 @@ const hi: Copy = {
     mailLabel: "हमें लिखिए",
   },
   closing: {
-    title: "कल सुबह आरंभ कीजिए।",
+    title: "कल सुबह शुरू कीजिए।",
     body: "आज रात अपनी नदी चुनिए। कल, दिन शुरू होने से पहले, उसके साथ बैठिए।",
-    cta: "अपना स्नान आरंभ कीजिए",
+    cta: "अपना स्नान शुरू कीजिए",
   },
   crumb: "हम कौन हैं",
 };

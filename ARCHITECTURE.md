@@ -51,7 +51,7 @@ src/
     sitemap.ts  robots.ts  manifest.ts  globals.css
   proxy.ts                     the URL scheme, the currency cookie, Clerk's middleware
   components/
-    Landing.tsx  RiverFlow.tsx  WaterBand.tsx  Specimen.tsx  SankalpPatra.tsx
+    Landing.tsx  Logo.tsx  Specimen.tsx  SankalpPatra.tsx
     snan/Sitting.tsx           the three minutes
     patra/                     owner and guest views of a sheet, the share button
     setup/SetupForm.tsx
@@ -151,8 +151,8 @@ ISR every thirty minutes for the live card. The product pages render per request
 and the theme are stamped by two sync `<head>` scripts before first paint: every currency
 is in the markup and CSS shows one, keyed off `data-cur` on `<html>`.
 
-Client components exist for the sitting, the river animation (`RiverFlow` writes path
-geometry through refs, no re-renders), the setup form, the share button, the theme
+Client components exist for the sitting, the river's off-screen pause (`InView`; the
+river's motion itself is CSS), the setup form, the share button, the theme
 toggle, the two observers (`ScrollReveal`, `PastHero`) and the masthead's signed-in state,
 which reads Clerk's cookie through `useSyncExternalStore` rather than loading Clerk.
 

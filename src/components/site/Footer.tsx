@@ -2,8 +2,8 @@ import Link from "next/link";
 import { content } from "@/lib/content";
 import { localePath, type Lang } from "@/lib/locales";
 import { navItem, navLabel, type NavKey } from "@/lib/nav";
-import { Mauli } from "@/components/marks";
 import { Mark, Wordmark } from "@/components/Logo";
+import { RiverHorizon } from "@/components/kit";
 
 /**
  * The column headings and the inert legal labels come from `t.footer.cols`,
@@ -23,24 +23,25 @@ const COLUMNS: { at: number; keys: NavKey[] }[] = [
   { at: REFERENCE, keys: ["panchang", "live", "rivers", "muhurat", "faq"] },
 ];
 
-/** The imprint: everything the almanac prints at the back. */
+/**
+ * The imprint: everything the almanac prints at the back. Every page closes on
+ * the full river (spec 5.6), the sun sitting on its horizon, and the imprint
+ * opens under the water.
+ */
 export function Footer({ lang }: { lang: Lang }) {
   const t = content[lang];
 
   return (
     <footer className="tint">
-      {/* The mauli thread: the one divider, between the page and its imprint. */}
       <div className="bg-paper">
-        <div className="mx-auto max-w-6xl px-5 pb-6 sm:px-8">
-          <Mauli />
-        </div>
+        <RiverHorizon height={120} />
       </div>
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
-            <div className="flex items-baseline gap-3">
-              <Mark className="h-9 w-9 shrink-0 translate-y-[0.14em] text-ink" />
-              <Wordmark className="text-[20px] text-ink" />
+            <div className="flex items-center gap-2.5">
+              <Mark className="h-9 w-9 shrink-0 text-ink" />
+              <Wordmark className="text-[26px] text-ink" />
             </div>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink2">{t.footer.tagline}</p>
           </div>
@@ -56,7 +57,7 @@ export function Footer({ lang }: { lang: Lang }) {
                       <li key={key}>
                         <a
                           href={item.href}
-                          className="impress text-sm text-ink2 underline decoration-rule decoration-1 hover:text-spot hover:decoration-spot active:text-spot"
+                          className="text-sm text-ink2 underline decoration-rule decoration-1 hover:text-sindoor hover:decoration-sindoor active:text-sindoor"
                         >
                           {navLabel(lang, key)}
                         </a>
@@ -78,7 +79,7 @@ export function Footer({ lang }: { lang: Lang }) {
                 <li key={label}>
                   <Link
                     href={localePath(lang, LEGAL_ROUTES[i] ?? "/terms")}
-                    className="impress text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 hover:text-spot active:text-spot"
+                    className="text-sm text-ink2 underline decoration-rule decoration-1 underline-offset-4 hover:text-sindoor active:text-sindoor"
                   >
                     {label}
                   </Link>

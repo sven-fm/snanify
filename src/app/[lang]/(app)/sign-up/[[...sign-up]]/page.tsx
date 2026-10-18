@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
   return (
     <>
       <div className="grain" aria-hidden="true" />
-      <Header lang={lang} currentPath={ROUTE} />
+      <Header lang={lang} currentPath={ROUTE} hideCta />
 
       <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-md">

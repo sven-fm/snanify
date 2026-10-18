@@ -10,7 +10,7 @@ import type { TierKey } from "@/content/prices";
    mornings, once, with no subscription anywhere.
 
    THE PRICE IS RESOLVED BY LOOKUP KEY, NOT BY ID. See src/lib/packs.ts for
-   why. The resolution is cached for the life of the instance, because a warm
+   why. The resolution is cached for the life of the instance, because a reused
    serverless instance handles many checkouts and the answer changes only when
    somebody runs the catalogue script.
 

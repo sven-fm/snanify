@@ -30,6 +30,7 @@ const en = {
         "What Snanify holds, who processes it, how long it stays, and how to have all of it deleted.",
     },
     title: "What we hold",
+    head: { title: "What we {accent}.", accent: "hold" },
     lede: "In short: your email address, what you chose to put on your sheet, and one line for each morning you kept. One button deletes all of it.",
     updated: "Version 2, October 2026.",
 
@@ -114,6 +115,7 @@ const en = {
       description: "What you are buying, what it costs, and how a refund works.",
     },
     title: "What you are buying",
+    head: { title: "What you are {accent}.", accent: "buying" },
     lede: "A pack of mornings. Each one is three minutes with a river's published figure for the day, and the Sankalp Patra it leaves you.",
     updated: "Version 1, September 2026.",
 
@@ -122,7 +124,7 @@ const en = {
         h: "What a morning is",
         body: [
           "You choose a water, write your own sankalp, and sit for about three minutes. At the end, a Sankalp Patra is made: a sheet carrying the names you added, the river's published figure for that day, the panchang for that instant, and a seed anyone can recompute.",
-          "The practice is yours from start to finish. No rite is performed by anybody, at any ghat, on your behalf, and we claim nothing about what a morning does beyond what is printed on the sheet.",
+          "The practice is yours from start to finish. No rite is performed for you by anybody, at any ghat, and we claim nothing about what a morning does beyond what is printed on the sheet.",
         ],
       },
       {
@@ -170,6 +172,8 @@ const en = {
       },
     ],
   },
+  /** The one press at the end of both pages, inviting the snan. */
+  close: { title: "Your river, tomorrow morning.", cta: "Begin your snan" },
 };
 
 const hi = {
@@ -180,6 +184,7 @@ const hi = {
         "स्नानिफ़ाई क्या रखती है, कौन उसे संभालता है, कितने समय तक, और सब कुछ कैसे मिटाया जाए।",
     },
     title: "हम क्या रखते हैं",
+    head: { title: "हम क्या {accent}", accent: "रखते हैं" },
     lede: "संक्षेप में: आपका ईमेल, जो आपने अपने पत्र पर रखना चुना, और हर निभाई हुई सुबह के लिए एक पंक्ति। एक बटन यह सब मिटा देता है।",
     updated: "संस्करण २, अक्टूबर २०२६।",
 
@@ -264,6 +269,7 @@ const hi = {
       description: "आप क्या खरीद रहे हैं, उसका मूल्य क्या है, और वापसी कैसे होती है।",
     },
     title: "आप क्या खरीद रहे हैं",
+    head: { title: "आप क्या {accent}", accent: "खरीद रहे हैं" },
     lede: "सुबहों का एक पैक। हर सुबह उस दिन नदी के प्रकाशित अंक के साथ तीन मिनट, और जो संकल्प पत्र वह छोड़ जाती है।",
     updated: "संस्करण १, सितंबर २०२६।",
 
@@ -320,6 +326,8 @@ const hi = {
       },
     ],
   },
+  /** The one press at the end of both pages, inviting the snan. */
+  close: { title: "कल सुबह, आपकी नदी।", cta: "अपना स्नान शुरू कीजिए" },
 };
 
 export const legalContent = { en, hi } satisfies Record<Lang, typeof en>;

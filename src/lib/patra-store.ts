@@ -3,8 +3,7 @@ import "server-only";
 import { eq } from "drizzle-orm";
 import { db, sittings, type Sitting } from "@/db";
 import { blobUrl, putSheet } from "@/lib/blob";
-import { renderPatra } from "@/lib/patra-image";
-import { patraView } from "@/lib/patra-view";
+import { renderPatraFor } from "@/lib/patra-image";
 
 /* ---------------------------------------------------------------------------
    Rendering a Sankalp Patra once, rather than every time somebody looks at it.
@@ -34,7 +33,7 @@ export async function storeSheet(sitting: Sitting): Promise<string | null> {
   if (sitting.imageKey) return sitting.imageKey;
 
   try {
-    const png = await renderPatra(patraView(sitting));
+    const png = await renderPatraFor(sitting);
     const stored = await putSheet(sitting.id, png);
 
     await db

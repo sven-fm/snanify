@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  <defs>
-    <clipPath id="seal"><circle cx="24" cy="24" r="20"></circle></clipPath>
-  </defs>
-  <circle cx="24" cy="24" r="23" fill="#f2ead9"></circle>
-  <circle cx="24" cy="24" r="21.4" stroke="#16130f" stroke-width="3.2" fill="none"></circle>
-  <g clip-path="url(#seal)">
-    <circle cx="24" cy="16.2" r="6.6" fill="#c1272d"></circle>
-    <g fill="#16130f">
-      <rect x="11" y="27.8" width="26" height="3.2"></rect>
-      <rect x="4" y="34.6" width="40" height="3.4"></rect>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><style>.p{fill:#f2ead9;stroke:#141210}.i{fill:#141210}.s{fill:#c8251d}.w{fill:#1d5a6a}@media (prefers-color-scheme:dark){.p{fill:#12110e;stroke:#ece3cf}.i{fill:#ece3cf}.s{fill:#e04a40}.w{fill:#5c9aa5}}</style><defs><clipPath id="c"><circle cx="24" cy="24" r="20"/></clipPath></defs><circle cx="24" cy="24" r="22" class="p" stroke-width="3.6"/><g clip-path="url(#c)"><path d="M14.5 24.6A9.5 9.5 0 0 1 33.5 24.6Z" class="s"/><rect y="24.6" width="48" height="1.8" class="i"/><g class="w"><rect x="6" y="30" width="36" height="3"/><rect x="2" y="37" width="44" height="3.4"/></g></g></svg>

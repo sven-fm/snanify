@@ -11,7 +11,7 @@ import type { Lang } from "@/lib/locales";
 const en = {
   code: "A slip at the press",
   title: "This page caught on something.",
-  lede: "The fault is ours. Press once more and it usually comes through.",
+  lede: "The fault is ours. Press again. It usually comes through.",
   retry: "Try again",
   home: "Back to the river",
   account: "Your account",
@@ -22,8 +22,8 @@ const en = {
 const hi: typeof en = {
   code: "छपाई में एक चूक",
   title: "यह पृष्ठ कहीं अटक गया।",
-  lede: "चूक हमारी है। एक बार फिर दबाइए, प्रायः यह खुल जाता है।",
-  retry: "फिर प्रयास कीजिए",
+  lede: "चूक हमारी है। फिर से दबाइए। अक्सर यह खुल जाता है।",
+  retry: "फिर कोशिश कीजिए",
   home: "नदी की ओर लौटिए",
   account: "आपका खाता",
   ref: "संदर्भ",

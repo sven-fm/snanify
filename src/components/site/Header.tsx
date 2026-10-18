@@ -4,9 +4,11 @@ import { localePath, type Lang } from "@/lib/i18n";
 import { ctaHref, primaryNav } from "@/lib/nav";
 import { withSamvat } from "@/lib/occasions";
 import { Logo } from "@/components/Logo";
+import { RiverStrip } from "@/components/kit";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitch } from "@/components/site/LangSwitch";
 import { MobileCta, ProfileMenu, ProfileRows } from "@/components/site/HeaderCta";
+import { MASTHEAD_PRESS, buttonClass } from "@/components/ui";
 
 export type NavLink = { href: string; label: string };
 
@@ -14,6 +16,12 @@ export type NavLink = { href: string; label: string };
  * A masthead rather than an app bar: wordmark and edition line, with the
  * sections set in a row beneath on wide screens. No rules: once the page
  * scrolls, a fold appears under it and it reads as a sheet laid over the page.
+ *
+ * It sits on the river strip (spec 5.6), the same on every page: teal waves
+ * behind the bar, fading downward into paper. The logo and the controls stand
+ * on their own paper ground so no ripple reads through the type. The strip
+ * runs its full 74px past the bar at the top of the page and is trimmed to the
+ * bar once the page scrolls (`[data-strip]` in globals.css).
  *
  * `currentPath` is the locale-independent route, so the language switch lands
  * on the same page instead of dumping you at home.
@@ -24,6 +32,7 @@ export function Header({
   currentPath = "/",
   ctaTo,
   ctaAfterHero = false,
+  hideCta = false,
 }: {
   lang: Lang;
   links?: NavLink[];
@@ -35,6 +44,11 @@ export function Header({
    * that one has scrolled off: see PastHero and `[data-until-scrolled]`.
    */
   ctaAfterHero?: boolean;
+  /**
+   * On a screen that carries its own press (/begin, sign-in, /setup, /today)
+   * the masthead's Begin stands down: one sindoor block per screen.
+   */
+  hideCta?: boolean;
 }) {
   const t = content[lang];
   /* The almanac's edition line, computed so it turns over at Chaitra by itself. */
@@ -53,14 +67,21 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-50 bg-paper" data-masthead>
+      {/* Behind the bar's content and above its paper: the header is its
+          own stacking context, so -z-10 paints over the header's ground and
+          under everything in flow, and the menu panel keeps positioning
+          against the header itself. */}
+      <div data-strip className="absolute inset-x-0 top-0 -z-10 h-[74px] overflow-hidden">
+        <RiverStrip />
+      </div>
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* masthead row */}
         <div className="flex h-14 items-center justify-between gap-3 sm:gap-4">
-          <Link href={localePath(lang, "/")} className="shrink-0">
+          <Link href={localePath(lang, "/")} className="-ml-1.5 shrink-0 bg-paper px-1.5 py-1">
             <Logo />
           </Link>
 
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="-mr-1.5 flex items-center gap-2 bg-paper px-1.5 py-1 sm:gap-4">
             {/* The almanac's edition line. Vikram Samvat runs ~57 years ahead
                 of CE; each locale sets it in its own numerals. */}
             <span className="label hidden text-ink2 lg:inline">{edition}</span>
@@ -81,6 +102,7 @@ export function Header({
               accountLabel={t.nav.account}
               rows={profileRows}
               afterHero={ctaAfterHero}
+              hideBegin={hideCta}
             />
 
             {/* The menu, phones and tablets. A <details> so it needs no
@@ -89,7 +111,7 @@ export function Header({
                 shows in its row, with the one action underneath. */}
             {navLinks.length > 0 && (
               <details className="group lg:hidden">
-                <summary className="impress flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden">
+                <summary className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden">
                   <span aria-hidden="true" className="flex flex-col gap-[5px] group-open:hidden">
                     <span className="block h-[2px] w-5 bg-current" />
                     <span className="block h-[2px] w-5 bg-current" />
@@ -108,7 +130,7 @@ export function Header({
                       <li key={l.href} className="border-b border-rule">
                         <a
                           href={l.href}
-                          className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-spot"
+                          className="display flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-sindoor"
                         >
                           {l.label}
                         </a>
@@ -121,25 +143,26 @@ export function Header({
                     </li>
                   </ul>
                   <div className="mx-auto max-w-6xl px-5 py-4 sm:px-8">
-                    <a
-                      href={ctaTo ?? ctaHref(lang)}
-                      className="label impress flex min-h-[48px] items-center justify-center bg-spot text-paper hover:bg-ink active:bg-ink"
-                    >
-                      {t.nav.cta}
-                    </a>
-                    <p className="label mt-4 text-ink2">{edition}</p>
+                    {!hideCta && (
+                      <a href={ctaTo ?? ctaHref(lang)} className={buttonClass("solid", "mb-4 min-h-[48px] w-full justify-center")}>
+                        {t.nav.cta}
+                      </a>
+                    )}
+                    <p className="label text-ink2">{edition}</p>
                   </div>
                 </div>
               </details>
             )}
 
-            <a
-              href={ctaTo ?? ctaHref(lang)}
-              data-until-scrolled={ctaAfterHero ? "" : undefined}
-              className="label impress hidden min-h-[44px] items-center bg-spot px-4 text-paper hover:bg-ink active:bg-ink sm:inline-flex"
-            >
-              {t.nav.cta}
-            </a>
+            {!hideCta && (
+              <a
+                href={ctaTo ?? ctaHref(lang)}
+                data-until-scrolled={ctaAfterHero ? "" : undefined}
+                className={buttonClass("solid", MASTHEAD_PRESS + " hidden sm:inline-flex")}
+              >
+                {t.nav.cta}
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -153,7 +176,7 @@ export function Header({
               <li key={l.href} className="first:pl-0">
                 <a
                   href={l.href}
-                  className="label impress block px-5 py-2.5 text-ink2 hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
+                  className="label block px-5 py-2.5 text-ink2 hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
                 >
                   {l.label}
                 </a>

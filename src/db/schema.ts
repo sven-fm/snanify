@@ -176,6 +176,13 @@ export const sittings = pgTable(
      * carried none. Printed on the sheet; it is part of the morning.
      */
     distanceKm: integer("distance_km"),
+    /**
+     * The person's nth morning across every water, counted when it was kept.
+     * Null on rows minted before it existed; they are not backfilled.
+     */
+    morningNo: integer("morning_no"),
+    /** Which Patra renderer drew this sheet. Null is the original one. */
+    imageVersion: integer("image_version"),
     isPublic: boolean("is_public").notNull().default(true),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
