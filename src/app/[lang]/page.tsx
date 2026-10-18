@@ -1,3 +1,4 @@
+import { HERO_WATER } from "@/lib/hero-water";
 import { ordinal } from "@/lib/ordinal";
 import { Landing, type LiveCard } from "@/components/Landing";
 import { notFound } from "next/navigation";
@@ -91,7 +92,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
   /* The Ganga at Har Ki Pauri is the water on the card, because it is the one
      a first visitor is likeliest to recognise. */
   const water =
-    snapshot.waters.find((w) => w.slug === "ganga-haridwar") ?? snapshot.waters[0];
+    snapshot.waters.find((w) => w.slug === HERO_WATER) ?? snapshot.waters[0];
 
   return <Landing lang={lang} live={buildCard(lang, water)} />;
 }
