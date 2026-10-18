@@ -61,7 +61,7 @@ vi.mock("@clerk/nextjs/server", () => ({
 import { deleteAccount } from "@/app/[lang]/(app)/account/actions";
 
 describe("deleteAccount", () => {
-  it("removes every file, replaced portraits included, before the login and the rows", async () => {
+  it("removes every file, replaced portraits included, then the rows, then the sign-in", async () => {
     const form = new FormData();
     form.set("confirm", "delete");
     await expect(deleteAccount("en", form)).rejects.toThrow("redirect /");
@@ -71,8 +71,8 @@ describe("deleteAccount", () => {
       "remove portrait/user_1-old.jpg",
       "remove sheet/s1-x.png",
       "removePortraits user_1",
-      "clerk",
       "rows",
+      "clerk",
     ]);
   });
 });

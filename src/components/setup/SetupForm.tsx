@@ -23,6 +23,8 @@ import {
   createSaver,
   type SaveStatus,
   type Saver,
+  SAVE_TIMEOUT,
+  withTimeout,
 } from "@/lib/autosave";
 
 /* ---------------------------------------------------------------------------
@@ -226,7 +228,11 @@ export function SetupForm({
     if (autosave) {
       pressing.current = true;
       saver.current?.cancel();
+    }
+    try {
       await saver.current?.settled();
+    } catch {
+      /* A save that failed has already said so under its field. */
     }
 
     /* Usually long finished by the time Save is pressed; awaited in case not. */
@@ -358,9 +364,11 @@ export function SetupForm({
   useEffect(() => {
     const made = createSaver(
       async () => {
-        const v = live.current;
         let sending = shrinking.current;
         let photo = sending ? await sending : null;
+        /* Read after the photograph is ready, so the words sent are the
+           newest the page holds. */
+        const v = live.current;
         /* A photograph too large to send is let go, with its error, and the
            rest of the sheet still saves; otherwise every later change would
            fail behind it. */
@@ -374,7 +382,7 @@ export function SetupForm({
           sending = null;
           photo = null;
         }
-        const result = await saveProfile(
+        const result = await withTimeout(saveProfile(
           EMPTY,
           autosaveForm({
             lang,
@@ -388,7 +396,7 @@ export function SetupForm({
             removePortrait: v.dropped,
             portrait: photo,
           }),
-        );
+        ), SAVE_TIMEOUT);
         setAutoErrors(result.errors);
         if (result.ok) {
           sentText.current = JSON.stringify([v.names, v.sankalp]);
@@ -443,6 +451,16 @@ export function SetupForm({
       else made.flush();
     };
   }, [lang, pack]);
+
+  /* The press gives the floor back when it answers without moving on: a
+     refusal, an error, a request that never came back as a state. Read off
+     the falling edge of `pending`, so a press that throws cannot leave the
+     page with autosave switched off. */
+  const wasPending = useRef(false);
+  useEffect(() => {
+    if (wasPending.current && !pending && !state.ok) pressing.current = false;
+    wasPending.current = pending;
+  }, [pending, state]);
 
   useEffect(() => {
     if (!ask || pressing.current) return;

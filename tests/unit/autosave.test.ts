@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   CHOICE_DELAY,
   TEXT_DELAY,
+  withTimeout,
   autosaveAllowed,
   autosaveForm,
   createSaver,
@@ -162,6 +163,21 @@ describe("createSaver", () => {
     await settle();
 
     expect(run).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("withTimeout", () => {
+  beforeEach(() => vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] }));
+  afterEach(() => vi.useRealTimers());
+
+  it("passes an answer through", async () => {
+    await expect(withTimeout(Promise.resolve(7), 1000)).resolves.toBe(7);
+  });
+
+  it("turns a save that never answers into a failure", async () => {
+    const hung = withTimeout(new Promise(() => {}), 1000);
+    vi.advanceTimersByTime(1000);
+    await expect(hung).rejects.toThrow("timed out");
   });
 });
 

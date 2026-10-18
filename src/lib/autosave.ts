@@ -27,6 +27,19 @@ export const CHOICE_DELAY = 350;
 /** A text field (names, sankalp) saves this long after it loses focus. */
 export const TEXT_DELAY = 600;
 
+/** A save that has not answered in this long counts as failed, so a hung
+    request ends in "Try again" rather than a press disabled for good. */
+export const SAVE_TIMEOUT = 15_000;
+
+/** The promise, or a rejection once `ms` have passed without an answer. */
+export function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const late = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error("save timed out")), ms);
+  });
+  return Promise.race([promise, late]).finally(() => clearTimeout(timer));
+}
+
 /** Whether the server takes an autosave: only onto a completed sheet. */
 export function autosaveAllowed(completedAt: Date | null | undefined): boolean {
   return completedAt instanceof Date;
