@@ -3,9 +3,8 @@ import { auth } from "@clerk/nextjs/server";
 import { db, sittings } from "@/db";
 import { isId } from "@/lib/ids";
 import { allow, clientKey } from "@/lib/limiter";
-import { renderPatra } from "@/lib/patra-image";
+import { renderPatraFor } from "@/lib/patra-image";
 import { sheetUrl, storeSheet } from "@/lib/patra-store";
-import { patraView } from "@/lib/patra-view";
 
 /* ---------------------------------------------------------------------------
    The share image, 1080 by 1920: the memento.
@@ -16,7 +15,9 @@ import { patraView } from "@/lib/patra-view";
 
    It still draws on demand for the sheets that have no stored file: the ones
    minted before this existed, and any whose render failed at the time. Those
-   are stored on the way past, so it happens once.
+   are stored on the way past, so it happens once, and each is drawn by the
+   renderer its row names (`renderPatraFor`), so an old sheet comes back as
+   it was sent.
 
    `isId` runs before the database is touched, so a path segment from the open
    internet never becomes a query.
@@ -62,7 +63,7 @@ export async function GET(
   }
   if (stored) return Response.redirect(stored, 308);
 
-  const png = await renderPatra(patraView(sitting));
+  const png = await renderPatraFor(sitting);
 
   /* Drawn because it was missing, so keep it this time. Nothing waits on the
      write: the reader already has their bytes below. */

@@ -19,6 +19,8 @@
    reporting a hydration mismatch when the same path is drawn on both sides.
    --------------------------------------------------------------------------- */
 
+import { horizonSun, sunPath, type WaveRow } from "@/lib/river-geometry";
+
 /** A tiny deterministic generator, seeded from the hash. xorshift32. */
 function generator(seedHex: string): () => number {
   let state = 0;
@@ -140,4 +142,90 @@ export function strokeWidth(index: number, count: number): number {
 /** Ink strength for the nth line, faint at the back. */
 export function strokeOpacity(index: number, count: number): number {
   return round(0.22 + (index / Math.max(count - 1, 1)) * 0.5);
+}
+
+/* ---------------------------------------------------------------------------
+   The closing river of the v3 Sankalp Patra (spec 6.5).
+
+   The same engraving, restyled: teal lines under a thin ink horizon, a sindoor
+   sun sitting on that horizon and cut by it, and the sun's path in marigold
+   dashes running from under the sun toward the bottom centre, widening as it
+   comes closer. `engrave()` still decides everything about the water: the
+   seed lays the lines and the percentile decides how many, so a fuller river
+   closes its sheet with more of them. Nothing here touches that logic.
+
+   Pure, rounded and colour-agnostic: the caller hands in the hex values.
+   --------------------------------------------------------------------------- */
+
+export type ClosingRiverInput = {
+  seed: string;
+  percentile: number | null;
+  /** The box the river is drawn in, from its own top-left corner. */
+  width: number;
+  height: number;
+  /** How far down the box the horizon runs. */
+  horizon: number;
+  /** The sun's centre across the box, and its radius. */
+  sunX: number;
+  sunR: number;
+  colours: { paper: string; ink: string; teal: string; sindoor: string; marigold: string };
+  /** The horizon's weight. */
+  rule?: number;
+  /** How heavy the lines are against the engraving's own weights. */
+  weight?: number;
+};
+
+export function closingRiver(input: ClosingRiverInput): string {
+  const { seed, percentile, width, height, horizon, sunX, sunR, colours } = input;
+  const rule = input.rule ?? 5;
+  const weight = input.weight ?? 2.2;
+  const r2 = (n: number) => round(n).toString();
+
+  /* The sun first, so the water's paper hides its lower part: the horizon
+     cuts it, as on every river the site draws (src/lib/river-geometry.ts). */
+  const at = horizonSun({ cx: sunX, horizonY: horizon, r: sunR });
+  const sun = `<circle cx="${r2(at.cx)}" cy="${r2(at.cy)}" r="${r2(at.r)}" fill="${colours.sindoor}" />`;
+  const water = `<rect x="0" y="${r2(horizon)}" width="${r2(width)}" height="${r2(height - horizon)}" fill="${colours.paper}" />`;
+
+  const top = horizon + rule;
+  const depth = Math.max(1, height - top);
+  const drawn = engrave({ seed, percentile, width, height: depth });
+  const n = drawn.lines.length;
+
+  const lines = drawn.lines
+    .map(
+      (d, i) =>
+        `<path d="${d}" fill="none" stroke="${colours.teal}" stroke-width="${r2(strokeWidth(i, n) * weight)}" stroke-opacity="${r2(Math.min(1, strokeOpacity(i, n) * 1.25))}" />`,
+    )
+    .join("");
+
+  /* The path lies on the drawing's own lines, about ten of them however many
+     the river drew: each row of dashes sits at its line's mean height, so the
+     glitter is on this river's water. A dash is never taller than half the
+     gap to its neighbour, so a short river keeps its path broken. sunPath
+     spaces and widens them, as on every river the site draws. */
+  const every = Math.max(2, Math.round(n / 10));
+  const means = drawn.lines.map((d) => {
+    const ys = d
+      .slice(2)
+      .split(" L ")
+      .map((p) => Number(p.split(" ")[1]));
+    return ys.reduce((a, b) => a + b, 0) / ys.length;
+  });
+  const picked = means.map((y, i) => ({ y, i })).filter(({ i }) => i % every === 0);
+  const rows: WaveRow[] = picked.map(({ y, i }, k) => {
+    const gap = Math.abs((picked[k + 1]?.y ?? depth) - y) || depth;
+    const stroke = Math.min(strokeWidth(i, n) * weight * 1.2, (gap * 0.5) / 3.6);
+    return { y: round(y), amp: 0, period: 0, stroke: round(stroke), opacity: 1, points: "", drift: 0 };
+  });
+  const dashes = sunPath(rows, { sunX, width })
+    .map((d) => `<rect x="${r2(d.x)}" y="${r2(d.y)}" width="${r2(d.w)}" height="${r2(d.h)}" fill="${colours.marigold}" />`)
+    .join("");
+
+  return (
+    sun +
+    water +
+    `<g transform="translate(0 ${r2(top)})">${lines}${dashes}</g>` +
+    `<rect x="0" y="${r2(horizon)}" width="${r2(width)}" height="${r2(rule)}" fill="${colours.ink}" />`
+  );
 }

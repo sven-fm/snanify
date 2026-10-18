@@ -30,16 +30,17 @@ import * as hb from "harfbuzzjs";
    sheet reading "Rekha Sharma · अनिल शर्मा" sets both halves properly.
    --------------------------------------------------------------------------- */
 
-export type Weight = 400 | 600;
+export type Weight = 400 | 600 | 700 | 800;
+/** Eczar for display and the sheet's own text; Martel Sans for v3's small text. */
+export type Family = "serif" | "sans";
 
 type Face = { face: hb.Face; font: hb.Font; upem: number };
 
-type Loaded = {
-  latin: Record<Weight, Face>;
-  deva: Record<Weight, Face>;
-};
-
-let loaded: Loaded | null = null;
+/* Opened on first use and kept for the life of the process. The v2 sheet only
+   ever asks for Eczar and Noto at 400 and 600; v3 adds Eczar 700 and 800 (the
+   header and the capitals) and Martel Sans 400 and 700 (the small text), the
+   four fetched as static TTFs from Google Fonts like the first four. */
+const opened = new Map<string, Promise<Face>>();
 
 async function open(file: string): Promise<Face> {
   const dir = path.join(process.cwd(), "src/assets/fonts");
@@ -49,21 +50,24 @@ async function open(file: string): Promise<Face> {
   return { face, font: new hb.Font(face), upem: face.upem };
 }
 
-async function faces(): Promise<Loaded> {
-  if (loaded) return loaded;
+function faceFile(deva: boolean, family: Family, weight: Weight): string {
+  /* Martel Sans is cut at 400 and 700, and carries Devanagari of its own. */
+  if (family === "sans") return weight >= 600 ? "martel-700.ttf" : "martel-400.ttf";
+  /* Devanagari at 400 and 600 is Noto Serif Devanagari, as the v2 sheet set
+     it. The heavy cuts (700, 800, v3's header and capitals) are full Eczar
+     files, Devanagari included, so a Hindi name is as heavy as an English one. */
+  if (deva && weight <= 600) return weight === 600 ? "noto-deva-600.ttf" : "noto-deva-400.ttf";
+  return `eczar-${weight}.ttf`;
+}
 
-  loaded = {
-    latin: {
-      400: await open("eczar-400.ttf"),
-      600: await open("eczar-600.ttf"),
-    },
-    deva: {
-      400: await open("noto-deva-400.ttf"),
-      600: await open("noto-deva-600.ttf"),
-    },
-  };
-
-  return loaded;
+function faceFor(deva: boolean, family: Family, weight: Weight): Promise<Face> {
+  const file = faceFile(deva, family, weight);
+  let face = opened.get(file);
+  if (!face) {
+    face = open(file);
+    opened.set(file, face);
+  }
+  return face;
 }
 
 /** Devanagari, including the danda and the double danda. */
@@ -104,6 +108,7 @@ export type TypesetOptions = {
   /** The baseline. */
   y: number;
   weight?: Weight;
+  family?: Family;
   fill?: string;
   anchor?: "start" | "middle" | "end";
   /** Extra space between characters, as a fraction of the size. */
@@ -155,6 +160,7 @@ export async function typeset(text: string, options: TypesetOptions): Promise<Ty
     x,
     y,
     weight = 400,
+    family = "serif",
     fill = "#16130f",
     anchor = "start",
     tracking = 0,
@@ -163,14 +169,12 @@ export async function typeset(text: string, options: TypesetOptions): Promise<Ty
 
   if (!text) return { svg: "", width: 0 };
 
-  const font = await faces();
   const pieces = runs(text);
+  const fonts = await Promise.all(pieces.map((run) => faceFor(run.deva, family, weight)));
 
   /* Measured first, then drawn, because a middle or end anchor needs the whole
      width before the first glyph can be placed. */
-  const shaped = pieces.map((run) =>
-    shapeRun(run, run.deva ? font.deva[weight] : font.latin[weight], size, tracking),
-  );
+  const shaped = pieces.map((run, i) => shapeRun(run, fonts[i], size, tracking));
 
   const width = shaped.reduce((sum, run) => sum + run.width, 0);
   const startX = anchor === "start" ? x : anchor === "middle" ? x - width / 2 : x - width;
@@ -195,7 +199,7 @@ export async function typeset(text: string, options: TypesetOptions): Promise<Ty
 /** How wide a line would be, without drawing it. */
 export async function measure(
   text: string,
-  options: { size: number; weight?: Weight; tracking?: number },
+  options: { size: number; weight?: Weight; family?: Family; tracking?: number },
 ): Promise<number> {
   return (await typeset(text, { ...options, x: 0, y: 0 })).width;
 }
@@ -210,7 +214,7 @@ export async function measure(
  */
 export async function wrap(
   text: string,
-  options: { size: number; weight?: Weight; maxWidth: number },
+  options: { size: number; weight?: Weight; family?: Family; maxWidth: number },
 ): Promise<string[]> {
   const words = text.split(/\s+/).filter(Boolean);
   const lines: string[] = [];
