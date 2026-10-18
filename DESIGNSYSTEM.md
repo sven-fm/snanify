@@ -49,7 +49,10 @@ shadow.
 ```
 
 Round things are SVG: the bindu, the sun, the seal. The **phone** around the specimen and
-the looped sitting is the one rounded frame, cut with `clip-path: inset(0 round …)`.
+the looped sitting is the one rounded frame, cut with `clip-path: inset(0 round …)`. It is one
+component, `src/components/kit/Phone.tsx`, drawn like a current iPhone: corners 15% of the
+width, a thin bezel inside a hairline ink-2 band, a small island in a status bar, and the
+content (nine by sixteen) below the status bar, so the island covers nothing.
 
 ## Colour
 
@@ -289,8 +292,10 @@ kit stays off it.
 Below the fold: the full river with the sun; the reading as a gauge with the small figure
 row under it; the specimen sheet in the phone; the six waters as a list; the packs, eleven
 on the label, one and sixty as plain rows; the footer. The page opens on the headline: no
-live sentence above it, no long lede, no second button. Desktop centres the 390 composition
-at `max-w-md` beside the specimen phone from `lg` up.
+live sentence above it, no long lede, no second button. From `lg` up the landing stays one
+centred column, scaled up, never two: larger capitals, the band the full width of the window,
+the seal and the pitch, the press; then the river as a full-width panorama, the reading, and
+the specimen phone centred in its own section.
 
 ### `/snan`
 

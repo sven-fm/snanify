@@ -54,7 +54,7 @@ describe("/begin", () => {
     const out = begin("en");
     expect(out).toContain("Pick your mornings.");
     expect(out).toContain("Eleven for eleven.");
-    expect(out).toContain("Pay once. Use them any morning you like.");
+    expect(out).toContain("Pay once, no subscription. Sit on any morning you like.");
   });
 
   it("keeps one press with mornings in hand, and the steps on a first visit only", () => {

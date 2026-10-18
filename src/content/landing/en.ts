@@ -66,7 +66,7 @@ export const en = {
     title: "Eleven mornings for eleven.",
     /* For rupee readers: eleven mornings cost ₹501, so the line names it. */
     titleInr: "Eleven mornings for {price:eleven}.",
-    lede: "Pay once, in your own currency. Sit them on any mornings you like.",
+    lede: "Pay once, no subscription. Sit on any morning you like.",
     labels: {
       each: "a morning",
       choose: "Choose this pack",

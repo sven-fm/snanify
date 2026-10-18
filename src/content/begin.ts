@@ -23,7 +23,7 @@ const en = {
   /* For rupee readers: eleven mornings cost ₹501, so the line names it. */
   subInr: "Eleven mornings for {price:eleven}.",
   /* The band: the one thing to know before paying. */
-  band: "Pay once. Use them any morning you like.",
+  band: "Pay once, no subscription. Sit on any morning you like.",
   steps: ["Your water", "Your sheet", "Your mornings"],
   setLine: "Your sheet is set. Here it is, with your names on it.",
   cancelled: "The payment stopped at Stripe. Pick your mornings when you are ready.",
@@ -79,7 +79,7 @@ const hi = {
   title: "अपनी सुबहें चुनिए।",
   sub: "ग्यारह सुबहें, ग्यारह में।",
   subInr: "ग्यारह सुबहें {price:eleven} में।",
-  band: "एक बार भुगतान कीजिए। फिर जिस सुबह चाहें, स्नान कीजिए।",
+  band: "एक बार भुगतान, कोई सदस्यता नहीं। किसी भी सुबह बैठिए।",
   steps: ["आपका जल", "आपका पत्र", "आपकी सुबहें"],
   setLine: "आपका पत्र तैयार है। यह रहा, आपके नामों के साथ।",
   cancelled: "भुगतान Stripe पर रुक गया। जब तैयार हों, अपनी सुबहें चुनिए।",

@@ -19,3 +19,21 @@ for (const [w, h] of [
     });
   }
 }
+
+/* From lg up the landing is one centred column, never two (owner feedback,
+   18 Oct): the press is centred, and the specimen phone sits in its own
+   section below the reading, centred too. */
+for (const path of ["/", "/hi"]) {
+  test(`${path} is one centred column at 1440x900`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(path);
+    const press = (await page.locator("[data-hero-press]").boundingBox())!;
+    expect(press.y + press.height).toBeLessThanOrEqual(900);
+    expect(Math.abs(press.x + press.width / 2 - 720)).toBeLessThan(4);
+    const phone = (await page.locator("#sheet .phone").boundingBox())!;
+    expect(phone.y).toBeGreaterThan(press.y + press.height);
+    expect(Math.abs(phone.x + phone.width / 2 - 720)).toBeLessThan(4);
+    const width = await page.evaluate(() => document.documentElement.scrollWidth);
+    expect(width).toBeLessThanOrEqual(1440);
+  });
+}

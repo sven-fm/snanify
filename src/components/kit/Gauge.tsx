@@ -80,7 +80,7 @@ export function Gauge({
           </svg>
         ) : null}
         <div className="mt-1.5 grid grid-cols-3 text-[0.6875rem] leading-[1.4] text-ink2" aria-hidden="true">
-          <span>{t.word.slack}</span>
+          <span className="text-left">{t.word.slack}</span>
           <span className="text-center">{t.word.usual}</span>
           <span className="text-right">{t.word.spate}</span>
         </div>
