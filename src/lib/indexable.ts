@@ -37,7 +37,7 @@ const CITY_SET: ReadonlySet<string> = new Set(INDEXABLE_CITIES);
 export const MUHURAT_INDEX_WINDOW_DAYS = 180;
 
 /**
- * Dated occasions outside the window that already earn Google impressions
+ * Dated occasions outside the window that already show in Google results
  * (Search Console, 25 September 2026). A page that is ranking keeps its place
  * until its day is past; take a slug out only once it has.
  */

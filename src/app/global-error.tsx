@@ -11,7 +11,7 @@ import { DEFAULT_LANG, localeDef, localePath, parseLang } from "@/lib/locales";
 
    Plain on purpose. The fonts, the theme script and the pixel all live in the
    shell, and the shell is what broke, so this leans on the stylesheet alone:
-   the paper, the ink and one press-coloured button. The everyday failures
+   the paper, the ink, one press and one quiet link. The everyday failures
    are caught one level down, by src/app/[lang]/error.tsx, inside the shell.
    --------------------------------------------------------------------------- */
 
@@ -38,15 +38,16 @@ export default function GlobalError({
               <button
                 type="button"
                 onClick={() => reset()}
-                className="label impress min-h-[44px] bg-sindoor px-6 py-3.5 text-paper active:bg-ink"
+                className="press w-full"
               >
-                {t.retry}
+                <span>{t.retry}</span>
+                <span aria-hidden="true">→</span>
               </button>
               {/* A full load, not a client navigation: the router lives in
                   the shell that just failed. */}
               <a
                 href={localePath(lang, "/")}
-                className="label impress inline-flex min-h-[44px] items-center justify-center border border-rulestrong px-6 py-3.5 active:bg-ink active:text-paper"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 font-bold text-ink underline decoration-ink decoration-2 underline-offset-4 active:text-sindoor"
               >
                 {t.home}
               </a>

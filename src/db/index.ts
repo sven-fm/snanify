@@ -26,7 +26,7 @@ import * as schema from "@/db/schema";
    rather than after.
 
    The pool is created once per module load and reused across invocations on a
-   warm instance.
+   live instance.
    --------------------------------------------------------------------------- */
 
 function connectionString(): string {

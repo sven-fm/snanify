@@ -19,3 +19,9 @@ it("leaves no retired token in src", () => {
   const out = execSync("grep -rEl '(--spot|--haldi-2|\\b(text|bg|border)-spot\\b|bg-haldi2|className=\"[^\"]*\\bwarm\\b)' src || true").toString();
   expect(out.trim()).toBe("");
 });
+it("leaves no retired mark or motion in src (spec 5.7, 7.1)", () => {
+  const out = execSync(
+    "grep -rnE 'Tilak|Kumkum|Mauli|Diya|Petals|impress|flicker|\\bwarm\\b|legacy-flow|legacy-breathe|WaterBand' src || true",
+  ).toString();
+  expect(out.trim()).toBe("");
+});

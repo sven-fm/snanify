@@ -47,13 +47,13 @@ export default function ErrorPage({
             <button type="button" onClick={() => reset()} className={buttonClass("solid")}>
               {t.retry}
             </button>
-            <LinkButton href={localePath(lang, "/")} variant="ghost">
+            <LinkButton href={localePath(lang, "/")} variant="quiet">
               {t.home}
             </LinkButton>
           </div>
           <a
             href={localePath(lang, "/account")}
-            className="impress mt-5 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-sindoor"
+            className="mt-5 inline-flex min-h-[44px] items-center text-sm text-ink underline decoration-rule underline-offset-4 hover:decoration-sindoor active:text-sindoor"
           >
             {t.account}
           </a>

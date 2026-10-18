@@ -30,7 +30,7 @@ export function ThemeToggle({ label }: { label: string }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="impress grid h-11 w-11 shrink-0 place-items-center border border-rulestrong text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
+      className="grid h-11 w-11 shrink-0 place-items-center border border-rulestrong text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
         {/* By day a sun, which pressing turns to night; by night a moon. */}

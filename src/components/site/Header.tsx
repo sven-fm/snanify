@@ -111,7 +111,7 @@ export function Header({
                 shows in its row, with the one action underneath. */}
             {navLinks.length > 0 && (
               <details className="group lg:hidden">
-                <summary className="impress flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden">
+                <summary className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center border border-rulestrong px-3 text-ink hover:bg-ink hover:text-paper active:bg-ink active:text-paper group-open:bg-ink group-open:text-paper [&::-webkit-details-marker]:hidden">
                   <span aria-hidden="true" className="flex flex-col gap-[5px] group-open:hidden">
                     <span className="block h-[2px] w-5 bg-current" />
                     <span className="block h-[2px] w-5 bg-current" />
@@ -130,7 +130,7 @@ export function Header({
                       <li key={l.href} className="border-b border-rule">
                         <a
                           href={l.href}
-                          className="display impress flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-sindoor"
+                          className="display flex min-h-[56px] items-center text-[1.25rem] text-ink active:text-sindoor"
                         >
                           {l.label}
                         </a>
@@ -176,7 +176,7 @@ export function Header({
               <li key={l.href} className="first:pl-0">
                 <a
                   href={l.href}
-                  className="label impress block px-5 py-2.5 text-ink2 hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
+                  className="label block px-5 py-2.5 text-ink2 hover:bg-ink hover:text-paper active:bg-ink active:text-paper"
                 >
                   {l.label}
                 </a>

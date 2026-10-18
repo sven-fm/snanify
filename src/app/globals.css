@@ -3,13 +3,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------------------
-   Snanify, a morning at the ghat, set in type.
+   Snanify, design system v3: one family, loud and calm.
 
-   Paper, ink and two inks with two jobs: vermillion acts (the button, the
-   bindu, the sun), haldi warms (the glitter, petals, the diya, anything
-   personal). Colour is flat: gradients, glows, blurs and soft shadows stay
-   out of this file, and boxes stay square. Round things are SVG marks.
-   DESIGNSYSTEM.md is the reference.
+   Paper and ink, one red, one yellow and the river's teal, each with one job:
+   sindoor acts (the press, the river's name, the sun, the seal, the bindu),
+   marigold is where you pay or share and the light on the water, teal is the
+   river. Colour is flat: gradients, glows, blurs and soft shadows stay out of
+   this file, and boxes stay square. The press's hard ink walls are a solid
+   box, not a soft shadow. Round things are SVG. DESIGNSYSTEM.md is the
+   reference.
    --------------------------------------------------------------------------- */
 
 :root {
@@ -394,7 +396,7 @@ html[data-scrolled] header[data-masthead] [data-strip] {
 /* --- Form marks ---------------------------------------------------------------
    A radio or a checkbox is a ruled square that fills with the sindoor,
    not the platform's blue circle. Inputs sit on a 2px rule rather than in a
-   box, and the rule turns spot when the field has focus.                    */
+   box, and the rule turns sindoor when the field has focus.                 */
 input[type="radio"],
 input[type="checkbox"] {
   appearance: none;
@@ -615,7 +617,7 @@ html:not([data-script="latin"]) i {
   animation: ink-in 0.45s steps(6, end) forwards;
 }
 
-/* The same impression under the name the motion table uses: `pull`, as a
+/* The same entrance under the name the motion table uses: `pull`, as a
    sheet is pulled from the press. A part of the sitting arrives this way,
    and so does the Sankalp Patra. */
 @utility pull {
@@ -670,7 +672,7 @@ html[data-cur="INR"] .cur-INR {
 
 /* --- Scroll-driven reveals -------------------------------------------------
    Content on the long reference pages sets itself as the reader reaches it,
-   with the same stepped impression as `ink-in`: an opacity in six steps and a
+   with the same stepped entrance as `ink-in`: an opacity in six steps and a
    rise of a few pixels, never a float. `InView` in src/components/live sets
    `data-in` once, and `--i` staggers siblings. Reduced motion shows everything
    at once, below.                                                            */
@@ -711,26 +713,6 @@ html[data-js] [data-in] .grow {
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i, 0) * 45ms);
 }
 
-/* Engraved water flowing steadily downward: the band's drawing, cut flat so
-   it tiles, is stacked twice and slides down by one copy, so the loop has no
-   seam. Thirty seconds per copy, which on a band this tall is a slow river
-   rather than a scroll. */
-@keyframes legacy-flow {
-  from { transform: translateY(0); }
-  to { transform: translateY(50%); }
-}
-.flow {
-  animation: legacy-flow 30s linear infinite;
-  will-change: transform;
-}
-/* The same water, eight times slower: behind the practice, where the reading
-   speed made the owner dizzy. Four minutes per copy is a river seen from a
-   ghat, not from a boat. */
-.flow-slow {
-  animation: legacy-flow 240s linear infinite;
-  will-change: transform;
-}
-
 /* A counter's new second settles in: a touch below and faint, then in place. */
 @keyframes tick {
   from { opacity: 0.35; transform: translateY(0.12em); }
@@ -738,18 +720,6 @@ html[data-js] [data-in] .grow {
 }
 .tick {
   animation: tick 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) both;
-}
-
-/* The waterline breathes at the river's own amplitude: four seconds in, six
-   out, as the sitting does. `--amp` is set from the percentile. */
-@keyframes legacy-breathe {
-  0% { transform: translateY(0); }
-  40% { transform: translateY(calc(var(--amp, 6px) * -1)); }
-  100% { transform: translateY(0); }
-}
-.breathe {
-  animation: legacy-breathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  will-change: transform;
 }
 
 /* The plate a photograph is printed on. By day it is the tint; by night it
@@ -807,9 +777,6 @@ html:not([data-js]) .ink-picture-lazy {
     transform: none;
     transition: none;
   }
-  .breathe,
-  .flow,
-  .flow-slow,
   .tick {
     animation: none;
   }
@@ -930,56 +897,4 @@ html:not([data-js]) .ink-picture-lazy {
   .loop-screen[style*="--i: 0"] { opacity: 1; }
   .loop-out { opacity: 0; }
   .loop-ink { width: 60%; }
-}
-
-/* --- Legacy, deleted in Task 20 ----------------------------------------------
-   Retired by v3 and kept only so the surfaces that still carry them work
-   until their own task replaces them: `impress` (the old 1px plate, replaced
-   by the press), the diya's `flicker` and the petals. The old `.flow` and
-   `.breathe` above (on `legacy-flow` and `legacy-breathe`) go with them.     */
-@utility impress {
-  transition-property: transform, background-color, color, border-color, box-shadow, opacity;
-  transition-duration: 120ms;
-  transition-timing-function: ease-out;
-}
-.impress:active,
-a:active > .impress,
-label:active > .impress {
-  transform: translate(1px, 1px);
-  transition-duration: 0ms;
-}
-
-/* --- Flicker ---------------------------------------------------------------
-   A diya flame breathing from its base. The flame on the primary button and
-   the one in the sitting; nowhere else. */
-@keyframes flicker {
-  0%, 100% { transform: scaleY(1) scaleX(1); }
-  35% { transform: scaleY(0.84) scaleX(1.06); }
-  70% { transform: scaleY(0.94) scaleX(0.97); }
-}
-.flicker {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: flicker 1.4s ease-in-out infinite;
-}
-
-/* Petals ride the water: a slow drift across, at the river's own pace, with
-   a small bob. Part of `flow`. `--d` sets the duration, `--delay` the
-   offset, `--x` how far a petal travels. */
-@keyframes petal-drift {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(calc(var(--x, 120px) * 0.5), -3px) rotate(18deg); }
-  100% { transform: translate(var(--x, 120px), 0) rotate(36deg); }
-}
-.petal {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: petal-drift var(--d, 18s) linear var(--delay, 0s) infinite alternate;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .flicker,
-  .petal {
-    animation: none;
-  }
 }

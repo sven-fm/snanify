@@ -146,7 +146,7 @@ export const clerkAppearance = {
     dividerLine: { backgroundColor: "var(--ink-2)" },
     dividerText: { color: "var(--ink-2)" },
 
-    /* The setup form's `field`: a 2px underline that takes the spot on focus. */
+    /* The setup form's `field`: a 2px underline that takes the sindoor on focus. */
     formFieldLabel: { ...LABEL, color: "var(--ink-2)" },
     formFieldInput: {
       minHeight: "48px",

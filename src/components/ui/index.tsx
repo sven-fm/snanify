@@ -7,7 +7,7 @@ import { PRICE } from "@/content/prices";
 import { Bindu } from "@/components/marks";
 
 /* Shared primitives. Everything here is flat: solid fills, square boxes,
-   vermillion for the action. See DESIGNSYSTEM.md. */
+   sindoor for the action. See DESIGNSYSTEM.md. */
 
 /**
  * A section of a page. Space divides one section from the next, never a rule.
@@ -52,8 +52,6 @@ const buttonVariants = {
   share: "press press-share",
   /* A plain ink-underlined link. */
   quiet,
-  /** @deprecated The ruled ghost box is retired in v3: it reads as the quiet link until its surface task removes the call (Task 20 deletes this key). */
-  ghost: quiet,
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;

@@ -4,7 +4,6 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { PALETTE } from "@/lib/palette";
 import * as River from "@/components/RiverFlow";
-import { WaterBand } from "@/components/WaterBand";
 
 const source = readFileSync("src/components/RiverFlow.tsx", "utf8");
 const landing = readFileSync("src/components/Landing.tsx", "utf8");
@@ -51,13 +50,5 @@ describe("RiverFlow in the palette", () => {
   it("no longer reads the headline's float", () => {
     expect(source).not.toMatch(/shape-outside|shapeOutside|sunAnchor/);
     expect(landing).not.toMatch(/shapeOutside|data-sun-anchor|sunAnchorSelector|petals/);
-  });
-});
-
-describe("WaterBand is the strip", () => {
-  it("renders the teal strip for a page band", () => {
-    const out = html(WaterBand({ seed: "faq", className: "mt-8 h-14 w-full" }));
-    expect(out).toContain("var(--teal)");
-    expect(out).toContain("mt-8 h-14 w-full");
   });
 });
