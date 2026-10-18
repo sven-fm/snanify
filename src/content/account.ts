@@ -54,7 +54,6 @@ const en = {
     todayCta: "Sit this morning",
     setupCta: "Set up your sheet",
     save: "Save",
-    accountHeading: "Your account",
     remindersOff: "Your reminders are off.",
     deleteHeading: "Delete your account",
     deleteBody:
@@ -114,7 +113,6 @@ const hi = {
     todayCta: "आज सुबह बैठिए",
     setupCta: "अपना पत्र तय कीजिए",
     save: "सहेजिए",
-    accountHeading: "आपका खाता",
     remindersOff: "आपकी सूचनाएँ बंद हैं।",
     deleteHeading: "अपना खाता मिटाइए",
     deleteBody:

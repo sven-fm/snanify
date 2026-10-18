@@ -76,4 +76,18 @@ describe("/account", () => {
       expect(out).not.toContain(gone);
     }
   });
+
+  it("names the fold for what it does, and keeps it closed until opened", () => {
+    for (const [lang, label] of [
+      ["en", "Delete your account"],
+      ["hi", "अपना खाता मिटाइए"],
+    ] as const) {
+      const out = view(lang);
+      const summary = out.match(/<summary[^>]*>([\s\S]*?)<\/summary>/)?.[1] ?? "";
+      expect(summary).toContain(label);
+      expect(out).toMatch(/<details class="group[^"]*">/);
+      expect(out).not.toMatch(/<details[^>]*open/);
+    }
+    expect(view("en")).not.toContain("Your account");
+  });
 });
