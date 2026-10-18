@@ -328,14 +328,6 @@ const faqEn = {
           ],
         },
         {
-          id: "refund",
-          q: "Can I get a refund?",
-          a: [
-            "Yes. Mornings you have not used are refunded in full on request. Write to hello@snanify.com.",
-            "A morning you have already sat is used and is not refunded. If the site failed you during a sitting, write to us and we refund that morning.",
-          ],
-        },
-        {
           id: "account",
           q: "Do I need an account?",
           a: [
@@ -539,14 +531,6 @@ export const faqContent = { en: faqEn, hi: {
           q: "ग्यारह ही क्यों?",
           a: [
             "शगुन ग्यारह की रीति से दिया जाता है: 11, 51, 101, 501। ऊपर का एक शगुन को गोल अंक से आगे बढ़ाता है। ग्यारह सुबहें इसी रीति पर हैं, और उनका मूल्य भी।",
-          ],
-        },
-        {
-          id: "refund",
-          q: "क्या राशि वापस मिल सकती है?",
-          a: [
-            "हाँ। जो सुबहें आपने नहीं लीं, वे कहने पर पूरी लौटा दी जाती हैं। hello@snanify.com पर लिखिए।",
-            "जो सुबह आप बैठ चुके, वह ली जा चुकी है और लौटाई नहीं जाती। यदि बैठक के दौरान साइट ने साथ छोड़ दिया हो, तो हमें लिखिए, हम वह सुबह लौटा देते हैं।",
           ],
         },
         {

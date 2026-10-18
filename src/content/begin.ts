@@ -31,6 +31,8 @@ const en = {
   payError: "Press Pay once more to open the payment page.",
   /* For a reader sent from /today or /account with every morning kept. */
   outLine: "You kept every morning. Pick your next ones.",
+  /* The packs alone (the menu's "Buy mornings", a returning buyer at zero). */
+  packsTitle: "Buy mornings",
   perLabel: "a morning",
   cta: "Pay {price}",
   opening: "Opening Stripe",
@@ -41,7 +43,6 @@ const en = {
     sixty: "Five a month for a year.",
   },
   note: "Stripe handles the payment.",
-  refund: "Unused mornings are refunded on request.",
   haveCredits: "You already have {credits} mornings on your account.",
   haveOne: "You already have one morning on your account.",
   toToday: "Do your snan this morning",
@@ -85,6 +86,7 @@ const hi = {
   cancelled: "भुगतान Stripe पर रुक गया। जब तैयार हों, अपनी सुबहें चुनिए।",
   payError: "भुगतान पृष्ठ खोलने के लिए भुगतान का बटन एक बार फिर दबाइए।",
   outLine: "आपने हर सुबह निभाई। अब अगली सुबहें चुनिए।",
+  packsTitle: "सुबहें खरीदिए",
   perLabel: "प्रति सुबह",
   cta: "{price} का भुगतान कीजिए",
   opening: "Stripe खुल रहा है",
@@ -94,7 +96,6 @@ const hi = {
     sixty: "महीने में पाँच, पूरे वर्ष।",
   },
   note: "भुगतान Stripe संभालता है।",
-  refund: "बची हुई सुबहें कहने पर लौटा दी जाती हैं।",
   haveCredits: "आपके खाते में पहले से {credits} सुबहें हैं।",
   haveOne: "आपके खाते में पहले से एक सुबह है।",
   toToday: "आज सुबह स्नान कीजिए",

@@ -29,7 +29,7 @@ const count = (s: string, re: RegExp) => (s.match(re) ?? []).length;
 const PRESS = /class="press(?=[\s"])(?![^"]*press-share)/g;
 
 const begin = (lang: "en" | "hi", extra: Partial<React.ComponentProps<typeof BeginView>> = {}) =>
-  html(React.createElement(BeginView, { lang, credits: 0, returning: false, ...extra }));
+  html(React.createElement(BeginView, { lang, credits: 0, ...extra }));
 
 describe("/begin", () => {
   it("carries one press, one band, one label and the price seal", () => {
@@ -57,12 +57,39 @@ describe("/begin", () => {
     expect(out).toContain("Pay once, no subscription. Sit on any morning you like.");
   });
 
-  it("keeps one press with mornings in hand, and the steps on a first visit only", () => {
-    const held = begin("en", { credits: 3, returning: true });
-    expect(count(held, PRESS)).toBe(1);
-    expect(held).toContain("You already have 3 mornings");
-    expect(held).not.toContain('aria-current="step"');
-    expect(begin("en")).toContain('aria-current="step"');
+  it("a first purchase carries the steps and the specimen beside the packs", () => {
+    const out = begin("en");
+    expect(out).toContain('aria-current="step"');
+    expect(out).toContain(`src="/specimen"`);
+  });
+
+  it("the packs alone: three choices, eleven chosen, one press, nothing that sells", () => {
+    for (const lang of ["en", "hi"] as const) {
+      const out = begin(lang, { packsOnly: true, credits: 49 });
+      expect(count(out, PRESS)).toBe(1);
+      for (const gone of ["data-band", "data-label", "data-seal", "/specimen\"", 'aria-current="step"']) {
+        expect(out, gone).not.toContain(gone);
+      }
+      expect(out).not.toContain(beginContent[lang].title);
+      expect(out).not.toContain(beginContent[lang].band);
+      const radios = out.match(/<input[^>]*type="radio"[^>]*>/g) ?? [];
+      expect(radios.length).toBe(3);
+      const checked = radios.filter((r) => /checked/.test(r));
+      expect(checked.length).toBe(1);
+      expect(checked[0]).toContain('value="eleven"');
+      expect(out).toContain(beginContent[lang].packsTitle);
+    }
+    expect(begin("en", { packsOnly: true, credits: 49 })).toContain("You already have 49 mornings");
+    /* The press names the chosen pack's price. */
+    const press = begin("en", { packsOnly: true }).split(PRESS)[1] ?? "";
+    expect(press).toContain("€11");
+  });
+
+  it("the packs alone keep a pack picked on a price table", () => {
+    const out = begin("en", { packsOnly: true, pack: "sixty" });
+    const checked = (out.match(/<input[^>]*type="radio"[^>]*>/g) ?? []).filter((r) => /checked/.test(r));
+    expect(checked).toHaveLength(1);
+    expect(checked[0]).toContain('value="sixty"');
   });
 
   it("drops the retired marks and the tint blocks", () => {

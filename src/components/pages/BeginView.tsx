@@ -10,6 +10,7 @@ import { Bindu } from "@/components/marks";
 import { Steps } from "@/components/site/Steps";
 import { startCheckout } from "@/app/[lang]/begin/actions";
 import { TrackedSubmit } from "@/components/site/TrackedSubmit";
+import { PackPicker } from "@/components/pages/PackPicker";
 
 /* ---------------------------------------------------------------------------
    The pay step as it is drawn (spec 6.3), from what Begin has already read:
@@ -24,6 +25,12 @@ import { TrackedSubmit } from "@/components/site/TrackedSubmit";
        beside it the eleven pack on the matchbox label under the price seal;
     5. the press, "Pay $11", full column width, under the thumb;
     6. one and sixty as plain ruled rows, each paid by an underlined link.
+
+   THE PACKS ALONE (`packsOnly`) for everyone here to buy who is past the
+   first purchase: the menu's "Buy mornings", a returning buyer at zero. The
+   menu's own words as the heading, the count in hand, the three packs as one choice with
+   eleven chosen, and the press. The specimen, the band and the offer belong
+   to the first purchase (src/lib/begin-path.ts decides which).
 
    ONE PRESS. The eleven's Pay is the only block on the page. One and sixty
    are rows whose Pay is a quiet link, and the way to today, for somebody
@@ -83,7 +90,8 @@ const W700 = { fontWeight: 700 } as const;
 export function BeginView({
   lang,
   credits,
-  returning,
+  packsOnly = false,
+  pack = "eleven",
   out = false,
   cancelled = false,
   error = false,
@@ -91,8 +99,10 @@ export function BeginView({
   lang: Lang;
   /** Mornings already on the account. */
   credits: number;
-  /** Bought before, or sent with every morning kept: the step line is for a first visit. */
-  returning: boolean;
+  /** The three packs alone, without the specimen, the band or the offer. */
+  packsOnly?: boolean;
+  /** The pack chosen when the packs stand alone. */
+  pack?: TierKey;
   out?: boolean;
   cancelled?: boolean;
   error?: boolean;
@@ -102,12 +112,50 @@ export function BeginView({
   const tiers = content[lang].pricing.tiers;
   const name = (tier: TierKey) => tiers.find((row) => row.key === tier)!.name;
   const lede = out ? t.outLine : t.setLine;
+  const held = credits === 1 ? t.haveOne : t.haveCredits.replace("{credits}", String(credits));
+
+  if (packsOnly) {
+    return (
+      <main className="overflow-x-clip">
+        <div className="mx-auto max-w-md px-5 pt-6 pb-16 sm:pt-10">
+          <h1
+            className={`display text-ink ${hi ? "text-[2rem]" : "text-[2.1rem] uppercase"}`}
+            style={{ fontWeight: 800, lineHeight: hi ? 1.22 : 0.95, letterSpacing: hi ? 0 : "-0.01em" }}
+          >
+            {t.packsTitle}
+          </h1>
+          {(credits > 0 || out) && (
+            <p className="mt-4 text-[0.9375rem] leading-[1.5] text-ink2">{credits > 0 ? held : t.outLine}</p>
+          )}
+
+          {cancelled && <Notice>{t.cancelled}</Notice>}
+          {error && <Notice>{t.payError}</Notice>}
+
+          <PackPicker
+            action={startCheckout.bind(null, lang)}
+            lang={lang}
+            pack={pack}
+            names={{ one: name("one"), eleven: name("eleven"), sixty: name("sixty") }}
+            blurbs={t.blurb}
+            perLabel={t.perLabel}
+            cta={t.cta}
+            opening={t.opening}
+            legend={t.packsTitle}
+          />
+
+          <p className="mt-6 text-sm leading-[1.6] text-ink2">
+            {t.note} <TaxNote lang={lang} />
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="overflow-x-clip">
       <div className="mx-auto max-w-md px-5 pt-6 pb-16 sm:pt-10">
         {/* The third of the three steps that began on /setup, for a first visit. */}
-        {!returning && <Steps steps={t.steps} here={[2]} label={t.title} className="mb-5" />}
+        <Steps steps={t.steps} here={[2]} label={t.title} className="mb-5" />
 
         {/* Capitals in Latin; Devanagari has no case and takes its own leading. */}
         <h1
@@ -127,7 +175,7 @@ export function BeginView({
         {credits > 0 ? (
           <div className="mt-5">
             <p className="text-[0.9375rem] leading-[1.5] text-ink">
-              {credits === 1 ? t.haveOne : t.haveCredits.replace("{credits}", String(credits))}
+              {held}
             </p>
             <Link href={localePath(lang, "/today")} className={buttonClass("quiet")}>
               {t.toToday}
@@ -181,7 +229,7 @@ export function BeginView({
         </ul>
 
         <p className="mt-6 text-sm leading-[1.6] text-ink2">
-          {t.note} <TaxNote lang={lang} /> {t.refund}
+          {t.note} <TaxNote lang={lang} />
         </p>
       </div>
     </main>

@@ -122,7 +122,7 @@ export const en = {
     cols: [
       { h: "Practice", links: ["Begin", "The snan"] },
       { h: "Reference", links: ["Panchang", "The rivers now", "Sacred waters", "Muhurat", "Questions"] },
-      { h: "Legal", links: ["Privacy", "Terms", "Refunds"] },
+      { h: "Legal", links: ["Privacy", "Terms"] },
     ],
     made: "Prayagraj and Berlin",
     rights: "© 2026 Snanify",

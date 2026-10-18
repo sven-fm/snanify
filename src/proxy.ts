@@ -108,6 +108,38 @@ function route(req: NextRequest) {
 const withClerk = clerkMiddleware(async (_auth, req) => route(req));
 
 /**
+ * THE LANDING, FOR SOMEBODY SIGNED IN, IS THEIR ACCOUNT. A signed-in visitor
+ * on `/` or `/hi` is sent on with a 307 to /account, where the register and
+ * the one press for this morning are; /account forwards somebody who has not
+ * set up yet to /setup. The landing itself stays a static page.
+ *
+ * ONLY A POSSIBLE SESSION PAYS FOR CLERK. A stranger, and every crawler, has
+ * no Clerk cookie and goes straight to the rewrite, so the landing keeps the
+ * fast first paint the comment on APP_PATH is about. A cookie that says a
+ * session may exist (`__session*`, or a `__client_uat*` that is not "0") runs
+ * Clerk's middleware, which verifies it before anything is redirected.
+ */
+export function isLanding(pathname: string): boolean {
+  const bare = pathname.replace(/\/$/, "") || "/";
+  return bare === "/" || [...PREFIXES].some((p) => bare === `/${p}`);
+}
+
+export function mightBeSignedIn(cookies: { name: string; value: string }[]): boolean {
+  return cookies.some(
+    ({ name, value }) =>
+      (/^__session(?:_|$)/.test(name) && value !== "") || (/^__client_uat(?:_|$)/.test(name) && value !== "" && value !== "0"),
+  );
+}
+
+const landingWithClerk = clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
+  if (!userId) return route(req);
+  const first = req.nextUrl.pathname.split("/")[1];
+  const prefix = PREFIXES.has(first) ? `/${first}` : "";
+  return NextResponse.redirect(new URL(`${prefix}/account`, req.url), 307);
+});
+
+/**
  * Only the signed-in routes pass through Clerk. On a marketing page Clerk has
  * nothing to read, and on a development instance its middleware answered a
  * first visit with a round trip to clerk.accounts.dev and back, 1.6 seconds
@@ -117,7 +149,10 @@ const withClerk = clerkMiddleware(async (_auth, req) => route(req));
 const APP_PATH = /^\/(?:[a-z]{2}\/)?(?:begin|setup|today|account|p|specimen|sign-in|sign-up|sign-out)(?:\/|$)/;
 
 export function proxy(req: NextRequest, event: NextFetchEvent) {
-  return APP_PATH.test(req.nextUrl.pathname) ? withClerk(req, event) : route(req);
+  const { pathname } = req.nextUrl;
+  if (APP_PATH.test(pathname)) return withClerk(req, event);
+  if (isLanding(pathname) && mightBeSignedIn(req.cookies.getAll())) return landingWithClerk(req, event);
+  return route(req);
 }
 
 export const config = {

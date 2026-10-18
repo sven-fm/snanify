@@ -33,6 +33,7 @@ export default async function Page({
   params: Promise<{ lang: Lang }>;
   searchParams: Promise<{
     pack?: string;
+    buy?: string;
     cancelled?: string;
     go?: string;
     error?: string;
@@ -51,6 +52,7 @@ export default async function Page({
     <Begin
       lang={lang}
       pack={query.pack}
+      buy={query.buy === "1"}
       cancelled={query.cancelled === "1"}
       error={query.error === "pay"}
       out={query.out === "1"}

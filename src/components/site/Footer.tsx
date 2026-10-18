@@ -11,8 +11,8 @@ import { RiverHorizon } from "@/components/kit";
  * have to be kept in step with it. The indices are the three columns as they
  * are written in src/content/landing/en.ts: service, company, legal.
  */
-/* In the order `t.footer.cols[LEGAL].links` sets them: privacy, terms, refunds. */
-const LEGAL_ROUTES = ["/privacy", "/terms", "/terms#refunds"];
+/* In the order `t.footer.cols[LEGAL].links` sets them: privacy, terms. */
+const LEGAL_ROUTES = ["/privacy", "/terms"];
 
 const PRACTICE = 0;
 const REFERENCE = 1;
@@ -71,9 +71,6 @@ export function Footer({ lang }: { lang: Lang }) {
 
           <div>
             <h2 className="label text-ink">{t.footer.cols[LEGAL].h}</h2>
-            {/* Privacy and terms are real pages now. Refunds is answered
-                inside the terms rather than on a page of its own, so it points
-                at that section instead of at a route that does not exist. */}
             <ul className="mt-4 space-y-2.5">
               {t.footer.cols[LEGAL].links.map((label, i) => (
                 <li key={label}>

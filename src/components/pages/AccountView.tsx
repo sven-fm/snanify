@@ -107,7 +107,7 @@ export function AccountView({
           )}
           {credits > 0 && (
             <div>
-              <Link href={localePath(lang, "/begin")} className={buttonClass("quiet", "mt-2")}>
+              <Link href={`${localePath(lang, "/begin")}?buy=1`} className={buttonClass("quiet", "mt-2")}>
                 {t.buyCta}
               </Link>
             </div>
