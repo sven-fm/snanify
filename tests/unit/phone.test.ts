@@ -3,7 +3,24 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Phone, PHONE_GEOMETRY as G } from "@/components/kit/Phone";
 import { Specimen } from "@/components/Specimen";
-import { SittingLoop } from "@/components/snan/SittingLoop";
+import { Walkthrough } from "@/components/snan/Walkthrough";
+import type { WalkData } from "@/lib/walkthrough";
+
+const WALK: WalkData = {
+  river: "Ganga",
+  place: "Har Ki Pauri, Haridwar",
+  state: "Running full.",
+  plain: "Fuller than usual for this time of year.",
+  percentile: 86,
+  figure: "669 m³/s, 86th percentile since 1997",
+  names: ["Anjali Sharma", "Vikram Sharma"],
+  sankalp: "For my mother, every morning this month.",
+  sheetTitle: "Sankalp Patra",
+  dateLine: "19 October 2026 · Shukla 9",
+  placeLine: ["at the ", "Ganga", ", Har Ki Pauri, Haridwar"],
+  badge: ["7th", "morning"],
+  timeLine: "06:12 in New York · 15:42 IST · 11,650 km away",
+};
 
 /* ---------------------------------------------------------------------------
    The shared phone (owner feedback, 18 Oct): one iPhone-like frame on the
@@ -58,10 +75,10 @@ describe("the phone", () => {
     expect(html).toMatch(/class="phone-content[^"]*"[^>]*><i id="x">/);
   });
 
-  it("is the one frame used by the specimen and the looped sitting", () => {
+  it("is the one frame used by the specimen and the walkthrough", () => {
     for (const lang of ["en", "hi"] as const) {
       const spec = renderToStaticMarkup(React.createElement(Specimen, { lang }));
-      const loop = renderToStaticMarkup(React.createElement(SittingLoop, { lang }));
+      const loop = renderToStaticMarkup(React.createElement(Walkthrough, { lang, data: WALK }));
       for (const html of [spec, loop]) {
         expect(html.match(/class="phone /g)?.length).toBe(1);
         expect(html).toContain("phone-content");

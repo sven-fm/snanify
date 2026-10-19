@@ -31,7 +31,7 @@ export function Gauge({
   figure?: string;
   /** The state and its plain sentence above the strip. */
   heading?: boolean;
-  /** A sindoor ring swells from the dot and fades (`pulse`), so the eye goes to today. The sitting's reading only. */
+  /** A sindoor ring swells from the dot and fades (`pulse`), so the eye goes to today. Wherever the dot is today's current figure. */
   pulse?: boolean;
   className?: string;
 }) {

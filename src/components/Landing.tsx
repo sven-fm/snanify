@@ -175,6 +175,7 @@ export function Landing({ lang, live }: { lang: Lang; live: LiveCard }) {
               band={live.band}
               lang={lang}
               figure={live.figure}
+              pulse
             />
             {live.muhurat ? (
               <p className="tabular mt-1 text-[0.75rem] leading-[1.4] text-ink2">{live.muhurat}</p>

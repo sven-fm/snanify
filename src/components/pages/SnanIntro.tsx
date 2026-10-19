@@ -4,20 +4,22 @@ import type { Lang } from "@/lib/locales";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { PastHero } from "@/components/site/PastHero";
-import { SittingLoop } from "@/components/snan/SittingLoop";
+import { Walkthrough } from "@/components/snan/Walkthrough";
 import { Specimen } from "@/components/Specimen";
 import { Band, Label, RiverHorizon, Seal } from "@/components/kit";
 import { buttonClass, CTA, CurrencyLine, Price, TaxNote } from "@/components/ui";
 import { snanContent } from "@/content/snan";
 import { PER_SNAN, PRICE } from "@/content/prices";
 import { clock, LIMB_START, SITTING } from "@/lib/sitting-plan";
+import type { WalkData } from "@/lib/walkthrough";
 
 /**
  * /snan, the landing's sibling (spec 6.2).
  *
  * 390px first. A capitals headline with the river word in sindoor, the band,
- * the price seal and the short pitch, then the one press. The five parts follow
- * as a list with their clocks and lengths from src/lib/sitting-plan.ts.
+ * the price seal and the short pitch, then the one press. The snan follows as a
+ * walkthrough in a phone (the launch video's cut, live, on today's figure), then
+ * the five parts as a list with their clocks and lengths from src/lib/sitting-plan.ts.
  *
  * One press above the parts (the hero's). The eleven pack carries the only
  * other press, far below, as on the landing; every other action is a quiet
@@ -38,7 +40,7 @@ const ROUTE = "/snan";
 const H2 = "display text-[1.75rem] leading-[1.12] sm:text-[2.25rem]";
 const W700 = { fontWeight: 700 } as const;
 
-export function SnanIntro({ lang }: { lang: Lang }) {
+export function SnanIntro({ lang, walk }: { lang: Lang; walk: WalkData }) {
   const t = snanContent[lang];
   const hi = lang === "hi";
   const begin = localePath(lang, "/begin");
@@ -99,8 +101,8 @@ export function SnanIntro({ lang }: { lang: Lang }) {
             </h2>
             <p className="mt-3 leading-[1.6] text-ink2">{t.form.lede}</p>
 
-            <div className="mt-8 flex justify-center">
-              <SittingLoop lang={lang} />
+            <div className="mt-8">
+              <Walkthrough lang={lang} data={walk} />
             </div>
 
             <ol id="parts" className="mt-10 border-b border-rule">

@@ -81,6 +81,13 @@ type Copy = {
     readonly limbs: readonly Limb[];
   };
 
+  /** The walkthrough in the phone: one caption per screen, "|" breaks a line,
+      the *starred* word goes sindoor. Then the jump buttons' label. */
+  readonly walk: {
+    readonly captions: readonly [string, string, string, string, string];
+    readonly show: string;
+  };
+
   readonly still: {
     readonly title: string;
     readonly body: string;
@@ -189,6 +196,17 @@ const en: Copy = {
         ],
       },
     ],
+  },
+
+  walk: {
+    captions: [
+      "The *Ganga*,|this morning.",
+      "Breathe with|the *river*.",
+      "Hold your|own *sankalp*.",
+      "Be *still*.|One minute.",
+      "Send it to|the *family*.",
+    ],
+    show: "Show part {n}",
   },
 
   still: {
@@ -342,6 +360,17 @@ const hi: Copy = {
         ],
       },
     ],
+  },
+
+  walk: {
+    captions: [
+      "आज सुबह की|*गंगा*।",
+      "*नदी* के साथ|साँस लीजिए।",
+      "अपना *संकल्प*|थामिए।",
+      "*शांत* रहिए।|एक मिनट।",
+      "*परिवार* को|भेजिए।",
+    ],
+    show: "भाग {n} देखिए",
   },
 
   still: {

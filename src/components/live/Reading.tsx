@@ -75,7 +75,7 @@ export function readingView(water: WaterState, lang: Lang): ReadingView {
 export function Reading({ view, lang, className = "" }: { view: ReadingView; lang: Lang; className?: string }) {
   return (
     <div data-reading className={className}>
-      <Gauge percentile={view.percentile} band={view.band} lang={lang} figure={view.figure} />
+      <Gauge percentile={view.percentile} band={view.band} lang={lang} figure={view.figure} pulse />
       <p data-source className="mt-0.5 text-[0.75rem] leading-[1.4] text-ink2">
         {view.source}
       </p>

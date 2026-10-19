@@ -17,10 +17,20 @@ import { cardImages } from "@/lib/page-cards";
 import { pageMetadata } from "@/lib/seo";
 import { currencyForLang, PRICE } from "@/content/prices";
 import { PACKS } from "@/lib/packs";
+import { REVALIDATE_SECONDS } from "@/lib/riverdata";
+import { walkData } from "@/lib/walkthrough";
 
 /* Public URL shape: English unprefixed, Hindi under /hi. Built through
    localePath so a route rename cannot strand one locale. */
 const ROUTE = "/snan";
+
+/* The walkthrough in the phone carries today's figure, so the page is
+   regenerated on the river's own schedule, as the landing is. */
+export const revalidate = 1800;
+
+if (revalidate !== REVALIDATE_SECONDS) {
+  throw new Error(`snan: revalidate is ${revalidate} but riverdata caches for ${REVALIDATE_SECONDS}`);
+}
 
 export function generateStaticParams() {
   return LANGS.map((lang) => ({ lang }));
@@ -104,7 +114,7 @@ export default async function Page({ params }: { params: Promise<{ lang: Lang }>
   return (
     <>
       <StructuredData graph={graph} />
-      <SnanIntro lang={lang} />
+      <SnanIntro lang={lang} walk={await walkData(lang)} />
     </>
   );
 }

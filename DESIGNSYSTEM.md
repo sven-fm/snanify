@@ -313,7 +313,10 @@ the specimen phone centred in its own section.
 
 `src/components/pages/SnanIntro.tsx`. The landing's sibling: the capitals headline "Three
 minutes with your {River}.", the band, one press, the five parts as a list with their
-durations, and the sitting looped in a phone (`SittingLoop`).
+durations, and the snan walked through in a phone (`snan/Walkthrough.tsx`): the launch video's
+cut, live, on today's figure. Five screens swipe through the phone under their captions in
+capitals, each moving as it does in the sitting; a numbered row under the phone jumps to a part.
+Under reduced motion nothing plays and the row steps the screens.
 
 ### `/begin`, sign-in and setup
 
@@ -478,7 +481,7 @@ delivery learning.
 
 ## Motion
 
-Eight motions, named, and nothing else. Transform and opacity only. All stop under
+Nine motions, named, and nothing else. Transform and opacity only. All stop under
 `prefers-reduced-motion`. `pulse` and `count` came from the owner's notes of 18 October 2026.
 
 | Name | What | Where |
@@ -489,8 +492,9 @@ Eight motions, named, and nothing else. Transform and opacity only. All stop und
 | `flow` | Each wave line drifts sideways by one period at its own pace (`.flow-line`); the sun's path shimmers (`.flow-glint`) | The strip, the full river |
 | `breathe` | The waves' vertical scale, 4s up and 6s down, at the river's own amplitude (`.breathe-waves`), scrubbed by the sitting's clock | The breath only |
 | `stamp` | The seal lands from scale 1.15 and -14° to its rest in 180ms, stepped (`.stamp`) | The morning badge at the mark |
-| `pulse` | A sindoor ring swells from the gauge's dot and fades, once every 1.6s (`.pulse-ring`); the dot itself stays put | The reading's gauge only |
+| `pulse` | A sindoor ring swells from the gauge's dot and fades, once every 1.6s (`.pulse-ring`); the dot itself stays put | Every gauge whose dot is today's current figure: the sitting's reading, the landing, `/live`, `/rivers/[river]`. A quiet feed draws no dot, so nothing pulses |
 | `count` | A countdown numeral's opacity, scrubbed by the sitting's clock (`src/lib/countdown.ts`): a breath number fades away across its second, a stillness number cross-fades into the next. No timer of its own. Under reduced motion the plain numbers stand at full ink | The breath, the stillness |
+| `swipe` | The launch video's cut: screens slide sideways as one track, eased in and out over 0.8s, each held 3.4s, the caption above riding with its screen; inside each screen the sitting's own motion plays in miniature. One clock in a script, run only while on screen (`snan/Walkthrough.tsx`). Under reduced motion it stands still and steps on a tap | The walkthrough on `/snan` |
 
 `flicker`, the petal drift, the old `impress` plate and the old flowing bands are retired.
 Only numerals, bars and pictures reveal on scroll (`.reveal`, `.grow`, `.ink-picture-lazy`
