@@ -12,6 +12,8 @@ const RULES = [
   [/\b(Hindus abroad|NRIs?|as a Hindu|you Hindus)\b/i, "telling readers who they are"],
   [/\b(Jal Sankalp|Jal Chihna|Watermark|Jal Path|Shwas|Maun|Chihn)\b/, "retired coined name"],
   [/·/, "middle dot"],
+  [/holy (dip|water)|punya(?! kaal)|as good as being there|measured at the ghat|passes the ghat|most people/i, "off limits (copy-guard)"],
+  [/\b(Diya|Petals|Tilak|Kumkum|Mauli)\b/, "retired mark named on a card"],
 ];
 const strings = (v) => (typeof v === "string" ? [v] : Array.isArray(v) ? v.flatMap(strings) : v && typeof v === "object" ? Object.values(v).flatMap(strings) : []);
 let bad = 0;

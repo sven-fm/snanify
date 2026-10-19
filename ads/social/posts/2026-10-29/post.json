@@ -2,20 +2,17 @@
   "date": "2026-10-29",
   "day": "Thu",
   "lang": "en",
-  "style": "B1",
+  "style": "plain",
   "motion": false,
   "theme": "Kartik custom: deep daan, the lamp at dusk",
   "cta": "soft",
   "path": "/",
   "card": {
-    "style": "calendar",
-    "scene": "lamps",
-    "sash": "Kartik, day 3",
-    "kicker": "Thursday 29 October",
-    "title": "Deep|daan",
-    "sub": "A lamp on a leaf, set on the water",
-    "line": "Dawn belongs to the river. Dusk belongs to the lamp.",
+    "style": "plain",
+    "when": "Kartik, day 3",
+    "head": "Dawn for|the *river*.|Dusk for|the lamp.",
+    "sub": "Deep daan: a lamp on a leaf, set on the water.",
     "cta": "Sit with the Ganga"
   },
-  "text": "\nKartik keeps two hours of the day. Dawn is for the snan. Dusk is for the lamp.\n\nDeep daan is the simplest of the evening customs: a lamp on a leaf, lit and set on the water from the step. Through the month, households light lamps at the door, by the tulsi and on the river.\n\nSit with the river at dawn. Light one lamp at dusk, at your own door. Two small acts, one day kept.\n\nYour Kartik morning, three minutes:"
+  "text": "\nKeep both hours of Kartik. Dawn is for the snan. Dusk is for the lamp.\n\nDeep daan is the simplest of the evening customs: a lamp on a leaf, lit and set on the water from the step. Through the month, households light lamps at the door, by the tulsi and on the river.\n\nSit with the river at dawn. Light 1 lamp at dusk, at your own door. 2 small acts, 1 day kept.\n\nYour Kartik morning, 3 minutes:"
 }

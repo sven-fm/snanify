@@ -24,7 +24,7 @@ for (const post of POSTS) {
   if (days.length && !days.includes(post.date)) continue;
   const dir = `ads/social/posts/${post.date}`;
   mkdirSync(dir, { recursive: true });
-  const card = { ...post.card, lang: post.lang, img: fileUrl(post.card.img), phone: fileUrl(post.card.phone) };
+  const card = { ...post.card, lang: post.lang, img: fileUrl(post.card.img), phone: fileUrl(post.card.phone), sheet: fileUrl(post.card.sheet) };
   const page = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
   await page.goto(`${page_}#${encodeURIComponent(JSON.stringify(card))}`);
   await page.waitForSelector("body[data-ready]");

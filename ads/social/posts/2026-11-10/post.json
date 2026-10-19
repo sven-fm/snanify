@@ -2,26 +2,17 @@
   "date": "2026-11-10",
   "day": "Tue",
   "lang": "en",
-  "style": "B2",
+  "style": "plain",
   "motion": true,
   "theme": "Ghat: the Yamuna at Vishram Ghat, Yam Dwitiya tomorrow",
   "cta": "front",
   "path": "/rivers/yamuna-mathura",
   "card": {
-    "style": "matchbox",
-    "dur": 7,
-    "kicker": "Vishram Ghat, Mathura",
-    "hook": "Tomorrow:|Yam Dwitiya.",
-    "brand": "Braj brand",
-    "number": "No. 03",
-    "emblem": "two",
-    "name": "Yamuna",
-    "tagline": "Krishna's own river, and Yama's sister",
-    "seal": {
-      "big": "2",
-      "small": "names, one river"
-    },
+    "style": "plain",
+    "when": "Vishram Ghat, Mathura",
+    "head": "*Yamuna*.|Tomorrow,|Yam Dwitiya.",
+    "sub": "Brother and sister. 1 river. 1 morning.",
     "cta": "Sit with the Yamuna"
   },
-  "text": "\nThe Yamuna is the daughter of Surya and the sister of Yama.\n\nTomorrow, Wednesday 11 November, is Yam Dwitiya, the day much of India keeps as Bhai Dooj. The story is of Yamuna receiving her brother Yama at her house. At Vishram Ghat in Mathura, brothers and sisters bathe in the Yamuna together, and the crowd that morning is the ghat's largest of the year.\n\nIt is a day built around a sibling, and a family spread across three countries can keep it on the same morning.\n\nPut your brother's or sister's name on your Patra, and sit with the Yamuna tomorrow. Set it up today:"
+  "text": "\nPut your brother's or sister's name on tomorrow's Patra. Wednesday 11 November is Yam Dwitiya, the day much of India keeps as Bhai Dooj.\n\nThe Yamuna is the daughter of Surya and the sister of Yama. The story is of Yamuna receiving her brother at her house. At Vishram Ghat in Mathura, brothers and sisters step into the Yamuna together, and the crowd that morning is the ghat's largest of the year.\n\nIt is a day built around a sibling, and a family spread across 3 countries can keep it on the same morning.\n\nSet it up today, and sit with the Yamuna tomorrow:"
 }

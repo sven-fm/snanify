@@ -2,33 +2,31 @@
   "date": "2026-11-03",
   "day": "Tue",
   "lang": "en",
-  "style": "B1",
+  "style": "plain",
   "motion": false,
   "theme": "Panchang: Toronto and Har Ki Pauri, same morning, two clocks",
   "cta": "soft",
   "path": "/panchang/toronto",
   "card": {
-    "style": "calendar",
-    "scene": "dawn",
-    "sash": "Kartik, day 8",
-    "kicker": "Tuesday 3 November",
-    "title": "Two clocks,|one morning",
-    "sub": "Wednesday 4 November",
+    "style": "plain",
+    "when": "Kartik, day 8",
+    "head": "2 clocks.|*1 morning.*",
+    "sub": "Wednesday 4 November.",
     "rows": [
       [
-        "Brahma muhurat, Toronto",
+        "Toronto",
         "05:06 to 06:01"
       ],
       [
-        "Har Ki Pauri at that moment",
+        "Har Ki Pauri then",
         "15:36 IST"
       ],
       [
-        "Brahma muhurat, Har Ki Pauri",
-        "04:48 to 05:40"
+        "Har Ki Pauri",
+        "04:48 to 05:40 IST"
       ]
     ],
     "cta": "Find your hour"
   },
-  "text": "\nSame morning, two clocks.\n\nTomorrow, Wednesday 4 November, Brahma muhurat opens in Toronto at 05:06. At that moment it is 15:36 at Har Ki Pauri, and the river has been running in daylight for nine hours.\n\nThe Ganga keeps its day. You keep yours: the river's figure for today, read in your own hour, with the time in Toronto and in IST side by side on your Sankalp Patra.\n\nFind your city's hours, then sit:"
+  "text": "\nRead the same morning on 2 clocks.\n\nTomorrow, Wednesday 4 November, Brahma muhurat opens in Toronto at 05:06. At that moment it is 15:36 at Har Ki Pauri, and the river has run in daylight for 9 hours.\n\nThe Ganga keeps its day. You keep yours: the river's figure for today, read in your own hour, with the time in Toronto and in IST side by side on your Sankalp Patra.\n\nFind your city's hours, then sit:"
 }

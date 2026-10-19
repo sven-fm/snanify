@@ -2,7 +2,7 @@
   "date": "2026-10-27",
   "day": "Tue",
   "lang": "en",
-  "style": "B1",
+  "style": "calendar",
   "motion": true,
   "theme": "Date: Kartik snan, day 1",
   "cta": "front",
@@ -10,11 +10,10 @@
   "card": {
     "style": "calendar",
     "scene": "dawn",
-    "dur": 8,
-    "sash": "Day 1 of 29",
-    "kicker": "Tuesday 27 October",
-    "title": "Kartik|snan",
-    "sub": "The first morning is today",
+    "dur": 7,
+    "kick": "Tuesday 27 October",
+    "title": "Kartik snan",
+    "sub": "Day 1 of 29. Today.",
     "rows": [
       [
         "Sunrise, Har Ki Pauri",
@@ -29,7 +28,7 @@
         "04:52 to 05:48"
       ]
     ],
-    "cta": "Sit your first morning"
+    "cta": "Do your first snan"
   },
-  "text": "\nKartik snan begins this morning.\n\nFor 29 mornings, to the full moon of 24 November, Har Ki Pauri keeps the month as a daily discipline: a bath before dawn, lamps in the evening, a lighter table.\n\nKeep it with the Ganga from wherever you wake. Three minutes: today's flow at Har Ki Pauri, a breath with the river, your sankalp. Then the family gets a Sankalp Patra with their names on it.\n\nSit your first Kartik morning now:"
+  "text": "\nDo your first Kartik snan today!\n\nFor 29 mornings, to the full moon of 24 November, Har Ki Pauri keeps the month as a daily discipline: the river before dawn, lamps in the evening, a lighter table.\n\nKeep it with the Ganga from wherever you wake. 3 minutes: today's flow at Har Ki Pauri, a breath with the river, your sankalp. Then the family gets a Sankalp Patra with their names on it.\n\nSit your first Kartik morning now:"
 }

@@ -2,38 +2,36 @@
   "date": "2026-11-08",
   "day": "Sun",
   "lang": "en",
-  "style": "B4",
+  "style": "signboard",
   "motion": true,
   "theme": "Date: Naraka Chaturdashi this morning, Lakshmi puja tonight (Kartik day 13)",
   "cta": "front",
   "path": "/",
   "card": {
     "style": "signboard",
-    "dur": 7,
-    "kicker": "Sun 8 Nov",
+    "when": "Sunday 8 November",
     "top": "Diwali",
     "bottom": "tonight",
     "seal": {
-      "big": "13",
-      "small": "of 29 Kartik mornings"
+      "a": "13",
+      "b": "of 29 Kartik mornings"
     },
-    "band": "Abhyanga snan at dawn. Lakshmi puja at dusk.",
+    "sub": "Abhyanga snan at dawn. Lakshmi puja at dusk.",
     "rows": [
       [
-        "Sunrise, Har Ki Pauri",
+        "Har Ki Pauri",
         "06:36 IST"
       ],
       [
-        "Sunrise, New York",
+        "New York",
         "06:34"
       ],
       [
-        "Sunrise, London",
+        "London",
         "07:06"
       ]
     ],
-    "cta": "Sit before the lamps",
-    "okp": "SHUBH DEEPAVALI"
+    "cta": "Sit before the lamps"
   },
-  "text": "\nShubh Deepavali.\n\nThis morning is Naraka Chaturdashi, the abhyanga snan before sunrise. This evening is Lakshmi puja, as the new moon holds at dusk. Tomorrow at dawn the same new moon gives Har Ki Pauri its Somvati Amavasya.\n\nGive the river three minutes before the house fills. Sit with the Ganga, hold your sankalp, and send the family a Sankalp Patra with their names on it before the first lamp is lit.\n\nSit with the Ganga this morning:"
+  "text": "\nShubh Deepavali.\n\nThis morning is Naraka Chaturdashi, the abhyanga snan before sunrise. This evening is Lakshmi puja, as the new moon holds at dusk. Tomorrow at dawn the same new moon gives Har Ki Pauri its Somvati Amavasya.\n\nGive the river 3 minutes before the house fills. Sit with the Ganga, hold your sankalp, and send the family a Sankalp Patra with their names on it before the first lamp is lit.\n\nSit with the Ganga this morning:"
 }

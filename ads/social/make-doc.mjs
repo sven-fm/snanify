@@ -4,7 +4,7 @@
 import { writeFileSync } from "node:fs";
 import { POSTS, caption } from "./calendar.mjs";
 
-const STYLE = { B1: "B1 calendar art", B2: "B2 matchbox", B4: "B4 signboard" };
+const STYLE = { plain: "PLAIN", calendar: "calendar art", signboard: "signboard", matchbox: "matchbox" };
 const asset = (p) => (p.motion ? `ads/social/posts/${p.date}/video.mp4` : `ads/social/posts/${p.date}/card.png`);
 const when = (p) => new Date(`${p.date}T12:00:00Z`).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
 
@@ -12,8 +12,9 @@ const out = [];
 out.push(`# Facebook calendar, 17 October to 15 November 2026
 
 Thirty posts for the Snanify Page, one a day, each ready to publish: the words, the card or
-video, the link. The daily task \`snanify-facebook-posts\` reads this file each morning, takes
-the day's row and schedules it for about 05:00 New York. Generated from
+video, the link. Each is scheduled in Facebook's own scheduler for 05:00 New York, so Meta
+publishes it; the daily task \`snanify-facebook-posts\` checks every morning that the next 3
+days are in the Planner and schedules any that are missing. Generated from
 \`ads/social/calendar.mjs\` by \`node ads/social/make-doc.mjs\`: edit the module, not this file.
 
 **The mix.** Three buckets, in turn: the dates (occasions, the panchang, Kartik snan day by
@@ -21,9 +22,13 @@ day), the rivers (the six waters, their stories and names) and the practice (the
 the breath, the Patra, Kartik customs). Hindi every Saturday. Every post ends on the snan:
 front and centre on a dated day and on the Friday Patra, lighter on a river or a practice day.
 
-**The look.** B1 calendar art for festival days and the panchang, B2 the matchbox label for
-the rivers and the price, B4 the painted signboard for the loud days. Fifteen posts move (an
-MP4, 4:5, 7 to 21 seconds, silent, its last frame as \`poster.png\`); fifteen are still.
+**The look.** The brand kit (\`brand/README.md\`; \`DESIGNSYSTEM.md\` is canonical). PLAIN by
+default: solid marigold, ink capitals with the river's name in sindoor, the press on its ink
+wall, the seal, the river at the foot. Calendar art for festival days, the signboard for a
+few loud days, the matchbox label for the eleven-morning pack only. Hindi on the cards in
+Noto Serif Devanagari with Devanagari numerals. Fifteen posts move (an MP4, 4:5, 7 seconds,
+the breath 21, silent, its last frame as \`poster.png\`), in the brand's own motions only:
+flow, pull, stamp, sink, breathe and count. Facebook publishes a Page video as a reel.
 
 **The facts.** Dates from \`resolveOccasion()\`, hours from \`cityDay()\` and astronomy-engine at
 each ghat, computed 16 October 2026 (\`ads/social/_sky.json\`). Stories from

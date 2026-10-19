@@ -2,7 +2,7 @@
   "date": "2026-11-09",
   "day": "Mon",
   "lang": "en",
-  "style": "B1",
+  "style": "calendar",
   "motion": true,
   "theme": "Date: Somvati Amavasya, the Diwali new moon on a Monday (Kartik day 14)",
   "cta": "front",
@@ -10,10 +10,9 @@
   "card": {
     "style": "calendar",
     "scene": "newmoon",
-    "dur": 8,
-    "sash": "Today",
-    "kicker": "Monday 9 November",
-    "title": "Somvati|Amavasya",
+    "dur": 7,
+    "kick": "Monday 9 November",
+    "title": "Somvati Amavasya",
     "sub": "The Diwali new moon, on a Monday",
     "rows": [
       [
@@ -27,5 +26,5 @@
     ],
     "cta": "Sit with the Ganga"
   },
-  "text": "\nA new moon on a Monday is Somvati Amavasya, and this one is the Diwali new moon.\n\nAt Haridwar it is the greatest of the amavasya bathing days. Har Ki Pauri on a Somvati morning is the fullest the ghat gets outside a Kumbh. The sun rose over the steps today at 06:37 IST.\n\nAmavasya is also the day tradition gives to the departed of one's line. Name them in your sankalp this morning.\n\nDay 14 of Kartik. Sit with the Ganga now:"
+  "text": "\nSit with the Ganga on Somvati Amavasya. A new moon on a Monday carries that name, and this one is the Diwali new moon.\n\nAt Haridwar it is the greatest of the amavasya bathing days. Har Ki Pauri on a Somvati morning is the fullest the ghat gets outside a Kumbh. The sun rose over the steps today at 06:37 IST.\n\nAmavasya is also the day tradition gives to the departed of one's line. Name them in your sankalp this morning.\n\nDay 14 of Kartik. Sit with the Ganga now:"
 }

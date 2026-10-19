@@ -2,29 +2,27 @@
   "date": "2026-10-30",
   "day": "Fri",
   "lang": "en",
-  "style": "B4",
+  "style": "plain",
   "motion": false,
   "theme": "Patra: what the sheet carries, line by line",
   "cta": "front",
   "path": "/",
   "card": {
-    "style": "signboard",
-    "kicker": "Fri 30 Oct",
-    "top": "Sankalp",
-    "bottom": "Patra",
-    "band": "One sheet for every morning you sit.",
+    "style": "plain",
+    "when": "Friday 30 October",
+    "head": "Your *Sankalp*|*Patra*.",
     "rows": [
       [
         "Names",
-        "up to five"
+        "up to 5"
       ],
       [
-        "The water",
-        "one of six"
+        "The river",
+        "1 of 6"
       ],
       [
         "Today's flow",
-        "and its rank"
+        "and how it runs"
       ],
       [
         "The tithi",
@@ -39,8 +37,8 @@
         "yours and IST"
       ]
     ],
-    "cta": "Make yours",
-    "okp": false
+    "offer": "Eleven mornings for eleven.",
+    "cta": "Make yours"
   },
-  "text": "\nHere is what the Sankalp Patra carries, line by line.\n\nUp to five names from your family. The water you sat with, one of six. That morning's flow and its rank against every day since 1997. The tithi. The distance from your home to the ghat. The hour, in your city and in IST. One prayer you chose. Your portrait, if you add one. And an engraving drawn from that day's flow, so every morning's sheet carries its own water.\n\nOne Patra for every morning you complete. Eleven mornings, eleven sheets for the family group.\n\nMake your first one this morning:"
+  "text": "\nMake your first Sankalp Patra this morning. Here is what it carries.\n\nUp to 5 names from your family. The river you sat with, 1 of 6. That morning's flow and how it runs for this time of year. The tithi. The distance from your home to the ghat. The hour, in your city and in IST. 1 prayer you chose. Your portrait, if you add one. And an engraving drawn from that day's flow, so every morning's sheet carries its own water.\n\n1 Patra for every morning you sit. 11 mornings, 11 sheets for the family group.\n\nMake yours this morning:"
 }

@@ -2,28 +2,25 @@
   "date": "2026-11-11",
   "day": "Wed",
   "lang": "en",
-  "style": "B4",
+  "style": "signboard",
   "motion": false,
   "theme": "Date: Yam Dwitiya, Bhai Dooj, at the Yamuna in Mathura",
   "cta": "front",
   "path": "/",
   "card": {
     "style": "signboard",
-    "kicker": "Wed 11 Nov",
+    "when": "Wednesday 11 November",
     "top": "Bhai",
     "bottom": "Dooj",
     "seal": {
-      "big": "2",
-      "small": "names on one sheet"
+      "a": "2",
+      "b": "names, 1 sheet"
     },
-    "band": "Yam Dwitiya at the Yamuna, Mathura.",
-    "rows": [
-      [
-        "Sunrise, Vishram Ghat",
-        "06:36 IST"
-      ]
-    ],
+    "box": {
+      "h": "Yam Dwitiya at the *Yamuna*.",
+      "p": "Put both your names on the Sankalp Patra. Send it before breakfast."
+    },
     "cta": "Sit with the Yamuna"
   },
-  "text": "\nToday is Yam Dwitiya, Bhai Dooj.\n\nAt Vishram Ghat, brothers and sisters step into the Yamuna together. Siblings today live in different cities and different time zones. The river is the same for both of you.\n\nSit three minutes with the Yamuna, put both your names on the Sankalp Patra, and send it to your brother or sister before breakfast.\n\nSit with the Yamuna this morning:"
+  "text": "\nToday is Yam Dwitiya, Bhai Dooj.\n\nAt Vishram Ghat, brothers and sisters step into the Yamuna together. Siblings today live in different cities and different time zones. The river is the same for both of you.\n\nSit 3 minutes with the Yamuna, put both your names on the Sankalp Patra, and send it to your brother or sister before breakfast.\n\nSit with the Yamuna this morning:"
 }

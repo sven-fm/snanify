@@ -2,23 +2,32 @@
   "date": "2026-11-04",
   "day": "Wed",
   "lang": "en",
-  "style": "B4",
+  "style": "plain",
   "motion": false,
   "theme": "Date: Rama Ekadashi, 4 Nov in the Americas and London, 5 Nov in the Gulf and India; Diwali in 4 days",
   "cta": "front",
   "path": "/",
   "card": {
-    "style": "signboard",
-    "kicker": "Wed 4 Nov",
-    "top": "Rama",
-    "bottom": "Ekadashi",
+    "style": "plain",
+    "when": "Wednesday 4 November",
+    "head": "Rama|*Ekadashi*",
+    "sub": "The last Ekadashi before Diwali.",
     "seal": {
-      "big": "4",
-      "small": "days to Diwali"
+      "a": "4",
+      "b": "days to Diwali"
     },
-    "band": "Today in New York, Toronto and London. Tomorrow in Dubai and India.",
-    "body": "The last Ekadashi before Diwali. Keep its morning with the river.",
+    "sealRoom": 250,
+    "rows": [
+      [
+        "New York, Toronto, London",
+        "Today"
+      ],
+      [
+        "Dubai, Singapore, India",
+        "Thu 5 Nov"
+      ]
+    ],
     "cta": "Sit this morning"
   },
-  "text": "\nRama Ekadashi, the last Ekadashi before Diwali, falls today in New York, Toronto, Houston and London, by your own sunrise. In Dubai, Singapore, Sydney and India it falls tomorrow, Thursday 5 November.\n\nEkadashi is first a fast kept at home, with its own rules for what is eaten and when the fast is broken. A morning snan is a customary part of the day.\n\nKeep yours with the river. Three minutes, then the day is yours.\n\nSit with the Ganga this morning:"
+  "text": "\nKeep Rama Ekadashi, the last Ekadashi before Diwali. By your own sunrise it falls today in New York, Toronto, Houston and London. In Dubai, Singapore, Sydney and India it falls tomorrow, Thursday 5 November.\n\nEkadashi is first a fast kept at home, with its own rules for what is eaten and when the fast is broken. A morning snan is a customary part of the day.\n\nKeep yours with the river. 3 minutes, then the day is yours.\n\nSit with the Ganga this morning:"
 }

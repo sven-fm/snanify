@@ -2,37 +2,37 @@
   "date": "2026-10-26",
   "day": "Mon",
   "lang": "en",
-  "style": "B4",
+  "style": "signboard",
   "motion": true,
   "theme": "Date: Kartik snan starts tomorrow, 29 mornings",
   "cta": "front",
   "path": "/",
   "card": {
     "style": "signboard",
-    "dur": 7,
-    "kicker": "Starts tomorrow",
+    "when": "Monday 26 October",
     "top": "Kartik",
-    "bottom": "snan",
+    "bottom": "tomorrow",
     "seal": {
-      "big": "29",
-      "small": "mornings of Kartik"
+      "a": "29",
+      "b": "mornings"
     },
-    "band": "Tuesday 27 October to Kartik Purnima, 24 November.",
+    "sub": "Tuesday 27 October to Kartik Purnima, 24 November.",
     "rows": [
       [
-        "Brahma muhurat, New York",
+        "New York",
         "05:33"
       ],
       [
-        "Brahma muhurat, London",
+        "London",
         "04:52"
       ],
       [
-        "Sunrise, Har Ki Pauri",
+        "Har Ki Pauri",
         "06:27 IST"
       ]
     ],
+    "offer": "Eleven mornings for eleven.",
     "cta": "Start now"
   },
-  "text": "\nKartik snan starts tomorrow, Tuesday 27 October, and runs 29 mornings to Kartik Purnima on 24 November.\n\nStart today, so your first morning is ready when you wake. Setup takes about two minutes: your water, your family's names, your prayer, your sankalp, your hour.\n\nTomorrow, Brahma muhurat opens at 05:33 in New York and at 04:52 in London. The sun rises over Har Ki Pauri at 06:27 IST.\n\nEleven mornings for $11, £11 or €11. Start now:"
+  "text": "\nStart today, and your first Kartik morning is ready when you wake. Kartik snan begins tomorrow, Tuesday 27 October, and runs 29 mornings to Kartik Purnima on 24 November.\n\nSetup takes about 2 minutes: your river, your family's names, your prayer, your sankalp, your hour.\n\nTomorrow, Brahma muhurat opens at 05:33 in New York and at 04:52 in London. The sun rises over Har Ki Pauri at 06:27 IST.\n\nEleven mornings for $11, £11 or €11. Start now:"
 }

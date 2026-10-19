@@ -2,7 +2,7 @@
   "date": "2026-10-25",
   "day": "Sun",
   "lang": "en",
-  "style": "B1",
+  "style": "calendar",
   "motion": true,
   "theme": "Date: Sharad Purnima tonight, the bathing morning after",
   "cta": "front",
@@ -10,13 +10,12 @@
   "card": {
     "style": "calendar",
     "scene": "moon",
-    "dur": 8,
-    "sash": "Tonight",
-    "kicker": "Sunday 25 October",
-    "title": "Sharad|Purnima",
-    "sub": "Kheer under the full moon",
-    "line": "The morning after is a bathing morning. Sit with the Yamuna at dawn.",
+    "dur": 7,
+    "kick": "Sunday 25 October",
+    "title": "Sharad Purnima",
+    "sub": "Tonight, the full moon",
+    "line": "Kheer under the moon. Sit with the Yamuna at dawn.",
     "cta": "Sit with the Yamuna"
   },
-  "text": "\nTonight is Sharad Purnima, the first clear full moon after the rains.\n\nFamilies set kheer out under the moon. Kojagara means \"who is awake?\": tradition holds that Lakshmi walks the earth tonight, asking it. In Braj it is the night of the raas, and the Yamuna is the river of that night.\n\nThe morning after is a bathing morning, and Kartik snan begins the day after that.\n\nSet up your snan today, and sit with the Yamuna at dawn:"
+  "text": "\nSet out the kheer tonight. It is Sharad Purnima, the first clear full moon after the rains.\n\nKojagara means \"who is awake?\": tradition holds that Lakshmi walks the earth tonight, asking it. In Braj it is the night of the raas, and the Yamuna is the river of that night.\n\nThe morning after is a bathing morning. Kartik snan begins the day after that.\n\nSet up your snan today. Sit with the Yamuna at dawn:"
 }

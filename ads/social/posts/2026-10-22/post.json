@@ -2,26 +2,17 @@
   "date": "2026-10-22",
   "day": "Thu",
   "lang": "en",
-  "style": "B2",
+  "style": "plain",
   "motion": true,
   "theme": "Ghat: the Godavari at Ram Kund, Nashik, and its older name Gautami",
   "cta": "soft",
   "path": "/rivers/godavari-nashik",
   "card": {
-    "style": "matchbox",
-    "dur": 7,
-    "kicker": "Ram Kund, Nashik",
-    "hook": "The river a sage|brought down.",
-    "brand": "Gautami brand",
-    "number": "No. 04",
-    "emblem": "sun",
-    "name": "Godavari",
-    "tagline": "The longest river of southern India",
-    "seal": {
-      "big": "3 min",
-      "small": "with the Godavari"
-    },
+    "style": "plain",
+    "when": "Ram Kund, Nashik",
+    "head": "The *Godavari*.|A sage|brought it down.",
+    "sub": "Its older name is Gautami.",
     "cta": "Sit with the Godavari"
   },
-  "text": "\nThe Godavari has an older name: Gautami. The sage Gautama brought the river down from Brahmagiri, above Trimbakeshwar, through Shiva's intercession. When the river is invoked, Gautami is still the name people use.\n\nA few tens of kilometres downstream it reaches Ram Kund in Panchavati, Nashik. Tradition holds that Rama and Sita bathed here, and that Rama performed his father Dasharatha's shraddha at this kund.\n\nFrom there the Godavari crosses the whole peninsula to the Bay of Bengal, the longest river of southern India.\n\nSit with the Godavari this morning:"
+  "text": "\nMeet the Godavari by its older name: Gautami. The sage Gautama brought the river down from Brahmagiri, above Trimbakeshwar, through Shiva's intercession. When the river is invoked, Gautami is still the name people use.\n\nA few tens of kilometres on, it reaches Ram Kund in Panchavati, Nashik. Tradition holds that Rama and Sita bathed here, and that Rama performed his father Dasharatha's shraddha at this kund.\n\nFrom there the Godavari crosses the whole peninsula to the Bay of Bengal: the longest river of southern India.\n\nSit with the Godavari this morning:"
 }

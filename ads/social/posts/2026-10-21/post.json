@@ -2,17 +2,16 @@
   "date": "2026-10-21",
   "day": "Wed",
   "lang": "en",
-  "style": "B4",
+  "style": "plain",
   "motion": false,
   "theme": "Date: Ashwin Shukla Ekadashi falls on 21 Oct in the Americas, 22 Oct in London, the Gulf and India",
   "cta": "front",
   "path": "/",
   "card": {
-    "style": "signboard",
-    "kicker": "Wed 21 Oct",
-    "top": "Ekadashi",
-    "bottom": "two dates",
-    "band": "Kept by your own sunrise.",
+    "style": "plain",
+    "when": "Wednesday 21 October",
+    "head": "Ekadashi.|*2 dates.*",
+    "sub": "Keep it by your own sunrise.",
     "rows": [
       [
         "New York, Toronto, Houston",
@@ -29,5 +28,5 @@
     ],
     "cta": "Sit this morning"
   },
-  "text": "\nEkadashi falls on two dates this week, and both are right.\n\nA tithi is kept on the day it is running at your own sunrise. In New York, Toronto and Houston that day is today, Wednesday 21 October. In London, Dubai, Singapore and India it is Thursday 22 October.\n\nThis is the Ekadashi of the bright half of Ashwin, kept by many as Papankusha Ekadashi. A morning snan belongs to the day. Keep yours with the river, wherever you wake.\n\nSit with the river on your Ekadashi:"
+  "text": "\nKeep Ekadashi by your own sunrise. This week it falls on 2 dates, and both are right.\n\nA tithi belongs to the day it is running at sunrise where you are. In New York, Toronto and Houston that day is today, Wednesday 21 October. In London, Dubai, Singapore and India it is Thursday 22 October.\n\nThis is the Ekadashi of the bright half of Ashwin, kept by many as Papankusha Ekadashi. A morning snan is a customary part of the day. Keep yours with the river.\n\nSit with the river on your Ekadashi:"
 }

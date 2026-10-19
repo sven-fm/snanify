@@ -2,7 +2,7 @@
   "date": "2026-11-05",
   "day": "Thu",
   "lang": "en",
-  "style": "B1",
+  "style": "calendar",
   "motion": true,
   "theme": "Calendar: Diwali week as the panchang sets it in India",
   "cta": "front",
@@ -10,10 +10,9 @@
   "card": {
     "style": "calendar",
     "scene": "newmoon",
-    "dur": 8,
-    "sash": "Diwali week",
-    "kicker": "Thursday 5 November",
-    "title": "Diwali|week",
+    "dur": 7,
+    "kick": "Thursday 5 November",
+    "title": "Diwali week",
     "sub": "The dates, as kept in India",
     "rows": [
       [
@@ -35,5 +34,5 @@
     ],
     "cta": "Plan your mornings"
   },
-  "text": "\nDiwali week, as the panchang sets it in India:\n\nSunday 8 November, before sunrise: Naraka Chaturdashi, the abhyanga snan, oil and then water.\nSunday 8 November, at dusk: Lakshmi puja, as the new moon holds.\nMonday 9 November, at dawn: Somvati Amavasya, the Diwali new moon on a Monday, the fullest morning Har Ki Pauri gets outside a Kumbh.\nWednesday 11 November: Yam Dwitiya, Bhai Dooj, at the Yamuna in Mathura.\n\nThree of those are mornings at the water. Keep each one with the river, three minutes at a time.\n\nSet up your mornings today:"
+  "text": "\nPlan Diwali week. Here it is as the panchang sets it in India:\n\nSunday 8 November, before sunrise: Naraka Chaturdashi, the abhyanga snan, oil and then water.\nSunday 8 November, at dusk: Lakshmi puja, as the new moon holds.\nMonday 9 November, at dawn: Somvati Amavasya, the Diwali new moon on a Monday, the fullest morning Har Ki Pauri gets outside a Kumbh.\nWednesday 11 November: Yam Dwitiya, Bhai Dooj, at the Yamuna in Mathura.\n\n3 of those are mornings at the water. Keep each one with the river, 3 minutes at a time.\n\nSet up your mornings today:"
 }

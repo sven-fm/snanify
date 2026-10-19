@@ -2,26 +2,17 @@
   "date": "2026-10-28",
   "day": "Wed",
   "lang": "en",
-  "style": "B2",
+  "style": "plain",
   "motion": true,
   "theme": "Ghat: the Triveni Sangam, two rivers seen and a third held in faith",
   "cta": "soft",
   "path": "/rivers/triveni-prayagraj",
   "card": {
-    "style": "matchbox",
-    "dur": 7,
-    "kicker": "Kartik, day 2",
-    "hook": "Two you can see.|One held in faith.",
-    "brand": "Tirtharaj brand",
-    "number": "No. 02",
-    "emblem": "two",
-    "name": "Sangam",
-    "tagline": "Prayagraj, where the Ganga meets the Yamuna",
-    "seal": {
-      "big": "3",
-      "small": "rivers, one place"
-    },
+    "style": "plain",
+    "when": "Kartik, day 2",
+    "head": "2 rivers|you can see.|*1 in faith.*",
+    "sub": "The Triveni Sangam, Prayagraj.",
     "cta": "Sit at the Sangam"
   },
-  "text": "\nAt Prayagraj the Ganga arrives from the north and the Yamuna from the west. For a stretch they run side by side, and you can see the line from a boat: the Yamuna darker and slower, the Ganga paler and quicker.\n\nTradition holds that the Sarasvati joins them here, unseen. The three give the place its name: Triveni, three braids. Prayag means the place of sacrifice, and the city is called Tirtharaj, the king of tirthas.\n\nKartik bathing at the Sangam runs the full month.\n\nSit at the Sangam this morning:"
+  "text": "\nLook for the line at Prayagraj. The Ganga arrives from the north and the Yamuna from the west, and for a stretch they run side by side: the Yamuna darker and slower, the Ganga paler and quicker.\n\nTradition holds that the Sarasvati joins them here, unseen. The 3 give the place its name: Triveni, 3 braids. Prayag means the place of sacrifice, and the city is called Tirtharaj, the king of tirthas.\n\nKartik bathing at the Sangam runs the full month.\n\nSit at the Sangam this morning:"
 }
