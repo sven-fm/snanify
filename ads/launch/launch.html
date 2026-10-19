@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@700;800&family=Martel+Sans:wght@400;700;800&display=block" rel="stylesheet">
+<style>
+  /* The launch video, 1080 x 1350 for the LinkedIn feed. A title, then a
+     phone standing in the river swipes through five screens of the snan,
+     drawn here from the kit and simplified to read at feed size: the
+     reading, the breath, the sankalp, the stillness, the Sankalp Patra. Each
+     screen moves a little while it is shown (the dot finds its place, the
+     river rises, the ink fills, the seconds fall, the seal lands), each under
+     its caption; then the end card. Every moving thing is a pure function of
+     time, set by frame(t); render.mjs steps it at 30 fps. Eased motion only,
+     flat colour, square corners, round things drawn. */
+  * { margin: 0; box-sizing: border-box; }
+  :root { --y: #f2c230; --k: #141210; --k2: #57513f; --r: #c8251d; --t: #1d5a6a; --p: #f2ead9; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body { background: var(--y); color: var(--k); font-family: "Martel Sans", sans-serif; }
+  .d { font-family: "Eczar", serif; font-synthesis: none; }
+  .r { color: var(--r); }
+  .abs { position: absolute; }
+  .lines > span { display: block; white-space: nowrap; }
+  .big { font-weight: 800; line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; }
+
+  .wm { font-family: "Eczar", serif; font-weight: 800; letter-spacing: -0.015em; line-height: 1; font-synthesis: none; display: inline-block; }
+  .wm-i { position: relative; display: inline-block; }
+  .wm-i svg { position: absolute; left: 53.6%; bottom: 0.789em; width: 0.237em; height: 0.237em; transform: translateX(-50%); }
+  .lock { display: inline-flex; align-items: center; gap: 0.5em; }
+  .lock > svg { width: 1.25em; height: 1.25em; flex: none; }
+
+  #title { left: 64px; top: 64px; right: 64px; }
+  .lockrow { font-size: 44px; }
+  #title .head { margin-top: 150px; }
+  .band { position: absolute; left: -60px; right: -60px; background: var(--k); color: var(--y); padding: 26px 124px 18px; font-weight: 800; font-size: 44px; line-height: 1.25; transform: rotate(-2deg); }
+
+  .cap { left: 64px; right: 64px; top: 64px; }
+
+  #phone { left: 230px; top: 300px; width: 620px; background: var(--k); border-radius: 76px; padding: 16px; z-index: 2; }
+  #phone .screen { position: relative; border-radius: 60px; overflow: hidden; background: var(--p); height: 1120px; }
+  #phone .bar { position: absolute; left: 0; right: 0; top: 0; height: 58px; display: flex; justify-content: center; align-items: center; z-index: 3; }
+  #phone .island { width: 170px; height: 44px; border-radius: 22px; background: #000; }
+  .track { position: absolute; left: 0; top: 0; height: 100%; display: flex; }
+  .scr { position: relative; width: 588px; height: 100%; flex: none; background: var(--p); overflow: hidden; }
+  .scr.night { background: #0b0a08; color: #b5ad99; }
+
+  /* Inside a screen: the sitting's five bars and its label, as in the app. */
+  .prog { position: absolute; left: 40px; right: 40px; top: 84px; display: flex; gap: 10px; }
+  .prog i { flex: 1; height: 5px; background: #c3b697; }
+  .prog i.on { background: var(--k); }
+  .night .prog i { background: #2a2622; } .night .prog i.on { background: #6f685a; }
+  .lbl { position: absolute; left: 40px; top: 104px; font-size: 22px; color: var(--k2); }
+  .night .lbl { color: #6f685a; }
+  .in { position: absolute; left: 40px; right: 40px; }
+  .scr svg.sr { position: absolute; left: 0; }
+
+  .rd .rv { top: 170px; font-family: "Eczar", serif; font-weight: 800; font-size: 104px; line-height: 1; color: var(--r); }
+  .rd .at { top: 280px; font-size: 26px; color: var(--k2); }
+  .rd .st { top: 350px; font-family: "Eczar", serif; font-weight: 700; font-size: 60px; line-height: 1.05; }
+  .rd .fu { top: 424px; font-size: 26px; color: var(--k2); }
+  .gauge { position: absolute; height: 40px; border: 3px solid var(--k); display: flex; }
+  .gauge b { display: block; height: 100%; }
+  .gauge .us { position: absolute; top: -12px; bottom: -12px; width: 0; border-left: 3px dashed var(--k); }
+  .gauge .dot { position: absolute; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+  .rd .gauge { left: 40px; right: 40px; top: 492px; }
+  .fig { font-size: 22px; color: var(--k2); }
+  .rd .fig { top: 556px; }
+
+  .br .say { top: 190px; text-align: center; font-family: "Eczar", serif; font-weight: 800; font-size: 78px; line-height: 1; text-transform: uppercase; }
+  .br .num { top: 290px; text-align: center; font-family: "Eczar", serif; font-weight: 800; font-size: 96px; line-height: 1; color: var(--k2); }
+
+  .sk .nm { top: 210px; font-size: 24px; color: var(--k2); }
+  .sk .tx { top: 250px; font-family: "Eczar", serif; font-weight: 700; font-size: 56px; line-height: 1.1; }
+  .hold { position: absolute; left: 40px; right: 48px; top: 470px; height: 84px; border: 3px solid var(--k); box-shadow: 8px 8px 0 0 var(--k); background: var(--p); overflow: hidden; }
+  .hold .ink { position: absolute; left: 0; top: 0; bottom: 0; background: var(--r); }
+  .hold span { position: absolute; left: 0; top: 0; bottom: 0; width: 494px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 28px; padding-top: 4px; }
+  .hold .ink { overflow: hidden; z-index: 1; font-style: normal; }
+  .hold .ink span { color: #fff; }
+
+  .stl .be { top: 230px; text-align: center; font-family: "Eczar", serif; font-weight: 700; font-size: 46px; color: #b5ad99; }
+  .stl .sec { top: 310px; text-align: center; font-family: "Eczar", serif; font-weight: 800; font-size: 150px; line-height: 1; color: #8a836f; }
+  .stl .kr { top: 480px; text-align: center; font-size: 24px; color: #6f685a; }
+
+  .pt .hd { top: 92px; display: flex; justify-content: space-between; align-items: baseline; }
+  .pt .hd .k { font-family: "Eczar", serif; font-weight: 700; font-size: 28px; color: var(--r); }
+  .pt .hd .w { font-size: 19px; color: var(--k2); }
+  .pt .ghat { position: absolute; left: 40px; right: 40px; top: 140px; height: 250px; background: url(../../public/waters/ganga-haridwar.webp) center 30% / cover; mix-blend-mode: multiply; }
+  .pt .seal { position: absolute; right: 26px; top: 160px; width: 120px; height: 120px; z-index: 2; }
+  .pt .seal svg { position: absolute; inset: 0; }
+  .pt .seal div { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--y); font-family: "Eczar", serif; font-weight: 800; line-height: 1; }
+  .pt .nms { top: 420px; white-space: nowrap; font-family: "Eczar", serif; font-weight: 800; font-size: 50px; line-height: 1; text-transform: uppercase; }
+  .pt .atg { top: 534px; font-size: 26px; }
+  .pt .st { top: 610px; font-family: "Eczar", serif; font-weight: 700; font-size: 40px; line-height: 1; }
+  .pt .gauge { left: 40px; width: 300px; top: 668px; height: 30px; }
+  .pt .gauge .dot { width: 30px; height: 30px; margin: -15px 0 0 -15px; }
+  .pt .pf { top: 716px; font-size: 19px; }
+  .pt .tm { top: 660px; left: 370px; font-size: 19px; line-height: 1.5; color: var(--k2); text-align: right; }
+
+  .river { left: 0; bottom: 0; z-index: 1; }
+
+  #end { left: 64px; right: 64px; top: 64px; }
+  #end .head { margin-top: 200px; }
+  #end .sub { font-weight: 700; font-size: 42px; line-height: 1.3; margin-top: 34px; }
+  .press { position: absolute; left: 64px; right: 73px; top: 890px; display: flex; align-items: center; justify-content: space-between; background: var(--r); color: #fff; border: 3px solid var(--k); box-shadow: 9px 9px 0 0 var(--k); padding: 28px 38px 20px; z-index: 3; }
+  .press .go { font-family: "Eczar", serif; font-weight: 800; font-size: 76px; line-height: 1; }
+  .press .ar { font-weight: 800; font-size: 64px; line-height: 1; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  const P = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+  const C = { y: "#f2c230", k: "#141210", r: "#c8251d", t: "#1d5a6a", p: "#f2ead9" };
+  const GAUGE = { w: [1, 2, 4, 2, 1], c: ["#f2ead9", "#e8dcc0", "#c9d7d2", "#7fa3a6", "#1d5a6a"] };
+  const f2 = (n) => Number(n).toFixed(2);
+  const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const red = (t) => esc(t).replace(/\*(.+?)\*/g, '<span class="r">$1</span>');
+  const lines = (t) => String(t).split("|").map((l) => `<span>${red(l)}</span>`).join("");
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => [...document.querySelectorAll(s)];
+  const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+  const span = (t, a, b) => clamp((t - a) / (b - a));
+  const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const out3 = (x) => 1 - Math.pow(1 - x, 3);
+
+  /* The mark and the wordmark (src/lib/logo-svg.ts). */
+  const MARK = (id) => `<svg viewBox="0 0 48 48" aria-hidden="true"><defs><clipPath id="mk${id}"><circle cx="24" cy="24" r="20"/></clipPath></defs><circle cx="24" cy="24" r="21.6" fill="${C.p}" stroke="${C.k}" stroke-width="2.4"/><g clip-path="url(#mk${id})"><path d="M15.4 24.6A8.6 8.6 0 0 1 32.6 24.6Z" fill="#c8251d"/><rect y="24.6" width="48" height="1.4" fill="${C.k}"/><g fill="#1d5a6a"><rect x="8" y="29" width="32" height="1.8"/><rect x="5" y="33.4" width="38" height="2"/><rect x="2" y="38" width="44" height="2.2"/></g></g></svg>`;
+  const LOCK = (id) => `<span class="lock">${MARK(id)}<span class="wm">Snan<span class="wm-i">ı<svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="5" fill="#c8251d"/></svg></span>fy</span></span>`;
+
+  /* The river (src/lib/river-geometry.ts, ported as in ads/social). */
+  function waveRows(width, height, rows, top) {
+    const k = width / 260, out = [];
+    for (let i = 0; i < rows; i++) {
+      const t = rows > 1 ? i / (rows - 1) : 0;
+      const y = top + (height - top - 4) * Math.pow(t, 1.7);
+      const amp = (0.5 + 2.6 * t) * k * 0.55, period = (40 + 50 * t) * k;
+      const pts = [];
+      for (let x = 0; x <= 2 * width + 1e-9; x += 6) pts.push(`${f2(x)},${f2(y + amp * Math.sin((2 * Math.PI * x) / period))}`);
+      out.push({ y, t, period, stroke: Math.max(1.6, (0.6 + 1.2 * t) * k * 0.45), drift: 11 - 4 * t, points: pts.join(" ") });
+    }
+    return out;
+  }
+  function sunPath(rows, sunX, width) {
+    const k = width / 260, out = [];
+    rows.forEach((row) => {
+      const t = row.t, centre = sunX + (width / 2 - sunX) * t, total = (5 + 64 * t) * k;
+      const n = t < 0.3 ? 1 : t < 0.7 ? 2 : 3, w = total / (2 * n - 1), left = centre - total / 2, h = row.stroke * 2.4;
+      for (let d = 0; d < n; d++) out.push({ x: left + d * 2 * w, y: row.y - h / 2, w, h });
+    });
+    return out;
+  }
+  function river(w, h, o) {
+    const hz = o.horizon, rows = waveRows(w, h, o.rows || 9, hz + 8);
+    const sun = `<clipPath id="sky${o.id}"><rect width="${w}" height="${f2(hz)}"/></clipPath><circle cx="${f2(o.sunX)}" cy="${f2(hz + 0.35 * o.sunR)}" r="${f2(o.sunR)}" fill="${o.sun || C.r}" clip-path="url(#sky${o.id})"/>`;
+    const path = sunPath(rows, o.sunX, w).map((d) => `<rect class="glint" x="${f2(d.x)}" y="${f2(d.y)}" width="${f2(d.w)}" height="${f2(d.h)}" fill="${o.path || C.y}"/>`).join("");
+    return `<svg class="${o.cls}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="${o.style || ""}">${sun}
+      <g class="waves" data-h="${h}" data-hz="${hz}"><g>${rows.map((r) => `<polyline class="wave" data-p="${f2(r.period)}" data-d="${f2(r.drift)}" points="${r.points}" fill="none" stroke="${o.wave || C.t}" stroke-width="${f2(r.stroke)}"/>`).join("")}</g>
+      ${path}</g><rect y="${f2(hz - 2.5)}" width="${w}" height="5" fill="${o.ink || C.k}"/></svg>`;
+  }
+  const gauge = () => `<div class="gauge">${GAUGE.w.map((w, i) => `<b style="flex:${w};background:${GAUGE.c[i]}"></b>`).join("")}<i class="us" style="left:40%"></i><svg class="dot" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="${C.r}" stroke="${C.k}" stroke-width="3"/></svg></div>`;
+  const prog = (n) => `<div class="prog">${[0, 1, 2, 3, 4].map((i) => `<i class="${i <= n ? "on" : ""}"></i>`).join("")}</div>`;
+  const inRiver = (id, extra = {}) => river(588, 440, { id, cls: "sr", horizon: 74, sunX: 400, sunR: 54, rows: 11, style: "top:700px", ...extra });
+
+  /* The five screens, simplified from the app. */
+  const SCREENS = [
+    `<div class="scr rd">${prog(0)}<div class="lbl">The reading</div>
+      <div class="in rv">GANGA</div><div class="in at">Har Ki Pauri, Haridwar</div>
+      <div class="in st">Running full.</div><div class="in fu">Fuller than usual for this time of year.</div>
+      ${gauge()}<div class="in fig">669 m³/s · 86th percentile since 1997</div>${inRiver("s0", { style: "top:660px" })}</div>`,
+    `<div class="scr br">${prog(1)}<div class="lbl">The breath</div>
+      <div class="in say">Breathe in</div><div class="in num"></div>${inRiver("s1", { style: "top:560px", horizon: 60 })}</div>`,
+    `<div class="scr sk">${prog(2)}<div class="lbl">Your sankalp</div>
+      <div class="in nm">Anjali Sharma, Vikram Sharma</div>
+      <div class="in tx">For my mother, every morning this month.</div>
+      <div class="hold"><span>Keep holding</span><i class="ink"><span>Keep holding</span></i></div>${inRiver("s2")}</div>`,
+    `<div class="scr stl night">${prog(3)}<div class="lbl">The stillness</div>
+      <div class="in be">Be still with the river.</div><div class="in sec"></div><div class="in kr">The river keeps running.</div>
+      ${inRiver("s3", { sun: "#4a1410", wave: "#16404a", path: "#5a4a1c", ink: "#3a3530" })}</div>`,
+    `<div class="scr pt"><div class="in hd"><span class="k">Sankalp Patra</span><span class="w">19 October · Shukla Navami</span></div>
+      <div class="ghat"></div>
+      <div class="seal"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#c8251d"/><circle cx="50" cy="50" r="43" fill="none" stroke="#f2c230" stroke-width="2" stroke-dasharray="4 3"/></svg><div><span style="font-size:30px">7th</span><span style="font-size:21px">morning</span></div></div>
+      <div class="in nms">Anjali Sharma<br>Vikram Sharma</div>
+      <div class="in atg">at the <span class="r">Ganga</span>, Har Ki Pauri, Haridwar</div>
+      <div class="in st">Running full.</div>${gauge()}
+      <div class="in tm">669 m³/s<br>86th since 1997</div><div class="in fig pf">06:12 in New York · 15:42 IST · 11,650 km away</div>${inRiver("s4", { style: "top:770px" })}</div>`,
+  ];
+
+  function fitLines(el, max, min, room) {
+    let s = max; el.style.fontSize = s + "px";
+    const wide = () => [...el.querySelectorAll(":scope > span")].some((x) => x.scrollWidth > room + 1);
+    while (s > min && wide()) { s -= 2; el.style.fontSize = s + "px"; }
+  }
+  const rise = (el, t, at, dist = 26, dur = 0.8) => { const k = inOut(span(t, at, at + dur)); el.style.opacity = f2(k); el.style.translate = `0 ${f2((1 - k) * dist)}px`; };
+  const fade = (el, t, at, dur = 0.5) => { const k = inOut(span(t, at, at + dur)); el.style.opacity = f2(1 - k); el.style.translate = `0 ${f2(-k * 10)}px`; };
+
+  const { lead, hold, swipe, endAt } = P, N = P.caps.length;
+  /* Slide i is fully in from lead + i * hold; the swipe into it takes `swipe`. */
+  const pos = (t) => { let p = 0; for (let i = 1; i < N; i++) p += inOut(span(t, lead + i * hold - swipe, lead + i * hold)); return p; };
+  const local = (t, i) => t - (lead + i * hold - (i ? swipe : 0.9));
+
+  function build() {
+    document.getElementById("root").innerHTML = `
+      ${river(1080, 230, { id: "f", cls: "abs river", horizon: 50, sunX: 880, sunR: 62, rows: 10 })}
+      <div id="title" class="abs"><div class="lockrow">${LOCK("a")}</div><div class="head big d lines">${lines(P.head)}</div></div>
+      <div class="band" style="top:${P.bandTop}px">${esc(P.band)}</div>
+      ${P.caps.map((c, i) => `<div class="cap abs big d lines" data-i="${i}">${lines(c)}</div>`).join("")}
+      <div id="phone" class="abs"><div class="screen"><div class="bar"><div class="island"></div></div><div class="track">${SCREENS.join("")}</div></div></div>
+      <div id="end" class="abs"><div class="lockrow">${LOCK("b")}</div><div class="head big d lines">${lines(P.endHead)}</div><div class="sub">${esc(P.endSub)}</div></div>
+      <div class="press"><span class="go">snanify.com</span><span class="ar">→</span></div>`;
+    fitLines($("#title .head"), 190, 80, 952);
+    fitLines($("#end .head"), 190, 80, 952);
+    $$(".cap").forEach((c) => fitLines(c, 112, 60, 952));
+    const sw = $(".screen").clientWidth;
+    $$(".scr").forEach((s) => (s.style.width = sw + "px"));
+  }
+
+  window.DURATION = P.total;
+  window.frame = (t) => {
+    /* The title rises in, the band slides under it; both fade as the phone
+       rises into the frame. */
+    const out = lead - 1.0;
+    $$("#title .lockrow, #title .head > span").forEach((el, i) => (t < out ? rise(el, t, 0.15 + i * 0.22) : fade(el, t, out + i * 0.06)));
+    const band = $(".band");
+    if (t < out) { const b = inOut(span(t, 1.0, 1.8)); band.style.opacity = f2(b); band.style.translate = `${f2((1 - b) * -160)}px 0`; }
+    else fade(band, t, out + 0.2);
+
+    /* The phone rises, holds with one long push-in, and sinks for the end. */
+    const ph = $("#phone");
+    const up = inOut(span(t, lead - 0.9, lead + 0.2)), down = inOut(span(t, endAt - 0.1, endAt + 0.8));
+    const push = 1 + 0.035 * inOut(span(t, lead - 0.9, endAt + 0.8));
+    ph.style.translate = `0 ${f2((1 - up) * 1150 + down * 1250)}px`;
+    ph.style.transform = `scale(${push.toFixed(5)})`;
+    ph.style.transformOrigin = "50% 0";
+
+    /* The swipe: screens slide as one track; the captions travel with them. */
+    const p = pos(t), sw = $(".screen").clientWidth;
+    $(".track").style.transform = `translateX(${f2(-p * sw)}px)`;
+    $$(".cap").forEach((c, i) => {
+      const d = i - p, vis = t < lead - 0.6 ? 0 : t > endAt - 0.3 ? 1 - inOut(span(t, endAt - 0.3, endAt + 0.2)) : 1;
+      c.style.opacity = f2(clamp(1 - Math.abs(d) * 2.4) * vis * (i === 0 ? inOut(span(t, lead - 0.6, lead + 0.1)) : 1));
+      c.style.translate = `${f2(d * 260)}px 0`;
+    });
+
+    /* What moves inside each screen. */
+    const l0 = local(t, 0), l1 = local(t, 1), l2 = local(t, 2), l3 = local(t, 3), l4 = local(t, 4);
+    $(".rd .dot").style.left = f2(10 + 76 * out3(span(l0, 0.5, 1.8))) + "%";
+    $(".pt .dot").style.left = "86%";
+    const lvl = inOut(span(l1, 0.2, 3.0));
+    const bw = $(".br .waves"); bw.setAttribute("transform", `translate(0 ${f2(60 * (1 - lvl) + 0)}) scale(1 ${f2(0.75 + 0.25 * lvl)})`);
+    const n = $(".br .num"), c1 = clamp(l1 - 0.2, 0, 3.99); n.textContent = String(Math.floor(c1) + 1); n.style.opacity = f2(1 - (c1 % 1) * 0.6);
+    $(".hold .ink").style.width = f2(100 * clamp(0.12 + 0.8 * inOut(span(l2, 0.2, 3.0)))) + "%";
+    const s3 = clamp(l3 - 0.3, 0, 3); $(".stl .sec").textContent = String(60 - Math.floor(s3));
+    const sl = $(".pt .seal"), k = out3(span(l4, 0.5, 0.85));
+    sl.style.opacity = l4 < 0.5 ? "0" : "1"; sl.style.transform = `rotate(${f2(-20 + 12 * k)}deg) scale(${f2(1.25 - 0.25 * k)})`;
+
+    /* The end card rises in; the press settles last. */
+    const e0 = endAt + 0.4;
+    $$("#end .lockrow, #end .head > span, #end .sub").forEach((el, i) => rise(el, t, e0 + i * 0.2));
+    rise($(".press"), t, e0 + 0.9);
+
+    /* flow: every wave drifts a period at its own pace; the path breathes. */
+    $$(".wave").forEach((wv) => { const per = Number(wv.dataset.p), dd = Number(wv.dataset.d); wv.setAttribute("transform", `translate(${f2(-(((t / dd) * per) % per))} 0)`); });
+    $$(".glint").forEach((g, j) => g.setAttribute("opacity", f2(0.75 + 0.25 * Math.sin(t * 1.4 + j * 0.9))));
+  };
+
+  document.fonts.load("800 40px Eczar", "SNAN").then(() => Promise.all(["700 40px Eczar", "400 40px 'Martel Sans'", "700 40px 'Martel Sans'", "800 40px 'Martel Sans'"].map((f) => document.fonts.load(f, "Snan")))).then(() => document.fonts.ready).then(() => {
+    build();
+    window.frame(P.still ?? 0);
+    document.body.dataset.ready = "1";
+  });
+</script>
+</body>
+</html>

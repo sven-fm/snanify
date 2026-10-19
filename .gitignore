@@ -63,3 +63,7 @@ _*.tmp.config.ts
 # ads: the raw phone recording the video ads are cut from (270 MB, over GitHub's limit)
 /ads/in/*.mp4
 .superpowers/
+
+# ads/launch: the stills for checking and the sound before it is muxed
+/ads/launch/stills/
+/ads/launch/out/tanpura.wav
